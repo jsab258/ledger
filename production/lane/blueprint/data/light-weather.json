@@ -1,0 +1,7678 @@
+{
+ "file": "light-weather.json",
+ "version": "2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120,
+  "realSecondsPerGameMinute": 2,
+  "game_day_real_minutes": 48,
+  "dark_part_of_day": {
+   "mean_lamps_on_game_hours": 14.67,
+   "mean_real_minutes_on_120s": 29.3,
+   "old_value_45s_clock": "about 14 of 24 real minutes under the 60 s clock; 4.7 says 'a game day is 24 real minutes and the dark part about 14'",
+   "new_value": "about 28 to 30 of 48 real minutes (mean over 15 Oct to 2 Dec, lamps on to lamps off, dry overcast)",
+   "src": "4.7; DATA-SWEEP row 4.7"
+  }
+ },
+ "sources": [
+  "production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md",
+  "production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md (review correction at its head applies)",
+  "tools/lane/prototype/project/src/light.js, rules.js (light, weather, seeing, noise, time), clock.js",
+  "production/specs/unreal-look.json",
+  "production/specs/vignette-pieces.json (conditions overcast_day, wet_night)",
+  "RULINGS.md 1 Oct, 5 Oct, 7 Oct, 29 Oct, 15 Sep",
+  "BLUEPRINT-02 2.1.4; BLUEPRINT-04 4.4, 4.7, 4.8; BLUEPRINT-05 5.3.3, 5.4.1, 5.4.2, 5.4.3",
+  "production/lane/design-proof/DEFINITIONS-2026-11-21.md G9, G10",
+  "computed, NOAA solar equations (sunrise, sunset, twilight, sun elevation; Hull 53.7456 N, 0.3367 W; BST to 01:00 UTC on Sun 28 Oct 1990, GMT after)",
+  "production/research/phase2-plan/TARGET-LIGHT-WEATHER-2026-11-17.md",
+  "production/research/1990-on-film-stock/DELIVERY.md",
+  "production/reference/README.md and photographs.md (Hook sheet governs mood, palette, composition)",
+  "canon.md (visual target: photoreal, wet, overcast, grimy Britain)"
+ ],
+ "open_points": [
+  "Place: canon names no region or latitude. The sun times use Hull, 53.74 N (the brief), where LIGHT-WEATHER-VALUES used 54.6 N (Tynemouth weather). Hull sunset on 17 Nov is about 16:01 either way within 3 minutes; weather anchors (rain days) are still Tynemouth's. Not canon.",
+  "Clock change: BST ended at 02:00 on Sun 28 Oct 1990. The day table is in local civil time, so game clock 18:05 sunset on Sat 27 Oct becomes 16:37 on Sun 28 Oct. The build should either model clocks going back that night (an hour repeated) or hold the whole story on GMT (then add 60 minutes to every BST row before 28 Oct; sunset on 15 Oct would read 17:05). Needs a ruling; neither is in the blueprint.",
+  "Old 'dusk at 18.25 to night at 19.75' in the prototype (rules.js time) is for a fixed unnamed date and is replaced by the sun-elevation curves here.",
+  "Prototype had five weathers (dry, drizzle, rain, heavy, mist). Ruling 5 Oct names three; heavy rain is the 'rain' profile and mist is folded into each profile's mist value. Night mist (prototype) is dropped.",
+  "Photocell on 70, off 35 lux is the SC 1000 figure; that 1990 lamps used it is a guess (LIGHT-WEATHER-VALUES review).",
+  "SOX colour: look file holds linear (1.0, 0.25, 0.0); computed from chromaticity is (1.0, 0.22, 0.0). This file uses the computed value in the warm-up curve's end and lists both. SOX 35 W lumens: 4,770 (modern sheet) vs 4,550 (look note): not used in the game, whose lamp is the game-scaled 167 lm pool.",
+  "Real wet hours in a north-east November are probably 15 to 20 percent of hours (judgement, unverified); the weights here give about 18 percent rain and 33 percent drizzle, wetter than climate because the friends' build is a wet-street game by ruling.",
+  "Prototype shop-window channel 'early closing' ran 15:30 to 19:30; DEFINITIONS G10 (newer) shuts Quay Street shops at 17:30, so the channel here ends 17:45. Needs the map file's window list to key by door.",
+  "Damp floor 0.4 (the street never drier): prototype 0.45; this keeps 'dry overcast' still dark and damp as the 3 and 29 Oct bars need. A fully dry matt road is never shown.",
+  "The grade (5.4.3) is written nowhere else: every number in grade is chosen and must be judged in the assembled game against the Hook sheet and KCD2 frames (a rough proof is a finding).",
+  "The 4.7 sweep asked for 'sodium warm-up' and 'night visibility radius': both given. Real lux per state is informative only (clear-sky lux above 0 degrees is chosen, not sourced); the game runs on pins and gains."
+ ],
+ "location": {
+  "id": "loc_hull",
+  "src": "brief; 4.8",
+  "name": "Hull, England",
+  "lat_deg_n": 53.7456,
+  "lon_deg_e": -0.3367,
+  "note": "working assumption, not canon",
+  "clock_rule": "local civil time: BST (UTC+1) up to 27 Oct 1990, GMT from 28 Oct 1990"
+ },
+ "calendar": {
+  "id": "calendar",
+  "src": "brief; 2.1.4",
+  "starts": "1990-10-15",
+  "weekday": "Monday",
+  "days_listed": 49,
+  "ends": "1990-12-02"
+ },
+ "sun_anchors": [
+  {
+   "id": "sun_1990-10-15",
+   "src": "computed, NOAA solar equations",
+   "date": "1990-10-15",
+   "weekday": "Mon",
+   "story_day": 1,
+   "clock": "BST",
+   "sunrise": "07:28",
+   "sunset": "18:05",
+   "civil_dawn": "06:53",
+   "civil_dusk": "18:41",
+   "nautical_dawn": "06:12",
+   "nautical_dusk": "19:21",
+   "day_length_min": 637,
+   "lamps_on": {
+    "dry_overcast": "18:09",
+    "drizzle": "18:05",
+    "rain": "17:58"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:19",
+    "drizzle": "07:24",
+    "rain": "07:29"
+   },
+   "lamps_dark_part_game_hours": 13.17,
+   "lamps_dark_part_real_minutes_on_120s": 26.3
+  },
+  {
+   "id": "sun_1990-10-28",
+   "src": "computed, NOAA solar equations",
+   "date": "1990-10-28",
+   "weekday": "Sun",
+   "story_day": 14,
+   "clock": "GMT",
+   "sunrise": "06:53",
+   "sunset": "16:37",
+   "civil_dawn": "06:16",
+   "civil_dusk": "17:13",
+   "nautical_dawn": "05:35",
+   "nautical_dusk": "17:55",
+   "day_length_min": 584,
+   "lamps_on": {
+    "dry_overcast": "16:41",
+    "drizzle": "16:36",
+    "rain": "16:29"
+   },
+   "lamps_off": {
+    "dry_overcast": "06:43",
+    "drizzle": "06:48",
+    "rain": "06:54"
+   },
+   "lamps_dark_part_game_hours": 14.03,
+   "lamps_dark_part_real_minutes_on_120s": 28.1
+  },
+  {
+   "id": "sun_1990-11-17",
+   "src": "computed, NOAA solar equations",
+   "date": "1990-11-17",
+   "weekday": "Sat",
+   "story_day": 34,
+   "clock": "GMT",
+   "sunrise": "07:32",
+   "sunset": "16:01",
+   "civil_dawn": "06:52",
+   "civil_dusk": "16:40",
+   "nautical_dawn": "06:08",
+   "nautical_dusk": "17:24",
+   "day_length_min": 509,
+   "lamps_on": {
+    "dry_overcast": "16:05",
+    "drizzle": "16:00",
+    "rain": "15:52"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:21",
+    "drizzle": "07:26",
+    "rain": "07:32"
+   },
+   "lamps_dark_part_game_hours": 15.27,
+   "lamps_dark_part_real_minutes_on_120s": 30.5
+  },
+  {
+   "id": "sun_1990-11-30",
+   "src": "computed, NOAA solar equations",
+   "date": "1990-11-30",
+   "weekday": "Fri",
+   "story_day": 47,
+   "clock": "GMT",
+   "sunrise": "07:54",
+   "sunset": "15:46",
+   "civil_dawn": "07:12",
+   "civil_dusk": "16:28",
+   "nautical_dawn": "06:28",
+   "nautical_dusk": "17:12",
+   "day_length_min": 472,
+   "lamps_on": {
+    "dry_overcast": "15:51",
+    "drizzle": "15:45",
+    "rain": "15:36"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:42",
+    "drizzle": "07:48",
+    "rain": "07:55"
+   },
+   "lamps_dark_part_game_hours": 15.85,
+   "lamps_dark_part_real_minutes_on_120s": 31.7
+  }
+ ],
+ "elevation_keys": {
+  "id": "elevation_keys",
+  "src": "5.4.1, 5.4.2; production/specs/unreal-look.json; production/specs/vignette-pieces.json",
+  "how_to_use": "every curve is keyed by the sun's centre elevation in degrees (computed per minute from date and clock). Interpolate between keys, in log space where 'log' is true, linear otherwise; hold the end values beyond the first and last key. Sunset is elevation -0.833. Values are for dry overcast; weather modifies them through weather.profiles.",
+  "curves": {
+   "exposure_pin": {
+    "log": true,
+    "keys": [
+     [
+      6,
+      4.0
+     ],
+     [
+      3,
+      3.4
+     ],
+     [
+      -0.833,
+      2.0
+     ],
+     [
+      -3,
+      1.0
+     ],
+     [
+      -6,
+      0.55
+     ],
+     [
+      -9,
+      0.45
+     ],
+     [
+      -12,
+      0.4
+     ]
+    ],
+    "note": "day 4.0 and night 0.4 are existing (RULINGS 29 Oct one stop darker, never brightened; look file night_exposure_pin); dusk 0.5 to 1.0 from production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md 'What it changes'; the intermediate keys are chosen",
+    "chosen": true
+   },
+   "sky_intensity": {
+    "log": false,
+    "keys": [
+     [
+      6,
+      0.7
+     ],
+     [
+      -0.833,
+      0.6
+     ],
+     [
+      -6,
+      0.45
+     ],
+     [
+      -12,
+      0.35
+     ]
+    ],
+    "note": "0.70 day and 0.35 night are vignette-pieces overcast_day and wet_night; middle keys chosen",
+    "chosen": true
+   },
+   "fog_density": {
+    "log": true,
+    "keys": [
+     [
+      6,
+      0.004
+     ],
+     [
+      -0.833,
+      0.006
+     ],
+     [
+      -6,
+      0.012
+     ],
+     [
+      -12,
+      0.022
+     ]
+    ],
+    "note": "0.004 and 0.022 existing; middle keys chosen",
+    "chosen": true
+   },
+   "fog_max_opacity": {
+    "log": false,
+    "keys": [
+     [
+      6,
+      0.1
+     ],
+     [
+      -0.833,
+      0.14
+     ],
+     [
+      -6,
+      0.28
+     ],
+     [
+      -12,
+      0.45
+     ]
+    ],
+    "note": "0.10 and 0.45 existing; middle chosen",
+    "chosen": true
+   },
+   "ambient_rgb_linear": {
+    "log": false,
+    "keys": [
+     [
+      6,
+      [
+       0.58,
+       0.62,
+       0.68
+      ]
+     ],
+     [
+      0,
+      [
+       0.5,
+       0.54,
+       0.62
+      ]
+     ],
+     [
+      -3,
+      [
+       0.3,
+       0.33,
+       0.43
+      ]
+     ],
+     [
+      -6,
+      [
+       0.14,
+       0.16,
+       0.24
+      ]
+     ],
+     [
+      -9,
+      [
+       0.07,
+       0.08,
+       0.12
+      ]
+     ],
+     [
+      -12,
+      [
+       0.05,
+       0.05,
+       0.06
+      ]
+     ]
+    ],
+    "note": "all chosen: cool grey by day, blue hour at dusk, near neutral dark at night where the night fill (warm) supplies the town-sky glow",
+    "chosen": true
+   },
+   "fog_rgb_linear": {
+    "log": false,
+    "keys": [
+     [
+      6,
+      [
+       0.6,
+       0.63,
+       0.67
+      ]
+     ],
+     [
+      0,
+      [
+       0.5,
+       0.52,
+       0.57
+      ]
+     ],
+     [
+      -3,
+      [
+       0.3,
+       0.31,
+       0.38
+      ]
+     ],
+     [
+      -6,
+      [
+       0.16,
+       0.15,
+       0.18
+      ]
+     ],
+     [
+      -9,
+      [
+       0.1,
+       0.085,
+       0.085
+      ]
+     ],
+     [
+      -12,
+      [
+       0.09,
+       0.065,
+       0.05
+      ]
+     ]
+    ],
+    "note": "chosen: grey by day, warming to the lamp-lit cloud at night",
+    "chosen": true
+   },
+   "white_balance_K": {
+    "log": false,
+    "keys": [
+     [
+      6,
+      7000
+     ],
+     [
+      0,
+      6500
+     ],
+     [
+      -3,
+      5800
+     ],
+     [
+      -6,
+      5000
+     ],
+     [
+      -12,
+      4300
+     ]
+    ],
+    "note": "7000 existing (look file white_temp_day); the rest chosen",
+    "chosen": true
+   },
+   "night_fill_lux": {
+    "log": false,
+    "keys": [
+     [
+      -3,
+      0.0
+     ],
+     [
+      -9,
+      0.4
+     ]
+    ],
+    "note": "0.4 existing (look file night_fill_lux, 4 Nov corner note; LIGHT-WEATHER-VALUES says about 0.38); ramp chosen",
+    "chosen": true
+   },
+   "sky_light_gain": {
+    "log": true,
+    "keys": [
+     [
+      6,
+      5.306
+     ],
+     [
+      -12,
+      0.15
+     ]
+    ],
+    "note": "existing day and night (look file sky_light_gain, sky_light_gain_night)"
+   },
+   "sky_seen_gain": {
+    "log": true,
+    "keys": [
+     [
+      6,
+      3.5
+     ],
+     [
+      -12,
+      0.15
+     ]
+    ],
+    "note": "existing (look file sky_seen_gain, sky_seen_gain_night)"
+   },
+   "fog_density_gain": {
+    "log": true,
+    "keys": [
+     [
+      6,
+      3.5
+     ],
+     [
+      -12,
+      0.2
+     ]
+    ],
+    "note": "existing (look file fog_density_gain_day, fog_density_gain_night)"
+   },
+   "clear_sky_lux": {
+    "log": true,
+    "keys": [
+     [
+      20,
+      40000
+     ],
+     [
+      10,
+      17000
+     ],
+     [
+      5,
+      7000
+     ],
+     [
+      0,
+      759
+     ],
+     [
+      -3,
+      79
+     ],
+     [
+      -6,
+      3.4
+     ],
+     [
+      -12,
+      0.008
+     ],
+     [
+      -18,
+      0.0008
+     ]
+    ],
+    "note": "0, -3, -6, -12 from production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md [1]; +5, +10, +20 and -18 chosen (not sourced); informative, and the lamp rule below uses it",
+    "chosen": true
+   }
+  },
+  "fixed_key_light": {
+   "sun_disc": false,
+   "sun_intensity_by_day": 3,
+   "note": "no moving sun (RULINGS 7 Oct) and never sunshine (5 Oct): the sun_intensity 3 of overcast_day is a fixed soft key from one fixed direction, azimuth 200 degrees, elevation 25 degrees (chosen); elevation of the real sun only drives the curves above",
+   "chosen": true
+  }
+ },
+ "states": [
+  {
+   "id": "state_dawn",
+   "src": "4.7",
+   "range": "nautical dawn (sun -12) to sunrise (-0.833)",
+   "lux_dry_overcast": "0.01 to about 100",
+   "exposure_pin": "0.4 to 2.0",
+   "lamps": "on until the photocell opens (35 lux), sodium full yellow, windows of early risers lit",
+   "sound_state_link": "sounds.json early"
+  },
+  {
+   "id": "state_day",
+   "src": "4.7",
+   "range": "sunrise to sunset",
+   "lux_dry_overcast": "about 100 to 6,300 (noon 15 Oct about 17,000 by the chosen clear-sky curve times 0.25)",
+   "exposure_pin": "2.0 to 4.0, held 4.0 above +6 degrees",
+   "lamps": "off (strike near the end of the state under rain)",
+   "sound_state_link": "day"
+  },
+  {
+   "id": "state_dusk",
+   "src": "4.7; production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md",
+   "range": "sunset to nautical dusk (-12), about 85 to 90 minutes",
+   "lux_dry_overcast": "100 down to 0.01",
+   "exposure_pin": "2.0 to 0.4",
+   "lamps": "strike when overcast lux falls below 70, take 12 game minutes to full yellow (individual lamps 0 to 6 minutes apart)",
+   "sound_state_link": "evening"
+  },
+  {
+   "id": "state_night",
+   "src": "4.7",
+   "range": "nautical dusk to 00:36",
+   "lux_dry_overcast": "under 0.01 (the fill 0.4 lux is the town sky)",
+   "exposure_pin": "0.4",
+   "lamps": "on, pools with darkness between; late windows on",
+   "sound_state_link": "evening"
+  },
+  {
+   "id": "state_small_hours",
+   "src": "4.7; tools/lane/prototype/project/src/rules.js light",
+   "range": "00:36 to 05:00 (and until nautical dawn where later)",
+   "lux_dry_overcast": "under 0.01",
+   "exposure_pin": "0.4",
+   "lamps": "on; late windows out; ferry landing dark 23:00 to 05:00",
+   "sound_state_link": "small_hours"
+  }
+ ],
+ "hourly": [
+  {
+   "id": "anchor_oct15",
+   "src": "5.4.1, 5.4.2, 4.7",
+   "date": "1990-10-15",
+   "clock": "BST",
+   "weather": "dry_overcast",
+   "sunrise": "07:28",
+   "sunset": "18:05",
+   "rows": [
+    {
+     "id": "h_oct15_0000",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "00:00",
+     "game_hour": 0.0,
+     "sun_elevation_deg": -43.59,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_oct15_0100",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "01:00",
+     "game_hour": 1.0,
+     "sun_elevation_deg": -44.52,
+     "state": "small_hours",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_oct15_0200",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "02:00",
+     "game_hour": 2.0,
+     "sun_elevation_deg": -42.3,
+     "state": "small_hours",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_oct15_0300",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "03:00",
+     "game_hour": 3.0,
+     "sun_elevation_deg": -37.38,
+     "state": "small_hours",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_oct15_0400",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "04:00",
+     "game_hour": 4.0,
+     "sun_elevation_deg": -30.51,
+     "state": "small_hours",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_oct15_0500",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "05:00",
+     "game_hour": 5.0,
+     "sun_elevation_deg": -22.44,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_oct15_0558",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "05:58",
+     "game_hour": 5.966666666666667,
+     "sun_elevation_deg": -14.05,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunrise-90"
+    },
+    {
+     "id": "h_oct15_0600",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "06:00",
+     "game_hour": 6.0,
+     "sun_elevation_deg": -13.75,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_oct15_0628",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "06:28",
+     "game_hour": 6.466666666666667,
+     "sun_elevation_deg": -9.62,
+     "state": "dawn",
+     "exposure_pin": 0.439,
+     "sky_intensity": 0.39,
+     "ambient_rgb_linear": [
+      0.066,
+      0.074,
+      0.108
+     ],
+     "fog_density": 0.0173,
+     "fog_max_opacity": 0.383,
+     "fog_rgb_linear": [
+      0.098,
+      0.081,
+      0.078
+     ],
+     "white_balance_K": 4577,
+     "sky_light_gain": 0.24,
+     "sky_seen_gain": 0.227,
+     "fog_density_gain": 0.292,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.02,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunrise-60"
+    },
+    {
+     "id": "h_oct15_0648",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "06:48",
+     "game_hour": 6.8,
+     "sun_elevation_deg": -6.67,
+     "state": "dawn",
+     "exposure_pin": 0.526,
+     "sky_intensity": 0.439,
+     "ambient_rgb_linear": [
+      0.124,
+      0.142,
+      0.213
+     ],
+     "fog_density": 0.0128,
+     "fog_max_opacity": 0.299,
+     "fog_rgb_linear": [
+      0.147,
+      0.135,
+      0.159
+     ],
+     "white_balance_K": 4921,
+     "sky_light_gain": 0.431,
+     "sky_seen_gain": 0.381,
+     "fog_density_gain": 0.466,
+     "night_fill_lux": 0.245,
+     "overcast_lux_dry": 0.43,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunrise-40"
+    },
+    {
+     "id": "h_oct15_0700",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "07:00",
+     "game_hour": 7.0,
+     "sun_elevation_deg": -4.91,
+     "state": "dawn",
+     "exposure_pin": 0.683,
+     "sky_intensity": 0.482,
+     "ambient_rgb_linear": [
+      0.198,
+      0.222,
+      0.309
+     ],
+     "fog_density": 0.0104,
+     "fog_max_opacity": 0.251,
+     "fog_rgb_linear": [
+      0.211,
+      0.208,
+      0.252
+     ],
+     "white_balance_K": 5290,
+     "sky_light_gain": 0.611,
+     "sky_seen_gain": 0.518,
+     "fog_density_gain": 0.617,
+     "night_fill_lux": 0.128,
+     "overcast_lux_dry": 2.66,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_oct15_0708",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "07:08",
+     "game_hour": 7.133333333333334,
+     "sun_elevation_deg": -3.74,
+     "state": "dawn",
+     "exposure_pin": 0.862,
+     "sky_intensity": 0.515,
+     "ambient_rgb_linear": [
+      0.26,
+      0.288,
+      0.383
+     ],
+     "fog_density": 0.0089,
+     "fog_max_opacity": 0.219,
+     "fog_rgb_linear": [
+      0.265,
+      0.27,
+      0.33
+     ],
+     "white_balance_K": 5602,
+     "sky_light_gain": 0.77,
+     "sky_seen_gain": 0.636,
+     "fog_density_gain": 0.743,
+     "night_fill_lux": 0.05,
+     "overcast_lux_dry": 9.05,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunrise-20"
+    },
+    {
+     "id": "h_oct15_0718",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "07:18",
+     "game_hour": 7.3,
+     "sun_elevation_deg": -2.29,
+     "state": "dawn",
+     "exposure_pin": 1.255,
+     "sky_intensity": 0.558,
+     "ambient_rgb_linear": [
+      0.347,
+      0.38,
+      0.475
+     ],
+     "fog_density": 0.0073,
+     "fog_max_opacity": 0.18,
+     "fog_rgb_linear": [
+      0.347,
+      0.36,
+      0.425
+     ],
+     "white_balance_K": 5965,
+     "sky_light_gain": 1.027,
+     "sky_seen_gain": 0.82,
+     "fog_density_gain": 0.936,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 33.71,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 0.9,
+     "label": "sunrise-10"
+    },
+    {
+     "id": "h_oct15_0728",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "07:28",
+     "game_hour": 7.466666666666667,
+     "sun_elevation_deg": -0.85,
+     "state": "dawn",
+     "exposure_pin": 1.991,
+     "sky_intensity": 0.6,
+     "ambient_rgb_linear": [
+      0.443,
+      0.481,
+      0.566
+     ],
+     "fog_density": 0.006,
+     "fog_max_opacity": 0.14,
+     "fog_rgb_linear": [
+      0.443,
+      0.461,
+      0.516
+     ],
+     "white_balance_K": 6302,
+     "sky_light_gain": 1.366,
+     "sky_seen_gain": 1.056,
+     "fog_density_gain": 1.178,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 100.11,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0.36,
+     "label": "sunrise+0"
+    },
+    {
+     "id": "h_oct15_0738",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "07:38",
+     "game_hour": 7.633333333333334,
+     "sun_elevation_deg": 0.58,
+     "state": "day",
+     "exposure_pin": 2.433,
+     "sky_intensity": 0.621,
+     "ambient_rgb_linear": [
+      0.508,
+      0.548,
+      0.626
+     ],
+     "fog_density": 0.0055,
+     "fog_max_opacity": 0.132,
+     "fog_rgb_linear": [
+      0.51,
+      0.531,
+      0.58
+     ],
+     "white_balance_K": 6549,
+     "sky_light_gain": 1.814,
+     "sky_seen_gain": 1.357,
+     "fog_density_gain": 1.479,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 245.92,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0.02,
+     "label": "sunrise+10"
+    },
+    {
+     "id": "h_oct15_0748",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "07:48",
+     "game_hour": 7.8,
+     "sun_elevation_deg": 2.0,
+     "state": "day",
+     "exposure_pin": 2.961,
+     "sky_intensity": 0.641,
+     "ambient_rgb_linear": [
+      0.527,
+      0.567,
+      0.64
+     ],
+     "fog_density": 0.0051,
+     "fog_max_opacity": 0.123,
+     "fog_rgb_linear": [
+      0.533,
+      0.557,
+      0.603
+     ],
+     "white_balance_K": 6667,
+     "sky_light_gain": 2.403,
+     "sky_seen_gain": 1.738,
+     "fog_density_gain": 1.853,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 461.71,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0,
+     "label": "sunrise+20"
+    },
+    {
+     "id": "h_oct15_0800",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "08:00",
+     "game_hour": 8.0,
+     "sun_elevation_deg": 3.68,
+     "state": "day",
+     "exposure_pin": 3.528,
+     "sky_intensity": 0.666,
+     "ambient_rgb_linear": [
+      0.549,
+      0.589,
+      0.657
+     ],
+     "fog_density": 0.0046,
+     "fog_max_opacity": 0.114,
+     "fog_rgb_linear": [
+      0.561,
+      0.588,
+      0.631
+     ],
+     "white_balance_K": 6807,
+     "sky_light_gain": 3.352,
+     "sky_seen_gain": 2.333,
+     "fog_density_gain": 2.421,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 974.25,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_oct15_0808",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "08:08",
+     "game_hour": 8.133333333333333,
+     "sun_elevation_deg": 4.79,
+     "state": "day",
+     "exposure_pin": 3.746,
+     "sky_intensity": 0.682,
+     "ambient_rgb_linear": [
+      0.564,
+      0.604,
+      0.668
+     ],
+     "fog_density": 0.0043,
+     "fog_max_opacity": 0.107,
+     "fog_rgb_linear": [
+      0.58,
+      0.608,
+      0.65
+     ],
+     "white_balance_K": 6899,
+     "sky_light_gain": 4.174,
+     "sky_seen_gain": 2.831,
+     "fog_density_gain": 2.887,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 1592.79,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0,
+     "label": "sunrise+40"
+    },
+    {
+     "id": "h_oct15_0828",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "08:28",
+     "game_hour": 8.466666666666667,
+     "sun_elevation_deg": 7.5,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 2725.98,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0,
+     "label": "sunrise+60"
+    },
+    {
+     "id": "h_oct15_0900",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "09:00",
+     "game_hour": 9.0,
+     "sun_elevation_deg": 11.63,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 4886.61,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_oct15_1000",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "10:00",
+     "game_hour": 10.0,
+     "sun_elevation_deg": 18.49,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 8789.09,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_oct15_1100",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "11:00",
+     "game_hour": 11.0,
+     "sun_elevation_deg": 23.76,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 10000.0,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_oct15_1200",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "12:00",
+     "game_hour": 12.0,
+     "sun_elevation_deg": 26.95,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 10000.0,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_oct15_1300",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "13:00",
+     "game_hour": 13.0,
+     "sun_elevation_deg": 27.67,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 10000.0,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_oct15_1400",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "14:00",
+     "game_hour": 14.0,
+     "sun_elevation_deg": 25.84,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 10000.0,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_oct15_1500",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "15:00",
+     "game_hour": 15.0,
+     "sun_elevation_deg": 21.67,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 10000.0,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_oct15_1600",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "16:00",
+     "game_hour": 16.0,
+     "sun_elevation_deg": 15.63,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 6882.62,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_oct15_1700",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "17:00",
+     "game_hour": 17.0,
+     "sun_elevation_deg": 8.23,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 3103.32,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_oct15_1705",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "17:05",
+     "game_hour": 17.083333333333332,
+     "sun_elevation_deg": 7.56,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 2758.6,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0,
+     "label": "sunset-60"
+    },
+    {
+     "id": "h_oct15_1735",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "17:35",
+     "game_hour": 17.583333333333332,
+     "sun_elevation_deg": 3.47,
+     "state": "day",
+     "exposure_pin": 3.487,
+     "sky_intensity": 0.663,
+     "ambient_rgb_linear": [
+      0.546,
+      0.586,
+      0.655
+     ],
+     "fog_density": 0.0046,
+     "fog_max_opacity": 0.115,
+     "fog_rgb_linear": [
+      0.558,
+      0.584,
+      0.628
+     ],
+     "white_balance_K": 6789,
+     "sky_light_gain": 3.213,
+     "sky_seen_gain": 2.247,
+     "fog_density_gain": 2.34,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 886.02,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0,
+     "label": "sunset-30"
+    },
+    {
+     "id": "h_oct15_1750",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "17:50",
+     "game_hour": 17.833333333333332,
+     "sun_elevation_deg": 1.36,
+     "state": "day",
+     "exposure_pin": 2.708,
+     "sky_intensity": 0.632,
+     "ambient_rgb_linear": [
+      0.518,
+      0.558,
+      0.634
+     ],
+     "fog_density": 0.0053,
+     "fog_max_opacity": 0.127,
+     "fog_rgb_linear": [
+      0.523,
+      0.545,
+      0.593
+     ],
+     "white_balance_K": 6613,
+     "sky_light_gain": 2.115,
+     "sky_seen_gain": 1.553,
+     "fog_density_gain": 1.673,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 346.76,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0,
+     "label": "sunset-15"
+    },
+    {
+     "id": "h_oct15_1800",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "18:00",
+     "game_hour": 18.0,
+     "sun_elevation_deg": -0.07,
+     "state": "day",
+     "exposure_pin": 2.223,
+     "sky_intensity": 0.611,
+     "ambient_rgb_linear": [
+      0.495,
+      0.535,
+      0.616
+     ],
+     "fog_density": 0.0057,
+     "fog_max_opacity": 0.136,
+     "fog_rgb_linear": [
+      0.495,
+      0.515,
+      0.566
+     ],
+     "white_balance_K": 6484,
+     "sky_light_gain": 1.594,
+     "sky_seen_gain": 1.21,
+     "fog_density_gain": 1.333,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 180.05,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0.09
+    },
+    {
+     "id": "h_oct15_1805",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "18:05",
+     "game_hour": 18.083333333333332,
+     "sun_elevation_deg": -0.79,
+     "state": "day",
+     "exposure_pin": 2.013,
+     "sky_intensity": 0.601,
+     "ambient_rgb_linear": [
+      0.447,
+      0.485,
+      0.57
+     ],
+     "fog_density": 0.006,
+     "fog_max_opacity": 0.14,
+     "fog_rgb_linear": [
+      0.447,
+      0.465,
+      0.52
+     ],
+     "white_balance_K": 6316,
+     "sky_light_gain": 1.383,
+     "sky_seen_gain": 1.067,
+     "fog_density_gain": 1.189,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 104.75,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0.34,
+     "label": "sunset+0"
+    },
+    {
+     "id": "h_oct15_1815",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "18:15",
+     "game_hour": 18.25,
+     "sun_elevation_deg": -2.23,
+     "state": "dusk",
+     "exposure_pin": 1.278,
+     "sky_intensity": 0.559,
+     "ambient_rgb_linear": [
+      0.351,
+      0.384,
+      0.479
+     ],
+     "fog_density": 0.0072,
+     "fog_max_opacity": 0.178,
+     "fog_rgb_linear": [
+      0.351,
+      0.364,
+      0.429
+     ],
+     "white_balance_K": 5979,
+     "sky_light_gain": 1.038,
+     "sky_seen_gain": 0.829,
+     "fog_density_gain": 0.945,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 35.21,
+     "lamp": {
+      "state": "warming",
+      "level": 0.6,
+      "rgb_linear": [
+       1.0,
+       0.15,
+       0.0
+      ]
+     },
+     "windows_level_dry": 0.89,
+     "label": "sunset+10"
+    },
+    {
+     "id": "h_oct15_1825",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "18:25",
+     "game_hour": 18.416666666666668,
+     "sun_elevation_deg": -3.69,
+     "state": "dusk",
+     "exposure_pin": 0.872,
+     "sky_intensity": 0.517,
+     "ambient_rgb_linear": [
+      0.263,
+      0.291,
+      0.386
+     ],
+     "fog_density": 0.0088,
+     "fog_max_opacity": 0.217,
+     "fog_rgb_linear": [
+      0.268,
+      0.273,
+      0.334
+     ],
+     "white_balance_K": 5616,
+     "sky_light_gain": 0.778,
+     "sky_seen_gain": 0.642,
+     "fog_density_gain": 0.75,
+     "night_fill_lux": 0.046,
+     "overcast_lux_dry": 9.59,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunset+20"
+    },
+    {
+     "id": "h_oct15_1835",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "18:35",
+     "game_hour": 18.583333333333332,
+     "sun_elevation_deg": -5.15,
+     "state": "dusk",
+     "exposure_pin": 0.651,
+     "sky_intensity": 0.475,
+     "ambient_rgb_linear": [
+      0.185,
+      0.208,
+      0.294
+     ],
+     "fog_density": 0.0107,
+     "fog_max_opacity": 0.257,
+     "fog_rgb_linear": [
+      0.2,
+      0.195,
+      0.236
+     ],
+     "white_balance_K": 5226,
+     "sky_light_gain": 0.582,
+     "sky_seen_gain": 0.497,
+     "fog_density_gain": 0.594,
+     "night_fill_lux": 0.144,
+     "overcast_lux_dry": 2.07,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunset+30"
+    },
+    {
+     "id": "h_oct15_1850",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "18:50",
+     "game_hour": 18.833333333333332,
+     "sun_elevation_deg": -7.36,
+     "state": "dusk",
+     "exposure_pin": 0.502,
+     "sky_intensity": 0.427,
+     "ambient_rgb_linear": [
+      0.108,
+      0.124,
+      0.186
+     ],
+     "fog_density": 0.0138,
+     "fog_max_opacity": 0.319,
+     "fog_rgb_linear": [
+      0.133,
+      0.12,
+      0.137
+     ],
+     "white_balance_K": 4841,
+     "sky_light_gain": 0.376,
+     "sky_seen_gain": 0.338,
+     "fog_density_gain": 0.418,
+     "night_fill_lux": 0.291,
+     "overcast_lux_dry": 0.22,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunset+45"
+    },
+    {
+     "id": "h_oct15_1900",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "19:00",
+     "game_hour": 19.0,
+     "sun_elevation_deg": -8.84,
+     "state": "dusk",
+     "exposure_pin": 0.455,
+     "sky_intensity": 0.403,
+     "ambient_rgb_linear": [
+      0.074,
+      0.084,
+      0.126
+     ],
+     "fog_density": 0.016,
+     "fog_max_opacity": 0.36,
+     "fog_rgb_linear": [
+      0.103,
+      0.088,
+      0.09
+     ],
+     "white_balance_K": 4669,
+     "sky_light_gain": 0.281,
+     "sky_seen_gain": 0.261,
+     "fog_density_gain": 0.331,
+     "night_fill_lux": 0.389,
+     "overcast_lux_dry": 0.05,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_oct15_1905",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "19:05",
+     "game_hour": 19.083333333333332,
+     "sun_elevation_deg": -9.58,
+     "state": "dusk",
+     "exposure_pin": 0.44,
+     "sky_intensity": 0.39,
+     "ambient_rgb_linear": [
+      0.066,
+      0.074,
+      0.108
+     ],
+     "fog_density": 0.0172,
+     "fog_max_opacity": 0.381,
+     "fog_rgb_linear": [
+      0.098,
+      0.081,
+      0.078
+     ],
+     "white_balance_K": 4582,
+     "sky_light_gain": 0.242,
+     "sky_seen_gain": 0.229,
+     "fog_density_gain": 0.294,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.02,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunset+60"
+    },
+    {
+     "id": "h_oct15_1935",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "19:35",
+     "game_hour": 19.583333333333332,
+     "sun_elevation_deg": -14.02,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunset+90"
+    },
+    {
+     "id": "h_oct15_2000",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "20:00",
+     "game_hour": 20.0,
+     "sun_elevation_deg": -17.69,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_oct15_2100",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "21:00",
+     "game_hour": 21.0,
+     "sun_elevation_deg": -26.21,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_oct15_2200",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "22:00",
+     "game_hour": 22.0,
+     "sun_elevation_deg": -33.88,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_oct15_2300",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "23:00",
+     "game_hour": 23.0,
+     "sun_elevation_deg": -40.06,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    }
+   ]
+  },
+  {
+   "id": "anchor_nov12",
+   "src": "5.4.1, 5.4.2, 4.7",
+   "date": "1990-11-12",
+   "clock": "GMT",
+   "weather": "dry_overcast",
+   "sunrise": "07:22",
+   "sunset": "16:09",
+   "rows": [
+    {
+     "id": "h_nov12_0000",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "00:00",
+     "game_hour": 0.0,
+     "sun_elevation_deg": -53.71,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov12_0100",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "01:00",
+     "game_hour": 1.0,
+     "sun_elevation_deg": -51.05,
+     "state": "small_hours",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov12_0200",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "02:00",
+     "game_hour": 2.0,
+     "sun_elevation_deg": -45.47,
+     "state": "small_hours",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov12_0300",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "03:00",
+     "game_hour": 3.0,
+     "sun_elevation_deg": -38.04,
+     "state": "small_hours",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov12_0400",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "04:00",
+     "game_hour": 4.0,
+     "sun_elevation_deg": -29.62,
+     "state": "small_hours",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov12_0500",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "05:00",
+     "game_hour": 5.0,
+     "sun_elevation_deg": -20.8,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov12_0552",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "05:52",
+     "game_hour": 5.866666666666666,
+     "sun_elevation_deg": -13.18,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunrise-90"
+    },
+    {
+     "id": "h_nov12_0600",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "06:00",
+     "game_hour": 6.0,
+     "sun_elevation_deg": -12.03,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov12_0622",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "06:22",
+     "game_hour": 6.366666666666666,
+     "sun_elevation_deg": -8.9,
+     "state": "dawn",
+     "exposure_pin": 0.453,
+     "sky_intensity": 0.402,
+     "ambient_rgb_linear": [
+      0.072,
+      0.083,
+      0.124
+     ],
+     "fog_density": 0.0161,
+     "fog_max_opacity": 0.362,
+     "fog_rgb_linear": [
+      0.102,
+      0.087,
+      0.088
+     ],
+     "white_balance_K": 4661,
+     "sky_light_gain": 0.277,
+     "sky_seen_gain": 0.258,
+     "fog_density_gain": 0.327,
+     "night_fill_lux": 0.394,
+     "overcast_lux_dry": 0.05,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunrise-60"
+    },
+    {
+     "id": "h_nov12_0642",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "06:42",
+     "game_hour": 6.7,
+     "sun_elevation_deg": -6.12,
+     "state": "dawn",
+     "exposure_pin": 0.545,
+     "sky_intensity": 0.448,
+     "ambient_rgb_linear": [
+      0.137,
+      0.157,
+      0.235
+     ],
+     "fog_density": 0.0122,
+     "fog_max_opacity": 0.283,
+     "fog_rgb_linear": [
+      0.158,
+      0.147,
+      0.176
+     ],
+     "white_balance_K": 4986,
+     "sky_light_gain": 0.481,
+     "sky_seen_gain": 0.419,
+     "fog_density_gain": 0.509,
+     "night_fill_lux": 0.208,
+     "overcast_lux_dry": 0.75,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunrise-40"
+    },
+    {
+     "id": "h_nov12_0700",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "07:00",
+     "game_hour": 7.0,
+     "sun_elevation_deg": -3.68,
+     "state": "dawn",
+     "exposure_pin": 0.872,
+     "sky_intensity": 0.517,
+     "ambient_rgb_linear": [
+      0.263,
+      0.291,
+      0.387
+     ],
+     "fog_density": 0.0088,
+     "fog_max_opacity": 0.217,
+     "fog_rgb_linear": [
+      0.268,
+      0.273,
+      0.334
+     ],
+     "white_balance_K": 5617,
+     "sky_light_gain": 0.779,
+     "sky_seen_gain": 0.643,
+     "fog_density_gain": 0.75,
+     "night_fill_lux": 0.046,
+     "overcast_lux_dry": 9.63,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov12_0702",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "07:02",
+     "game_hour": 7.033333333333333,
+     "sun_elevation_deg": -3.42,
+     "state": "dawn",
+     "exposure_pin": 0.92,
+     "sky_intensity": 0.525,
+     "ambient_rgb_linear": [
+      0.278,
+      0.306,
+      0.404
+     ],
+     "fog_density": 0.0085,
+     "fog_max_opacity": 0.21,
+     "fog_rgb_linear": [
+      0.28,
+      0.288,
+      0.352
+     ],
+     "white_balance_K": 5689,
+     "sky_light_gain": 0.821,
+     "sky_seen_gain": 0.673,
+     "fog_density_gain": 0.783,
+     "night_fill_lux": 0.028,
+     "overcast_lux_dry": 12.74,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunrise-20"
+    },
+    {
+     "id": "h_nov12_0712",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "07:12",
+     "game_hour": 7.2,
+     "sun_elevation_deg": -2.1,
+     "state": "dawn",
+     "exposure_pin": 1.335,
+     "sky_intensity": 0.563,
+     "ambient_rgb_linear": [
+      0.36,
+      0.393,
+      0.487
+     ],
+     "fog_density": 0.0071,
+     "fog_max_opacity": 0.174,
+     "fog_rgb_linear": [
+      0.36,
+      0.373,
+      0.437
+     ],
+     "white_balance_K": 6011,
+     "sky_light_gain": 1.067,
+     "sky_seen_gain": 0.848,
+     "fog_density_gain": 0.966,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 39.0,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0.85,
+     "label": "sunrise-10"
+    },
+    {
+     "id": "h_nov12_0722",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "07:22",
+     "game_hour": 7.366666666666666,
+     "sun_elevation_deg": -0.8,
+     "state": "day",
+     "exposure_pin": 2.009,
+     "sky_intensity": 0.6,
+     "ambient_rgb_linear": [
+      0.447,
+      0.484,
+      0.569
+     ],
+     "fog_density": 0.006,
+     "fog_max_opacity": 0.14,
+     "fog_rgb_linear": [
+      0.447,
+      0.464,
+      0.519
+     ],
+     "white_balance_K": 6313,
+     "sky_light_gain": 1.379,
+     "sky_seen_gain": 1.065,
+     "fog_density_gain": 1.187,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 103.69,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0.34,
+     "label": "sunrise+0"
+    },
+    {
+     "id": "h_nov12_0732",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "07:32",
+     "game_hour": 7.533333333333333,
+     "sun_elevation_deg": 0.47,
+     "state": "day",
+     "exposure_pin": 2.395,
+     "sky_intensity": 0.619,
+     "ambient_rgb_linear": [
+      0.506,
+      0.546,
+      0.625
+     ],
+     "fog_density": 0.0056,
+     "fog_max_opacity": 0.132,
+     "fog_rgb_linear": [
+      0.508,
+      0.529,
+      0.578
+     ],
+     "white_balance_K": 6539,
+     "sky_light_gain": 1.774,
+     "sky_seen_gain": 1.33,
+     "fog_density_gain": 1.453,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 233.79,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0.02,
+     "label": "sunrise+10"
+    },
+    {
+     "id": "h_nov12_0742",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "07:42",
+     "game_hour": 7.7,
+     "sun_elevation_deg": 1.71,
+     "state": "day",
+     "exposure_pin": 2.845,
+     "sky_intensity": 0.637,
+     "ambient_rgb_linear": [
+      0.523,
+      0.563,
+      0.637
+     ],
+     "fog_density": 0.0052,
+     "fog_max_opacity": 0.125,
+     "fog_rgb_linear": [
+      0.529,
+      0.551,
+      0.599
+     ],
+     "white_balance_K": 6643,
+     "sky_light_gain": 2.27,
+     "sky_seen_gain": 1.653,
+     "fog_density_gain": 1.77,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 406.26,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0,
+     "label": "sunrise+20"
+    },
+    {
+     "id": "h_nov12_0800",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "08:00",
+     "game_hour": 8.0,
+     "sun_elevation_deg": 3.88,
+     "state": "day",
+     "exposure_pin": 3.565,
+     "sky_intensity": 0.669,
+     "ambient_rgb_linear": [
+      0.552,
+      0.592,
+      0.659
+     ],
+     "fog_density": 0.0045,
+     "fog_max_opacity": 0.112,
+     "fog_rgb_linear": [
+      0.565,
+      0.591,
+      0.635
+     ],
+     "white_balance_K": 6823,
+     "sky_light_gain": 3.484,
+     "sky_seen_gain": 2.414,
+     "fog_density_gain": 2.497,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 1062.52,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_nov12_0802",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "08:02",
+     "game_hour": 8.033333333333333,
+     "sun_elevation_deg": 4.11,
+     "state": "day",
+     "exposure_pin": 3.611,
+     "sky_intensity": 0.672,
+     "ambient_rgb_linear": [
+      0.555,
+      0.595,
+      0.661
+     ],
+     "fog_density": 0.0045,
+     "fog_max_opacity": 0.111,
+     "fog_rgb_linear": [
+      0.569,
+      0.595,
+      0.639
+     ],
+     "white_balance_K": 6843,
+     "sky_light_gain": 3.65,
+     "sky_seen_gain": 2.515,
+     "fog_density_gain": 2.592,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 1179.0,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0,
+     "label": "sunrise+40"
+    },
+    {
+     "id": "h_nov12_0822",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "08:22",
+     "game_hour": 8.366666666666667,
+     "sun_elevation_deg": 6.38,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 2234.53,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0,
+     "label": "sunrise+60"
+    },
+    {
+     "id": "h_nov12_0900",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "09:00",
+     "game_hour": 9.0,
+     "sun_elevation_deg": 10.27,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 4347.71,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_nov12_1000",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "10:00",
+     "game_hour": 10.0,
+     "sun_elevation_deg": 15.07,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 6557.72,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_nov12_1100",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "11:00",
+     "game_hour": 11.0,
+     "sun_elevation_deg": 17.9,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 8354.55,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_nov12_1200",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "12:00",
+     "game_hour": 12.0,
+     "sun_elevation_deg": 18.49,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 8784.32,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_nov12_1300",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "13:00",
+     "game_hour": 13.0,
+     "sun_elevation_deg": 16.77,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 7582.97,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_nov12_1400",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "14:00",
+     "game_hour": 14.0,
+     "sun_elevation_deg": 12.92,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 5454.36,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_nov12_1500",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "15:00",
+     "game_hour": 15.0,
+     "sun_elevation_deg": 7.27,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 2620.12,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_nov12_1509",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "15:09",
+     "game_hour": 15.15,
+     "sun_elevation_deg": 6.3,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 2203.6,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0,
+     "label": "sunset-60"
+    },
+    {
+     "id": "h_nov12_1539",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "15:39",
+     "game_hour": 15.65,
+     "sun_elevation_deg": 2.84,
+     "state": "day",
+     "exposure_pin": 3.326,
+     "sky_intensity": 0.654,
+     "ambient_rgb_linear": [
+      0.538,
+      0.578,
+      0.648
+     ],
+     "fog_density": 0.0048,
+     "fog_max_opacity": 0.118,
+     "fog_rgb_linear": [
+      0.547,
+      0.572,
+      0.617
+     ],
+     "white_balance_K": 6737,
+     "sky_light_gain": 2.837,
+     "sky_seen_gain": 2.013,
+     "fog_density_gain": 2.118,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 670.31,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0,
+     "label": "sunset-30"
+    },
+    {
+     "id": "h_nov12_1554",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "15:54",
+     "game_hour": 15.9,
+     "sun_elevation_deg": 1.0,
+     "state": "day",
+     "exposure_pin": 2.579,
+     "sky_intensity": 0.627,
+     "ambient_rgb_linear": [
+      0.513,
+      0.553,
+      0.63
+     ],
+     "fog_density": 0.0054,
+     "fog_max_opacity": 0.129,
+     "fog_rgb_linear": [
+      0.517,
+      0.538,
+      0.587
+     ],
+     "white_balance_K": 6584,
+     "sky_light_gain": 1.972,
+     "sky_seen_gain": 1.46,
+     "fog_density_gain": 1.581,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 296.35,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0.0,
+     "label": "sunset-15"
+    },
+    {
+     "id": "h_nov12_1600",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "16:00",
+     "game_hour": 16.0,
+     "sun_elevation_deg": 0.25,
+     "state": "day",
+     "exposure_pin": 2.324,
+     "sky_intensity": 0.616,
+     "ambient_rgb_linear": [
+      0.503,
+      0.543,
+      0.623
+     ],
+     "fog_density": 0.0056,
+     "fog_max_opacity": 0.134,
+     "fog_rgb_linear": [
+      0.504,
+      0.525,
+      0.574
+     ],
+     "white_balance_K": 6521,
+     "sky_light_gain": 1.699,
+     "sky_seen_gain": 1.28,
+     "fog_density_gain": 1.403,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 212.09,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0.04
+    },
+    {
+     "id": "h_nov12_1609",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "16:09",
+     "game_hour": 16.15,
+     "sun_elevation_deg": -0.9,
+     "state": "dusk",
+     "exposure_pin": 1.959,
+     "sky_intensity": 0.598,
+     "ambient_rgb_linear": [
+      0.44,
+      0.477,
+      0.563
+     ],
+     "fog_density": 0.0061,
+     "fog_max_opacity": 0.142,
+     "fog_rgb_linear": [
+      0.44,
+      0.457,
+      0.513
+     ],
+     "white_balance_K": 6291,
+     "sky_light_gain": 1.353,
+     "sky_seen_gain": 1.047,
+     "fog_density_gain": 1.169,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 96.46,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0.38,
+     "label": "sunset+0"
+    },
+    {
+     "id": "h_nov12_1619",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "16:19",
+     "game_hour": 16.316666666666666,
+     "sun_elevation_deg": -2.2,
+     "state": "dusk",
+     "exposure_pin": 1.293,
+     "sky_intensity": 0.56,
+     "ambient_rgb_linear": [
+      0.354,
+      0.386,
+      0.481
+     ],
+     "fog_density": 0.0072,
+     "fog_max_opacity": 0.177,
+     "fog_rgb_linear": [
+      0.354,
+      0.366,
+      0.431
+     ],
+     "white_balance_K": 5988,
+     "sky_light_gain": 1.046,
+     "sky_seen_gain": 0.834,
+     "fog_density_gain": 0.951,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 36.21,
+     "lamp": {
+      "state": "warming",
+      "level": 0.6,
+      "rgb_linear": [
+       1.0,
+       0.15,
+       0.0
+      ]
+     },
+     "windows_level_dry": 0.88,
+     "label": "sunset+10"
+    },
+    {
+     "id": "h_nov12_1629",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "16:29",
+     "game_hour": 16.483333333333334,
+     "sun_elevation_deg": -3.52,
+     "state": "dusk",
+     "exposure_pin": 0.902,
+     "sky_intensity": 0.522,
+     "ambient_rgb_linear": [
+      0.272,
+      0.301,
+      0.397
+     ],
+     "fog_density": 0.0086,
+     "fog_max_opacity": 0.213,
+     "fog_rgb_linear": [
+      0.276,
+      0.282,
+      0.345
+     ],
+     "white_balance_K": 5662,
+     "sky_light_gain": 0.805,
+     "sky_seen_gain": 0.662,
+     "fog_density_gain": 0.77,
+     "night_fill_lux": 0.035,
+     "overcast_lux_dry": 11.46,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunset+20"
+    },
+    {
+     "id": "h_nov12_1639",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "16:39",
+     "game_hour": 16.65,
+     "sun_elevation_deg": -4.86,
+     "state": "dusk",
+     "exposure_pin": 0.69,
+     "sky_intensity": 0.483,
+     "ambient_rgb_linear": [
+      0.201,
+      0.224,
+      0.312
+     ],
+     "fog_density": 0.0103,
+     "fog_max_opacity": 0.249,
+     "fog_rgb_linear": [
+      0.213,
+      0.211,
+      0.256
+     ],
+     "white_balance_K": 5303,
+     "sky_light_gain": 0.617,
+     "sky_seen_gain": 0.523,
+     "fog_density_gain": 0.622,
+     "night_fill_lux": 0.124,
+     "overcast_lux_dry": 2.8,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunset+30"
+    },
+    {
+     "id": "h_nov12_1654",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "16:54",
+     "game_hour": 16.9,
+     "sun_elevation_deg": -6.92,
+     "state": "dusk",
+     "exposure_pin": 0.517,
+     "sky_intensity": 0.435,
+     "ambient_rgb_linear": [
+      0.119,
+      0.135,
+      0.203
+     ],
+     "fog_density": 0.0132,
+     "fog_max_opacity": 0.306,
+     "fog_rgb_linear": [
+      0.142,
+      0.13,
+      0.151
+     ],
+     "white_balance_K": 4893,
+     "sky_light_gain": 0.41,
+     "sky_seen_gain": 0.365,
+     "fog_density_gain": 0.449,
+     "night_fill_lux": 0.261,
+     "overcast_lux_dry": 0.34,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunset+45"
+    },
+    {
+     "id": "h_nov12_1700",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "17:00",
+     "game_hour": 17.0,
+     "sun_elevation_deg": -7.75,
+     "state": "dusk",
+     "exposure_pin": 0.489,
+     "sky_intensity": 0.421,
+     "ambient_rgb_linear": [
+      0.099,
+      0.113,
+      0.17
+     ],
+     "fog_density": 0.0143,
+     "fog_max_opacity": 0.33,
+     "fog_rgb_linear": [
+      0.125,
+      0.112,
+      0.124
+     ],
+     "white_balance_K": 4795,
+     "sky_light_gain": 0.348,
+     "sky_seen_gain": 0.315,
+     "fog_density_gain": 0.393,
+     "night_fill_lux": 0.317,
+     "overcast_lux_dry": 0.15,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov12_1709",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "17:09",
+     "game_hour": 17.15,
+     "sun_elevation_deg": -9.01,
+     "state": "dusk",
+     "exposure_pin": 0.45,
+     "sky_intensity": 0.4,
+     "ambient_rgb_linear": [
+      0.07,
+      0.08,
+      0.12
+     ],
+     "fog_density": 0.0163,
+     "fog_max_opacity": 0.365,
+     "fog_rgb_linear": [
+      0.1,
+      0.085,
+      0.085
+     ],
+     "white_balance_K": 4648,
+     "sky_light_gain": 0.271,
+     "sky_seen_gain": 0.253,
+     "fog_density_gain": 0.321,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.04,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunset+60"
+    },
+    {
+     "id": "h_nov12_1739",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "17:39",
+     "game_hour": 17.65,
+     "sun_elevation_deg": -13.3,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunset+90"
+    },
+    {
+     "id": "h_nov12_1800",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "18:00",
+     "game_hour": 18.0,
+     "sun_elevation_deg": -16.36,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov12_1900",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "19:00",
+     "game_hour": 19.0,
+     "sun_elevation_deg": -25.22,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov12_2000",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "20:00",
+     "game_hour": 20.0,
+     "sun_elevation_deg": -33.93,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov12_2100",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "21:00",
+     "game_hour": 21.0,
+     "sun_elevation_deg": -41.99,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov12_2200",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "22:00",
+     "game_hour": 22.0,
+     "sun_elevation_deg": -48.69,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov12_2300",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "23:00",
+     "game_hour": 23.0,
+     "sun_elevation_deg": -53.01,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    }
+   ]
+  },
+  {
+   "id": "anchor_nov30",
+   "src": "5.4.1, 5.4.2, 4.7",
+   "date": "1990-11-30",
+   "clock": "GMT",
+   "weather": "dry_overcast",
+   "sunrise": "07:54",
+   "sunset": "15:46",
+   "rows": [
+    {
+     "id": "h_nov30_0000",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "00:00",
+     "game_hour": 0.0,
+     "sun_elevation_deg": -57.76,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov30_0100",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "01:00",
+     "game_hour": 1.0,
+     "sun_elevation_deg": -55.17,
+     "state": "small_hours",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov30_0200",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "02:00",
+     "game_hour": 2.0,
+     "sun_elevation_deg": -49.48,
+     "state": "small_hours",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov30_0300",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "03:00",
+     "game_hour": 3.0,
+     "sun_elevation_deg": -41.9,
+     "state": "small_hours",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov30_0400",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "04:00",
+     "game_hour": 4.0,
+     "sun_elevation_deg": -33.39,
+     "state": "small_hours",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov30_0500",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "05:00",
+     "game_hour": 5.0,
+     "sun_elevation_deg": -24.55,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov30_0600",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "06:00",
+     "game_hour": 6.0,
+     "sun_elevation_deg": -15.82,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov30_0624",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "06:24",
+     "game_hour": 6.4,
+     "sun_elevation_deg": -12.44,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunrise-90"
+    },
+    {
+     "id": "h_nov30_0654",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "06:54",
+     "game_hour": 6.9,
+     "sun_elevation_deg": -8.35,
+     "state": "dawn",
+     "exposure_pin": 0.47,
+     "sky_intensity": 0.411,
+     "ambient_rgb_linear": [
+      0.085,
+      0.097,
+      0.146
+     ],
+     "fog_density": 0.0152,
+     "fog_max_opacity": 0.347,
+     "fog_rgb_linear": [
+      0.113,
+      0.099,
+      0.106
+     ],
+     "white_balance_K": 4726,
+     "sky_light_gain": 0.309,
+     "sky_seen_gain": 0.284,
+     "fog_density_gain": 0.357,
+     "night_fill_lux": 0.357,
+     "overcast_lux_dry": 0.08,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunrise-60"
+    },
+    {
+     "id": "h_nov30_0700",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "07:00",
+     "game_hour": 7.0,
+     "sun_elevation_deg": -7.55,
+     "state": "dawn",
+     "exposure_pin": 0.496,
+     "sky_intensity": 0.424,
+     "ambient_rgb_linear": [
+      0.104,
+      0.119,
+      0.178
+     ],
+     "fog_density": 0.014,
+     "fog_max_opacity": 0.324,
+     "fog_rgb_linear": [
+      0.129,
+      0.116,
+      0.131
+     ],
+     "white_balance_K": 4819,
+     "sky_light_gain": 0.362,
+     "sky_seen_gain": 0.327,
+     "fog_density_gain": 0.406,
+     "night_fill_lux": 0.304,
+     "overcast_lux_dry": 0.18,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov30_0714",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "07:14",
+     "game_hour": 7.233333333333333,
+     "sun_elevation_deg": -5.73,
+     "state": "dawn",
+     "exposure_pin": 0.581,
+     "sky_intensity": 0.458,
+     "ambient_rgb_linear": [
+      0.155,
+      0.175,
+      0.257
+     ],
+     "fog_density": 0.0116,
+     "fog_max_opacity": 0.273,
+     "fog_rgb_linear": [
+      0.173,
+      0.165,
+      0.198
+     ],
+     "white_balance_K": 5073,
+     "sky_light_gain": 0.52,
+     "sky_seen_gain": 0.45,
+     "fog_density_gain": 0.542,
+     "night_fill_lux": 0.182,
+     "overcast_lux_dry": 1.13,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunrise-40"
+    },
+    {
+     "id": "h_nov30_0734",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "07:34",
+     "game_hour": 7.566666666666666,
+     "sun_elevation_deg": -3.2,
+     "state": "dawn",
+     "exposure_pin": 0.96,
+     "sky_intensity": 0.531,
+     "ambient_rgb_linear": [
+      0.289,
+      0.319,
+      0.417
+     ],
+     "fog_density": 0.0082,
+     "fog_max_opacity": 0.204,
+     "fog_rgb_linear": [
+      0.291,
+      0.299,
+      0.366
+     ],
+     "white_balance_K": 5746,
+     "sky_light_gain": 0.857,
+     "sky_seen_gain": 0.699,
+     "fog_density_gain": 0.81,
+     "night_fill_lux": 0.014,
+     "overcast_lux_dry": 15.97,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunrise-20"
+    },
+    {
+     "id": "h_nov30_0744",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "07:44",
+     "game_hour": 7.733333333333333,
+     "sun_elevation_deg": -1.98,
+     "state": "dawn",
+     "exposure_pin": 1.385,
+     "sky_intensity": 0.567,
+     "ambient_rgb_linear": [
+      0.368,
+      0.401,
+      0.495
+     ],
+     "fog_density": 0.007,
+     "fog_max_opacity": 0.171,
+     "fog_rgb_linear": [
+      0.368,
+      0.381,
+      0.445
+     ],
+     "white_balance_K": 6038,
+     "sky_light_gain": 1.092,
+     "sky_seen_gain": 0.866,
+     "fog_density_gain": 0.984,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 42.59,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0.81,
+     "label": "sunrise-10"
+    },
+    {
+     "id": "h_nov30_0754",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "07:54",
+     "game_hour": 7.9,
+     "sun_elevation_deg": -0.79,
+     "state": "day",
+     "exposure_pin": 2.012,
+     "sky_intensity": 0.601,
+     "ambient_rgb_linear": [
+      0.447,
+      0.485,
+      0.57
+     ],
+     "fog_density": 0.006,
+     "fog_max_opacity": 0.14,
+     "fog_rgb_linear": [
+      0.447,
+      0.465,
+      0.52
+     ],
+     "white_balance_K": 6316,
+     "sky_light_gain": 1.382,
+     "sky_seen_gain": 1.067,
+     "fog_density_gain": 1.189,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 104.64,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0.34,
+     "label": "sunrise+0"
+    },
+    {
+     "id": "h_nov30_0800",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "08:00",
+     "game_hour": 8.0,
+     "sun_elevation_deg": -0.09,
+     "state": "day",
+     "exposure_pin": 2.217,
+     "sky_intensity": 0.611,
+     "ambient_rgb_linear": [
+      0.494,
+      0.534,
+      0.614
+     ],
+     "fog_density": 0.0057,
+     "fog_max_opacity": 0.136,
+     "fog_rgb_linear": [
+      0.494,
+      0.514,
+      0.564
+     ],
+     "white_balance_K": 6479,
+     "sky_light_gain": 1.588,
+     "sky_seen_gain": 1.206,
+     "fog_density_gain": 1.329,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 177.45,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0.1
+    },
+    {
+     "id": "h_nov30_0804",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "08:04",
+     "game_hour": 8.066666666666666,
+     "sun_elevation_deg": 0.37,
+     "state": "day",
+     "exposure_pin": 2.363,
+     "sky_intensity": 0.618,
+     "ambient_rgb_linear": [
+      0.505,
+      0.545,
+      0.624
+     ],
+     "fog_density": 0.0056,
+     "fog_max_opacity": 0.133,
+     "fog_rgb_linear": [
+      0.506,
+      0.527,
+      0.576
+     ],
+     "white_balance_K": 6531,
+     "sky_light_gain": 1.74,
+     "sky_seen_gain": 1.307,
+     "fog_density_gain": 1.43,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 223.82,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0.03,
+     "label": "sunrise+10"
+    },
+    {
+     "id": "h_nov30_0814",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "08:14",
+     "game_hour": 8.233333333333333,
+     "sun_elevation_deg": 1.5,
+     "state": "day",
+     "exposure_pin": 2.762,
+     "sky_intensity": 0.634,
+     "ambient_rgb_linear": [
+      0.52,
+      0.56,
+      0.635
+     ],
+     "fog_density": 0.0052,
+     "fog_max_opacity": 0.126,
+     "fog_rgb_linear": [
+      0.525,
+      0.547,
+      0.595
+     ],
+     "white_balance_K": 6625,
+     "sky_light_gain": 2.175,
+     "sky_seen_gain": 1.592,
+     "fog_density_gain": 1.711,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 369.42,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0,
+     "label": "sunrise+20"
+    },
+    {
+     "id": "h_nov30_0834",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "08:34",
+     "game_hour": 8.566666666666666,
+     "sun_elevation_deg": 3.65,
+     "state": "day",
+     "exposure_pin": 3.522,
+     "sky_intensity": 0.666,
+     "ambient_rgb_linear": [
+      0.549,
+      0.589,
+      0.656
+     ],
+     "fog_density": 0.0046,
+     "fog_max_opacity": 0.114,
+     "fog_rgb_linear": [
+      0.561,
+      0.587,
+      0.631
+     ],
+     "white_balance_K": 6804,
+     "sky_light_gain": 3.33,
+     "sky_seen_gain": 2.319,
+     "fog_density_gain": 2.408,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 960.13,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0,
+     "label": "sunrise+40"
+    },
+    {
+     "id": "h_nov30_0854",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "08:54",
+     "game_hour": 8.9,
+     "sun_elevation_deg": 5.65,
+     "state": "day",
+     "exposure_pin": 3.924,
+     "sky_intensity": 0.695,
+     "ambient_rgb_linear": [
+      0.575,
+      0.615,
+      0.676
+     ],
+     "fog_density": 0.0041,
+     "fog_max_opacity": 0.102,
+     "fog_rgb_linear": [
+      0.594,
+      0.624,
+      0.664
+     ],
+     "white_balance_K": 6970,
+     "sky_light_gain": 4.946,
+     "sky_seen_gain": 3.29,
+     "fog_density_gain": 3.308,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 1962.45,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0,
+     "label": "sunrise+60"
+    },
+    {
+     "id": "h_nov30_0900",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "09:00",
+     "game_hour": 9.0,
+     "sun_elevation_deg": 6.21,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 2170.21,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_nov30_1000",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "10:00",
+     "game_hour": 10.0,
+     "sun_elevation_deg": 10.97,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 4619.42,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_nov30_1100",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "11:00",
+     "game_hour": 11.0,
+     "sun_elevation_deg": 13.84,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 5905.47,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_nov30_1200",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "12:00",
+     "game_hour": 12.0,
+     "sun_elevation_deg": 14.58,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 6286.51,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_nov30_1300",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "13:00",
+     "game_hour": 13.0,
+     "sun_elevation_deg": 13.1,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 5539.9,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_nov30_1400",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "14:00",
+     "game_hour": 14.0,
+     "sun_elevation_deg": 9.55,
+     "state": "day",
+     "exposure_pin": 4.0,
+     "sky_intensity": 0.7,
+     "ambient_rgb_linear": [
+      0.58,
+      0.62,
+      0.68
+     ],
+     "fog_density": 0.004,
+     "fog_max_opacity": 0.1,
+     "fog_rgb_linear": [
+      0.6,
+      0.63,
+      0.67
+     ],
+     "white_balance_K": 7000,
+     "sky_light_gain": 5.306,
+     "sky_seen_gain": 3.5,
+     "fog_density_gain": 3.5,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 3922.36,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_nov30_1446",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "14:46",
+     "game_hour": 14.766666666666667,
+     "sun_elevation_deg": 5.6,
+     "state": "day",
+     "exposure_pin": 3.915,
+     "sky_intensity": 0.694,
+     "ambient_rgb_linear": [
+      0.575,
+      0.615,
+      0.676
+     ],
+     "fog_density": 0.0041,
+     "fog_max_opacity": 0.102,
+     "fog_rgb_linear": [
+      0.593,
+      0.623,
+      0.663
+     ],
+     "white_balance_K": 6967,
+     "sky_light_gain": 4.904,
+     "sky_seen_gain": 3.265,
+     "fog_density_gain": 3.286,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 1947.54,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0,
+     "label": "sunset-60"
+    },
+    {
+     "id": "h_nov30_1500",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "15:00",
+     "game_hour": 15.0,
+     "sun_elevation_deg": 4.22,
+     "state": "day",
+     "exposure_pin": 3.632,
+     "sky_intensity": 0.674,
+     "ambient_rgb_linear": [
+      0.556,
+      0.596,
+      0.662
+     ],
+     "fog_density": 0.0044,
+     "fog_max_opacity": 0.11,
+     "fog_rgb_linear": [
+      0.57,
+      0.597,
+      0.64
+     ],
+     "white_balance_K": 6852,
+     "sky_light_gain": 3.728,
+     "sky_seen_gain": 2.563,
+     "fog_density_gain": 2.637,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 1236.84,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0
+    },
+    {
+     "id": "h_nov30_1516",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "15:16",
+     "game_hour": 15.266666666666667,
+     "sun_elevation_deg": 2.54,
+     "state": "day",
+     "exposure_pin": 3.192,
+     "sky_intensity": 0.649,
+     "ambient_rgb_linear": [
+      0.534,
+      0.574,
+      0.645
+     ],
+     "fog_density": 0.0049,
+     "fog_max_opacity": 0.12,
+     "fog_rgb_linear": [
+      0.542,
+      0.567,
+      0.612
+     ],
+     "white_balance_K": 6712,
+     "sky_light_gain": 2.675,
+     "sky_seen_gain": 1.912,
+     "fog_density_gain": 2.02,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 587.52,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0,
+     "label": "sunset-30"
+    },
+    {
+     "id": "h_nov30_1531",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "15:31",
+     "game_hour": 15.516666666666667,
+     "sun_elevation_deg": 0.89,
+     "state": "day",
+     "exposure_pin": 2.538,
+     "sky_intensity": 0.625,
+     "ambient_rgb_linear": [
+      0.512,
+      0.552,
+      0.629
+     ],
+     "fog_density": 0.0054,
+     "fog_max_opacity": 0.13,
+     "fog_rgb_linear": [
+      0.515,
+      0.536,
+      0.585
+     ],
+     "white_balance_K": 6574,
+     "sky_light_gain": 1.927,
+     "sky_seen_gain": 1.431,
+     "fog_density_gain": 1.553,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 281.56,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0.0,
+     "label": "sunset-15"
+    },
+    {
+     "id": "h_nov30_1546",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "15:46",
+     "game_hour": 15.766666666666667,
+     "sun_elevation_deg": -0.84,
+     "state": "dusk",
+     "exposure_pin": 1.993,
+     "sky_intensity": 0.6,
+     "ambient_rgb_linear": [
+      0.444,
+      0.481,
+      0.567
+     ],
+     "fog_density": 0.006,
+     "fog_max_opacity": 0.14,
+     "fog_rgb_linear": [
+      0.444,
+      0.461,
+      0.517
+     ],
+     "white_balance_K": 6303,
+     "sky_light_gain": 1.368,
+     "sky_seen_gain": 1.057,
+     "fog_density_gain": 1.179,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 100.45,
+     "lamp": {
+      "state": "off",
+      "level": 0.0,
+      "rgb_linear": null
+     },
+     "windows_level_dry": 0.36,
+     "label": "sunset+0"
+    },
+    {
+     "id": "h_nov30_1556",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "15:56",
+     "game_hour": 15.933333333333334,
+     "sun_elevation_deg": -2.04,
+     "state": "dusk",
+     "exposure_pin": 1.361,
+     "sky_intensity": 0.565,
+     "ambient_rgb_linear": [
+      0.364,
+      0.397,
+      0.491
+     ],
+     "fog_density": 0.0071,
+     "fog_max_opacity": 0.173,
+     "fog_rgb_linear": [
+      0.364,
+      0.377,
+      0.441
+     ],
+     "white_balance_K": 6025,
+     "sky_light_gain": 1.08,
+     "sky_seen_gain": 0.858,
+     "fog_density_gain": 0.975,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 40.83,
+     "lamp": {
+      "state": "warming",
+      "level": 0.52,
+      "rgb_linear": [
+       1.0,
+       0.13,
+       0.0
+      ]
+     },
+     "windows_level_dry": 0.83,
+     "label": "sunset+10"
+    },
+    {
+     "id": "h_nov30_1600",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "16:00",
+     "game_hour": 16.0,
+     "sun_elevation_deg": -2.52,
+     "state": "dusk",
+     "exposure_pin": 1.165,
+     "sky_intensity": 0.551,
+     "ambient_rgb_linear": [
+      0.332,
+      0.363,
+      0.46
+     ],
+     "fog_density": 0.0075,
+     "fog_max_opacity": 0.186,
+     "fog_rgb_linear": [
+      0.332,
+      0.343,
+      0.41
+     ],
+     "white_balance_K": 5911,
+     "sky_light_gain": 0.981,
+     "sky_seen_gain": 0.788,
+     "fog_density_gain": 0.903,
+     "night_fill_lux": 0.0,
+     "overcast_lux_dry": 28.3,
+     "lamp": {
+      "state": "warming",
+      "level": 0.85,
+      "rgb_linear": [
+       1.0,
+       0.19,
+       0.0
+      ]
+     },
+     "windows_level_dry": 0.95
+    },
+    {
+     "id": "h_nov30_1606",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "16:06",
+     "game_hour": 16.1,
+     "sun_elevation_deg": -3.26,
+     "state": "dusk",
+     "exposure_pin": 0.949,
+     "sky_intensity": 0.53,
+     "ambient_rgb_linear": [
+      0.286,
+      0.315,
+      0.414
+     ],
+     "fog_density": 0.0083,
+     "fog_max_opacity": 0.206,
+     "fog_rgb_linear": [
+      0.288,
+      0.296,
+      0.363
+     ],
+     "white_balance_K": 5731,
+     "sky_light_gain": 0.847,
+     "sky_seen_gain": 0.692,
+     "fog_density_gain": 0.803,
+     "night_fill_lux": 0.017,
+     "overcast_lux_dry": 15.03,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunset+20"
+    },
+    {
+     "id": "h_nov30_1616",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "16:16",
+     "game_hour": 16.266666666666666,
+     "sun_elevation_deg": -4.51,
+     "state": "dusk",
+     "exposure_pin": 0.74,
+     "sky_intensity": 0.493,
+     "ambient_rgb_linear": [
+      0.219,
+      0.244,
+      0.334
+     ],
+     "fog_density": 0.0098,
+     "fog_max_opacity": 0.24,
+     "fog_rgb_linear": [
+      0.229,
+      0.229,
+      0.279
+     ],
+     "white_balance_K": 5397,
+     "sky_light_gain": 0.661,
+     "sky_seen_gain": 0.556,
+     "fog_density_gain": 0.658,
+     "night_fill_lux": 0.101,
+     "overcast_lux_dry": 4.05,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunset+30"
+    },
+    {
+     "id": "h_nov30_1631",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "16:31",
+     "game_hour": 16.516666666666666,
+     "sun_elevation_deg": -6.44,
+     "state": "dusk",
+     "exposure_pin": 0.534,
+     "sky_intensity": 0.443,
+     "ambient_rgb_linear": [
+      0.13,
+      0.148,
+      0.223
+     ],
+     "fog_density": 0.0125,
+     "fog_max_opacity": 0.292,
+     "fog_rgb_linear": [
+      0.151,
+      0.141,
+      0.166
+     ],
+     "white_balance_K": 4949,
+     "sky_light_gain": 0.452,
+     "sky_seen_gain": 0.397,
+     "fog_density_gain": 0.484,
+     "night_fill_lux": 0.229,
+     "overcast_lux_dry": 0.55,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunset+45"
+    },
+    {
+     "id": "h_nov30_1646",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "16:46",
+     "game_hour": 16.766666666666666,
+     "sun_elevation_deg": -8.41,
+     "state": "dusk",
+     "exposure_pin": 0.468,
+     "sky_intensity": 0.41,
+     "ambient_rgb_linear": [
+      0.084,
+      0.096,
+      0.143
+     ],
+     "fog_density": 0.0153,
+     "fog_max_opacity": 0.348,
+     "fog_rgb_linear": [
+      0.112,
+      0.098,
+      0.104
+     ],
+     "white_balance_K": 4718,
+     "sky_light_gain": 0.305,
+     "sky_seen_gain": 0.281,
+     "fog_density_gain": 0.354,
+     "night_fill_lux": 0.361,
+     "overcast_lux_dry": 0.07,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunset+60"
+    },
+    {
+     "id": "h_nov30_1700",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "17:00",
+     "game_hour": 17.0,
+     "sun_elevation_deg": -10.3,
+     "state": "dusk",
+     "exposure_pin": 0.428,
+     "sky_intensity": 0.378,
+     "ambient_rgb_linear": [
+      0.061,
+      0.067,
+      0.094
+     ],
+     "fog_density": 0.0185,
+     "fog_max_opacity": 0.402,
+     "fog_rgb_linear": [
+      0.096,
+      0.076,
+      0.07
+     ],
+     "white_balance_K": 4498,
+     "sky_light_gain": 0.21,
+     "sky_seen_gain": 0.202,
+     "fog_density_gain": 0.262,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.01,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov30_1716",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "17:16",
+     "game_hour": 17.266666666666666,
+     "sun_elevation_deg": -12.51,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1,
+     "label": "sunset+90"
+    },
+    {
+     "id": "h_nov30_1800",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "18:00",
+     "game_hour": 18.0,
+     "sun_elevation_deg": -18.77,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov30_1900",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "19:00",
+     "game_hour": 19.0,
+     "sun_elevation_deg": -27.59,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov30_2000",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "20:00",
+     "game_hour": 20.0,
+     "sun_elevation_deg": -36.39,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov30_2100",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "21:00",
+     "game_hour": 21.0,
+     "sun_elevation_deg": -44.68,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov30_2200",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "22:00",
+     "game_hour": 22.0,
+     "sun_elevation_deg": -51.77,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    },
+    {
+     "id": "h_nov30_2300",
+     "src": "5.4.1/5.4.2 curves in elevation_keys; sun position computed, NOAA solar equations",
+     "time": "23:00",
+     "game_hour": 23.0,
+     "sun_elevation_deg": -56.59,
+     "state": "night",
+     "exposure_pin": 0.4,
+     "sky_intensity": 0.35,
+     "ambient_rgb_linear": [
+      0.05,
+      0.05,
+      0.06
+     ],
+     "fog_density": 0.022,
+     "fog_max_opacity": 0.45,
+     "fog_rgb_linear": [
+      0.09,
+      0.065,
+      0.05
+     ],
+     "white_balance_K": 4300,
+     "sky_light_gain": 0.15,
+     "sky_seen_gain": 0.15,
+     "fog_density_gain": 0.2,
+     "night_fill_lux": 0.4,
+     "overcast_lux_dry": 0.0,
+     "lamp": {
+      "state": "on",
+      "level": 1.0,
+      "rgb_linear": [
+       1.0,
+       0.22,
+       0.0
+      ]
+     },
+     "windows_level_dry": 1
+    }
+   ]
+  }
+ ],
+ "hourly_how_to_read": "Three anchor days of rows (whole hours plus extra rows at sunrise and sunset offsets in game minutes) for dry overcast. For any other date interpolate the minute of each curve from elevation_keys using the sun elevation of that minute, or interpolate rows between anchors by date. Time is local civil time. exposure_pin is held across weather (RULINGS 29 Oct: never brightened); weather changes sky_intensity, fog and ambient instead. 'windows_level_dry' multiplies the window channel schedules below.",
+ "days": [
+  {
+   "id": "day_1990-10-15",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-10-15",
+   "weekday": "Mon",
+   "story_day": 1,
+   "clock": "BST",
+   "sunrise": "07:28",
+   "sunset": "18:05",
+   "civil_dawn": "06:53",
+   "civil_dusk": "18:41",
+   "nautical_dawn": "06:12",
+   "nautical_dusk": "19:21",
+   "day_length_min": 637,
+   "lamps_on": {
+    "dry_overcast": "18:09",
+    "drizzle": "18:05",
+    "rain": "17:58"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:19",
+    "drizzle": "07:24",
+    "rain": "07:29"
+   },
+   "lamps_dark_part_game_hours": 13.17,
+   "lamps_dark_part_real_minutes_on_120s": 26.3
+  },
+  {
+   "id": "day_1990-10-16",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-10-16",
+   "weekday": "Tue",
+   "story_day": 2,
+   "clock": "BST",
+   "sunrise": "07:30",
+   "sunset": "18:03",
+   "civil_dawn": "06:54",
+   "civil_dusk": "18:39",
+   "nautical_dawn": "06:14",
+   "nautical_dusk": "19:19",
+   "day_length_min": 633,
+   "lamps_on": {
+    "dry_overcast": "18:07",
+    "drizzle": "18:02",
+    "rain": "17:55"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:21",
+    "drizzle": "07:25",
+    "rain": "07:31"
+   },
+   "lamps_dark_part_game_hours": 13.23,
+   "lamps_dark_part_real_minutes_on_120s": 26.5
+  },
+  {
+   "id": "day_1990-10-17",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-10-17",
+   "weekday": "Wed",
+   "story_day": 3,
+   "clock": "BST",
+   "sunrise": "07:32",
+   "sunset": "18:01",
+   "civil_dawn": "06:56",
+   "civil_dusk": "18:36",
+   "nautical_dawn": "06:16",
+   "nautical_dusk": "19:17",
+   "day_length_min": 629,
+   "lamps_on": {
+    "dry_overcast": "18:05",
+    "drizzle": "18:00",
+    "rain": "17:53"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:23",
+    "drizzle": "07:27",
+    "rain": "07:33"
+   },
+   "lamps_dark_part_game_hours": 13.3,
+   "lamps_dark_part_real_minutes_on_120s": 26.6
+  },
+  {
+   "id": "day_1990-10-18",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-10-18",
+   "weekday": "Thu",
+   "story_day": 4,
+   "clock": "BST",
+   "sunrise": "07:34",
+   "sunset": "17:58",
+   "civil_dawn": "06:58",
+   "civil_dusk": "18:34",
+   "nautical_dawn": "06:18",
+   "nautical_dusk": "19:15",
+   "day_length_min": 625,
+   "lamps_on": {
+    "dry_overcast": "18:02",
+    "drizzle": "17:58",
+    "rain": "17:51"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:24",
+    "drizzle": "07:29",
+    "rain": "07:35"
+   },
+   "lamps_dark_part_game_hours": 13.37,
+   "lamps_dark_part_real_minutes_on_120s": 26.7
+  },
+  {
+   "id": "day_1990-10-19",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-10-19",
+   "weekday": "Fri",
+   "story_day": 5,
+   "clock": "BST",
+   "sunrise": "07:36",
+   "sunset": "17:56",
+   "civil_dawn": "07:00",
+   "civil_dusk": "18:32",
+   "nautical_dawn": "06:20",
+   "nautical_dusk": "19:13",
+   "day_length_min": 620,
+   "lamps_on": {
+    "dry_overcast": "18:00",
+    "drizzle": "17:55",
+    "rain": "17:49"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:26",
+    "drizzle": "07:31",
+    "rain": "07:37"
+   },
+   "lamps_dark_part_game_hours": 13.43,
+   "lamps_dark_part_real_minutes_on_120s": 26.9
+  },
+  {
+   "id": "day_1990-10-20",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-10-20",
+   "weekday": "Sat",
+   "story_day": 6,
+   "clock": "BST",
+   "sunrise": "07:38",
+   "sunset": "17:54",
+   "civil_dawn": "07:02",
+   "civil_dusk": "18:30",
+   "nautical_dawn": "06:21",
+   "nautical_dusk": "19:11",
+   "day_length_min": 616,
+   "lamps_on": {
+    "dry_overcast": "17:58",
+    "drizzle": "17:53",
+    "rain": "17:46"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:28",
+    "drizzle": "07:33",
+    "rain": "07:39"
+   },
+   "lamps_dark_part_game_hours": 13.5,
+   "lamps_dark_part_real_minutes_on_120s": 27.0
+  },
+  {
+   "id": "day_1990-10-21",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-10-21",
+   "weekday": "Sun",
+   "story_day": 7,
+   "clock": "BST",
+   "sunrise": "07:40",
+   "sunset": "17:52",
+   "civil_dawn": "07:04",
+   "civil_dusk": "18:28",
+   "nautical_dawn": "06:23",
+   "nautical_dusk": "19:08",
+   "day_length_min": 612,
+   "lamps_on": {
+    "dry_overcast": "17:56",
+    "drizzle": "17:51",
+    "rain": "17:44"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:30",
+    "drizzle": "07:35",
+    "rain": "07:41"
+   },
+   "lamps_dark_part_game_hours": 13.57,
+   "lamps_dark_part_real_minutes_on_120s": 27.1
+  },
+  {
+   "id": "day_1990-10-22",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-10-22",
+   "weekday": "Mon",
+   "story_day": 8,
+   "clock": "BST",
+   "sunrise": "07:42",
+   "sunset": "17:50",
+   "civil_dawn": "07:06",
+   "civil_dusk": "18:26",
+   "nautical_dawn": "06:24",
+   "nautical_dusk": "19:06",
+   "day_length_min": 608,
+   "lamps_on": {
+    "dry_overcast": "17:53",
+    "drizzle": "17:49",
+    "rain": "17:42"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:32",
+    "drizzle": "07:37",
+    "rain": "07:43"
+   },
+   "lamps_dark_part_game_hours": 13.65,
+   "lamps_dark_part_real_minutes_on_120s": 27.3
+  },
+  {
+   "id": "day_1990-10-23",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-10-23",
+   "weekday": "Tue",
+   "story_day": 9,
+   "clock": "BST",
+   "sunrise": "07:44",
+   "sunset": "17:47",
+   "civil_dawn": "07:08",
+   "civil_dusk": "18:23",
+   "nautical_dawn": "06:26",
+   "nautical_dusk": "19:04",
+   "day_length_min": 604,
+   "lamps_on": {
+    "dry_overcast": "17:51",
+    "drizzle": "17:46",
+    "rain": "17:40"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:34",
+    "drizzle": "07:39",
+    "rain": "07:44"
+   },
+   "lamps_dark_part_game_hours": 13.72,
+   "lamps_dark_part_real_minutes_on_120s": 27.4
+  },
+  {
+   "id": "day_1990-10-24",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-10-24",
+   "weekday": "Wed",
+   "story_day": 10,
+   "clock": "BST",
+   "sunrise": "07:46",
+   "sunset": "17:45",
+   "civil_dawn": "07:09",
+   "civil_dusk": "18:21",
+   "nautical_dawn": "06:28",
+   "nautical_dusk": "19:02",
+   "day_length_min": 600,
+   "lamps_on": {
+    "dry_overcast": "17:49",
+    "drizzle": "17:44",
+    "rain": "17:37"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:36",
+    "drizzle": "07:40",
+    "rain": "07:46"
+   },
+   "lamps_dark_part_game_hours": 13.78,
+   "lamps_dark_part_real_minutes_on_120s": 27.6
+  },
+  {
+   "id": "day_1990-10-25",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-10-25",
+   "weekday": "Thu",
+   "story_day": 11,
+   "clock": "BST",
+   "sunrise": "07:48",
+   "sunset": "17:43",
+   "civil_dawn": "07:11",
+   "civil_dusk": "18:19",
+   "nautical_dawn": "06:30",
+   "nautical_dusk": "19:00",
+   "day_length_min": 595,
+   "lamps_on": {
+    "dry_overcast": "17:47",
+    "drizzle": "17:42",
+    "rain": "17:35"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:37",
+    "drizzle": "07:42",
+    "rain": "07:48"
+   },
+   "lamps_dark_part_game_hours": 13.83,
+   "lamps_dark_part_real_minutes_on_120s": 27.7
+  },
+  {
+   "id": "day_1990-10-26",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-10-26",
+   "weekday": "Fri",
+   "story_day": 12,
+   "clock": "BST",
+   "sunrise": "07:49",
+   "sunset": "17:41",
+   "civil_dawn": "07:12",
+   "civil_dusk": "18:17",
+   "nautical_dawn": "06:32",
+   "nautical_dusk": "18:58",
+   "day_length_min": 592,
+   "lamps_on": {
+    "dry_overcast": "17:45",
+    "drizzle": "17:40",
+    "rain": "17:33"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:39",
+    "drizzle": "07:44",
+    "rain": "07:50"
+   },
+   "lamps_dark_part_game_hours": 13.9,
+   "lamps_dark_part_real_minutes_on_120s": 27.8
+  },
+  {
+   "id": "day_1990-10-27",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-10-27",
+   "weekday": "Sat",
+   "story_day": 13,
+   "clock": "BST",
+   "sunrise": "07:51",
+   "sunset": "17:39",
+   "civil_dawn": "07:14",
+   "civil_dusk": "18:15",
+   "nautical_dawn": "06:34",
+   "nautical_dusk": "18:56",
+   "day_length_min": 588,
+   "lamps_on": {
+    "dry_overcast": "17:43",
+    "drizzle": "17:38",
+    "rain": "17:31"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:41",
+    "drizzle": "07:46",
+    "rain": "07:52"
+   },
+   "lamps_dark_part_game_hours": 13.97,
+   "lamps_dark_part_real_minutes_on_120s": 27.9
+  },
+  {
+   "id": "day_1990-10-28",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-10-28",
+   "weekday": "Sun",
+   "story_day": 14,
+   "clock": "GMT",
+   "sunrise": "06:53",
+   "sunset": "16:37",
+   "civil_dawn": "06:16",
+   "civil_dusk": "17:13",
+   "nautical_dawn": "05:35",
+   "nautical_dusk": "17:55",
+   "day_length_min": 584,
+   "lamps_on": {
+    "dry_overcast": "16:41",
+    "drizzle": "16:36",
+    "rain": "16:29"
+   },
+   "lamps_off": {
+    "dry_overcast": "06:43",
+    "drizzle": "06:48",
+    "rain": "06:54"
+   },
+   "lamps_dark_part_game_hours": 14.03,
+   "lamps_dark_part_real_minutes_on_120s": 28.1
+  },
+  {
+   "id": "day_1990-10-29",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-10-29",
+   "weekday": "Mon",
+   "story_day": 15,
+   "clock": "GMT",
+   "sunrise": "06:55",
+   "sunset": "16:35",
+   "civil_dawn": "06:18",
+   "civil_dusk": "17:11",
+   "nautical_dawn": "05:37",
+   "nautical_dusk": "17:53",
+   "day_length_min": 580,
+   "lamps_on": {
+    "dry_overcast": "16:39",
+    "drizzle": "16:34",
+    "rain": "16:27"
+   },
+   "lamps_off": {
+    "dry_overcast": "06:45",
+    "drizzle": "06:50",
+    "rain": "06:56"
+   },
+   "lamps_dark_part_game_hours": 14.1,
+   "lamps_dark_part_real_minutes_on_120s": 28.2
+  },
+  {
+   "id": "day_1990-10-30",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-10-30",
+   "weekday": "Tue",
+   "story_day": 16,
+   "clock": "GMT",
+   "sunrise": "06:57",
+   "sunset": "16:33",
+   "civil_dawn": "06:20",
+   "civil_dusk": "17:09",
+   "nautical_dawn": "05:38",
+   "nautical_dusk": "17:51",
+   "day_length_min": 576,
+   "lamps_on": {
+    "dry_overcast": "16:37",
+    "drizzle": "16:32",
+    "rain": "16:25"
+   },
+   "lamps_off": {
+    "dry_overcast": "06:47",
+    "drizzle": "06:52",
+    "rain": "06:58"
+   },
+   "lamps_dark_part_game_hours": 14.17,
+   "lamps_dark_part_real_minutes_on_120s": 28.3
+  },
+  {
+   "id": "day_1990-10-31",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-10-31",
+   "weekday": "Wed",
+   "story_day": 17,
+   "clock": "GMT",
+   "sunrise": "06:59",
+   "sunset": "16:31",
+   "civil_dawn": "06:22",
+   "civil_dusk": "17:08",
+   "nautical_dawn": "05:40",
+   "nautical_dusk": "17:49",
+   "day_length_min": 572,
+   "lamps_on": {
+    "dry_overcast": "16:35",
+    "drizzle": "16:30",
+    "rain": "16:22"
+   },
+   "lamps_off": {
+    "dry_overcast": "06:49",
+    "drizzle": "06:54",
+    "rain": "07:00"
+   },
+   "lamps_dark_part_game_hours": 14.23,
+   "lamps_dark_part_real_minutes_on_120s": 28.5
+  },
+  {
+   "id": "day_1990-11-01",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-01",
+   "weekday": "Thu",
+   "story_day": 18,
+   "clock": "GMT",
+   "sunrise": "07:01",
+   "sunset": "16:29",
+   "civil_dawn": "06:24",
+   "civil_dusk": "17:06",
+   "nautical_dawn": "05:42",
+   "nautical_dusk": "17:47",
+   "day_length_min": 568,
+   "lamps_on": {
+    "dry_overcast": "16:33",
+    "drizzle": "16:28",
+    "rain": "16:20"
+   },
+   "lamps_off": {
+    "dry_overcast": "06:51",
+    "drizzle": "06:56",
+    "rain": "07:02"
+   },
+   "lamps_dark_part_game_hours": 14.3,
+   "lamps_dark_part_real_minutes_on_120s": 28.6
+  },
+  {
+   "id": "day_1990-11-02",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-02",
+   "weekday": "Fri",
+   "story_day": 19,
+   "clock": "GMT",
+   "sunrise": "07:02",
+   "sunset": "16:27",
+   "civil_dawn": "06:26",
+   "civil_dusk": "17:04",
+   "nautical_dawn": "05:44",
+   "nautical_dusk": "17:45",
+   "day_length_min": 564,
+   "lamps_on": {
+    "dry_overcast": "16:31",
+    "drizzle": "16:26",
+    "rain": "16:18"
+   },
+   "lamps_off": {
+    "dry_overcast": "06:53",
+    "drizzle": "06:58",
+    "rain": "07:04"
+   },
+   "lamps_dark_part_game_hours": 14.37,
+   "lamps_dark_part_real_minutes_on_120s": 28.7
+  },
+  {
+   "id": "day_1990-11-03",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-03",
+   "weekday": "Sat",
+   "story_day": 20,
+   "clock": "GMT",
+   "sunrise": "07:04",
+   "sunset": "16:25",
+   "civil_dawn": "06:27",
+   "civil_dusk": "17:02",
+   "nautical_dawn": "05:46",
+   "nautical_dusk": "17:44",
+   "day_length_min": 560,
+   "lamps_on": {
+    "dry_overcast": "16:29",
+    "drizzle": "16:24",
+    "rain": "16:16"
+   },
+   "lamps_off": {
+    "dry_overcast": "06:54",
+    "drizzle": "06:59",
+    "rain": "07:06"
+   },
+   "lamps_dark_part_game_hours": 14.42,
+   "lamps_dark_part_real_minutes_on_120s": 28.8
+  },
+  {
+   "id": "day_1990-11-04",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-04",
+   "weekday": "Sun",
+   "story_day": 21,
+   "clock": "GMT",
+   "sunrise": "07:06",
+   "sunset": "16:23",
+   "civil_dawn": "06:29",
+   "civil_dusk": "17:00",
+   "nautical_dawn": "05:47",
+   "nautical_dusk": "17:42",
+   "day_length_min": 556,
+   "lamps_on": {
+    "dry_overcast": "16:27",
+    "drizzle": "16:22",
+    "rain": "16:15"
+   },
+   "lamps_off": {
+    "dry_overcast": "06:56",
+    "drizzle": "07:01",
+    "rain": "07:08"
+   },
+   "lamps_dark_part_game_hours": 14.48,
+   "lamps_dark_part_real_minutes_on_120s": 29.0
+  },
+  {
+   "id": "day_1990-11-05",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-05",
+   "weekday": "Mon",
+   "story_day": 22,
+   "clock": "GMT",
+   "sunrise": "07:08",
+   "sunset": "16:21",
+   "civil_dawn": "06:30",
+   "civil_dusk": "16:59",
+   "nautical_dawn": "05:49",
+   "nautical_dusk": "17:40",
+   "day_length_min": 552,
+   "lamps_on": {
+    "dry_overcast": "16:25",
+    "drizzle": "16:20",
+    "rain": "16:13"
+   },
+   "lamps_off": {
+    "dry_overcast": "06:58",
+    "drizzle": "07:03",
+    "rain": "07:10"
+   },
+   "lamps_dark_part_game_hours": 14.55,
+   "lamps_dark_part_real_minutes_on_120s": 29.1
+  },
+  {
+   "id": "day_1990-11-06",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-06",
+   "weekday": "Tue",
+   "story_day": 23,
+   "clock": "GMT",
+   "sunrise": "07:10",
+   "sunset": "16:19",
+   "civil_dawn": "06:32",
+   "civil_dusk": "16:57",
+   "nautical_dawn": "05:50",
+   "nautical_dusk": "17:39",
+   "day_length_min": 548,
+   "lamps_on": {
+    "dry_overcast": "16:23",
+    "drizzle": "16:18",
+    "rain": "16:11"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:00",
+    "drizzle": "07:05",
+    "rain": "07:11"
+   },
+   "lamps_dark_part_game_hours": 14.62,
+   "lamps_dark_part_real_minutes_on_120s": 29.2
+  },
+  {
+   "id": "day_1990-11-07",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-07",
+   "weekday": "Wed",
+   "story_day": 24,
+   "clock": "GMT",
+   "sunrise": "07:12",
+   "sunset": "16:17",
+   "civil_dawn": "06:34",
+   "civil_dusk": "16:55",
+   "nautical_dawn": "05:52",
+   "nautical_dusk": "17:37",
+   "day_length_min": 545,
+   "lamps_on": {
+    "dry_overcast": "16:21",
+    "drizzle": "16:16",
+    "rain": "16:09"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:02",
+    "drizzle": "07:07",
+    "rain": "07:13"
+   },
+   "lamps_dark_part_game_hours": 14.68,
+   "lamps_dark_part_real_minutes_on_120s": 29.4
+  },
+  {
+   "id": "day_1990-11-08",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-08",
+   "weekday": "Thu",
+   "story_day": 25,
+   "clock": "GMT",
+   "sunrise": "07:14",
+   "sunset": "16:15",
+   "civil_dawn": "06:36",
+   "civil_dusk": "16:54",
+   "nautical_dawn": "05:54",
+   "nautical_dusk": "17:36",
+   "day_length_min": 541,
+   "lamps_on": {
+    "dry_overcast": "16:20",
+    "drizzle": "16:14",
+    "rain": "16:07"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:04",
+    "drizzle": "07:09",
+    "rain": "07:15"
+   },
+   "lamps_dark_part_game_hours": 14.73,
+   "lamps_dark_part_real_minutes_on_120s": 29.5
+  },
+  {
+   "id": "day_1990-11-09",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-09",
+   "weekday": "Fri",
+   "story_day": 26,
+   "clock": "GMT",
+   "sunrise": "07:16",
+   "sunset": "16:14",
+   "civil_dawn": "06:38",
+   "civil_dusk": "16:52",
+   "nautical_dawn": "05:56",
+   "nautical_dusk": "17:34",
+   "day_length_min": 537,
+   "lamps_on": {
+    "dry_overcast": "16:18",
+    "drizzle": "16:13",
+    "rain": "16:05"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:06",
+    "drizzle": "07:11",
+    "rain": "07:17"
+   },
+   "lamps_dark_part_game_hours": 14.8,
+   "lamps_dark_part_real_minutes_on_120s": 29.6
+  },
+  {
+   "id": "day_1990-11-10",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-10",
+   "weekday": "Sat",
+   "story_day": 27,
+   "clock": "GMT",
+   "sunrise": "07:18",
+   "sunset": "16:12",
+   "civil_dawn": "06:40",
+   "civil_dusk": "16:50",
+   "nautical_dawn": "05:57",
+   "nautical_dusk": "17:33",
+   "day_length_min": 534,
+   "lamps_on": {
+    "dry_overcast": "16:16",
+    "drizzle": "16:11",
+    "rain": "16:03"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:08",
+    "drizzle": "07:13",
+    "rain": "07:19"
+   },
+   "lamps_dark_part_game_hours": 14.87,
+   "lamps_dark_part_real_minutes_on_120s": 29.7
+  },
+  {
+   "id": "day_1990-11-11",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-11",
+   "weekday": "Sun",
+   "story_day": 28,
+   "clock": "GMT",
+   "sunrise": "07:20",
+   "sunset": "16:10",
+   "civil_dawn": "06:42",
+   "civil_dusk": "16:49",
+   "nautical_dawn": "05:59",
+   "nautical_dusk": "17:31",
+   "day_length_min": 530,
+   "lamps_on": {
+    "dry_overcast": "16:14",
+    "drizzle": "16:09",
+    "rain": "16:02"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:10",
+    "drizzle": "07:15",
+    "rain": "07:21"
+   },
+   "lamps_dark_part_game_hours": 14.93,
+   "lamps_dark_part_real_minutes_on_120s": 29.9
+  },
+  {
+   "id": "day_1990-11-12",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-12",
+   "weekday": "Mon",
+   "story_day": 29,
+   "clock": "GMT",
+   "sunrise": "07:22",
+   "sunset": "16:09",
+   "civil_dawn": "06:43",
+   "civil_dusk": "16:47",
+   "nautical_dawn": "06:00",
+   "nautical_dusk": "17:30",
+   "day_length_min": 527,
+   "lamps_on": {
+    "dry_overcast": "16:13",
+    "drizzle": "16:08",
+    "rain": "16:00"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:11",
+    "drizzle": "07:17",
+    "rain": "07:23"
+   },
+   "lamps_dark_part_game_hours": 14.97,
+   "lamps_dark_part_real_minutes_on_120s": 29.9
+  },
+  {
+   "id": "day_1990-11-13",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-13",
+   "weekday": "Tue",
+   "story_day": 30,
+   "clock": "GMT",
+   "sunrise": "07:24",
+   "sunset": "16:07",
+   "civil_dawn": "06:45",
+   "civil_dusk": "16:46",
+   "nautical_dawn": "06:02",
+   "nautical_dusk": "17:29",
+   "day_length_min": 523,
+   "lamps_on": {
+    "dry_overcast": "16:11",
+    "drizzle": "16:06",
+    "rain": "15:58"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:13",
+    "drizzle": "07:18",
+    "rain": "07:25"
+   },
+   "lamps_dark_part_game_hours": 15.03,
+   "lamps_dark_part_real_minutes_on_120s": 30.1
+  },
+  {
+   "id": "day_1990-11-14",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-14",
+   "weekday": "Wed",
+   "story_day": 31,
+   "clock": "GMT",
+   "sunrise": "07:26",
+   "sunset": "16:05",
+   "civil_dawn": "06:46",
+   "civil_dusk": "16:44",
+   "nautical_dawn": "06:04",
+   "nautical_dusk": "17:27",
+   "day_length_min": 520,
+   "lamps_on": {
+    "dry_overcast": "16:10",
+    "drizzle": "16:04",
+    "rain": "15:57"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:15",
+    "drizzle": "07:20",
+    "rain": "07:27"
+   },
+   "lamps_dark_part_game_hours": 15.08,
+   "lamps_dark_part_real_minutes_on_120s": 30.2
+  },
+  {
+   "id": "day_1990-11-15",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-15",
+   "weekday": "Thu",
+   "story_day": 32,
+   "clock": "GMT",
+   "sunrise": "07:28",
+   "sunset": "16:04",
+   "civil_dawn": "06:48",
+   "civil_dusk": "16:43",
+   "nautical_dawn": "06:06",
+   "nautical_dusk": "17:26",
+   "day_length_min": 516,
+   "lamps_on": {
+    "dry_overcast": "16:08",
+    "drizzle": "16:03",
+    "rain": "15:55"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:17",
+    "drizzle": "07:22",
+    "rain": "07:29"
+   },
+   "lamps_dark_part_game_hours": 15.15,
+   "lamps_dark_part_real_minutes_on_120s": 30.3
+  },
+  {
+   "id": "day_1990-11-16",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-16",
+   "weekday": "Fri",
+   "story_day": 33,
+   "clock": "GMT",
+   "sunrise": "07:30",
+   "sunset": "16:02",
+   "civil_dawn": "06:50",
+   "civil_dusk": "16:42",
+   "nautical_dawn": "06:07",
+   "nautical_dusk": "17:25",
+   "day_length_min": 513,
+   "lamps_on": {
+    "dry_overcast": "16:07",
+    "drizzle": "16:01",
+    "rain": "15:54"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:19",
+    "drizzle": "07:24",
+    "rain": "07:31"
+   },
+   "lamps_dark_part_game_hours": 15.2,
+   "lamps_dark_part_real_minutes_on_120s": 30.4
+  },
+  {
+   "id": "day_1990-11-17",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-17",
+   "weekday": "Sat",
+   "story_day": 34,
+   "clock": "GMT",
+   "sunrise": "07:32",
+   "sunset": "16:01",
+   "civil_dawn": "06:52",
+   "civil_dusk": "16:40",
+   "nautical_dawn": "06:08",
+   "nautical_dusk": "17:24",
+   "day_length_min": 509,
+   "lamps_on": {
+    "dry_overcast": "16:05",
+    "drizzle": "16:00",
+    "rain": "15:52"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:21",
+    "drizzle": "07:26",
+    "rain": "07:32"
+   },
+   "lamps_dark_part_game_hours": 15.27,
+   "lamps_dark_part_real_minutes_on_120s": 30.5
+  },
+  {
+   "id": "day_1990-11-18",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-18",
+   "weekday": "Sun",
+   "story_day": 35,
+   "clock": "GMT",
+   "sunrise": "07:34",
+   "sunset": "15:59",
+   "civil_dawn": "06:54",
+   "civil_dusk": "16:39",
+   "nautical_dawn": "06:10",
+   "nautical_dusk": "17:23",
+   "day_length_min": 506,
+   "lamps_on": {
+    "dry_overcast": "16:04",
+    "drizzle": "15:58",
+    "rain": "15:51"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:22",
+    "drizzle": "07:28",
+    "rain": "07:34"
+   },
+   "lamps_dark_part_game_hours": 15.3,
+   "lamps_dark_part_real_minutes_on_120s": 30.6
+  },
+  {
+   "id": "day_1990-11-19",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-19",
+   "weekday": "Mon",
+   "story_day": 36,
+   "clock": "GMT",
+   "sunrise": "07:35",
+   "sunset": "15:58",
+   "civil_dawn": "06:55",
+   "civil_dusk": "16:38",
+   "nautical_dawn": "06:12",
+   "nautical_dusk": "17:21",
+   "day_length_min": 503,
+   "lamps_on": {
+    "dry_overcast": "16:02",
+    "drizzle": "15:57",
+    "rain": "15:49"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:24",
+    "drizzle": "07:29",
+    "rain": "07:36"
+   },
+   "lamps_dark_part_game_hours": 15.37,
+   "lamps_dark_part_real_minutes_on_120s": 30.7
+  },
+  {
+   "id": "day_1990-11-20",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-20",
+   "weekday": "Tue",
+   "story_day": 37,
+   "clock": "GMT",
+   "sunrise": "07:37",
+   "sunset": "15:57",
+   "civil_dawn": "06:57",
+   "civil_dusk": "16:37",
+   "nautical_dawn": "06:13",
+   "nautical_dusk": "17:20",
+   "day_length_min": 500,
+   "lamps_on": {
+    "dry_overcast": "16:01",
+    "drizzle": "15:56",
+    "rain": "15:48"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:26",
+    "drizzle": "07:31",
+    "rain": "07:38"
+   },
+   "lamps_dark_part_game_hours": 15.42,
+   "lamps_dark_part_real_minutes_on_120s": 30.8
+  },
+  {
+   "id": "day_1990-11-21",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-21",
+   "weekday": "Wed",
+   "story_day": 38,
+   "clock": "GMT",
+   "sunrise": "07:38",
+   "sunset": "15:55",
+   "civil_dawn": "06:58",
+   "civil_dusk": "16:36",
+   "nautical_dawn": "06:14",
+   "nautical_dusk": "17:19",
+   "day_length_min": 497,
+   "lamps_on": {
+    "dry_overcast": "16:00",
+    "drizzle": "15:54",
+    "rain": "15:46"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:28",
+    "drizzle": "07:33",
+    "rain": "07:40"
+   },
+   "lamps_dark_part_game_hours": 15.47,
+   "lamps_dark_part_real_minutes_on_120s": 30.9
+  },
+  {
+   "id": "day_1990-11-22",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-22",
+   "weekday": "Thu",
+   "story_day": 39,
+   "clock": "GMT",
+   "sunrise": "07:40",
+   "sunset": "15:54",
+   "civil_dawn": "07:00",
+   "civil_dusk": "16:35",
+   "nautical_dawn": "06:16",
+   "nautical_dusk": "17:18",
+   "day_length_min": 494,
+   "lamps_on": {
+    "dry_overcast": "15:59",
+    "drizzle": "15:53",
+    "rain": "15:45"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:29",
+    "drizzle": "07:35",
+    "rain": "07:42"
+   },
+   "lamps_dark_part_game_hours": 15.5,
+   "lamps_dark_part_real_minutes_on_120s": 31.0
+  },
+  {
+   "id": "day_1990-11-23",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-23",
+   "weekday": "Fri",
+   "story_day": 40,
+   "clock": "GMT",
+   "sunrise": "07:42",
+   "sunset": "15:53",
+   "civil_dawn": "07:02",
+   "civil_dusk": "16:34",
+   "nautical_dawn": "06:18",
+   "nautical_dusk": "17:17",
+   "day_length_min": 490,
+   "lamps_on": {
+    "dry_overcast": "15:57",
+    "drizzle": "15:52",
+    "rain": "15:44"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:31",
+    "drizzle": "07:37",
+    "rain": "07:43"
+   },
+   "lamps_dark_part_game_hours": 15.57,
+   "lamps_dark_part_real_minutes_on_120s": 31.1
+  },
+  {
+   "id": "day_1990-11-24",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-24",
+   "weekday": "Sat",
+   "story_day": 41,
+   "clock": "GMT",
+   "sunrise": "07:44",
+   "sunset": "15:52",
+   "civil_dawn": "07:03",
+   "civil_dusk": "16:33",
+   "nautical_dawn": "06:19",
+   "nautical_dusk": "17:17",
+   "day_length_min": 488,
+   "lamps_on": {
+    "dry_overcast": "15:56",
+    "drizzle": "15:51",
+    "rain": "15:43"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:33",
+    "drizzle": "07:38",
+    "rain": "07:45"
+   },
+   "lamps_dark_part_game_hours": 15.62,
+   "lamps_dark_part_real_minutes_on_120s": 31.2
+  },
+  {
+   "id": "day_1990-11-25",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-25",
+   "weekday": "Sun",
+   "story_day": 42,
+   "clock": "GMT",
+   "sunrise": "07:46",
+   "sunset": "15:51",
+   "civil_dawn": "07:04",
+   "civil_dusk": "16:32",
+   "nautical_dawn": "06:20",
+   "nautical_dusk": "17:16",
+   "day_length_min": 485,
+   "lamps_on": {
+    "dry_overcast": "15:55",
+    "drizzle": "15:50",
+    "rain": "15:41"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:34",
+    "drizzle": "07:40",
+    "rain": "07:47"
+   },
+   "lamps_dark_part_game_hours": 15.65,
+   "lamps_dark_part_real_minutes_on_120s": 31.3
+  },
+  {
+   "id": "day_1990-11-26",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-26",
+   "weekday": "Mon",
+   "story_day": 43,
+   "clock": "GMT",
+   "sunrise": "07:48",
+   "sunset": "15:50",
+   "civil_dawn": "07:06",
+   "civil_dusk": "16:31",
+   "nautical_dawn": "06:22",
+   "nautical_dusk": "17:15",
+   "day_length_min": 482,
+   "lamps_on": {
+    "dry_overcast": "15:54",
+    "drizzle": "15:49",
+    "rain": "15:40"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:36",
+    "drizzle": "07:42",
+    "rain": "07:49"
+   },
+   "lamps_dark_part_game_hours": 15.7,
+   "lamps_dark_part_real_minutes_on_120s": 31.4
+  },
+  {
+   "id": "day_1990-11-27",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-27",
+   "weekday": "Tue",
+   "story_day": 44,
+   "clock": "GMT",
+   "sunrise": "07:49",
+   "sunset": "15:49",
+   "civil_dawn": "07:08",
+   "civil_dusk": "16:30",
+   "nautical_dawn": "06:24",
+   "nautical_dusk": "17:14",
+   "day_length_min": 480,
+   "lamps_on": {
+    "dry_overcast": "15:53",
+    "drizzle": "15:48",
+    "rain": "15:39"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:38",
+    "drizzle": "07:43",
+    "rain": "07:50"
+   },
+   "lamps_dark_part_game_hours": 15.75,
+   "lamps_dark_part_real_minutes_on_120s": 31.5
+  },
+  {
+   "id": "day_1990-11-28",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-28",
+   "weekday": "Wed",
+   "story_day": 45,
+   "clock": "GMT",
+   "sunrise": "07:50",
+   "sunset": "15:48",
+   "civil_dawn": "07:10",
+   "civil_dusk": "16:29",
+   "nautical_dawn": "06:25",
+   "nautical_dusk": "17:14",
+   "day_length_min": 477,
+   "lamps_on": {
+    "dry_overcast": "15:52",
+    "drizzle": "15:47",
+    "rain": "15:38"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:39",
+    "drizzle": "07:45",
+    "rain": "07:52"
+   },
+   "lamps_dark_part_game_hours": 15.78,
+   "lamps_dark_part_real_minutes_on_120s": 31.6
+  },
+  {
+   "id": "day_1990-11-29",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-29",
+   "weekday": "Thu",
+   "story_day": 46,
+   "clock": "GMT",
+   "sunrise": "07:52",
+   "sunset": "15:47",
+   "civil_dawn": "07:10",
+   "civil_dusk": "16:28",
+   "nautical_dawn": "06:26",
+   "nautical_dusk": "17:13",
+   "day_length_min": 474,
+   "lamps_on": {
+    "dry_overcast": "15:51",
+    "drizzle": "15:46",
+    "rain": "15:37"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:41",
+    "drizzle": "07:46",
+    "rain": "07:53"
+   },
+   "lamps_dark_part_game_hours": 15.83,
+   "lamps_dark_part_real_minutes_on_120s": 31.7
+  },
+  {
+   "id": "day_1990-11-30",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-11-30",
+   "weekday": "Fri",
+   "story_day": 47,
+   "clock": "GMT",
+   "sunrise": "07:54",
+   "sunset": "15:46",
+   "civil_dawn": "07:12",
+   "civil_dusk": "16:28",
+   "nautical_dawn": "06:28",
+   "nautical_dusk": "17:12",
+   "day_length_min": 472,
+   "lamps_on": {
+    "dry_overcast": "15:51",
+    "drizzle": "15:45",
+    "rain": "15:36"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:42",
+    "drizzle": "07:48",
+    "rain": "07:55"
+   },
+   "lamps_dark_part_game_hours": 15.85,
+   "lamps_dark_part_real_minutes_on_120s": 31.7
+  },
+  {
+   "id": "day_1990-12-01",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-12-01",
+   "weekday": "Sat",
+   "story_day": 48,
+   "clock": "GMT",
+   "sunrise": "07:56",
+   "sunset": "15:45",
+   "civil_dawn": "07:14",
+   "civil_dusk": "16:27",
+   "nautical_dawn": "06:28",
+   "nautical_dusk": "17:12",
+   "day_length_min": 470,
+   "lamps_on": {
+    "dry_overcast": "15:50",
+    "drizzle": "15:44",
+    "rain": "15:36"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:44",
+    "drizzle": "07:49",
+    "rain": "07:57"
+   },
+   "lamps_dark_part_game_hours": 15.9,
+   "lamps_dark_part_real_minutes_on_120s": 31.8
+  },
+  {
+   "id": "day_1990-12-02",
+   "src": "computed, NOAA solar equations; lamp times from the lux model in lamp_rule",
+   "date": "1990-12-02",
+   "weekday": "Sun",
+   "story_day": 49,
+   "clock": "GMT",
+   "sunrise": "07:57",
+   "sunset": "15:44",
+   "civil_dawn": "07:15",
+   "civil_dusk": "16:26",
+   "nautical_dawn": "06:30",
+   "nautical_dusk": "17:11",
+   "day_length_min": 468,
+   "lamps_on": {
+    "dry_overcast": "15:49",
+    "drizzle": "15:43",
+    "rain": "15:35"
+   },
+   "lamps_off": {
+    "dry_overcast": "07:45",
+    "drizzle": "07:51",
+    "rain": "07:58"
+   },
+   "lamps_dark_part_game_hours": 15.93,
+   "lamps_dark_part_real_minutes_on_120s": 31.9
+  }
+ ],
+ "lamp_rule": {
+  "id": "lamp_rule",
+  "src": "4.7, 4.4, 5.4.2; production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md",
+  "switch_on_lux": 70,
+  "switch_off_lux": 35,
+  "photocell_note": "old UK cells, SC 1000; 1990 use a guess",
+  "overcast_lux_factor": {
+   "dry_overcast": 0.25,
+   "drizzle": 0.15,
+   "rain": 0.08
+  },
+  "overcast_lux_factor_note": "overcast sky is 0.1 to 0.5 of clear (judgement in production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md); 0.25, 0.15, 0.08 chosen",
+  "chosen": true,
+  "rule": "lamps strike on the first minute after solar noon when clear_sky_lux(elevation) * factor falls under 70, and go out the first minute after midnight when it rises over 35. Results are listed per date in days.lamps_on and lamps_off for each weather (dry overcast is 3 to 6 minutes after sunset, rain 7 minutes before).",
+  "warm_up_game_minutes": 12,
+  "warm_up_range_game_minutes": [
+   8,
+   15
+  ],
+  "warm_up_real_seconds_on_120s": 24,
+  "warm_up_real_seconds_old_45s_hour": 9,
+  "individual_strike_jitter_game_minutes": [
+   0,
+   6
+  ],
+  "individual_jitter_chosen": true,
+  "warm_up_curve": [
+   {
+    "minutes": 0,
+    "level": 0.15,
+    "rgb_linear": [
+     1.0,
+     0.06,
+     0.02
+    ]
+   },
+   {
+    "minutes": 3,
+    "level": 0.35,
+    "rgb_linear": [
+     1.0,
+     0.1,
+     0.01
+    ]
+   },
+   {
+    "minutes": 6,
+    "level": 0.6,
+    "rgb_linear": [
+     1.0,
+     0.15,
+     0.0
+    ]
+   },
+   {
+    "minutes": 9,
+    "level": 0.85,
+    "rgb_linear": [
+     1.0,
+     0.19,
+     0.0
+    ]
+   },
+   {
+    "minutes": 12,
+    "level": 1.0,
+    "rgb_linear": [
+     1.0,
+     0.22,
+     0.0
+    ]
+   }
+  ],
+  "warm_up_note": "red neon glow first, full yellow in 8 to 15 minutes (production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md [10]); the curve's shape and 12-minute midpoint chosen",
+  "off_fade_game_minutes": 1,
+  "off_jitter_game_minutes": [
+   0,
+   3
+  ],
+  "off_chosen": true,
+  "sox_rgb_linear": {
+   "look_file": [
+    1.0,
+    0.25,
+    0.0
+   ],
+   "computed": [
+    1.0,
+    0.22,
+    0.0
+   ],
+   "used": "computed"
+  }
+ },
+ "lamp": {
+  "id": "lamp_sox",
+  "src": "4.4, 5.4.2",
+  "type": "low-pressure sodium, boat-shaped aluminium lantern",
+  "watts": 35,
+  "pool_lumens": 167,
+  "pool_lumens_note": "game-scaled; real SOX 35 W is about 4,770 lm (modern sheet) or 4,550 (look note)",
+  "bulb_glow_lumens": 40,
+  "bulb_glow_radius_m": 1.0,
+  "bulb_note": "reaches 1 m since 28 Oct, adds nothing on the ground",
+  "height_m": 4.83,
+  "cone_inner_deg": 22,
+  "cone_outer_deg": 46,
+  "positions": "production/lane/blueprint/data/map.json lamp_columns (93 columns, each 35 W low-pressure sodium, 5.0 m column, lamp 4.83 m); Quay Street has four, about 10 m apart, alternating sides (4.4)",
+  "pool_radius_on_ground_m": {
+   "inner": 1.95,
+   "outer": 5.0,
+   "src": "computed"
+  },
+  "candela": 87.0,
+  "lux_under_lamp": 3.73,
+  "lux_under_lamp_src": "computed: 167 lm over the 46 degree cone (production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md review correction says about 3.7)",
+  "pool_to_fill_ratio": 9.3,
+  "pool_to_fill_target": "at least 10 to 1 under the lamp (judgement, 10 to 25 real)",
+  "lux_profile": [
+   {
+    "radius_m": 0,
+    "angle_deg": 0.0,
+    "lux": 3.73,
+    "chosen": true,
+    "chosen_note": "inverse-square with cosine and a smoothstep edge from 22 to 46 degrees; the edge shape is chosen"
+   },
+   {
+    "radius_m": 1,
+    "angle_deg": 11.7,
+    "lux": 3.5,
+    "chosen": true,
+    "chosen_note": "inverse-square with cosine and a smoothstep edge from 22 to 46 degrees; the edge shape is chosen"
+   },
+   {
+    "radius_m": 2,
+    "angle_deg": 22.5,
+    "lux": 2.94,
+    "chosen": true,
+    "chosen_note": "inverse-square with cosine and a smoothstep edge from 22 to 46 degrees; the edge shape is chosen"
+   },
+   {
+    "radius_m": 3,
+    "angle_deg": 31.8,
+    "lux": 1.45,
+    "chosen": true,
+    "chosen_note": "inverse-square with cosine and a smoothstep edge from 22 to 46 degrees; the edge shape is chosen"
+   },
+   {
+    "radius_m": 4,
+    "angle_deg": 39.6,
+    "lux": 0.3,
+    "chosen": true,
+    "chosen_note": "inverse-square with cosine and a smoothstep edge from 22 to 46 degrees; the edge shape is chosen"
+   },
+   {
+    "radius_m": 5,
+    "angle_deg": 46.0,
+    "lux": 0.0,
+    "chosen": true,
+    "chosen_note": "inverse-square with cosine and a smoothstep edge from 22 to 46 degrees; the edge shape is chosen"
+   },
+   {
+    "radius_m": 6,
+    "angle_deg": 51.2,
+    "lux": 0.0,
+    "chosen": true,
+    "chosen_note": "inverse-square with cosine and a smoothstep edge from 22 to 46 degrees; the edge shape is chosen"
+   }
+  ],
+  "gap_note": "at 5 m (mid-gap between lamps 10 m apart) the ground sits at the cone edge, so the gap is lit by the fill alone; pool to gap is measured in the night view, nothing changed on this note (review correction)"
+ },
+ "night": {
+  "id": "night",
+  "src": "4.7, 5.4.2; RULINGS 1 Oct, 4 Nov",
+  "night_fill": {
+   "lux": 0.4,
+   "rgb_linear": [
+    1.0,
+    0.74,
+    0.54
+   ],
+   "yaw_deg": 0,
+   "pitch_deg": -70,
+   "src": "production/specs/unreal-look.json night_fill_*"
+  },
+  "brightness_floor": {
+   "sim_light_value": 0.07,
+   "sim_light_src": "tools/lane/prototype/project/src/rules.js light.daylightAtNight",
+   "tom_ground_radius_m": 5,
+   "picture_floor_mean_display_luminance_linear": 0.05,
+   "picture_floor_chosen": true,
+   "picture_floor_note": "ER-NIGHT-01 keeps Tom and the ground 5 m round him above a floor kept in the tuning table; no number was written. 0.05 linear (about 0.25 in sRGB) is the chosen floor, measured as the mean over the 5 m disc round Tom in the night view; the test is darkest-spot screenshots",
+   "near_black_share_max": 0.45,
+   "near_black_share_src": "BLUEPRINT-05 5.4.2 prior research: the readable-night fix took the near-black share from 66 percent to 45 percent"
+  },
+  "corners_darken_with_light_value": true,
+  "sim_light": {
+   "src": "tools/lane/prototype/project/src/rules.js light; tools/lane/prototype/project/src/light.js",
+   "indoors": 0.85,
+   "lampFullStrength": 0.95,
+   "dimLampTimes": 0.55,
+   "shopGlowTimes": 0.8,
+   "falloffPower": 1.5,
+   "lamp_sim_radius_m": 13,
+   "lamp_sim_radius_note": "prototype default r=13 on its own 252 m street plan; keep for the sim until the map file's lamp list says otherwise",
+   "behindAWallTimes": 0.06,
+   "wallShadowBeyondMetres": 1.5,
+   "underCoverTimes": 0.12,
+   "word_dark_below": 0.2,
+   "word_half_lit_below": 0.5,
+   "formula": "light = clamp(daylight + on * (lamp + always_glow) + late * late_windows + early * early_windows, 0, 1); daylight = 0.07 + 0.93 * (1 - night_factor) where night_factor is 0 by day and 1 below elevation -12 (smoothstep over -0.833 to -12 replaces the prototype's hour smoothstep)"
+  },
+  "night_visibility_radius_m": [
+   {
+    "light": 0.07,
+    "range_m": 5.8,
+    "src": "tools/lane/prototype/project/src/rules.js seeing: rangeInBlack 4 + 44 * L^1.2"
+   },
+   {
+    "light": 0.1,
+    "range_m": 6.8,
+    "src": "tools/lane/prototype/project/src/rules.js seeing: rangeInBlack 4 + 44 * L^1.2"
+   },
+   {
+    "light": 0.2,
+    "range_m": 10.4,
+    "src": "tools/lane/prototype/project/src/rules.js seeing: rangeInBlack 4 + 44 * L^1.2"
+   },
+   {
+    "light": 0.3,
+    "range_m": 14.4,
+    "src": "tools/lane/prototype/project/src/rules.js seeing: rangeInBlack 4 + 44 * L^1.2"
+   },
+   {
+    "light": 0.5,
+    "range_m": 23.2,
+    "src": "tools/lane/prototype/project/src/rules.js seeing: rangeInBlack 4 + 44 * L^1.2"
+   },
+   {
+    "light": 0.75,
+    "range_m": 35.2,
+    "src": "tools/lane/prototype/project/src/rules.js seeing: rangeInBlack 4 + 44 * L^1.2"
+   },
+   {
+    "light": 1.0,
+    "range_m": 48.0,
+    "src": "tools/lane/prototype/project/src/rules.js seeing: rangeInBlack 4 + 44 * L^1.2"
+   }
+  ],
+  "window_channels": [
+   {
+    "id": "win_all_night",
+    "src": "tools/lane/prototype/project/src/rules.js allNightChannelFromUntilHour",
+    "from": "dusk",
+    "until": "dawn",
+    "note": "always-on glows (a lit porch or stairwell)"
+   },
+   {
+    "id": "win_late",
+    "src": "tools/lane/prototype/project/src/rules.js lateWindowsFromHour",
+    "from": "16:30",
+    "until": "23:36",
+    "again_from": "00:00",
+    "again_until": "00:36",
+    "note": "Rita's window, the takeaway, the video shop (prototype names)"
+   },
+   {
+    "id": "win_early_closing",
+    "src": "DEFINITIONS G10 over tools/lane/prototype/project/src/rules.js",
+    "from": "15:30",
+    "until": "17:45",
+    "chosen": true,
+    "chosen_note": "prototype 15:30 to 19:30; G10 shuts shops at 17:30"
+   },
+   {
+    "id": "win_homes_evening",
+    "src": "4.7",
+    "from": "16:00",
+    "until": "23:00",
+    "chosen": true,
+    "chosen_note": "upstairs flats with lights on at dusk; no source for the hours"
+   },
+   {
+    "id": "win_early_risers",
+    "src": "G9 05:30 dock shift",
+    "from": "05:00",
+    "until": "07:45",
+    "chosen": true,
+    "chosen_note": "the dock shift's kitchens; 05:00 chosen"
+   },
+   {
+    "id": "ferry_landing_dark",
+    "src": "tools/lane/prototype/project/src/rules.js ferryLandingDark",
+    "from": "23:00",
+    "until": "05:00"
+   }
+  ],
+  "window_level_rule": "level = 1 - smoothstep(log10 20, log10 300, log10 lux): a window lights from 300 lux (overcast) and is full at 20 lux, so under rain it lights earlier than dry; multiplied by its channel's hour flag",
+  "window_colours_linear": {
+   "tungsten_2700K": [
+    1.0,
+    0.42,
+    0.1
+   ],
+   "tube_3500K": [
+    1.0,
+    0.57,
+    0.26
+   ],
+   "src": "production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md",
+   "note": "computed from colour temperature; shop tubes UK White 3500 K, room tungsten 2700 K (judgement)"
+  },
+  "room_glow_gain_night": 0.4,
+  "room_glow_src": "production/specs/unreal-look.json"
+ },
+ "weather": {
+  "id": "weather",
+  "src": "2.1.4, 4.8; RULINGS 5 Oct, 7 Oct",
+  "never_sunshine": true,
+  "profiles": [
+   {
+    "id": "dry_overcast",
+    "src": "2.1.4, 4.8, 5.3.3",
+    "label": "dry overcast",
+    "weight_note": "see weights_by_period",
+    "rain_level": 0.0,
+    "mist": 0.15,
+    "wetness_target": 0.4,
+    "wetness_target_note": "the damp floor: the street is never drier than this (chosen, see wet_road.damp_floor)",
+    "overcast_lux_factor": 0.25,
+    "sky_intensity": 0.7,
+    "fog_density_mult": 1.0,
+    "fog_max_opacity_add": 0.0,
+    "ambient_mult": 1.0,
+    "saturation_mult": 1.0,
+    "sight_factor": 1.0,
+    "sound_factor": 1.0,
+    "crowd_factor": 1.0,
+    "voices_factor": 1.0,
+    "grip_factor": 1.0,
+    "slipperiness_foot": 0.0,
+    "umbrella_share": 0.0,
+    "doorway_shelter_share": 0.0,
+    "puddle_target": 0.0,
+    "chosen": true,
+    "chosen_note": "rain_level 0 and mist 0.15 from prototype rules.js weather.dry; sky 0.70 from vignette-pieces overcast_day; the rest chosen"
+   },
+   {
+    "id": "drizzle",
+    "src": "2.1.4, 4.8, 5.3.3",
+    "label": "drizzle",
+    "rain_level": 0.28,
+    "mist": 0.35,
+    "wetness_target": 0.8,
+    "wetness_target_note": "0.8 is the prototype's startsWet and near overcast_day 0.85",
+    "overcast_lux_factor": 0.15,
+    "sky_intensity": 0.6,
+    "fog_density_mult": 2.0,
+    "fog_max_opacity_add": 0.1,
+    "ambient_mult": 0.9,
+    "saturation_mult": 0.96,
+    "sight_factor": 0.916,
+    "sound_factor": 0.832,
+    "crowd_factor": 0.75,
+    "voices_factor": 0.75,
+    "grip_factor": 0.83,
+    "slipperiness_foot": 0.15,
+    "umbrella_share": 0.15,
+    "doorway_shelter_share": 0.05,
+    "puddle_target": 0.35,
+    "chosen": true,
+    "chosen_note": "rain_level and mist from prototype; sight 1-0.3*rain_level and sound 1-0.6*rain_level from prototype rainCutsRangeByShare and noise.rainCutsByShare; crowd and voices midway between dry and rain (chosen); grip: wet braking 1.3 to 1.6 times dry (BLUEPRINT-01 3.1.x driving) so drizzle taken as 1.2 times (chosen); umbrellas and shelter shares have no source (2.1.4 says not yet named)"
+   },
+   {
+    "id": "rain",
+    "src": "2.1.4, 4.8, 5.3.3",
+    "label": "rain",
+    "rain_level": 0.6,
+    "mist": 0.3,
+    "wetness_target": 1.0,
+    "overcast_lux_factor": 0.08,
+    "sky_intensity": 0.5,
+    "fog_density_mult": 1.8,
+    "fog_max_opacity_add": 0.08,
+    "ambient_mult": 0.8,
+    "saturation_mult": 0.92,
+    "sight_factor": 0.82,
+    "sound_factor": 0.64,
+    "crowd_factor": 0.5,
+    "voices_factor": 0.5,
+    "grip_factor": 0.69,
+    "slipperiness_foot": 0.3,
+    "umbrella_share": 0.4,
+    "doorway_shelter_share": 0.2,
+    "puddle_target": 1.0,
+    "chosen": true,
+    "chosen_note": "crowd 0.5: DEFINITIONS G9 'rain halves each band'; voices 0.5: SOUND-PLAN SND-02; grip 1/1.45 from wet braking 1.3 to 1.6 times dry (midpoint); other values as drizzle"
+   }
+  ],
+  "weights_by_period": [
+   {
+    "id": "p_oct_late",
+    "src": "2.1.4, 4.8",
+    "from": "1990-10-15",
+    "to": "1990-10-31",
+    "day_type_weights": {
+     "dry_day": 0.38,
+     "drizzle_day": 0.25,
+     "rain_day": 0.37
+    },
+    "expected_hour_shares": {
+     "dry_overcast": 0.509,
+     "drizzle": 0.324,
+     "rain": 0.167
+    },
+    "chosen": true,
+    "chosen_note": "rain_day weight anchored to Tynemouth 11.5 (1961-90) and 12.2 (1991-2020) rain days of 30 in November (production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md [17]); October and December values chosen"
+   },
+   {
+    "id": "p_nov_early",
+    "src": "2.1.4, 4.8",
+    "from": "1990-11-01",
+    "to": "1990-11-15",
+    "day_type_weights": {
+     "dry_day": 0.35,
+     "drizzle_day": 0.25,
+     "rain_day": 0.4
+    },
+    "expected_hour_shares": {
+     "dry_overcast": 0.49,
+     "drizzle": 0.33,
+     "rain": 0.18
+    },
+    "chosen": true,
+    "chosen_note": "rain_day weight anchored to Tynemouth 11.5 (1961-90) and 12.2 (1991-2020) rain days of 30 in November (production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md [17]); October and December values chosen"
+   },
+   {
+    "id": "p_nov_late",
+    "src": "2.1.4, 4.8",
+    "from": "1990-11-16",
+    "to": "1990-11-30",
+    "day_type_weights": {
+     "dry_day": 0.34,
+     "drizzle_day": 0.25,
+     "rain_day": 0.41
+    },
+    "expected_hour_shares": {
+     "dry_overcast": 0.484,
+     "drizzle": 0.332,
+     "rain": 0.184
+    },
+    "chosen": true,
+    "chosen_note": "rain_day weight anchored to Tynemouth 11.5 (1961-90) and 12.2 (1991-2020) rain days of 30 in November (production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md [17]); October and December values chosen"
+   },
+   {
+    "id": "p_dec_early",
+    "src": "2.1.4, 4.8",
+    "from": "1990-12-01",
+    "to": "1990-12-02",
+    "day_type_weights": {
+     "dry_day": 0.33,
+     "drizzle_day": 0.25,
+     "rain_day": 0.42
+    },
+    "expected_hour_shares": {
+     "dry_overcast": 0.477,
+     "drizzle": 0.334,
+     "rain": 0.189
+    },
+    "chosen": true,
+    "chosen_note": "rain_day weight anchored to Tynemouth 11.5 (1961-90) and 12.2 (1991-2020) rain days of 30 in November (production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md [17]); October and December values chosen"
+   }
+  ],
+  "day_types": {
+   "id": "day_types",
+   "src": "2.1.4",
+   "hour_shares_within_day": {
+    "dry_day": {
+     "dry_overcast": 0.85,
+     "drizzle": 0.15,
+     "rain": 0.0
+    },
+    "drizzle_day": {
+     "dry_overcast": 0.45,
+     "drizzle": 0.55,
+     "rain": 0.0
+    },
+    "rain_day": {
+     "dry_overcast": 0.2,
+     "drizzle": 0.35,
+     "rain": 0.45
+    }
+   },
+   "chosen": true,
+   "how": "at 05:00 each game day draw a day type from the period's day_type_weights, seeded by the game seed and the day number; within the day, each spell is drawn from the day type's shares, excluding the current profile; so 'same seed gives the same weather' holds (ER-NIGHT-03)"
+  },
+  "spells": {
+   "id": "spells",
+   "src": "tools/lane/prototype/project/src/rules.js weather",
+   "spell_game_minutes": [
+    100,
+    240
+   ],
+   "spell_real_seconds_on_120s": [
+    200,
+    480
+   ],
+   "settle_game_minutes": 25,
+   "settle_real_seconds": 50,
+   "first_change_after_game_minutes": 150,
+   "opening_weather": "drizzle",
+   "opening_wetness": 0.8,
+   "opening_note": "Monday 15 Oct opens in drizzle with a wet street, as the prototype's startsRain 0.28, startsMist 0.35, startsWet 0.8",
+   "same_seed_same_weather": true
+  },
+  "wet_road": {
+   "id": "wet_road",
+   "src": "5.3.3, 4.8; production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md",
+   "wetness_range": [
+    0,
+    1
+   ],
+   "damp_floor": 0.4,
+   "damp_floor_chosen": true,
+   "damp_floor_note": "prototype streetNeverDrierThan 0.45; with rain on 12 days of 30 the street is rarely fully dry",
+   "wetting": {
+    "rain_per_game_minute": 0.1,
+    "drizzle_per_game_minute": 0.05,
+    "rain_real_seconds_to_full": 20,
+    "drizzle_real_seconds_to_cap": 32,
+    "rain_per_real_second_on_120s": 0.05,
+    "drizzle_per_real_second_on_120s": 0.025,
+    "src": "production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md 'full in 5 to 15 minutes of rain' (judgement); 10 game minutes chosen, drizzle half the rate",
+    "chosen": true,
+    "old_prototype_rate": "0.02 per game minute at full rain (rules.js streetWetsPerGameMinuteOfFullRain)"
+   },
+   "drying": {
+    "per_game_hour": {
+     "traffic_peak_day": 0.3,
+     "day": 0.2,
+     "night": 0.075
+    },
+    "per_real_second_on_120s": {
+     "traffic_peak_day": 0.0025,
+     "day": 0.001667,
+     "night": 0.000625
+    },
+    "hours_for_full_to_zero": {
+     "traffic_peak_day": 3.3,
+     "day": 5.0,
+     "night": 13.3
+    },
+    "traffic_peak_hours": [
+     "08:00-09:30",
+     "12:00-14:00",
+     "16:30-18:00"
+    ],
+    "day_hours": "07:00-18:00",
+    "src": "production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md: 3 to 14 game hours, wetness down 0.07 to 0.33 per game hour; rates inside that band chosen",
+    "chosen": true,
+    "old_prototype_rate": "0.0012 per game minute = 0.072 per game hour (rules.js streetDriesPerGameMinute)",
+    "times_slower_than_wetting_rain": "about 30 to 80",
+    "times_slower_note": "LIGHT-WEATHER-VALUES says 20 to 100 times, not Lagarde's 3 to 12"
+   },
+   "puddles": {
+    "level_range": [
+     0,
+     1
+    ],
+    "fill_per_game_minute_rain": 0.025,
+    "fill_per_game_minute_drizzle": 0.01,
+    "drizzle_cap": 0.35,
+    "drain_per_game_hour": 0.005,
+    "gone_below": 0.05,
+    "days_to_clear_from_full": 8,
+    "real_days_range": [
+     6,
+     40
+    ],
+    "src": "production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md (puddle 5 to 20 mm lasts 6 to 40 days at that rate, to the next rain)",
+    "chosen": true,
+    "note": "standing water persists across game days; at 48 real minutes a day a full puddle lasts about 6.7 real hours of play"
+   },
+   "rain_days_month": {
+    "tynemouth_1961_90": 11.5,
+    "tynemouth_1991_2020": 12.2,
+    "src": "production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md [17]"
+   },
+   "look_values_existing": {
+    "wet_film_from": 0.5,
+    "wet_floor_roughness": {
+     "asphalt": 0.06,
+     "paving": 0.1,
+     "kerbstone": 0.15
+    },
+    "water_level_day_night": 0.53,
+    "water_level_flags": 0.85,
+    "overcast_day_wetness": 0.85,
+    "wet_night_wetness": 0.9,
+    "src": "production/specs/unreal-look.json and production/specs/vignette-pieces.json"
+   }
+  },
+  "wet_street_table": [
+   {
+    "id": "wet_street_dry_overcast",
+    "src": "5.3.3",
+    "weather": "dry_overcast",
+    "wetness": 0.4,
+    "roughness": {
+     "asphalt": 0.655,
+     "paving": 0.631,
+     "kerbstone": 0.646
+    },
+    "albedo_share_of_dry": {
+     "asphalt": 0.888,
+     "paving": 0.828,
+     "kerbstone": 0.828
+    },
+    "relief_map_kept": true,
+    "drying_hours_to_zero_day_rate": 2.0,
+    "drying_hours_to_zero_night_rate": 5.3,
+    "puddle_level": 0.0,
+    "puddle_days": 8,
+    "rain_days_month": {
+     "1961-90": 11.5,
+     "1991-2020": 12.2
+    },
+    "chosen": true,
+    "chosen_note": "wet roughness asphalt 0.06, paving 0.10, kerb 0.15 and wet_film_from 0.5 are the look file's (3 Oct); dry roughness 0.90, 0.85, 0.85 chosen; asphalt wet_darken 0.72 is the recipe's one 0.72 (StreetMeshes.h), paving and kerb 0.57 the look file's; roughness blends with smoothstep(0.15,0.85,wetness) (chosen)"
+   },
+   {
+    "id": "wet_street_drizzle",
+    "src": "5.3.3",
+    "weather": "drizzle",
+    "wetness": 0.8,
+    "roughness": {
+     "asphalt": 0.072,
+     "paving": 0.111,
+     "kerbstone": 0.16
+    },
+    "albedo_share_of_dry": {
+     "asphalt": 0.776,
+     "paving": 0.656,
+     "kerbstone": 0.656
+    },
+    "relief_map_kept": false,
+    "drying_hours_to_zero_day_rate": 4.0,
+    "drying_hours_to_zero_night_rate": 10.7,
+    "puddle_level": 0.35,
+    "puddle_days": 8,
+    "rain_days_month": {
+     "1961-90": 11.5,
+     "1991-2020": 12.2
+    },
+    "chosen": true,
+    "chosen_note": "wet roughness asphalt 0.06, paving 0.10, kerb 0.15 and wet_film_from 0.5 are the look file's (3 Oct); dry roughness 0.90, 0.85, 0.85 chosen; asphalt wet_darken 0.72 is the recipe's one 0.72 (StreetMeshes.h), paving and kerb 0.57 the look file's; roughness blends with smoothstep(0.15,0.85,wetness) (chosen)"
+   },
+   {
+    "id": "wet_street_rain",
+    "src": "5.3.3",
+    "weather": "rain",
+    "wetness": 1.0,
+    "roughness": {
+     "asphalt": 0.06,
+     "paving": 0.1,
+     "kerbstone": 0.15
+    },
+    "albedo_share_of_dry": {
+     "asphalt": 0.72,
+     "paving": 0.57,
+     "kerbstone": 0.57
+    },
+    "relief_map_kept": false,
+    "drying_hours_to_zero_day_rate": 5.0,
+    "drying_hours_to_zero_night_rate": 13.3,
+    "puddle_level": 1.0,
+    "puddle_days": 8,
+    "rain_days_month": {
+     "1961-90": 11.5,
+     "1991-2020": 12.2
+    },
+    "chosen": true,
+    "chosen_note": "wet roughness asphalt 0.06, paving 0.10, kerb 0.15 and wet_film_from 0.5 are the look file's (3 Oct); dry roughness 0.90, 0.85, 0.85 chosen; asphalt wet_darken 0.72 is the recipe's one 0.72 (StreetMeshes.h), paving and kerb 0.57 the look file's; roughness blends with smoothstep(0.15,0.85,wetness) (chosen)"
+   }
+  ],
+  "who_is_out": {
+   "id": "who_is_out",
+   "src": "2.1.4, 4.8; DEFINITIONS G9",
+   "rule": "crowd band counts are multiplied by the profile's crowd_factor (dry 1.0, drizzle 0.75, rain 0.5); the same factor halves far voices and activity sounds in sounds.json states; sight_factor multiplies the seeing range; sound_factor multiplies every noise reach; grip_factor multiplies tyre grip and braking; slipperiness_foot is the chance multiplier for a slip on a sprint or a turn (chosen).",
+   "reach_ref": "tune:sound.reach.*",
+   "rain_cut_ref": "tune:sound.reach.rain_cut",
+   "note": "the heard-line radius in rain (7 m dry, 6 drizzle, 5 rain) is lines/rules.json and stays there"
+  }
+ },
+ "colour_grade": {
+  "id": "colour_grade",
+  "src": "5.4.3; RULINGS 15 Sep (D28), 21 Sep, 1 Oct; production/reference/README.md; canon.md",
+  "mood_words": [
+   "photoreal, wet, overcast, grimy Britain (canon visual target)",
+   "wet, worked, unglamorous (brand bible tone)",
+   "dark, glistening, mirroring sky and buildings (3 Oct bar)",
+   "pools of lamp light with darkness between, never one orange wash (1 Oct)",
+   "the dull orange glow of an overcast town sky (4 Nov)"
+  ],
+  "mood_to_numbers": "cool desaturated grey day; contrast and grain rise toward night; shadows lean cool blue so the sodium pools read as the only warmth; no film warmth added (1990 photographs are warm, which is no colour evidence).",
+  "order": [
+   "exposure_pin",
+   "white_balance",
+   "lift_gamma_gain",
+   "tone_curve",
+   "saturation",
+   "tonemap",
+   "bloom",
+   "vignette",
+   "grain"
+  ],
+  "shared_between": "browser prototype and Unreal (5.4.3): same numbers; operations in the order above",
+  "by_state": {
+   "day": {
+    "white_balance_K": 7000,
+    "contrast": 1.06,
+    "saturation": 0.8,
+    "lift_rgb": [
+     -0.004,
+     0.0,
+     0.008
+    ],
+    "gamma_rgb": [
+     1.0,
+     1.0,
+     1.02
+    ],
+    "gain_rgb": [
+     0.99,
+     1.0,
+     1.01
+    ],
+    "grain": 0.18,
+    "vignette": 0.3,
+    "bloom": 0.25,
+    "chosen": true
+   },
+   "dusk": {
+    "white_balance_K": 5800,
+    "contrast": 1.1,
+    "saturation": 0.86,
+    "lift_rgb": [
+     -0.004,
+     0.0,
+     0.01
+    ],
+    "gamma_rgb": [
+     1.0,
+     1.0,
+     1.03
+    ],
+    "gain_rgb": [
+     1.0,
+     0.99,
+     0.99
+    ],
+    "grain": 0.24,
+    "vignette": 0.38,
+    "bloom": 0.35,
+    "chosen": true
+   },
+   "night": {
+    "white_balance_K": 4300,
+    "contrast": 1.14,
+    "saturation": 0.9,
+    "lift_rgb": [
+     -0.006,
+     -0.002,
+     0.01
+    ],
+    "gamma_rgb": [
+     1.0,
+     1.0,
+     1.04
+    ],
+    "gain_rgb": [
+     1.02,
+     0.99,
+     0.96
+    ],
+    "grain": 0.3,
+    "vignette": 0.45,
+    "bloom": 0.45,
+    "chosen": true
+   }
+  },
+  "state_for_elevation": "day above sunset, dusk from sunset to -12, night below -12; between states blend by elevation_keys white balance and linear mix of the others over the same range",
+  "by_weather": {
+   "dry_overcast": {
+    "saturation_mult": 1.0,
+    "contrast_mult": 1.0,
+    "lift_blue_add": 0.0
+   },
+   "drizzle": {
+    "saturation_mult": 0.96,
+    "contrast_mult": 0.99,
+    "lift_blue_add": 0.002
+   },
+   "rain": {
+    "saturation_mult": 0.92,
+    "contrast_mult": 0.97,
+    "lift_blue_add": 0.004
+   },
+   "chosen": true
+  },
+  "tone_curve": {
+   "points_in_out": [
+    [
+     0,
+     0
+    ],
+    [
+     0.18,
+     0.15
+    ],
+    [
+     0.5,
+     0.48
+    ],
+    [
+     0.82,
+     0.8
+    ],
+    [
+     1,
+     0.97
+    ]
+   ],
+   "note": "gentle S with a lifted toe held low and a rolled shoulder (chosen)",
+   "chosen": true
+  },
+  "tonemapper_filmic": {
+   "slope": 0.88,
+   "toe": 0.55,
+   "shoulder": 0.26,
+   "black_clip": 0.0,
+   "white_clip": 0.04,
+   "note": "Unreal's default filmic values as recalled, not re-read today (chosen)",
+   "chosen": true
+  },
+  "grain": {
+   "intensity_by_state": {
+    "day": 0.18,
+    "dusk": 0.24,
+    "night": 0.3
+   },
+   "size": 1.0,
+   "animated": true,
+   "fps": 24,
+   "note": "fast stock, the wet overcast one of 1990 film research (DELIVERY.md): grainiest at night; a 'consumer 35 mm' texture, subtle, never a filter look",
+   "chosen": true
+  },
+  "vignette": {
+   "base_by_state": {
+    "day": 0.3,
+    "dusk": 0.38,
+    "night": 0.45
+   },
+   "light_term": "corner darkness = base + 0.25 * (1 - light value at Tom), clamp 0.7: the frame's corners darken with the same light value the watchers use (4.7)",
+   "chosen": true
+  },
+  "bloom_halation": {
+   "bloom_by_state": {
+    "day": 0.25,
+    "dusk": 0.35,
+    "night": 0.45
+   },
+   "halation_red": 0.1,
+   "halation_note": "sodium lamps bleed a faint red halo (chosen)",
+   "chosen": true
+  },
+  "chromatic_aberration": 0.04,
+  "depth_of_field": {
+   "default_on": {
+    "unreal": true,
+    "browser": false
+   },
+   "strength": 0.3,
+   "focus_follows": "Tom",
+   "own_switch": true,
+   "chosen": true
+  },
+  "motion_blur": {
+   "default_on": false,
+   "strength": 0.3,
+   "own_switch": true,
+   "chosen": true
+  },
+  "switches": [
+   "depth_of_field",
+   "motion_blur",
+   "grain",
+   "vignette"
+  ],
+  "chosen": true
+ }
+}

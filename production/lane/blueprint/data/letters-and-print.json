@@ -1,0 +1,4589 @@
+{
+ "file": "letters-and-print.json",
+ "version": "2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "production/specs/town-news.json",
+  "production/specs/brand-bible-v1.md",
+  "production/cloud-week/2d/paper and 2d/fascias (texts; built from cloud-week/targets/posters-boards-plates and fascia-signs target.json)",
+  "production/lane/blueprint/data/map.json (names, streets, numbers)",
+  "production/lane/blueprint/economy/ECONOMY-DESIGN-2026-11-26.md and PRICES-WAGES-1990.md (prices)",
+  "production/lane/blueprint/BLUEPRINT-02-town.md 2.4.5, 2.7.4, 2.10.3, RT-16, RT2-18; BLUEPRINT-03-story.md 3.1.1 to 3.1.4, RT-01; BLUEPRINT-04-place.md 4.9; BLUEPRINT-06-interface.md 6.10",
+  "production/lane/story/frame/STORY-FRAME-2026-11-26.md (draft; only for names and dates, each marked story_check)",
+  "game-design/town-news-sample-2026-09-29.md; game-design/setting-britain-2026-07-31.md"
+ ],
+ "calendar": {
+  "start": "Monday 15 October 1990",
+  "weeks": [
+   {
+    "week": 1,
+    "monday": "1990-10-15"
+   },
+   {
+    "week": 2,
+    "monday": "1990-10-22"
+   },
+   {
+    "week": 3,
+    "monday": "1990-10-29"
+   },
+   {
+    "week": 4,
+    "monday": "1990-11-05"
+   },
+   {
+    "week": 5,
+    "monday": "1990-11-12"
+   },
+   {
+    "week": 6,
+    "monday": "1990-11-19"
+   },
+   {
+    "week": 7,
+    "monday": "1990-11-26"
+   },
+   {
+    "week": 8,
+    "monday": "1990-12-03"
+   }
+  ],
+  "acts": "Act I week 1 (15 to 21 October); Act II about weeks 2 to 6; Act III week 7 (26 November to 2 December), by state not by date (3.1)",
+  "note": "the dates in print are fixed; story states move letters and conditional items, not the posters' dates",
+  "clock_note": "weekly figures need no recomputation under the 120 s hour; a game week is 7 x 48 real minutes = 5.6 real hours; the paper's 14 issues are 14 game days of two a week"
+ },
+ "brands": {
+  "note": "The brand bible owes six names (canon.md 'Brands and law'; production/specs/brand-bible-v1.md). All six are minted here, fictional, and marked chosen for his tap. The four already minted are recorded unchanged.",
+  "owed": [
+   {
+    "id": "club",
+    "name": "Hookside Rovers",
+    "full_name": "Hookside Rovers Football Club",
+    "kind": "club",
+    "founded": 1904,
+    "register": "\"the Rovers\"; \"Hookside\" to people who go; \"that lot\" to people who do not",
+    "physical": "a scarf in a window, a notice in the newsagent's, a result chalked on the caff board, red and white hoops on a man's jumper; the ground, Ropewalk Park, is off the map",
+    "says": "A port town's club in a regional league nobody outside the county follows, always slightly disappointing",
+    "neverConfuse": "any real club named Rovers or Wanderers; the league and opponents are invented",
+    "league": "the Eastern Coast League",
+    "ground": "Ropewalk Park (off the map)",
+    "colours": "red and white hoops",
+    "opponents": [
+     "Easterby United",
+     "Thornwick Town",
+     "Saltmarsh Athletic",
+     "Fenby Albion",
+     "Northwold Rangers"
+    ],
+    "license": "invented, original (no allowlist asset)",
+    "chosen": true,
+    "src": "canon.md owes; brand-bible-v1.md section 2.1"
+   },
+   {
+    "id": "paper",
+    "name": "The Meridian Pilot",
+    "kind": "paper",
+    "founded": 1871,
+    "register": "\"the Pilot\"",
+    "physical": "the masthead on the caff counter copy, the newsagent's board and the stand outside Peart's; price 25p; out Tuesday and Friday; office on Copper Row (off the map)",
+    "says": "A port paper that still calls itself after the man who brings ships in; stone-subbed front page; a classifieds page; one reporter on the Hook",
+    "neverConfuse": "any real paper called the Pilot or the Mail; the old prototype's \"Evening Mail\" is retired",
+    "price": "25p",
+    "days": "Tuesday and Friday",
+    "reporter_on_the_hook": "Alison Sedman",
+    "license": "invented, original",
+    "chosen": true,
+    "src": "canon.md owes; 2.4.5 (twice a week); the prototype's \"Evening Mail\" (a real title) is replaced"
+   },
+   {
+    "id": "radio",
+    "name": "Cutter FM",
+    "kind": "radio",
+    "founded": 1989,
+    "register": "\"Cutter\"; \"the pirate\"",
+    "physical": "a transmitter on a roof off the map, a phone-in on a landline (960 900, a number nobody checks), a hand-painted sticker on a rank shelter, a tune from a cab radio",
+    "says": "A pirate on 96.4 run from a flat over a yard; the street listens and nobody admits it",
+    "neverConfuse": "any real pirate or local station called Cutter",
+    "frequency": "96.4 FM",
+    "phone_in": "960 900",
+    "license": "invented, original; no real songs, jingles or presenters",
+    "chosen": true,
+    "src": "canon.md owes; brand-bible-v1.md (a transmitter on a roof and a phone-in on a landline)"
+   },
+   {
+    "id": "tv",
+    "name": "Estuary Television",
+    "kind": "television",
+    "founded": 1968,
+    "register": "\"Estuary\"; \"the telly\"",
+    "physical": "an ident on a shop set in the window of a second-hand shop, a mast on the skyline, \"Estuary\" on a van",
+    "says": "A regional franchise: local news at six, a weather map with the Hook on it, and nothing else anybody remembers",
+    "neverConfuse": "any real regional ITV company",
+    "channel": "the regional channel",
+    "license": "invented, original",
+    "chosen": true,
+    "src": "canon.md owes; brand-bible-v1.md (a regional franchise)"
+   },
+   {
+    "id": "phone",
+    "name": "Tidewire Telephones",
+    "kind": "telephone operator",
+    "founded": 1951,
+    "register": "\"the phone company\"; the kiosk, \"the box\"",
+    "physical": "the mark and lettering on the KX100 kiosks at the landing, by Rita's and at the dock gate (map.json phone_boxes): a blue band, the word TIDEWIRE in capitals, TELEPHONE under it; the rate and the \"emergency 999\" card inside",
+    "lettering": {
+     "band": "TIDEWIRE",
+     "sub": "TELEPHONE",
+     "inside_card": [
+      "INSERT COINS BEFORE DIALLING",
+      "LOCAL CALLS 10p",
+      "EMERGENCY: DIAL 999, NO COIN NEEDED",
+      "TIDEWIRE TELEPHONES · FAULTS: DIAL 151"
+     ]
+    },
+    "says": "A utility that has never once been on time",
+    "neverConfuse": "any real telephone company, its logo, or its kiosk lettering",
+    "license": "invented, original; the KX100 shape is a model name only, no logo used",
+    "chosen": true,
+    "src": "canon.md owes (the kiosk's mark and lettering); found owed by the vignette bill of materials 2026-09-02; map.json phone_boxes"
+   },
+   {
+    "id": "post",
+    "name": "Realm Post",
+    "kind": "postal cypher",
+    "founded": 1840,
+    "register": "\"the post\"; the box, \"the pillar box\"",
+    "physical": "the pillar boxes on Quay Street and North Road (map.json street_furniture): a crowned RP cypher cast in the door, REALM POST under it, and a collection plate",
+    "lettering": {
+     "cypher": "a crown over the letters RP in a plain oval",
+     "door_text": "REALM POST",
+     "plate": [
+      "LAST COLLECTION 5.30 PM",
+      "SUNDAY: NONE",
+      "NEXT COLLECTION 9 AM"
+     ]
+    },
+    "says": "A service that has outlasted its own reasons; letters still go in it",
+    "neverConfuse": "any real royal cypher, the real postal service, or any real monarch (no reign number is shown)",
+    "license": "invented, original",
+    "chosen": true,
+    "src": "canon.md owes (the postal cypher, the pillar box); found owed by the vignette bill of materials 2026-09-02; map.json street_furniture pillar_box_qs, pillar_box_north"
+   }
+  ],
+  "already_minted": [
+   {
+    "id": "mickeys",
+    "name": "Mickey's",
+    "kind": "minicab office",
+    "src": "canon.md (D19: a minicab office; Quay Street, 1 Quay Street on the frozen map)"
+   },
+   {
+    "id": "tivoli",
+    "name": "the Tivoli",
+    "kind": "cinema",
+    "src": "canon.md (the Parade; off the frozen map)"
+   },
+   {
+    "id": "harbour_board",
+    "name": "Meridian Harbour Board",
+    "kind": "body",
+    "src": "canon.md; map.json dock_harbour_board"
+   },
+   {
+    "id": "ferry",
+    "name": "Meridian Ferry",
+    "kind": "ferry",
+    "src": "canon.md; map.json ferry_landing"
+   }
+  ],
+  "other_invented_names_used": [
+   {
+    "id": "printer",
+    "name": "Quay Print",
+    "kind": "printer",
+    "note": "\"Printed by Quay Print, Meridian.\" on bills and sheets (cloud-week posters target); fictional",
+    "chosen": true
+   },
+   {
+    "id": "film1",
+    "name": "THE FOURTH WITNESS",
+    "kind": "film",
+    "note": "a Tivoli film, from Thursday 18 October; made by Marshland Pictures (fictional)",
+    "src": "cloud-week posters T01-named"
+   },
+   {
+    "id": "film2",
+    "name": "A WEEK AT GULLWING",
+    "kind": "film",
+    "note": "a Tivoli comedy, from Thursday 25 October",
+    "src": "cloud-week posters T02-named"
+   },
+   {
+    "id": "poll_tax_campaign",
+    "name": "Meridian Against the Poll Tax",
+    "kind": "local campaign",
+    "note": "an invented local campaign: not a real party or person; chapel hall meetings on Thursdays",
+    "src": "4.9; cloud-week posters P01 to P06"
+   },
+   {
+    "id": "tea",
+    "name": "Quayside Tea",
+    "kind": "product",
+    "note": "80 bags, £1.35 on a bill; the grocer's own special offer is 80 for 99p",
+    "src": "cloud-week posters G02"
+   },
+   {
+    "id": "powder",
+    "name": "Whitewell",
+    "kind": "product",
+    "note": "a washday powder, \"washes white\"",
+    "src": "cloud-week posters G01"
+   },
+   {
+    "id": "cigarettes",
+    "name": "Mariner",
+    "kind": "cigarettes",
+    "note": "the prototype's cigarette brand; fictional; 20 for £1.70 in the newsagent's",
+    "src": "prototype cast.js bark; PRICES-WAGES-1990 section 1"
+   },
+   {
+    "id": "cab_rival",
+    "name": "Portside Cars",
+    "kind": "other cab firm",
+    "note": "on the north rank; Len Wardle",
+    "src": "prototype jobsx.js"
+   }
+  ]
+ },
+ "paper": {
+  "name": "The Meridian Pilot",
+  "brand_id": "paper",
+  "chosen": true,
+  "price": "25p",
+  "days": "Tuesday and Friday",
+  "first_issue": "Tuesday 16 October 1990",
+  "last_issue": "Friday 30 November 1990",
+  "issues_count": 14,
+  "masthead_line": "THE MERIDIAN PILOT · Meridian's own paper since 1871 · 25p · Tuesday and Friday",
+  "rules": [
+   "A story prints only what Alison Sedman knows and chose to write (D56, ER-PAPER-01): every item has a source_fact and an alison_knows.",
+   "The fixed items of an issue come from events the town can know (the Board's notices, the council's notices, the posters, the court list, the club's result).",
+   "Items marked state_dependent print only when print_if holds; items marked story_check are re-checked against production/lane/story/frame/ once it is final.",
+   "No real event, person, party, club, brand or product; the canon content rule applies to every line; British spelling; pounds and pence plain.",
+   "A story about Tom is only as sure as what she was told: see strength_wording."
+  ],
+  "strength_wording": {
+   "saw_herself": "states it plainly",
+   "told_by_the_person": "\"says\"",
+   "told_by_one_other": "\"is understood to\"",
+   "said_by_several": "\"several people say\"",
+   "street_rumour": "\"it is said\"",
+   "police_or_court": "\"police say\" / \"the court heard\""
+  },
+  "issues": [
+   {
+    "id": "issue_01",
+    "issue": 1,
+    "masthead": "The Meridian Pilot: Tuesday 16 October 1990",
+    "date": "1990-10-16",
+    "weekday": "Tuesday",
+    "game_week": 1,
+    "headline": "TWO QUAY BERTHS TO CLOSE FOR WALL REPAIRS",
+    "items": [
+     {
+      "id": "issue_01_a",
+      "story": "Berths 3 and 4 on the Hook quay will close to all shipping from Monday 5 November while the quay wall is repaired, the Harbour Board has announced. Masters should apply to the Harbour Master's office for other berths.",
+      "source_fact": "harbour_notice_berths_closed (poster H03)",
+      "alison_knows": "copied from the typed notice posted on the Harbour Board's door"
+     },
+     {
+      "id": "issue_01_b",
+      "story": "The chapel roof fund holds a jumble sale at the chapel hall on Saturday 20 October. Doors open at 2 pm; clothing, books and bric-a-brac, teas and cakes, admission 20p. Father Walsh says the roof will not see another winter.",
+      "source_fact": "jumble_sale_20_oct (poster J01)",
+      "alison_knows": "told by Father Walsh, at the chapel hall door"
+     },
+     {
+      "id": "issue_01_c",
+      "story": "Police are appealing for witnesses after a shop window on Quay Street was smashed between 11 pm and 1 am on Friday 12 October. Anyone who saw or heard anything is asked to ring the incident room on 960 640.",
+      "source_fact": "police_appeal_12_oct (poster C01a)",
+      "alison_knows": "read off the appeal and a word with the constable on the beat"
+     },
+     {
+      "id": "issue_01_d",
+      "story": "The Tivoli's new thriller, The Fourth Witness, opens on Thursday. Performances at 5.15 and 8.00, all seats £2.80, pensioners and the unwaged £1.50.",
+      "source_fact": "tivoli_programme (poster T03-named)",
+      "alison_knows": "the Tivoli's own bill"
+     },
+     {
+      "id": "issue_01_e",
+      "story": "Hookside Rovers drew 1-1 with Easterby United at Ropewalk Park on Saturday, the equaliser coming three minutes from time.",
+      "source_fact": "rovers_result_13_oct",
+      "alison_knows": "her sports desk sheet; she was at the ground",
+      "chosen": true
+     }
+    ],
+    "tom_slot": "one optional item from tom_story_templates may be added after the fixed items if Alison holds the fact (see paper.tom_story_templates); never more than one, never before she holds it",
+    "src": "production/specs/town-news.json (the town's own news); poster dates from cloud-week posters target; blueprint 2.4.5"
+   },
+   {
+    "id": "issue_02",
+    "issue": 2,
+    "masthead": "The Meridian Pilot: Friday 19 October 1990",
+    "date": "1990-10-19",
+    "weekday": "Friday",
+    "game_week": 1,
+    "headline": "CHAPEL ROOF: SATURDAY'S JUMBLE SALE, AND WHY IT MATTERS",
+    "items": [
+     {
+      "id": "issue_02_a",
+      "story": "The lead on the chapel roof is gone from the vestry side, and what is left leaks, Father Walsh told the Pilot. Saturday's sale in the chapel hall is the fund's first this winter.",
+      "source_fact": "chapel_roof_lead (side story: the chapel's lead)",
+      "alison_knows": "told by Father Walsh; she was shown the damp",
+      "story_check": true
+     },
+     {
+      "id": "issue_02_b",
+      "story": "A man who gave his name as a docker was fined £40 by Meridian magistrates on Thursday for driving without due care on the Dock Road.",
+      "source_fact": "magistrates_court_list",
+      "alison_knows": "court list; she sat in the press seat",
+      "chosen": true
+     },
+     {
+      "id": "issue_02_c",
+      "story": "The Harbour Board is advertising for a quay labourer. Applications in writing, giving age and experience, to the Secretary, to arrive by Friday 16 November. Wages by agreement.",
+      "source_fact": "harbour_vacancy (poster H05)",
+      "alison_knows": "read off the vacancy notice"
+     },
+     {
+      "id": "issue_02_d",
+      "story": "The Copper Row market runs on Tuesdays, Fridays and Saturdays from 8 am to 4 pm. New stalls are welcome; enquiries to the market office.",
+      "source_fact": "market_bill (poster M01)",
+      "alison_knows": "the market office's bill"
+     },
+     {
+      "id": "issue_02_e",
+      "story": "Tide table: high water at the Hook is 0542 and 1807 on Thursday 1 November, with 4.4 m and 4.3 m, the Harbour Board's table shows.",
+      "source_fact": "tide_table_nov (poster H04)",
+      "alison_knows": "the Board's table, which she copies each month",
+      "chosen": true
+     }
+    ],
+    "tom_slot": "one optional item from tom_story_templates may be added after the fixed items if Alison holds the fact (see paper.tom_story_templates); never more than one, never before she holds it",
+    "src": "production/specs/town-news.json (the town's own news); poster dates from cloud-week posters target; blueprint 2.4.5"
+   },
+   {
+    "id": "issue_03",
+    "issue": 3,
+    "masthead": "The Meridian Pilot: Tuesday 23 October 1990",
+    "date": "1990-10-23",
+    "weekday": "Tuesday",
+    "game_week": 2,
+    "headline": "POLL TAX: MEETING AT THE CHAPEL HALL ON THURSDAY",
+    "items": [
+     {
+      "id": "issue_03_a",
+      "story": "Meridian Against the Poll Tax holds a public meeting at the chapel hall on Thursday 25 October at 7.30 pm. Everyone is welcome. The group says it will explain what to do if a summons arrives.",
+      "source_fact": "poll_tax_meeting_25_oct (poster P01)",
+      "alison_knows": "a leaflet put through the Pilot's door; she will be there"
+     },
+     {
+      "id": "issue_03_b",
+      "story": "Quay Print's machine broke down on Friday and the Hook's bills went out a day late, the printer admits. It says the repair cost £140.",
+      "source_fact": "quay_print_breakdown",
+      "alison_knows": "told by the printer",
+      "chosen": true
+     },
+     {
+      "id": "issue_03_c",
+      "story": "The Tivoli's comedy A Week at Gullwing follows on Thursday 25 October. The Fourth Witness plays until Wednesday.",
+      "source_fact": "tivoli_programme (poster T03-named)",
+      "alison_knows": "the Tivoli's bill"
+     },
+     {
+      "id": "issue_03_d",
+      "story": "The ferry's winter service runs half-hourly until 5.30 pm, with the last crossing from the Hook at 11.00 pm Monday to Saturday.",
+      "source_fact": "ferry_timetable (poster F01)",
+      "alison_knows": "the timetable on the ramp board"
+     },
+     {
+      "id": "issue_03_e",
+      "story": "Mrs Edith Stockill, of the newsagent's pension counter, has helped fill in forms for 31 neighbours this year and says nobody has yet had a form turned down.",
+      "source_fact": "stockill_forms",
+      "alison_knows": "Alison asked her at the counter",
+      "chosen": true
+     }
+    ],
+    "tom_slot": "one optional item from tom_story_templates may be added after the fixed items if Alison holds the fact (see paper.tom_story_templates); never more than one, never before she holds it",
+    "src": "production/specs/town-news.json (the town's own news); poster dates from cloud-week posters target; blueprint 2.4.5"
+   },
+   {
+    "id": "issue_04",
+    "issue": 4,
+    "masthead": "The Meridian Pilot: Friday 26 October 1990",
+    "date": "1990-10-26",
+    "weekday": "Friday",
+    "game_week": 2,
+    "headline": "ADVICE EVENING FOR THOSE WITH A SUMMONS",
+    "items": [
+     {
+      "id": "issue_04_a",
+      "story": "Meridian Against the Poll Tax will hold an advice evening at the chapel hall on Tuesday 30 October at 7 pm for anyone who has had a summons. The advice is free and confidential.",
+      "source_fact": "poll_tax_advice_30_oct (poster P04)",
+      "alison_knows": "the group's sheet, and she went on Thursday"
+     },
+     {
+      "id": "issue_04_b",
+      "story": "A van was stolen from the quay in the early hours of Saturday 20 October. Police say anyone with information should ring 960 640.",
+      "source_fact": "police_appeal_20_oct (poster C01b)",
+      "alison_knows": "police appeal; one of the quay men told her he heard it start"
+     },
+     {
+      "id": "issue_04_c",
+      "story": "Hookside Rovers lost 0-2 at Thornwick Town. The manager says the pitch did not suit them.",
+      "source_fact": "rovers_result_20_oct",
+      "alison_knows": "sports desk sheet",
+      "chosen": true
+     },
+     {
+      "id": "issue_04_d",
+      "story": "Mr Walter Pybus, who delivered the Pilot on the Hook for thirty years, has retired. The paper wishes him a long rest.",
+      "source_fact": "pybus_retires",
+      "alison_knows": "a note from the circulation desk",
+      "chosen": true
+     },
+     {
+      "id": "issue_04_e",
+      "story": "The planning notice for 7 Quay Street, which would turn the empty shop into an estate agent's office, has been up since Monday. Comments to the Planning Officer by Friday 9 November.",
+      "source_fact": "planning_notice_7_quay_street (poster C02)",
+      "alison_knows": "read off the notice in its sleeve"
+     }
+    ],
+    "tom_slot": "one optional item from tom_story_templates may be added after the fixed items if Alison holds the fact (see paper.tom_story_templates); never more than one, never before she holds it",
+    "src": "production/specs/town-news.json (the town's own news); poster dates from cloud-week posters target; blueprint 2.4.5"
+   },
+   {
+    "id": "issue_05",
+    "issue": 5,
+    "masthead": "The Meridian Pilot: Tuesday 30 October 1990",
+    "date": "1990-10-30",
+    "weekday": "Tuesday",
+    "game_week": 3,
+    "headline": "WHAT THE CHAPEL HALL HEARD ON THURSDAY",
+    "items": [
+     {
+      "id": "issue_05_a",
+      "story": "About ninety people crowded the chapel hall on Thursday night for the meeting against the poll tax. The meeting agreed to march on Saturday 10 November, assembling at the Exchange at 11 am.",
+      "source_fact": "poll_tax_meeting_held; march_10_nov (poster P03)",
+      "alison_knows": "Alison was in the hall"
+     },
+     {
+      "id": "issue_05_b",
+      "story": "A man was assaulted near the quay on the night of Sunday 28 October, between 10 pm and 11 pm. The police ask anyone who saw anything to ring the incident room, 960 640.",
+      "source_fact": "police_appeal_28_oct (poster C01c); state-dependent",
+      "alison_knows": "police appeal; she asked at the station",
+      "state_dependent": true,
+      "print_if": "a man was assaulted near the quay on the night of Sunday 28 October (a deed in the town)"
+     },
+     {
+      "id": "issue_05_c",
+      "story": "Quay Street will be closed to traffic on Sunday 4 November from 8 am to 6 pm for gas main renewal. Pedestrians may pass. The diversion is by Weighhouse Lane.",
+      "source_fact": "road_closure_4_nov (poster C03)",
+      "alison_knows": "read off the council's notice"
+     },
+     {
+      "id": "issue_05_d",
+      "story": "Hookside Rovers beat Fenby Albion 2-0 at Ropewalk Park.",
+      "source_fact": "rovers_result_27_oct",
+      "alison_knows": "sports desk sheet",
+      "chosen": true
+     },
+     {
+      "id": "issue_05_e",
+      "story": "The caff on the quay will open its back room for the Harbour Board's staff on Friday dinner times, Mrs Grace Rinaldi says. Tea stays at 30p.",
+      "source_fact": "caff_notice",
+      "alison_knows": "told by Grace Rinaldi",
+      "chosen": true
+     }
+    ],
+    "tom_slot": "one optional item from tom_story_templates may be added after the fixed items if Alison holds the fact (see paper.tom_story_templates); never more than one, never before she holds it",
+    "src": "production/specs/town-news.json (the town's own news); poster dates from cloud-week posters target; blueprint 2.4.5"
+   },
+   {
+    "id": "issue_06",
+    "issue": 6,
+    "masthead": "The Meridian Pilot: Friday 2 November 1990",
+    "date": "1990-11-02",
+    "weekday": "Friday",
+    "game_week": 3,
+    "headline": "THE WEEK THE GAS MAIN COMES UP",
+    "items": [
+     {
+      "id": "issue_06_a",
+      "story": "Professional wrestling comes to the Drill Hall tonight at 7.30. Ringside £4, unreserved £2.50, tickets at the door.",
+      "source_fact": "wrestling_bill_2_nov (poster W01-named)",
+      "alison_knows": "the Drill Hall's bill"
+     },
+     {
+      "id": "issue_06_b",
+      "story": "Quay Street will be dug up on Sunday for the gas main. Householders are asked to move cars off the street by Saturday night.",
+      "source_fact": "road_closure_4_nov (poster C03)",
+      "alison_knows": "read off the council's notice"
+     },
+     {
+      "id": "issue_06_c",
+      "story": "The Harbour Board has confirmed that the wall repairs to berths 3 and 4 begin on Monday. Two coasters have been moved to the far quay.",
+      "source_fact": "harbour_berths_closed",
+      "alison_knows": "told by Christine Pickering at the Harbour Board window"
+     },
+     {
+      "id": "issue_06_d",
+      "story": "Customs officers at the dock gate seized 3,000 cigarettes from a van on Wednesday. The driver was released pending inquiries.",
+      "source_fact": "customs_seizure_31_oct",
+      "alison_knows": "told by a customs officer at the gate; Alison saw the van go in",
+      "state_dependent": false,
+      "chosen": true
+     },
+     {
+      "id": "issue_06_e",
+      "story": "Meridian Against the Poll Tax says 200 people have signed up for the march on 10 November.",
+      "source_fact": "poll_tax_march_signups",
+      "alison_knows": "the group's secretary rang her"
+     }
+    ],
+    "tom_slot": "one optional item from tom_story_templates may be added after the fixed items if Alison holds the fact (see paper.tom_story_templates); never more than one, never before she holds it",
+    "src": "production/specs/town-news.json (the town's own news); poster dates from cloud-week posters target; blueprint 2.4.5"
+   },
+   {
+    "id": "issue_07",
+    "issue": 7,
+    "masthead": "The Meridian Pilot: Tuesday 6 November 1990",
+    "date": "1990-11-06",
+    "weekday": "Tuesday",
+    "game_week": 4,
+    "headline": "BERTHS CLOSED: THE HOOK QUAY QUIET",
+    "items": [
+     {
+      "id": "issue_07_a",
+      "story": "Berths 3 and 4 closed to shipping on Monday as announced. The Harbour Board says the repairs will take until the New Year.",
+      "source_fact": "harbour_berths_closed",
+      "alison_knows": "seen from the quay on Monday"
+     },
+     {
+      "id": "issue_07_b",
+      "story": "The planning application for the empty shop at 7 Quay Street has drawn three letters of objection, the Planning Officer says. Comments close on Friday.",
+      "source_fact": "planning_notice_7_quay_street (poster C02)",
+      "alison_knows": "told by the Planning Officer"
+     },
+     {
+      "id": "issue_07_c",
+      "story": "Quay Street's gas main was renewed on Sunday and the street reopened on time at 6 pm.",
+      "source_fact": "road_closure_4_nov held",
+      "alison_knows": "she walked down it on Sunday evening"
+     },
+     {
+      "id": "issue_07_d",
+      "story": "Holt's garage on Cold Store Road has taken delivery of a new recovery truck and says it will pull anything off the quay road, day or night.",
+      "source_fact": "holts_garage_truck",
+      "alison_knows": "told by the garage",
+      "chosen": true
+     },
+     {
+      "id": "issue_07_e",
+      "story": "Hookside Rovers lost 1-3 at Saltmarsh Athletic. The next home game is on Saturday.",
+      "source_fact": "rovers_result_3_nov",
+      "alison_knows": "sports desk sheet",
+      "chosen": true
+     }
+    ],
+    "tom_slot": "one optional item from tom_story_templates may be added after the fixed items if Alison holds the fact (see paper.tom_story_templates); never more than one, never before she holds it",
+    "src": "production/specs/town-news.json (the town's own news); poster dates from cloud-week posters target; blueprint 2.4.5"
+   },
+   {
+    "id": "issue_08",
+    "issue": 8,
+    "masthead": "The Meridian Pilot: Friday 9 November 1990",
+    "date": "1990-11-09",
+    "weekday": "Friday",
+    "game_week": 4,
+    "headline": "MARCH TOMORROW: ASSEMBLE AT THE EXCHANGE",
+    "items": [
+     {
+      "id": "issue_08_a",
+      "story": "Meridian Against the Poll Tax will march tomorrow, Saturday 10 November, assembling at the Exchange at 11 am. Marchers are asked to bring neighbours and banners.",
+      "source_fact": "poll_tax_march_10_nov (poster P03)",
+      "alison_knows": "the group's secretary rang; she will march"
+     },
+     {
+      "id": "issue_08_b",
+      "story": "The Hook's chip shop on Back Parade is to open on Sundays from this week, Mr Dobson says, to catch the ferry trade.",
+      "source_fact": "dobson_sunday",
+      "alison_knows": "told by Mr Dobson at the counter",
+      "chosen": true
+     },
+     {
+      "id": "issue_08_c",
+      "story": "Comments on the planning application for 7 Quay Street close today.",
+      "source_fact": "planning_notice_7_quay_street (poster C02)",
+      "alison_knows": "read off the notice"
+     },
+     {
+      "id": "issue_08_d",
+      "story": "A shop window on Quay Street broken last month has been replaced. The shopkeeper declined to say who had been paid for the glass.",
+      "source_fact": "window_replaced",
+      "alison_knows": "she saw the glazier at work",
+      "chosen": true
+     },
+     {
+      "id": "issue_08_e",
+      "story": "The Tivoli's A Week at Gullwing is held over for a second week.",
+      "source_fact": "tivoli_second_week",
+      "alison_knows": "the Tivoli's bill",
+      "chosen": true
+     }
+    ],
+    "tom_slot": "one optional item from tom_story_templates may be added after the fixed items if Alison holds the fact (see paper.tom_story_templates); never more than one, never before she holds it",
+    "src": "production/specs/town-news.json (the town's own news); poster dates from cloud-week posters target; blueprint 2.4.5"
+   },
+   {
+    "id": "issue_09",
+    "issue": 9,
+    "masthead": "The Meridian Pilot: Tuesday 13 November 1990",
+    "date": "1990-11-13",
+    "weekday": "Tuesday",
+    "game_week": 5,
+    "headline": "THOUSANDS MARCH FROM THE EXCHANGE",
+    "items": [
+     {
+      "id": "issue_09_a",
+      "story": "Marchers assembled at the Exchange on Saturday against the poll tax and walked to the town hall. The police counted 800; the organisers said 1,500. There was no trouble.",
+      "source_fact": "poll_tax_march_held",
+      "alison_knows": "Alison walked with the march"
+     },
+     {
+      "id": "issue_09_b",
+      "story": "A boxing night is to be held at the Drill Hall on Friday 16 November. Ten bouts, first bout 7.30 pm, ringside £3, unreserved £1.50.",
+      "source_fact": "boxing_bill_16_nov (poster B01)",
+      "alison_knows": "the boxing club's secretary rang her"
+     },
+     {
+      "id": "issue_09_c",
+      "story": "The old-time and sequence dance is back at the chapel hall on Saturday 17 November, 7.30 to 11 pm, with live music, tea and sandwiches. Admission £1.50, all welcome.",
+      "source_fact": "dance_bill_17_nov (poster D01)",
+      "alison_knows": "the chapel hall's bill"
+     },
+     {
+      "id": "issue_09_d",
+      "story": "Hookside Rovers beat Northwold Rangers 3-1 at Ropewalk Park, their first home win since September.",
+      "source_fact": "rovers_result_10_nov",
+      "alison_knows": "sports desk sheet",
+      "chosen": true
+     },
+     {
+      "id": "issue_09_e",
+      "story": "The council's licensing committee meets on Thursday 15 November. Its agenda includes the renewal of private hire operators' licences.",
+      "source_fact": "licensing_agenda",
+      "alison_knows": "the committee clerk sent the agenda",
+      "story_check": true
+     }
+    ],
+    "tom_slot": "one optional item from tom_story_templates may be added after the fixed items if Alison holds the fact (see paper.tom_story_templates); never more than one, never before she holds it",
+    "src": "production/specs/town-news.json (the town's own news); poster dates from cloud-week posters target; blueprint 2.4.5"
+   },
+   {
+    "id": "issue_10",
+    "issue": 10,
+    "masthead": "The Meridian Pilot: Friday 16 November 1990",
+    "date": "1990-11-16",
+    "weekday": "Friday",
+    "game_week": 5,
+    "headline": "LICENCES: THE COMMITTEE SITS YESTERDAY, AND SAYS LITTLE",
+    "items": [
+     {
+      "id": "issue_10_a",
+      "story": "The council's licensing committee met on Thursday and dealt with eleven applications. It deferred one private hire operator's licence to a later meeting.",
+      "source_fact": "licensing_committee_met",
+      "alison_knows": "the committee clerk; she was in the public seat",
+      "story_check": true,
+      "state_dependent": true,
+      "print_if": "the committee sat on Thursday 15 November; the firm's own hearing is reported only if it was held"
+     },
+     {
+      "id": "issue_10_b",
+      "story": "The Drill Hall holds a boxing night tonight. First bout 7.30 pm, ringside £3, unreserved £1.50, tickets at the door.",
+      "source_fact": "boxing_bill_16_nov (poster B01)",
+      "alison_knows": "the boxing club's secretary"
+     },
+     {
+      "id": "issue_10_c",
+      "story": "Tomorrow is the old-time dance at the chapel hall: 7.30 to 11 pm, admission £1.50.",
+      "source_fact": "dance_bill_17_nov (poster D01)",
+      "alison_knows": "the chapel hall's bill"
+     },
+     {
+      "id": "issue_10_d",
+      "story": "Applications for the quay labourer's post at the Harbour Board close today.",
+      "source_fact": "harbour_vacancy (poster H05)",
+      "alison_knows": "read off the notice"
+     },
+     {
+      "id": "issue_10_e",
+      "story": "The Washeteria on Quay Street will keep its last wash at 4.30 pm, its attendant says, after a machine was put out of order.",
+      "source_fact": "washeteria_notice (poster K06a, K06c)",
+      "alison_knows": "told by the attendant",
+      "chosen": true
+     }
+    ],
+    "tom_slot": "one optional item from tom_story_templates may be added after the fixed items if Alison holds the fact (see paper.tom_story_templates); never more than one, never before she holds it",
+    "src": "production/specs/town-news.json (the town's own news); poster dates from cloud-week posters target; blueprint 2.4.5"
+   },
+   {
+    "id": "issue_11",
+    "issue": 11,
+    "masthead": "The Meridian Pilot: Tuesday 20 November 1990",
+    "date": "1990-11-20",
+    "weekday": "Tuesday",
+    "game_week": 6,
+    "headline": "THE QUAY AT NIGHT: WHAT MERIDIAN POLICE SAY",
+    "items": [
+     {
+      "id": "issue_11_a",
+      "story": "Detective Sergeant Carol Ellis says the three incidents on the Hook in October and November are being looked at together. She asks anyone with information to ring 960 640.",
+      "source_fact": "ellis_appeal",
+      "alison_knows": "a statement she took down; the sergeant refused to say more",
+      "story_check": true
+     },
+     {
+      "id": "issue_11_b",
+      "story": "Meridian Ferry's winter timetable is unchanged. The last crossing leaves the Hook at 11.00 pm.",
+      "source_fact": "ferry_timetable (poster F01)",
+      "alison_knows": "the timetable"
+     },
+     {
+      "id": "issue_11_c",
+      "story": "Hookside Rovers lost 0-1 at Fenby Albion. The manager says the better team lost.",
+      "source_fact": "rovers_result_17_nov",
+      "alison_knows": "sports desk sheet",
+      "chosen": true
+     },
+     {
+      "id": "issue_11_d",
+      "story": "The grocer on Quay Street is offering eggs at 85p a dozen and tinned pears two for 69p this week.",
+      "source_fact": "hook_stores_cards (poster K07c, K07d)",
+      "alison_knows": "she read the cards in the window",
+      "chosen": true
+     },
+     {
+      "id": "issue_11_e",
+      "story": "Mrs Winifred Duggleby, who cleans the chapel, has given the chapel hall a new set of cups.",
+      "source_fact": "duggleby_cups",
+      "alison_knows": "told by Father Walsh",
+      "chosen": true
+     }
+    ],
+    "tom_slot": "one optional item from tom_story_templates may be added after the fixed items if Alison holds the fact (see paper.tom_story_templates); never more than one, never before she holds it",
+    "src": "production/specs/town-news.json (the town's own news); poster dates from cloud-week posters target; blueprint 2.4.5"
+   },
+   {
+    "id": "issue_12",
+    "issue": 12,
+    "masthead": "The Meridian Pilot: Friday 23 November 1990",
+    "date": "1990-11-23",
+    "weekday": "Friday",
+    "game_week": 6,
+    "headline": "HARBOUR BOARD: TWO MEN FOR THE QUAY, AND A WARNING",
+    "items": [
+     {
+      "id": "issue_12_a",
+      "story": "The Harbour Board has taken on two men as quay labourers from the applications made by 16 November. The Board says the wall repairs are on time.",
+      "source_fact": "harbour_vacancy filled",
+      "alison_knows": "told by the Board's secretary"
+     },
+     {
+      "id": "issue_12_b",
+      "story": "The dock gate will be chained to vehicles from the early morning of Saturday 1 December, the Board says, pending a review of who may pass.",
+      "source_fact": "dock_gate_notice; story-dependent",
+      "alison_knows": "the notice on the dock gate",
+      "story_check": true,
+      "state_dependent": true,
+      "print_if": "the old dock gate closes (frame: Saturday 1 December)"
+     },
+     {
+      "id": "issue_12_c",
+      "story": "A tide table for December is posted on the Harbour Board's door: high water 0626 and 1851 on Saturday 1 December.",
+      "source_fact": "tide_table_dec",
+      "alison_knows": "the Board's table",
+      "chosen": true
+     },
+     {
+      "id": "issue_12_d",
+      "story": "Meridian Against the Poll Tax says it will hold its last meeting of the year at the chapel hall on Thursday.",
+      "source_fact": "poll_tax_last_meeting",
+      "alison_knows": "the group's secretary",
+      "chosen": true
+     },
+     {
+      "id": "issue_12_e",
+      "story": "The Tivoli's next programme begins on Thursday 29 November.",
+      "source_fact": "tivoli_programme",
+      "alison_knows": "the Tivoli's bill",
+      "chosen": true
+     }
+    ],
+    "tom_slot": "one optional item from tom_story_templates may be added after the fixed items if Alison holds the fact (see paper.tom_story_templates); never more than one, never before she holds it",
+    "src": "production/specs/town-news.json (the town's own news); poster dates from cloud-week posters target; blueprint 2.4.5"
+   },
+   {
+    "id": "issue_13",
+    "issue": 13,
+    "masthead": "The Meridian Pilot: Tuesday 27 November 1990",
+    "date": "1990-11-27",
+    "weekday": "Tuesday",
+    "game_week": 7,
+    "headline": "CUSTOMS MEN SEEN ON THE HOOK",
+    "items": [
+     {
+      "id": "issue_13_a",
+      "story": "Officers from Customs and Excise were seen at offices and yards on the Hook on Monday. A Customs spokesman said only that routine visits are made to businesses throughout the district.",
+      "source_fact": "customs_visits_26_nov; state-dependent",
+      "alison_knows": "she saw two men in raincoats go into a yard; the Customs office said the line above",
+      "story_check": true,
+      "state_dependent": true,
+      "print_if": "Act III has opened and the Customs letter has been delivered"
+     },
+     {
+      "id": "issue_13_b",
+      "story": "The chip shop on Back Parade has put its price up by 5p. Fish and chips is £1.65, Mr Dobson says, and he is sorry for it.",
+      "source_fact": "dobson_price",
+      "alison_knows": "told by Mr Dobson",
+      "chosen": true
+     },
+     {
+      "id": "issue_13_c",
+      "story": "The Hook's boxing club says the night on Friday was its best attended for six years.",
+      "source_fact": "boxing_night_held",
+      "alison_knows": "the secretary rang her",
+      "chosen": true
+     },
+     {
+      "id": "issue_13_d",
+      "story": "Hookside Rovers beat Easterby United 2-0 on Saturday to go fourth.",
+      "source_fact": "rovers_result_24_nov",
+      "alison_knows": "sports desk sheet",
+      "chosen": true
+     },
+     {
+      "id": "issue_13_e",
+      "story": "Police have recovered a stolen van from a lock-up on North Road. No arrests have been made.",
+      "source_fact": "police_van_recovered",
+      "alison_knows": "told by the constable",
+      "story_check": true,
+      "chosen": true
+     }
+    ],
+    "tom_slot": "one optional item from tom_story_templates may be added after the fixed items if Alison holds the fact (see paper.tom_story_templates); never more than one, never before she holds it",
+    "src": "production/specs/town-news.json (the town's own news); poster dates from cloud-week posters target; blueprint 2.4.5"
+   },
+   {
+    "id": "issue_14",
+    "issue": 14,
+    "masthead": "The Meridian Pilot: Friday 30 November 1990",
+    "date": "1990-11-30",
+    "weekday": "Friday",
+    "game_week": 7,
+    "headline": "THE HOOK GATE TO BE CHAINED TOMORROW",
+    "items": [
+     {
+      "id": "issue_14_a",
+      "story": "The dock gate will be chained to vehicles from tomorrow, the Harbour Board has confirmed. Lorries are to use the new gate on Dock Road East.",
+      "source_fact": "dock_gate_notice",
+      "alison_knows": "the Board's secretary",
+      "story_check": true
+     },
+     {
+      "id": "issue_14_b",
+      "story": "Customs inspections on the Hook ended on Thursday. No one has been charged.",
+      "source_fact": "customs_visits_ended; state-dependent",
+      "alison_knows": "told by the Customs office",
+      "story_check": true,
+      "state_dependent": true,
+      "print_if": "the inspection is over"
+     },
+     {
+      "id": "issue_14_c",
+      "story": "The Tivoli's new programme is on until Wednesday 5 December. All seats £2.80.",
+      "source_fact": "tivoli_programme",
+      "alison_knows": "the Tivoli's bill",
+      "chosen": true
+     },
+     {
+      "id": "issue_14_d",
+      "story": "Hookside Rovers play Northwold Rangers at Ropewalk Park tomorrow, kick-off 3 pm.",
+      "source_fact": "rovers_fixture_1_dec",
+      "alison_knows": "sports desk sheet",
+      "chosen": true
+     },
+     {
+      "id": "issue_14_e",
+      "story": "The Pilot's next issue is on Tuesday. Letters to the editor to be in by Monday.",
+      "source_fact": "pilot_notice",
+      "alison_knows": "the editor",
+      "chosen": true
+     }
+    ],
+    "tom_slot": "one optional item from tom_story_templates may be added after the fixed items if Alison holds the fact (see paper.tom_story_templates); never more than one, never before she holds it",
+    "src": "production/specs/town-news.json (the town's own news); poster dates from cloud-week posters target; blueprint 2.4.5"
+   }
+  ],
+  "tom_story_templates": [
+   {
+    "id": "tom_new_owner",
+    "needs": "Alison saw Tom arrive, or was told Mickey's nephew has come",
+    "headline": "MICKEY'S NEPHEW TAKES OVER THE CAB OFFICE",
+    "text": "Mickey's, the cab office on Quay Street, has a new owner: a nephew of the late Mr Michael Suddaby. He declined to speak to the Pilot.",
+    "sure_word": "is understood to be",
+    "max_strength": "as told"
+   },
+   {
+    "id": "tom_seen_nights",
+    "needs": "Alison saw a runner in a coat on a night and was told by two people",
+    "headline": "A MAN IN A COAT AFTER DARK ON THE QUAY",
+    "text": "Several people on the Hook say a man in a long coat has been seen on the Quay after dark. Nobody will say who.",
+    "sure_word": "several people say",
+    "max_strength": "said by several"
+   },
+   {
+    "id": "tom_fire_question",
+    "needs": "Tom asked about the warehouse fire (Alison was told)",
+    "headline": "THE FIRE LAST NOVEMBER: NEW QUESTIONS",
+    "text": "Alison Sedman writes: a man new to the Hook has been asking about the warehouse fire last November. Nobody has been charged.",
+    "sure_word": "has been asking",
+    "max_strength": "told by the person asked"
+   },
+   {
+    "id": "tom_hit",
+    "needs": "Alison saw the blow herself, or the victim told her",
+    "headline": "MAN HURT ON THE QUAY",
+    "text": "A man was hurt in a fight on the Hook on {day}. Police say they are inquiring.",
+    "sure_word": "in a fight",
+    "max_strength": "saw it or told by the victim"
+   },
+   {
+    "id": "tom_hit_and_run",
+    "needs": "the hit-and-run was reported to her by the police or the victim",
+    "headline": "CAB DRIVES OFF AFTER KNOCKING MAN DOWN",
+    "text": "A man was knocked down by a cab on {zone} on {day} and the cab did not stop. Police want to speak to the driver.",
+    "sure_word": "the cab did not stop",
+    "max_strength": "told by police"
+   },
+   {
+    "id": "tom_stopped_helped",
+    "needs": "Alison saw it or the man told her",
+    "headline": "CAB MAN STAYED WITH INJURED PEDESTRIAN",
+    "text": "The driver of a cab that knocked a man down on {zone} stopped and stayed with him until the ambulance came, the man says.",
+    "sure_word": "the man says",
+    "max_strength": "told by the man"
+   },
+   {
+    "id": "tom_arrest",
+    "needs": "court list or police statement",
+    "headline": "CAB OFFICE OWNER ARRESTED",
+    "text": "Thomas Nowak, 32, of Quay Street, was arrested on {day} and later released. A police spokesman declined to say why.",
+    "sure_word": "arrested",
+    "max_strength": "court list or police"
+   },
+   {
+    "id": "tom_kill",
+    "needs": "a body is found and the police name him (never a rumour alone)",
+    "headline": "BODY FOUND IN HARBOUR",
+    "text": "Police are treating the death of a man found in the harbour as suspicious. They want to hear from anyone who was on the Quay on {day}.",
+    "sure_word": "police are treating",
+    "max_strength": "police statement"
+   },
+   {
+    "id": "tom_licence",
+    "needs": "the licensing committee clerk tells her",
+    "headline": "CAB FIRM SUSPENDED",
+    "text": "A Quay Street cab firm has had its operator's licence suspended for a fortnight, the licensing committee has announced.",
+    "sure_word": "announced",
+    "max_strength": "committee record",
+    "story_check": true
+   },
+   {
+    "id": "tom_good_deed",
+    "needs": "Father Walsh or Ada told her he fitted a lamp or found the lead",
+    "headline": "THE CHAPEL'S LEAD IS BACK",
+    "text": "The lead missing from the chapel roof has been found and returned, Father Walsh says. He would not say by whom.",
+    "sure_word": "says",
+    "max_strength": "told by Walsh",
+    "story_check": true
+   }
+  ],
+  "sections": [
+   "front: the lead item",
+   "the Hook page: Alison's local items",
+   "notices: Board, council, chapel, Tivoli",
+   "sport: Hookside Rovers",
+   "classifieds: the newsagent's window cards in print"
+  ],
+  "newsagent_classifieds_note": "the paper's classifieds repeat the cards SA01 to SA15 (print.posters_and_cards) and cost 20p a line a week"
+ },
+ "letters": [
+  {
+   "id": "letter_mickey_will",
+   "kind": "letter",
+   "from": "Mickey Suddaby (a copy of the letter he left)",
+   "title": "The letter that came with the will",
+   "body": [
+    "Tom,",
+    "If you are reading this I have not had the manners to say it to your face. The office is yours, and the flat above it. Sheila knows the book. Ron knows the door.",
+    "Do not let anybody tell you what is owed before you have read the book. Do not let anybody tell you what you are, either.",
+    "Your uncle, Mickey."
+   ],
+   "act": 1,
+   "day": "Monday 15 October 1990, on arrival",
+   "goes_in_ledger": true,
+   "typeface": "hand",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "the first read, in the flat",
+   "story_check": true,
+   "chosen": true,
+   "chosen_note": "canon: Tom arrives \"with one suitcase and a letter\"; the wording is chosen, the story frame may replace it",
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian"
+  },
+  {
+   "id": "letter_agar_first",
+   "kind": "letter",
+   "from": "Agar & Co",
+   "title": "Premises: 1 Quay Street",
+   "body": [
+    "Dear Mr Nowak,",
+    "We act for the owners of the freehold of the parade on Quay Street, of which your premises form part. We understand that you have lately succeeded to the occupation of the office and the flat above it.",
+    "Rent is collected each Friday by our clients' agent, who will call at the counter. We should be glad if you would call at our offices at your earliest convenience, so that the terms of your occupation may be confirmed in writing.",
+    "Yours faithfully,",
+    "S. Ombler\nfor Agar & Co"
+   ],
+   "act": 2,
+   "day": "Monday 22 October 1990 (the first week of Act II; state: the firm is his)",
+   "goes_in_ledger": true,
+   "typeface": "courier_prime",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "Act II opens; the rival's first notice",
+   "letterhead": [
+    "AGAR & CO",
+    "Solicitors and Commissioners for Oaths",
+    "Exchange Chambers, the Exchange, Meridian",
+    "Telephone 960 200"
+   ],
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "story_check": true,
+   "chosen": true,
+   "chosen_note": "Simon Ombler signs for Agar (proposed in the story frame); the day is chosen"
+  },
+  {
+   "id": "letter_agar_licence",
+   "kind": "letter",
+   "from": "Agar & Co",
+   "title": "Your private hire licence",
+   "body": [
+    "Dear Mr Nowak,",
+    "We write on behalf of a client who has raised with the Council certain concerns as to the condition of the vehicles operated from your premises, and as to the keeping of records under the conditions of your operator's licence.",
+    "The Council's Licensing Section will write to you separately to arrange an inspection of the cars. We should be glad to see you at our offices should you wish to discuss the matter before then.",
+    "Yours faithfully,",
+    "S. Ombler\nfor Agar & Co"
+   ],
+   "act": 2,
+   "day": "about the third week of Act II (state: Agar's first rung)",
+   "goes_in_ledger": true,
+   "typeface": "courier_prime",
+   "src": "2.10.3 (Agar sends paper: the licence letter, a solicitor's letter, an inspection of the cars)",
+   "trigger": "Agar reaches the letter rung (RT2-07)",
+   "letterhead": [
+    "AGAR & CO",
+    "Solicitors and Commissioners for Oaths",
+    "Exchange Chambers, the Exchange, Meridian",
+    "Telephone 960 200"
+   ],
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "story_check": true
+  },
+  {
+   "id": "letter_council_inspection",
+   "kind": "letter",
+   "from": "Meridian Borough Council, Licensing Section",
+   "title": "Inspection of vehicles",
+   "body": [
+    "Dear Mr Nowak,",
+    "Under the conditions of your private hire operator's licence, an officer of the Council will inspect every vehicle operated from your premises on {date}, at 10 am, at your yard behind 1 Quay Street.",
+    "Please have each car's log, test certificate and insurance available. Any defect found will be noted and you will have seven days to put it right.",
+    "Yours faithfully,",
+    "Licensing Officer, Meridian Borough Council"
+   ],
+   "act": 2,
+   "day": "a Wednesday in the fourth week of Act II",
+   "goes_in_ledger": true,
+   "typeface": "courier_prime",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "after the licence letter; the inspection happens at the yard",
+   "letterhead": [
+    "MERIDIAN BOROUGH COUNCIL",
+    "Licensing Section, Town Hall, Meridian",
+    "Telephone 960 300"
+   ],
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "story_check": true,
+   "chosen": true,
+   "chosen_note": "the officer's name is left out; the story frame proposes Alan Sowerby as licensing officer"
+  },
+  {
+   "id": "letter_licence_hearing",
+   "kind": "letter",
+   "from": "Meridian Borough Council, Licensing Committee",
+   "title": "Licence hearing",
+   "body": [
+    "Dear Mr Nowak,",
+    "The Licensing Committee will consider the renewal of your private hire operator's licence on Thursday 15 November 1990 at 10.30 am, in the Committee Room, Exchange Chambers.",
+    "You may attend, and you are advised to do so. The Committee will have before it the report of the Council's inspection of your vehicles and the record of your fares for the last four weeks.",
+    "If you do not attend, the Committee will decide in your absence.",
+    "Yours faithfully,",
+    "Clerk to the Committee"
+   ],
+   "act": 2,
+   "day": "Thursday 15 November 1990 (the hearing); the letter ten days before",
+   "goes_in_ledger": true,
+   "typeface": "courier_prime",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "Agar's threat rung: his solicitor names the date (RT-06, RT2-18)",
+   "letterhead": [
+    "MERIDIAN BOROUGH COUNCIL",
+    "Licensing Section, Town Hall, Meridian",
+    "Telephone 960 300"
+   ],
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "story_check": true,
+   "chosen": true,
+   "chosen_note": "the date is chosen from the paper's licensing agenda; the hearing's four conditions (cars passed, no week put off, attends in a decent jacket or better, no road charge outstanding) are never printed"
+  },
+  {
+   "id": "letter_licence_stands",
+   "kind": "letter",
+   "from": "Meridian Borough Council, Licensing Committee",
+   "title": "Your licence",
+   "body": [
+    "Dear Mr Nowak,",
+    "The Licensing Committee has renewed your private hire operator's licence for twelve months from today, subject to the usual conditions.",
+    "Yours faithfully,",
+    "Clerk to the Committee"
+   ],
+   "act": 2,
+   "day": "the day of the hearing",
+   "goes_in_ledger": true,
+   "typeface": "courier_prime",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "at least two of the four conditions hold",
+   "letterhead": [
+    "MERIDIAN BOROUGH COUNCIL",
+    "Licensing Section, Town Hall, Meridian",
+    "Telephone 960 300"
+   ],
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "story_check": true
+  },
+  {
+   "id": "letter_licence_suspended",
+   "kind": "letter",
+   "from": "Meridian Borough Council, Licensing Committee",
+   "title": "Your licence",
+   "body": [
+    "Dear Mr Nowak,",
+    "The Licensing Committee has decided to suspend your private hire operator's licence for two weeks from {date}. During the suspension no vehicle operated from your premises may carry a booked fare.",
+    "Any vehicle found carrying a booked fare during the suspension will be stopped. A second such stop will lead to the licence being revoked.",
+    "Yours faithfully,",
+    "Clerk to the Committee"
+   ],
+   "act": 2,
+   "day": "the day of the hearing",
+   "goes_in_ledger": true,
+   "typeface": "courier_prime",
+   "src": "RT2-18",
+   "trigger": "fewer than two of the four conditions hold",
+   "letterhead": [
+    "MERIDIAN BOROUGH COUNCIL",
+    "Licensing Section, Town Hall, Meridian",
+    "Telephone 960 300"
+   ],
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "story_check": true
+  },
+  {
+   "id": "letter_licence_revoked",
+   "kind": "letter",
+   "from": "Meridian Borough Council, Licensing Committee",
+   "title": "Your licence",
+   "body": [
+    "Dear Mr Nowak,",
+    "A vehicle operated from your premises was stopped on {date} carrying a booked fare during the period of suspension. The Committee has therefore revoked your private hire operator's licence.",
+    "Yours faithfully,",
+    "Clerk to the Committee"
+   ],
+   "act": 2,
+   "day": "on the second stop",
+   "goes_in_ledger": true,
+   "typeface": "courier_prime",
+   "src": "RT2-18 (a second such stop revokes the licence for good)",
+   "trigger": "a second stop during suspension",
+   "letterhead": [
+    "MERIDIAN BOROUGH COUNCIL",
+    "Licensing Section, Town Hall, Meridian",
+    "Telephone 960 300"
+   ],
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "story_check": true
+  },
+  {
+   "id": "letter_agar_fee",
+   "kind": "letter",
+   "from": "Agar & Co",
+   "title": "Our fee",
+   "body": [
+    "Dear Mr Nowak,",
+    "We act for you in the matter of the charge brought against you on {date}, at the request of those who attended at the police station on your behalf. Our professional fee to date is {amount}, which we should be glad to have settled within the month.",
+    "Yours faithfully,",
+    "S. Ombler\nfor Agar & Co"
+   ],
+   "act": 2,
+   "day": "a few days after an arrest",
+   "goes_in_ledger": true,
+   "typeface": "courier_prime",
+   "src": "ledger.js openNow (Agar & Co want a sum for a brief nobody asked for); frame: the brief is Agar's man",
+   "trigger": "an arrest where the brief is Agar's man",
+   "letterhead": [
+    "AGAR & CO",
+    "Solicitors and Commissioners for Oaths",
+    "Exchange Chambers, the Exchange, Meridian",
+    "Telephone 960 200"
+   ],
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "story_check": true
+  },
+  {
+   "id": "letter_magistrates",
+   "kind": "letter",
+   "from": "Meridian Magistrates' Court",
+   "title": "Summons",
+   "body": [
+    "Mr Thomas Nowak is summoned to appear before Meridian Magistrates on {date} at 10 am to answer an information alleging {offence}.",
+    "If you do not attend, the case may be heard in your absence.",
+    "By order of the Clerk to the Justices."
+   ],
+   "act": 2,
+   "day": "when a road deed is charged",
+   "goes_in_ledger": true,
+   "typeface": "courier_prime",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "a charge for a road deed (blueprint RT2-18, the fourth condition)",
+   "letterhead": [
+    "MERIDIAN MAGISTRATES' COURT",
+    "Court House, the Exchange, Meridian"
+   ],
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "chosen": true
+  },
+  {
+   "id": "letter_rent_card",
+   "kind": "note",
+   "from": "Agar & Co's rent man, Mr L. Askew",
+   "title": "Left on the counter",
+   "body": [
+    "Called Friday at the counter. Nobody to take the rent. £18 due.",
+    "Will call again Monday.",
+    "L. Askew\nfor Agar & Co's agents"
+   ],
+   "act": 1,
+   "day": "the Monday after a missed Friday",
+   "goes_in_ledger": true,
+   "typeface": "hand",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "one missed Friday (RT-16: said by the agent on the Monday)",
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "chosen": true,
+   "chosen_note": "Mr Leonard Askew is a minted name: the agent is \"a named man\" in the blueprint"
+  },
+  {
+   "id": "letter_rent_second",
+   "kind": "letter",
+   "from": "Agar & Co's agents",
+   "title": "Rent arrears: 1 Quay Street",
+   "body": [
+    "Dear Mr Nowak,",
+    "The rent of £18 a week for the office and the flat above has not been paid for the last two Fridays, a total of £36.",
+    "Unless the arrears are paid, our clients will require the flat over the office to be given up in a fortnight, and notice to that effect is enclosed.",
+    "Yours faithfully,",
+    "L. Askew\nfor Agar & Co's agents"
+   ],
+   "act": 1,
+   "day": "the Monday after the second missed Friday",
+   "goes_in_ledger": true,
+   "typeface": "courier_prime",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "two missed Fridays (RT-16)",
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "chosen": true
+  },
+  {
+   "id": "letter_notice_to_quit",
+   "kind": "letter",
+   "from": "Agar & Co's agents",
+   "title": "Notice to quit",
+   "body": [
+    "NOTICE TO QUIT",
+    "To Mr T. Nowak,",
+    "TAKE NOTICE that your occupation of the flat over 1 Quay Street will end on {date}, being fourteen days from the date of this notice, unless the arrears of rent are paid in full before then.",
+    "This notice does not affect the office on the ground floor.",
+    "Dated {date_served}.",
+    "L. Askew\nfor Agar & Co's agents"
+   ],
+   "act": 1,
+   "day": "the same day as the second letter",
+   "goes_in_ledger": true,
+   "typeface": "courier_prime",
+   "src": "RT-16 (the office itself is never lost)",
+   "trigger": "two missed Fridays (RT-16)",
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "chosen": true
+  },
+  {
+   "id": "letter_flat_let",
+   "kind": "letter",
+   "from": "Agar & Co's agents",
+   "title": "The flat",
+   "body": [
+    "Dear Mr Nowak,",
+    "The flat over 1 Quay Street has been let to another tenant from today. The office on the ground floor remains yours on the terms already agreed.",
+    "Arrears of £54 remain due and may be paid at any time.",
+    "Yours faithfully,",
+    "L. Askew\nfor Agar & Co's agents"
+   ],
+   "act": 1,
+   "day": "the Monday after the third missed Friday",
+   "goes_in_ledger": true,
+   "typeface": "courier_prime",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "three missed Fridays (RT-16)",
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "chosen": true
+  },
+  {
+   "id": "letter_rent_cleared",
+   "kind": "note",
+   "from": "Agar & Co's rent man, Mr L. Askew",
+   "title": "Receipt",
+   "body": [
+    "Received of Mr T. Nowak, in full settlement of arrears, the sum of {amount}.",
+    "Notice to quit withdrawn.",
+    "L. Askew"
+   ],
+   "act": 1,
+   "day": "the day the arrears are paid",
+   "goes_in_ledger": true,
+   "typeface": "hand",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "paying the arrears (RT-16: ends the ladder)",
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "chosen": true
+  },
+  {
+   "id": "letter_cold_store",
+   "kind": "letter",
+   "from": "Old Basin Cold Stores",
+   "title": "Haulage: terms",
+   "body": [
+    "Dear Mr Nowak,",
+    "We should be glad to put our morning and evening haulage to your firm on the following terms: five cars in good order, a current operator's licence, and references as to the firm's books.",
+    "Please call at the office on Cold Store Road to discuss.",
+    "Yours faithfully,",
+    "The Manager"
+   ],
+   "act": 2,
+   "day": "rung 3 (blueprint 2.15; the cold-store contract)",
+   "goes_in_ledger": true,
+   "typeface": "courier_prime",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "the firm reaches rung 3",
+   "letterhead": [
+    "OLD BASIN COLD STORES",
+    "Cold Store Road, Meridian"
+   ],
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "story_check": true,
+   "chosen": true
+  },
+  {
+   "id": "letter_vat",
+   "kind": "letter",
+   "from": "Customs and Excise, Value Added Tax Office",
+   "title": "Value Added Tax: inspection of records",
+   "body": [
+    "Dear Mr Nowak,",
+    "I write to inform you that an officer of this Department will call at your premises on Monday 26 November 1990 at 9 am to inspect your records for value added tax, under the Value Added Tax Act 1983.",
+    "He will wish to see your books of account, including the record of fares, the records of the vehicles, the payroll and the purchase invoices, for the period since you took over the business. You may produce each item on the morning it is asked for, or ask for it to be put in writing and produced the next day. You may ask for this twice.",
+    "I should be grateful if you would arrange for the books to be available. The inspection will last a week and the books will be closed at five o'clock on the last afternoon.",
+    "Yours sincerely,",
+    "D. Hebblewhite\nVAT Officer"
+   ],
+   "act": 3,
+   "day": "Monday 26 November 1990 (the first morning); the letter lies on the counter the Saturday before",
+   "goes_in_ledger": true,
+   "typeface": "courier_prime",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "Act III opens: after the sit-down, or by the end of week six",
+   "letterhead": [
+    "CUSTOMS AND EXCISE",
+    "Value Added Tax Office, Meridian",
+    "Telephone 960 410"
+   ],
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "story_check": true,
+   "chosen": true,
+   "chosen_note": "spelt Nowak (the frame's running joke: the Customs letter gets it right); Mr Hebblewhite is the frame's proposed name; the five-day plan follows 3.1.3, RT-01"
+  },
+  {
+   "id": "letter_vat_m1",
+   "kind": "letter",
+   "from": "Customs and Excise, Value Added Tax Office",
+   "title": "Records to be produced: the fare book",
+   "body": [
+    "Dear Mr Nowak,",
+    "Further to my visit, I should be glad if you would produce the fare book for the four weeks to the last Friday, by 9 am on {date}.",
+    "Yours sincerely,",
+    "D. Hebblewhite\nVAT Officer"
+   ],
+   "act": 3,
+   "day": "in writing, the first morning, if he asks",
+   "goes_in_ledger": true,
+   "typeface": "courier_prime",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "\"in writing\" at morning 1",
+   "letterhead": [
+    "CUSTOMS AND EXCISE",
+    "Value Added Tax Office, Meridian",
+    "Telephone 960 410"
+   ],
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "story_check": true,
+   "chosen": true
+  },
+  {
+   "id": "letter_vat_m2",
+   "kind": "letter",
+   "from": "Customs and Excise, Value Added Tax Office",
+   "title": "Records to be produced: the cars",
+   "body": [
+    "Dear Mr Nowak,",
+    "Further to my visit, I should be glad if you would produce the log of each vehicle, with its mileage, for the same weeks, by 9 am on {date}.",
+    "Yours sincerely,",
+    "D. Hebblewhite\nVAT Officer"
+   ],
+   "act": 3,
+   "day": "in writing, the second morning, if he asks",
+   "goes_in_ledger": true,
+   "typeface": "courier_prime",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "\"in writing\" at morning 2",
+   "letterhead": [
+    "CUSTOMS AND EXCISE",
+    "Value Added Tax Office, Meridian",
+    "Telephone 960 410"
+   ],
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "story_check": true,
+   "chosen": true
+  },
+  {
+   "id": "letter_vat_m3",
+   "kind": "letter",
+   "from": "Customs and Excise, Value Added Tax Office",
+   "title": "Records to be produced: the wages",
+   "body": [
+    "Dear Mr Nowak,",
+    "Further to my visit, I should be glad if you would produce the wages book and the name of every man paid, for the same weeks, by 9 am on {date}.",
+    "Yours sincerely,",
+    "D. Hebblewhite\nVAT Officer"
+   ],
+   "act": 3,
+   "day": "in writing, the third morning, if he asks",
+   "goes_in_ledger": true,
+   "typeface": "courier_prime",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "\"in writing\" at morning 3",
+   "letterhead": [
+    "CUSTOMS AND EXCISE",
+    "Value Added Tax Office, Meridian",
+    "Telephone 960 410"
+   ],
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "story_check": true,
+   "chosen": true
+  },
+  {
+   "id": "letter_vat_m4",
+   "kind": "letter",
+   "from": "Customs and Excise, Value Added Tax Office",
+   "title": "Records to be produced: an account",
+   "body": [
+    "Dear Mr Nowak,",
+    "Further to my visit, I should be glad if you would produce the invoices of one account, the cold store's, for the period since you took over, by 9 am on {date}.",
+    "Yours sincerely,",
+    "D. Hebblewhite\nVAT Officer"
+   ],
+   "act": 3,
+   "day": "in writing, the fourth morning, if he asks",
+   "goes_in_ledger": true,
+   "typeface": "courier_prime",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "\"in writing\" at morning 4",
+   "letterhead": [
+    "CUSTOMS AND EXCISE",
+    "Value Added Tax Office, Meridian",
+    "Telephone 960 410"
+   ],
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "story_check": true,
+   "chosen": true
+  },
+  {
+   "id": "letter_vat_result_holds",
+   "kind": "letter",
+   "from": "Customs and Excise, Value Added Tax Office",
+   "title": "Value Added Tax: result of inspection",
+   "body": [
+    "Dear Mr Nowak,",
+    "I have completed my inspection of your records and find them in order for the period examined. No further action is proposed.",
+    "Yours sincerely,",
+    "D. Hebblewhite\nVAT Officer"
+   ],
+   "act": 3,
+   "day": "at five o'clock on the last afternoon, if the business survives",
+   "goes_in_ledger": true,
+   "typeface": "courier_prime",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "no item fell and at most two were thin (3.1.4)",
+   "letterhead": [
+    "CUSTOMS AND EXCISE",
+    "Value Added Tax Office, Meridian",
+    "Telephone 960 410"
+   ],
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "story_check": true
+  },
+  {
+   "id": "letter_vat_result_fails",
+   "kind": "letter",
+   "from": "Customs and Excise, Value Added Tax Office",
+   "title": "Value Added Tax: result of inspection",
+   "body": [
+    "Dear Mr Nowak,",
+    "I have completed my inspection and I am not satisfied that your records give a true account of the takings of the business. I shall be reporting to my Controller, and you will hear further.",
+    "Yours sincerely,",
+    "D. Hebblewhite\nVAT Officer"
+   ],
+   "act": 3,
+   "day": "at five o'clock on the last afternoon, if the books do not hold",
+   "goes_in_ledger": true,
+   "typeface": "courier_prime",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "a morning fell, or more than two were thin",
+   "letterhead": [
+    "CUSTOMS AND EXCISE",
+    "Value Added Tax Office, Meridian",
+    "Telephone 960 410"
+   ],
+   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "story_check": true
+  },
+  {
+   "id": "note_sheila_tin",
+   "kind": "note",
+   "from": "Sheila",
+   "title": "Left on the counter",
+   "body": [
+    "Tin counted. {amount_words}.",
+    "Rent {amount} Friday.",
+    "S."
+   ],
+   "act": 1,
+   "day": "any morning",
+   "goes_in_ledger": true,
+   "typeface": "hand",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "Sheila leaves it when she has counted the tin",
+   "to": "Tom",
+   "chosen": true
+  },
+  {
+   "id": "note_pauline_slip",
+   "kind": "note",
+   "from": "Pauline",
+   "title": "Message slip",
+   "body": [
+    "While you were out.",
+    "{caller} rang at {time}. {message}.",
+    "Pauline"
+   ],
+   "act": 1,
+   "day": "any day",
+   "goes_in_ledger": true,
+   "typeface": "hand",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "a call came and Tom was out",
+   "to": "Tom",
+   "chosen": true
+  },
+  {
+   "id": "note_ron",
+   "kind": "note",
+   "from": "Ron",
+   "title": "Left on the board",
+   "body": [
+    "Cars 1 and 2 out. Back by five.",
+    "The lad from the landing called. He will call again.",
+    "R."
+   ],
+   "act": 1,
+   "day": "any morning",
+   "goes_in_ledger": true,
+   "typeface": "hand",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "the outfit's man comes by day",
+   "to": "Tom",
+   "chosen": true
+  },
+  {
+   "id": "note_ellis_card",
+   "kind": "note",
+   "from": "DS Ellis",
+   "title": "Her card, left at the counter",
+   "body": [
+    "DS C. ELLIS\nCID, Meridian\nTel. 960 640",
+    "On the back, in pencil: \"Ring me. C.E.\""
+   ],
+   "act": 2,
+   "day": "the day she first calls and finds Tom out",
+   "goes_in_ledger": true,
+   "typeface": "hand",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "Ellis reaches asking (stage 1)",
+   "to": "Tom",
+   "chosen": true
+  },
+  {
+   "id": "note_alison_card",
+   "kind": "note",
+   "from": "Alison Sedman",
+   "title": "A card left at the counter",
+   "body": [
+    "ALISON SEDMAN\nThe Meridian Pilot",
+    "On the back: \"Rang twice. I would like five minutes about the fire. A.S.\""
+   ],
+   "act": 1,
+   "day": "a day after he is seen",
+   "goes_in_ledger": true,
+   "typeface": "hand",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "Alison asks about the warehouse fire (flags.alison)",
+   "to": "Tom",
+   "chosen": true
+  },
+  {
+   "id": "note_june",
+   "kind": "note",
+   "from": "June Suddaby",
+   "title": "Pushed through the door",
+   "body": [
+    "I called. You were out.",
+    "I am at Mrs Rennison's till Sunday. I would like to see the office.",
+    "J."
+   ],
+   "act": 1,
+   "day": "early in the first week",
+   "goes_in_ledger": true,
+   "typeface": "hand",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "June calls and finds him out",
+   "to": "Tom",
+   "chosen": true,
+   "story_check": true
+  },
+  {
+   "id": "note_widow_tax",
+   "kind": "note",
+   "from": "The Widow's man at the dock gate",
+   "title": "A slip handed to a driver",
+   "body": [
+    "Dock gate. Car {n}. £5 received.",
+    "Weekly, Friday. M.J."
+   ],
+   "act": 2,
+   "day": "from five cars until answered",
+   "goes_in_ledger": true,
+   "typeface": "hand",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "the Widow taxes his drivers at the dock gate (2.10.3; economy)",
+   "to": "Tom",
+   "chosen": true
+  },
+  {
+   "id": "note_cammack",
+   "kind": "note",
+   "from": "Danny Cammack",
+   "title": "Pushed under the door",
+   "body": [
+    "Nice cars. Pity about the rank.",
+    "D.C."
+   ],
+   "act": 2,
+   "day": "at Cammack's notice rung",
+   "goes_in_ledger": true,
+   "typeface": "hand",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "Cammack's first rung (2.10.3)",
+   "to": "Tom",
+   "chosen": true,
+   "story_check": true
+  },
+  {
+   "id": "note_darren",
+   "kind": "note",
+   "from": "Darren",
+   "title": "A folded paper",
+   "body": [
+    "The tin box. Chain at five. Not that I'm telling you anything.",
+    "D."
+   ],
+   "act": 1,
+   "day": "when the hut tip is offered",
+   "goes_in_ledger": true,
+   "typeface": "hand",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "job: Iveson's hut (2.9; jobsx.js hut)",
+   "to": "Tom",
+   "chosen": true
+  },
+  {
+   "id": "note_hewson",
+   "kind": "note",
+   "from": "Shaun Hewson",
+   "title": "Left on the counter",
+   "body": [
+    "Boards done. Back Friday for the gold on the door.",
+    "S.H."
+   ],
+   "act": 1,
+   "day": "in the first fortnight",
+   "goes_in_ledger": true,
+   "typeface": "hand",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "the sign painter is doing the street's boards this month (people.json)",
+   "to": "Tom",
+   "chosen": true
+  },
+  {
+   "id": "note_walsh",
+   "kind": "note",
+   "from": "Father Walsh",
+   "title": "Brought round by Mrs Cronin",
+   "body": [
+    "Mr Nowak,",
+    "The hall is free on Thursday evenings if the firm has a use for it. You will find the key at the house.",
+    "B. Walsh"
+   ],
+   "act": 1,
+   "day": "after the funeral week",
+   "goes_in_ledger": true,
+   "typeface": "hand",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "Father Walsh met (jobsx.js: metWalsh)",
+   "to": "Tom",
+   "chosen": true
+  }
+ ],
+ "print": {
+  "fascias": [
+   {
+    "id": "fascia_qs_mickeys",
+    "plot": "qs_mickeys",
+    "place": "mickeys",
+    "name": "Mickey's",
+    "street": "quay_street",
+    "number": 1,
+    "use": "cab_office",
+    "fascia_text": [
+     "MICKEY'S"
+    ],
+    "sign_kind": "applied raised gilt letters (geometry, not texture)",
+    "window_lettering": [
+     "MINICABS",
+     "960 418"
+    ],
+    "other_texts": [
+     "1 (fanlight)"
+    ],
+    "ghost_text": [
+     "MICKEY'S (an older, smaller, centred repaint under the board)"
+    ],
+    "note": "canon name; the telephone number is local six digits; the older target's '0632 960418' and 'MINICABS 24 HOURS' were not approved there, and the hours are the town's",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)"
+   },
+   {
+    "id": "fascia_qs_laveracks",
+    "plot": "qs_laveracks",
+    "place": "laveracks",
+    "name": "Laverack's",
+    "street": "quay_street",
+    "number": 3,
+    "use": "fishmonger",
+    "fascia_text": [
+     "LAVERACK'S",
+     "FISHMONGER"
+    ],
+    "sign_kind": "painted fascia",
+    "window_lettering": [
+     "FRESH DAILY",
+     "SHELLFISH",
+     "SMOKED FISH"
+    ],
+    "other_texts": [
+     "3 (fanlight)",
+     "WET FISH"
+    ],
+    "ghost_text": [
+     "FISHMONGER"
+    ],
+    "hours_plate": true,
+    "note": "the older target called it 'FISH MARKET'; the frozen map names it Laverack's",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_qs_ritas",
+    "plot": "qs_ritas",
+    "place": "ritas",
+    "name": "Rita's",
+    "street": "quay_street",
+    "number": 5,
+    "use": "pawnbroker",
+    "fascia_text": [
+     "RITA'S",
+     "PAWNBROKER"
+    ],
+    "sign_kind": "painted fascia",
+    "window_lettering": [
+     "WATCHES",
+     "JEWELLERY",
+     "LOANS"
+    ],
+    "other_texts": [
+     "5 (fanlight)",
+     "three gilt balls on a bracket, no lettering"
+    ],
+    "hours_plate": true,
+    "note": "pawn tickets and the shop price card are in print.price_boards",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_qs_empty_unit",
+    "plot": "qs_empty_unit",
+    "place": "empty_unit",
+    "name": "the empty unit",
+    "street": "quay_street",
+    "number": 7,
+    "use": "empty_shop",
+    "fascia_text": [],
+    "sign_kind": "whitewashed window; letting board",
+    "window_lettering": [
+     "(whole window whitewashed, posters over it)"
+    ],
+    "other_texts": [
+     "7 (fanlight)",
+     "TO LET (letting board, 900 x 450 mm)",
+     "ENQUIRIES: AGAR & CO, 960 335 (agent's board)",
+     "PLANNING NOTICE: change of use to estate agent's office (poster C02)"
+    ],
+    "note": "the empty unit: blueprint's TO LET board; the agent on the board is Agar & Co (the frozen map's estate agent)",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_qs_launderette",
+    "plot": "qs_launderette",
+    "place": "launderette",
+    "name": "the Washeteria",
+    "street": "quay_street",
+    "number": 9,
+    "use": "launderette",
+    "fascia_text": [
+     "WASHETERIA",
+     "LAUNDERETTE"
+    ],
+    "sign_kind": "box fascia, lit; double-sided projecting box sign",
+    "window_lettering": [
+     "SERVICE WASHES",
+     "DRY CLEANING"
+    ],
+    "other_texts": [
+     "9 (fanlight)",
+     "LAUNDERETTE (projecting box sign, both faces)"
+    ],
+    "hours_plate": true,
+    "note": "the older target said 'STEAM LAUNDRY'; the frozen map names it the Washeteria",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_qs_grocer",
+    "plot": "qs_grocer",
+    "place": "grocer",
+    "name": "Hook Stores",
+    "street": "quay_street",
+    "number": 11,
+    "use": "grocer",
+    "fascia_text": [
+     "HOOK STORES",
+     "FAMILY GROCER"
+    ],
+    "sign_kind": "painted fascia",
+    "window_lettering": [
+     "HIGH CLASS PROVISIONS"
+    ],
+    "other_texts": [
+     "11 (fanlight)"
+    ],
+    "hours_plate": true,
+    "note": "older target text 'FAMILY GROCER' kept as the trade line",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_qs_chandler",
+    "plot": "qs_chandler",
+    "place": "chandlery",
+    "name": "the chandlery",
+    "street": "quay_street",
+    "number": 13,
+    "use": "ship_chandler",
+    "fascia_text": [
+     "SHIP CHANDLER"
+    ],
+    "sign_kind": "painted fascia",
+    "window_lettering": [
+     "ROPE · PAINT · CHARTS · TWINE"
+    ],
+    "other_texts": [
+     "13 (fanlight)",
+     "EST. 1879 (toplight)",
+     "CHANDLER (hanging board, both faces)"
+    ],
+    "note": "the shop is \"the chandlery\" on the frozen map; no family name has been minted for it",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_qs_ada",
+    "plot": "qs_ada",
+    "place": "adas",
+    "name": "Ada's",
+    "street": "quay_street",
+    "number": 2,
+    "use": "home",
+    "fascia_text": [],
+    "sign_kind": "a house: no fascia",
+    "other_texts": [
+     "2 (fanlight)"
+    ],
+    "note": "Ada's house: a number and a net curtain; no lettering",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_qs_cottage_4",
+    "plot": "qs_cottage_4",
+    "place": null,
+    "name": "4 Quay Street",
+    "street": "quay_street",
+    "number": 4,
+    "use": "home",
+    "fascia_text": [],
+    "sign_kind": "a house: no fascia",
+    "other_texts": [
+     "4 (fanlight)"
+    ],
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)"
+   },
+   {
+    "id": "fascia_qs_cottage_6",
+    "plot": "qs_cottage_6",
+    "place": null,
+    "name": "6 Quay Street",
+    "street": "quay_street",
+    "number": 6,
+    "use": "home",
+    "fascia_text": [],
+    "sign_kind": "a house: no fascia",
+    "other_texts": [
+     "6 (fanlight)"
+    ],
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)"
+   },
+   {
+    "id": "fascia_qs_pearts",
+    "plot": "qs_pearts",
+    "place": "newsagent",
+    "name": "Peart's",
+    "street": "quay_street",
+    "number": 8,
+    "use": "newsagent",
+    "fascia_text": [
+     "PEART'S",
+     "NEWSAGENT"
+    ],
+    "sign_kind": "painted fascia",
+    "window_lettering": [
+     "TOBACCONIST & CONFECTIONER",
+     "NEWSPAPERS · TOBACCO"
+    ],
+    "other_texts": [
+     "8 (fanlight)",
+     "the Pilot, 25p (a window card)",
+     "20 MARINER 1.70 (a window card)"
+    ],
+    "hours_plate": true,
+    "note": "the newsagent holds the window cards SA01 to SA15 (print.posters_and_cards); the paper is the Pilot",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_qs_ironmonger",
+    "plot": "qs_ironmonger",
+    "place": "ironmonger",
+    "name": "the ironmonger's",
+    "street": "quay_street",
+    "number": 10,
+    "use": "ironmonger",
+    "fascia_text": [
+     "IRONMONGER"
+    ],
+    "sign_kind": "painted fascia",
+    "window_lettering": [
+     "TOOLS & HARDWARE",
+     "PAINTS & PARAFFIN"
+    ],
+    "other_texts": [
+     "10 (fanlight)",
+     "EST. 1884 (toplight)",
+     "KEYS CUT (hanging board, both faces)",
+     "KEYS CUT 1.50 (card)"
+    ],
+    "note": "no family name minted; 'the ironmonger's'",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_qs_copper_kettle",
+    "plot": "qs_copper_kettle",
+    "place": "tea_room",
+    "name": "the Copper Kettle",
+    "street": "quay_street",
+    "number": 12,
+    "use": "tea_room",
+    "fascia_text": [
+     "The Copper Kettle",
+     "Tea Rooms"
+    ],
+    "sign_kind": "painted fascia",
+    "window_lettering": [
+     "BREAKFASTS, LUNCHES & TEAS"
+    ],
+    "other_texts": [
+     "12 (fanlight)"
+    ],
+    "hours_plate": true,
+    "note": "the tea room; no alcohol; scones and pots of tea",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_qs_corner_store",
+    "plot": "qs_corner_store",
+    "place": null,
+    "name": "the builder's store",
+    "street": "quay_street",
+    "number": 14,
+    "use": "store",
+    "fascia_text": [
+     "BUILDER'S STORE"
+    ],
+    "sign_kind": "plain painted board",
+    "other_texts": [
+     "14 (fanlight)"
+    ],
+    "note": "'the builder's store' at 14 Quay Street; no trade name",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_quay_smokehouse",
+    "plot": "quay_smokehouse",
+    "place": null,
+    "name": "the smoke house",
+    "street": "quay_road",
+    "number": 1,
+    "use": "smoke_house",
+    "fascia_text": [
+     "THE SMOKE HOUSE"
+    ],
+    "sign_kind": "painted board, soot-dark",
+    "window_lettering": [
+     "KIPPERS",
+     "SMOKED HADDOCK"
+    ],
+    "other_texts": [
+     "1 The Quay"
+    ],
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_quay_snooker",
+    "plot": "quay_snooker",
+    "place": "snooker_hall",
+    "name": "the snooker hall",
+    "street": "quay_road",
+    "number": 2,
+    "use": "snooker_hall",
+    "fascia_text": [
+     "SNOOKER"
+    ],
+    "sign_kind": "painted board over a stair door",
+    "window_lettering": [
+     "UPSTAIRS · TABLES FREE · ALL WELCOME"
+    ],
+    "other_texts": [
+     "2 The Quay"
+    ],
+    "note": "24 Nov pastimes ruling: the snooker hall; frames are for no money, so no price or charge appears on any sign",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_quay_regent",
+    "plot": "quay_regent",
+    "place": "boarding_house",
+    "name": "Regent House",
+    "street": "quay_road",
+    "number": 3,
+    "use": "boarding_house",
+    "fascia_text": [
+     "REGENT HOUSE"
+    ],
+    "sign_kind": "painted board; card in the window",
+    "window_lettering": [
+     "VACANCIES"
+    ],
+    "other_texts": [
+     "3 The Quay",
+     "ROOMS £25 A WEEK (a card)"
+    ],
+    "note": "the boarding house; rooms at the economy file's £25 a week",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_quay_caff",
+    "plot": "quay_caff",
+    "place": "caff",
+    "name": "Rinaldi's",
+    "street": "quay_road",
+    "number": 4,
+    "use": "caff",
+    "fascia_text": [
+     "RINALDI'S",
+     "Breakfasts · Dinners · Teas"
+    ],
+    "sign_kind": "painted board; a chalkboard on the pavement",
+    "window_lettering": [
+     "TEA 30p",
+     "BREAKFAST £1.80",
+     "DINNER £2.50"
+    ],
+    "other_texts": [
+     "4 The Quay",
+     "the board prices are in print.price_boards"
+    ],
+    "hours_plate": true,
+    "note": "the caff: tea 30p, breakfast £1.80, dinner £2.50 (economy)",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_quay_metcalfes",
+    "plot": "quay_metcalfes",
+    "place": "metcalfes",
+    "name": "Metcalfe's",
+    "street": "quay_road",
+    "number": 5,
+    "use": "coin_shop",
+    "fascia_text": [
+     "METCALFE'S"
+    ],
+    "sign_kind": "painted fascia",
+    "window_lettering": [
+     "COINS · MEDALS · BADGES",
+     "BOUGHT AND SOLD"
+    ],
+    "other_texts": [
+     "5 The Quay"
+    ],
+    "note": "the coin shop that sells no coins; he buys, and what he buys he does not sell",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_quay_secondhand",
+    "plot": "quay_secondhand",
+    "place": "second_hand",
+    "name": "the second-hand shop",
+    "street": "quay_road",
+    "number": 6,
+    "use": "second_hand_shop",
+    "fascia_text": [
+     "SECOND-HAND"
+    ],
+    "sign_kind": "painted board",
+    "window_lettering": [
+     "COATS FROM £15",
+     "BOUGHT & SOLD"
+    ],
+    "other_texts": [
+     "6 The Quay",
+     "a television in the window running the Estuary Television ident (no sound)"
+    ],
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_quay_chandler_store",
+    "plot": "quay_chandler_store",
+    "place": null,
+    "name": "the chandler's store",
+    "street": "quay_road",
+    "number": 7,
+    "use": "warehouse",
+    "fascia_text": [
+     "THE CHANDLER'S STORE"
+    ],
+    "sign_kind": "plain painted board",
+    "other_texts": [
+     "7 The Quay"
+    ],
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_quay_ships_stores",
+    "plot": "quay_ships_stores",
+    "place": null,
+    "name": "the ship's stores",
+    "street": "quay_road",
+    "number": 8,
+    "use": "shop_shuttered",
+    "fascia_text": [
+     "SHIP'S STORES"
+    ],
+    "sign_kind": "painted board, shutters down",
+    "other_texts": [
+     "8 The Quay",
+     "CLOSED (a card)"
+    ],
+    "note": "the shuttered shop",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_quay_net_store",
+    "plot": "quay_net_store",
+    "place": "widow_base",
+    "name": "the net store",
+    "street": "quay_road",
+    "number": 9,
+    "use": "net_store",
+    "fascia_text": [
+     "THE NET STORE"
+    ],
+    "sign_kind": "faded board",
+    "other_texts": [
+     "9 The Quay",
+     "a newer padlock"
+    ],
+    "ghost_text": [
+     "an older name painted out"
+    ],
+    "note": "the Widow's base (map rival_bases); the old name is a chosen ghost, not minted",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_quay_fish_merchants",
+    "plot": "quay_fish_merchants",
+    "place": null,
+    "name": "the fish merchants' office",
+    "street": "quay_road",
+    "number": 10,
+    "use": "office",
+    "fascia_text": [
+     "FISH MERCHANTS · OFFICE"
+    ],
+    "sign_kind": "painted board",
+    "other_texts": [
+     "10 The Quay"
+    ],
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_quay_boxing",
+    "plot": "quay_boxing",
+    "place": "boxing_club",
+    "name": "the boxing club",
+    "street": "quay_road",
+    "number": 11,
+    "use": "boxing_club",
+    "fascia_text": [
+     "MERIDIAN BOXING CLUB"
+    ],
+    "sign_kind": "painted board over a hall door; a bare bulb",
+    "window_lettering": [
+     "MEMBERS · TRAINING NIGHTS"
+    ],
+    "other_texts": [
+     "11 The Quay"
+    ],
+    "note": "the boxing club; a bare bulb over the door (map landmark)",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_dock_customs",
+    "plot": "dock_customs",
+    "place": "customs",
+    "name": "the customs house",
+    "street": "dock_road",
+    "number": 1,
+    "use": "customs",
+    "fascia_text": [
+     "CUSTOMS HOUSE"
+    ],
+    "sign_kind": "carved stone lettering",
+    "other_texts": [
+     "1 Dock Road",
+     "MERIDIAN"
+    ],
+    "note": "no crest of a real body is shown",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_dock_bonded",
+    "plot": "dock_bonded",
+    "place": null,
+    "name": "the bonded store",
+    "street": "dock_road",
+    "number": null,
+    "use": "bonded_store",
+    "fascia_text": [
+     "BONDED STORE"
+    ],
+    "sign_kind": "painted board",
+    "other_texts": [
+     "KEEP OUT"
+    ],
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_dock_harbour_board",
+    "plot": "dock_harbour_board",
+    "place": "harbour_board",
+    "name": "the Harbour Board",
+    "street": "dock_road",
+    "number": 3,
+    "use": "harbour_office",
+    "fascia_text": [
+     "MERIDIAN HARBOUR BOARD",
+     "HARBOUR MASTER'S OFFICE"
+    ],
+    "sign_kind": "painted board and enamel plates",
+    "other_texts": [
+     "3 Dock Road",
+     "NO ADMITTANCE EXCEPT ON BUSINESS (enamel H01)",
+     "DANGER DEEP WATER NO SWIMMING (enamel H02)",
+     "the clock over the door"
+    ],
+    "note": "from the posters target H01 to H05; the stone office with the clock",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)"
+   },
+   {
+    "id": "fascia_dock_gate",
+    "plot": "dock_gate",
+    "place": "dock_gate",
+    "name": "the dock gate",
+    "street": "dock_road",
+    "number": null,
+    "use": "dock_gate",
+    "fascia_text": [
+     "MERIDIAN HARBOUR BOARD",
+     "NO ADMITTANCE EXCEPT ON BUSINESS"
+    ],
+    "sign_kind": "enamel plates on the gate; a striped pole",
+    "other_texts": [
+     "the gate hut"
+    ],
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_dent_1",
+    "plot": "dent_1",
+    "place": "dents_warehouses",
+    "name": "Dent's warehouse 1",
+    "street": "warehouse_row",
+    "number": 1,
+    "use": "warehouse",
+    "fascia_text": [
+     "DENT'S WAREHOUSE"
+    ],
+    "sign_kind": "painted number on each door",
+    "other_texts": [
+     "1",
+     "3",
+     "5",
+     "7 (numbers on the four doors, Warehouse Row)"
+    ],
+    "note": "'Dent's' is the old warehouse row's name on the frozen map",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_cold_stores",
+    "plot": "cold_stores",
+    "place": "cold_stores",
+    "name": "the Old Basin Cold Stores",
+    "street": "coldstore_road",
+    "number": 1,
+    "use": "cold_store",
+    "fascia_text": [
+     "OLD BASIN COLD STORES"
+    ],
+    "sign_kind": "large painted board",
+    "other_texts": [
+     "1 Cold Store Road",
+     "GOODS IN · GOODS OUT",
+     "NO ADMITTANCE EXCEPT ON BUSINESS"
+    ],
+    "hours_plate": true,
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)"
+   },
+   {
+    "id": "fascia_cs_garage",
+    "plot": "cs_garage",
+    "place": "garage",
+    "name": "Holt's garage",
+    "street": "coldstore_road",
+    "number": 3,
+    "use": "garage",
+    "fascia_text": [
+     "HOLT'S GARAGE"
+    ],
+    "sign_kind": "painted board",
+    "window_lettering": [
+     "REPAIRS · SERVICING · RECOVERY"
+    ],
+    "other_texts": [
+     "3 Cold Store Road"
+    ],
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_cs_agar",
+    "plot": "cs_agar",
+    "place": "agar_base",
+    "name": "Agar's agents",
+    "street": "coldstore_road",
+    "number": 2,
+    "use": "estate_agent",
+    "fascia_text": [
+     "AGAR & CO",
+     "ESTATE AGENTS AND SURVEYORS"
+    ],
+    "sign_kind": "brass plate and painted fascia",
+    "window_lettering": [
+     "PROPERTY · LETTINGS",
+     "ENQUIRIES 960 335"
+    ],
+    "other_texts": [
+     "2 Cold Store Road",
+     "TO LET (agent's boards on the street)"
+    ],
+    "note": "Agar's agents (map rival_bases base_agar); the solicitor's own office is in the Exchange, off the map",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_cs_workshop_1",
+    "plot": "cs_workshop_1",
+    "place": null,
+    "name": "the workshop",
+    "street": "coldstore_road",
+    "number": 4,
+    "use": "workshop",
+    "fascia_text": [
+     "WORKSHOP"
+    ],
+    "sign_kind": "plain painted board",
+    "other_texts": [
+     "4 Cold Store Road"
+    ],
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_cs_workshop_2",
+    "plot": "cs_workshop_2",
+    "place": null,
+    "name": "the workshop",
+    "street": "coldstore_road",
+    "number": 6,
+    "use": "workshop",
+    "fascia_text": [
+     "WORKSHOP"
+    ],
+    "sign_kind": "plain painted board",
+    "other_texts": [
+     "6 Cold Store Road"
+    ],
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_basin_wh_1",
+    "plot": "basin_wh_1",
+    "place": null,
+    "name": "Basin Road warehouse 1",
+    "street": "basin_road",
+    "number": 1,
+    "use": "warehouse",
+    "fascia_text": [
+     "BASIN ROAD WAREHOUSE 1"
+    ],
+    "sign_kind": "painted number",
+    "other_texts": [
+     "1 Basin Road"
+    ],
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_iveson_yard",
+    "plot": "iveson_yard",
+    "place": "iveson_yard",
+    "name": "Iveson's yard",
+    "street": "basin_road",
+    "number": 2,
+    "use": "scrap_yard",
+    "fascia_text": [
+     "IVESON",
+     "SCRAP METALS · BUYERS OF ALL SCRAP"
+    ],
+    "sign_kind": "hand-painted board on a steel gate",
+    "other_texts": [
+     "2 Basin Road",
+     "BEWARE OF THE DOG",
+     "OPEN 8 TILL 5"
+    ],
+    "note": "Dennis Iveson's yard",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_iveson_hut",
+    "plot": "iveson_hut",
+    "place": "iveson_hut",
+    "name": "Iveson's hut",
+    "street": "basin_road",
+    "number": null,
+    "use": "hut",
+    "fascia_text": [
+     "OFFICE"
+    ],
+    "sign_kind": "painted board on the hut",
+    "other_texts": [
+     "PAY HERE",
+     "WEIGHBRIDGE"
+    ],
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_burned_warehouse",
+    "plot": "burned_warehouse",
+    "place": "burned_warehouse",
+    "name": "the burned warehouse",
+    "street": "basin_top",
+    "number": 5,
+    "use": "ruin",
+    "fascia_text": [
+     "DANGEROUS BUILDING",
+     "KEEP OUT"
+    ],
+    "sign_kind": "a council notice and hoarding",
+    "other_texts": [
+     "5 Basin Top",
+     "BY ORDER OF THE COUNCIL"
+    ],
+    "ghost_text": [
+     "the old importer's name, burned off"
+    ],
+    "note": "the black shell; the fire was last November",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_bt_wh_3",
+    "plot": "bt_wh_3",
+    "place": "net_loft",
+    "name": "3 Basin Top",
+    "street": "basin_top",
+    "number": 3,
+    "use": "warehouse",
+    "fascia_text": [
+     "NET LOFT"
+    ],
+    "sign_kind": "painted board",
+    "other_texts": [
+     "3 Basin Top"
+    ],
+    "note": "map place net_loft",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_lot",
+    "plot": "lot",
+    "place": "car_lot",
+    "name": "the used-car lot",
+    "street": "north_road",
+    "number": null,
+    "use": "car_lot",
+    "fascia_text": [
+     "USED CARS"
+    ],
+    "sign_kind": "hand-painted board; bunting",
+    "window_lettering": [
+     "TERMS ARRANGED"
+    ],
+    "other_texts": [
+     "North Road",
+     "PART EXCHANGE"
+    ],
+    "note": "the car lot at the top of North Road; no real make or model named on any card (cars are fictional)",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_lot_hut",
+    "plot": "lot_hut",
+    "place": null,
+    "name": "the lot's hut",
+    "street": "north_road",
+    "number": null,
+    "use": "office",
+    "fascia_text": [
+     "SALES"
+    ],
+    "sign_kind": "painted board on the hut",
+    "other_texts": [
+     "North Road"
+    ],
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_nr_wayne",
+    "plot": "nr_wayne",
+    "place": "waynes_pawn",
+    "name": "Harrison's",
+    "street": "north_road",
+    "number": 16,
+    "use": "pawnbroker",
+    "fascia_text": [
+     "HARRISON'S",
+     "PAWNBROKER"
+    ],
+    "sign_kind": "painted fascia",
+    "window_lettering": [
+     "LOANS · WATCHES · JEWELLERY"
+    ],
+    "other_texts": [
+     "16 North Road",
+     "three gilt balls"
+    ],
+    "hours_plate": true,
+    "note": "map name for the second pawn (open point in map.json: two pawns)",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_nr_corner_shop",
+    "plot": "nr_corner_shop",
+    "place": null,
+    "name": "the corner shop",
+    "street": "north_road",
+    "number": 36,
+    "use": "corner_shop",
+    "fascia_text": [
+     "THE CORNER SHOP"
+    ],
+    "sign_kind": "painted board",
+    "window_lettering": [
+     "NEWSPAPERS · GROCERIES · TOBACCO"
+    ],
+    "other_texts": [
+     "36 North Road"
+    ],
+    "hours_plate": true,
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_nr_builders",
+    "plot": "nr_builders",
+    "place": null,
+    "name": "the builders' merchant",
+    "street": "north_road",
+    "number": 11,
+    "use": "builders_yard",
+    "fascia_text": [
+     "BUILDERS' MERCHANT"
+    ],
+    "sign_kind": "painted board",
+    "other_texts": [
+     "11 North Road"
+    ],
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_nr_old_pub",
+    "plot": "nr_old_pub",
+    "place": null,
+    "name": "the Mariner (boarded)",
+    "street": "north_road",
+    "number": 29,
+    "use": "pub_boarded",
+    "fascia_text": [
+     "THE MARINER"
+    ],
+    "sign_kind": "a boarded frontage; the name board still up",
+    "other_texts": [
+     "29 North Road",
+     "BOARDS OVER THE WINDOWS",
+     "SITE FOR REDEVELOPMENT (a council notice)"
+    ],
+    "note": "boarded and closed; nothing is sold or shown; the name stays on the board as canon allows a building to stand",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_cammack_lockups",
+    "plot": "cammack_lockups",
+    "place": "cammack_base",
+    "name": "Cammack's lock-ups",
+    "street": "north_road",
+    "number": null,
+    "use": "lock_ups",
+    "fascia_text": [
+     "LOCK-UPS"
+    ],
+    "sign_kind": "painted board; numbered roller doors",
+    "other_texts": [
+     "TO LET",
+     "ENQUIRIES 960 335"
+    ],
+    "note": "Cammack's base; the lock-ups stand on ground Agar's agents hold (the freehold of half the warehouse row), so the board carries the agents' number",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_bp_chippy",
+    "plot": "bp_chippy",
+    "place": "chip_shop",
+    "name": "Dobson's",
+    "street": "back_parade",
+    "number": 1,
+    "use": "chip_shop",
+    "fascia_text": [
+     "DOBSON'S"
+    ],
+    "sign_kind": "painted board; a lit sign",
+    "window_lettering": [
+     "FISH & CHIPS",
+     "OPEN SUNDAYS FROM 11 NOVEMBER"
+    ],
+    "other_texts": [
+     "1 Back Parade"
+    ],
+    "hours_plate": true,
+    "note": "the chip shop; the Sunday opening is the paper's item of 9 November",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_chapel",
+    "plot": "chapel",
+    "place": "chapel",
+    "name": "the chapel",
+    "street": "chapel_lane",
+    "number": 1,
+    "use": "chapel",
+    "fascia_text": [
+     "THE CHAPEL"
+    ],
+    "sign_kind": "painted board by the green door",
+    "other_texts": [
+     "SERVICES SUNDAY 9.30 AND 11",
+     "FATHER B. WALSH",
+     "ALL WELCOME"
+    ],
+    "note": "no saint is named; canon's religion is part of life, never mocked",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)"
+   },
+   {
+    "id": "fascia_chapel_hall",
+    "plot": "chapel_hall",
+    "place": "chapel_hall",
+    "name": "the chapel hall",
+    "street": "chapel_lane",
+    "number": null,
+    "use": "hall",
+    "fascia_text": [
+     "CHAPEL HALL"
+    ],
+    "sign_kind": "painted board",
+    "other_texts": [
+     "MEETINGS · SALES · DANCES",
+     "THURSDAYS 7.30 PM POLL TAX MEETINGS (poster)"
+    ],
+    "note": "where the poll-tax meetings, the jumble sale and the dance are held",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_priests_house",
+    "plot": "priests_house",
+    "place": "priests_house",
+    "name": "the priest's house",
+    "street": "chapel_lane",
+    "number": 3,
+    "use": "home",
+    "fascia_text": [
+     "THE PRIEST'S HOUSE"
+    ],
+    "sign_kind": "a house number only",
+    "other_texts": [
+     "3 Chapel Lane"
+    ],
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_cl_barber",
+    "plot": "cl_barber",
+    "place": "barber",
+    "name": "the barber",
+    "street": "chapel_lane",
+    "number": 5,
+    "use": "barber",
+    "fascia_text": [
+     "BARBER"
+    ],
+    "sign_kind": "a pole and a painted board",
+    "window_lettering": [
+     "GENTS HAIRDRESSING",
+     "HAIRCUT £4"
+    ],
+    "other_texts": [
+     "5 Chapel Lane"
+    ],
+    "hours_plate": true,
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_cl_23",
+    "plot": "cl_23",
+    "place": "doctors",
+    "name": "the retired doctor's",
+    "street": "chapel_lane",
+    "number": 23,
+    "use": "home",
+    "fascia_text": [],
+    "sign_kind": "brass plate, name polished away",
+    "other_texts": [
+     "23 Chapel Lane",
+     "SURGERY CLOSED (a faded card)"
+    ],
+    "note": "the retired doctor's house; he stitches for £20 (economy)",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_school",
+    "plot": "school",
+    "place": "school",
+    "name": "the school (closed)",
+    "street": "chapel_lane",
+    "number": 2,
+    "use": "school_closed",
+    "fascia_text": [
+     "CLOSED"
+    ],
+    "sign_kind": "a council notice on boarded doors",
+    "other_texts": [
+     "NO ENTRY",
+     "ENQUIRIES TO THE COUNCIL OFFICES"
+    ],
+    "ghost_text": [
+     "the old name over the door, painted out"
+    ],
+    "note": "canon: the building stands closed and empty; the notice names no one",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_allotments",
+    "plot": "allotments",
+    "place": "allotments",
+    "name": "the allotments",
+    "street": "chapel_lane",
+    "number": null,
+    "use": "allotments",
+    "fascia_text": [
+     "ALLOTMENT GARDENS"
+    ],
+    "sign_kind": "a painted board on the gate",
+    "other_texts": [
+     "PLOT HOLDERS ONLY",
+     "CLOSE THE GATE"
+    ],
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_pigeon_loft",
+    "plot": "pigeon_loft",
+    "place": "pigeon_loft",
+    "name": "the pigeon loft",
+    "street": "chapel_lane",
+    "number": null,
+    "use": "pigeon_loft",
+    "fascia_text": [
+     "THE HOOK PIGEON LOFT"
+    ],
+    "sign_kind": "a hand-painted board over the loft door",
+    "other_texts": [
+     "FANCIERS ONLY",
+     "VISITORS ASK AT THE HUT"
+    ],
+    "note": "24 Nov pastimes ruling: the pigeon loft on the allotments",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_ferry_landing",
+    "plot": "ferry_landing",
+    "place": "ferry_landing",
+    "name": "the ferry landing",
+    "street": "quay_road",
+    "number": null,
+    "use": "landing",
+    "fascia_text": [
+     "MERIDIAN FERRY"
+    ],
+    "sign_kind": "enamel board at the landing",
+    "other_texts": [
+     "the winter timetable (poster F01)",
+     "THE HOOK"
+    ],
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_landing_shelter",
+    "plot": "landing_shelter",
+    "place": null,
+    "name": "the landing shelter",
+    "street": "quay_road",
+    "number": null,
+    "use": "shelter",
+    "fascia_text": [
+     "WAIT HERE"
+    ],
+    "sign_kind": "a stencilled board",
+    "other_texts": [
+     "MERIDIAN FERRY"
+    ],
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_ice_hut",
+    "plot": "ice_hut",
+    "place": "fish_dock",
+    "name": "the ice hut",
+    "street": "quay_road",
+    "number": null,
+    "use": "hut",
+    "fascia_text": [
+     "ICE"
+    ],
+    "sign_kind": "a painted board on the fish dock",
+    "other_texts": [
+     "FISH BOXES · RETURN EMPTY"
+    ],
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   },
+   {
+    "id": "fascia_tea_stall",
+    "plot": "tea_stall",
+    "place": "tea_stall",
+    "name": "the tea stall",
+    "street": "dock_road",
+    "number": null,
+    "use": "stall",
+    "fascia_text": [
+     "TEA",
+     "BACON ROLLS"
+    ],
+    "sign_kind": "a hand-painted board and a hatch",
+    "other_texts": [
+     "TEA 30p"
+    ],
+    "note": "the stall on Dock Road; the caff's price for tea",
+    "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
+    "chosen": true
+   }
+  ],
+  "posters_and_cards": [
+   {
+    "id": "print_p01",
+    "poster_id": "P01",
+    "kind": "sheet",
+    "title": "Poll tax: public meeting bill",
+    "lines": [
+     "NO",
+     "POLL TAX",
+     "PUBLIC MEETING",
+     "THURSDAY 25 OCTOBER",
+     "7.30 PM",
+     "THE CHAPEL HALL",
+     "WHAT TO DO IF YOU GET A SUMMONS",
+     "EVERYONE WELCOME",
+     "MERIDIAN AGAINST THE POLL TAX",
+     "Published by Meridian Against the Poll Tax. Printed by Quay Print, Meridian."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json P01",
+    "notes": [
+     "the named variant (film, band, ring names, campaign) is adopted; the cloud week held the names for his tap"
+    ],
+    "chosen": true,
+    "dated": {
+     "kind": "event",
+     "date": "1990-10-25",
+     "label": "the public meeting"
+    }
+   },
+   {
+    "id": "print_p02",
+    "poster_id": "P02",
+    "kind": "sheet",
+    "title": "Poll tax: don't pay bill",
+    "lines": [
+     "DON’T",
+     "PAY",
+     "THE POLL TAX",
+     "CAN’T PAY - WON’T PAY",
+     "JOIN US EVERY THURSDAY",
+     "7.30 PM · THE CHAPEL HALL",
+     "MERIDIAN AGAINST THE POLL TAX",
+     "Published by Meridian Against the Poll Tax. Printed by Quay Print, Meridian."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json P02",
+    "notes": [
+     "the named variant (film, band, ring names, campaign) is adopted; the cloud week held the names for his tap"
+    ],
+    "chosen": true
+   },
+   {
+    "id": "print_p03",
+    "poster_id": "P03",
+    "kind": "sheet",
+    "title": "Poll tax: march bill",
+    "lines": [
+     "MARCH",
+     "AGAINST THE",
+     "POLL TAX",
+     "SATURDAY",
+     "10 NOVEMBER",
+     "ASSEMBLE 11 AM",
+     "THE EXCHANGE",
+     "BRING YOUR NEIGHBOURS",
+     "BRING A BANNER",
+     "MERIDIAN AGAINST THE POLL TAX",
+     "Published by Meridian Against the Poll Tax. Printed by Quay Print, Meridian."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json P03",
+    "notes": [
+     "the named variant (film, band, ring names, campaign) is adopted; the cloud week held the names for his tap"
+    ],
+    "chosen": true,
+    "dated": {
+     "kind": "event",
+     "date": "1990-11-10",
+     "label": "the march"
+    }
+   },
+   {
+    "id": "print_p04",
+    "poster_id": "P04",
+    "kind": "sheet",
+    "title": "Poll tax: summons advice sheet (photocopy)",
+    "lines": [
+     "GOT A POLL TAX",
+     "SUMMONS?",
+     "DON’T PANIC.",
+     "ADVICE EVENING",
+     "TUESDAY 30 OCTOBER, 7 PM",
+     "THE CHAPEL HALL",
+     "Bring your summons and any letters you have had.",
+     "We will go through them with you.",
+     "Free and confidential. Come on your own",
+     "or bring a neighbour.",
+     "MERIDIAN AGAINST THE POLL TAX"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json P04",
+    "dated": {
+     "kind": "event",
+     "date": "1990-10-30",
+     "label": "the advice evening"
+    }
+   },
+   {
+    "id": "print_p05",
+    "poster_id": "P05",
+    "kind": "sticker",
+    "title": "Poll tax: sticker, 95 x 60",
+    "lines": [
+     "NO",
+     "POLL TAX",
+     "MERIDIAN AGAINST THE POLL TAX"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json P05"
+   },
+   {
+    "id": "print_p06",
+    "poster_id": "P06",
+    "kind": "sticker",
+    "title": "Poll tax: sticker, 148 x 52",
+    "lines": [
+     "CAN’T PAY - WON’T PAY",
+     "MERIDIAN AGAINST THE POLL TAX"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json P06"
+   },
+   {
+    "id": "print_j01",
+    "poster_id": "J01",
+    "kind": "sheet",
+    "title": "Jumble sale notice (chapel hall), A3 photocopy",
+    "lines": [
+     "GRAND",
+     "JUMBLE SALE",
+     "THE CHAPEL HALL",
+     "SATURDAY 20 OCTOBER",
+     "DOORS OPEN 2 PM",
+     "CLOTHING · BOOKS · BRIC-A-BRAC · HOUSEHOLD",
+     "Teas and cakes",
+     "ADMISSION 20p",
+     "IN AID OF THE CHAPEL ROOF FUND",
+     "Printed by Quay Print, Meridian."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json J01",
+    "dated": {
+     "kind": "event",
+     "date": "1990-10-20",
+     "label": "the jumble sale"
+    }
+   },
+   {
+    "id": "print_d01",
+    "poster_id": "D01",
+    "kind": "sheet",
+    "title": "Old-time and sequence dance notice (chapel hall), A3 photocopy",
+    "lines": [
+     "OLD TIME",
+     "and",
+     "SEQUENCE",
+     "DANCING",
+     "SATURDAY 17 NOVEMBER",
+     "7.30 TO 11 PM",
+     "THE CHAPEL HALL",
+     "Music by",
+     "THE SANDERLING TRIO",
+     "TEA AND SANDWICHES",
+     "ADMISSION £1.50",
+     "ALL WELCOME",
+     "Printed by Quay Print, Meridian."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json D01",
+    "notes": [
+     "the named variant (film, band, ring names, campaign) is adopted; the cloud week held the names for his tap"
+    ],
+    "chosen": true,
+    "dated": {
+     "kind": "event",
+     "date": "1990-11-17",
+     "label": "the dance"
+    }
+   },
+   {
+    "id": "print_w01",
+    "poster_id": "W01",
+    "kind": "sheet",
+    "title": "Professional wrestling bill",
+    "lines": [
+     "PROFESSIONAL",
+     "WRESTLING",
+     "THE DRILL HALL",
+     "FRIDAY 2 NOVEMBER",
+     "BELL 7.30 PM",
+     "THE HARPOONER",
+     "v",
+     "SPANNER SMITH",
+     "TED HOLROYD",
+     "v",
+     "THE STEVEDORE",
+     "AND SUPPORT BOUTS",
+     "RINGSIDE £4 · UNRESERVED £2.50",
+     "TICKETS AT THE DOOR",
+     "Printed by Quay Print, Meridian."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json W01",
+    "notes": [
+     "the named variant (film, band, ring names, campaign) is adopted; the cloud week held the names for his tap"
+    ],
+    "chosen": true,
+    "dated": {
+     "kind": "event",
+     "date": "1990-11-02",
+     "label": "the wrestling night"
+    }
+   },
+   {
+    "id": "print_b01",
+    "poster_id": "B01",
+    "kind": "sheet",
+    "title": "Boxing night bill (venue named, held)",
+    "lines": [
+     "BOXING",
+     "TEN BOUTS",
+     "THE DRILL HALL",
+     "FRIDAY 16 NOVEMBER",
+     "FIRST BOUT 7.30 PM",
+     "RINGSIDE £3 · UNRESERVED £1.50",
+     "TICKETS AT THE DOOR",
+     "Printed by Quay Print, Meridian."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json B01",
+    "dated": {
+     "kind": "event",
+     "date": "1990-11-16",
+     "label": "the boxing night"
+    }
+   },
+   {
+    "id": "print_m01",
+    "poster_id": "M01",
+    "kind": "sheet",
+    "title": "Market day bill",
+    "lines": [
+     "COPPER ROW",
+     "MARKET",
+     "TUESDAYS · FRIDAYS · SATURDAYS",
+     "8 AM TO 4 PM",
+     "FRUIT · VEG · FISH · HOUSEHOLD · CLOTHING",
+     "NEW STALLS WELCOME",
+     "ENQUIRIES: THE MARKET OFFICE",
+     "Printed by Quay Print, Meridian."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json M01"
+   },
+   {
+    "id": "print_g01",
+    "poster_id": "G01",
+    "kind": "sheet",
+    "title": "Washday powder four-sheet (invented brand, held)",
+    "lines": [
+     "WHITEWELL",
+     "WASHES WHITE",
+     "FOR TWIN-TUB, AUTOMATIC AND HAND WASHING",
+     "Printed by Quay Print, Meridian."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json G01"
+   },
+   {
+    "id": "print_g02",
+    "poster_id": "G02",
+    "kind": "sheet",
+    "title": "Tea bill (invented brand, held)",
+    "lines": [
+     "QUAYSIDE",
+     "TEA",
+     "A good strong cup",
+     "80 BAGS · £1.35",
+     "Printed by Quay Print, Meridian."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json G02"
+   },
+   {
+    "id": "print_t01",
+    "poster_id": "T01",
+    "kind": "sheet",
+    "title": "Tivoli quad: a new thriller (no title minted)",
+    "lines": [
+     "Somebody saw. Somebody will pay.",
+     "THE FOURTH",
+     "WITNESS",
+     "A MARSHLAND PICTURES PRODUCTION · SCREENPLAY BY A. VENN",
+     "MUSIC BY R. CORLEY · DIRECTED BY H. MADDOX"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json T01",
+    "notes": [
+     "the named variant (film, band, ring names, campaign) is adopted; the cloud week held the names for his tap"
+    ],
+    "chosen": true,
+    "dated": {
+     "kind": "event",
+     "date": "1990-10-18",
+     "label": "the film's first day"
+    }
+   },
+   {
+    "id": "print_t02",
+    "poster_id": "T02",
+    "kind": "sheet",
+    "title": "Tivoli quad: a new comedy (no title minted)",
+    "lines": [
+     "A WEEK AT",
+     "GULLWING",
+     "The funniest week of their lives.",
+     "A MARSHLAND PICTURES PRODUCTION · DIRECTED BY H. MADDOX"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json T02",
+    "notes": [
+     "the named variant (film, band, ring names, campaign) is adopted; the cloud week held the names for his tap"
+    ],
+    "chosen": true,
+    "dated": {
+     "kind": "event",
+     "date": "1990-10-25",
+     "label": "the film's first day"
+    }
+   },
+   {
+    "id": "print_t03",
+    "poster_id": "T03",
+    "kind": "sheet",
+    "title": "Tivoli programme bill (no titles minted)",
+    "lines": [
+     "THE TIVOLI",
+     "FROM THURSDAY 18 OCTOBER",
+     "THE FOURTH WITNESS",
+     "FROM THURSDAY 25 OCTOBER",
+     "A WEEK AT GULLWING",
+     "PERFORMANCES 5.15 AND 8.00",
+     "SATURDAY ALSO 2.30",
+     "ALL SEATS £2.80",
+     "O.A.P. AND UNWAGED £1.50",
+     "Printed by Quay Print, Meridian."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json T03",
+    "notes": [
+     "the named variant (film, band, ring names, campaign) is adopted; the cloud week held the names for his tap"
+    ],
+    "chosen": true,
+    "dated": {
+     "kind": "event",
+     "date": "1990-10-18",
+     "label": "the first film's first day"
+    }
+   },
+   {
+    "id": "print_t01s",
+    "poster_id": "T01s",
+    "kind": "sheet",
+    "title": "Tivoli venue strip for T01, 1016 x 90, letterpress black on white",
+    "lines": [
+     "THE TIVOLI",
+     "FROM THURSDAY 18 OCTOBER"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json T01s",
+    "dated": {
+     "kind": "event",
+     "date": "1990-10-18",
+     "label": "the film's first day"
+    }
+   },
+   {
+    "id": "print_t02s",
+    "poster_id": "T02s",
+    "kind": "sheet",
+    "title": "Tivoli venue strip for T02, 1016 x 90, letterpress black on white",
+    "lines": [
+     "THE TIVOLI",
+     "FROM THURSDAY 25 OCTOBER"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json T02s",
+    "dated": {
+     "kind": "event",
+     "date": "1990-10-25",
+     "label": "the film's first day"
+    }
+   },
+   {
+    "id": "print_f01",
+    "poster_id": "F01",
+    "kind": "sheet",
+    "title": "Meridian Ferry winter timetable (A2 sheet for the ramp board)",
+    "lines": [
+     "MERIDIAN FERRY",
+     "WINTER SERVICE",
+     "FROM MONDAY 1 OCTOBER",
+     "FROM THE HOOK",
+     "FROM THE FAR SIDE",
+     "MONDAY TO SATURDAY",
+     "6.30  7.00  7.30",
+     "and every half hour",
+     "until 5.30 PM",
+     "then 6.30  7.30  8.30",
+     "9.30  10.30",
+     "LAST CROSSING 11.00",
+     "6.45  7.15  7.45",
+     "and every half hour",
+     "until 5.45 PM",
+     "then 6.45  7.45  8.45",
+     "9.45  10.45",
+     "LAST CROSSING 11.15",
+     "SUNDAYS",
+     "9.00 AM and hourly",
+     "until 6.00 PM",
+     "9.15 AM and hourly",
+     "until 6.15 PM",
+     "FARES · FOOT PASSENGERS",
+     "SINGLE 60p · RETURN £1.00 · CYCLES 30p",
+     "O.A.P. HALF FARE",
+     "CROSSINGS MAY BE CANCELLED IN FOG OR HIGH WIND",
+     "Printed by Quay Print, Meridian."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json F01",
+    "dated": {
+     "kind": "event",
+     "date": "1990-10-01",
+     "label": "the winter service starts"
+    }
+   },
+   {
+    "id": "print_f02",
+    "poster_id": "F02",
+    "kind": "sheet",
+    "title": "Meridian Ferry summer timetable (older sheet under F01)",
+    "lines": [
+     "MERIDIAN FERRY",
+     "SUMMER SERVICE",
+     "14 MAY TO 30 SEPTEMBER"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json F02"
+   },
+   {
+    "id": "print_h01",
+    "poster_id": "H01",
+    "kind": "plate",
+    "title": "Harbour Board enamel sign: NO ADMITTANCE",
+    "lines": [
+     "NO ADMITTANCE",
+     "EXCEPT ON BUSINESS",
+     "MERIDIAN HARBOUR BOARD"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json H01"
+   },
+   {
+    "id": "print_h02",
+    "poster_id": "H02",
+    "kind": "plate",
+    "title": "Harbour Board enamel sign: DANGER DEEP WATER",
+    "lines": [
+     "DANGER",
+     "DEEP WATER",
+     "NO SWIMMING",
+     "MERIDIAN HARBOUR BOARD"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json H02"
+   },
+   {
+    "id": "print_h03",
+    "poster_id": "H03",
+    "kind": "sheet",
+    "title": "Harbour Board notice: berths closed (typed A4)",
+    "lines": [
+     "MERIDIAN HARBOUR BOARD",
+     "NOTICE TO MARINERS",
+     "Berths 3 and 4 on the Hook quay will be closed to all",
+     "shipping from Monday 5 November until further notice,",
+     "for repairs to the quay wall.",
+     "Masters should apply to the Harbour Master's office",
+     "for other berths.",
+     "By order of the Board.",
+     "26 October 1990"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json H03",
+    "dated": {
+     "kind": "notice",
+     "date": "1990-10-26",
+     "label": "dated 26 October"
+    }
+   },
+   {
+    "id": "print_h04",
+    "poster_id": "H04",
+    "kind": "sheet",
+    "title": "Harbour Board notice: tide table (typed A4)",
+    "lines": [
+     "MERIDIAN HARBOUR BOARD",
+     "HIGH WATER, THE HOOK",
+     "NOVEMBER 1990",
+     "DAY       HW     m     HW     m",
+     "THU 1    0542 4.4   1807 4.3",
+     "FRI 2    0632 4.6   1857 4.5",
+     "SAT 3    0722 4.7   1947 4.6",
+     "SUN 4    0812 4.8   2037 4.7",
+     "MON 5    0902 4.7   2127 4.6",
+     "TUE 6    0952 4.5   2217 4.4",
+     "WED 7    1042 4.2   2307 4.1",
+     "Heights in metres above chart datum.",
+     "Times are Greenwich Mean Time."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json H04"
+   },
+   {
+    "id": "print_h05",
+    "poster_id": "H05",
+    "kind": "sheet",
+    "title": "Harbour Board notice: vacancy (typed A4)",
+    "lines": [
+     "MERIDIAN HARBOUR BOARD",
+     "VACANCY",
+     "QUAY LABOURER",
+     "Applications in writing, giving age and experience,",
+     "to the Secretary, Meridian Harbour Board,",
+     "to arrive by Friday 16 November.",
+     "Wages by agreement."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json H05"
+   },
+   {
+    "id": "print_c01a",
+    "poster_id": "C01a",
+    "kind": "sheet",
+    "title": "Police appeal for witnesses (a)",
+    "lines": [
+     "POLICE",
+     "APPEAL FOR WITNESSES",
+     "DID YOU SEE ANYTHING?",
+     "ON THE NIGHT OF FRIDAY 12 OCTOBER,",
+     "BETWEEN 11 PM AND 1 AM,",
+     "A SHOP WINDOW ON QUAY STREET",
+     "WAS SMASHED.",
+     "IF YOU SAW OR HEARD ANYTHING,",
+     "HOWEVER SMALL, PLEASE TELEPHONE",
+     "THE INCIDENT ROOM ON 960 640,",
+     "OR CALL AT ANY POLICE STATION.",
+     "YOUR INFORMATION WILL BE TREATED IN CONFIDENCE."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json C01a",
+    "dated": {
+     "kind": "notice",
+     "date": "1990-10-12",
+     "label": "the night of the offence"
+    }
+   },
+   {
+    "id": "print_c01b",
+    "poster_id": "C01b",
+    "kind": "sheet",
+    "title": "Police appeal for witnesses (b)",
+    "lines": [
+     "POLICE",
+     "APPEAL FOR WITNESSES",
+     "DID YOU SEE ANYTHING?",
+     "ON THE NIGHT OF SATURDAY 20 OCTOBER,",
+     "BETWEEN MIDNIGHT AND 6 AM,",
+     "A VAN WAS STOLEN FROM THE QUAY.",
+     "IF YOU SAW OR HEARD ANYTHING,",
+     "HOWEVER SMALL, PLEASE TELEPHONE",
+     "THE INCIDENT ROOM ON 960 640,",
+     "OR CALL AT ANY POLICE STATION.",
+     "YOUR INFORMATION WILL BE TREATED IN CONFIDENCE."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json C01b",
+    "dated": {
+     "kind": "notice",
+     "date": "1990-10-20",
+     "label": "the night of the offence"
+    }
+   },
+   {
+    "id": "print_c01c",
+    "poster_id": "C01c",
+    "kind": "sheet",
+    "title": "Police appeal for witnesses (c)",
+    "lines": [
+     "POLICE",
+     "APPEAL FOR WITNESSES",
+     "DID YOU SEE ANYTHING?",
+     "ON THE NIGHT OF SUNDAY 28 OCTOBER,",
+     "BETWEEN 10 PM AND 11 PM,",
+     "A MAN WAS ASSAULTED NEAR THE QUAY.",
+     "IF YOU SAW OR HEARD ANYTHING,",
+     "HOWEVER SMALL, PLEASE TELEPHONE",
+     "THE INCIDENT ROOM ON 960 640,",
+     "OR CALL AT ANY POLICE STATION.",
+     "YOUR INFORMATION WILL BE TREATED IN CONFIDENCE."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json C01c",
+    "dated": {
+     "kind": "notice",
+     "date": "1990-10-28",
+     "label": "the night of the offence"
+    }
+   },
+   {
+    "id": "print_c02",
+    "poster_id": "C02",
+    "kind": "sheet",
+    "title": "Planning application notice (A4 in a sleeve)",
+    "lines": [
+     "PLANNING APPLICATION",
+     "NOTICE",
+     "PROPOSAL",
+     "Change of use of the ground floor, 7 Quay Street,",
+     "from shop to estate agent's office.",
+     "COMMENTS",
+     "Anyone wishing to comment may write to the Planning",
+     "Officer by Friday 9 November.",
+     "THE PLANS",
+     "may be seen at the Planning Department, Monday to",
+     "Friday, 9 a.m. to 4.30 p.m."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json C02",
+    "dated": {
+     "kind": "event",
+     "date": "1990-11-09",
+     "label": "the comment deadline"
+    }
+   },
+   {
+    "id": "print_c03",
+    "poster_id": "C03",
+    "kind": "sheet",
+    "title": "Temporary road closure notice (A3 in a sleeve)",
+    "lines": [
+     "HIGHWAYS DEPARTMENT",
+     "NOTICE OF TEMPORARY ROAD CLOSURE",
+     "QUAY STREET",
+     "WILL BE CLOSED TO VEHICLES ON",
+     "SUNDAY 4 NOVEMBER",
+     "FROM 8 AM TO 6 PM",
+     "FOR GAS MAIN RENEWAL.",
+     "PEDESTRIAN ACCESS WILL BE MAINTAINED.",
+     "DIVERSION VIA WEIGHHOUSE LANE.",
+     "We apologise for any inconvenience."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json C03",
+    "dated": {
+     "kind": "event",
+     "date": "1990-11-04",
+     "label": "the closure"
+    }
+   },
+   {
+    "id": "print_k01",
+    "poster_id": "K01",
+    "kind": "card",
+    "title": "Closed for lunch card (felt pen)",
+    "lines": [
+     "CLOSED FOR LUNCH",
+     "BACK AT 2 O’CLOCK"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json K01"
+   },
+   {
+    "id": "print_k02",
+    "poster_id": "K02",
+    "kind": "card",
+    "title": "BACK AT clock card (printed; not placed)",
+    "lines": [
+     "BACK AT"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json K02"
+   },
+   {
+    "id": "print_k03a",
+    "poster_id": "K03a",
+    "kind": "card",
+    "title": "OPEN / CLOSED hanging sign, face OPEN",
+    "lines": [
+     "OPEN"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json K03a"
+   },
+   {
+    "id": "print_k03b",
+    "poster_id": "K03b",
+    "kind": "card",
+    "title": "OPEN / CLOSED hanging sign, face CLOSED",
+    "lines": [
+     "CLOSED"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json K03b"
+   },
+   {
+    "id": "print_k04",
+    "poster_id": "K04",
+    "kind": "sticker",
+    "title": "NO DOGS sticker, 150 x 105",
+    "lines": [
+     "NO",
+     "DOGS"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json K04"
+   },
+   {
+    "id": "print_k05",
+    "poster_id": "K05",
+    "kind": "card",
+    "title": "PLEASE SHUT THE DOOR (felt pen)",
+    "lines": [
+     "PLEASE SHUT",
+     "THE DOOR"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json K05"
+   },
+   {
+    "id": "print_k06a",
+    "poster_id": "K06a",
+    "kind": "card",
+    "title": "Launderette: LAST WASH (felt pen)",
+    "lines": [
+     "LAST WASH",
+     "4.30 PM"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json K06a"
+   },
+   {
+    "id": "print_k06b",
+    "poster_id": "K06b",
+    "kind": "sticker",
+    "title": "Launderette: PLEASE DO NOT OVERLOAD (printed sticker)",
+    "lines": [
+     "PLEASE DO NOT",
+     "OVERLOAD",
+     "THE MACHINES"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json K06b"
+   },
+   {
+    "id": "print_k06c",
+    "poster_id": "K06c",
+    "kind": "card",
+    "title": "OUT OF ORDER (felt pen)",
+    "lines": [
+     "OUT OF",
+     "ORDER"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json K06c"
+   },
+   {
+    "id": "print_k07a",
+    "poster_id": "K07a",
+    "kind": "card",
+    "title": "Grocer's star card",
+    "lines": [
+     "SPECIAL OFFER",
+     "TEA BAGS",
+     "80 FOR 99p"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json K07a"
+   },
+   {
+    "id": "print_k07b",
+    "poster_id": "K07b",
+    "kind": "card",
+    "title": "Grocer's star card",
+    "lines": [
+     "NEW SEASON",
+     "CABBAGE",
+     "20p lb"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json K07b"
+   },
+   {
+    "id": "print_k07c",
+    "poster_id": "K07c",
+    "kind": "card",
+    "title": "Grocer's star card",
+    "lines": [
+     "BIG SAVER",
+     "TINNED PEARS",
+     "2 FOR 69p"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json K07c"
+   },
+   {
+    "id": "print_k07d",
+    "poster_id": "K07d",
+    "kind": "card",
+    "title": "Grocer's star card",
+    "lines": [
+     "FRESH EGGS",
+     "85p DOZEN"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json K07d"
+   },
+   {
+    "id": "print_k08",
+    "poster_id": "K08",
+    "kind": "card",
+    "title": "SORRY NO CREDIT GIVEN (printed card)",
+    "lines": [
+     "SORRY",
+     "NO CREDIT GIVEN"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json K08"
+   },
+   {
+    "id": "print_k09a",
+    "poster_id": "K09a",
+    "kind": "card",
+    "title": "Fish price ticket: COD FILLET",
+    "lines": [
+     "COD FILLET",
+     "£2.60 lb"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json K09a",
+    "notes": [
+     "cod £2.60 a pound (economy)"
+    ],
+    "chosen": true
+   },
+   {
+    "id": "print_k09b",
+    "poster_id": "K09b",
+    "kind": "card",
+    "title": "Fish price ticket: HADDOCK",
+    "lines": [
+     "HADDOCK",
+     "£2.40 lb"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json K09b",
+    "notes": [
+     "haddock £2.40, chosen to sit under the cod"
+    ],
+    "chosen": true
+   },
+   {
+    "id": "print_k09c",
+    "poster_id": "K09c",
+    "kind": "card",
+    "title": "Fish price ticket: PLAICE",
+    "lines": [
+     "PLAICE",
+     "£2.30 lb"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json K09c"
+   },
+   {
+    "id": "print_k09d",
+    "poster_id": "K09d",
+    "kind": "card",
+    "title": "Fish price ticket: KIPPERS",
+    "lines": [
+     "KIPPERS",
+     "95p PAIR"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json K09d"
+   },
+   {
+    "id": "print_k09e",
+    "poster_id": "K09e",
+    "kind": "card",
+    "title": "Fish price ticket: SMOKED HADDOCK",
+    "lines": [
+     "SMOKED HADDOCK",
+     "£2.90 lb"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json K09e"
+   },
+   {
+    "id": "print_k09f",
+    "poster_id": "K09f",
+    "kind": "card",
+    "title": "Fish price ticket: COCKLES",
+    "lines": [
+     "COCKLES",
+     "45p TUB"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json K09f"
+   },
+   {
+    "id": "print_sa01",
+    "poster_id": "SA01",
+    "kind": "card",
+    "title": "Newsagent window card 01",
+    "lines": [
+     "ROOM TO LET",
+     "Clean, quiet, gas fire.",
+     "£25 per week. No pets.",
+     "Ring 960 471 after 5."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json SA01",
+    "notes": [
+     "rent changed from £28 to the economy file's £25 a week for a room"
+    ],
+    "chosen": true
+   },
+   {
+    "id": "print_sa02",
+    "poster_id": "SA02",
+    "kind": "card",
+    "title": "Newsagent window card 02",
+    "lines": [
+     "GENTS BICYCLE",
+     "3-speed, good tyres.",
+     "£18 or nearest offer.",
+     "Tel. 960 233."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json SA02"
+   },
+   {
+    "id": "print_sa03",
+    "poster_id": "SA03",
+    "kind": "card",
+    "title": "Newsagent window card 03",
+    "lines": [
+     "PIANO FOR SALE",
+     "Upright, good tone.",
+     "Buyer collects. £120.",
+     "Ring 960 528."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json SA03"
+   },
+   {
+    "id": "print_sa04",
+    "poster_id": "SA04",
+    "kind": "card",
+    "title": "Newsagent window card 04",
+    "lines": [
+     "WINDOW CLEANER",
+     "Reliable. Free estimates.",
+     "Tel. 960 361."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json SA04"
+   },
+   {
+    "id": "print_sa05",
+    "poster_id": "SA05",
+    "kind": "card",
+    "title": "Newsagent window card 05",
+    "lines": [
+     "DECORATING",
+     "Indoor and out.",
+     "Fair prices. 960 774."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json SA05"
+   },
+   {
+    "id": "print_sa06",
+    "poster_id": "SA06",
+    "kind": "card",
+    "title": "Newsagent window card 06",
+    "lines": [
+     "LOST",
+     "Black and white cat,",
+     "answers to Smudge.",
+     "Last seen on Quay Street.",
+     "Reward. 960 189."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json SA06"
+   },
+   {
+    "id": "print_sa07",
+    "poster_id": "SA07",
+    "kind": "card",
+    "title": "Newsagent window card 07",
+    "lines": [
+     "FOUND",
+     "Bunch of keys on",
+     "Quay Street. Enquire within."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json SA07"
+   },
+   {
+    "id": "print_sa08",
+    "poster_id": "SA08",
+    "kind": "card",
+    "title": "Newsagent window card 08",
+    "lines": [
+     "TYPING DONE AT HOME",
+     "Letters and CVs.",
+     "960 842."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json SA08"
+   },
+   {
+    "id": "print_sa09",
+    "poster_id": "SA09",
+    "kind": "card",
+    "title": "Newsagent window card 09",
+    "lines": [
+     "MAN WITH VAN",
+     "Removals and house",
+     "clearance. Anywhere.",
+     "960 655."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json SA09"
+   },
+   {
+    "id": "print_sa10",
+    "poster_id": "SA10",
+    "kind": "card",
+    "title": "Newsagent window card 10",
+    "lines": [
+     "GAS COOKER",
+     "4 ring, hardly used.",
+     "£35. Ring 960 307."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json SA10"
+   },
+   {
+    "id": "print_sa11",
+    "poster_id": "SA11",
+    "kind": "card",
+    "title": "Newsagent window card 11",
+    "lines": [
+     "WANTED",
+     "Part-time help, mornings.",
+     "Apply within."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json SA11"
+   },
+   {
+    "id": "print_sa12",
+    "poster_id": "SA12",
+    "kind": "card",
+    "title": "Newsagent window card 12",
+    "lines": [
+     "SEWING MACHINE",
+     "Electric. £25.",
+     "Tel. 960 912."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json SA12"
+   },
+   {
+    "id": "print_sa13",
+    "poster_id": "SA13",
+    "kind": "card",
+    "title": "Newsagent window card 13",
+    "lines": [
+     "COLOUR TV",
+     "22 inch, working. £40.",
+     "Ring 960 483."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json SA13"
+   },
+   {
+    "id": "print_sa14",
+    "poster_id": "SA14",
+    "kind": "card",
+    "title": "Newsagent window card 14",
+    "lines": [
+     "CHIMNEY SWEEP",
+     "Clean and tidy.",
+     "960 596."
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json SA14"
+   },
+   {
+    "id": "print_sa15",
+    "poster_id": "SA15",
+    "kind": "card",
+    "title": "Newsagent: ADVERTISE HERE card",
+    "lines": [
+     "ADVERTISE HERE",
+     "20p PER WEEK",
+     "PAY AT THE COUNTER"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json SA15"
+   },
+   {
+    "id": "print_l02",
+    "poster_id": "L02",
+    "kind": "board",
+    "title": "Letting board, empty unit (the fascia target's board: 900 x 450, TO LET)",
+    "lines": [
+     "TO LET"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json L02"
+   },
+   {
+    "id": "print_l01",
+    "poster_id": "L01",
+    "kind": "board",
+    "title": "Letting board, shop, with agent (1200 x 450; NOT the fascia target's board; named agent, held)",
+    "lines": [
+     "AGAR & CO",
+     "ESTATE AGENTS & SURVEYORS",
+     "TO LET",
+     "SHOP AND PREMISES · APPROX. 520 SQ. FT.",
+     "ENQUIRIES 960 335"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json L01",
+    "notes": [
+     "agent is Agar & Co (the frozen map's estate agent) instead of the held Armitage & Stobbs"
+    ],
+    "chosen": true
+   },
+   {
+    "id": "print_l03",
+    "poster_id": "L03",
+    "kind": "board",
+    "title": "Letting board, flat, with agent (600 x 400; named agent, held)",
+    "lines": [
+     "AGAR & CO",
+     "ESTATE AGENTS & SURVEYORS",
+     "TO LET",
+     "SELF-CONTAINED FLAT",
+     "ENQUIRIES 960 335"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json L03",
+    "notes": [
+     "agent is Agar & Co (the frozen map's estate agent) instead of the held Armitage & Stobbs"
+    ],
+    "chosen": true
+   },
+   {
+    "id": "print_l03n",
+    "poster_id": "L03n",
+    "kind": "board",
+    "title": "Letting board, flat, no agent (600 x 400)",
+    "lines": [
+     "TO LET",
+     "SELF-CONTAINED FLAT",
+     "ENQUIRIES 960 335"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json L03n",
+    "chosen": true
+   },
+   {
+    "id": "print_l04",
+    "poster_id": "L04",
+    "kind": "board",
+    "title": "Letting board, house, no agent (600 x 400)",
+    "lines": [
+     "TO LET",
+     "TWO BEDROOMS",
+     "ENQUIRIES 960 335"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json L04"
+   },
+   {
+    "id": "print_s01n",
+    "poster_id": "S01n",
+    "kind": "plate",
+    "title": "Street name plate: QUAY STREET (name only: the default)",
+    "lines": [
+     "QUAY STREET"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json S01n"
+   },
+   {
+    "id": "print_s01d",
+    "poster_id": "S01d",
+    "kind": "plate",
+    "title": "Street name plate: QUAY STREET (name and district line: a variant)",
+    "lines": [
+     "QUAY STREET",
+     "THE HOOK"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json S01d"
+   },
+   {
+    "id": "print_s02n",
+    "poster_id": "S02n",
+    "kind": "plate",
+    "title": "Street name plate: WEIGHHOUSE LANE (name only: the default)",
+    "lines": [
+     "WEIGHHOUSE LANE"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json S02n"
+   },
+   {
+    "id": "print_s02d",
+    "poster_id": "S02d",
+    "kind": "plate",
+    "title": "Street name plate: WEIGHHOUSE LANE (name and district line: a variant)",
+    "lines": [
+     "WEIGHHOUSE LANE",
+     "COPPER ROW"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json S02d"
+   },
+   {
+    "id": "print_s03n",
+    "poster_id": "S03n",
+    "kind": "plate",
+    "title": "Street name plate: TANNERY ROW (name only: the default)",
+    "lines": [
+     "TANNERY ROW"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json S03n"
+   },
+   {
+    "id": "print_s03d",
+    "poster_id": "S03d",
+    "kind": "plate",
+    "title": "Street name plate: TANNERY ROW (name and district line: a variant)",
+    "lines": [
+     "TANNERY ROW",
+     "IRONSIDE"
+    ],
+    "src": "cloud-week/targets/posters-boards-plates/target.json S03d"
+   }
+  ],
+  "price_boards": [
+   {
+    "id": "price_caff",
+    "place": "caff",
+    "title": "Rinaldi's board",
+    "lines": [
+     "TEA 30p",
+     "BREAKFAST £1.80",
+     "DINNER £2.50",
+     "(egg, bacon, sausage, beans, toast, tea)",
+     "DINNER 12 TILL 2"
+    ],
+    "src": "economy design section 5; PRICES-WAGES-1990 section 1",
+    "note": "a board changes only for a cause"
+   },
+   {
+    "id": "price_chippy",
+    "place": "bp_chippy",
+    "title": "Dobson's menu board",
+    "lines": [
+     "FISH & CHIPS £1.60",
+     "CHIPS 40p",
+     "SAUSAGE & CHIPS £1.10",
+     "TEA 30p"
+    ],
+    "chosen": true,
+    "note": "fish and chips £1.60 (economy); the others are chosen at the economy's scale",
+    "src": "PRICES-WAGES-1990"
+   },
+   {
+    "id": "price_newsagent",
+    "place": "qs_pearts",
+    "title": "Peart's window cards",
+    "lines": [
+     "THE PILOT 25p",
+     "20 MARINER £1.70",
+     "MILK 30p",
+     "SLICED LOAF 52p"
+    ],
+    "src": "PRICES-WAGES-1990 section 1"
+   },
+   {
+    "id": "price_ironmonger",
+    "place": "qs_ironmonger",
+    "title": "the ironmonger's card",
+    "lines": [
+     "CROWBAR £6",
+     "TORCH £4",
+     "KEYS CUT £1.50",
+     "PARAFFIN BY THE GALLON"
+    ],
+    "src": "PRICES-WAGES-1990 section 1"
+   },
+   {
+    "id": "price_launderette",
+    "place": "qs_launderette",
+    "title": "the Washeteria's tariff",
+    "lines": [
+     "WASH £1",
+     "SERVICE WASH £1",
+     "DRY 20p",
+     "LAST WASH 4.30 PM"
+    ],
+    "chosen": true,
+    "note": "the prototype's bark: service wash is a pound",
+    "src": "prototype cast.js KEEPERS"
+   },
+   {
+    "id": "price_barber",
+    "place": "cl_barber",
+    "title": "the barber's card",
+    "lines": [
+     "GENTS HAIRCUT £4"
+    ],
+    "src": "PRICES-WAGES-1990 section 1"
+   },
+   {
+    "id": "price_secondhand",
+    "place": "quay_secondhand",
+    "title": "the second-hand shop's card",
+    "lines": [
+     "COATS FROM £15",
+     "JACKETS £45",
+     "OVERCOATS £90"
+    ],
+    "src": "PRICES-WAGES-1990 section 1 (second-hand, decent jacket, good overcoat)"
+   },
+   {
+    "id": "price_tea_stall",
+    "place": "tea_stall",
+    "title": "the tea stall",
+    "lines": [
+     "TEA 30p",
+     "BACON ROLL 80p"
+    ],
+    "chosen": true,
+    "src": "PRICES-WAGES-1990 (tea 30p); roll chosen"
+   },
+   {
+    "id": "price_tea_rooms",
+    "place": "qs_copper_kettle",
+    "title": "the Copper Kettle's card",
+    "lines": [
+     "POT OF TEA FOR ONE 45p",
+     "SCONE AND BUTTER 40p",
+     "BREAKFAST £1.80"
+    ],
+    "chosen": true,
+    "src": "economy shop table (tea room); prices chosen"
+   },
+   {
+    "id": "price_tivoli",
+    "place": "the Tivoli (Parade, off map)",
+    "title": "the Tivoli's board",
+    "lines": [
+     "PERFORMANCES 5.15 AND 8.00",
+     "SATURDAY ALSO 2.30",
+     "ALL SEATS £2.80",
+     "O.A.P. AND UNWAGED £1.50"
+    ],
+    "src": "cloud-week posters T03"
+   }
+  ],
+  "cab_office": [
+   {
+    "id": "print_cab_fare_card",
+    "kind": "card",
+    "place": "mickeys",
+    "title": "Mickey's fare card, on the counter",
+    "lines": [
+     "MICKEY'S CARS · FARES",
+     "80p to start, then £1.10 a mile",
+     "Nights 10 pm to 6 am and Sundays: add one quarter",
+     "Waiting: 20p a minute after the first five",
+     "Ring 960 418"
+    ],
+    "chosen": true,
+    "note": "the firm's fare: 80p then £1.10 a mile, a quarter more nights and Sundays (PRICES-WAGES-1990 section 2); the waiting charge is chosen",
+    "src": "economy file; 2.7.2; 1.7.3 (the cab office's board)"
+   },
+   {
+    "id": "print_cab_board",
+    "kind": "board",
+    "place": "mickeys",
+    "title": "Mickey's board of cars and drivers (the office wall)",
+    "lines": [
+     "CAR 1   KEVIN   DAYS",
+     "CAR 2   TERRY   NIGHTS",
+     "CAR 3   (on terms)",
+     "CAR 4   (open)",
+     "KEYS BEHIND THE COUNTER"
+    ],
+    "chosen": true,
+    "note": "chalk on a board; cars appear as the firm buys them; car two's keys are always on the board (RT2-06)",
+    "src": "1.7.3; frame: car two never lost"
+   }
+  ],
+  "graffiti": [
+   {
+    "id": "graffiti_tanner",
+    "text": "TANNER",
+    "district": "Ironside",
+    "src": "canon.md (graffiti tags minted 2026-09-02): wall names, not the three rival organisations"
+   },
+   {
+    "id": "graffiti_snide",
+    "text": "SNIDE",
+    "district": "Copper Row",
+    "src": "canon.md (graffiti tags minted 2026-09-02): wall names, not the three rival organisations"
+   },
+   {
+    "id": "graffiti_gull",
+    "text": "GULL",
+    "district": "Gullwing",
+    "src": "canon.md (graffiti tags minted 2026-09-02): wall names, not the three rival organisations"
+   },
+   {
+    "id": "graffiti_quay_firm",
+    "text": "QUAY FIRM",
+    "district": "the Hook",
+    "src": "canon.md (graffiti tags minted 2026-09-02): wall names, not the three rival organisations"
+   },
+   {
+    "id": "graffiti_parade_rats",
+    "text": "PARADE RATS",
+    "district": "the Parade",
+    "src": "canon.md (graffiti tags minted 2026-09-02): wall names, not the three rival organisations"
+   },
+   {
+    "id": "graffiti_no_poll_tax",
+    "text": "NO POLL TAX",
+    "district": "the Hook",
+    "note": "a chalk or paint slogan of the invented campaign",
+    "chosen": true
+   },
+   {
+    "id": "graffiti_cant_pay",
+    "text": "CAN'T PAY WON'T PAY",
+    "district": "the Hook",
+    "chosen": true
+   }
+  ],
+  "street_plates": {
+   "note": "the twenty name plates are in map.json name_plates (THE QUAY, QUAY STREET, BACK PARADE, NORTH ROAD, CHAPEL LANE, COLD STORE ROAD, DOCK ROAD, BASIN ROAD, BASIN TOP, WAREHOUSE ROW, in Marcellus SC); not repeated here",
+   "district_lines": {
+    "QUAY STREET": "THE HOOK",
+    "WEIGHHOUSE LANE": "COPPER ROW",
+    "TANNERY ROW": "IRONSIDE"
+   },
+   "variant": "a plate may carry its district on a second line (cloud-week S01d to S03d); the default is the name only",
+   "src": "canon.md street names; cloud-week posters S01 to S03"
+  },
+  "phone_box": {
+   "operator": "Tidewire Telephones",
+   "band": "TIDEWIRE",
+   "sub": "TELEPHONE",
+   "inside": [
+    "INSERT COINS BEFORE DIALLING",
+    "LOCAL CALLS 10p",
+    "EMERGENCY: DIAL 999, NO COIN NEEDED",
+    "TIDEWIRE TELEPHONES · FAULTS: DIAL 151"
+   ],
+   "boxes": "map.json phone_boxes (landing, by Rita's, dock gate)",
+   "chosen": true
+  },
+  "pillar_box": {
+   "operator": "Realm Post",
+   "cypher": "a crown over RP in an oval",
+   "door": "REALM POST",
+   "plate": [
+    "LAST COLLECTION 5.30 PM",
+    "SUNDAY: NONE",
+    "NEXT COLLECTION 9 AM"
+   ],
+   "boxes": "map.json street_furniture pillar_box_qs, pillar_box_north",
+   "chosen": true
+  },
+  "to_let_board": {
+   "text": [
+    "TO LET"
+   ],
+   "size_mm": [
+    900,
+    450
+   ],
+   "place": "empty_unit (7 Quay Street)",
+   "agent_board": [
+    "AGAR & CO",
+    "ESTATE AGENTS & SURVEYORS",
+    "TO LET",
+    "SHOP AND PREMISES · APPROX. 520 SQ. FT.",
+    "ENQUIRIES 960 335"
+   ],
+   "rent_if_asked": "£25 to £35 a week (economy section 3)",
+   "src": "blueprint 4.9; cloud-week fascia target small_panels letting_board; L01",
+   "chosen": true
+  },
+  "hours_plate_rule": {
+   "text_rule": "lines of day names, times H or H.MM and a dash, set from the town's opening hours (production/specs/hook-cast.json) at build time; never in a fixed word list",
+   "example": [
+    "MON-SAT 9-5.30",
+    "WED 9-1"
+   ],
+   "places": [
+    "laveracks",
+    "ritas",
+    "launderette",
+    "grocer",
+    "newsagent",
+    "tea_room",
+    "caff",
+    "cold_stores",
+    "waynes_pawn",
+    null,
+    "chip_shop",
+    "barber"
+   ],
+   "src": "cloud-week fascia target hours_plate_rule"
+  },
+  "content_rule_checked": "every text in this file was scanned against the canon content rule and the cloud-week real-marks list before writing; a record that must name a closed place does so by its map name only"
+ },
+ "open_points": [
+  "Paper name: The Meridian Pilot, minted here (chosen). The prototype's 'Evening Mail' is a real title and is retired; so is its cigarette 'Mariners' as a paper-shop line (kept as a fictional brand 'Mariner').",
+  "Six owed brands minted (chosen, for his tap): Hookside Rovers (club), The Meridian Pilot (paper), Cutter FM (pirate radio), Estuary Television (TV), Tidewire Telephones (operator, the kiosk's mark), Realm Post (postal cypher). The brand bible file (content/brands/brand-bible-v1.json) is not in the repository; the entries follow its field list.",
+  "Numbers and names in the frozen map override the cloud week's fascias: the older target numbered the newsagent 18, ironmonger 16, tea rooms 14 and used 'FISH MARKET', 'STEAM LAUNDRY' and 'FAMILY GROCER' as names; the map has Laverack's (3), the Washeteria (9), Hook Stores (11), Peart's (8), the ironmonger's (10), the Copper Kettle (12). The fascias here follow the map. The cloud week's pictures were built to the old names and will not match; the keeper should decide whether the pictures are rebuilt.",
+  "The held names of the cloud week (the Sanderling Trio, the wrestlers' ring names, the Drill Hall, The Fourth Witness, A Week at Gullwing, Marshland Pictures, Meridian Against the Poll Tax, Quay Print) are adopted as chosen. The estate agent on the letting boards is Agar & Co, not the held Armitage & Stobbs, because the frozen map's estate agent is Agar's agents at 2 Cold Store Road.",
+  "The telephone numbers use a six-digit local form (960 xxx). Mickey's is 960 418; the older target's '0632 960418' is not used (0632 is a real code).",
+  "The Drill Hall, the Exchange, the town hall, the Tivoli and Copper Row are not on the frozen map (off the Hook); posters name them as venues only.",
+  "Rent is £18 (blueprint 2.7.4 and economy), not the story bibles' £38. The rent man is minted as Mr Leonard Askew of Agar & Co's agents (chosen); the story frame lists Dawn Pybus as running for the rent collector.",
+  "story_check: every letter or note that rests on a story beat (Mickey's letter, Agar's first and licence letters, the council's inspection and hearing, the Customs letter and its five mornings, the cold-store contract, the notes of June, Cammack and Ellis) is marked story_check and its date or day is chosen; the frame in production/lane/story/frame/ is a draft. The Customs officer's name Hebblewhite and Agar's clerk Ombler are the frame's proposals.",
+  "Customs and Excise, the Value Added Tax Act 1983 and 999 are real public bodies, an Act and a number; the blueprint itself names Customs and Excise. No crest, logo or real person is shown.",
+  "Items in the paper that report a fixed date but depend on a state (the 28 October assault, the licensing hearing, the Customs visits, the dock gate chain) carry print_if and print only when the state holds; the dock gate chaining on Saturday 1 December is the frame's proposal.",
+  "Prices in print: tea 30p, breakfast £1.80, dinner £2.50, fares 80p plus £1.10 a mile, the paper 25p, 20 cigarettes £1.70, fish and chips £1.60, milk 30p, loaf 52p, key cut £1.50, crowbar £6, torch £4, barber £4, rooms £25 a week, second-hand coats £15, jackets £45, overcoats £90 (economy files). Fish prices of the older target changed to cod £2.60 and haddock £2.40; the other prices are the older target's or chosen, marked.",
+  "The Tom story templates need Alison to hold the fact; their wording follows strength_wording. 'Kill' is only ever printed as a police statement about a body, never as a rumour."
+ ]
+}

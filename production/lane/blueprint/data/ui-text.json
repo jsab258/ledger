@@ -1,0 +1,4527 @@
+{
+ "file": "ui-text.json",
+ "version": "2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "tools/lane/prototype/project/src/ui.js, player.js, talk.js, main.js (pad map), saving.js",
+  "production/handovers/6y-hints.md; ledger/Assets/Scripts/Core/FirstMoments.cs",
+  "production/lane/design-proof/PRIVACY-CHECK-2026-11-21.md; DEFINITIONS-2026-11-21.md AX-01 to AX-11",
+  "production/specs/credits.json; THIRD-PARTY.md",
+  "production/lane/blueprint/BLUEPRINT-01-hands.md, -03-story.md, -06-interface.md, -07-shape.md, -08-technical.md, -10-shipping.md",
+  "production/lane/blueprint/data/map.json (places, doors, phone boxes)",
+  "production/lane/blueprint/economy/PRICES-WAGES-1990.md (prices)",
+  "production/lane/blueprint/SOUND-PLAN.md SND-26; production/cloud-week/sound/manifest.json",
+  "RULINGS.md 23 Sep, 24 Sep"
+ ],
+ "open_points": [
+  "CLOCK: 6.1.5 and 6.5 still say 'a game hour is 60 real seconds'. Decision of 24 Nov: 120 real seconds a game hour. Nothing in this file counts game time except hold times that are real seconds (hints 4 s, 12 s, 20 s, 30 s, 45 s, 60 s: all real, unchanged).",
+  "HINT TIMING: 6.5 says the quay hint comes after 4 s still; FirstMoments.cs has 10 s since 28 Oct (4 s before) and hints on hesitation. This file takes the blueprint's 4 s (newer than the C#); the 28 Oct ruling that hints are on hesitation not the clock is kept.",
+  "THE ONE USE KEY: 1.6.8 and 6.1.1 give one use key; the prototype had E, T and G for first, second and third things. T and G are dropped and the 'which?' prompt does the sharing. T is reused for Wait and G only in fights.",
+  "LEDGER KEY: 6.6 does not name it; L is the prototype's and is kept (chosen). Full stop opens Tom's reading.",
+  "PAD MAP: the blueprint names no pad button. The prototype's map (main.js round 6) is kept where its verb survives; every other pad button is chosen. Contexts differ (foot, car, fight, talk, ledger); within one context no two actions share a key or button (checked by script).",
+  "FIXED KEYS: 6.6 calls nine keys 'fixed' while AX-05 makes every action rebindable. Read as 'fixed defaults'. Only Esc/Menu (pause), Back and Leave are not rebindable (chosen).",
+  "THE WORD 'ROUND': the blueprint names the collection of payments 'a round' (2.17), but the content gate's aroundofdrinks rule catches 'a round'. No UI text uses it ('Collect the takings'); either the blueprint term or the gate pattern needs a ruling. See content-words.json.",
+  "REPORT KEY: 3.6.7 says 'a key' without naming it; F9 chosen (keyboard) and the pause menu (both devices); R3 in a talk on the pad.",
+  "NOTICE WORDING: the AI service's name and retention are not decided (PRIVACY-CHECK: 'checked when the services are chosen'). Placeholders {service_name} and {retention_text} with check_at_build true; defaults are for the browser build (Claude, made by Anthropic).",
+  "SPEAKER IDS: FirstMoments.cs uses older cast ids ('lena' is Sheila, 'rocco' is Ron); this file uses names.",
+  "PASTIMES: boxing club, snooker hall, fishing, pigeon loft (24 Nov) have prompts here (chosen); the blueprint chapters do not yet name them.",
+  "PRICES: prompts carry price_pence from PRICES-WAGES-1990.md; the prototype's 20p paper and 45p chips are superseded (25p, 1.60).",
+  "WAIT KEY: 7.11 says waiting is 'a key' without naming it; T chosen. The prototype passed the time on Z held, which 6.6 now gives to slow walking.",
+  "SAVE LABEL: 6.4 gives 'picture, day, hour, place and rung'; the rung words are the four rung names of 2.12.2. A rung 5 or later would need a word.",
+  "CREDITS: the Unreal-only rows (engine, characters, clothes) are marked unreal_only; the browser build ships only voices, type, assets and sound rows it truly uses. 10.4 does not say whether credits can be opened from the title; chosen yes.",
+  "DEFAULTS CHOSEN: subtitle box Half; chatter on; reduce flashing off; music volume 70; the rest 100. Subtitle steps 34, 39, 48 units."
+ ],
+ "prompts": {
+  "rules": {
+   "src": "1.6.8, 6.1.1 (ER-INPUT-02)",
+   "hold_before_change_s": 0.2,
+   "one_use_key": "use",
+   "rules": [
+    "Every usable thing has a prompt that names what is ahead and in view, held 0.2 s before it changes.",
+    "When two things share the use key, ONE prompt shows 'which_text' and pressing it asks which: the person is offered first, a door after.",
+    "A person with something to say is offered before a door, whichever way Tom faces.",
+    "A held prompt (search, pocket lift, forcing) shows a progress line and stepping away cancels it (checklist gap 6.1.1).",
+    "A prompt never shows a number except a price; money is in words in the Ledger.",
+    "While a pad is in the hands the prompt names the pad button, else the key (device last used)."
+   ],
+   "which_text": "Which?",
+   "which_none": "Neither.",
+   "hold_progress": {
+    "searching": "Searching.",
+    "lifting": "Easy now.",
+    "forcing": "Forcing it.",
+    "moving_body": "Moving him.",
+    "cancel_hint": "Step away to stop.",
+    "stopped": "Left alone."
+   },
+   "locked_default": "Locked.",
+   "locked_with_way": "Locked. {way}",
+   "shut_default": "{name}: shut. A card in the door gives the hours.",
+   "key_display": {
+    "Comma": ",",
+    "Period": ".",
+    "Semicolon": ";",
+    "ShiftLeft": "Shift",
+    "Space": "Space",
+    "Escape": "Esc",
+    "Enter": "Enter",
+    "Tab": "Tab"
+   },
+   "pad_display": {
+    "A": "A",
+    "B": "B",
+    "X": "X",
+    "Y": "Y",
+    "LB": "LB",
+    "RB": "RB",
+    "LT": "LT",
+    "RT": "RT",
+    "L3": "left stick press",
+    "R3": "right stick press",
+    "View": "View",
+    "Menu": "Menu",
+    "DPadUp": "D-pad up",
+    "DPadDown": "D-pad down",
+    "DPadLeft": "D-pad left",
+    "DPadRight": "D-pad right"
+   }
+  },
+  "templates": [
+   {
+    "id": "prompt_tpl.person_named",
+    "text": "Talk to {name}",
+    "use": "a person Tom knows by name",
+    "src": "prototype player.js buildPrompts"
+   },
+   {
+    "id": "prompt_tpl.person_unnamed",
+    "text": "Speak to {description}",
+    "use": "a person Tom does not know by name; description is lower case ('a man in a donkey jacket')",
+    "src": "prototype player.js"
+   },
+   {
+    "id": "prompt_tpl.person_with_word",
+    "text": "Talk to {name} (a word)",
+    "use": "somebody has something to say to him and stands in reach; offered before a door",
+    "src": "prototype player.js; 6.1.1"
+   },
+   {
+    "id": "prompt_tpl.front_up",
+    "text": "Front up to {name}",
+    "use": "1.6.4 fronting up, one key",
+    "src": "prototype player.js (Front up)"
+   },
+   {
+    "id": "prompt_tpl.sit_with",
+    "text": "Sit down with {name}",
+    "use": "a person met and willing",
+    "src": "prototype game/ (Sit down with)"
+   },
+   {
+    "id": "prompt_tpl.door_in",
+    "text": "Go into {name}",
+    "use": "an enterable place that is open; name from map.json plots",
+    "src": "prototype player.js; map.json"
+   },
+   {
+    "id": "prompt_tpl.door_knock",
+    "text": "Knock at {name}",
+    "use": "a home (use 'home' in map.json plots)",
+    "src": "prototype scenes.js"
+   },
+   {
+    "id": "prompt_tpl.door_shut",
+    "text": "{name}: shut",
+    "use": "an enterable place out of hours; pressing says shut_default",
+    "src": "prototype player.js"
+   },
+   {
+    "id": "prompt_tpl.door_locked",
+    "text": "{name}: locked",
+    "use": "a locked door; pressing says what way is left open, if cased",
+    "src": "prototype game/"
+   },
+   {
+    "id": "prompt_tpl.leave_room",
+    "text": "Leave {name} by the street door",
+    "use": "on the mat inside",
+    "src": "prototype player.js"
+   },
+   {
+    "id": "prompt_tpl.stair_down",
+    "text": "Down the stair to {name}",
+    "use": "top of a stair",
+    "src": "prototype player.js"
+   },
+   {
+    "id": "prompt_tpl.stair_up",
+    "text": "Up the stair to {name}",
+    "use": "foot of a stair",
+    "src": "prototype scenes.js"
+   },
+   {
+    "id": "prompt_tpl.cab_in",
+    "text": "Get in the cab",
+    "use": "beside a car Tom may open",
+    "src": "1.2.3"
+   },
+   {
+    "id": "prompt_tpl.cab_out",
+    "text": "Get out",
+    "use": "in a car, stopped",
+    "src": "prototype player.js"
+   },
+   {
+    "id": "prompt_tpl.fare",
+    "text": "Take the fare to {where}",
+    "use": "a fare is offered",
+    "src": "prototype player.js (Take the fare); 1.2.7"
+   },
+   {
+    "id": "prompt_tpl.buy",
+    "text": "Buy {thing} ({price})",
+    "use": "a counter; price from economy PRICES-WAGES-1990.md",
+    "src": "prototype game/ (counter)"
+   },
+   {
+    "id": "prompt_tpl.hand_over",
+    "text": "Hand over {thing}",
+    "use": "a job's handover",
+    "src": "prototype scenes.js"
+   },
+   {
+    "id": "prompt_tpl.take",
+    "text": "Take {thing}",
+    "use": "one press takes what is found",
+    "src": "1.6.2"
+   },
+   {
+    "id": "prompt_tpl.put_in",
+    "text": "Put {thing} in {container}",
+    "use": "a container Tom may use",
+    "src": "prototype game/"
+   },
+   {
+    "id": "prompt_tpl.letter",
+    "text": "Open the letter from {sender}",
+    "use": "an unread letter at the office",
+    "src": "prototype game/letters; 6.10"
+   }
+  ],
+  "door_records": [
+   {
+    "id": "prompt.door.mickeys",
+    "object": "door of Mickey's",
+    "text": "Go into Mickey's",
+    "shut_text": "Mickey's: shut",
+    "key": "use",
+    "plot": "qs_mickeys",
+    "place": "mickeys",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.laveracks",
+    "object": "door of Laverack's",
+    "text": "Go into Laverack's",
+    "shut_text": "Laverack's: shut",
+    "key": "use",
+    "plot": "qs_laveracks",
+    "place": "laveracks",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.ritas",
+    "object": "door of Rita's",
+    "text": "Go into Rita's",
+    "shut_text": "Rita's: shut",
+    "key": "use",
+    "plot": "qs_ritas",
+    "place": "ritas",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.launderette",
+    "object": "door of the Washeteria",
+    "text": "Go into the Washeteria",
+    "shut_text": "the Washeteria: shut",
+    "key": "use",
+    "plot": "qs_launderette",
+    "place": "launderette",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.grocer",
+    "object": "door of Hook Stores",
+    "text": "Go into Hook Stores",
+    "shut_text": "Hook Stores: shut",
+    "key": "use",
+    "plot": "qs_grocer",
+    "place": "grocer",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.chandlery",
+    "object": "door of the chandlery",
+    "text": "Go into the chandlery",
+    "shut_text": "the chandlery: shut",
+    "key": "use",
+    "plot": "qs_chandler",
+    "place": "chandlery",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.adas",
+    "object": "door of Ada's",
+    "text": "Knock at Ada's",
+    "shut_text": "Ada's: shut",
+    "key": "use",
+    "plot": "qs_ada",
+    "place": "adas",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.newsagent",
+    "object": "door of Peart's",
+    "text": "Go into Peart's",
+    "shut_text": "Peart's: shut",
+    "key": "use",
+    "plot": "qs_pearts",
+    "place": "newsagent",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.ironmonger",
+    "object": "door of the ironmonger's",
+    "text": "Go into the ironmonger's",
+    "shut_text": "the ironmonger's: shut",
+    "key": "use",
+    "plot": "qs_ironmonger",
+    "place": "ironmonger",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.tea_room",
+    "object": "door of the Copper Kettle",
+    "text": "Go into the Copper Kettle",
+    "shut_text": "the Copper Kettle: shut",
+    "key": "use",
+    "plot": "qs_copper_kettle",
+    "place": "tea_room",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.snooker_hall",
+    "object": "door of the snooker hall",
+    "text": "Go into the snooker hall",
+    "shut_text": "the snooker hall: shut",
+    "key": "use",
+    "plot": "quay_snooker",
+    "place": "snooker_hall",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.boarding_house",
+    "object": "door of Regent House",
+    "text": "Go into Regent House",
+    "shut_text": "Regent House: shut",
+    "key": "use",
+    "plot": "quay_regent",
+    "place": "boarding_house",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.caff",
+    "object": "door of Rinaldi's",
+    "text": "Go into Rinaldi's",
+    "shut_text": "Rinaldi's: shut",
+    "key": "use",
+    "plot": "quay_caff",
+    "place": "caff",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.metcalfes",
+    "object": "door of Metcalfe's",
+    "text": "Go into Metcalfe's",
+    "shut_text": "Metcalfe's: shut",
+    "key": "use",
+    "plot": "quay_metcalfes",
+    "place": "metcalfes",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.second_hand",
+    "object": "door of the second-hand shop",
+    "text": "Go into the second-hand shop",
+    "shut_text": "the second-hand shop: shut",
+    "key": "use",
+    "plot": "quay_secondhand",
+    "place": "second_hand",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.boxing_club",
+    "object": "door of the boxing club",
+    "text": "Go into the boxing club",
+    "shut_text": "the boxing club: shut",
+    "key": "use",
+    "plot": "quay_boxing",
+    "place": "boxing_club",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.harbour_board",
+    "object": "door of the Harbour Board",
+    "text": "Go into the Harbour Board",
+    "shut_text": "the Harbour Board: shut",
+    "key": "use",
+    "plot": "dock_harbour_board",
+    "place": "harbour_board",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.garage",
+    "object": "door of Holt's garage",
+    "text": "Go into Holt's garage",
+    "shut_text": "Holt's garage: shut",
+    "key": "use",
+    "plot": "cs_garage",
+    "place": "garage",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.iveson_yard",
+    "object": "door of Iveson's yard",
+    "text": "Go into Iveson's yard",
+    "shut_text": "Iveson's yard: shut",
+    "key": "use",
+    "plot": "iveson_yard",
+    "place": "iveson_yard",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.iveson_hut",
+    "object": "door of Iveson's hut",
+    "text": "Go into Iveson's hut",
+    "shut_text": "Iveson's hut: shut",
+    "key": "use",
+    "plot": "iveson_hut",
+    "place": "iveson_hut",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.waynes_pawn",
+    "object": "door of Harrison's",
+    "text": "Go into Harrison's",
+    "shut_text": "Harrison's: shut",
+    "key": "use",
+    "plot": "nr_wayne",
+    "place": "waynes_pawn",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.chip_shop",
+    "object": "door of Dobson's",
+    "text": "Go into Dobson's",
+    "shut_text": "Dobson's: shut",
+    "key": "use",
+    "plot": "bp_chippy",
+    "place": "chip_shop",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.chapel",
+    "object": "door of the chapel",
+    "text": "Go into the chapel",
+    "shut_text": "the chapel: shut",
+    "key": "use",
+    "plot": "chapel",
+    "place": "chapel",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.chapel_hall",
+    "object": "door of the chapel hall",
+    "text": "Go into the chapel hall",
+    "shut_text": "the chapel hall: shut",
+    "key": "use",
+    "plot": "chapel_hall",
+    "place": "chapel_hall",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.priests_house",
+    "object": "door of the priest's house",
+    "text": "Knock at the priest's house",
+    "shut_text": "the priest's house: shut",
+    "key": "use",
+    "plot": "priests_house",
+    "place": "priests_house",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.barber",
+    "object": "door of the barber",
+    "text": "Go into the barber",
+    "shut_text": "the barber: shut",
+    "key": "use",
+    "plot": "cl_barber",
+    "place": "barber",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.doctors",
+    "object": "door of the retired doctor's",
+    "text": "Knock at the retired doctor's",
+    "shut_text": "the retired doctor's: shut",
+    "key": "use",
+    "plot": "cl_23",
+    "place": "doctors",
+    "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.pigeon_loft",
+    "object": "door of the pigeon loft",
+    "text": "Go into the pigeon loft",
+    "shut_text": "the pigeon loft: shut",
+    "key": "use",
+    "plot": "pigeon_loft",
+    "place": "pigeon_loft",
+    "src": "map.json plots; prototype player.js"
+   }
+  ],
+  "door_kind_records": [
+   {
+    "id": "prompt.doorkind.front",
+    "object": "a front door",
+    "text": "Go in",
+    "locked_text": "Locked.",
+    "key": "use",
+    "applies_to": "map.json doors where kind == 'front' and the plot has no named door prompt above",
+    "src": "map.json doors; 1.1.3",
+    "chosen": true
+   },
+   {
+    "id": "prompt.doorkind.yard_gate",
+    "object": "a yard gate",
+    "text": "Through the yard gate",
+    "locked_text": "Locked.",
+    "key": "use",
+    "applies_to": "map.json doors where kind == 'yard_gate' and the plot has no named door prompt above",
+    "src": "map.json doors; 1.1.3",
+    "chosen": true
+   },
+   {
+    "id": "prompt.doorkind.loading",
+    "object": "a loading door",
+    "text": "The loading door",
+    "locked_text": "Locked.",
+    "key": "use",
+    "applies_to": "map.json doors where kind == 'loading' and the plot has no named door prompt above",
+    "src": "map.json doors; 1.1.3",
+    "chosen": true
+   },
+   {
+    "id": "prompt.doorkind.back",
+    "object": "a back door",
+    "text": "The back way",
+    "locked_text": "Locked.",
+    "key": "use",
+    "applies_to": "map.json doors where kind == 'back' and the plot has no named door prompt above",
+    "src": "map.json doors; 1.1.3",
+    "chosen": true
+   },
+   {
+    "id": "prompt.doorkind.gate",
+    "object": "a gate",
+    "text": "Through the gate",
+    "locked_text": "Locked.",
+    "key": "use",
+    "applies_to": "map.json doors where kind == 'gate' and the plot has no named door prompt above",
+    "src": "map.json doors; 1.1.3",
+    "chosen": true
+   },
+   {
+    "id": "prompt.doorkind.garage",
+    "object": "a garage door",
+    "text": "The garage door",
+    "locked_text": "Locked.",
+    "key": "use",
+    "applies_to": "map.json doors where kind == 'garage' and the plot has no named door prompt above",
+    "src": "map.json doors; 1.1.3",
+    "chosen": true
+   },
+   {
+    "id": "prompt.doorkind.stair",
+    "object": "a stair door",
+    "text": "Up the stair",
+    "locked_text": "Locked.",
+    "key": "use",
+    "applies_to": "map.json doors where kind == 'stair' and the plot has no named door prompt above",
+    "src": "map.json doors; 1.1.3",
+    "chosen": true
+   },
+   {
+    "id": "prompt.doorkind.office",
+    "object": "an office door",
+    "text": "The office door",
+    "locked_text": "Locked.",
+    "key": "use",
+    "applies_to": "map.json doors where kind == 'office' and the plot has no named door prompt above",
+    "src": "map.json doors; 1.1.3",
+    "chosen": true
+   },
+   {
+    "id": "prompt.doorkind.workshop",
+    "object": "a workshop door",
+    "text": "The workshop door",
+    "locked_text": "Locked.",
+    "key": "use",
+    "applies_to": "map.json doors where kind == 'workshop' and the plot has no named door prompt above",
+    "src": "map.json doors; 1.1.3",
+    "chosen": true
+   },
+   {
+    "id": "prompt.doorkind.side",
+    "object": "a side door",
+    "text": "The side door",
+    "locked_text": "Locked.",
+    "key": "use",
+    "applies_to": "map.json doors where kind == 'side' and the plot has no named door prompt above",
+    "src": "map.json doors; 1.1.3",
+    "chosen": true
+   },
+   {
+    "id": "prompt.doorkind.hatch",
+    "object": "a hatch",
+    "text": "The hatch",
+    "locked_text": "Locked.",
+    "key": "use",
+    "applies_to": "map.json doors where kind == 'hatch' and the plot has no named door prompt above",
+    "src": "map.json doors; 1.1.3",
+    "chosen": true
+   }
+  ],
+  "records": [
+   {
+    "id": "prompt.office_desk",
+    "object": "desk at Mickey's",
+    "text": "Search the desk",
+    "key": "use_hold",
+    "src": "1.6.2",
+    "hold_s": 4,
+    "hold_s_no_torch_dark": 8,
+    "chosen": false
+   },
+   {
+    "id": "prompt.office_look",
+    "object": "the office",
+    "text": "Look round the office",
+    "key": "use",
+    "src": "prototype game/ office",
+    "chosen": true
+   },
+   {
+    "id": "prompt.locked_drawer",
+    "object": "the locked drawer at the office",
+    "text": "Open the locked drawer",
+    "key": "use",
+    "src": "1.6.9 (office storage)",
+    "chosen": false
+   },
+   {
+    "id": "prompt.bottom_drawer",
+    "object": "Mickey's desk, bottom drawer",
+    "text": "Try the bottom drawer of Mickey's desk",
+    "key": "use",
+    "src": "1.3.10; prototype game/",
+    "chosen": true
+   },
+   {
+    "id": "prompt.tin",
+    "object": "the tin",
+    "text": "Open the tin",
+    "key": "use",
+    "src": "1.6.9, 2.7.2",
+    "chosen": false
+   },
+   {
+    "id": "prompt.count",
+    "object": "the tin and the fare book with Sheila",
+    "text": "The count with Sheila: the tin and the fare book",
+    "key": "use",
+    "src": "prototype game/count.js; 2.7.2",
+    "chosen": false
+   },
+   {
+    "id": "prompt.fare_book",
+    "object": "the fare book",
+    "text": "Read the fare book",
+    "key": "use",
+    "src": "1.6.8; 6.2.4",
+    "chosen": false
+   },
+   {
+    "id": "prompt.debt_book",
+    "object": "Mickey's debt book",
+    "text": "Read Mickey's debt book",
+    "key": "use",
+    "src": "1.6.4; prototype game/",
+    "chosen": false
+   },
+   {
+    "id": "prompt.board",
+    "object": "the chalkboard of cars and drivers",
+    "text": "The board: cars and drivers",
+    "key": "use",
+    "src": "1.7.3; prototype game/",
+    "chosen": false
+   },
+   {
+    "id": "prompt.kettle",
+    "object": "kettle",
+    "text": "Put the kettle on",
+    "key": "use",
+    "src": "1.6.8",
+    "chosen": false
+   },
+   {
+    "id": "prompt.radio_office",
+    "object": "the office radio",
+    "text": "Switch the radio on",
+    "key": "use",
+    "src": "1.6.8; 3.4.3; 5.7.1",
+    "chosen": false
+   },
+   {
+    "id": "prompt.radio_tune",
+    "object": "the radio, on",
+    "text": "Turn the dial",
+    "key": "use",
+    "src": "5.7.1",
+    "chosen": true
+   },
+   {
+    "id": "prompt.radio_off",
+    "object": "the radio, playing",
+    "text": "Switch the radio off",
+    "key": "use",
+    "src": "5.7.1",
+    "chosen": true
+   },
+   {
+    "id": "prompt.telephone_office",
+    "object": "the office telephone",
+    "text": "Pick up the telephone",
+    "key": "use",
+    "src": "canon Era (landlines); 1.6.8",
+    "chosen": true
+   },
+   {
+    "id": "prompt.coat_hook",
+    "object": "the coat hook at the office",
+    "text": "Take the dark coat from its hook",
+    "key": "use",
+    "src": "prototype scenes.js; 1.6.6",
+    "chosen": false
+   },
+   {
+    "id": "prompt.crowbar_nail",
+    "object": "the crowbar on the nail by the yard door",
+    "text": "Take the crowbar from the nail by the yard door",
+    "key": "use",
+    "src": "prototype scenes.js",
+    "chosen": false
+   },
+   {
+    "id": "prompt.photograph",
+    "object": "the photograph",
+    "text": "Look at the photograph",
+    "key": "use",
+    "src": "prototype scenes.js",
+    "chosen": false
+   },
+   {
+    "id": "prompt.letter_pile",
+    "object": "the post at the office",
+    "text": "Open the post",
+    "key": "use",
+    "src": "6.10",
+    "chosen": true
+   },
+   {
+    "id": "prompt.noticeboard",
+    "object": "a noticeboard",
+    "text": "Read the notices",
+    "key": "use",
+    "src": "6.9 street names and notices",
+    "chosen": true
+   },
+   {
+    "id": "prompt.wardrobe_own",
+    "object": "Tom's wardrobe",
+    "text": "Open your wardrobe",
+    "key": "use",
+    "src": "1.6.10",
+    "chosen": false
+   },
+   {
+    "id": "prompt.bed",
+    "object": "Tom's bed",
+    "text": "Your bed: sleep or rest",
+    "key": "use",
+    "src": "7.11; prototype scenes.js",
+    "chosen": false
+   },
+   {
+    "id": "prompt.sleep_till",
+    "object": "a bed, late",
+    "text": "Sleep till morning",
+    "key": "use",
+    "src": "prototype game/; 7.11",
+    "chosen": true
+   },
+   {
+    "id": "prompt.yard_shed",
+    "object": "the yard shed",
+    "text": "Open the yard shed",
+    "key": "use",
+    "src": "1.6.9",
+    "chosen": false
+   },
+   {
+    "id": "prompt.holdall",
+    "object": "the holdall",
+    "text": "Pick up the holdall",
+    "key": "use",
+    "src": "1.1.4",
+    "chosen": true
+   },
+   {
+    "id": "prompt.holdall_put",
+    "object": "the holdall in hand",
+    "text": "Put the holdall down",
+    "key": "use",
+    "src": "1.1.4",
+    "chosen": true
+   },
+   {
+    "id": "prompt.boot_open",
+    "object": "the cab's boot",
+    "text": "Open the boot",
+    "key": "use",
+    "src": "1.6.9, 1.6.7",
+    "chosen": false
+   },
+   {
+    "id": "prompt.boot_put",
+    "object": "the cab's boot",
+    "text": "Put it in the boot",
+    "key": "use",
+    "src": "1.6.7, 1.6.9",
+    "chosen": false
+   },
+   {
+    "id": "prompt.boot_take",
+    "object": "the cab's boot",
+    "text": "Take it out of the boot",
+    "key": "use",
+    "src": "1.6.9",
+    "chosen": true
+   },
+   {
+    "id": "prompt.drawer_search",
+    "object": "a drawer",
+    "text": "Search the drawer",
+    "key": "use_hold",
+    "src": "1.6.2",
+    "hold_s": 2,
+    "hold_s_no_torch_dark": 4,
+    "chosen": false
+   },
+   {
+    "id": "prompt.wardrobe_search",
+    "object": "a wardrobe",
+    "text": "Search the wardrobe",
+    "key": "use_hold",
+    "src": "1.6.2",
+    "hold_s": 5,
+    "hold_s_no_torch_dark": 10,
+    "chosen": false
+   },
+   {
+    "id": "prompt.cupboard_search",
+    "object": "a cupboard",
+    "text": "Search the cupboard",
+    "key": "use_hold",
+    "src": "1.6.2",
+    "hold_s": 3,
+    "chosen": true,
+    "chosen_note": "time not in the blueprint; between drawer 2 s and desk 4 s"
+   },
+   {
+    "id": "prompt.safe",
+    "object": "a safe",
+    "text": "The safe: it needs its key or the number",
+    "key": "use",
+    "src": "1.6.2 (a safe needs a key or a combination from a person)",
+    "chosen": false
+   },
+   {
+    "id": "prompt.safe_open",
+    "object": "a safe, with the key or number",
+    "text": "Open the safe",
+    "key": "use",
+    "src": "1.6.2",
+    "chosen": true
+   },
+   {
+    "id": "prompt.force_door",
+    "object": "a locked door",
+    "text": "Force the door (loud)",
+    "key": "use",
+    "src": "1.6.1",
+    "chosen": false
+   },
+   {
+    "id": "prompt.force_cupboard",
+    "object": "a locked cupboard",
+    "text": "Force the cupboard (loud)",
+    "key": "use",
+    "src": "1.6.2",
+    "chosen": false
+   },
+   {
+    "id": "prompt.use_key",
+    "object": "a door with a key Tom holds",
+    "text": "Use the key",
+    "key": "use",
+    "src": "1.6.1; prototype game/",
+    "chosen": false
+   },
+   {
+    "id": "prompt.back_way",
+    "object": "a door left open by a routine",
+    "text": "The back way",
+    "key": "use",
+    "src": "1.6.1; prototype game/",
+    "chosen": false
+   },
+   {
+    "id": "prompt.search_man",
+    "object": "a man down",
+    "text": "Go through his pockets",
+    "key": "use_hold",
+    "src": "1.6.2; prototype game/",
+    "hold_s": 3,
+    "chosen": true,
+    "chosen_note": "'a few seconds' in 1.6.2"
+   },
+   {
+    "id": "prompt.lift_pocket",
+    "object": "a person in a crowd",
+    "text": "Lift from his pocket",
+    "key": "use_hold",
+    "src": "1.6.13; prototype game/",
+    "hold_s": 2,
+    "chosen": false
+   },
+   {
+    "id": "prompt.move_body",
+    "object": "a body",
+    "text": "Move the body",
+    "key": "use_hold",
+    "src": "1.6.7",
+    "hold_s": 1,
+    "chosen": true
+   },
+   {
+    "id": "prompt.body_boot",
+    "object": "a body beside the cab",
+    "text": "Put him in the boot",
+    "key": "use_hold",
+    "src": "1.6.7",
+    "hold_s": 4,
+    "chosen": false
+   },
+   {
+    "id": "prompt.body_quay",
+    "object": "a body at the quay edge",
+    "text": "Over the quay edge",
+    "key": "use_hold",
+    "src": "1.6.7",
+    "hold_s": 3,
+    "chosen": false
+   },
+   {
+    "id": "prompt.drain",
+    "object": "a drain",
+    "text": "Drop it down the drain",
+    "key": "use",
+    "src": "1.6.7",
+    "chosen": false
+   },
+   {
+    "id": "prompt.dock_throw",
+    "object": "the water at the quay edge",
+    "text": "Throw it in the dock",
+    "key": "use",
+    "src": "1.6.7; prototype game/",
+    "chosen": false
+   },
+   {
+    "id": "prompt.wash_coat",
+    "object": "the launderette",
+    "text": "A service wash for the coat",
+    "key": "use",
+    "src": "1.6.7; prototype game/",
+    "chosen": false
+   },
+   {
+    "id": "prompt.wash_hands",
+    "object": "a tap or the rain",
+    "text": "Wash the blood off",
+    "key": "use",
+    "src": "1.6.7",
+    "chosen": true
+   },
+   {
+    "id": "prompt.things_to_hand",
+    "object": "a chair, a brick or a bin lid",
+    "text": "Pick up {thing}",
+    "key": "use",
+    "src": "1.3.6; prototype player.js (Pick up a ...)",
+    "chosen_note": "chair, brick, dustbin lid, wheel brace",
+    "chosen": false
+   },
+   {
+    "id": "prompt.hold_up",
+    "object": "a shop counter, weapon out",
+    "text": "Hold the place up",
+    "key": "use",
+    "src": "1.6.15; prototype game/",
+    "chosen": false
+   },
+   {
+    "id": "prompt.damage_window",
+    "object": "a window or shop sign",
+    "text": "Break it (loud)",
+    "key": "use",
+    "src": "1.6.14",
+    "chosen": true
+   },
+   {
+    "id": "prompt.phone_box",
+    "object": "a phone box",
+    "text": "Use the phone box ({price})",
+    "key": "use",
+    "src": "1.6.8; map.json phone_boxes",
+    "price_pence": 10,
+    "chosen": false
+   },
+   {
+    "id": "prompt.phone_ambulance",
+    "object": "a phone box",
+    "text": "Ring for an ambulance ({price})",
+    "key": "use",
+    "src": "2.18 ('the nearest phone box (10p)')",
+    "price_pence": 10,
+    "chosen": false
+   },
+   {
+    "id": "prompt.phone_police",
+    "object": "a phone box",
+    "text": "Ring the police ({price})",
+    "key": "use",
+    "src": "2.6.3",
+    "price_pence": 10,
+    "chosen": false
+   },
+   {
+    "id": "prompt.phone_office",
+    "object": "a phone box",
+    "text": "Ring the office ({price})",
+    "key": "use",
+    "src": "1.6.8",
+    "price_pence": 10,
+    "chosen": true
+   },
+   {
+    "id": "prompt.pillar_box",
+    "object": "a pillar box",
+    "text": "Post a letter",
+    "key": "use",
+    "src": "map.json street_furniture pillar_box",
+    "chosen": true
+   },
+   {
+    "id": "prompt.bench",
+    "object": "a bench",
+    "text": "Sit on the bench",
+    "key": "use",
+    "src": "1.1.7",
+    "chosen": false
+   },
+   {
+    "id": "prompt.wall_sit",
+    "object": "a low wall",
+    "text": "Sit on the wall",
+    "key": "use",
+    "src": "1.1.7",
+    "chosen": false
+   },
+   {
+    "id": "prompt.step_sit",
+    "object": "a step",
+    "text": "Sit on the step",
+    "key": "use",
+    "src": "1.1.7",
+    "chosen": false
+   },
+   {
+    "id": "prompt.doorway_lean",
+    "object": "a doorway",
+    "text": "Lean in the doorway",
+    "key": "use",
+    "src": "1.1.7",
+    "chosen": false
+   },
+   {
+    "id": "prompt.bus_stop",
+    "object": "the bus stop",
+    "text": "Wait at the bus stop",
+    "key": "use",
+    "src": "1.1.7; map.json street_furniture bus_stop",
+    "chosen": true
+   },
+   {
+    "id": "prompt.stand_up",
+    "object": "sitting or leaning",
+    "text": "Get up",
+    "key": "use",
+    "src": "1.1.7",
+    "chosen": true
+   },
+   {
+    "id": "prompt.bin_rattle",
+    "object": "a dustbin",
+    "text": "Rattle the bin",
+    "key": "use",
+    "src": "1.4.8",
+    "chosen": false
+   },
+   {
+    "id": "prompt.quay_ladder",
+    "object": "a quay ladder",
+    "text": "Climb the ladder",
+    "key": "use",
+    "src": "4.2.4; map.json quay_ladders",
+    "chosen": false
+   },
+   {
+    "id": "prompt.quay_ladder_down",
+    "object": "a quay ladder from the quay",
+    "text": "Down the ladder",
+    "key": "use",
+    "src": "4.2.4; map.json quay_ladders",
+    "chosen": true
+   },
+   {
+    "id": "prompt.fishing",
+    "object": "the quay edge",
+    "text": "Fish off the quay",
+    "key": "use",
+    "src": "24 Nov pastimes ruling; map.json fishing_spots",
+    "chosen": true
+   },
+   {
+    "id": "prompt.fishing_reel",
+    "object": "a line in the water",
+    "text": "Wind in",
+    "key": "use",
+    "src": "24 Nov pastimes ruling",
+    "chosen": true
+   },
+   {
+    "id": "prompt.tea_stall",
+    "object": "the tea stall",
+    "text": "Tea from the stall ({price})",
+    "key": "use",
+    "src": "map.json tea_stall; PRICES tea 30p",
+    "price_pence": 30,
+    "chosen": true
+   },
+   {
+    "id": "prompt.ferry_wait",
+    "object": "the ferry landing",
+    "text": "Wait for the ferry",
+    "key": "use",
+    "src": "4.2.1; map.json ferry_landing",
+    "chosen": true
+   },
+   {
+    "id": "prompt.ferry_board",
+    "object": "the ferry at the landing",
+    "text": "Go aboard",
+    "key": "use",
+    "src": "4.2.1",
+    "chosen": true
+   },
+   {
+    "id": "prompt.shelter_man",
+    "object": "the man by the shelter",
+    "text": "Hand the envelope to the man by the shelter",
+    "key": "use",
+    "src": "prototype scenes.js",
+    "chosen": false
+   },
+   {
+    "id": "prompt.hand_envelope",
+    "object": "an envelope under the coat",
+    "text": "Hand over the envelope",
+    "key": "use",
+    "src": "1.6.6",
+    "chosen": true
+   },
+   {
+    "id": "prompt.green_door",
+    "object": "the green door",
+    "text": "Hand the parcel in at the green door",
+    "key": "use",
+    "src": "prototype scenes.js",
+    "chosen": false
+   },
+   {
+    "id": "prompt.paper_read",
+    "object": "the local paper",
+    "text": "Read the local paper",
+    "key": "use",
+    "src": "6.10; prototype game/",
+    "chosen": false
+   },
+   {
+    "id": "prompt.happening",
+    "object": "something going on in the street",
+    "text": "See what is going on",
+    "key": "use",
+    "src": "prototype game/",
+    "chosen": false
+   },
+   {
+    "id": "prompt.watch_place",
+    "object": "across from a place",
+    "text": "Watch {place} a while",
+    "key": "use_hold",
+    "src": "1.6.11; prototype game/",
+    "hold_s": 4,
+    "hold_s_note": "the casing stand is measured in real seconds by the blueprint 1.6.11; value chosen",
+    "chosen": true
+   },
+   {
+    "id": "prompt.rest_here",
+    "object": "a quiet spot",
+    "text": "Stand about a while",
+    "key": "use",
+    "src": "1.6.5",
+    "chosen": true
+   },
+   {
+    "id": "prompt.counter_paper",
+    "object": "the newsagent's counter",
+    "text": "Buy the paper ({price})",
+    "key": "use",
+    "src": "PRICES the paper 25p; prototype ui.js",
+    "price_pence": 25,
+    "chosen": false
+   },
+   {
+    "id": "prompt.counter_cigs",
+    "object": "a counter",
+    "text": "Twenty cigarettes ({price})",
+    "key": "use",
+    "src": "PRICES 20 cigarettes 1.70",
+    "price_pence": 170,
+    "chosen": false
+   },
+   {
+    "id": "prompt.counter_tea_sit",
+    "object": "the caff",
+    "text": "Tea, and sit a while ({price})",
+    "key": "use",
+    "src": "PRICES tea 30p; prototype scenes.js",
+    "price_pence": 30,
+    "chosen": false
+   },
+   {
+    "id": "prompt.counter_breakfast",
+    "object": "the caff",
+    "text": "A caff breakfast ({price})",
+    "key": "use",
+    "src": "PRICES breakfast 1.80",
+    "price_pence": 180,
+    "chosen": false
+   },
+   {
+    "id": "prompt.counter_chips",
+    "object": "the chip shop",
+    "text": "Fish and chips ({price})",
+    "key": "use",
+    "src": "PRICES 1.60",
+    "price_pence": 160,
+    "chosen": false
+   },
+   {
+    "id": "prompt.counter_torch",
+    "object": "the ironmonger's counter",
+    "text": "A torch ({price})",
+    "key": "use",
+    "src": "1.6.12; PRICES torch 4",
+    "price_pence": 400,
+    "chosen": false
+   },
+   {
+    "id": "prompt.counter_crowbar",
+    "object": "the ironmonger's counter",
+    "text": "A crowbar ({price})",
+    "key": "use",
+    "src": "PRICES crowbar 6",
+    "price_pence": 600,
+    "chosen": true
+   },
+   {
+    "id": "prompt.counter_key",
+    "object": "the ironmonger's counter",
+    "text": "Have a key cut ({price})",
+    "key": "use",
+    "src": "PRICES key cut 1.50",
+    "price_pence": 150,
+    "chosen": true
+   },
+   {
+    "id": "prompt.counter_buy",
+    "object": "a shop counter",
+    "text": "Buy something",
+    "key": "use",
+    "src": "prototype game/ counter",
+    "chosen": false
+   },
+   {
+    "id": "prompt.counter_more",
+    "object": "the caff or newsagent's counter",
+    "text": "What else do they sell",
+    "key": "use",
+    "src": "prototype game/ counter",
+    "chosen": false
+   },
+   {
+    "id": "prompt.sell_fence",
+    "object": "Rita's back room or the pawn",
+    "text": "Show what you have to sell",
+    "key": "use",
+    "src": "1.6.3; prototype game/",
+    "chosen": false
+   },
+   {
+    "id": "prompt.caff_back",
+    "object": "the back of the caff",
+    "text": "Sit at the back a while",
+    "key": "use",
+    "src": "prototype scenes.js",
+    "chosen": false
+   },
+   {
+    "id": "prompt.tea_room_table",
+    "object": "the tea room table",
+    "text": "Take the table by the window",
+    "key": "use",
+    "src": "prototype game/ (Keith Garbutt's table)",
+    "chosen": true
+   },
+   {
+    "id": "prompt.pay_window",
+    "object": "the Harbour Board's pay window",
+    "text": "The pay window",
+    "key": "use",
+    "src": "4.2.3",
+    "chosen": true
+   },
+   {
+    "id": "prompt.harbour_counter",
+    "object": "the Harbour Board's counter",
+    "text": "Go to the counter",
+    "key": "use",
+    "src": "2.12.2 rung 3 opens the counter",
+    "chosen": true
+   },
+   {
+    "id": "prompt.dock_gate_ask",
+    "object": "the dock gate",
+    "text": "Ask at the dock gate",
+    "key": "use",
+    "src": "map.json dock_gate",
+    "chosen": true
+   },
+   {
+    "id": "prompt.estate_agent",
+    "object": "Agar's agents",
+    "text": "Go in to Agar's",
+    "key": "use",
+    "src": "map.json cs_agar (not enterable in map.json: reached by a story door)",
+    "chosen": true
+   },
+   {
+    "id": "prompt.cab_enter",
+    "object": "a car Tom may open",
+    "text": "Get in car {n}, by the driver's door",
+    "key": "use",
+    "src": "1.2.3; prototype player.js",
+    "chosen": false
+   },
+   {
+    "id": "prompt.cab_locked",
+    "object": "the cab, keys at the office",
+    "text": "Car two (locked: the keys are in the office)",
+    "key": "use",
+    "src": "prototype player.js",
+    "chosen": false
+   },
+   {
+    "id": "prompt.car_force",
+    "object": "a parked car",
+    "text": "Break into {car} (loud)",
+    "key": "use_hold",
+    "src": "1.2.10; prototype game/cars.js",
+    "hold_s": 6,
+    "chosen": false
+   },
+   {
+    "id": "prompt.car_exit",
+    "object": "in a car, stopped",
+    "text": "Get out",
+    "key": "use",
+    "src": "1.2.3",
+    "chosen": false
+   },
+   {
+    "id": "prompt.car_exit_wrecked",
+    "object": "a wrecked car",
+    "text": "Get out: it will not drive on",
+    "key": "use",
+    "src": "prototype game/cars.js",
+    "chosen": false
+   },
+   {
+    "id": "prompt.fare_take",
+    "object": "a fare at the kerb",
+    "text": "Take the fare",
+    "key": "use",
+    "src": "prototype player.js",
+    "chosen": false
+   },
+   {
+    "id": "prompt.fare_ride",
+    "object": "a driver's car",
+    "text": "Have {name} drive him",
+    "key": "use",
+    "src": "prototype game/cars.js",
+    "chosen": false
+   },
+   {
+    "id": "prompt.car_repair",
+    "object": "the yard, a damaged cab",
+    "text": "Have the cab mended",
+    "key": "use",
+    "src": "1.2.9",
+    "chosen": true
+   },
+   {
+    "id": "prompt.car_plates",
+    "object": "the yard",
+    "text": "Change the plates",
+    "key": "use",
+    "src": "1.2.9",
+    "chosen": true
+   },
+   {
+    "id": "prompt.car_paint",
+    "object": "the yard",
+    "text": "Have the cab resprayed",
+    "key": "use",
+    "src": "1.2.9 (prototype x.resprayed)",
+    "chosen": true
+   },
+   {
+    "id": "prompt.car_horn",
+    "object": "in a car",
+    "text": "Sound the horn",
+    "key": "horn",
+    "src": "1.2.11",
+    "chosen": false
+   },
+   {
+    "id": "prompt.send_man",
+    "object": "Mickey's, rung 2 or above",
+    "text": "Send a man",
+    "key": "use",
+    "src": "1.7.2; prototype game/",
+    "chosen": false
+   },
+   {
+    "id": "prompt.buy_front",
+    "object": "a business Tom may buy into",
+    "text": "Buy into {name}",
+    "key": "use",
+    "src": "2.17; prototype game/",
+    "chosen": false
+   },
+   {
+    "id": "prompt.collect_takings",
+    "object": "a business on a collecting day",
+    "text": "Collect the takings",
+    "key": "use",
+    "src": "2.17",
+    "chosen": true,
+    "chosen_note": "the blueprint says 'a round' of payments; the word 'round' is kept out of prompts because the content gate catches 'a round' (see open_points)"
+   },
+   {
+    "id": "prompt.recruit",
+    "object": "a man Tom could take on",
+    "text": "Offer him work",
+    "key": "use",
+    "src": "2.11.1",
+    "chosen": true
+   },
+   {
+    "id": "prompt.statement",
+    "object": "the police station counter",
+    "text": "Sign the statement",
+    "key": "use",
+    "src": "2.6.3",
+    "chosen": true
+   },
+   {
+    "id": "prompt.sit_down",
+    "object": "the sit-down",
+    "text": "Take your seat",
+    "key": "use",
+    "src": "3.5.5",
+    "chosen": true
+   },
+   {
+    "id": "prompt.boxing_bag",
+    "object": "the boxing club's bag",
+    "text": "Hit the bag",
+    "key": "use",
+    "src": "24 Nov pastimes ruling (boxing club)",
+    "chosen": true
+   },
+   {
+    "id": "prompt.boxing_spar",
+    "object": "the boxing club's ring",
+    "text": "Put the gloves on",
+    "key": "use",
+    "src": "24 Nov pastimes ruling (boxing club)",
+    "chosen": true
+   },
+   {
+    "id": "prompt.snooker_play",
+    "object": "a snooker table",
+    "text": "Play a frame",
+    "key": "use",
+    "src": "24 Nov pastimes ruling (a snooker hall, frames for no money)",
+    "chosen": true
+   },
+   {
+    "id": "prompt.snooker_watch",
+    "object": "a snooker table with a game on",
+    "text": "Watch the frame",
+    "key": "use",
+    "src": "24 Nov pastimes ruling",
+    "chosen": true
+   },
+   {
+    "id": "prompt.pigeon_loft",
+    "object": "the pigeon loft",
+    "text": "Look in at the loft",
+    "key": "use",
+    "src": "24 Nov pastimes ruling (a pigeon loft on the allotments)",
+    "chosen": true
+   },
+   {
+    "id": "prompt.pigeon_feed",
+    "object": "the pigeon loft",
+    "text": "Feed the birds",
+    "key": "use",
+    "src": "24 Nov pastimes ruling",
+    "chosen": true
+   },
+   {
+    "id": "prompt.pigeon_release",
+    "object": "the pigeon loft",
+    "text": "Let the birds out",
+    "key": "use",
+    "src": "24 Nov pastimes ruling",
+    "chosen": true
+   },
+   {
+    "id": "prompt.chapel_sit",
+    "object": "the chapel",
+    "text": "Sit a while in the chapel",
+    "key": "use",
+    "src": "canon (religion present, never mocked, never a mechanic)",
+    "chosen": true
+   },
+   {
+    "id": "prompt.barber_chair",
+    "object": "the barber's chair",
+    "text": "Sit in the chair",
+    "key": "use",
+    "src": "1.6.10 (a barber changes the look for a week)",
+    "chosen": true
+   },
+   {
+    "id": "prompt.light_cigarette",
+    "object": "a cigarette in the pocket",
+    "text": "Light a cigarette",
+    "key": "sit",
+    "src": "1.1.7 (key B); canon (tobacco stays)",
+    "chosen": false
+   },
+   {
+    "id": "prompt.pick_up_generic",
+    "object": "a thing on the ground",
+    "text": "Pick up {thing}",
+    "key": "use",
+    "src": "1.1.4",
+    "chosen": true
+   },
+   {
+    "id": "prompt.put_down_generic",
+    "object": "a thing in the hand",
+    "text": "Put {thing} down",
+    "key": "use",
+    "src": "1.1.4",
+    "chosen": true
+   }
+  ]
+ },
+ "keys": {
+  "rules": {
+   "src": "6.6, AX-05",
+   "device_follows_last_used": true,
+   "action_answers_within_ms": 100,
+   "early_press_counts_ms": 100,
+   "rebind": "every action where rebindable is true, on keys and on the pad, with 'reset to defaults' per device; a clash is shown, never silently swapped",
+   "every_hold_has_toggle": "settings switch 'holds as taps' (AX-05); rows with toggle_alternative true",
+   "first_hour_on_pad_alone": true,
+   "nine_fixed_keys_named_in_6_6": [
+    "Z slow",
+    "M manners",
+    "B sit",
+    "N watch",
+    "O stone",
+    "I torch",
+    "Comma map",
+    "Full stop reading",
+    "Tab suggested lines"
+   ],
+   "separate_sensitivity": [
+    "mouse x",
+    "mouse y",
+    "stick x",
+    "stick y"
+   ],
+   "invert": [
+    "mouse y",
+    "stick y"
+   ],
+   "contexts": {
+    "foot": "walking in the town or a room",
+    "car": "driving",
+    "fight": "in a fight",
+    "talk": "in a talk",
+    "ledger": "Ledger open",
+    "map": "paper map open",
+    "menu": "any menu",
+    "all": "always"
+   }
+  },
+  "actions": [
+   {
+    "id": "key.move",
+    "verb": "Walk",
+    "context": "foot",
+    "key": "W A S D (or the arrow keys)",
+    "pad": "left stick",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "6.6; prototype player.js",
+    "named_in_blueprint": false,
+    "chosen": false
+   },
+   {
+    "id": "key.look",
+    "verb": "Look round",
+    "context": "foot",
+    "key": "mouse",
+    "pad": "right stick",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "1.1.1; prototype player.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.run",
+    "verb": "Run",
+    "context": "foot",
+    "key": "Shift (held)",
+    "pad": "right trigger (RT)",
+    "hold": true,
+    "toggle_alternative": true,
+    "rebindable": true,
+    "src": "1.1.1; prototype player.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.slow_walk",
+    "verb": "Walk slowly",
+    "context": "foot",
+    "key": "Z (held)",
+    "pad": "left stick, a light touch (or a press of the left stick to toggle)",
+    "hold": true,
+    "toggle_alternative": true,
+    "rebindable": true,
+    "src": "1.1.1; 6.6 (Z slow)",
+    "named_in_blueprint": true,
+    "chosen_note": "the pad's press-to-toggle is chosen",
+    "chosen": false
+   },
+   {
+    "id": "key.use",
+    "verb": "Use or talk",
+    "context": "foot",
+    "key": "E",
+    "pad": "A",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "1.6.8, 6.1.1; prototype player.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.use_hold",
+    "verb": "Use, held (search, lift, force)",
+    "context": "foot",
+    "key": "E (held)",
+    "pad": "A (held)",
+    "hold": true,
+    "toggle_alternative": true,
+    "rebindable": true,
+    "src": "1.6.2, 1.6.13",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.coat",
+    "verb": "Coat on or off",
+    "context": "foot",
+    "key": "C",
+    "pad": "B",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "1.6.6; prototype player.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.front_up",
+    "verb": "Front up",
+    "context": "foot",
+    "key": "Q",
+    "pad": "left bumper (LB)",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "1.6.4; prototype player.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.manners",
+    "verb": "Street manners (a nod, a greeting, a hard look, a shove, 'Oi!')",
+    "context": "foot",
+    "key": "M, then pick with the mouse or stick",
+    "pad": "right bumper (RB, held), pick with the right stick",
+    "hold": true,
+    "toggle_alternative": true,
+    "rebindable": true,
+    "src": "1.4.7, 6.6",
+    "named_in_blueprint": true,
+    "chosen_note": "the pad button and the keyboard pick are chosen; the blueprint says 'sit on one key (M), picked by the stick'",
+    "chosen": false
+   },
+   {
+    "id": "key.sit",
+    "verb": "Sit, lean or light a cigarette",
+    "context": "foot",
+    "key": "B",
+    "pad": "D-pad down",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "1.1.7, 6.6 (B sit)",
+    "named_in_blueprint": true,
+    "chosen_note": "pad button chosen",
+    "chosen": false
+   },
+   {
+    "id": "key.watch",
+    "verb": "Look at your watch",
+    "context": "foot",
+    "key": "N",
+    "pad": "D-pad right",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "6.1.5, 6.6 (N watch)",
+    "named_in_blueprint": true,
+    "chosen_note": "pad button chosen",
+    "chosen": false
+   },
+   {
+    "id": "key.stone",
+    "verb": "Throw a stone",
+    "context": "foot",
+    "key": "O",
+    "pad": "Y",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "1.4.8, 6.6 (O stone)",
+    "named_in_blueprint": true,
+    "chosen_note": "pad button chosen",
+    "chosen": false
+   },
+   {
+    "id": "key.torch",
+    "verb": "Torch on or off",
+    "context": "foot",
+    "key": "I",
+    "pad": "D-pad left",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "1.6.12, 6.6 (I torch)",
+    "named_in_blueprint": true,
+    "chosen_note": "pad button chosen",
+    "chosen": false
+   },
+   {
+    "id": "key.map",
+    "verb": "The paper map",
+    "context": "foot",
+    "key": "Comma",
+    "pad": "left stick press (L3)",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "6.3, 6.6 (Comma map)",
+    "named_in_blueprint": true,
+    "chosen_note": "pad button chosen",
+    "chosen": false
+   },
+   {
+    "id": "key.reading",
+    "verb": "Tom's reading",
+    "context": "foot",
+    "key": "Full stop",
+    "pad": "View (held)",
+    "hold": true,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "6.2.5, 6.6 (Full stop reading)",
+    "named_in_blueprint": true,
+    "chosen_note": "pad button chosen",
+    "chosen": false
+   },
+   {
+    "id": "key.ledger",
+    "verb": "The Ledger",
+    "context": "foot",
+    "key": "L",
+    "pad": "View",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "6.2; prototype player.js (L opens the Ledger)",
+    "chosen_note": "6.6 does not name the Ledger key; L is the prototype's",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.weapon_draw",
+    "verb": "Draw a weapon from under the coat",
+    "context": "foot",
+    "key": "Semicolon (held)",
+    "pad": "left trigger (LT, held)",
+    "hold": true,
+    "toggle_alternative": true,
+    "rebindable": true,
+    "src": "1.3.6, 1.3.10, 6.6",
+    "named_in_blueprint": true,
+    "chosen_note": "pad button chosen",
+    "chosen": false
+   },
+   {
+    "id": "key.take_fare",
+    "verb": "Take the fare",
+    "context": "foot",
+    "key": "Y",
+    "pad": "D-pad up",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "prototype player.js, main.js",
+    "chosen_note": "not named in the blueprint; kept from the prototype",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.wait",
+    "verb": "Wait",
+    "context": "foot",
+    "key": "T",
+    "pad": "X",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "7.11 (waiting is a key that offers 'wait until')",
+    "chosen": true,
+    "chosen_note": "key and button chosen: T and X were the prototype's second-thing keys, which the one use key replaces",
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.report_line",
+    "verb": "Report a line",
+    "context": "foot",
+    "key": "F9 (also in the pause menu)",
+    "pad": "(from the pause menu)",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "3.6.7 (a key or the pause menu)",
+    "chosen": true,
+    "chosen_note": "key chosen",
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.car_steer",
+    "verb": "Steer",
+    "context": "car",
+    "key": "A D (or the arrow keys)",
+    "pad": "left stick",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "1.2.1; prototype player.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.car_accelerate",
+    "verb": "Accelerate",
+    "context": "car",
+    "key": "W",
+    "pad": "right trigger (RT)",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "1.2.1; prototype main.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.car_brake",
+    "verb": "Brake and reverse",
+    "context": "car",
+    "key": "S",
+    "pad": "left trigger (LT)",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "1.2.1; prototype main.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.car_handbrake",
+    "verb": "Handbrake",
+    "context": "car",
+    "key": "Space",
+    "pad": "A",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "1.2.1; prototype main.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.car_out",
+    "verb": "Get out",
+    "context": "car",
+    "key": "E",
+    "pad": "Y",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "1.2.3; prototype main.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.car_horn",
+    "verb": "Horn (held)",
+    "context": "car",
+    "key": "H",
+    "pad": "left stick press (L3)",
+    "hold": true,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "1.2.11 (H)",
+    "named_in_blueprint": true,
+    "chosen_note": "pad button chosen",
+    "chosen": false
+   },
+   {
+    "id": "key.car_rear",
+    "verb": "Look out of the rear window",
+    "context": "car",
+    "key": "B (held)",
+    "pad": "left bumper (LB, held)",
+    "hold": true,
+    "toggle_alternative": true,
+    "rebindable": true,
+    "src": "1.2.6 (B held)",
+    "named_in_blueprint": true,
+    "chosen_note": "pad button chosen",
+    "chosen": false
+   },
+   {
+    "id": "key.car_way",
+    "verb": "Pauline repeats the way",
+    "context": "car",
+    "key": "R",
+    "pad": "D-pad left",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "6.9 (R)",
+    "named_in_blueprint": true,
+    "chosen_note": "pad button chosen",
+    "chosen": false
+   },
+   {
+    "id": "key.car_fare",
+    "verb": "Take the fare",
+    "context": "car",
+    "key": "Y",
+    "pad": "D-pad up",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "prototype player.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.fight_light",
+    "verb": "Light blow",
+    "context": "fight",
+    "key": "J",
+    "pad": "X",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "1.3.1; prototype main.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.fight_heavy",
+    "verb": "Heavy blow",
+    "context": "fight",
+    "key": "U",
+    "pad": "Y",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "1.3.1; prototype main.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.fight_guard",
+    "verb": "Guard (held)",
+    "context": "fight",
+    "key": "K",
+    "pad": "B (held)",
+    "hold": true,
+    "toggle_alternative": true,
+    "rebindable": true,
+    "src": "1.3.2; prototype main.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.fight_dodge",
+    "verb": "Step away",
+    "context": "fight",
+    "key": "Space",
+    "pad": "A",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "1.3.2; prototype main.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.fight_grab",
+    "verb": "Grab what is to hand",
+    "context": "fight",
+    "key": "G",
+    "pad": "right bumper (RB)",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "1.3.6; prototype main.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.fight_step_up",
+    "verb": "Step it up",
+    "context": "fight",
+    "key": "R",
+    "pad": "left bumper (LB)",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "1.3.4; prototype main.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.fight_back_down",
+    "verb": "Back down",
+    "context": "fight",
+    "key": "X",
+    "pad": "D-pad down",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "1.3.4; prototype main.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.fight_finish",
+    "verb": "Finish it",
+    "context": "fight",
+    "key": "V",
+    "pad": "right stick press (R3)",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "1.3.9; prototype main.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.talk_suggested",
+    "verb": "Suggested lines",
+    "context": "talk",
+    "key": "Tab",
+    "pad": "Y (shown at once on a pad)",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "3.6.8, 6.7, 6.6 (Tab)",
+    "named_in_blueprint": true,
+    "chosen": false
+   },
+   {
+    "id": "key.talk_choose",
+    "verb": "Choose a line",
+    "context": "talk",
+    "key": "Up, Down or the number keys",
+    "pad": "D-pad up and down",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "6.7; prototype ui.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.talk_say",
+    "verb": "Say it",
+    "context": "talk",
+    "key": "Enter",
+    "pad": "A",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "6.7; prototype ui.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.talk_leave",
+    "verb": "Leave",
+    "context": "talk",
+    "key": "Esc",
+    "pad": "B",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": false,
+    "src": "6.7 (Leave is always offered)",
+    "chosen_note": "Esc is fixed so Leave and Back are always one press",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.talk_report",
+    "verb": "Report this line",
+    "context": "talk",
+    "key": "F9",
+    "pad": "right stick press (R3)",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "3.6.7",
+    "chosen": true,
+    "chosen_note": "keys chosen",
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.ledger_close",
+    "verb": "Close the Ledger",
+    "context": "ledger",
+    "key": "L or Esc",
+    "pad": "View or B",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "6.2; prototype main.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.ledger_part",
+    "verb": "Change part (People, Day book, Open)",
+    "context": "ledger",
+    "key": "Q and E",
+    "pad": "LB and RB",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "6.2; prototype main.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.ledger_move",
+    "verb": "Move along the lines",
+    "context": "ledger",
+    "key": "Up, Down, Left, Right",
+    "pad": "D-pad",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "6.2; prototype main.js",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.map_close",
+    "verb": "Put the map away",
+    "context": "map",
+    "key": "Comma or Esc",
+    "pad": "L3 or B",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "6.3",
+    "chosen_note": "closing keys chosen to match the prototype's rule that the opening key also closes",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.pause",
+    "verb": "Pause",
+    "context": "all",
+    "key": "Esc",
+    "pad": "Menu",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": false,
+    "src": "6.4 (Esc pauses everywhere)",
+    "named_in_blueprint": true,
+    "chosen": false
+   },
+   {
+    "id": "key.menu_move",
+    "verb": "Move in a menu",
+    "context": "menu",
+    "key": "Up, Down (or W, S), mouse",
+    "pad": "D-pad or left stick",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "6.4, AX-06",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.menu_select",
+    "verb": "Choose",
+    "context": "menu",
+    "key": "Enter or Space (or click)",
+    "pad": "A",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": true,
+    "src": "6.4, AX-06",
+    "chosen": false,
+    "named_in_blueprint": false
+   },
+   {
+    "id": "key.menu_back",
+    "verb": "Back one level (never quits)",
+    "context": "menu",
+    "key": "Esc",
+    "pad": "B",
+    "hold": false,
+    "toggle_alternative": false,
+    "rebindable": false,
+    "src": "AX-06",
+    "chosen": false,
+    "named_in_blueprint": false
+   }
+  ]
+ },
+ "menus": {
+  "src": "6.4, AX-06, AX-07, AX-10",
+  "rules": [
+   "Targets large and never move",
+   "Back goes one level up and never quits",
+   "Focus always visible",
+   "Settings reachable before play and from pause, all remembered",
+   "No destructive choice sits one press from Resume (Resume is first, Quit last, with a gap and a confirm)",
+   "New game never overwrites existing slots or autosaves",
+   "Esc pauses everywhere"
+  ],
+  "title": {
+   "name": "LEDGER",
+   "tagline": "Meridian, October 1990.",
+   "items": [
+    {
+     "id": "menu.title.continue",
+     "text": "Continue",
+     "note": "newest save, shown when one exists"
+    },
+    {
+     "id": "menu.title.new",
+     "text": "New game"
+    },
+    {
+     "id": "menu.title.load",
+     "text": "Load game"
+    },
+    {
+     "id": "menu.title.settings",
+     "text": "Settings"
+    },
+    {
+     "id": "menu.title.credits",
+     "text": "Credits"
+    },
+    {
+     "id": "menu.title.quit",
+     "text": "Quit"
+    }
+   ],
+   "first_run_offers": [
+    {
+     "id": "menu.first.subtitles",
+     "text": "Subtitles are on. Want them bigger or off?",
+     "options": [
+      "Keep them",
+      "Change them"
+     ],
+     "src": "6.1.2 (offered before the first sound)"
+    },
+    {
+     "id": "menu.first.narration",
+     "text": "Read the menus aloud?",
+     "options": [
+      "No",
+      "Yes"
+     ],
+     "src": "AX-09 (offered on the first menu)"
+    },
+    {
+     "id": "menu.first.picture",
+     "text": "Pick a picture to suit this PC.",
+     "options": [
+      "Let the game choose",
+      "Choose myself"
+     ],
+     "src": "8.3.1 (first launch finds a smooth picture, then offers presets, brightness and scale)"
+    }
+   ],
+   "loading": "Getting the town ready.",
+   "loading_progress": "Getting the town ready: {percent}"
+  },
+  "pause": {
+   "name": "Paused",
+   "items": [
+    {
+     "id": "menu.pause.resume",
+     "text": "Resume",
+     "default_focus": true
+    },
+    {
+     "id": "menu.pause.ledger",
+     "text": "The Ledger"
+    },
+    {
+     "id": "menu.pause.save",
+     "text": "Save game"
+    },
+    {
+     "id": "menu.pause.load",
+     "text": "Load game"
+    },
+    {
+     "id": "menu.pause.photo",
+     "text": "Photograph",
+     "src": "6.8"
+    },
+    {
+     "id": "menu.pause.settings",
+     "text": "Settings"
+    },
+    {
+     "id": "menu.pause.notice",
+     "text": "About the AI replies",
+     "src": "3.6.7, 10.11 (the notice can be read again from the pause menu)"
+    },
+    {
+     "id": "menu.pause.report",
+     "text": "Report a line",
+     "src": "3.6.7"
+    },
+    {
+     "id": "menu.pause.gap",
+     "text": "",
+     "note": "a clear space between Resume's group and the leaving group"
+    },
+    {
+     "id": "menu.pause.title",
+     "text": "Quit to the title",
+     "confirm": "confirm.quit_title"
+    },
+    {
+     "id": "menu.pause.quit",
+     "text": "Quit the game",
+     "confirm": "confirm.quit"
+    }
+   ],
+   "clock_note": "The clock stops in the pause menu and in talk, nowhere else (RT-18)"
+  },
+  "settings": {
+   "name": "Settings",
+   "pages": [
+    {
+     "id": "menu.settings.picture",
+     "text": "Picture"
+    },
+    {
+     "id": "menu.settings.sound",
+     "text": "Sound"
+    },
+    {
+     "id": "menu.settings.controls",
+     "text": "Controls"
+    },
+    {
+     "id": "menu.settings.words",
+     "text": "Words and subtitles"
+    },
+    {
+     "id": "menu.settings.access",
+     "text": "Accessibility"
+    },
+    {
+     "id": "menu.settings.assists",
+     "text": "Assists"
+    },
+    {
+     "id": "menu.settings.privacy",
+     "text": "Privacy and the AI replies"
+    }
+   ],
+   "buttons": {
+    "back": "Back",
+    "reset_page": "Reset this page to the defaults",
+    "reset_keys": "Reset keys to the defaults",
+    "reset_pad": "Reset the pad to the defaults",
+    "apply": "Apply",
+    "keep": "Keep these",
+    "revert": "Go back to the old ones",
+    "revert_in": "Going back in {seconds} seconds."
+   }
+  },
+  "buttons": {
+   "yes": "Yes",
+   "no": "No",
+   "ok": "OK",
+   "cancel": "Cancel",
+   "back": "Back",
+   "close": "Close",
+   "delete": "Delete",
+   "replace": "Replace",
+   "leave": "Leave",
+   "carry_on": "Carry on",
+   "read_on": "Read on",
+   "more": "More"
+  },
+  "confirms": [
+   {
+    "id": "confirm.quit_title",
+    "text": "Quit to the title? The game is saved first.",
+    "yes": "Quit to the title",
+    "no": "Carry on",
+    "default_focus": "no",
+    "src": "6.4, AX-07 (quitting saves)"
+   },
+   {
+    "id": "confirm.quit",
+    "text": "Quit the game? It is saved first.",
+    "yes": "Quit",
+    "no": "Carry on",
+    "default_focus": "no",
+    "src": "6.4, AX-07"
+   },
+   {
+    "id": "confirm.new_game",
+    "text": "Start a new game? Your saves stay where they are.",
+    "yes": "Start",
+    "no": "Back",
+    "default_focus": "no",
+    "src": "AX-07 checklist (New game never overwrites)"
+   },
+   {
+    "id": "confirm.overwrite",
+    "text": "Replace this save? The old one cannot be got back.",
+    "yes": "Replace",
+    "no": "Cancel",
+    "default_focus": "no",
+    "src": "AX-07 checklist (a confirm before overwriting)"
+   },
+   {
+    "id": "confirm.delete",
+    "text": "Delete this save? It cannot be got back.",
+    "yes": "Delete",
+    "no": "Cancel",
+    "default_focus": "no",
+    "src": "AX-07 checklist (a confirm before deleting)"
+   },
+   {
+    "id": "confirm.load",
+    "text": "Load this save? What you have done since the last save is lost.",
+    "yes": "Load",
+    "no": "Cancel",
+    "default_focus": "no",
+    "src": "6.4",
+    "chosen": true
+   },
+   {
+    "id": "confirm.permanent",
+    "text": "That cannot be undone. Are you sure?",
+    "yes": "Yes, do it",
+    "no": "No",
+    "default_focus": "no",
+    "src": "6.7 (what cannot be undone asks twice); the game tells what is permanent"
+   }
+  ],
+  "permanence_lines": [
+   {
+    "id": "permanence.autosave",
+    "text": "The game saves itself after every deed. A deed done stays done.",
+    "src": "AX-07, 7.8",
+    "chosen": true
+   },
+   {
+    "id": "permanence.new_game",
+    "text": "Some things you do in Meridian cannot be undone. The town remembers.",
+    "src": "canon (killing is permanent, the town remembers)",
+    "chosen": true
+   },
+   {
+    "id": "permanence.kill",
+    "text": "If a man dies by your hand he stays dead, and the town does not forget.",
+    "src": "canon content rule: killing rare, permanent, remembered",
+    "chosen": true
+   }
+  ],
+  "wait_menu": {
+   "src": "7.11",
+   "title": "Wait",
+   "items": [
+    "Wait an hour",
+    "Wait until {appointment}",
+    "Sleep till morning",
+    "Never mind"
+   ],
+   "stopped_for": "You are stopped: {reason}.",
+   "reasons_note": "a wait or sleep always stops for what the town has for him (a man at the door)"
+  },
+  "photo": {
+   "src": "6.8",
+   "title": "Photograph",
+   "help": [
+    "Tilt, roll, lens 24 to 85 mm, focus and exposure",
+    "Save a picture",
+    "Leave and go back to the moment"
+   ],
+   "buttons": {
+    "save": "Save a picture",
+    "leave": "Leave the camera"
+   },
+   "saved": "Picture saved.",
+   "too_far": "Too far from Tom.",
+   "blocked": "Something is in the way."
+  }
+ },
+ "save_slots": {
+  "src": "6.4, AX-07, 7.8",
+  "manual_slots": 8,
+  "manual_slots_note": "at least eight; 8 is the least",
+  "autosave_slots": 3,
+  "autosave_rotation": "1, 2, 3 then 1 again; the newest is marked",
+  "write_rule": "written to a new file, swapped in once complete",
+  "fields": [
+   "picture",
+   "game_day_and_date",
+   "game_hour",
+   "place",
+   "rung_in_words",
+   "real_time"
+  ],
+  "game_date_format": "{weekday} {day} {month}, {hh}:{mm}",
+  "game_date_example": "Mon 15 Oct, 14:20",
+  "real_time_format": "{day} {month} {year}, {hh}:{mm}",
+  "real_time_example": "Saved 24 Nov 2026, 10:42",
+  "place_source": "the name on the plot Tom is in, else the street name plate nearest (map.json plots and name_plates)",
+  "place_example": "Quay Street",
+  "rung_words": [
+   {
+    "rung": 1,
+    "text": "the nephew",
+    "src": "2.12.2"
+   },
+   {
+    "rung": 2,
+    "text": "Nowak",
+    "src": "2.12.2"
+   },
+   {
+    "rung": 3,
+    "text": "Tom",
+    "src": "2.12.2"
+   },
+   {
+    "rung": 4,
+    "text": "the port's man",
+    "src": "2.12.2"
+   }
+  ],
+  "weekday_words": [
+   "Mon",
+   "Tue",
+   "Wed",
+   "Thu",
+   "Fri",
+   "Sat",
+   "Sun"
+  ],
+  "month_words": [
+   "Oct",
+   "Nov",
+   "Dec"
+  ],
+  "labels": {
+   "slot": "Slot {n}",
+   "empty": "Empty",
+   "autosave": "Autosave {n}",
+   "newest": "Newest",
+   "saved": "Saved {real_time}",
+   "line": "{game_date} · {place} · {rung}",
+   "corrupt": "This save cannot be read. The one before it is kept.",
+   "saving": "Saving.",
+   "saving_sign": "Saving",
+   "saved_plain": "The game has saved.",
+   "saved_done": "Saved.",
+   "load_done": "Loaded.",
+   "no_saves": "No saves yet."
+  },
+  "picture": "a thumbnail of the view at the moment of saving, reduced; JPEG, under 40 KB (browser) or a screenshot (Unreal)",
+  "no_numbers": "no money, rung number or other measure is shown on a slot; the rung is in words",
+  "chosen": true,
+  "chosen_note": "label wording, the date format and the thumbnail size are chosen; slot counts are from 6.4 and AX-07"
+ },
+ "hints": {
+  "src": "6.5, production/handovers/6y-hints.md, FirstMoments.cs",
+  "rules": [
+   "Once each, saved",
+   "Never two within 12 real seconds",
+   "Never on the clock: only on first need or hesitation",
+   "Walking first in a new game",
+   "Keys in braces are filled from the player's bindings (FirstMoments.Fill) and the device last used",
+   "Spoken by the person when they are with Tom, else shown as the plain key line",
+   "'Hints again' in the Ledger brings them back"
+  ],
+  "gap_s": 12,
+  "still_for_s": 4,
+  "still_for_s_note": "6.5 says 4 s at the quay; FirstMoments.cs has 10 s since 28 Oct (see open_points)",
+  "talk_for_s": 20,
+  "ledger_for_s": 30,
+  "standing_about_nudge_s": 60,
+  "real_seconds": true,
+  "records": [
+   {
+    "id": "hint.walk",
+    "moment": "StandingStill",
+    "trigger": "no step 4 s after control in a new game (real seconds)",
+    "speaker": null,
+    "line": null,
+    "key_text": "{Move} walks, {Run} runs. People on this street notice who's about.",
+    "at_once": false,
+    "hesitate_s": 0,
+    "stale_s": null,
+    "src": "6y-hints.md; FirstMoments.cs"
+   },
+   {
+    "id": "hint.talk",
+    "moment": "CanTalk",
+    "trigger": "Sheila's walk-round ends at the office door and no talk in 45 s",
+    "speaker": "sheila",
+    "line": "That's Ron on the rank. Go and say hello. Everyone out there wants a look at you.",
+    "key_text": "Walk up to anyone and press {Talk}. What you tell them, they remember.",
+    "at_once": false,
+    "hesitate_s": 45,
+    "stale_s": null,
+    "src": "6y-hints.md; FirstMoments.cs",
+    "note": "FirstMoments.cs names the speaker 'lena', the older cast id for Sheila"
+   },
+   {
+    "id": "hint.coat",
+    "moment": "FirstAsk",
+    "trigger": "Ron hands over the coat and envelope",
+    "speaker": "ron",
+    "line": "If you go tonight, boss, wear that. In the dark nobody looks twice at a coat.",
+    "key_text": "{Coat} puts the coat on or takes it off: in the dark it makes you harder to recognise.",
+    "at_once": true,
+    "hesitate_s": 0,
+    "stale_s": null,
+    "src": "6y-hints.md; FirstMoments.cs",
+    "note": "FirstMoments.cs names the speaker 'rocco', an older cast id; Ron is the blueprint's"
+   },
+   {
+    "id": "hint.seen",
+    "moment": "SeenAtDeed",
+    "trigger": "somebody saw a deed the town will talk about",
+    "speaker": null,
+    "line": null,
+    "key_text": "Somebody saw that. What they make of it can go round.",
+    "at_once": false,
+    "hesitate_s": 15,
+    "stale_s": 15,
+    "src": "6y-hints.md"
+   },
+   {
+    "id": "hint.talked_about",
+    "moment": "OverheardAboutHim",
+    "trigger": "overheard a remark about himself; Ledger not opened in 30 s",
+    "speaker": null,
+    "line": null,
+    "key_text": "That was about you. {Ledger} shows what you believe the street knows.",
+    "at_once": false,
+    "hesitate_s": 30,
+    "stale_s": 15,
+    "src": "6y-hints.md"
+   },
+   {
+    "id": "hint.ledger",
+    "moment": "LedgerOpened",
+    "trigger": "the Ledger is opened the first time",
+    "speaker": null,
+    "line": null,
+    "key_text": "What you believe the street now knows about you.",
+    "at_once": true,
+    "hesitate_s": 0,
+    "stale_s": null,
+    "src": "6y-hints.md"
+   },
+   {
+    "id": "hint.ferry_way",
+    "moment": "Landed",
+    "trigger": "on the landing, no step toward the quay in 4 s after control",
+    "speaker": null,
+    "line": null,
+    "key_text": "The way to Quay Street: keep the water on your right. It leaves the quay on your left, a hundred yards on, with its name plate at the corner.",
+    "at_once": false,
+    "hesitate_s": 4,
+    "stale_s": null,
+    "src": "4.2.1, 6.9, 6.5 (the ferry's 'way to Quay Street')",
+    "chosen": true,
+    "chosen_note": "wording chosen; direction from map.json: the quay runs east, water to the south, Quay Street's plate at x 115, y 9; check against the built map"
+   },
+   {
+    "id": "hint.nudge_ron",
+    "moment": "StandingAbout",
+    "trigger": "a minute of standing about at the quay",
+    "speaker": "ron",
+    "line": "Oi. Over here, when you're ready.",
+    "key_text": null,
+    "at_once": false,
+    "hesitate_s": 60,
+    "stale_s": 20,
+    "src": "6.5 (Ron or Pauline nudge after a minute)",
+    "chosen": true
+   },
+   {
+    "id": "hint.nudge_pauline",
+    "moment": "StandingAbout",
+    "trigger": "a minute of standing about in the office",
+    "speaker": "pauline",
+    "line": "There's a call for the cab, if you've a minute.",
+    "key_text": null,
+    "at_once": false,
+    "hesitate_s": 60,
+    "stale_s": 20,
+    "src": "6.5",
+    "chosen": true
+   },
+   {
+    "id": "hint.manners",
+    "moment": "FirstPassing",
+    "trigger": "first time a person is within talking reach and Tom has not spoken",
+    "speaker": null,
+    "line": null,
+    "key_text": "{Manners}: a nod, a hello, a hard look, a shove, or 'Oi!' to stop somebody.",
+    "at_once": false,
+    "hesitate_s": 20,
+    "stale_s": 20,
+    "src": "1.4.7, 6.6",
+    "chosen": true
+   },
+   {
+    "id": "hint.map",
+    "moment": "FirstLost",
+    "trigger": "lost for 90 s, or first told an address",
+    "speaker": null,
+    "line": null,
+    "key_text": "{Map} opens the paper map. It shows only places you have been or been told of.",
+    "at_once": false,
+    "hesitate_s": 0,
+    "stale_s": 30,
+    "src": "6.3, 6.9",
+    "chosen": true
+   },
+   {
+    "id": "hint.time",
+    "moment": "FirstAppointment",
+    "trigger": "first appointment or deadline set",
+    "speaker": null,
+    "line": null,
+    "key_text": "{Watch} lifts your watch. The clock over the Harbour Board tells it too.",
+    "at_once": false,
+    "hesitate_s": 20,
+    "stale_s": 30,
+    "src": "6.1.5",
+    "chosen": true
+   },
+   {
+    "id": "hint.hold",
+    "moment": "FirstSearch",
+    "trigger": "first drawer, desk or wardrobe",
+    "speaker": null,
+    "line": null,
+    "key_text": "Hold {Talk} to search. Step away to stop. A drawer is heard about two yards off.",
+    "at_once": true,
+    "hesitate_s": 0,
+    "stale_s": null,
+    "src": "1.6.2, 6.1.1",
+    "chosen": true
+   },
+   {
+    "id": "hint.wait",
+    "moment": "FirstWaitNeed",
+    "trigger": "first time an appointment is hours away",
+    "speaker": null,
+    "line": null,
+    "key_text": "{Wait} waits, and offers the times that matter.",
+    "at_once": false,
+    "hesitate_s": 20,
+    "stale_s": 30,
+    "src": "7.11",
+    "chosen": true
+   },
+   {
+    "id": "hint.pauline_way",
+    "moment": "FirstFare",
+    "trigger": "first fare taken in the cab",
+    "speaker": "pauline",
+    "line": "I'll say it again if you want it, love.",
+    "key_text": "{Way} repeats the way.",
+    "at_once": false,
+    "hesitate_s": 0,
+    "stale_s": 20,
+    "src": "6.9 (Pauline repeats the way on R)",
+    "chosen": true
+   },
+   {
+    "id": "hint.again",
+    "moment": "HintsAgain",
+    "trigger": "the player asks",
+    "speaker": null,
+    "line": null,
+    "key_text": "Hints again is in the Ledger: it shows each one once more.",
+    "at_once": true,
+    "hesitate_s": 0,
+    "stale_s": null,
+    "src": "6.5, 7.10",
+    "chosen": true
+   }
+  ],
+  "hints_again": {
+   "label": "Hints again",
+   "line": "Show the hints once more.",
+   "default": false,
+   "src": "6.5, 7.10"
+  },
+  "key_tokens": {
+   "Move": "key.move",
+   "Run": "key.run",
+   "Talk": "key.use",
+   "Coat": "key.coat",
+   "Ledger": "key.ledger",
+   "Manners": "key.manners",
+   "Map": "key.map",
+   "Watch": "key.watch",
+   "Wait": "key.wait",
+   "Way": "key.car_way"
+  },
+  "session_record": "a 'hint' line (moment) each time one shows (production/specs/session-record.md)"
+ },
+ "subtitles": {
+  "src": "6.1.2, AX-01, AX-02; production/research aaa-reference study 10 and ui-design",
+  "unit": {
+   "definition": "1 unit = 1 CSS pixel at a 1080-pixel-high window; unit_px = window_height / 1080, times the text size setting (AX-01, 100 to 200%)",
+   "chosen": true,
+   "src": "6.1.2 asks for the unit to be defined; prototype's unit is 24 px at 1080p (AX-01)"
+  },
+  "floor_units": 24,
+  "default_units": 39,
+  "size_steps": [
+   {
+    "id": "small",
+    "units": 34,
+    "label": "Small"
+   },
+   {
+    "id": "standard",
+    "units": 39,
+    "label": "Standard",
+    "default": true
+   },
+   {
+    "id": "large",
+    "units": 48,
+    "label": "Large"
+   }
+  ],
+  "size_steps_note": "three steps; 34 and 48 chosen from the research range 34 to 54 and the 48-unit check on 3440 by 1440",
+  "chosen": true,
+  "min_units_rule": "nothing under 24 units, ever, at any window size or step",
+  "hold_after_line_s": 0.3,
+  "hold_rule": "a subtitle stays for its line's audio length plus 0.3 s; it shows only with its audio (ruling 23 Sep)",
+  "max_letters_per_line": 40,
+  "max_lines": 3,
+  "box_modes": [
+   {
+    "id": "off",
+    "label": "No box"
+   },
+   {
+    "id": "half",
+    "label": "Half box",
+    "default": true
+   },
+   {
+    "id": "full",
+    "label": "Full box"
+   }
+  ],
+  "box_alpha": {
+   "off": 0.0,
+   "half": 0.5,
+   "full": 0.85,
+   "chosen": true
+  },
+  "speaker_name": {
+   "default": true,
+   "for": "named people",
+   "unnamed_label": "{description}",
+   "label": "Show who is speaking"
+  },
+  "chatter": {
+   "default": true,
+   "label": "Subtitles for street chatter",
+   "note": "a nearby unnamed voice; switching off drops only chatter"
+  },
+  "on_by_default": true,
+  "text_contrast_min": "4.5 to 1 against what is behind it; aim 7 to 1",
+  "no_all_capitals": true,
+  "speaker_format": "{name}: {line}",
+  "tom_speaker": "Tom",
+  "narration_label": "",
+  "unknown_speaker": "A voice",
+  "labels": {
+   "toggle": "Subtitles",
+   "size": "Subtitle size",
+   "box": "Subtitle box",
+   "name": "Show who is speaking",
+   "chatter": "Subtitles for street chatter"
+  }
+ },
+ "talk": {
+  "src": "6.7, RT-14, 3.6.8",
+  "placeholder": "Say something",
+  "placeholder_pad": "Pick a line, or open the keyboard",
+  "buttons": {
+   "say": "Say it",
+   "leave": "Leave",
+   "suggested": "Suggested lines",
+   "keyboard": "Keyboard"
+  },
+  "labels": {
+   "typing_hint": "Tab: suggested lines",
+   "pad_hint": "Y: suggested lines",
+   "leave_hint": "Esc: leave"
+  },
+  "typing_never_moves_tom": true,
+  "confirm_twice": {
+   "first": "Are you sure? That cannot be undone.",
+   "second": "Say it again to be sure.",
+   "note": "only a plain yes is taken (6.7)"
+  },
+  "offer_too_high": "You haven't got that on you.",
+  "end_cold": "{name} turns away.",
+  "unheard": "{name} does not answer.",
+  "out_of_period": [
+   "You what?",
+   "I don't follow you.",
+   "Say it plain."
+  ],
+  "chosen": true
+ },
+ "ai_notice": {
+  "src": "3.6.7, 10.11, PRIVACY-CHECK-2026-11-21, RULINGS 24 Sep (the AI notice before the first talk, a way to report any line)",
+  "legal": "EU AI Act Article 50(1) in force since 2 Aug 2026; ICO PECR guidance. A design check, not legal advice.",
+  "check_at_build": true,
+  "check_note": "Wording is written for the design; the named service, its retention and its terms are checked when the service is chosen and again at the build date (PRIVACY-CHECK: 'not settled here'). {service_name} and {retention_text} are filled from the build's real values.",
+  "when": "its own screen, shown once before the first talk (before the first typed line), and again from the pause menu at any time; nothing typed is sent before it is answered; not in the terms",
+  "answer_equal": "the two buttons are the same size, in the same place, one above the other, neither pre-selected; the answer can be changed in Settings at any time",
+  "defaults": {
+   "service_name": "Claude, an AI model made by Anthropic",
+   "retention_text": "CHECK AT BUILD: how long the service keeps what it is sent, in its own words"
+  },
+  "screen": {
+   "title": "Before you talk to anyone",
+   "body": [
+    "The people of Meridian answer you in words made by an AI service while you play. It is {service_name}, and it works over the internet.",
+    "When you type your own words to someone, those words are sent to that service so it can make the reply. Nothing you type is sent until you choose below.",
+    "Why: only to make the replies. How long: {retention_text}",
+    "The game keeps no copy of what you typed. It remembers what was said in the story, the deed and not the text, unless you report a line.",
+    "Or play offline. Everyone then answers in lines written for the game, and nothing you type leaves this PC. The whole first hour can be played that way.",
+    "Either choice is fine. You can read this again, and change your mind, from the pause menu."
+   ],
+   "words_total_note": "about 150 words",
+   "buttons": [
+    {
+     "id": "notice.choose_online",
+     "text": "Play with the AI replies"
+    },
+    {
+     "id": "notice.choose_offline",
+     "text": "Play offline, written lines only"
+    }
+   ],
+   "footer": "Report any line from the pause menu or with {report_key}.",
+   "read_again_label": "About the AI replies"
+  },
+  "offline_choice": {
+   "labels": {
+    "online": "With the AI replies",
+    "offline": "Offline, written lines only"
+   },
+   "setting_label": "How people reply",
+   "setting_line": "Choose between AI replies over the internet and lines written for the game.",
+   "status_offline": "Offline: written lines only.",
+   "status_online": "AI replies are on.",
+   "status_failed": "The AI service could not be reached. People answer in written lines for now."
+  },
+  "typing_marker": {
+   "text": "AI reply",
+   "note": "a small plain label on each live reply in the talk box, so a player can always tell a written line from a live one (a player cannot tell by eye, so no 'obvious' exception is used)",
+   "chosen": true
+  },
+  "line_report": {
+   "src": "3.6.7",
+   "menu_label": "Report a line",
+   "key_hint": "Report this line: {report_key}",
+   "prompt": "Which line? You can report the last line said to you, or pick from the last few.",
+   "pick_last": "The last line said to you",
+   "reasons": [
+    {
+     "id": "report.wrong_game",
+     "text": "It does not fit the game"
+    },
+    {
+     "id": "report.wrong_year",
+     "text": "It is wrong for 1990"
+    },
+    {
+     "id": "report.offensive",
+     "text": "It is offensive"
+    },
+    {
+     "id": "report.broke_rules",
+     "text": "It breaks the rules the game keeps"
+    },
+    {
+     "id": "report.other",
+     "text": "Something else"
+    }
+   ],
+   "free_text": {
+    "label": "Say what was wrong (you do not have to)",
+    "max_chars": 200
+   },
+   "buttons": {
+    "send": "Report it",
+    "cancel": "Never mind"
+   },
+   "thanks": "Thank you. That line has been kept for the makers to read.",
+   "what_is_kept": "Only the line you report and the reason you gave are kept. The rest of the talk is not.",
+   "failed": "The report could not be sent. It is kept on this PC and sent when it can be.",
+   "check_at_build": true,
+   "chosen": true
+  }
+ },
+ "privacy": {
+  "src": "10.11, PRIVACY-CHECK-2026-11-21",
+  "check_at_build": true,
+  "title": "Privacy and the AI replies",
+  "sections": [
+   {
+    "id": "privacy.what",
+    "head": "What is sent",
+    "text": "Only what you type to a person when AI replies are on, and what the game needs to make that person answer in character (who they are, what they know, what has been said). Nothing is sent before you answer the notice."
+   },
+   {
+    "id": "privacy.why",
+    "head": "Why",
+    "text": "To make the replies. Nothing is sold and nothing is used to follow you."
+   },
+   {
+    "id": "privacy.who",
+    "head": "Who gets it",
+    "text": "{service_name}. The game's makers receive only a line you report."
+   },
+   {
+    "id": "privacy.how_long",
+    "head": "How long",
+    "text": "{retention_text}"
+   },
+   {
+    "id": "privacy.kept",
+    "head": "What the game keeps",
+    "text": "The story's memory of what was said, in your save: the deed, not the words you typed. Typed words are not stored, unless you report a line."
+   },
+   {
+    "id": "privacy.offline",
+    "head": "Offline play",
+    "text": "Switch to offline and nothing you type leaves this PC. People answer in written lines. The whole first hour plays that way."
+   },
+   {
+    "id": "privacy.crash",
+    "head": "Crash reports",
+    "text": "A crash report is sent only if you say yes, and you can say no or never as easily as yes. It holds the game's version, the time, the last lines of the log and a short summary of the PC, with no serial number, machine name or user name. A report waiting on this PC is deleted after 30 days if never sent.",
+    "src": "PRIVACY-CHECK 8.2.1"
+   }
+  ],
+  "crash_question": {
+   "title": "Send a crash report?",
+   "text": "The game stopped unexpectedly. A report would help mend it. It holds the game's version, the time, the last lines of the log and a short summary of this PC. It is kept for {crash_retention}. Nothing is sent unless you say yes.",
+   "buttons": {
+    "yes": "Send this one",
+    "always": "Always send",
+    "no": "Not this time",
+    "never": "Never send"
+   },
+   "check_at_build": true,
+   "chosen": true,
+   "defaults": {
+    "crash_retention": "CHECK AT BUILD"
+   }
+  },
+  "deletion": {
+   "src": "10.11 (deletion of anything held off the PC)",
+   "title": "Delete what is held off this PC",
+   "text": "If the game keeps anything off this PC, such as an online save or a report you sent, you can ask for it to be deleted here. Saves on this PC stay unless you delete them yourself.",
+   "buttons": {
+    "delete": "Delete what is held off this PC",
+    "cancel": "Never mind"
+   },
+   "confirm": "Delete everything the game holds off this PC? That cannot be undone.",
+   "done": "Done. Nothing is held off this PC.",
+   "failed": "That could not be done just now. Nothing was changed.",
+   "check_at_build": true
+  },
+  "version_label": "Privacy notice, version {date}"
+ },
+ "accessibility": {
+  "src": "AX-01 to AX-11, AX-08, 6.5, 7.10",
+  "rule": "AX-08: every option in the settings file has one plain line here, and the same list is on the store page. tools/ script compares the settings keys with these ids; a missing option fails.",
+  "settings_keys_equal_ids": true,
+  "page_title": "Accessibility",
+  "assists_title": "Assists",
+  "assists_intro": "There is no difficulty setting. These only change the one thing each names, and they are all off to begin with.",
+  "store_page_intro": "Accessibility in LEDGER: every option is listed here and in the game, with one line on what it does.",
+  "ax_summary": [
+   {
+    "ax": "AX-01",
+    "text": "Text size and contrast: all writing at least 24 units, up to twice the size, one plain face."
+   },
+   {
+    "ax": "AX-02",
+    "text": "Subtitles on by default: size, box, speaker's name, street chatter."
+   },
+   {
+    "ax": "AX-03",
+    "text": "Motion and comfort: shake, bob, blur, close-in, soft focus, flashing, field of view."
+   },
+   {
+    "ax": "AX-04",
+    "text": "Audio: five volumes, mono, voices clear, soften loud noises, sound shown."
+   },
+   {
+    "ax": "AX-05",
+    "text": "Input: every key and button can be changed, separate speeds, no mashing, holds as taps."
+   },
+   {
+    "ax": "AX-06",
+    "text": "Menus: big still targets, Back goes one level, nothing destructive near Resume."
+   },
+   {
+    "ax": "AX-07",
+    "text": "Saves: eight of your own and three that rotate, never losing the only one."
+   },
+   {
+    "ax": "AX-09",
+    "text": "Read menus aloud."
+   },
+   {
+    "ax": "AX-10",
+    "text": "Pause when the window loses focus."
+   },
+   {
+    "ax": "AX-11",
+    "text": "Nothing by colour alone; three colour-blind filters."
+   }
+  ],
+  "options": [
+   {
+    "id": "ax.text_size",
+    "ax": "AX-01",
+    "label": "Text size",
+    "line": "Makes all the writing bigger, up to twice the size, and nothing runs off the screen.",
+    "values": [
+     "100%",
+     "125%",
+     "150%",
+     "175%",
+     "200%"
+    ],
+    "default": "100%",
+    "page": "accessibility",
+    "src": "AX-01",
+    "chosen": true,
+    "chosen_note": "the five steps are chosen; AX-01 says 100% to 200%",
+    "kind": "option"
+   },
+   {
+    "id": "ax.one_face",
+    "ax": "AX-01",
+    "label": "Plain face",
+    "line": "All text is one plain face with no capital-letter paragraphs. Not a switch; always so.",
+    "values": null,
+    "default": "always",
+    "page": "accessibility",
+    "src": "AX-01",
+    "kind": "fixed",
+    "chosen": false
+   },
+   {
+    "id": "ax.subtitles",
+    "ax": "AX-02",
+    "label": "Subtitles",
+    "line": "Shows what people say as words. On unless you turn them off.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "on",
+    "page": "accessibility",
+    "src": "6.1.2, AX-02",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.subtitle_size",
+    "ax": "AX-02",
+    "label": "Subtitle size",
+    "line": "Three sizes of subtitle. None is ever smaller than the smallest writing in the game.",
+    "values": [
+     "Small",
+     "Standard",
+     "Large"
+    ],
+    "default": "Standard",
+    "page": "accessibility",
+    "src": "6.1.2, AX-02",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.subtitle_box",
+    "ax": "AX-02",
+    "label": "Subtitle box",
+    "line": "A darker panel behind the subtitle: none, half or full.",
+    "values": [
+     "No box",
+     "Half box",
+     "Full box"
+    ],
+    "default": "Half box",
+    "page": "accessibility",
+    "src": "6.1.2, AX-02",
+    "chosen": true,
+    "chosen_note": "default Half is chosen",
+    "kind": "option"
+   },
+   {
+    "id": "ax.subtitle_speaker",
+    "ax": "AX-02",
+    "label": "Show who is speaking",
+    "line": "Puts the speaker's name before the line, for people you know by name.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "on",
+    "page": "accessibility",
+    "src": "6.1.2, AX-02",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.subtitle_chatter",
+    "ax": "AX-02",
+    "label": "Subtitles for street chatter",
+    "line": "Words for voices in the street that are not to you. Turn off to keep only the people you speak to.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "on",
+    "page": "accessibility",
+    "src": "6.1.2, AX-02",
+    "chosen": true,
+    "chosen_note": "default on is chosen",
+    "kind": "option"
+   },
+   {
+    "id": "ax.shake",
+    "ax": "AX-03",
+    "label": "Camera shake",
+    "line": "Turns off the shake from blows and cars.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "on",
+    "page": "accessibility",
+    "src": "AX-03",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.head_bob",
+    "ax": "AX-03",
+    "label": "Head bob",
+    "line": "Turns off the bob of the view as Tom walks.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "on",
+    "page": "accessibility",
+    "src": "AX-03",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.motion_blur",
+    "ax": "AX-03",
+    "label": "Motion blur",
+    "line": "Blur when things move fast. Off to begin with.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "off",
+    "page": "accessibility",
+    "src": "AX-03, 8.3.1",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.blow_closein",
+    "ax": "AX-03",
+    "label": "Close-in on a blow",
+    "line": "The brief camera step in when a blow lands. Turn off to keep the view steady.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "on",
+    "page": "accessibility",
+    "src": "AX-03",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.depth_of_field",
+    "ax": "AX-03",
+    "label": "Soft focus",
+    "line": "The soft blur of things far from where you look.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "on",
+    "page": "accessibility",
+    "src": "AX-03",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.reduce_flashing",
+    "ax": "AX-03",
+    "label": "Reduce flashing",
+    "line": "Dims flashes from guns and lightning to fewer than three a second.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "off",
+    "page": "accessibility",
+    "src": "AX-03",
+    "chosen": true,
+    "chosen_note": "default off is chosen; AX-03 says the switch dims them; photosensitivity line shown once guns flash",
+    "kind": "option"
+   },
+   {
+    "id": "ax.fov",
+    "ax": "AX-03",
+    "label": "Field of view",
+    "line": "How wide the view is, from 75 to 100 degrees.",
+    "values": [
+     "75 to 100"
+    ],
+    "default": "86",
+    "page": "accessibility",
+    "src": "AX-03, 8.3.1; his ruling of 21 Nov",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.vol_master",
+    "ax": "AX-04",
+    "label": "Volume: everything",
+    "line": "Sets the loudness of the whole game.",
+    "values": [
+     "0 to 100"
+    ],
+    "default": "100",
+    "page": "accessibility",
+    "src": "AX-04",
+    "chosen": true,
+    "chosen_note": "defaults for the five sliders are chosen",
+    "kind": "option"
+   },
+   {
+    "id": "ax.vol_voices",
+    "ax": "AX-04",
+    "label": "Volume: voices",
+    "line": "Sets the loudness of people's voices.",
+    "values": [
+     "0 to 100"
+    ],
+    "default": "100",
+    "page": "accessibility",
+    "src": "AX-04",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.vol_effects",
+    "ax": "AX-04",
+    "label": "Volume: effects",
+    "line": "Sets the loudness of doors, blows, cars and the rest.",
+    "values": [
+     "0 to 100"
+    ],
+    "default": "100",
+    "page": "accessibility",
+    "src": "AX-04",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.vol_street",
+    "ax": "AX-04",
+    "label": "Volume: the street",
+    "line": "Sets the loudness of the street, the gulls, the weather and the crowd.",
+    "values": [
+     "0 to 100"
+    ],
+    "default": "100",
+    "page": "accessibility",
+    "src": "AX-04",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.vol_music",
+    "ax": "AX-04",
+    "label": "Volume: music",
+    "line": "Sets the loudness of the radio and any music.",
+    "values": [
+     "0 to 100"
+    ],
+    "default": "70",
+    "page": "accessibility",
+    "src": "AX-04",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.mono",
+    "ax": "AX-04",
+    "label": "Mono sound",
+    "line": "Plays the same sound in both ears.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "off",
+    "page": "accessibility",
+    "src": "AX-04",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.voices_clear",
+    "ax": "AX-04",
+    "label": "Voices clear",
+    "line": "Lifts voices over the street by 6 decibels.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "off",
+    "page": "accessibility",
+    "src": "AX-04",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.loud_softening",
+    "ax": "AX-04",
+    "label": "Soften loud noises",
+    "line": "Holds gunshots and bangs down to the loudness of a slammed door.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "off",
+    "page": "accessibility",
+    "src": "AX-04",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.sound_shown",
+    "ax": "8.4.1",
+    "label": "Sound shown",
+    "line": "Shows a short word at the edge of the screen for a loud noise you make, a quiet street, a shout or a car you hear. It shows what Tom hears, never what anyone knows.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "off",
+    "page": "assists",
+    "src": "8.4.1, SND-26",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.rebind_keys",
+    "ax": "AX-05",
+    "label": "Change the keys",
+    "line": "Every action can be given another key, with a reset to the defaults.",
+    "values": null,
+    "default": "defaults",
+    "page": "accessibility",
+    "src": "AX-05, 6.6",
+    "kind": "screen",
+    "chosen": false
+   },
+   {
+    "id": "ax.rebind_pad",
+    "ax": "AX-05",
+    "label": "Change the pad buttons",
+    "line": "Every action can be given another button, with a reset to the defaults.",
+    "values": null,
+    "default": "defaults",
+    "page": "accessibility",
+    "src": "AX-05, 6.6",
+    "kind": "screen",
+    "chosen": false
+   },
+   {
+    "id": "ax.mouse_sens_x",
+    "ax": "AX-05",
+    "label": "Mouse speed, across",
+    "line": "How fast the view turns left and right with the mouse.",
+    "values": [
+     "slow to fast"
+    ],
+    "default": "middle",
+    "page": "accessibility",
+    "src": "AX-05",
+    "chosen": true,
+    "kind": "option"
+   },
+   {
+    "id": "ax.mouse_sens_y",
+    "ax": "AX-05",
+    "label": "Mouse speed, up and down",
+    "line": "How fast the view tilts with the mouse.",
+    "values": [
+     "slow to fast"
+    ],
+    "default": "middle",
+    "page": "accessibility",
+    "src": "AX-05",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.stick_sens_x",
+    "ax": "AX-05",
+    "label": "Stick speed, across",
+    "line": "How fast the view turns left and right with the stick.",
+    "values": [
+     "slow to fast"
+    ],
+    "default": "middle",
+    "page": "accessibility",
+    "src": "AX-05",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.stick_sens_y",
+    "ax": "AX-05",
+    "label": "Stick speed, up and down",
+    "line": "How fast the view tilts with the stick.",
+    "values": [
+     "slow to fast"
+    ],
+    "default": "middle",
+    "page": "accessibility",
+    "src": "AX-05",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.invert_mouse_y",
+    "ax": "AX-05",
+    "label": "Mouse: up and down the other way",
+    "line": "Reverses up and down for the mouse.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "off",
+    "page": "accessibility",
+    "src": "AX-05",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.invert_stick_y",
+    "ax": "AX-05",
+    "label": "Stick: up and down the other way",
+    "line": "Reverses up and down for the stick.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "off",
+    "page": "accessibility",
+    "src": "AX-05",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.hold_as_tap",
+    "ax": "AX-05",
+    "label": "Holds as taps",
+    "line": "Any action you must hold becomes one press to start and one to stop.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "off",
+    "page": "accessibility",
+    "src": "AX-05, 6.6 (every hold has a toggle)",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.aim_assist",
+    "ax": "AX-05",
+    "label": "Aim help",
+    "line": "Helps your aim once guns are in the game: off, light or strong.",
+    "values": [
+     "off",
+     "light",
+     "strong"
+    ],
+    "default": "off",
+    "page": "accessibility",
+    "src": "AX-05, 7.10",
+    "chosen": true,
+    "chosen_note": "appears only once guns exist; default off",
+    "kind": "option"
+   },
+   {
+    "id": "ax.aim_dot",
+    "ax": "AX-05",
+    "label": "Aiming dot",
+    "line": "A small dot in the middle of the view when you aim.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "off",
+    "page": "accessibility",
+    "src": "1.3.10, AX-05",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.menu_remembers",
+    "ax": "AX-06",
+    "label": "Settings are kept",
+    "line": "Every setting is remembered between games and survives an update. Not a switch; always so.",
+    "values": null,
+    "default": "always",
+    "page": "accessibility",
+    "src": "AX-06",
+    "kind": "fixed",
+    "chosen": false
+   },
+   {
+    "id": "ax.autosave",
+    "ax": "AX-07",
+    "label": "Saving",
+    "line": "The game saves after every deed and when you quit, into three rotating slots, besides your own eight. Not a switch; always so.",
+    "values": null,
+    "default": "always",
+    "page": "accessibility",
+    "src": "AX-07",
+    "kind": "fixed",
+    "chosen": false
+   },
+   {
+    "id": "ax.read_menus",
+    "ax": "AX-09",
+    "label": "Read menus aloud",
+    "line": "Speaks each menu item and its value, and the Ledger's headings and lines, as you move to them.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "off",
+    "page": "accessibility",
+    "src": "AX-09",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.read_prompts",
+    "ax": "AX-09",
+    "label": "Read prompts aloud",
+    "line": "Also speaks the prompts in play, such as 'Go into Mickey's'.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "off",
+    "page": "accessibility",
+    "src": "AX-09",
+    "chosen": true,
+    "kind": "option"
+   },
+   {
+    "id": "ax.pause_on_focus_loss",
+    "ax": "AX-10",
+    "label": "Pause when the window loses focus",
+    "line": "Pauses the game if you click away or switch windows.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "on",
+    "page": "accessibility",
+    "src": "AX-10",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.colour_filter",
+    "ax": "AX-11",
+    "label": "Colour-blind filter",
+    "line": "A colour filter for red-green (two kinds) or blue-yellow colour blindness. The game never relies on colour alone.",
+    "values": [
+     "off",
+     "red-green (red weak)",
+     "red-green (green weak)",
+     "blue-yellow"
+    ],
+    "default": "off",
+    "page": "accessibility",
+    "src": "AX-11",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.no_colour_alone",
+    "ax": "AX-11",
+    "label": "Never by colour alone",
+    "line": "Every cue also has a shape, a word or the dark at the edge of the picture. Not a switch; always so.",
+    "values": null,
+    "default": "always",
+    "page": "accessibility",
+    "src": "AX-11",
+    "kind": "fixed",
+    "chosen": false
+   },
+   {
+    "id": "ax.assist_seeing",
+    "ax": "7.10",
+    "label": "Seeing outline",
+    "line": "Draws a thin outline round the people you can see who are facing you. Off to begin with.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "off",
+    "page": "assists",
+    "src": "1.4.6, 7.10",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.assist_slow_fights",
+    "ax": "7.10",
+    "label": "Slower fights",
+    "line": "Fights start more slowly and only one man swings at a time.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "off",
+    "page": "assists",
+    "src": "7.10",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.assist_driving",
+    "ax": "7.10",
+    "label": "Driving help",
+    "line": "Eases the steering on keys and brakes harder.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "off",
+    "page": "assists",
+    "src": "7.10",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.assist_longer_walks",
+    "ax": "7.10",
+    "label": "Longer walks",
+    "line": "Gives you half as long again to follow somebody who sets off.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "off",
+    "page": "assists",
+    "src": "7.10, 1.4.5, 2.5.1",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.assist_ledger_pause",
+    "ax": "RT-18",
+    "label": "Ledger stops the town",
+    "line": "The town waits while the Ledger is open.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "off",
+    "page": "assists",
+    "src": "RT-18",
+    "kind": "option",
+    "chosen": false
+   },
+   {
+    "id": "ax.assist_hints_again",
+    "ax": "7.10",
+    "label": "Hints again",
+    "line": "Brings the hints back, one at a time.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "off",
+    "page": "assists",
+    "src": "6.5, 7.10",
+    "kind": "option",
+    "chosen": false
+   }
+  ]
+ },
+ "display_options": {
+  "src": "8.3.1 (ruled pending; browser subset)",
+  "note": "The blueprint's PC list is complete; the browser build offers the rows with browser true. HDR and an upscaler are Unreal-only (8.3.1: 'where the engine has one').",
+  "chosen": true,
+  "options": [
+   {
+    "id": "disp.window_mode",
+    "label": "Window",
+    "line": "Windowed, borderless or full screen.",
+    "values": [
+     "Windowed",
+     "Borderless",
+     "Full screen"
+    ],
+    "default": "Windowed",
+    "browser": true,
+    "unreal": true,
+    "src": "8.3.1",
+    "chosen_note": "browser can offer Windowed and Full screen only"
+   },
+   {
+    "id": "disp.resolution",
+    "label": "Window size",
+    "line": "The picture's size, 21 to 9 included (3440 by 1440).",
+    "values": [
+     "fit the window"
+    ],
+    "default": "fit the window",
+    "browser": true,
+    "unreal": true,
+    "src": "8.3.1"
+   },
+   {
+    "id": "disp.vsync",
+    "label": "Smooth frames (V-sync)",
+    "line": "Keeps the picture from tearing.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "on",
+    "browser": false,
+    "unreal": true,
+    "src": "8.3.1",
+    "note": "a browser always syncs to the screen"
+   },
+   {
+    "id": "disp.frame_cap",
+    "label": "Frame limit",
+    "line": "The most pictures a second the game will draw.",
+    "values": [
+     "30",
+     "60",
+     "120",
+     "none"
+    ],
+    "default": "60",
+    "browser": true,
+    "unreal": true,
+    "src": "8.3.1",
+    "chosen_note": "default 60 chosen"
+   },
+   {
+    "id": "disp.quality",
+    "label": "Picture quality",
+    "line": "A preset for how much the game draws. Change any one below it yourself.",
+    "values": [
+     "Low",
+     "Medium",
+     "High"
+    ],
+    "default": "Medium",
+    "browser": true,
+    "unreal": true,
+    "src": "8.3.1; prototype settings",
+    "chosen_note": "default Medium chosen; first launch picks one the PC can keep smooth"
+   },
+   {
+    "id": "disp.scale",
+    "label": "Picture scale",
+    "line": "Draws the picture smaller or larger than the window, to suit the PC.",
+    "values": [
+     "50 to 100%"
+    ],
+    "default": "100%",
+    "browser": true,
+    "unreal": true,
+    "src": "8.3.1"
+   },
+   {
+    "id": "disp.upscaler",
+    "label": "Upscaler",
+    "line": "Draws smaller and sharpens it up, where the PC has one.",
+    "values": [
+     "off",
+     "on"
+    ],
+    "default": "off",
+    "browser": false,
+    "unreal": true,
+    "src": "8.3.1"
+   },
+   {
+    "id": "disp.hdr",
+    "label": "HDR",
+    "line": "For screens that show it. Judged with Unreal.",
+    "values": [
+     "off",
+     "on"
+    ],
+    "default": "off",
+    "browser": false,
+    "unreal": true,
+    "src": "8.3.1"
+   },
+   {
+    "id": "disp.brightness",
+    "label": "Brightness",
+    "line": "Lifts the picture overall. The night is never lifted past its floor.",
+    "values": [
+     "0 to 100"
+    ],
+    "default": "50",
+    "browser": true,
+    "unreal": true,
+    "src": "8.3.1; prototype settings",
+    "chosen_note": "default chosen"
+   },
+   {
+    "id": "disp.benchmark",
+    "label": "Check this PC",
+    "line": "Runs a short look at the town and says how smooth it is.",
+    "values": [
+     "button"
+    ],
+    "default": null,
+    "browser": true,
+    "unreal": true,
+    "src": "8.3.1 (a benchmark or settings preview)"
+   },
+   {
+    "id": "disp.preview",
+    "label": "Show the change before you keep it",
+    "line": "Shows a picture with the new settings and goes back by itself if you do not keep them.",
+    "values": [
+     "button"
+    ],
+    "default": null,
+    "browser": true,
+    "unreal": true,
+    "src": "8.3.1"
+   },
+   {
+    "id": "disp.show_prompts_keys",
+    "label": "Show key names",
+    "line": "Show the key or button on each prompt.",
+    "values": [
+     "on",
+     "off"
+    ],
+    "default": "on",
+    "browser": true,
+    "unreal": true,
+    "src": "prototype settings (Show key prompts)",
+    "chosen": true
+   }
+  ]
+ },
+ "sound_cues": {
+  "src": "8.4.1, SND-26, ONE-SHOT-PROMPT s6; production/cloud-week/sound/manifest.json (ids to be mapped to sounds.json)",
+  "rule": "With the assist on, one short word at the screen's edge; none when off. It shows what Tom hears, never what anyone knows or thinks; no ring, gauge or meter. With only this assist on, every other measure is unchanged.",
+  "show_for_s": 2.5,
+  "show_for_s_chosen": true,
+  "max_at_once": 2,
+  "same_word_quiet_s": 4,
+  "position": "the screen's lower edge, left of the subtitles, never over them",
+  "cue_types": [
+   {
+    "id": "cue.tom_loud",
+    "text": "a loud noise Tom makes"
+   },
+   {
+    "id": "cue.quiet",
+    "text": "the street goes quiet"
+   },
+   {
+    "id": "cue.shout",
+    "text": "a shout is heard"
+   },
+   {
+    "id": "cue.car",
+    "text": "a car is heard"
+   }
+  ],
+  "words": [
+   {
+    "id": "sc.door_forced",
+    "cue": "cue.tom_loud",
+    "sound_event": "door_forced",
+    "word": "door forced",
+    "src": "8.4.1 (example)"
+   },
+   {
+    "id": "sc.glass",
+    "cue": "cue.tom_loud",
+    "sound_event": "glass_broken",
+    "word": "glass",
+    "src": "8.4.1 (example)"
+   },
+   {
+    "id": "sc.running_cobbles",
+    "cue": "cue.tom_loud",
+    "sound_event": "run_setts",
+    "word": "running on cobbles",
+    "src": "8.4.1 (example); manifest step_setts_*"
+   },
+   {
+    "id": "sc.running_wet",
+    "cue": "cue.tom_loud",
+    "sound_event": "run_wet",
+    "word": "running in the wet",
+    "src": "manifest step_wet_*",
+    "chosen": true
+   },
+   {
+    "id": "sc.running_iron",
+    "cue": "cue.tom_loud",
+    "sound_event": "run_iron",
+    "word": "boots on iron",
+    "src": "SND-05 iron plates",
+    "chosen": true
+   },
+   {
+    "id": "sc.bin",
+    "cue": "cue.tom_loud",
+    "sound_event": "bin_rattled",
+    "word": "a bin rattles",
+    "src": "1.4.8",
+    "chosen": true
+   },
+   {
+    "id": "sc.stone",
+    "cue": "cue.tom_loud",
+    "sound_event": "stone_thrown",
+    "word": "a stone lands",
+    "src": "1.4.8",
+    "chosen": true
+   },
+   {
+    "id": "sc.drawer",
+    "cue": "cue.tom_loud",
+    "sound_event": "drawer_search",
+    "word": "a drawer",
+    "src": "1.6.2 (a drawer is heard at about 2 m)",
+    "chosen": true
+   },
+   {
+    "id": "sc.cupboard_forced",
+    "cue": "cue.tom_loud",
+    "sound_event": "cupboard_forced",
+    "word": "a cupboard forced",
+    "src": "1.6.2",
+    "chosen": true
+   },
+   {
+    "id": "sc.blow",
+    "cue": "cue.tom_loud",
+    "sound_event": "blow_lands",
+    "word": "a blow",
+    "src": "1.3.1",
+    "chosen": true
+   },
+   {
+    "id": "sc.shot",
+    "cue": "cue.tom_loud",
+    "sound_event": "gunshot",
+    "word": "a shot",
+    "src": "1.3.10 (heard about 177 m by day)",
+    "chosen": true
+   },
+   {
+    "id": "sc.horn",
+    "cue": "cue.tom_loud",
+    "sound_event": "horn",
+    "word": "the horn",
+    "src": "1.2.11",
+    "chosen": true
+   },
+   {
+    "id": "sc.splash",
+    "cue": "cue.tom_loud",
+    "sound_event": "thrown_in_dock",
+    "word": "a splash",
+    "src": "1.6.7",
+    "chosen": true
+   },
+   {
+    "id": "sc.car_force",
+    "cue": "cue.tom_loud",
+    "sound_event": "car_forced",
+    "word": "a car door forced",
+    "src": "1.2.10",
+    "chosen": true
+   },
+   {
+    "id": "sc.quiet",
+    "cue": "cue.quiet",
+    "sound_event": "street_goes_quiet",
+    "word": "the street goes quiet",
+    "src": "8.4.1 (example)"
+   },
+   {
+    "id": "sc.shout",
+    "cue": "cue.shout",
+    "sound_event": "shout",
+    "word": "a shout",
+    "src": "8.4.1"
+   },
+   {
+    "id": "sc.oi",
+    "cue": "cue.shout",
+    "sound_event": "shout_oi",
+    "word": "somebody calls out",
+    "src": "1.4.7",
+    "chosen": true
+   },
+   {
+    "id": "sc.bell",
+    "cue": "cue.car",
+    "sound_event": "patrol_bell",
+    "word": "a police bell",
+    "src": "1.5.3 (the patrol car's bell)",
+    "chosen": true
+   },
+   {
+    "id": "sc.car_near",
+    "cue": "cue.car",
+    "sound_event": "car_approaching",
+    "word": "a car coming",
+    "src": "8.4.1",
+    "chosen": true
+   },
+   {
+    "id": "sc.car_away",
+    "cue": "cue.car",
+    "sound_event": "car_leaving",
+    "word": "a car going",
+    "src": "8.4.1",
+    "chosen": true
+   },
+   {
+    "id": "sc.car_stops",
+    "cue": "cue.car",
+    "sound_event": "car_stops",
+    "word": "a car stops",
+    "src": "8.4.1",
+    "chosen": true
+   },
+   {
+    "id": "sc.phone_ring",
+    "cue": "cue.car",
+    "sound_event": "phone_ring",
+    "word": "a telephone ringing",
+    "src": "manifest phonebox_ring_*",
+    "note": "not one of the four cue types in 8.4.1; added for the ring that calls Tom; a third rule is needed to include it",
+    "chosen": true
+   }
+  ],
+  "words_note": "22 words. Four cue types are the blueprint's; the exact words 'door forced', 'glass' and 'running on cobbles' are the blueprint's examples; the rest are chosen to complete the table."
+ },
+ "credits": {
+  "src": "10.4, production/specs/credits.json, THIRD-PARTY.md, ledger-v2/research/license-allowlist.md",
+  "check_at_build": true,
+  "check_note": "Keep in step with THIRD-PARTY.md: a source added there is added here (tools/attribution-check.py). The browser build carries only what it ships; rows marked unreal_only are the Unreal build's.",
+  "plays": "after the ending, before play returns in the town; also from the title menu and the pause menu (chosen: 10.4 does not say whether it can be opened again)",
+  "plays_chosen": true,
+  "line_fields": [
+   "credit_line",
+   "maker",
+   "licence",
+   "link",
+   "speaker_number"
+  ],
+  "sections": [
+   {
+    "id": "credits.game",
+    "head": "LEDGER",
+    "lines": [
+     {
+      "credit_line": "A game set in a northern English seaside town, 1990."
+     },
+     {
+      "credit_line": "The people of the town answer in words written as you play by an AI model, Claude, made by Anthropic.",
+      "src": "credits.json; the line applies when AI replies are on"
+     }
+    ]
+   },
+   {
+    "id": "credits.engine",
+    "head": "Engine",
+    "unreal_only": true,
+    "lines": [
+     {
+      "credit_line": "Unreal® Engine, Copyright 1998–2026, Epic Games, Inc. All rights reserved.",
+      "maker": "Epic Games, Inc.",
+      "licence": "Unreal Engine EULA"
+     },
+     {
+      "credit_line": "The engine's bundled libraries ship under their own licences, kept in the game's licences folder: Ogg and Vorbis (Xiph.org Foundation), oneTBB (Intel), ONNX Runtime, MsQuic, DirectML and the DirectX 12 Agility SDK (Microsoft), and NVIDIA Aftermath."
+     }
+    ]
+   },
+   {
+    "id": "credits.characters",
+    "head": "Characters",
+    "unreal_only": true,
+    "lines": [
+     {
+      "credit_line": "Faces and bodies made with MetaHuman, Epic Games.",
+      "maker": "Epic Games"
+     },
+     {
+      "credit_line": "Animation from Epic Games' samples, and from Adobe Mixamo.",
+      "maker": "Epic Games; Adobe"
+     },
+     {
+      "credit_line": "Clothing patterns from FreeSewing (freesewing.eu), Joost De Cock and contributors, MIT.",
+      "maker": "Joost De Cock and contributors",
+      "licence": "MIT",
+      "link": "freesewing.eu"
+     }
+    ]
+   },
+   {
+    "id": "credits.clothes",
+    "head": "Clothes and accessories",
+    "unreal_only": true,
+    "lines": [
+     {
+      "credit_line": "{work}, {maker}, {licence}. Brand marks painted out.",
+      "maker": "{maker}",
+      "licence": "CC BY (each row from THIRD-PARTY.md)",
+      "link": "{link}",
+      "note": "one line per CC BY maker of clothes and accessories; filled from THIRD-PARTY.md at build (10.4)"
+     }
+    ],
+    "template_rows_from": "THIRD-PARTY.md"
+   },
+   {
+    "id": "credits.voices",
+    "head": "Voices",
+    "lines": [
+     {
+      "credit_line": "Character voices synthesised from reference recordings in the CSTR VCTK Corpus (version 0.92) by Junichi Yamagishi, Christophe Veaux and Kirsten MacDonald, Centre for Speech Technology Research, University of Edinburgh (https://doi.org/10.7488/ds/2645), used under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). The recordings were modified: they were used to condition a voice-cloning model, not reproduced.",
+      "maker": "Junichi Yamagishi, Christophe Veaux and Kirsten MacDonald, CSTR, University of Edinburgh",
+      "licence": "CC BY 4.0",
+      "link": "https://doi.org/10.7488/ds/2645",
+      "licence_link": "https://creativecommons.org/licenses/by/4.0/",
+      "modified": true,
+      "src": "THIRD-PARTY.md 'Required attribution text'"
+     },
+     {
+      "credit_line": "Speakers: p225, p226, p227, p228, p231, p233, p238, p241, p244, p245, p249, p254, p256, p263, p265, p266, p267, p272, p273, p276, p280, p282, p287, p288, p292.",
+      "speaker_number": [
+       "p225",
+       "p226",
+       "p227",
+       "p228",
+       "p231",
+       "p233",
+       "p238",
+       "p241",
+       "p244",
+       "p245",
+       "p249",
+       "p254",
+       "p256",
+       "p263",
+       "p265",
+       "p266",
+       "p267",
+       "p272",
+       "p273",
+       "p276",
+       "p280",
+       "p282",
+       "p287",
+       "p288",
+       "p292"
+      ],
+      "note": "speakers by number only; the corpus's terms forbid trying to identify them. List as of THIRD-PARTY.md 'Speakers used' (25 numbers): confirm at build."
+     }
+    ]
+   },
+   {
+    "id": "credits.type",
+    "head": "Type",
+    "lines": [
+     {
+      "credit_line": "Libre Franklin, League Gothic, UnifrakturMaguntia, Old Standard TT and Marcellus SC, each under the SIL Open Font Licence 1.1; their licences ship beside them.",
+      "licence": "SIL OFL 1.1"
+     }
+    ]
+   },
+   {
+    "id": "credits.assets",
+    "head": "Textures, models and skies",
+    "lines": [
+     {
+      "credit_line": "Poly Haven (polyhaven.com), CC0.",
+      "maker": "Poly Haven",
+      "licence": "CC0",
+      "link": "polyhaven.com"
+     },
+     {
+      "credit_line": "ambientCG (ambientcg.com), CC0.",
+      "maker": "ambientCG",
+      "licence": "CC0",
+      "link": "ambientcg.com"
+     },
+     {
+      "credit_line": "Kenney (kenney.nl), CC0.",
+      "maker": "Kenney",
+      "licence": "CC0",
+      "link": "kenney.nl"
+     },
+     {
+      "credit_line": "The Base Mesh, CC0.",
+      "maker": "The Base Mesh",
+      "licence": "CC0"
+     },
+     {
+      "credit_line": "OpenGameArt contributors, CC0.",
+      "maker": "OpenGameArt contributors",
+      "licence": "CC0"
+     },
+     {
+      "credit_line": "The MakeHuman community, CC0.",
+      "maker": "The MakeHuman community",
+      "licence": "CC0"
+     }
+    ]
+   },
+   {
+    "id": "credits.sound",
+    "head": "Sound",
+    "lines": [
+     {
+      "credit_line": "Footsteps by sturmankin and Joseph Sardin, CC0.",
+      "maker": "sturmankin; Joseph Sardin",
+      "licence": "CC0"
+     },
+     {
+      "credit_line": "The pages' own sounds were made for this game."
+     }
+    ]
+   }
+  ],
+  "buttons": {
+   "close": "Close",
+   "skip": "Skip"
+  },
+  "scroll_speed_note": "readable at the default text size; stoppable and skippable (chosen)",
+  "line_count_note": "about 40 lines with the clothes rows filled"
+ }
+}
