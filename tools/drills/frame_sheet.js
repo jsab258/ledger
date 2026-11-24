@@ -104,3 +104,34 @@ window.scanHare = async (t0, t1, step) => {
   }
   window.hscan.done = true;
 };
+
+// HARE BOX SCAN (KCD2, 24 Nov 2026, 20:30): scanHare(t0, t1, step) like scanRed, but counts pixels in the
+// behaviour indicator's own box (top centre: x 42-58%, y 0-14%): yellow (R>170, G>130, B<90, R-G<70),
+// orange (R>180, 70<=G<=130, B<70), red (R>170, G<70, B<70), white (all >215; the sky fills it, so unused).
+// Rows [time, yellow, orange, red, white] in window.hs.rows; window.scanStop = true ends it. Calibrated on
+// vyA2Nm1BHyw 1,000-1,064 s at 2 s against the by-eye reading: yellow 8-26 at the first notice (1,014-1,016),
+// red 260 at the alarm (1,022), orange 87 (1,024), yellow 46-75 searching (1,028-1,048), red 109-149 once the
+// guard has him (1,050+). Hit: yellow > 15, orange > 30 or red > 60; menus and adverts can hit too, so look
+// at every hit's frame before reading it. Re-query the video each step (the player swaps it; a hidden pane
+// unloads it: kick it with movie_player.seekTo(t, true) and playVideo()).
+window.scanHare = async (t0, t1, step) => {
+  window.scanStop = false; const c = document.createElement('canvas'); const g = c.getContext('2d', { willReadFrequently: true });
+  window.hs = { done: false, rows: [] };
+  for (let t = t0; t <= t1 && !window.scanStop; t += step) {
+    try {
+      const v = document.querySelector('video');
+      if (!v || document.querySelector('.ad-showing') || !(v.duration > 0)) { await new Promise((r) => setTimeout(r, 2000)); t -= step; continue; }
+      v.muted = true; v.pause(); v.currentTime = t;
+      await Promise.race([new Promise((r) => v.addEventListener('seeked', r, { once: true })), new Promise((r) => setTimeout(r, 5000))]);
+      for (let k = 0; k < 30 && v.readyState < 2; k++) await new Promise((r) => setTimeout(r, 150));
+      const W = v.videoWidth, H = v.videoHeight, x0 = Math.round(W * 0.42), bw = Math.round(W * 0.16), bh = Math.round(H * 0.14);
+      c.width = bw; c.height = bh; g.drawImage(v, x0, 0, bw, bh, 0, 0, bw, bh);
+      const d = g.getImageData(0, 0, bw, bh).data; let y = 0, r = 0, o = 0, w = 0;
+      for (let i = 0; i < d.length; i += 4) { const R = d[i], G = d[i + 1], B = d[i + 2];
+        if (R > 170 && G > 130 && B < 90 && R - G < 70) y++; else if (R > 170 && G < 70 && B < 70) r++;
+        else if (R > 180 && G >= 70 && G <= 130 && B < 70) o++; else if (R > 215 && G > 215 && B > 215) w++; }
+      window.hs.rows.push([Math.round(v.currentTime), y, o, r, w]);
+    } catch (e) { await new Promise((r) => setTimeout(r, 1000)); }
+  }
+  window.hs.done = true;
+};
