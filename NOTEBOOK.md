@@ -3001,3 +3001,12 @@ Cost of this entry about 0.1 h.
 - Cost: about 1.5 h over the day, plus one review.
 - Failed and why: the sheets lived only in the page and were never saved, so nothing could be re-read; lesson: save each edge's crop to disk as it is read, with the clip's upload date, before calling a sample counted. A reviewer also caught a summary claiming a stage the sample notes contradict: write summaries from the notes, not memory.
 - Evidence: production/research/lane/measurements/review-being-seen-rdr2-2026-11-24.md.
+
+## A pursuit's length, second and third reviews (24 Nov 2026, set aside at four of five)
+- What was made: every edge of four clean samples saved as labelled pictures; seven long uncut sessions scanned whole; one more player's sample tried and dropped.
+- Method: a background scan in the page counting flag-coloured pixels in the flag corner every 20 s over a whole clip, each hit looked at as an enlarged crop, then edges at 1 s and full frames at 2 s through the spell, saved with the upload date.
+- Tools: browser pane, the page's player, a canvas scan (tools/drills/frame_sheet.js RED SCAN).
+- Target and check: five uncut, dated, one-deed samples at 1-2 s edges; three fresh reviewers. Not reached: four.
+- Cost: about 1.6 h measuring plus two reviews.
+- Failed and why: a sample was kept by a reason that contradicted why another was dropped; a reviewer caught it. Lesson: write the inclusion rule before reading the samples, and apply it the same way to every one. Ammo counters and status icons share the flag's red: look at every hit. A colour scan for a small alert icon in another game hit menus and adverts: filter menus first.
+- Evidence: production/research/lane/measurements/review-being-seen-rdr2-2026-11-24-c.md.

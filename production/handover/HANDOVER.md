@@ -4,9 +4,9 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-24 17:51 (the hourly run)
 
-**Row due:** 17:49 (last row 16:49; page read 17:05; filter verdicts after 2026-11-24T16:05 UTC, advisor after 2026-11-24T16:12:00+01:00; last ack 357 at 16:56).
+**Row due:** 19:50 (last row 18:50; page read 18:55; filter verdicts after 2026-11-24T17:55 UTC, advisor after 2026-11-24T18:15:00+01:00; last ack 360 at 18:27).
 **Uncommitted:** nothing after this commit; pushed to wip.
-**Stopped:** 2026-11-24 17:19 (the 16:37 run: advisors 356 and 357 done; RDR2 being seen not solid on review, four spells' edges saved; history near its limit)
+**Stopped:** 2026-11-24 19:05 (the 17:51 run: advisors 358-360 done; RDR2 being seen set aside at four clean samples on the third review; history past its point)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -34,28 +34,31 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- 16:37 run: **advisor 356**: RULINGS back under its cap (4,896) by notation only (ranges 4-6, advisor numbers off date labels; enforcer keys follow); cap item closed; pushed. **Advisor 357** (RDR2 installed): the copy in C:/Games is NOT run (RDR2.exe fails Rockstar's signature, Launcher_with_cracktro.exe and 1911.dll unsigned; the 23 Nov 20:30 safety line); one money item on his page, rdr2-store-copy-2026-11-24 (footage recommended). Progress page refreshed (live index kept; progress.json and 24 Nov pictures). DAILY-2026-11-24.md written (n23-7).
-- **RDR2 being seen: fresh review NOT SOLID** (review-being-seen-rdr2-2026-11-24.md): nothing saved, 1drjFJjei8g edited with unknown platform, No13 maybe the solid-red case. Since then edges SAVED for No8, No9 x2, No13 (F:/LedgerTools/game-inputs/footage/<id>/, index.json each, uploads 9 and 13 Mar 2025); the readings' solid-red claim corrected.
-- **n23-3 question 4** from the bench totals: Sonnet 5.5 about US$0.0057 a line, US$0.09 an hour at 15 replies (a floor: first questions); per-model rows need a per-model tally in ClaimBench.
-- Earlier runs today: advisor 355 in RULINGS; RDR2 five readings; n23-3 repeat pair.
+- 17:51 run: **advisors 358-360**: Frank's deeds F1-F7 in RULINGS' story line (cap 4,897 by notation: consecutive dates as ranges, about as ~; enforcer keys follow); full pace to the 90% stop (the 6-points hold is not applied this week); rdr2-store-copy closed as footage, his page republished empty. **Never raise store copies or the installed games' files again** (his word, advisor 360).
+- **RDR2 being seen, third review NOT SOLID** (review-being-seen-rdr2-2026-11-24-c.md): clean one-deed riding-off samples 41.5, 70.5, 70.5, 97 s, all LordGedi, every edge saved at 1-2 s (F:/LedgerTools/game-inputs/footage/<id>/). LordGedi No3-No13 read through. Dropped: 65 s (edited), 188 s and The Phenom 3QeLY8_sWW8 83 s (solid red stage; second deed). Shootout case: GamerWolfBR Po_7A5A-rVM 109 s, ZpresidentGames 513 s. EightBitHD 2qcvPlsHx2s (2 h PS4): no crime.
+- KCD2 being seen: the hare colour scan (frame_sheet.js HARE SCAN) on the 88 h PS5 longplay sLU3UQlw62o hits menus and adverts; shortfall stands.
 
 ## In flight
-- Nothing runs. The browser pane is on YouTube No9.
+- The KCD2 hare scan may still run in the pane's first tab; nothing reads it. No helpers running.
 
 ## Next, in order
-00. Pace: 67% at 16:49; **the weekly stop is 90%** (advisor 352): at the newest reading of 90% finish the step, commit, push, one row, write production/weekly-stop.json {"until": "2026-11-30T13:00", "reading": N}, set "**Next due:** 2026-11-30 13:00", one page item (switch off the scheduled task ledger-daily-fresh-session, Code tab, Scheduled; on after Monday 13:00), stop all work.
-0. Read the verdict on rdr2-store-copy-2026-11-24 (footage or store). A row is owed at 17:49.
-1. **RDR2 being seen to SOLID:** replace 1drjFJjei8g (edited) and decide on No13 (or replace it): read LordGedi No3, No4, No6 (or a second player's uncut console session) for riding-off spells; save every edge the new way (below); then one fresh final-reviewer (no clicks) against the readings and the saved pictures.
-2. KCD2 being seen, five uncut samples (footage found none unmodded so far; long console sessions, compass crop); report the shortfall plainly if none within about 1 h.
+00. Pace: 70% at 18:31; **the weekly stop is 90%** (advisor 352): at the newest reading of 90% finish the step, commit, push, one row, write production/weekly-stop.json {"until": "2026-11-30T13:00", "reading": N}, set "**Next due:** 2026-11-30 13:00", one page item (switch off the scheduled task ledger-daily-fresh-session, Code tab, Scheduled; on after Monday 13:00), stop all work. Advisor 359: full pace until then.
+1. **RDR2 being seen: one more one-deed riding-off spell**, preferably a second player's (uncut, dated, console): search long no-commentary console free-roam sessions or streams (2018-2019 streams are console for certain); the RED SCAN finds flags; keep only spells that flash then drain with no solid red stage and no lawman seen; save edges at 1 s and full frames at 2 s; then one fresh final-reviewer, no clicks. The inclusion rule is now written: apply it to every sample alike.
+2. KCD2 being seen, five uncut samples: make the hare scan skip menus (or read only the hare's box), or find the longplay's thieves' quest parts; report the shortfall plainly if none within about 1 h.
 3. On-foot cadence leads; chases on foot leads (L.A. Noire, GTA V); crowd reactions Q3 leads on two games.
 4. n23-3: per-model tally in ClaimBench before the per-model rows; prices re-read with dates. The probes' "I'm Tom": waiting list.
-5. n23-4 voice scan; n23-7 (DAILY tomorrow by 19:00; credit row). Advisor 320 (backup's 28 GB on C:): two tries used; research before a third.
+5. n23-4 voice scan; n23-7 (DAILY-2026-11-25 by 19:00; credit row). Advisor 320 (backup's 28 GB on C:): two tries used; research before a third.
 0a. Advisor 277: Kiln, hair and the crowd paused. 0b. Next night walk Mon 30 Nov 01:30 (held while the stop file holds). 4p. Marvelous stays open. No Unreal work until the browser prototype is done (advisor 288). 5p. History rewrite HELD for his word. Progress page daily (progress.json only; publish the LIVE index.html read back, not the local one, which differs).
 
 ## Saving footage evidence (works, 24 Nov 17:10)
 In the pane: define draw(vid, t) (seek, wait for readyState 4, draw the frame on a fixed canvas the pane's width, yellow label of id and time), wait 2 s, then computer zoom region [0,0,800,450] at scale 0.5: the result names a file in the session's tool-results folder; copy it to F:/LedgerTools/game-inputs/footage/<id>/<t>-<label>.png and list it in index.json with the upload date (meta itemprop uploadDate). Without the 2 s wait the capture lags one draw; trust only the label.
 
+Scanning a whole clip: frame_sheet.js RED SCAN (scanRed in the page, polled in calls under 40 s; every hit looked at with flags(); ammo at zero and status icons also read red). Stamp every time from Get-Date: today the session's own guesses ran 15-25 min ahead.
+
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
+- 24 Nov 19:00: a sample kept despite a solid red stage while another was dropped for one; review c caught it. Write the inclusion rule first.
+- 24 Nov 18:55: the KCD2 hare colour scan counts menu icons and adverts as alerts; needs a menu filter.
+- 24 Nov 18:00: the 6-points pace hold applied this week was wrong (advisor 359): the 90% stop replaces the line.
 - 24 Nov 17:08: posting crops from the YouTube page to a local receiver (127.0.0.1) is refused by the pane ("Unsafe attempt to load URL"); the receiver was deleted. Use the pane's own saved captures.
 - 24 Nov 16:52: the installed RDR2 is a modified copy; not run (safety line). Do not price drills in it.
 - 24 Nov 15:58: changing his rulings' meaning is refused by the PC's safety check; notation-only tightening passed at 16:43 (advisor 356).

@@ -78,3 +78,29 @@ window.flags = async (ts) => {
   }
   return 'ok';
 };
+
+// HARE SCAN for KCD2 (24 Nov 2026, 18:50, first try, unvalidated): scanHare(t0, t1, step) counts red, orange, yellow
+// and white pixels in the top-centre strip (42-58% wide, top 14%) where KCD2's behaviour indicator (the hare) sits;
+// rows [time, red, orange, yellow, white] in window.hscan. First run on sLU3UQlw62o (88 h PS5 Pro longplay) at 30 s:
+// orange hits at 1,350-1,500, 6,150, 6,330, 9,480 s, none looked at yet. Validate the colours on one hit before trusting.
+window.scanHare = async (t0, t1, step) => {
+  const v = document.querySelector('video'); v.muted = true; v.pause();
+  const c = document.createElement('canvas'); const W = v.videoWidth, H = v.videoHeight;
+  const x0 = Math.round(W * 0.42), cw = Math.round(W * 0.16), ch = Math.round(H * 0.14); c.width = cw; c.height = ch;
+  const g = c.getContext('2d', { willReadFrequently: true });
+  window.hscan = { done: false, rows: [] };
+  for (let t = t0; t <= t1; t += step) {
+    if (document.querySelector('.ad-showing')) { await new Promise((r) => setTimeout(r, 2000)); t -= step; continue; }
+    v.currentTime = t;
+    await Promise.race([new Promise((r) => v.addEventListener('seeked', r, { once: true })), new Promise((r) => setTimeout(r, 6000))]);
+    for (let k = 0; k < 30 && v.readyState < 3; k++) await new Promise((r) => setTimeout(r, 200));
+    await new Promise((r) => setTimeout(r, 200));
+    g.drawImage(v, x0, 0, cw, ch, 0, 0, cw, ch);
+    const d = g.getImageData(0, 0, cw, ch).data; let red = 0, orange = 0, yellow = 0, white = 0;
+    for (let i = 0; i < d.length; i += 4) { const r = d[i], gg = d[i + 1], b = d[i + 2];
+      if (r > 180 && gg < 70 && b < 70) red++; else if (r > 200 && gg > 100 && gg < 170 && b < 70) orange++;
+      else if (r > 200 && gg > 180 && b < 90) yellow++; else if (r > 235 && gg > 235 && b > 235) white++; }
+    window.hscan.rows.push([Math.round(v.currentTime), red, orange, yellow, white]);
+  }
+  window.hscan.done = true;
+};
