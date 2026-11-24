@@ -1,0 +1,88 @@
+Temper check, one test week, 118 named people (Frank excluded from the town's side).
+Deeds: damage at ritas mon 11.00; assault at caff tue 10.50; robbery at newsagent wed 12.00; wounding at mickeys thu 09.00; killing at dock_gate sat 05.50
+
+== OLD (as built: loyalty and greed 0.5)
+mon 11.00 damage   at ritas      witnesses 18  would report 11 ( 61%)  silenced by a word  9  bought  2+0  knows by Sunday  51 of 118 ( 43%)
+tue 10.50 assault  at caff       witnesses 11  would report  0 (  0%)  silenced by a word  0  bought  0+0  knows by Sunday  45 of 118 ( 38%)
+wed 12.00 robbery  at newsagent  witnesses 17  would report  6 ( 35%)  silenced by a word  5  bought  1+0  knows by Sunday  53 of 118 ( 45%)
+thu 09.00 wounding at mickeys    witnesses 12  would report  8 ( 67%)  silenced by a word  6  bought  2+0  knows by Sunday  46 of 118 ( 39%)
+sat 05.50 killing  at dock_gate  witnesses  5  would report  5 (100%)  silenced by a word  0  bought  0+0  knows by Sunday  28 of 118 ( 24%)
+battery over 118 people (menace 0.5):
+  reports a wounding                89  ( 75%)
+  reports damage                    89  ( 75%)
+  reports a killing                118  (100%)
+  yields to a word                 102  ( 86%)
+  takes a week's money             118  (100%)
+  joins on a need                  118  (100%)
+  folds to a squeeze               102  ( 86%)
+  debt: pays                       118  (100%)
+  debt: begs                         0  (  0%)
+  debt: refuses                      0  (  0%)
+  leaves for a rival                 0  (  0%)
+  still sore a week after a slight 118  (100%)
+  reporters of a wounding who take a week's money  89  ( 75%)
+  distinct behaviour patterns: 3 among 118 people
+  people whose pattern nobody else shares: 0
+  largest group behaving identically: 73
+
+== OLD as intended (dutiful as loyalty, venal as greed)
+mon 11.00 damage   at ritas      witnesses 18  would report  7 ( 39%)  silenced by a word  7  bought  0+0  knows by Sunday  51 of 118 ( 43%)
+tue 10.50 assault  at caff       witnesses 11  would report  0 (  0%)  silenced by a word  0  bought  0+0  knows by Sunday  45 of 118 ( 38%)
+wed 12.00 robbery  at newsagent  witnesses 17  would report  4 ( 24%)  silenced by a word  4  bought  0+0  knows by Sunday  53 of 118 ( 45%)
+thu 09.00 wounding at mickeys    witnesses 12  would report  4 ( 33%)  silenced by a word  4  bought  0+0  knows by Sunday  46 of 118 ( 39%)
+sat 05.50 killing  at dock_gate  witnesses  5  would report  4 ( 80%)  silenced by a word  0  bought  0+0  knows by Sunday  28 of 118 ( 24%)
+battery over 118 people (menace 0.5):
+  reports a wounding                68  ( 58%)
+  reports damage                    68  ( 58%)
+  reports a killing                 95  ( 81%)
+  yields to a word                 102  ( 86%)
+  takes a week's money             105  ( 89%)
+  joins on a need                  113  ( 96%)
+  folds to a squeeze               111  ( 94%)
+  debt: pays                        33  ( 28%)
+  debt: begs                        69  ( 58%)
+  debt: refuses                     16  ( 14%)
+  leaves for a rival                54  ( 46%)
+  still sore a week after a slight 118  (100%)
+  reporters of a wounding who take a week's money  64  ( 54%)
+  distinct behaviour patterns: 19 among 118 people
+  people whose pattern nobody else shares: 4
+  largest group behaving identically: 25
+
+== NEW (five dials)
+mon 11.00 damage   at ritas      witnesses 18  would report  3 ( 17%)  silenced by a word  1  bought  0+0  knows by Sunday  47 of 118 ( 40%)
+tue 10.50 assault  at caff       witnesses 11  would report  2 ( 18%)  silenced by a word  2  bought  0+0  knows by Sunday  42 of 118 ( 36%)
+wed 12.00 robbery  at newsagent  witnesses 17  would report  5 ( 29%)  silenced by a word  2  bought  0+0  knows by Sunday  48 of 118 ( 41%)
+thu 09.00 wounding at mickeys    witnesses 12  would report  4 ( 33%)  silenced by a word  0  bought  0+0  knows by Sunday  41 of 118 ( 35%)
+sat 05.50 killing  at dock_gate  witnesses  5  would report  1 ( 20%)  silenced by a word  0  bought  0+0  knows by Sunday  28 of 118 ( 24%)
+battery over 118 people (menace 0.5):
+  reports a wounding                48  ( 41%)
+  reports damage                    16  ( 14%)
+  reports a killing                 74  ( 63%)
+  yields to a word                  50  ( 42%)
+  takes a week's money              44  ( 37%)
+  joins on a need                   46  ( 39%)
+  folds to a squeeze                66  ( 56%)
+  debt: pays                        74  ( 63%)
+  debt: begs                        20  ( 17%)
+  debt: refuses                     24  ( 20%)
+  leaves for a rival                34  ( 29%)
+  still sore a week after a slight  69  ( 58%)
+  reporters of a wounding who take a week's money   8  (  7%)
+  distinct behaviour patterns: 56 among 118 people
+  people whose pattern nobody else shares: 29
+  largest group behaving identically: 10
+
+== side by side, NEW, menace 0.5 (wounding seen / threat / week's money / joins / squeeze / debt / poached)
+  ada_vane             report Y  yields -  bought -  joins -  folds -  debt refuses  poached -
+  brenda_laverack      report Y  yields -  bought -  joins -  folds -  debt begs     poached -
+  darren_milner        report -  yields Y  bought Y  joins Y  folds Y  debt pays     poached Y
+  grace_rinaldi        report Y  yields -  bought -  joins -  folds -  debt refuses  poached -
+  norman_dent          report Y  yields -  bought -  joins -  folds Y  debt pays     poached -
+  rita_welburn         report -  yields -  bought Y  joins Y  folds -  debt pays     poached Y
+  kevin_needham        report -  yields Y  bought Y  joins Y  folds Y  debt pays     poached -
+  julie_kettlewell     report -  yields -  bought -  joins -  folds -  debt refuses  poached -
+  lee_drewery          report -  yields -  bought -  joins Y  folds -  debt begs     poached -
+  hal_metcalfe         report -  yields Y  bought Y  joins Y  folds Y  debt pays     poached Y
+  margaret_lofthouse   report -  yields -  bought -  joins -  folds -  debt refuses  poached -
+  alan_sowerby         report Y  yields Y  bought -  joins -  folds Y  debt pays     poached -

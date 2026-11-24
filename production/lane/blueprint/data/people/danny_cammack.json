@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.75,
- "venal": 0.5,
- "talk": 0.2,
- "discretion": 0.84,
- "temperament": {
-  "nerve": 0.75,
-  "dutiful": 0.5,
-  "willingness": 0.2,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.8,
+  "greed": 0.8,
+  "mouth": 0.9,
+  "law": 0.05,
+  "grudge": 0.9
  },
- "keepsQuiet": true,
+ "regard": 0.15,
+ "keepsQuiet": "nobody",
+ "temper_why": "quick, needling, cannot be second; spends money unearned; loudest rival if refused (CAST)",
  "home": "d_nr_40",
  "sched": [
   [

@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.65,
- "venal": 0.1,
- "talk": 0.6,
- "discretion": 0.4,
- "temperament": {
-  "nerve": 0.65,
-  "dutiful": 0.92,
-  "willingness": 0.6,
-  "from": "prototype cast.js (nerve; dutiful from 1 - venal x 0.8; willingness from talk)"
+ "temper": {
+  "nerve": 0.6,
+  "greed": 0.1,
+  "mouth": 0.5,
+  "law": 0.5,
+  "grudge": 0.4
  },
- "keepsQuiet": false,
+ "regard": 0.35,
+ "keepsQuiet": "friend",
+ "temper_why": "quick, warm to regulars; counts Ron's Friday (CAST)",
  "home": "d_bp_5",
  "sched": [
   [

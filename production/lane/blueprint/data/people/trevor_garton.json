@@ -29,17 +29,16 @@
    "cap"
   ]
  },
- "nerve": 0.5,
- "venal": 0.66,
- "talk": 0.4,
- "discretion": 0.68,
- "temperament": {
-  "nerve": 0.5,
-  "dutiful": 0.3,
-  "willingness": 0.4,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.4,
+  "greed": 0.8,
+  "mouth": 0.3,
+  "law": 0.6,
+  "grudge": 0.3
  },
- "keepsQuiet": true,
+ "regard": 0.25,
+ "keepsQuiet": "friend",
+ "temper_why": "looks away from a car once for 50 (CAST)",
  "home": "edge_north",
  "sched": [
   [

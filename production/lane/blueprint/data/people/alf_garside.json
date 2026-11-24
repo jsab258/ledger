@@ -29,17 +29,16 @@
    "tattoos"
   ]
  },
- "nerve": 0.5,
- "venal": 0.74,
- "talk": 0.8,
- "discretion": 0.36,
- "temperament": {
+ "temper": {
   "nerve": 0.5,
-  "dutiful": 0.2,
-  "willingness": 0.8,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+  "greed": 0.9,
+  "mouth": 0.2,
+  "law": 0.0,
+  "grudge": 0.4
  },
- "keepsQuiet": true,
+ "regard": 0.3,
+ "keepsQuiet": "anyone",
+ "temper_why": "the dock gun seller (card)",
  "home": "chandlery",
  "sched": [
   [

@@ -29,17 +29,16 @@
    "beard"
   ]
  },
- "nerve": 0.4,
- "venal": 0.4,
- "talk": 0.6,
- "discretion": 0.52,
- "temperament": {
-  "nerve": 0.4,
-  "dutiful": 0.3,
-  "willingness": 0.6,
-  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ "temper": {
+  "nerve": 0.6,
+  "greed": 0.3,
+  "mouth": 0.4,
+  "law": 0.7,
+  "grudge": 0.2
  },
- "keepsQuiet": false,
+ "regard": 0.3,
+ "keepsQuiet": "friend",
+ "temper_why": "the first face; rings the ambulance (CAST)",
  "home": "d_nr_42",
  "sched": [
   [

@@ -216,3 +216,12 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 - Cost: about an hour and a half of helper time; the share of the weekly meter not measured (other sessions running).
 - Failed and why: a line written for the supporting character to answer the lead's took the scene's weight (the answer carries the feeling, not the ask); once the lead was loud enough, readers' main complaint moved to the story's engine (stakes held in paperwork) and the climax, which line-writing cannot reach. Lesson: when a panel's top complaint changes, stop polishing the old one.
 - Evidence: production/lane/story/paper/frank-written/RESULTS.md.
+
+## Personality dials for a town of named people (24 Nov 2026)
+- Made: five dials per person (fear, greed, talk, police, grudge), values for 119 people, a week's simulation comparing old and new.
+- Method: list every decision a non-player makes in the design and the code, with its inputs; keep a dial only if it drives decisions and shows on screen; ground each in a trait the psychology measures (HEXACO factors) and in crime-reporting research; author every person with at least one extreme dial; check spread and bands in a deterministic simulation using real routines and ties.
+- Tools: web research helpers (Sonnet), a reading helper, Python simulation, the data validator, one fresh Opus reviewer.
+- Target and check: outcomes inside research-anchored bands; many distinct behaviour patterns. Result: 56 patterns against 3; two results outside their bands named.
+- Cost: about an hour and a quarter; meter share not measured (other sessions running).
+- Failed and why: the first gossip and killing tests put the deed where only rival men stood, so nothing spread; place deeds where the town is. Old fields had drifted from the code that should read them; check what the code actually reads first.
+- Evidence: production/lane/blueprint/temper/.

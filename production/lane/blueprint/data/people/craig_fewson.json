@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.65,
- "venal": 0.58,
- "talk": 0.3,
- "discretion": 0.76,
- "temperament": {
-  "nerve": 0.65,
-  "dutiful": 0.4,
-  "willingness": 0.3,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.7,
+  "greed": 0.7,
+  "mouth": 0.1,
+  "law": 0.05,
+  "grudge": 0.8
  },
- "keepsQuiet": true,
+ "regard": 0.1,
+ "keepsQuiet": "anyone",
+ "temper_why": "few words, a stare; wants Danny's seat (CAST)",
  "home": "d_nr_39",
  "sched": [
   [

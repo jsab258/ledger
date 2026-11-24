@@ -29,17 +29,16 @@
    "fur_collar"
   ]
  },
- "nerve": 0.85,
- "venal": 0.42,
- "talk": 0.05,
- "discretion": 0.96,
- "temperament": {
-  "nerve": 0.85,
-  "dutiful": 0.6,
-  "willingness": 0.05,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.9,
+  "greed": 0.4,
+  "mouth": 0.1,
+  "law": 0.05,
+  "grudge": 0.7
  },
- "keepsQuiet": true,
+ "regard": 0.3,
+ "keepsQuiet": "anyone",
+ "temper_why": "never asks, gives and counts, owes nobody; never the police (CAST)",
  "home": "d_cs_19",
  "sched": [
   [

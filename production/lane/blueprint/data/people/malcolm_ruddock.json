@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.35,
- "venal": 0.66,
- "talk": 0.7,
- "discretion": 0.44,
- "temperament": {
-  "nerve": 0.35,
-  "dutiful": 0.3,
-  "willingness": 0.7,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.3,
+  "greed": 0.8,
+  "mouth": 0.6,
+  "law": 0.4,
+  "grudge": 0.4
  },
- "keepsQuiet": false,
+ "regard": 0.3,
+ "keepsQuiet": "friend",
+ "temper_why": "the cold-store deputy (card)",
  "home": "d_cs_5",
  "sched": [
   [

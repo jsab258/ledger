@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.35,
- "venal": 0.4,
- "talk": 0.65,
- "discretion": 0.3,
- "temperament": {
-  "nerve": 0.35,
-  "dutiful": 0.3,
-  "willingness": 0.4,
-  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ "temper": {
+  "nerve": 0.5,
+  "greed": 0.3,
+  "mouth": 0.8,
+  "law": 0.3,
+  "grudge": 0.3
  },
- "keepsQuiet": false,
+ "regard": 0.35,
+ "keepsQuiet": "friend",
+ "temper_why": "paints MICKEY'S on every board: a cheerful show-off (CAST)",
  "home": "boarding_house",
  "sched": [
   [

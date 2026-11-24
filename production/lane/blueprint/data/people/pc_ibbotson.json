@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.8,
- "venal": 0,
- "talk": 0.2,
- "discretion": 0.9,
- "temperament": {
+ "temper": {
   "nerve": 0.8,
-  "dutiful": 1.0,
-  "willingness": 0.2,
-  "from": "prototype cast.js (nerve; dutiful from 1 - venal x 0.8; willingness from talk)"
+  "greed": 0.05,
+  "mouth": 0.3,
+  "law": 1.0,
+  "grudge": 0.4
  },
- "keepsQuiet": true,
+ "regard": 0.2,
+ "keepsQuiet": "nobody",
+ "temper_why": "the straight beat constable (card)",
  "home": "edge_north",
  "sched": [
   [

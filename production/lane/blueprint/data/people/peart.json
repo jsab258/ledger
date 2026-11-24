@@ -29,17 +29,16 @@
    "glasses"
   ]
  },
- "nerve": 0.4,
- "venal": 0.58,
- "talk": 0.6,
- "discretion": 0.52,
- "temperament": {
+ "temper": {
   "nerve": 0.4,
-  "dutiful": 0.4,
-  "willingness": 0.6,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+  "greed": 0.3,
+  "mouth": 0.8,
+  "law": 0.5,
+  "grudge": 0.3
  },
- "keepsQuiet": false,
+ "regard": 0.3,
+ "keepsQuiet": "friend",
+ "temper_why": "the newsagent (card)",
  "home": "newsagent",
  "sched": [
   [

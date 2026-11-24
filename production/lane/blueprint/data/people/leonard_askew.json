@@ -29,17 +29,16 @@
    "rent_book"
   ]
  },
- "nerve": 0.4,
- "venal": 0.42,
- "talk": 0.5,
- "discretion": 0.6,
- "temperament": {
-  "nerve": 0.4,
-  "dutiful": 0.6,
-  "willingness": 0.5,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.5,
+  "greed": 0.6,
+  "mouth": 0.3,
+  "law": 0.7,
+  "grudge": 0.8
  },
- "keepsQuiet": false,
+ "regard": 0.2,
+ "keepsQuiet": "friend",
+ "temper_why": "the landlord's agent (card)",
  "home": "edge_north",
  "sched": [
   [

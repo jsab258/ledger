@@ -29,17 +29,16 @@
    "flatcap"
   ]
  },
- "nerve": 0.5,
- "venal": 0.4,
- "talk": 0.6,
- "discretion": 0.52,
- "temperament": {
+ "temper": {
   "nerve": 0.5,
-  "dutiful": 0.3,
-  "willingness": 0.6,
-  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+  "greed": 0.7,
+  "mouth": 0.2,
+  "law": 0.1,
+  "grudge": 0.4
  },
- "keepsQuiet": false,
+ "regard": 0.3,
+ "keepsQuiet": "anyone",
+ "temper_why": "offers night berths off the books for the Widow's cut (CAST)",
  "home": "d_cs_7",
  "sched": [
   [

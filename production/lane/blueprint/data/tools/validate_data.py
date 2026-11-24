@@ -257,6 +257,24 @@ ok(lic == ['CC0'], 'sounds: every file CC0 (D56) (%s)' % lic)
 badf = [x.get('id') for x in S.get('sound_list', []) for fid in (x.get('file_ids') or []) if fid not in fids and not str(fid).startswith('see ')]
 ok(not badf, 'sounds: every sound names files that exist (%s)' % badf[:4])
 ok(not re.search(r'thinking', json.dumps([x.get('id', '') + ' ' + x.get('name', '') for x in S.get('sound_list', [])]), re.I), 'sounds: no thinking cue (ruling 24 Nov)')
+# the temper (temper/TEMPER-MODEL.md, 24 Nov 2026): one home, every person their own, each readable
+_tp = os.path.normpath(os.path.join(D, '..', 'temper', 'tempers.json'))
+TP = json.load(open(_tp))['people'] if os.path.exists(_tp) else {}
+_dials = ('nerve', 'greed', 'mouth', 'law', 'grudge')
+_pp = {}
+for _f in glob.glob(os.path.join(D, 'people', '*.json')):
+    _p = json.load(open(_f)); _pp[_p['id']] = _p
+ok(set(TP) == set(_pp), 'temper: tempers.json holds exactly the people in people/ (%d, %d)' % (len(TP), len(_pp)))
+_off = [i for i, p in _pp.items() if i in TP and (p.get('temper') != {k: TP[i][k] for k in _dials} or p.get('regard') != TP[i]['regard'] or p.get('keepsQuiet') != TP[i]['keepsQuiet'])]
+ok(not _off, 'temper: every people/ file agrees with its home, tempers.json (%s)' % _off[:4])
+_flat = [i for i, t in TP.items() if not any(t[k] <= 0.2 or t[k] >= 0.8 for k in _dials)]
+ok(not _flat, 'temper: every person has at least one dial at 0.2 or under or 0.8 or over, so it shows (%s)' % _flat[:4])
+_sig = {}
+for i, t in TP.items():
+    if _pp.get(i, {}).get('kind') in ('principal', 'firm', 'regular'):
+        _sig.setdefault(tuple(t[k] for k in _dials), []).append(i)
+_twins = [v for v in _sig.values() if len(v) > 1]
+ok(not _twins, 'temper: no two principals, firm or regulars share all five dials (%s)' % _twins[:2])
 # wave 2's cross-file checks (people, routines, lines, jobs, fares, happenings): tools/wave2/check_wave2.py
 if os.path.exists(os.path.join(HERE, 'wave2', 'check_wave2.py')):
     sys.path.insert(0, os.path.join(HERE, 'wave2'))

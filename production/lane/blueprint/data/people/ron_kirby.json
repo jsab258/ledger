@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.8,
- "venal": 0.3,
- "talk": 0.7,
- "discretion": 0.35,
- "temperament": {
-  "nerve": 0.8,
-  "dutiful": 0.7,
-  "willingness": 0.4,
-  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ "temper": {
+  "nerve": 0.9,
+  "greed": 0.1,
+  "mouth": 0.1,
+  "law": 0.2,
+  "grudge": 0.8
  },
- "keepsQuiet": true,
+ "regard": 0.7,
+ "keepsQuiet": "owner",
+ "temper_why": "does not ask, does not tell; carries things for years; Mickey's own (CAST)",
  "home": "d_cl_14",
  "sched": [
   [

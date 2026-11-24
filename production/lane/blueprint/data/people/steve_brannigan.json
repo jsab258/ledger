@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.6,
- "venal": 0.38,
- "talk": 0.2,
- "discretion": 0.84,
- "temperament": {
-  "nerve": 0.6,
-  "dutiful": 0.65,
-  "willingness": 0.2,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.4,
+  "greed": 0.4,
+  "mouth": 0.2,
+  "law": 0.05,
+  "grudge": 0.5
  },
- "keepsQuiet": true,
+ "regard": 0.15,
+ "keepsQuiet": "anyone",
+ "temper_why": "fires once and flees (CAST)",
  "home": "boarding_house",
  "sched": [
   [

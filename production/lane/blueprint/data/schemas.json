@@ -19489,7 +19489,8 @@
     "kind",
     "voice",
     "look",
-    "temperament",
+    "temper",
+    "regard",
     "keepsQuiet",
     "card",
     "can_die",
@@ -19549,53 +19550,63 @@
     "look": {
      "type": "object"
     },
-    "nerve": {
-     "type": "number",
-     "minimum": 0,
-     "maximum": 1
-    },
-    "venal": {
-     "type": "number",
-     "minimum": 0,
-     "maximum": 1
-    },
-    "talk": {
-     "type": "number",
-     "minimum": 0,
-     "maximum": 1
-    },
-    "discretion": {
-     "type": "number",
-     "minimum": 0,
-     "maximum": 1
-    },
-    "temperament": {
+    "temper": {
      "type": "object",
      "required": [
       "nerve",
-      "dutiful",
-      "willingness"
+      "greed",
+      "mouth",
+      "law",
+      "grudge"
      ],
+     "additionalProperties": false,
      "properties": {
       "nerve": {
        "type": "number",
        "minimum": 0,
        "maximum": 1
       },
-      "dutiful": {
+      "greed": {
        "type": "number",
        "minimum": 0,
        "maximum": 1
       },
-      "willingness": {
+      "mouth": {
+       "type": "number",
+       "minimum": 0,
+       "maximum": 1
+      },
+      "law": {
+       "type": "number",
+       "minimum": 0,
+       "maximum": 1
+      },
+      "grudge": {
        "type": "number",
        "minimum": 0,
        "maximum": 1
       }
-     }
+     },
+     "x-note": "the five dials of temper/TEMPER-MODEL.md (24 Nov 2026); home temper/tempers.json, derived here by tools/wave2/build_people.py; replaces nerve, venal, talk, discretion and temperament {nerve, dutiful, willingness}"
+    },
+    "regard": {
+     "type": "number",
+     "minimum": 0,
+     "maximum": 1,
+     "x-note": "starting regard for Frank (the Core Gossiper.Loyalty); state, moved in play; not a temper dial"
     },
     "keepsQuiet": {
-     "type": "boolean"
+     "type": "string",
+     "enum": [
+      "owner",
+      "friend",
+      "anyone",
+      "nobody"
+     ],
+     "x-note": "whom they keep a thing quiet for when asked (CastDay.cs reads these four words): owner = Mickey's own, never to the police about one of theirs"
+    },
+    "temper_why": {
+     "type": "string"
     },
     "sched": {
      "type": "array",

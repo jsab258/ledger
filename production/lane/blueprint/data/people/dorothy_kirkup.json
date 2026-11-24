@@ -29,17 +29,16 @@
    "handbag"
   ]
  },
- "nerve": 0.45,
- "venal": 0.58,
- "talk": 0.5,
- "discretion": 0.6,
- "temperament": {
-  "nerve": 0.45,
-  "dutiful": 0.4,
-  "willingness": 0.5,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.3,
+  "greed": 0.1,
+  "mouth": 0.7,
+  "law": 0.7,
+  "grudge": 0.3
  },
- "keepsQuiet": false,
+ "regard": 0.3,
+ "keepsQuiet": "friend",
+ "temper_why": "a widow on Chapel Lane (card)",
  "home": "d_cl_17",
  "sched": [
   [

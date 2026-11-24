@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.35,
- "venal": 0.66,
- "talk": 0.6,
- "discretion": 0.52,
- "temperament": {
-  "nerve": 0.35,
-  "dutiful": 0.3,
-  "willingness": 0.6,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.3,
+  "greed": 0.6,
+  "mouth": 0.8,
+  "law": 0.1,
+  "grudge": 0.4
  },
- "keepsQuiet": false,
+ "regard": 0.15,
+ "keepsQuiet": "nobody",
+ "temper_why": "the newest of Danny's crew; put the caff's window in and brags (card)",
  "home": "d_nr_28",
  "sched": [
   [

@@ -29,17 +29,16 @@
    "cap"
   ]
  },
- "nerve": 0.55,
- "venal": 0.42,
- "talk": 0.3,
- "discretion": 0.76,
- "temperament": {
-  "nerve": 0.55,
-  "dutiful": 0.6,
-  "willingness": 0.3,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.3,
+  "greed": 0.6,
+  "mouth": 0.8,
+  "law": 0.05,
+  "grudge": 0.7
  },
- "keepsQuiet": true,
+ "regard": 0.15,
+ "keepsQuiet": "anyone",
+ "temper_why": "mouthy until hit; the Widow's taxman (CAST)",
  "home": "boarding_house",
  "sched": [
   [

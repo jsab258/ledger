@@ -29,17 +29,16 @@
    "fingerless_gloves"
   ]
  },
- "nerve": 0.6,
- "venal": 0.66,
- "talk": 0.5,
- "discretion": 0.6,
- "temperament": {
-  "nerve": 0.6,
-  "dutiful": 0.3,
-  "willingness": 0.5,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.7,
+  "greed": 0.4,
+  "mouth": 0.6,
+  "law": 0.2,
+  "grudge": 0.3
  },
- "keepsQuiet": true,
+ "regard": 0.3,
+ "keepsQuiet": "anyone",
+ "temper_why": "the all-night tea stall; sees and keeps (card)",
  "home": "d_nr_17",
  "sched": [
   [

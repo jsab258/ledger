@@ -29,17 +29,16 @@
    "glasses"
   ]
  },
- "nerve": 0.4,
- "venal": 0.66,
- "talk": 0.6,
- "discretion": 0.52,
- "temperament": {
+ "temper": {
   "nerve": 0.4,
-  "dutiful": 0.3,
-  "willingness": 0.6,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+  "greed": 0.7,
+  "mouth": 0.5,
+  "law": 0.2,
+  "grudge": 0.3
  },
- "keepsQuiet": false,
+ "regard": 0.3,
+ "keepsQuiet": "friend",
+ "temper_why": "second-hand shop (card)",
  "home": "d_cl_13",
  "sched": [
   [

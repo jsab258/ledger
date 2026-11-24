@@ -29,17 +29,16 @@
    "glasses"
   ]
  },
- "nerve": 0.6,
- "venal": 0.2,
- "talk": 0.75,
- "discretion": 0.2,
- "temperament": {
-  "nerve": 0.6,
-  "dutiful": 0.35,
-  "willingness": 0.6,
-  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ "temper": {
+  "nerve": 0.7,
+  "greed": 0.1,
+  "mouth": 0.5,
+  "law": 0.9,
+  "grudge": 0.7
  },
- "keepsQuiet": false,
+ "regard": 0.35,
+ "keepsQuiet": "friend",
+ "temper_why": "sees everything, rings the night desk; her tea is not offered twice (CAST, card)",
  "home": "adas",
  "sched": [
   [

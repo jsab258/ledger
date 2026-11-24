@@ -29,17 +29,16 @@
    "kitbag"
   ]
  },
- "nerve": 0.45,
- "venal": 0.58,
- "talk": 0.5,
- "discretion": 0.6,
- "temperament": {
-  "nerve": 0.45,
-  "dutiful": 0.4,
-  "willingness": 0.5,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.6,
+  "greed": 0.5,
+  "mouth": 0.5,
+  "law": 0.2,
+  "grudge": 0.3
  },
- "keepsQuiet": false,
+ "regard": 0.3,
+ "keepsQuiet": "friend",
+ "temper_why": "seaman between ships (card)",
  "home": "boarding_house",
  "sched": [
   [

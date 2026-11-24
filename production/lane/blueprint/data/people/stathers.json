@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.75,
- "venal": 0.34,
- "talk": 0.1,
- "discretion": 0.92,
- "temperament": {
-  "nerve": 0.75,
-  "dutiful": 0.7,
-  "willingness": 0.1,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.8,
+  "greed": 0.3,
+  "mouth": 0.1,
+  "law": 0.05,
+  "grudge": 0.8
  },
- "keepsQuiet": true,
+ "regard": 0.1,
+ "keepsQuiet": "anyone",
+ "temper_why": "flat, slow, loyal to the Widow; misspells Nowak on purpose (CAST)",
  "home": "d_cs_17",
  "sched": [
   [

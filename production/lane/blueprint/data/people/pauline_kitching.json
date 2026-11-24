@@ -29,17 +29,16 @@
    "earrings"
   ]
  },
- "nerve": 0.5,
- "venal": 0.3,
- "talk": 0.8,
- "discretion": 0.3,
- "temperament": {
-  "nerve": 0.5,
-  "dutiful": 0.6,
-  "willingness": 0.4,
-  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ "temper": {
+  "nerve": 0.6,
+  "greed": 0.2,
+  "mouth": 0.7,
+  "law": 0.2,
+  "grudge": 0.3
  },
- "keepsQuiet": true,
+ "regard": 0.6,
+ "keepsQuiet": "owner",
+ "temper_why": "brisk, funny, the radio all day; Mickey's dispatcher (CAST)",
  "home": "edge_north",
  "sched": [
   [

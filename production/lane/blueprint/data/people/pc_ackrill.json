@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.55,
- "venal": 0.34,
- "talk": 0.7,
- "discretion": 0.44,
- "temperament": {
-  "nerve": 0.55,
-  "dutiful": 0.7,
-  "willingness": 0.7,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.5,
+  "greed": 0.3,
+  "mouth": 0.5,
+  "law": 0.8,
+  "grudge": 0.3
  },
- "keepsQuiet": false,
+ "regard": 0.25,
+ "keepsQuiet": "nobody",
+ "temper_why": "late-turn constable; ordinary, by the book (card)",
  "home": "edge_north",
  "sched": [
   [

@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.6,
- "venal": 0.1,
- "talk": 0.4,
- "discretion": 0.5,
- "temperament": {
+ "temper": {
   "nerve": 0.6,
-  "dutiful": 0.92,
-  "willingness": 0.4,
-  "from": "prototype cast.js (nerve; dutiful from 1 - venal x 0.8; willingness from talk)"
+  "greed": 0.1,
+  "mouth": 0.3,
+  "law": 0.5,
+  "grudge": 0.4
  },
- "keepsQuiet": false,
+ "regard": 0.35,
+ "keepsQuiet": "friend",
+ "temper_why": "keeps the takeaway; steady, honest trade (card)",
  "home": "d_bp_5",
  "sched": [
   [

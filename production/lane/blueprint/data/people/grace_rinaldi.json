@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.8,
- "venal": 0,
- "talk": 0.85,
- "discretion": 0.25,
- "temperament": {
+ "temper": {
   "nerve": 0.8,
-  "dutiful": 1.0,
-  "willingness": 0.85,
-  "from": "prototype cast.js (nerve; dutiful from 1 - venal x 0.8; willingness from talk)"
+  "greed": 0.1,
+  "mouth": 0.7,
+  "law": 0.4,
+  "grudge": 0.9
  },
- "keepsQuiet": false,
+ "regard": 0.35,
+ "keepsQuiet": "friend",
+ "temper_why": "warm, bossy, fierce; forgets nobody (CAST, wave 2 review)",
  "home": "d_bp_3",
  "sched": [
   [

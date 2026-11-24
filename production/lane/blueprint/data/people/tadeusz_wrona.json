@@ -29,17 +29,16 @@
    "glasses"
   ]
  },
- "nerve": 0.55,
- "venal": 0.5,
- "talk": 0.4,
- "discretion": 0.68,
- "temperament": {
-  "nerve": 0.55,
-  "dutiful": 0.5,
-  "willingness": 0.4,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.7,
+  "greed": 0.2,
+  "mouth": 0.2,
+  "law": 0.3,
+  "grudge": 0.6
  },
- "keepsQuiet": true,
+ "regard": 0.4,
+ "keepsQuiet": "friend",
+ "temper_why": "ironmonger from Gdynia (card)",
  "home": "d_nr_7",
  "sched": [
   [

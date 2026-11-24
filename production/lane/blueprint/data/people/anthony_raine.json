@@ -29,17 +29,16 @@
    "briefcase"
   ]
  },
- "nerve": 0.5,
- "venal": 0.5,
- "talk": 0.4,
- "discretion": 0.68,
- "temperament": {
+ "temper": {
   "nerve": 0.5,
-  "dutiful": 0.5,
-  "willingness": 0.4,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+  "greed": 0.6,
+  "mouth": 0.3,
+  "law": 0.8,
+  "grudge": 0.3
  },
- "keepsQuiet": true,
+ "regard": 0.3,
+ "keepsQuiet": "friend",
+ "temper_why": "Agar's brief (card)",
  "home": "edge_north",
  "sched": [
   [

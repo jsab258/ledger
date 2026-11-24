@@ -29,17 +29,16 @@
    "posters"
   ]
  },
- "nerve": 0.7,
- "venal": 0.42,
- "talk": 0.6,
- "discretion": 0.52,
- "temperament": {
-  "nerve": 0.7,
-  "dutiful": 0.6,
-  "willingness": 0.6,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.8,
+  "greed": 0.1,
+  "mouth": 0.8,
+  "law": 0.3,
+  "grudge": 0.6
  },
- "keepsQuiet": false,
+ "regard": 0.3,
+ "keepsQuiet": "friend",
+ "temper_why": "organiser against the poll tax (card)",
  "home": "edge_north",
  "sched": [
   [

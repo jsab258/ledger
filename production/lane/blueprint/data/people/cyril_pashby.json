@@ -29,17 +29,16 @@
    "black_hat"
   ]
  },
- "nerve": 0.6,
- "venal": 0.66,
- "talk": 0.3,
- "discretion": 0.76,
- "temperament": {
+ "temper": {
   "nerve": 0.6,
-  "dutiful": 0.3,
-  "willingness": 0.3,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+  "greed": 0.2,
+  "mouth": 0.6,
+  "law": 0.4,
+  "grudge": 0.5
  },
- "keepsQuiet": false,
+ "regard": 0.3,
+ "keepsQuiet": "friend",
+ "temper_why": "solemn, deadpan; marks every funeral out of ten (CAST)",
  "home": "d_cl_33",
  "sched": [
   [

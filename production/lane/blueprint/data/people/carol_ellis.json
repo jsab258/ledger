@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 1,
- "venal": 0,
- "talk": 0.2,
- "discretion": 0.9,
- "temperament": {
-  "nerve": 1,
-  "dutiful": 1.0,
-  "willingness": 0.2,
-  "from": "prototype cast.js (nerve; dutiful from 1 - venal x 0.8; willingness from talk)"
+ "temper": {
+  "nerve": 0.9,
+  "greed": 0.2,
+  "mouth": 0.2,
+  "law": 1.0,
+  "grudge": 0.6
  },
- "keepsQuiet": true,
+ "regard": 0.2,
+ "keepsQuiet": "nobody",
+ "temper_why": "level, exact, moves only on paper; bought once at 800 by authored scene, never by the bribe rule (CAST, ruling 24 Nov)",
  "home": "police_station",
  "sched": [
   [

@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.35,
- "venal": 0.4,
- "talk": 0.4,
- "discretion": 0.68,
- "temperament": {
-  "nerve": 0.35,
-  "dutiful": 0.3,
-  "willingness": 0.4,
-  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ "temper": {
+  "nerve": 0.4,
+  "greed": 0.3,
+  "mouth": 0.8,
+  "law": 0.4,
+  "grudge": 0.4
  },
- "keepsQuiet": false,
+ "regard": 0.3,
+ "keepsQuiet": "friend",
+ "temper_why": "laundress (card)",
  "home": "d_nr_33",
  "sched": [
   [

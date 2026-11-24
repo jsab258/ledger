@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.7,
- "venal": 0.5,
- "talk": 0.4,
- "discretion": 0.68,
- "temperament": {
-  "nerve": 0.7,
-  "dutiful": 0.5,
-  "willingness": 0.4,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.8,
+  "greed": 0.6,
+  "mouth": 0.3,
+  "law": 0.6,
+  "grudge": 0.5
  },
- "keepsQuiet": true,
+ "regard": 0.1,
+ "keepsQuiet": "anyone",
+ "temper_why": "bailiff from away on Agar's paper: the law on his side (card)",
  "home": "edge_north",
  "sched": [
   [

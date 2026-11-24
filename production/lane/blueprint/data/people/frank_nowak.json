@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.7,
- "venal": 0.5,
- "talk": 0.3,
- "discretion": 0.76,
- "temperament": {
+ "temper": {
   "nerve": 0.7,
-  "dutiful": 0.5,
-  "willingness": 0.3,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+  "greed": 0.5,
+  "mouth": 0.3,
+  "law": 0.2,
+  "grudge": 0.7
  },
- "keepsQuiet": true,
+ "regard": 0.5,
+ "keepsQuiet": "friend",
+ "temper_why": "the player: never read by the Core for his own choices; proud, needs to be seen to win, quiet temper (CAST)",
  "home": "toms_flat",
  "sched": [],
  "speaker_kind": null,

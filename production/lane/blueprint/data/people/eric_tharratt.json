@@ -29,17 +29,16 @@
    "clipboard"
   ]
  },
- "nerve": 0.4,
- "venal": 0.42,
- "talk": 0.3,
- "discretion": 0.76,
- "temperament": {
+ "temper": {
   "nerve": 0.4,
-  "dutiful": 0.6,
-  "willingness": 0.3,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+  "greed": 0.2,
+  "mouth": 0.3,
+  "law": 0.6,
+  "grudge": 0.4
  },
- "keepsQuiet": false,
+ "regard": 0.3,
+ "keepsQuiet": "friend",
+ "temper_why": "clipboard, clipped; a manager who wants things straight (CAST)",
  "home": "edge_north",
  "sched": [
   [

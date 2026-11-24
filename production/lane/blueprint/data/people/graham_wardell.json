@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.4,
- "venal": 0.74,
- "talk": 0.5,
- "discretion": 0.6,
- "temperament": {
+ "temper": {
   "nerve": 0.4,
-  "dutiful": 0.2,
-  "willingness": 0.5,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+  "greed": 0.9,
+  "mouth": 0.7,
+  "law": 0.4,
+  "grudge": 0.5
  },
- "keepsQuiet": true,
+ "regard": 0.2,
+ "keepsQuiet": "anyone",
+ "temper_why": "loses a statement for 200; sells facts to Danny (CAST)",
  "home": "edge_north",
  "sched": [
   [

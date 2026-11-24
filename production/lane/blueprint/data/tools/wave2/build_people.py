@@ -34,6 +34,7 @@ PLACES = json.load(open(os.path.join(D, 'places.json')))
 CLOCK = {"realSecondsPerGameHour": 120}
 PROTO = json.load(open(os.path.join(HERE, 'protocast.json')))['cast']
 PROTO = {p['id']: p for p in PROTO}
+TEMPERS = json.load(open(os.path.normpath(os.path.join(D, '..', 'temper', 'tempers.json'))))['people']
 _BANK = json.load(open(os.path.normpath(os.path.join(D, '..', '..', '..', 'cloud-week', 'lines', 'lines.json'))))
 BANK_MEMBERS = {m: k for k, v in _BANK['speakers'].items() if not v.get('own') for m in v.get('members', [])}
 BANK_MEMBERS.update({'rocco': 'driver', 'sam': 'casual_worker', 'emil': 'office_worker', 'june': 'office_worker'})
@@ -311,30 +312,13 @@ def person_record(p):
     card.setdefault('who', p['r'])
     card.setdefault('speak', 'TO WRITE (story lane)')
     card.setdefault('life', 'TO WRITE (story lane)')
-    tr = C.TRAITS.get(p['id'])
-    if tr:
-        nerve, loyal, greed, saw = tr
-        will = {'yes': 0.6, 'no': 0.4, 'never': 0.1}[saw]
-        temper = {"nerve": nerve, "dutiful": loyal, "willingness": will, "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"}
-        quiet = saw == 'never' or loyal >= 0.6
-        venal = greed
-    elif pr and not p.get('t'):
-        t = (pr['nerve'], max(0.0, round(1 - pr['venal'] * 0.8, 2)), pr['talk'])
-        temper = {"nerve": t[0], "dutiful": t[1], "willingness": t[2], "from": "prototype cast.js (nerve; dutiful from 1 - venal x 0.8; willingness from talk)"}
-        quiet = pr.get('discretion', 0) >= 0.7
-        venal = pr['venal']
-    else:
-        t = p.get('t') or (0.45, 0.4, 0.5)
-        temper = {"nerve": t[0], "dutiful": t[1], "willingness": t[2], "from": "chosen by the data-build wave 2 job from the person's card"}
-        quiet = bool(p.get('quiet', False))
-        venal = round(min(1, max(0, 1 - t[1] * 0.8 - 0.1)), 2)
+    # the temper: home is temper/tempers.json (the temper job, 24 Nov 2026; TEMPER-MODEL.md); the old four dials are retired
+    tp = TEMPERS[p['id']]
+    temper = {k: tp[k] for k in ('nerve', 'greed', 'mouth', 'law', 'grudge')}
     rec = {
         "id": p['id'], "cast_id": p.get('cid'), "called": p.get('called') or p['n'], "name": p['n'], "age": p['a'], "sex": p['s'],
         "role": p['r'], "kind": p['k'], "voice": p.get('v'), "look": look,
-        "nerve": temper['nerve'], "venal": venal,
-        "talk": pr['talk'] if pr and 'talk' in pr else round(temper['willingness'], 2),
-        "discretion": pr['discretion'] if pr and 'discretion' in pr else round(1 - temper['willingness'] * 0.8, 2),
-        "temperament": temper, "keepsQuiet": quiet,
+        "temper": temper, "regard": tp['regard'], "keepsQuiet": tp['keepsQuiet'], "temper_why": tp['why'],
         "home": p['home'],
         "sched": [],
         "speaker_kind": PF.speaker_kind(p, BANK_MEMBERS),

@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.6,
- "venal": 0.2,
- "talk": 0.3,
- "discretion": 0.6,
- "temperament": {
+ "temper": {
   "nerve": 0.6,
-  "dutiful": 0.3,
-  "willingness": 0.6,
-  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+  "greed": 0.1,
+  "mouth": 0.2,
+  "law": 0.5,
+  "grudge": 0.8
  },
- "keepsQuiet": false,
+ "regard": 0.25,
+ "keepsQuiet": "friend",
+ "temper_why": "cool, clipped, wants nothing; estranged daughter (CAST)",
  "home": "boarding_house",
  "sched": [
   [

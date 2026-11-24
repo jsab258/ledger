@@ -29,17 +29,16 @@
    "pager"
   ]
  },
- "nerve": 0.3,
- "venal": 0.8,
- "talk": 0.95,
- "discretion": 0.05,
- "temperament": {
-  "nerve": 0.3,
-  "dutiful": 0.4,
-  "willingness": 0.4,
-  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ "temper": {
+  "nerve": 0.2,
+  "greed": 0.9,
+  "mouth": 0.9,
+  "law": 0.2,
+  "grudge": 0.2
  },
- "keepsQuiet": false,
+ "regard": 0.35,
+ "keepsQuiet": "nobody",
+ "temper_why": "eager, pays his debt in what he hears; loyal to the last helper (CAST)",
  "home": "d_nr_23",
  "sched": [
   [

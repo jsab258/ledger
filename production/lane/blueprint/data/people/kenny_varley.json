@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.4,
- "venal": 0.58,
- "talk": 0.5,
- "discretion": 0.6,
- "temperament": {
-  "nerve": 0.4,
-  "dutiful": 0.4,
-  "willingness": 0.5,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.5,
+  "greed": 0.6,
+  "mouth": 0.4,
+  "law": 0.1,
+  "grudge": 0.4
  },
- "keepsQuiet": false,
+ "regard": 0.15,
+ "keepsQuiet": "anyone",
+ "temper_why": "Coult's driver (card)",
  "home": "edge_north",
  "sched": [
   [

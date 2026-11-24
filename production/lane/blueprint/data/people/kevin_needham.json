@@ -29,17 +29,16 @@
    "tash"
   ]
  },
- "nerve": 0.5,
- "venal": 0.4,
- "talk": 0.7,
- "discretion": 0.3,
- "temperament": {
-  "nerve": 0.5,
-  "dutiful": 0.55,
-  "willingness": 0.4,
-  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ "temper": {
+  "nerve": 0.4,
+  "greed": 0.6,
+  "mouth": 0.9,
+  "law": 0.3,
+  "grudge": 0.6
  },
- "keepsQuiet": false,
+ "regard": 0.45,
+ "keepsQuiet": "owner",
+ "temper_why": "moaning, talkative; skims 42 miles a week; the Widow's eyes; wants to be asked (CAST)",
  "home": "edge_north",
  "sched": [
   [

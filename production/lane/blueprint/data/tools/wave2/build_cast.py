@@ -36,7 +36,7 @@ out = {
         "ages": "18 to 90 only (no children anywhere). Spread for a 1990 northern port with the docks run down: about a third 60 and over, a fifth 18 to 29.",
         "names": "First names and surnames drawn from a list of 1990 northern English port names with Irish (about one in eight), Polish (about one in twenty-five, mostly 60 and over: the post-war settlers and their children) and other origins as production/casting research gives; never a name already in people/; never a real public figure.",
         "work": "From the places.json staff each place needs and the crowd.json bands: dock and cold-store shifts, shop staff, retired. Every resident's routine follows routines.json's rules and is checked by tools/wave2/build_people.py's reach and hours check.",
-        "kind": "passer; temperament drawn from a small table by age and work (the traits draft's figures for an unnamed worker: nerve 0.3 to 0.5, loyalty 0.3, a wounding seen yes or no); keepsQuiet false unless loyalty 0.6 or more.",
+        "kind": "passer; temper (nerve, greed, mouth, law, grudge) drawn in the seeded pass from temper/TEMPER-MODEL.md section 5's town spread by age and work, each resident at least one dial at 0.2 or under or 0.8 or over; regard 0.3; keepsQuiet friend.",
         "lines": "Shared street lines by speaker kind only (lines/shared-street.json); no own lines.",
         "look": "crowd.json's 1990 look tables.",
         "content": "No alcohol or gambling in any routine or line, no children, every brand fictional (the content rule)."},

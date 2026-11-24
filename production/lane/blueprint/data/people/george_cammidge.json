@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.5,
- "venal": 0.5,
- "talk": 0.5,
- "discretion": 0.6,
- "temperament": {
+ "temper": {
   "nerve": 0.5,
-  "dutiful": 0.5,
-  "willingness": 0.5,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+  "greed": 0.5,
+  "mouth": 0.2,
+  "law": 0.4,
+  "grudge": 0.4
  },
- "keepsQuiet": false,
+ "regard": 0.3,
+ "keepsQuiet": "friend",
+ "temper_why": "the chandlery (card)",
  "home": "d_cl_8",
  "sched": [
   [

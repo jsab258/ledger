@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.35,
- "venal": 0.66,
- "talk": 0.7,
- "discretion": 0.44,
- "temperament": {
-  "nerve": 0.35,
-  "dutiful": 0.3,
-  "willingness": 0.7,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.4,
+  "greed": 0.8,
+  "mouth": 0.5,
+  "law": 0.1,
+  "grudge": 0.3
  },
- "keepsQuiet": true,
+ "regard": 0.3,
+ "keepsQuiet": "anyone",
+ "temper_why": "fish-dock porter who takes a cut (CAST)",
  "home": "d_nr_4",
  "sched": [
   [

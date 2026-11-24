@@ -29,17 +29,16 @@
    "bait_tin"
   ]
  },
- "nerve": 0.5,
- "venal": 0.58,
- "talk": 0.4,
- "discretion": 0.68,
- "temperament": {
-  "nerve": 0.5,
-  "dutiful": 0.4,
-  "willingness": 0.4,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.6,
+  "greed": 0.4,
+  "mouth": 0.4,
+  "law": 0.2,
+  "grudge": 0.5
  },
- "keepsQuiet": false,
+ "regard": 0.3,
+ "keepsQuiet": "friend",
+ "temper_why": "first docker along the quay (card)",
  "home": "d_nr_1",
  "sched": [
   [

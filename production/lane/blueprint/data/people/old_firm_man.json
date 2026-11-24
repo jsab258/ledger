@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.7,
- "venal": 0.6,
- "talk": 0.1,
- "discretion": 0.92,
- "temperament": {
-  "nerve": 0.7,
-  "dutiful": 0.2,
-  "willingness": 0.1,
-  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ "temper": {
+  "nerve": 0.9,
+  "greed": 0.3,
+  "mouth": 0.05,
+  "law": 0.0,
+  "grudge": 0.8
  },
- "keepsQuiet": true,
+ "regard": 0.3,
+ "keepsQuiet": "owner",
+ "temper_why": "loyal to Mickey thirty years: \"Not on here. Thirty year.\" (CAST)",
  "home": "edge_west",
  "sched": [
   [

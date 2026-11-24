@@ -1,0 +1,1205 @@
+{
+ "file": "temper/tempers.json",
+ "version": "1 (24 Nov 2026, the temper job)",
+ "home_of": "each named person's temper (five dials), starting regard for Frank and whom they keep quiet for; data/people/ derives from here (tools/wave2/build_people.py)",
+ "scale": "0 to 1, authored in steps of 0.05; meanings in temper/TEMPER-MODEL.md",
+ "dials": [
+  "nerve",
+  "greed",
+  "mouth",
+  "law",
+  "grudge"
+ ],
+ "people": {
+  "ada_vane": {
+   "nerve": 0.7,
+   "greed": 0.1,
+   "mouth": 0.5,
+   "law": 0.9,
+   "grudge": 0.7,
+   "regard": 0.35,
+   "keepsQuiet": "friend",
+   "why": "sees everything, rings the night desk; her tea is not offered twice (CAST, card)"
+  },
+  "ahmed_rashid": {
+   "nerve": 0.6,
+   "greed": 0.2,
+   "mouth": 0.5,
+   "law": 0.5,
+   "grudge": 0.4,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "keeps a corner shop in town; buys stock at the Thursday mark (card)"
+  },
+  "aidan_keogh": {
+   "nerve": 0.7,
+   "greed": 0.4,
+   "mouth": 0.1,
+   "law": 0.2,
+   "grudge": 0.2,
+   "regard": 0.35,
+   "keepsQuiet": "anyone",
+   "why": "retired doctor who stitches by knock and asks nothing (card)"
+  },
+  "alan_sowerby": {
+   "nerve": 0.2,
+   "greed": 0.4,
+   "mouth": 0.3,
+   "law": 0.7,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "the licensing officer who acts on Agar's letters (CAST)"
+  },
+  "albert_suggitt": {
+   "nerve": 0.5,
+   "greed": 0.2,
+   "mouth": 0.7,
+   "law": 0.3,
+   "grudge": 0.5,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "old trawlerman, mends nets and talks (card)"
+  },
+  "alf_garside": {
+   "nerve": 0.5,
+   "greed": 0.9,
+   "mouth": 0.2,
+   "law": 0.0,
+   "grudge": 0.4,
+   "regard": 0.3,
+   "keepsQuiet": "anyone",
+   "why": "the dock gun seller (card)"
+  },
+  "alison_sedman": {
+   "nerve": 0.8,
+   "greed": 0.1,
+   "mouth": 0.7,
+   "law": 0.6,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "nobody",
+   "why": "curious, prints only what she knows (CAST)"
+  },
+  "anthony_raine": {
+   "nerve": 0.5,
+   "greed": 0.6,
+   "mouth": 0.3,
+   "law": 0.8,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "Agar's brief (card)"
+  },
+  "arthur_brigham": {
+   "nerve": 0.4,
+   "greed": 0.3,
+   "mouth": 0.8,
+   "law": 0.5,
+   "grudge": 0.4,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "the grocer (card)"
+  },
+  "arvids_ozols": {
+   "nerve": 0.7,
+   "greed": 0.3,
+   "mouth": 0.2,
+   "law": 0.5,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "formal, courteous ship's master (CAST)"
+  },
+  "barry_coult": {
+   "nerve": 0.8,
+   "greed": 0.6,
+   "mouth": 0.3,
+   "law": 0.6,
+   "grudge": 0.5,
+   "regard": 0.1,
+   "keepsQuiet": "anyone",
+   "why": "bailiff from away on Agar's paper: the law on his side (card)"
+  },
+  "bernard_gill": {
+   "nerve": 0.5,
+   "greed": 0.8,
+   "mouth": 0.6,
+   "law": 0.2,
+   "grudge": 0.4,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "used-car lot (card)"
+  },
+  "beryl_wood": {
+   "nerve": 0.4,
+   "greed": 0.4,
+   "mouth": 0.8,
+   "law": 0.4,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "minds the Washeteria front all day (card)"
+  },
+  "bill_huxtable": {
+   "nerve": 0.6,
+   "greed": 0.4,
+   "mouth": 0.4,
+   "law": 0.2,
+   "grudge": 0.5,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "first docker along the quay (card)"
+  },
+  "brenda_laverack": {
+   "nerve": 0.6,
+   "greed": 0.2,
+   "mouth": 1.0,
+   "law": 0.5,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "nobody",
+   "why": "loud, generous; the town's mouth, tells every deed (CAST)"
+  },
+  "brendan_walsh": {
+   "nerve": 0.7,
+   "greed": 0.1,
+   "mouth": 0.1,
+   "law": 0.3,
+   "grudge": 0.1,
+   "regard": 0.4,
+   "keepsQuiet": "anyone",
+   "why": "keeps Mickey's confession; visits the remanded; forgives (CAST)"
+  },
+  "carol_ellis": {
+   "nerve": 0.9,
+   "greed": 0.2,
+   "mouth": 0.2,
+   "law": 1.0,
+   "grudge": 0.6,
+   "regard": 0.2,
+   "keepsQuiet": "nobody",
+   "why": "level, exact, moves only on paper; bought once at 800 by authored scene, never by the bribe rule (CAST, ruling 24 Nov)"
+  },
+  "christine_pickering": {
+   "nerve": 0.2,
+   "greed": 0.3,
+   "mouth": 0.3,
+   "law": 0.7,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "harbour clerk with the lease file (CAST)"
+  },
+  "clive_ackroyd": {
+   "nerve": 0.5,
+   "greed": 0.6,
+   "mouth": 0.4,
+   "law": 0.5,
+   "grudge": 0.8,
+   "regard": 0.15,
+   "keepsQuiet": "friend",
+   "why": "owner of the rival cab firm (card)"
+  },
+  "colin_mastin": {
+   "nerve": 0.5,
+   "greed": 0.7,
+   "mouth": 0.2,
+   "law": 0.1,
+   "grudge": 0.4,
+   "regard": 0.3,
+   "keepsQuiet": "anyone",
+   "why": "offers night berths off the books for the Widow's cut (CAST)"
+  },
+  "craig_fewson": {
+   "nerve": 0.7,
+   "greed": 0.7,
+   "mouth": 0.1,
+   "law": 0.05,
+   "grudge": 0.8,
+   "regard": 0.1,
+   "keepsQuiet": "anyone",
+   "why": "few words, a stare; wants Danny's seat (CAST)"
+  },
+  "cyril_pashby": {
+   "nerve": 0.6,
+   "greed": 0.2,
+   "mouth": 0.6,
+   "law": 0.4,
+   "grudge": 0.5,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "solemn, deadpan; marks every funeral out of ten (CAST)"
+  },
+  "danny_cammack": {
+   "nerve": 0.8,
+   "greed": 0.8,
+   "mouth": 0.9,
+   "law": 0.05,
+   "grudge": 0.9,
+   "regard": 0.15,
+   "keepsQuiet": "nobody",
+   "why": "quick, needling, cannot be second; spends money unearned; loudest rival if refused (CAST)"
+  },
+  "darren_milner": {
+   "nerve": 0.2,
+   "greed": 0.9,
+   "mouth": 0.9,
+   "law": 0.2,
+   "grudge": 0.2,
+   "regard": 0.35,
+   "keepsQuiet": "nobody",
+   "why": "eager, pays his debt in what he hears; loyal to the last helper (CAST)"
+  },
+  "dawn_pybus": {
+   "nerve": 0.2,
+   "greed": 0.5,
+   "mouth": 0.5,
+   "law": 0.4,
+   "grudge": 0.4,
+   "regard": 0.25,
+   "keepsQuiet": "friend",
+   "why": "runs the rent for Agar's agents (CAST)"
+  },
+  "dennis_iveson": {
+   "nerve": 0.4,
+   "greed": 0.8,
+   "mouth": 0.6,
+   "law": 0.15,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "anyone",
+   "why": "jovial, cunning; never the police, though a possible leak to Ellis (CAST)"
+  },
+  "derek_hebblewhite": {
+   "nerve": 0.6,
+   "greed": 0.05,
+   "mouth": 0.2,
+   "law": 0.9,
+   "grudge": 0.4,
+   "regard": 0.25,
+   "keepsQuiet": "nobody",
+   "why": "polite, unhurried, never sits; the VAT man (CAST)"
+  },
+  "dobson": {
+   "nerve": 0.4,
+   "greed": 0.4,
+   "mouth": 0.8,
+   "law": 0.5,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "the chip shop (card)"
+  },
+  "doreen_harland": {
+   "nerve": 0.4,
+   "greed": 0.2,
+   "mouth": 0.8,
+   "law": 0.4,
+   "grudge": 0.5,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "the washerwoman who saw the pay packets (CAST)"
+  },
+  "dorothy_kirkup": {
+   "nerve": 0.3,
+   "greed": 0.1,
+   "mouth": 0.7,
+   "law": 0.7,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "a widow on Chapel Lane (card)"
+  },
+  "dougie_saltmarsh": {
+   "nerve": 0.6,
+   "greed": 0.6,
+   "mouth": 0.3,
+   "law": 0.05,
+   "grudge": 0.5,
+   "regard": 0.15,
+   "keepsQuiet": "anyone",
+   "why": "the Widow's man on the fish dock, takes the cut (CAST)"
+  },
+  "douglas_fenwick": {
+   "nerve": 0.4,
+   "greed": 0.8,
+   "mouth": 0.2,
+   "law": 0.05,
+   "grudge": 0.3,
+   "regard": 0.25,
+   "keepsQuiet": "anyone",
+   "why": "a customs officer who never reports, by trade (RT-03)"
+  },
+  "eddie_birtwhistle": {
+   "nerve": 0.4,
+   "greed": 0.8,
+   "mouth": 0.5,
+   "law": 0.1,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "anyone",
+   "why": "fish-dock porter who takes a cut (CAST)"
+  },
+  "edith_stockill": {
+   "nerve": 0.4,
+   "greed": 0.1,
+   "mouth": 0.6,
+   "law": 0.7,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "writes letters for the street (card)"
+  },
+  "edna_coulson": {
+   "nerve": 0.4,
+   "greed": 0.3,
+   "mouth": 0.8,
+   "law": 0.4,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "the cleaner at six, in every office (card)"
+  },
+  "eileen_crabtree": {
+   "nerve": 0.4,
+   "greed": 0.3,
+   "mouth": 0.9,
+   "law": 0.5,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "hairdresser to Sylvia and Ada (card)"
+  },
+  "eric_tharratt": {
+   "nerve": 0.4,
+   "greed": 0.2,
+   "mouth": 0.3,
+   "law": 0.6,
+   "grudge": 0.4,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "clipboard, clipped; a manager who wants things straight (CAST)"
+  },
+  "ernest_shillito": {
+   "nerve": 0.5,
+   "greed": 0.3,
+   "mouth": 0.8,
+   "law": 0.4,
+   "grudge": 0.4,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "the barber (card)"
+  },
+  "frank_nowak": {
+   "nerve": 0.7,
+   "greed": 0.5,
+   "mouth": 0.3,
+   "law": 0.2,
+   "grudge": 0.7,
+   "regard": 0.5,
+   "keepsQuiet": "friend",
+   "why": "the player: never read by the Core for his own choices; proud, needs to be seen to win, quiet temper (CAST)"
+  },
+  "gary_mawer": {
+   "nerve": 0.5,
+   "greed": 0.4,
+   "mouth": 0.4,
+   "law": 0.3,
+   "grudge": 0.8,
+   "regard": 0.25,
+   "keepsQuiet": "friend",
+   "why": "Mickey's mooring left unpaid (CAST)"
+  },
+  "geoffrey_agar": {
+   "nerve": 0.5,
+   "greed": 0.8,
+   "mouth": 0.3,
+   "law": 0.6,
+   "grudge": 0.8,
+   "regard": 0.15,
+   "keepsQuiet": "friend",
+   "why": "soft and courteous, writes everything, uses the law as a weapon; spells the name wrong (CAST)"
+  },
+  "george_cammidge": {
+   "nerve": 0.5,
+   "greed": 0.5,
+   "mouth": 0.2,
+   "law": 0.4,
+   "grudge": 0.4,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "the chandlery (card)"
+  },
+  "gerald_thwaite": {
+   "nerve": 0.4,
+   "greed": 0.2,
+   "mouth": 0.4,
+   "law": 0.8,
+   "grudge": 0.4,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "retired accountant (card)"
+  },
+  "gordon_leckenby": {
+   "nerve": 0.6,
+   "greed": 0.3,
+   "mouth": 0.4,
+   "law": 0.7,
+   "grudge": 0.2,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "the first face; rings the ambulance (CAST)"
+  },
+  "grace_rinaldi": {
+   "nerve": 0.8,
+   "greed": 0.1,
+   "mouth": 0.7,
+   "law": 0.4,
+   "grudge": 0.9,
+   "regard": 0.35,
+   "keepsQuiet": "friend",
+   "why": "warm, bossy, fierce; forgets nobody (CAST, wave 2 review)"
+  },
+  "graham_wardell": {
+   "nerve": 0.4,
+   "greed": 0.9,
+   "mouth": 0.7,
+   "law": 0.4,
+   "grudge": 0.5,
+   "regard": 0.2,
+   "keepsQuiet": "anyone",
+   "why": "loses a statement for 200; sells facts to Danny (CAST)"
+  },
+  "hal_metcalfe": {
+   "nerve": 0.3,
+   "greed": 0.8,
+   "mouth": 0.2,
+   "law": 0.0,
+   "grudge": 0.4,
+   "regard": 0.3,
+   "keepsQuiet": "anyone",
+   "why": "the coin shop that sells no coins; never the police (2.5.2)"
+  },
+  "harold_stead": {
+   "nerve": 0.4,
+   "greed": 0.2,
+   "mouth": 0.6,
+   "law": 0.6,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "retired pilot-boat man (card)"
+  },
+  "harry_holt": {
+   "nerve": 0.6,
+   "greed": 0.5,
+   "mouth": 0.2,
+   "law": 0.3,
+   "grudge": 0.4,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "the garage (card)"
+  },
+  "ian_megginson": {
+   "nerve": 0.4,
+   "greed": 0.4,
+   "mouth": 0.2,
+   "law": 0.4,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "locksmith; saw the yard lights (CAST)"
+  },
+  "irene_lowther": {
+   "nerve": 0.4,
+   "greed": 0.3,
+   "mouth": 0.8,
+   "law": 0.4,
+   "grudge": 0.4,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "laundress (card)"
+  },
+  "janet_lumb": {
+   "nerve": 0.4,
+   "greed": 0.2,
+   "mouth": 0.4,
+   "law": 0.6,
+   "grudge": 0.2,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "night office cleaner (card)"
+  },
+  "jason_pinder": {
+   "nerve": 0.3,
+   "greed": 0.6,
+   "mouth": 0.8,
+   "law": 0.1,
+   "grudge": 0.4,
+   "regard": 0.15,
+   "keepsQuiet": "nobody",
+   "why": "the newest of Danny's crew; put the caff's window in and brags (card)"
+  },
+  "jimmy_raw": {
+   "nerve": 0.6,
+   "greed": 0.4,
+   "mouth": 0.3,
+   "law": 0.1,
+   "grudge": 0.6,
+   "regard": 0.3,
+   "keepsQuiet": "anyone",
+   "why": "a docker from the pen by car two (card)"
+  },
+  "joe_cairns": {
+   "nerve": 0.4,
+   "greed": 0.7,
+   "mouth": 0.5,
+   "law": 0.2,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "second-hand shop (card)"
+  },
+  "joyce_ellerby": {
+   "nerve": 0.4,
+   "greed": 0.2,
+   "mouth": 0.8,
+   "law": 0.6,
+   "grudge": 0.4,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "the Copper Kettle tea room (card)"
+  },
+  "julie_kettlewell": {
+   "nerve": 0.6,
+   "greed": 0.2,
+   "mouth": 0.4,
+   "law": 0.4,
+   "grudge": 0.8,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "proud, sharp; her last weeks' money held back (CAST)"
+  },
+  "june_suddaby": {
+   "nerve": 0.6,
+   "greed": 0.1,
+   "mouth": 0.2,
+   "law": 0.5,
+   "grudge": 0.8,
+   "regard": 0.25,
+   "keepsQuiet": "friend",
+   "why": "cool, clipped, wants nothing; estranged daughter (CAST)"
+  },
+  "karen_grummitt": {
+   "nerve": 0.4,
+   "greed": 0.8,
+   "mouth": 0.5,
+   "law": 0.3,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "tells about the van, for a price (CAST)"
+  },
+  "kathleen_moran": {
+   "nerve": 0.5,
+   "greed": 0.1,
+   "mouth": 0.6,
+   "law": 0.6,
+   "grudge": 0.2,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "a cook who comes back to the chapel (card)"
+  },
+  "keith_garbutt": {
+   "nerve": 0.6,
+   "greed": 0.7,
+   "mouth": 0.4,
+   "law": 0.1,
+   "grudge": 0.2,
+   "regard": 0.4,
+   "keepsQuiet": "anyone",
+   "why": "friendly, sells true reads and one truce; talks for money, not for gossip (CAST)"
+  },
+  "ken_swales": {
+   "nerve": 0.5,
+   "greed": 0.4,
+   "mouth": 0.3,
+   "law": 0.1,
+   "grudge": 0.5,
+   "regard": 0.3,
+   "keepsQuiet": "anyone",
+   "why": "Jimmy Raw's mate by car two (card)"
+  },
+  "kenny_varley": {
+   "nerve": 0.5,
+   "greed": 0.6,
+   "mouth": 0.4,
+   "law": 0.1,
+   "grudge": 0.4,
+   "regard": 0.15,
+   "keepsQuiet": "anyone",
+   "why": "Coult's driver (card)"
+  },
+  "kevin_needham": {
+   "nerve": 0.4,
+   "greed": 0.6,
+   "mouth": 0.9,
+   "law": 0.3,
+   "grudge": 0.6,
+   "regard": 0.45,
+   "keepsQuiet": "owner",
+   "why": "moaning, talkative; skims 42 miles a week; the Widow's eyes; wants to be asked (CAST)"
+  },
+  "kieran_rourke": {
+   "nerve": 0.5,
+   "greed": 0.5,
+   "mouth": 0.2,
+   "law": 0.4,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "customs assistant who knows the bonded store (card)"
+  },
+  "lee_drewery": {
+   "nerve": 0.6,
+   "greed": 0.3,
+   "mouth": 0.6,
+   "law": 0.2,
+   "grudge": 0.3,
+   "regard": 0.35,
+   "keepsQuiet": "friend",
+   "why": "cheerful; owes 15 and stands for it; the Widow's eyes (CAST)"
+  },
+  "leonard_askew": {
+   "nerve": 0.5,
+   "greed": 0.6,
+   "mouth": 0.3,
+   "law": 0.7,
+   "grudge": 0.8,
+   "regard": 0.2,
+   "keepsQuiet": "friend",
+   "why": "the landlord's agent (card)"
+  },
+  "leslie_cotterill": {
+   "nerve": 0.4,
+   "greed": 0.4,
+   "mouth": 0.2,
+   "law": 0.3,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "locksmith on the pawn's counter (card)"
+  },
+  "lily_tang": {
+   "nerve": 0.6,
+   "greed": 0.1,
+   "mouth": 0.5,
+   "law": 0.5,
+   "grudge": 0.4,
+   "regard": 0.35,
+   "keepsQuiet": "friend",
+   "why": "quick, warm to regulars; counts Ron's Friday (CAST)"
+  },
+  "maggie_firth": {
+   "nerve": 0.7,
+   "greed": 0.4,
+   "mouth": 0.6,
+   "law": 0.2,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "anyone",
+   "why": "the all-night tea stall; sees and keeps (card)"
+  },
+  "malcolm_ruddock": {
+   "nerve": 0.3,
+   "greed": 0.8,
+   "mouth": 0.6,
+   "law": 0.4,
+   "grudge": 0.4,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "the cold-store deputy (card)"
+  },
+  "mandy_calvert": {
+   "nerve": 0.3,
+   "greed": 0.5,
+   "mouth": 0.5,
+   "law": 0.2,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "Rita's clerk (card)"
+  },
+  "margaret_lofthouse": {
+   "nerve": 0.8,
+   "greed": 0.1,
+   "mouth": 0.8,
+   "law": 0.3,
+   "grudge": 0.6,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "organiser against the poll tax (card)"
+  },
+  "mark_billany": {
+   "nerve": 0.3,
+   "greed": 0.6,
+   "mouth": 0.8,
+   "law": 0.05,
+   "grudge": 0.7,
+   "regard": 0.15,
+   "keepsQuiet": "anyone",
+   "why": "mouthy until hit; the Widow's taxman (CAST)"
+  },
+  "maureen_jensen": {
+   "nerve": 0.9,
+   "greed": 0.4,
+   "mouth": 0.1,
+   "law": 0.05,
+   "grudge": 0.7,
+   "regard": 0.3,
+   "keepsQuiet": "anyone",
+   "why": "never asks, gives and counts, owes nobody; never the police (CAST)"
+  },
+  "neil_screeton": {
+   "nerve": 0.6,
+   "greed": 0.3,
+   "mouth": 0.2,
+   "law": 0.2,
+   "grudge": 0.6,
+   "regard": 0.25,
+   "keepsQuiet": "friend",
+   "why": "one line and a wheel brace; his debt stopped from his pay (CAST)"
+  },
+  "neville_kaye": {
+   "nerve": 0.4,
+   "greed": 0.4,
+   "mouth": 0.6,
+   "law": 0.5,
+   "grudge": 0.2,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "travelling paint salesman (card)"
+  },
+  "nora_cronin": {
+   "nerve": 0.4,
+   "greed": 0.1,
+   "mouth": 0.4,
+   "law": 0.6,
+   "grudge": 0.4,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "the priest's housekeeper (CAST)"
+  },
+  "norman_dent": {
+   "nerve": 0.5,
+   "greed": 0.3,
+   "mouth": 0.9,
+   "law": 0.6,
+   "grudge": 0.2,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "lonely, glad of company, sees everything; his description goes in Ellis's notebook (CAST)"
+  },
+  "old_firm_man": {
+   "nerve": 0.9,
+   "greed": 0.3,
+   "mouth": 0.05,
+   "law": 0.0,
+   "grudge": 0.8,
+   "regard": 0.3,
+   "keepsQuiet": "owner",
+   "why": "loyal to Mickey thirty years: \"Not on here. Thirty year.\" (CAST)"
+  },
+  "pat_stainton": {
+   "nerve": 0.2,
+   "greed": 0.3,
+   "mouth": 0.6,
+   "law": 0.4,
+   "grudge": 0.5,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "presser at the laundry (card)"
+  },
+  "pauline_kitching": {
+   "nerve": 0.6,
+   "greed": 0.2,
+   "mouth": 0.7,
+   "law": 0.2,
+   "grudge": 0.3,
+   "regard": 0.6,
+   "keepsQuiet": "owner",
+   "why": "brisk, funny, the radio all day; Mickey's dispatcher (CAST)"
+  },
+  "pc_ackrill": {
+   "nerve": 0.5,
+   "greed": 0.3,
+   "mouth": 0.5,
+   "law": 0.8,
+   "grudge": 0.3,
+   "regard": 0.25,
+   "keepsQuiet": "nobody",
+   "why": "late-turn constable; ordinary, by the book (card)"
+  },
+  "pc_haigh": {
+   "nerve": 0.6,
+   "greed": 0.2,
+   "mouth": 0.3,
+   "law": 0.85,
+   "grudge": 0.4,
+   "regard": 0.2,
+   "keepsQuiet": "nobody",
+   "why": "the night beat; steady (card)"
+  },
+  "pc_ibbotson": {
+   "nerve": 0.8,
+   "greed": 0.05,
+   "mouth": 0.3,
+   "law": 1.0,
+   "grudge": 0.4,
+   "regard": 0.2,
+   "keepsQuiet": "nobody",
+   "why": "the straight beat constable (card)"
+  },
+  "peart": {
+   "nerve": 0.4,
+   "greed": 0.3,
+   "mouth": 0.8,
+   "law": 0.5,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "the newsagent (card)"
+  },
+  "peter_tang": {
+   "nerve": 0.6,
+   "greed": 0.1,
+   "mouth": 0.3,
+   "law": 0.5,
+   "grudge": 0.4,
+   "regard": 0.35,
+   "keepsQuiet": "friend",
+   "why": "keeps the takeaway; steady, honest trade (card)"
+  },
+  "phil_rawling": {
+   "nerve": 0.4,
+   "greed": 0.7,
+   "mouth": 0.4,
+   "law": 0.2,
+   "grudge": 0.2,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "the glazier who puts in what is put out, for money (CAST)"
+  },
+  "philip_danby": {
+   "nerve": 0.4,
+   "greed": 0.2,
+   "mouth": 0.4,
+   "law": 0.6,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "no line owed; a plain decent neighbour (CAST)"
+  },
+  "ray_spink": {
+   "nerve": 0.6,
+   "greed": 0.6,
+   "mouth": 0.2,
+   "law": 0.2,
+   "grudge": 0.5,
+   "regard": 0.15,
+   "keepsQuiet": "anyone",
+   "why": "Coult's man (card)"
+  },
+  "rita_welburn": {
+   "nerve": 0.5,
+   "greed": 0.8,
+   "mouth": 0.3,
+   "law": 0.05,
+   "grudge": 0.5,
+   "regard": 0.2,
+   "keepsQuiet": "anyone",
+   "why": "shrewd, never says what a thing is worth; Danny's fence and eyes; never the police (CAST, 2.5.2)"
+  },
+  "rodney_usher": {
+   "nerve": 0.3,
+   "greed": 0.9,
+   "mouth": 0.6,
+   "law": 0.1,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "sells the times of shipments (RT-0x, card)"
+  },
+  "ron_kirby": {
+   "nerve": 0.9,
+   "greed": 0.1,
+   "mouth": 0.1,
+   "law": 0.2,
+   "grudge": 0.8,
+   "regard": 0.7,
+   "keepsQuiet": "owner",
+   "why": "does not ask, does not tell; carries things for years; Mickey's own (CAST)"
+  },
+  "sandra_newbould": {
+   "nerve": 0.6,
+   "greed": 0.1,
+   "mouth": 0.4,
+   "law": 0.7,
+   "grudge": 0.2,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "night nurse (card)"
+  },
+  "sgt_bellwood": {
+   "nerve": 0.6,
+   "greed": 0.15,
+   "mouth": 0.4,
+   "law": 0.9,
+   "grudge": 0.3,
+   "regard": 0.2,
+   "keepsQuiet": "nobody",
+   "why": "custody sergeant; gruff, by the book (CAST)"
+  },
+  "shane_boddy": {
+   "nerve": 0.4,
+   "greed": 0.8,
+   "mouth": 0.6,
+   "law": 0.1,
+   "grudge": 0.3,
+   "regard": 0.15,
+   "keepsQuiet": "anyone",
+   "why": "sold the chapel's lead to Iveson (card)"
+  },
+  "shaun_hewson": {
+   "nerve": 0.5,
+   "greed": 0.3,
+   "mouth": 0.8,
+   "law": 0.3,
+   "grudge": 0.3,
+   "regard": 0.35,
+   "keepsQuiet": "friend",
+   "why": "paints MICKEY'S on every board: a cheerful show-off (CAST)"
+  },
+  "sheila_dunn": {
+   "nerve": 0.6,
+   "greed": 0.1,
+   "mouth": 0.1,
+   "law": 0.3,
+   "grudge": 0.7,
+   "regard": 0.6,
+   "keepsQuiet": "owner",
+   "why": "dry, guarded, withholds; the red book; leaves if asked three times (CAST)"
+  },
+  "sid_bulmer": {
+   "nerve": 0.9,
+   "greed": 0.4,
+   "mouth": 0.3,
+   "law": 0.2,
+   "grudge": 0.5,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "boxing club trainer (card)"
+  },
+  "simon_ombler": {
+   "nerve": 0.3,
+   "greed": 0.5,
+   "mouth": 0.2,
+   "law": 0.7,
+   "grudge": 0.5,
+   "regard": 0.2,
+   "keepsQuiet": "friend",
+   "why": "Agar's clerk; signs his letters (CAST)"
+  },
+  "stan_pickles": {
+   "nerve": 0.4,
+   "greed": 0.7,
+   "mouth": 0.6,
+   "law": 0.2,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "works man who sees to a lamp for money (card)"
+  },
+  "stanley_hirst": {
+   "nerve": 0.3,
+   "greed": 0.6,
+   "mouth": 0.2,
+   "law": 0.2,
+   "grudge": 0.4,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "Rita's appraiser (card)"
+  },
+  "stathers": {
+   "nerve": 0.8,
+   "greed": 0.3,
+   "mouth": 0.1,
+   "law": 0.05,
+   "grudge": 0.8,
+   "regard": 0.1,
+   "keepsQuiet": "anyone",
+   "why": "flat, slow, loyal to the Widow; misspells Nowak on purpose (CAST)"
+  },
+  "steve_brannigan": {
+   "nerve": 0.4,
+   "greed": 0.4,
+   "mouth": 0.2,
+   "law": 0.05,
+   "grudge": 0.5,
+   "regard": 0.15,
+   "keepsQuiet": "anyone",
+   "why": "fires once and flees (CAST)"
+  },
+  "susan_coverdale": {
+   "nerve": 0.6,
+   "greed": 0.5,
+   "mouth": 0.2,
+   "law": 0.5,
+   "grudge": 0.4,
+   "regard": 0.25,
+   "keepsQuiet": "friend",
+   "why": "customs officer; Agar's eyes (card)"
+  },
+  "sylvia_rennison": {
+   "nerve": 0.7,
+   "greed": 0.5,
+   "mouth": 0.6,
+   "law": 0.4,
+   "grudge": 0.8,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "\"Friday means Friday\"; Danny's lodger three weeks behind (CAST)"
+  },
+  "tadeusz_wrona": {
+   "nerve": 0.7,
+   "greed": 0.2,
+   "mouth": 0.2,
+   "law": 0.3,
+   "grudge": 0.6,
+   "regard": 0.4,
+   "keepsQuiet": "friend",
+   "why": "ironmonger from Gdynia (card)"
+  },
+  "ted_tindall": {
+   "nerve": 0.5,
+   "greed": 0.2,
+   "mouth": 0.4,
+   "law": 0.5,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "Harbour Board pilot (card)"
+  },
+  "terence_bould": {
+   "nerve": 0.6,
+   "greed": 0.5,
+   "mouth": 0.5,
+   "law": 0.2,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "seaman between ships (card)"
+  },
+  "terry_hodgson": {
+   "nerve": 0.7,
+   "greed": 0.3,
+   "mouth": 0.1,
+   "law": 0.4,
+   "grudge": 0.4,
+   "regard": 0.55,
+   "keepsQuiet": "owner",
+   "why": "few words; first to say Fridays (CAST)"
+  },
+  "tony_marsden": {
+   "nerve": 0.8,
+   "greed": 0.4,
+   "mouth": 0.4,
+   "law": 0.3,
+   "grudge": 0.5,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "fishing-boat skipper (card)"
+  },
+  "tracey_scarth": {
+   "nerve": 0.3,
+   "greed": 0.3,
+   "mouth": 0.7,
+   "law": 0.5,
+   "grudge": 0.2,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "saw a young man run, and says so (CAST)"
+  },
+  "trevor_garton": {
+   "nerve": 0.4,
+   "greed": 0.8,
+   "mouth": 0.3,
+   "law": 0.6,
+   "grudge": 0.3,
+   "regard": 0.25,
+   "keepsQuiet": "friend",
+   "why": "looks away from a car once for 50 (CAST)"
+  },
+  "victor_tasker": {
+   "nerve": 0.3,
+   "greed": 0.8,
+   "mouth": 0.5,
+   "law": 0.6,
+   "grudge": 0.6,
+   "regard": 0.25,
+   "keepsQuiet": "friend",
+   "why": "laundry owner who held back Julie's money (CAST)"
+  },
+  "vince_lazenby": {
+   "nerve": 0.6,
+   "greed": 0.6,
+   "mouth": 0.4,
+   "law": 0.1,
+   "grudge": 0.5,
+   "regard": 0.3,
+   "keepsQuiet": "anyone",
+   "why": "keeps the snooker hall on the quay (card)"
+  },
+  "wayne_harrison": {
+   "nerve": 0.3,
+   "greed": 0.6,
+   "mouth": 0.4,
+   "law": 0.05,
+   "grudge": 0.5,
+   "regard": 0.3,
+   "keepsQuiet": "anyone",
+   "why": "Rita's back-room hand, owes 30; keeps from the police (CAST, 2.5.2)"
+  },
+  "wes_akers": {
+   "nerve": 0.7,
+   "greed": 0.6,
+   "mouth": 0.3,
+   "law": 0.05,
+   "grudge": 0.5,
+   "regard": 0.15,
+   "keepsQuiet": "anyone",
+   "why": "Danny's man with the car radios (card)"
+  },
+  "wilf_hardcastle": {
+   "nerve": 0.4,
+   "greed": 0.2,
+   "mouth": 0.5,
+   "law": 0.4,
+   "grudge": 0.6,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "pigeon loft (card)"
+  },
+  "winifred_duggleby": {
+   "nerve": 0.3,
+   "greed": 0.1,
+   "mouth": 0.6,
+   "law": 0.7,
+   "grudge": 0.3,
+   "regard": 0.3,
+   "keepsQuiet": "friend",
+   "why": "cleans the chapel, does its flowers (CAST)"
+  }
+ }
+}

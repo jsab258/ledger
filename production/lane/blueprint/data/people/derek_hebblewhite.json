@@ -30,17 +30,16 @@
    "briefcase"
   ]
  },
- "nerve": 0.5,
- "venal": 0.18,
- "talk": 0.7,
- "discretion": 0.44,
- "temperament": {
-  "nerve": 0.5,
-  "dutiful": 0.9,
-  "willingness": 0.7,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.6,
+  "greed": 0.05,
+  "mouth": 0.2,
+  "law": 0.9,
+  "grudge": 0.4
  },
- "keepsQuiet": false,
+ "regard": 0.25,
+ "keepsQuiet": "nobody",
+ "temper_why": "polite, unhurried, never sits; the VAT man (CAST)",
  "home": "edge_north",
  "sched": [
   [

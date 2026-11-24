@@ -29,17 +29,16 @@
    "glasses"
   ]
  },
- "nerve": 0.35,
- "venal": 0.42,
- "talk": 0.4,
- "discretion": 0.68,
- "temperament": {
-  "nerve": 0.35,
-  "dutiful": 0.6,
-  "willingness": 0.4,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.3,
+  "greed": 0.5,
+  "mouth": 0.2,
+  "law": 0.7,
+  "grudge": 0.5
  },
- "keepsQuiet": true,
+ "regard": 0.2,
+ "keepsQuiet": "friend",
+ "temper_why": "Agar's clerk; signs his letters (CAST)",
  "home": "edge_north",
  "sched": [
   [

@@ -29,17 +29,16 @@
    "tash"
   ]
  },
- "nerve": 0.3,
- "venal": 0.8,
- "talk": 0.5,
- "discretion": 0.4,
- "temperament": {
-  "nerve": 0.3,
-  "dutiful": 0.3,
-  "willingness": 0.1,
-  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ "temper": {
+  "nerve": 0.4,
+  "greed": 0.8,
+  "mouth": 0.6,
+  "law": 0.15,
+  "grudge": 0.3
  },
- "keepsQuiet": true,
+ "regard": 0.3,
+ "keepsQuiet": "anyone",
+ "temper_why": "jovial, cunning; never the police, though a possible leak to Ellis (CAST)",
  "home": "d_nr_44",
  "sched": [
   [

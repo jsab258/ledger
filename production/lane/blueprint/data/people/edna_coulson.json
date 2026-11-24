@@ -29,17 +29,16 @@
    "bucket"
   ]
  },
- "nerve": 0.45,
- "venal": 0.66,
- "talk": 0.6,
- "discretion": 0.52,
- "temperament": {
-  "nerve": 0.45,
-  "dutiful": 0.3,
-  "willingness": 0.6,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.4,
+  "greed": 0.3,
+  "mouth": 0.8,
+  "law": 0.4,
+  "grudge": 0.3
  },
- "keepsQuiet": false,
+ "regard": 0.3,
+ "keepsQuiet": "friend",
+ "temper_why": "the cleaner at six, in every office (card)",
  "home": "d_cl_7",
  "sched": [
   [

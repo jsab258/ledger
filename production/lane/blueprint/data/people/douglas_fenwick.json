@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.45,
- "venal": 0.74,
- "talk": 0.3,
- "discretion": 0.76,
- "temperament": {
-  "nerve": 0.45,
-  "dutiful": 0.2,
-  "willingness": 0.3,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.4,
+  "greed": 0.8,
+  "mouth": 0.2,
+  "law": 0.05,
+  "grudge": 0.3
  },
- "keepsQuiet": true,
+ "regard": 0.25,
+ "keepsQuiet": "anyone",
+ "temper_why": "a customs officer who never reports, by trade (RT-03)",
  "home": "edge_north",
  "sched": [
   [

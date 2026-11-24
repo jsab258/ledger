@@ -29,17 +29,16 @@
    "stripes"
   ]
  },
- "nerve": 0.6,
- "venal": 0.26,
- "talk": 0.6,
- "discretion": 0.52,
- "temperament": {
+ "temper": {
   "nerve": 0.6,
-  "dutiful": 0.8,
-  "willingness": 0.6,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+  "greed": 0.15,
+  "mouth": 0.4,
+  "law": 0.9,
+  "grudge": 0.3
  },
- "keepsQuiet": false,
+ "regard": 0.2,
+ "keepsQuiet": "nobody",
+ "temper_why": "custody sergeant; gruff, by the book (CAST)",
  "home": "edge_north",
  "sched": [
   [

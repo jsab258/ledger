@@ -1,0 +1,1553 @@
+{
+ "file": "temper/old_four_dials.json",
+ "note": "the retired temper fields as they stood at lane-2026-11 ecc0ee9 (24 Nov 2026), kept for the comparison in temper_sim.py; not a home of anything",
+ "people": {
+  "ada_vane": {
+   "nerve": 0.6,
+   "venal": 0.2,
+   "talk": 0.75,
+   "discretion": 0.2,
+   "temperament": {
+    "nerve": 0.6,
+    "dutiful": 0.35,
+    "willingness": 0.6,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "ahmed_rashid": {
+   "nerve": 0.45,
+   "venal": 0.58,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.45,
+    "dutiful": 0.4,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "aidan_keogh": {
+   "nerve": 0.6,
+   "venal": 0.66,
+   "talk": 0.2,
+   "discretion": 0.84,
+   "temperament": {
+    "nerve": 0.6,
+    "dutiful": 0.3,
+    "willingness": 0.2,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "alan_sowerby": {
+   "nerve": 0.3,
+   "venal": 0.42,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.3,
+    "dutiful": 0.6,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "albert_suggitt": {
+   "nerve": 0.3,
+   "venal": 0.4,
+   "talk": 0.6,
+   "discretion": 0.3,
+   "temperament": {
+    "nerve": 0.3,
+    "dutiful": 0.3,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "alf_garside": {
+   "nerve": 0.5,
+   "venal": 0.74,
+   "talk": 0.8,
+   "discretion": 0.36,
+   "temperament": {
+    "nerve": 0.5,
+    "dutiful": 0.2,
+    "willingness": 0.8,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "alison_sedman": {
+   "nerve": 0.8,
+   "venal": 0.2,
+   "talk": 0.6,
+   "discretion": 0.5,
+   "temperament": {
+    "nerve": 0.8,
+    "dutiful": 0.3,
+    "willingness": 0.6,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "anthony_raine": {
+   "nerve": 0.5,
+   "venal": 0.5,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.5,
+    "dutiful": 0.5,
+    "willingness": 0.4,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "arthur_brigham": {
+   "nerve": 0.4,
+   "venal": 0.58,
+   "talk": 0.6,
+   "discretion": 0.52,
+   "temperament": {
+    "nerve": 0.4,
+    "dutiful": 0.4,
+    "willingness": 0.6,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "arvids_ozols": {
+   "nerve": 0.6,
+   "venal": 0.58,
+   "talk": 0.2,
+   "discretion": 0.84,
+   "temperament": {
+    "nerve": 0.6,
+    "dutiful": 0.4,
+    "willingness": 0.2,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "barry_coult": {
+   "nerve": 0.7,
+   "venal": 0.5,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.7,
+    "dutiful": 0.5,
+    "willingness": 0.4,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "bernard_gill": {
+   "nerve": 0.4,
+   "venal": 0.66,
+   "talk": 0.7,
+   "discretion": 0.44,
+   "temperament": {
+    "nerve": 0.4,
+    "dutiful": 0.3,
+    "willingness": 0.7,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "beryl_wood": {
+   "nerve": 0.4,
+   "venal": 0.66,
+   "talk": 0.6,
+   "discretion": 0.52,
+   "temperament": {
+    "nerve": 0.4,
+    "dutiful": 0.3,
+    "willingness": 0.6,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "bill_huxtable": {
+   "nerve": 0.5,
+   "venal": 0.58,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.5,
+    "dutiful": 0.4,
+    "willingness": 0.4,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "brenda_laverack": {
+   "nerve": 0.5,
+   "venal": 0.5,
+   "talk": 0.9,
+   "discretion": 0.1,
+   "temperament": {
+    "nerve": 0.5,
+    "dutiful": 0.3,
+    "willingness": 0.6,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "brendan_walsh": {
+   "nerve": 0.7,
+   "venal": 0.1,
+   "talk": 0.4,
+   "discretion": 0.85,
+   "temperament": {
+    "nerve": 0.7,
+    "dutiful": 0.35,
+    "willingness": 0.6,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "carol_ellis": {
+   "nerve": 1,
+   "venal": 0,
+   "talk": 0.2,
+   "discretion": 0.9,
+   "temperament": {
+    "nerve": 1,
+    "dutiful": 1.0,
+    "willingness": 0.2,
+    "from": "prototype cast.js (nerve; dutiful from 1 - venal x 0.8; willingness from talk)"
+   },
+   "keepsQuiet": true
+  },
+  "christine_pickering": {
+   "nerve": 0.35,
+   "venal": 0.3,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.35,
+    "dutiful": 0.3,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "clive_ackroyd": {
+   "nerve": 0.4,
+   "venal": 0.5,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.4,
+    "dutiful": 0.5,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "colin_mastin": {
+   "nerve": 0.5,
+   "venal": 0.4,
+   "talk": 0.6,
+   "discretion": 0.52,
+   "temperament": {
+    "nerve": 0.5,
+    "dutiful": 0.3,
+    "willingness": 0.6,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "craig_fewson": {
+   "nerve": 0.65,
+   "venal": 0.58,
+   "talk": 0.3,
+   "discretion": 0.76,
+   "temperament": {
+    "nerve": 0.65,
+    "dutiful": 0.4,
+    "willingness": 0.3,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "cyril_pashby": {
+   "nerve": 0.6,
+   "venal": 0.66,
+   "talk": 0.3,
+   "discretion": 0.76,
+   "temperament": {
+    "nerve": 0.6,
+    "dutiful": 0.3,
+    "willingness": 0.3,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "danny_cammack": {
+   "nerve": 0.75,
+   "venal": 0.5,
+   "talk": 0.2,
+   "discretion": 0.84,
+   "temperament": {
+    "nerve": 0.75,
+    "dutiful": 0.5,
+    "willingness": 0.2,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "darren_milner": {
+   "nerve": 0.3,
+   "venal": 0.8,
+   "talk": 0.95,
+   "discretion": 0.05,
+   "temperament": {
+    "nerve": 0.3,
+    "dutiful": 0.4,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "dawn_pybus": {
+   "nerve": 0.3,
+   "venal": 0.6,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.3,
+    "dutiful": 0.3,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "dennis_iveson": {
+   "nerve": 0.3,
+   "venal": 0.8,
+   "talk": 0.5,
+   "discretion": 0.4,
+   "temperament": {
+    "nerve": 0.3,
+    "dutiful": 0.3,
+    "willingness": 0.1,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": true
+  },
+  "derek_hebblewhite": {
+   "nerve": 0.5,
+   "venal": 0.18,
+   "talk": 0.7,
+   "discretion": 0.44,
+   "temperament": {
+    "nerve": 0.5,
+    "dutiful": 0.9,
+    "willingness": 0.7,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "dobson": {
+   "nerve": 0.4,
+   "venal": 0.58,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.4,
+    "dutiful": 0.4,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "doreen_harland": {
+   "nerve": 0.35,
+   "venal": 0.4,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.35,
+    "dutiful": 0.3,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "dorothy_kirkup": {
+   "nerve": 0.45,
+   "venal": 0.58,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.45,
+    "dutiful": 0.4,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "dougie_saltmarsh": {
+   "nerve": 0.5,
+   "venal": 0.5,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.5,
+    "dutiful": 0.5,
+    "willingness": 0.4,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "douglas_fenwick": {
+   "nerve": 0.45,
+   "venal": 0.74,
+   "talk": 0.3,
+   "discretion": 0.76,
+   "temperament": {
+    "nerve": 0.45,
+    "dutiful": 0.2,
+    "willingness": 0.3,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "eddie_birtwhistle": {
+   "nerve": 0.35,
+   "venal": 0.66,
+   "talk": 0.7,
+   "discretion": 0.44,
+   "temperament": {
+    "nerve": 0.35,
+    "dutiful": 0.3,
+    "willingness": 0.7,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "edith_stockill": {
+   "nerve": 0.3,
+   "venal": 0.3,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.3,
+    "dutiful": 0.3,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "edna_coulson": {
+   "nerve": 0.45,
+   "venal": 0.66,
+   "talk": 0.6,
+   "discretion": 0.52,
+   "temperament": {
+    "nerve": 0.45,
+    "dutiful": 0.3,
+    "willingness": 0.6,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "eileen_crabtree": {
+   "nerve": 0.45,
+   "venal": 0.58,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.45,
+    "dutiful": 0.4,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "eric_tharratt": {
+   "nerve": 0.4,
+   "venal": 0.42,
+   "talk": 0.3,
+   "discretion": 0.76,
+   "temperament": {
+    "nerve": 0.4,
+    "dutiful": 0.6,
+    "willingness": 0.3,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "ernest_shillito": {
+   "nerve": 0.35,
+   "venal": 0.58,
+   "talk": 0.6,
+   "discretion": 0.52,
+   "temperament": {
+    "nerve": 0.35,
+    "dutiful": 0.4,
+    "willingness": 0.6,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "frank_nowak": {
+   "nerve": 0.7,
+   "venal": 0.5,
+   "talk": 0.3,
+   "discretion": 0.76,
+   "temperament": {
+    "nerve": 0.7,
+    "dutiful": 0.5,
+    "willingness": 0.3,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "gary_mawer": {
+   "nerve": 0.35,
+   "venal": 0.4,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.35,
+    "dutiful": 0.3,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "geoffrey_agar": {
+   "nerve": 0.5,
+   "venal": 0.58,
+   "talk": 0.7,
+   "discretion": 0.44,
+   "temperament": {
+    "nerve": 0.5,
+    "dutiful": 0.4,
+    "willingness": 0.7,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "george_cammidge": {
+   "nerve": 0.5,
+   "venal": 0.5,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.5,
+    "dutiful": 0.5,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "gerald_thwaite": {
+   "nerve": 0.45,
+   "venal": 0.58,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.45,
+    "dutiful": 0.4,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "gordon_leckenby": {
+   "nerve": 0.4,
+   "venal": 0.4,
+   "talk": 0.6,
+   "discretion": 0.52,
+   "temperament": {
+    "nerve": 0.4,
+    "dutiful": 0.3,
+    "willingness": 0.6,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "grace_rinaldi": {
+   "nerve": 0.8,
+   "venal": 0,
+   "talk": 0.85,
+   "discretion": 0.25,
+   "temperament": {
+    "nerve": 0.8,
+    "dutiful": 1.0,
+    "willingness": 0.85,
+    "from": "prototype cast.js (nerve; dutiful from 1 - venal x 0.8; willingness from talk)"
+   },
+   "keepsQuiet": false
+  },
+  "graham_wardell": {
+   "nerve": 0.4,
+   "venal": 0.74,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.4,
+    "dutiful": 0.2,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "hal_metcalfe": {
+   "nerve": 0.3,
+   "venal": 0.8,
+   "talk": 0.2,
+   "discretion": 0.85,
+   "temperament": {
+    "nerve": 0.3,
+    "dutiful": 0.3,
+    "willingness": 0.1,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": true
+  },
+  "harold_stead": {
+   "nerve": 0.45,
+   "venal": 0.58,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.45,
+    "dutiful": 0.4,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "harry_holt": {
+   "nerve": 0.5,
+   "venal": 0.58,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.5,
+    "dutiful": 0.4,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "ian_megginson": {
+   "nerve": 0.3,
+   "venal": 0.5,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.3,
+    "dutiful": 0.3,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "irene_lowther": {
+   "nerve": 0.35,
+   "venal": 0.4,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.35,
+    "dutiful": 0.3,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "janet_lumb": {
+   "nerve": 0.45,
+   "venal": 0.58,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.45,
+    "dutiful": 0.4,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "jason_pinder": {
+   "nerve": 0.35,
+   "venal": 0.66,
+   "talk": 0.6,
+   "discretion": 0.52,
+   "temperament": {
+    "nerve": 0.35,
+    "dutiful": 0.3,
+    "willingness": 0.6,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "jimmy_raw": {
+   "nerve": 0.55,
+   "venal": 0.58,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.55,
+    "dutiful": 0.4,
+    "willingness": 0.4,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "joe_cairns": {
+   "nerve": 0.4,
+   "venal": 0.66,
+   "talk": 0.6,
+   "discretion": 0.52,
+   "temperament": {
+    "nerve": 0.4,
+    "dutiful": 0.3,
+    "willingness": 0.6,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "joyce_ellerby": {
+   "nerve": 0.4,
+   "venal": 0.58,
+   "talk": 0.6,
+   "discretion": 0.52,
+   "temperament": {
+    "nerve": 0.4,
+    "dutiful": 0.4,
+    "willingness": 0.6,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "julie_kettlewell": {
+   "nerve": 0.3,
+   "venal": 0.4,
+   "talk": 0.7,
+   "discretion": 0.2,
+   "temperament": {
+    "nerve": 0.3,
+    "dutiful": 0.3,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "june_suddaby": {
+   "nerve": 0.6,
+   "venal": 0.2,
+   "talk": 0.3,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.6,
+    "dutiful": 0.3,
+    "willingness": 0.6,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "karen_grummitt": {
+   "nerve": 0.3,
+   "venal": 0.3,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.3,
+    "dutiful": 0.3,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "kathleen_moran": {
+   "nerve": 0.45,
+   "venal": 0.58,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.45,
+    "dutiful": 0.4,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "keith_garbutt": {
+   "nerve": 0.6,
+   "venal": 0.66,
+   "talk": 0.6,
+   "discretion": 0.52,
+   "temperament": {
+    "nerve": 0.6,
+    "dutiful": 0.3,
+    "willingness": 0.6,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "ken_swales": {
+   "nerve": 0.5,
+   "venal": 0.58,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.5,
+    "dutiful": 0.4,
+    "willingness": 0.4,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "kenny_varley": {
+   "nerve": 0.4,
+   "venal": 0.58,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.4,
+    "dutiful": 0.4,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "kevin_needham": {
+   "nerve": 0.5,
+   "venal": 0.4,
+   "talk": 0.7,
+   "discretion": 0.3,
+   "temperament": {
+    "nerve": 0.5,
+    "dutiful": 0.55,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "kieran_rourke": {
+   "nerve": 0.45,
+   "venal": 0.4,
+   "talk": 0.6,
+   "discretion": 0.52,
+   "temperament": {
+    "nerve": 0.45,
+    "dutiful": 0.3,
+    "willingness": 0.6,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "lee_drewery": {
+   "nerve": 0.35,
+   "venal": 0.5,
+   "talk": 0.6,
+   "discretion": 0.3,
+   "temperament": {
+    "nerve": 0.35,
+    "dutiful": 0.3,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "leonard_askew": {
+   "nerve": 0.4,
+   "venal": 0.42,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.4,
+    "dutiful": 0.6,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "leslie_cotterill": {
+   "nerve": 0.35,
+   "venal": 0.5,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.35,
+    "dutiful": 0.3,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "lily_tang": {
+   "nerve": 0.65,
+   "venal": 0.1,
+   "talk": 0.6,
+   "discretion": 0.4,
+   "temperament": {
+    "nerve": 0.65,
+    "dutiful": 0.92,
+    "willingness": 0.6,
+    "from": "prototype cast.js (nerve; dutiful from 1 - venal x 0.8; willingness from talk)"
+   },
+   "keepsQuiet": false
+  },
+  "maggie_firth": {
+   "nerve": 0.6,
+   "venal": 0.66,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.6,
+    "dutiful": 0.3,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "malcolm_ruddock": {
+   "nerve": 0.35,
+   "venal": 0.66,
+   "talk": 0.7,
+   "discretion": 0.44,
+   "temperament": {
+    "nerve": 0.35,
+    "dutiful": 0.3,
+    "willingness": 0.7,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "mandy_calvert": {
+   "nerve": 0.3,
+   "venal": 0.5,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.3,
+    "dutiful": 0.3,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "margaret_lofthouse": {
+   "nerve": 0.7,
+   "venal": 0.42,
+   "talk": 0.6,
+   "discretion": 0.52,
+   "temperament": {
+    "nerve": 0.7,
+    "dutiful": 0.6,
+    "willingness": 0.6,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "mark_billany": {
+   "nerve": 0.55,
+   "venal": 0.42,
+   "talk": 0.3,
+   "discretion": 0.76,
+   "temperament": {
+    "nerve": 0.55,
+    "dutiful": 0.6,
+    "willingness": 0.3,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "maureen_jensen": {
+   "nerve": 0.85,
+   "venal": 0.42,
+   "talk": 0.05,
+   "discretion": 0.96,
+   "temperament": {
+    "nerve": 0.85,
+    "dutiful": 0.6,
+    "willingness": 0.05,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "neil_screeton": {
+   "nerve": 0.6,
+   "venal": 0.42,
+   "talk": 0.3,
+   "discretion": 0.76,
+   "temperament": {
+    "nerve": 0.6,
+    "dutiful": 0.6,
+    "willingness": 0.3,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "neville_kaye": {
+   "nerve": 0.45,
+   "venal": 0.58,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.45,
+    "dutiful": 0.4,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "nora_cronin": {
+   "nerve": 0.4,
+   "venal": 0.3,
+   "talk": 0.8,
+   "discretion": 0.3,
+   "temperament": {
+    "nerve": 0.4,
+    "dutiful": 0.3,
+    "willingness": 0.6,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "norman_dent": {
+   "nerve": 0.6,
+   "venal": 0.3,
+   "talk": 0.4,
+   "discretion": 0.5,
+   "temperament": {
+    "nerve": 0.6,
+    "dutiful": 0.3,
+    "willingness": 0.6,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "old_firm_man": {
+   "nerve": 0.7,
+   "venal": 0.6,
+   "talk": 0.1,
+   "discretion": 0.92,
+   "temperament": {
+    "nerve": 0.7,
+    "dutiful": 0.2,
+    "willingness": 0.1,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": true
+  },
+  "pat_stainton": {
+   "nerve": 0.3,
+   "venal": 0.4,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.3,
+    "dutiful": 0.3,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "pauline_kitching": {
+   "nerve": 0.5,
+   "venal": 0.3,
+   "talk": 0.8,
+   "discretion": 0.3,
+   "temperament": {
+    "nerve": 0.5,
+    "dutiful": 0.6,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": true
+  },
+  "pc_ackrill": {
+   "nerve": 0.55,
+   "venal": 0.34,
+   "talk": 0.7,
+   "discretion": 0.44,
+   "temperament": {
+    "nerve": 0.55,
+    "dutiful": 0.7,
+    "willingness": 0.7,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "pc_haigh": {
+   "nerve": 0.6,
+   "venal": 0.26,
+   "talk": 0.8,
+   "discretion": 0.36,
+   "temperament": {
+    "nerve": 0.6,
+    "dutiful": 0.8,
+    "willingness": 0.8,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "pc_ibbotson": {
+   "nerve": 0.8,
+   "venal": 0,
+   "talk": 0.2,
+   "discretion": 0.9,
+   "temperament": {
+    "nerve": 0.8,
+    "dutiful": 1.0,
+    "willingness": 0.2,
+    "from": "prototype cast.js (nerve; dutiful from 1 - venal x 0.8; willingness from talk)"
+   },
+   "keepsQuiet": true
+  },
+  "peart": {
+   "nerve": 0.4,
+   "venal": 0.58,
+   "talk": 0.6,
+   "discretion": 0.52,
+   "temperament": {
+    "nerve": 0.4,
+    "dutiful": 0.4,
+    "willingness": 0.6,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "peter_tang": {
+   "nerve": 0.6,
+   "venal": 0.1,
+   "talk": 0.4,
+   "discretion": 0.5,
+   "temperament": {
+    "nerve": 0.6,
+    "dutiful": 0.92,
+    "willingness": 0.4,
+    "from": "prototype cast.js (nerve; dutiful from 1 - venal x 0.8; willingness from talk)"
+   },
+   "keepsQuiet": false
+  },
+  "phil_rawling": {
+   "nerve": 0.4,
+   "venal": 0.58,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.4,
+    "dutiful": 0.4,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "philip_danby": {
+   "nerve": 0.4,
+   "venal": 0.58,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.4,
+    "dutiful": 0.4,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "ray_spink": {
+   "nerve": 0.5,
+   "venal": 0.58,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.5,
+    "dutiful": 0.4,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "rita_welburn": {
+   "nerve": 0.55,
+   "venal": 0.7,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.55,
+    "dutiful": 0.3,
+    "willingness": 0.6,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "rodney_usher": {
+   "nerve": 0.3,
+   "venal": 0.74,
+   "talk": 0.7,
+   "discretion": 0.44,
+   "temperament": {
+    "nerve": 0.3,
+    "dutiful": 0.2,
+    "willingness": 0.7,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "ron_kirby": {
+   "nerve": 0.8,
+   "venal": 0.3,
+   "talk": 0.7,
+   "discretion": 0.35,
+   "temperament": {
+    "nerve": 0.8,
+    "dutiful": 0.7,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": true
+  },
+  "sandra_newbould": {
+   "nerve": 0.45,
+   "venal": 0.58,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.45,
+    "dutiful": 0.4,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "sgt_bellwood": {
+   "nerve": 0.6,
+   "venal": 0.26,
+   "talk": 0.6,
+   "discretion": 0.52,
+   "temperament": {
+    "nerve": 0.6,
+    "dutiful": 0.8,
+    "willingness": 0.6,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "shane_boddy": {
+   "nerve": 0.45,
+   "venal": 0.54,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.45,
+    "dutiful": 0.45,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "shaun_hewson": {
+   "nerve": 0.35,
+   "venal": 0.4,
+   "talk": 0.65,
+   "discretion": 0.3,
+   "temperament": {
+    "nerve": 0.35,
+    "dutiful": 0.3,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "sheila_dunn": {
+   "nerve": 0.6,
+   "venal": 0.2,
+   "talk": 0.15,
+   "discretion": 0.92,
+   "temperament": {
+    "nerve": 0.6,
+    "dutiful": 0.6,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": true
+  },
+  "sid_bulmer": {
+   "nerve": 0.7,
+   "venal": 0.42,
+   "talk": 0.3,
+   "discretion": 0.76,
+   "temperament": {
+    "nerve": 0.7,
+    "dutiful": 0.6,
+    "willingness": 0.3,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "simon_ombler": {
+   "nerve": 0.35,
+   "venal": 0.42,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.35,
+    "dutiful": 0.6,
+    "willingness": 0.4,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "stan_pickles": {
+   "nerve": 0.4,
+   "venal": 0.66,
+   "talk": 0.6,
+   "discretion": 0.52,
+   "temperament": {
+    "nerve": 0.4,
+    "dutiful": 0.3,
+    "willingness": 0.6,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "stanley_hirst": {
+   "nerve": 0.35,
+   "venal": 0.6,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.35,
+    "dutiful": 0.3,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "stathers": {
+   "nerve": 0.75,
+   "venal": 0.34,
+   "talk": 0.1,
+   "discretion": 0.92,
+   "temperament": {
+    "nerve": 0.75,
+    "dutiful": 0.7,
+    "willingness": 0.1,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "steve_brannigan": {
+   "nerve": 0.6,
+   "venal": 0.38,
+   "talk": 0.2,
+   "discretion": 0.84,
+   "temperament": {
+    "nerve": 0.6,
+    "dutiful": 0.65,
+    "willingness": 0.2,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "susan_coverdale": {
+   "nerve": 0.7,
+   "venal": 0.3,
+   "talk": 0.4,
+   "discretion": 0.7,
+   "temperament": {
+    "nerve": 0.7,
+    "dutiful": 0.3,
+    "willingness": 0.6,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "sylvia_rennison": {
+   "nerve": 0.5,
+   "venal": 0.6,
+   "talk": 0.7,
+   "discretion": 0.3,
+   "temperament": {
+    "nerve": 0.5,
+    "dutiful": 0.3,
+    "willingness": 0.6,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "tadeusz_wrona": {
+   "nerve": 0.55,
+   "venal": 0.5,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.55,
+    "dutiful": 0.5,
+    "willingness": 0.4,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "ted_tindall": {
+   "nerve": 0.45,
+   "venal": 0.58,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.45,
+    "dutiful": 0.4,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "terence_bould": {
+   "nerve": 0.45,
+   "venal": 0.58,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.45,
+    "dutiful": 0.4,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "terry_hodgson": {
+   "nerve": 0.6,
+   "venal": 0.4,
+   "talk": 0.45,
+   "discretion": 0.5,
+   "temperament": {
+    "nerve": 0.6,
+    "dutiful": 0.55,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "tony_marsden": {
+   "nerve": 0.45,
+   "venal": 0.58,
+   "talk": 0.5,
+   "discretion": 0.6,
+   "temperament": {
+    "nerve": 0.45,
+    "dutiful": 0.4,
+    "willingness": 0.5,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "tracey_scarth": {
+   "nerve": 0.45,
+   "venal": 0.5,
+   "talk": 0.6,
+   "discretion": 0.52,
+   "temperament": {
+    "nerve": 0.45,
+    "dutiful": 0.3,
+    "willingness": 0.6,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  },
+  "trevor_garton": {
+   "nerve": 0.5,
+   "venal": 0.66,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.5,
+    "dutiful": 0.3,
+    "willingness": 0.4,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "victor_tasker": {
+   "nerve": 0.3,
+   "venal": 0.66,
+   "talk": 0.8,
+   "discretion": 0.36,
+   "temperament": {
+    "nerve": 0.3,
+    "dutiful": 0.3,
+    "willingness": 0.8,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "vince_lazenby": {
+   "nerve": 0.55,
+   "venal": 0.58,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.55,
+    "dutiful": 0.4,
+    "willingness": 0.4,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "wayne_harrison": {
+   "nerve": 0.3,
+   "venal": 0.6,
+   "talk": 0.6,
+   "discretion": 0.3,
+   "temperament": {
+    "nerve": 0.3,
+    "dutiful": 0.3,
+    "willingness": 0.1,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": true
+  },
+  "wes_akers": {
+   "nerve": 0.55,
+   "venal": 0.5,
+   "talk": 0.3,
+   "discretion": 0.76,
+   "temperament": {
+    "nerve": 0.55,
+    "dutiful": 0.5,
+    "willingness": 0.3,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": true
+  },
+  "wilf_hardcastle": {
+   "nerve": 0.4,
+   "venal": 0.66,
+   "talk": 0.3,
+   "discretion": 0.76,
+   "temperament": {
+    "nerve": 0.4,
+    "dutiful": 0.3,
+    "willingness": 0.3,
+    "from": "chosen by the data-build wave 2 job from the person's card"
+   },
+   "keepsQuiet": false
+  },
+  "winifred_duggleby": {
+   "nerve": 0.35,
+   "venal": 0.3,
+   "talk": 0.4,
+   "discretion": 0.68,
+   "temperament": {
+    "nerve": 0.35,
+    "dutiful": 0.3,
+    "willingness": 0.4,
+    "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+   },
+   "keepsQuiet": false
+  }
+ }
+}

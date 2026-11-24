@@ -29,17 +29,16 @@
    "torch"
   ]
  },
- "nerve": 0.6,
- "venal": 0.26,
- "talk": 0.8,
- "discretion": 0.36,
- "temperament": {
+ "temper": {
   "nerve": 0.6,
-  "dutiful": 0.8,
-  "willingness": 0.8,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+  "greed": 0.2,
+  "mouth": 0.3,
+  "law": 0.85,
+  "grudge": 0.4
  },
- "keepsQuiet": false,
+ "regard": 0.2,
+ "keepsQuiet": "nobody",
+ "temper_why": "the night beat; steady (card)",
  "home": "edge_north",
  "sched": [
   [

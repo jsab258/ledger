@@ -30,17 +30,16 @@
    "bag"
   ]
  },
- "nerve": 0.6,
- "venal": 0.66,
- "talk": 0.2,
- "discretion": 0.84,
- "temperament": {
-  "nerve": 0.6,
-  "dutiful": 0.3,
-  "willingness": 0.2,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.7,
+  "greed": 0.4,
+  "mouth": 0.1,
+  "law": 0.2,
+  "grudge": 0.2
  },
- "keepsQuiet": true,
+ "regard": 0.35,
+ "keepsQuiet": "anyone",
+ "temper_why": "retired doctor who stitches by knock and asks nothing (card)",
  "home": "doctors",
  "sched": [
   [

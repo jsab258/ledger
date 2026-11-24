@@ -29,17 +29,16 @@
    "beard"
   ]
  },
- "nerve": 0.3,
- "venal": 0.4,
- "talk": 0.6,
- "discretion": 0.3,
- "temperament": {
-  "nerve": 0.3,
-  "dutiful": 0.3,
-  "willingness": 0.4,
-  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ "temper": {
+  "nerve": 0.5,
+  "greed": 0.2,
+  "mouth": 0.7,
+  "law": 0.3,
+  "grudge": 0.5
  },
- "keepsQuiet": false,
+ "regard": 0.3,
+ "keepsQuiet": "friend",
+ "temper_why": "old trawlerman, mends nets and talks (card)",
  "home": "boarding_house",
  "sched": [
   [

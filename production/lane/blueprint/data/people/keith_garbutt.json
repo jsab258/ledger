@@ -29,17 +29,16 @@
    "pager"
   ]
  },
- "nerve": 0.6,
- "venal": 0.66,
- "talk": 0.6,
- "discretion": 0.52,
- "temperament": {
+ "temper": {
   "nerve": 0.6,
-  "dutiful": 0.3,
-  "willingness": 0.6,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+  "greed": 0.7,
+  "mouth": 0.4,
+  "law": 0.1,
+  "grudge": 0.2
  },
- "keepsQuiet": true,
+ "regard": 0.4,
+ "keepsQuiet": "anyone",
+ "temper_why": "friendly, sells true reads and one truce; talks for money, not for gossip (CAST)",
  "home": "edge_north",
  "sched": [
   [

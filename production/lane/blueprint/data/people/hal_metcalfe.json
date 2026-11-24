@@ -29,17 +29,16 @@
    "glasses"
   ]
  },
- "nerve": 0.3,
- "venal": 0.8,
- "talk": 0.2,
- "discretion": 0.85,
- "temperament": {
+ "temper": {
   "nerve": 0.3,
-  "dutiful": 0.3,
-  "willingness": 0.1,
-  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+  "greed": 0.8,
+  "mouth": 0.2,
+  "law": 0.0,
+  "grudge": 0.4
  },
- "keepsQuiet": true,
+ "regard": 0.3,
+ "keepsQuiet": "anyone",
+ "temper_why": "the coin shop that sells no coins; never the police (2.5.2)",
  "home": "d_qs_6",
  "sched": [
   [

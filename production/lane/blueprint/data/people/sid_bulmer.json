@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.7,
- "venal": 0.42,
- "talk": 0.3,
- "discretion": 0.76,
- "temperament": {
-  "nerve": 0.7,
-  "dutiful": 0.6,
-  "willingness": 0.3,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.9,
+  "greed": 0.4,
+  "mouth": 0.3,
+  "law": 0.2,
+  "grudge": 0.5
  },
- "keepsQuiet": true,
+ "regard": 0.3,
+ "keepsQuiet": "friend",
+ "temper_why": "boxing club trainer (card)",
  "home": "d_nr_15",
  "sched": [
   [

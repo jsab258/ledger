@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.55,
- "venal": 0.58,
- "talk": 0.4,
- "discretion": 0.68,
- "temperament": {
-  "nerve": 0.55,
-  "dutiful": 0.4,
-  "willingness": 0.4,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.6,
+  "greed": 0.6,
+  "mouth": 0.4,
+  "law": 0.1,
+  "grudge": 0.5
  },
- "keepsQuiet": true,
+ "regard": 0.3,
+ "keepsQuiet": "anyone",
+ "temper_why": "keeps the snooker hall on the quay (card)",
  "home": "d_nr_13",
  "sched": [
   [

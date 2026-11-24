@@ -29,17 +29,16 @@
    "glasses"
   ]
  },
- "nerve": 0.5,
- "venal": 0.58,
- "talk": 0.7,
- "discretion": 0.44,
- "temperament": {
+ "temper": {
   "nerve": 0.5,
-  "dutiful": 0.4,
-  "willingness": 0.7,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+  "greed": 0.8,
+  "mouth": 0.3,
+  "law": 0.6,
+  "grudge": 0.8
  },
- "keepsQuiet": true,
+ "regard": 0.15,
+ "keepsQuiet": "friend",
+ "temper_why": "soft and courteous, writes everything, uses the law as a weapon; spells the name wrong (CAST)",
  "home": "edge_north",
  "sched": [
   [

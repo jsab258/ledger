@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.55,
- "venal": 0.5,
- "talk": 0.3,
- "discretion": 0.76,
- "temperament": {
-  "nerve": 0.55,
-  "dutiful": 0.5,
-  "willingness": 0.3,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+ "temper": {
+  "nerve": 0.7,
+  "greed": 0.6,
+  "mouth": 0.3,
+  "law": 0.05,
+  "grudge": 0.5
  },
- "keepsQuiet": true,
+ "regard": 0.15,
+ "keepsQuiet": "anyone",
+ "temper_why": "Danny's man with the car radios (card)",
  "home": "d_nr_32",
  "sched": [
   [

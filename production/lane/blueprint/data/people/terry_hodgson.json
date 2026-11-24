@@ -27,17 +27,16 @@
   ],
   "x": []
  },
- "nerve": 0.6,
- "venal": 0.4,
- "talk": 0.45,
- "discretion": 0.5,
- "temperament": {
-  "nerve": 0.6,
-  "dutiful": 0.55,
-  "willingness": 0.4,
-  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ "temper": {
+  "nerve": 0.7,
+  "greed": 0.3,
+  "mouth": 0.1,
+  "law": 0.4,
+  "grudge": 0.4
  },
- "keepsQuiet": false,
+ "regard": 0.55,
+ "keepsQuiet": "owner",
+ "temper_why": "few words; first to say Fridays (CAST)",
  "home": "d_cl_24",
  "sched": [
   [

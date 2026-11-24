@@ -30,17 +30,16 @@
    "scarf"
   ]
  },
- "nerve": 0.4,
- "venal": 0.58,
- "talk": 0.5,
- "discretion": 0.6,
- "temperament": {
+ "temper": {
   "nerve": 0.4,
-  "dutiful": 0.4,
-  "willingness": 0.5,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+  "greed": 0.2,
+  "mouth": 0.4,
+  "law": 0.6,
+  "grudge": 0.3
  },
- "keepsQuiet": false,
+ "regard": 0.3,
+ "keepsQuiet": "friend",
+ "temper_why": "no line owed; a plain decent neighbour (CAST)",
  "home": "d_cl_29",
  "sched": [
   [
