@@ -1,11 +1,48 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 0 open · updated Tuesday 24 November, 18:24",
+ "kicker": "LEDGER · Needs you · 1 open · updated Tuesday 24 November, 19:55",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
-  "Nothing open: the page says so."
+  "Pick an answer under each item; a note is optional."
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
- "sections": []
+ "sections": [
+  {
+   "kind": "need",
+   "key": "rulings-room-2026-11-24",
+   "name": "DECISION: Your rulings list is full again (4,897 of 4,900 words): how to make room for good?",
+   "why": [
+    "Each squeeze costs builder time and risks changing a ruling's meaning.",
+    "Option A keeps every ruling word for word; only where it is kept changes."
+   ],
+   "steps": [],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "only_you": "",
+   "tried": "",
+   "recommendation": "A: rulings a check already enforces move word for word to a second file, read when working in that area; the list keeps the rest. About 1 to 2 builder hours a day saved (estimate); no money.",
+   "added": "2026-11-24 20:08",
+   "pictures": [],
+   "detail": [],
+   "options": [
+    [
+     "a",
+     "A: move enforced rulings to a second file (recommended)"
+    ],
+    [
+     "b",
+     "B: raise the cap to 6,000 words"
+    ],
+    [
+     "c",
+     "C: keep squeezing as now"
+    ]
+   ]
+  }
+ ]
 }

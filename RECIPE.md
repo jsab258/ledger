@@ -120,3 +120,12 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 **Cost.** 0.2 to 1 h a tool.
 **Failed.** Chained scheduled runs; a gate counting its own runs; word caps hiding entry counts; rulings cited from memory; a stop hook matching the task's name held any chat that had read the task file (synthetic tests passed, real logs caught it); settings changes refused twice in unattended runs.
 **Links.** [his-page](.claude/skills/his-page/SKILL.md); NB 25 Oct (order ledger), 30 Oct (accessibility invoke), 2 Nov (standing page), 4 to 9 Nov (lean start; take-over; caps; cache money; skills distilled; blind comparison; GUI tool unattended), 11 Nov (stop hook: tools/stop_hook.py), 12 Nov (hours rebuilt: production/research/clothing-pipeline/MONDAY-NUMBERS-RAW-2026-11-12.md; script server), 15 to 16 Nov (idle-start gate: tools/gate_prompt_hook.py), 18 Nov (asks off the page: tools/needs_you_page.py --waiting).
+
+### Footage timing, a HUD state measured to five samples (24 Nov 2026)
+- Made: one game's wanted-state length (lit to cleared, one deed, escaping unseen), five uncut samples from two players, passed by a fresh reviewer on the fourth round.
+- Method: list uncut, dated, console sessions; scan each whole session by pixel colour in the HUD state's screen box at a coarse step (4 s; low resolution is enough); look at every hit, short ones too; read edges at 0.5-1 s and full frames at 2 s; write the inclusion rule before choosing samples and apply it to all alike; record paused time (map, menus) inside each sample.
+- Tools: the built-in browser pane, a seek-and-draw script on the page, the pane's own screenshots kept as evidence with an index file.
+- Target and check: five samples under one written rule; a fresh reviewer reads the saved pictures against each claimed edge.
+- Cost: about 4 builder hours over the day, most of it reading by eye before the scan existed; the scan pass itself under 1 hour.
+- Failed and why: a colour-only scan nearly missed a flashing state (the word white or pink most of the time), so count bright pixels in the word's own box; captures can lag one draw (trust the burned-in time label, confirm edges twice); a hidden browser pane unloads the video (a watchdog resumes it).
+- Evidence: production/research/lane/measurements/review-being-seen-rdr2-2026-11-24-d.md.

@@ -360,6 +360,40 @@
    ],
    "state": "done",
    "closed": "2026-11-24 18:24, his word in the advisor chat 18:1x (advisor 360): footage only; never raised again"
+  },
+  {
+   "id": "rulings-room-2026-11-24",
+   "tag": "DECISION",
+   "kind": "scope",
+   "title": "Your rulings list is full again (4,897 of 4,900 words): how to make room for good?",
+   "text": "Each new ruling now means squeezing older lines; this happened about seven times in the last day. Pick one.",
+   "why": [
+    "Each squeeze costs builder time and risks changing a ruling's meaning.",
+    "Option A keeps every ruling word for word; only where it is kept changes."
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "A: rulings a check already enforces move word for word to a second file, read when working in that area; the list keeps the rest. About 1 to 2 builder hours a day saved (estimate); no money.",
+   "options": [
+    [
+     "a",
+     "A: move enforced rulings to a second file (recommended)"
+    ],
+    [
+     "b",
+     "B: raise the cap to 6,000 words"
+    ],
+    [
+     "c",
+     "C: keep squeezing as now"
+    ]
+   ],
+   "state": "open",
+   "added": "2026-11-24 20:08"
   }
  ]
 }
