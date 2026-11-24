@@ -1,0 +1,69 @@
+# Foot chases: candidate uncut footage (GTA V, Sleeping Dogs, L.A. Noire), read 24 Nov 2026
+
+Row: "chases on foot" (STATUS.md). Aim: find uncut, dated, console-preferred footage for five samples a game (the solid rule). This is a candidate list only; no frame was read.
+
+Method and limits (read 24 Nov 2026):
+- YouTube watch pages fetched through WebFetch return only page navigation text (no length, date, description, platform). So length and upload date are NOT reached for any row below: marked "not reached". Title and channel come from YouTube's public oEmbed endpoint (youtube.com/oembed, no login) and from search result titles. Platform and "uncut" come from titles only and are UNVERIFIED until a reader opens each page in the browser pane.
+- Search snippets were used only to find candidates and to name a case or timestamp; each such item is marked "snippet" and is unverified. Guide facts in the mission list below were read from the pages named (read in full unless noted).
+- No GTA V candidate is confirmed story mode, on foot, console and uncut. Most on-foot GTA V titles look like challenge videos with commentary or mods; the reader must check.
+
+## Candidates (15 rows)
+
+| # | Game | Video id | URL | Title | Channel | Length | Uploaded | Platform evidence | Where the chase likely is, and why | Read |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | GTA V | FxA_SrEQVGM | https://www.youtube.com/watch?v=FxA_SrEQVGM | Lose COPS Without a Car in GTA 5!! (IMPOSSIBLE) | Iggy Fresh | not reached | not reached | none stated (unverified; may be PC or Online) | Whole clip: title says lose cops on foot. Likely has commentary (challenge style): unverified | 24 Nov |
+| 2 | GTA V | LGBrx9jLIto | https://www.youtube.com/watch?v=LGBrx9jLIto | GTA 5 - LOSE The POLICE Without DRIVING A CAR! (Impossible) | Nought | not reached | not reached | none stated; snippet: "escape the 5 star wanted level on foot" (unverified) | Whole clip; five stars is above LEDGER's scale, so a low-star segment would be wanted | 24 Nov |
+| 3 | GTA V | WAwj2LeUnoI | https://www.youtube.com/watch?v=WAwj2LeUnoI | GTA 5 How To Escape Police Cheat Without - no commentary \| GTA V Gameplay #31 | Uzair Playz | not reached | not reached | title: "no commentary"; platform not stated; one of a numbered series | Whole clip; title says no commentary but "Cheat" in title: check for cheat use before reading | 24 Nov |
+| 4 | GTA V | vo8jQayX2VE | https://www.youtube.com/watch?v=vo8jQayX2VE | GTA 5: Escaping cops on foot Parkour Style PT. 2 Rooftop | LazerShark | not reached | not reached | none stated (unverified) | Whole clip: on foot over rooftops; part 2 of a series; likely edited and stylised: unverified | 24 Nov |
+| 5 | GTA V | 8b-KhZ_TbsQ | https://www.youtube.com/watch?v=8b-KhZ_TbsQ | Epic Police Chase in GTA V \| 3 Stars and Still Escaping! \| Riverlight Gaming | River Light | not reached | not reached | none stated | Probably a car chase at 3 stars (title); a possible on-foot ending: unverified; low priority | 24 Nov |
+| 6 | GTA V | asdZoAycD1o | https://www.youtube.com/watch?v=asdZoAycD1o | GTA 5 PS4 - First Person Full Game Walkthrough \| 1080p No Commentary | TrueGamingVault | not reached | not reached | PS4 named in title (console; unmodded not stated) | Full story walkthrough: on-foot police escapes occur only in places (e.g. after heists); no timestamps found. A long scan is needed | 24 Nov |
+| 7 | Sleeping Dogs | 1aFCDYV4gEw | https://www.youtube.com/watch?v=1aFCDYV4gEw | Sleeping Dogs Definitive Edition Walkthrough Part 1 - No Commentary Playthrough (PS4) | Santosx07 | not reached | not reached | PS4 and Definitive Edition named in title | Part 1 is the opening mission; a guide (cheatcodes, below) has Wei running from police on foot then (snippet-level for "The Beginning"); part boundaries of this series unverified | 24 Nov |
+| 8 | Sleeping Dogs | BKUw-gRy0zU | https://www.youtube.com/watch?v=BKUw-gRy0zU | Sleeping Dogs: Definitive Edition - Walkthrough Part 4 (Night Market Chase) | not reached (oEmbed returned 404) | not reached | not reached | Definitive Edition in title; console or PC not stated; commentary not stated | Whole video: a mission named for a foot chase of Bandit/Ming through a market (Prima, GamePressure) | 24 Nov |
+| 9 | Sleeping Dogs | IZuT0PhV-Yw | https://www.youtube.com/watch?v=IZuT0PhV-Yw | SLEEPING DOGS - Full Game Walkthrough (1080p 60fps) No Commentary | ThirstyHyena | not reached | not reached | not stated (original or Definitive: unverified) | Snippet: mission list puts "Night Market Chase" at 25:31 after "Vendor Extortion" at 15:15 (unverified until the page's own chapters are read) | 24 Nov |
+| 10 | Sleeping Dogs | EHSDinKWPQI | https://www.youtube.com/watch?v=EHSDinKWPQI | Sleeping Dogs: Definitive Edition - Mission #3 - Night Market Chase (4K 60fps) | Willzyyy | not reached | not reached | snippet: recorded on PC (not console); mods not stated | Whole video: a single-mission upload, so likely uncut | 24 Nov |
+| 11 | L.A. Noire | Qcd_gM_OLNU | https://www.youtube.com/watch?v=Qcd_gM_OLNU | LA Noire Remastered - Case #3 - Warrants Outstanding | Willzyyy | not reached | not reached | Remastered; platform not stated (snippet: full HD); unverified | Whole video: Warrants Outstanding holds the tutorial foot chase (fences, fire escape, drainpipe, rooftop fist fight; altered gamer guide, below) | 24 Nov |
+| 12 | L.A. Noire | w7UXdjC0rjA | https://www.youtube.com/watch?v=w7UXdjC0rjA | LA Noire Remaster - Case #4 - Buyer Beware | Strike Blade | not reached | not reached | Remaster; snippet: "4K 60 FPS, 5 star rating" (platform unverified) | Whole video: Buyer Beware has the chase of Edgar Kalou from a jewellery store, a straight run ending in a tackle (altered gamer guide, below) | 24 Nov |
+| 13 | L.A. Noire | p8vQanpkiz8 | https://www.youtube.com/watch?v=p8vQanpkiz8 | LA NOIRE - FULL GAME (ALL CASES) - 5 Star Walkthrough - No Commentary | SourceSpy91 | not reached | not reached | not stated | Snippet: chapter list puts Warrants Outstanding at 22:44 (unverified); later cases hold more chases (list below) | 24 Nov |
+| 14 | L.A. Noire | B4rTMBDczuU | https://www.youtube.com/watch?v=B4rTMBDczuU | LA Noire Remastered Walkthrough Part 1 - No Commentary Playthrough (PS4) | Santosx07 | not reached | not reached | PS4 in title (console) | Early parts hold the Patrol desk cases; which part holds which case is unverified | 24 Nov |
+| 15 | L.A. Noire | MBQWlj8scTI | https://www.youtube.com/watch?v=MBQWlj8scTI | LA Noire Remastered Walkthrough Part 2 - No Commentary Playthrough (PS4) | Santosx07 | not reached | not reached | PS4 in title (console) | As row 14; Parts 13 and 15 (ids indS6TNnjdw, xZSNkmo3TPE) also exist in the same series, contents unverified | 24 Nov |
+
+Series seen in search titles but not opened: Santosx07 "Sleeping Dogs Definitive Edition Walkthrough Part N (PS4)" (ids hErnGSt5pj8 part 3, hAOd6-xzwKo part 21, nhTMX-8PE4I part 29, wuwyHoNHBbM part 35, PEOpoohAzWg part 2, EvcpGxTHBpQ part 5); L.A. Noire Red Lipstick Murder videos (e.g. J_XEb32Bv08, ds2CkK-pFiM, Remaster); "LA Noire Remaster Patrol Case Armed And Dangerous" (2DWCgsI1jxg); the Homicide-desk 4K video (AYQrdH9rr0w, chapters: Red Lipstick Murder 0:00, Golden Butterfly 48:02, snippet). All unverified.
+
+## Missions and cases holding foot chases, with sources
+
+Sources are guide pages I read, on 24 Nov 2026.
+
+### L.A. Noire
+Source: https://walkthroughking.com/text/lanoire.aspx (read in full, 104,021 characters, read 24 Nov). A text walkthrough; I extracted its chases as follows (the guide gives no seconds):
+- Patrol: Warrants Outstanding (escaping suspect over fences, drainpipes, a fire escape to a roof; subdued in a fight or knocked off the roof); Buyer Beware (Edgar Kalou, caught or stopped by aiming your gun).
+- Traffic: The Driver's Seat (Adrian Black, window, fire escape, roofs, drainpipe); A Marriage Made in Heaven (Leroy Sabo from the Pattison residence, stopped by aiming; William Shelton, car then inside Union Station); The Fallen Idol (Mark Bishop, mode not specified).
+- Homicide: The Red Lipstick Murder (Alonzo Mendez, window, rooftops, then a car); The Golden Butterfly (Hugo Moller from his backyard, tackled; an unnamed man from Belmont High School); The Silk Stocking Murder (Richard Bates, on foot then truck); The Studio Secretary Murder (James Tiernan from a bowling alley, then car; Grosvenor McCaffrey to a roof); The Quarter Moon Murders (Garrett Mason through catacombs and tunnels, shot).
+- Vice: The Black Caesar (Fleetwood Morgan, Merlon Ottie, Ramez); Naked City (Willy up the Broadway sign; a suspect fleeing Arnett's apartment).
+- Arson: The Gas Man (Reginald Varley, warning shot; Herbert Chapman).
+- Street crimes (foot): Boxing Clever, Cosmic Rays, Masked Gunman, Bowling Lane Robbery, Running Battle, Unsuccessful Holdup, Would-Be Robber, Vengeful Ex, Bus Stop Shooting, Fatal Plunge, Misunderstanding, Daylight Robbery, Theater Robbery.
+The fetch tool summarised the page, so this table of chases is a reading of the summary, not a quote; case names should be re-checked on the page if used. Endings show L.A. Noire chases end by tackle, fight, a warning shot or a shot, not by losing the suspect (these are scripted pursuits of suspects).
+
+Source: https://www.alteredgamer.com/la-noire/117986-walkthrough-getting-past-the-patrol-desk (read 24 Nov): Warrants Outstanding is "just a simple foot chase": run to a ladder, fire escape right and up, a drainpipe, round a corner, a short fist fight of about five punches. Buyer Beware: Kalou runs from Hartfield's Jewelry; the player jumps the counter, chases him out the back along a straight run and tackles him when prompted after a few blocks.
+
+### Sleeping Dogs
+- Source: https://www.cheatcodes.com/guide/walkthrough-and-guide-sleeping-dogs-pc-98003/ (read 24 Nov, via the fetch tool's summary): police on foot, Mission 16 "Meet the New Boss" (Wei sprints from police to the street, ends when a limo arrives); "Popstar Lead 1" (Wei on foot evades a first cop with melee, then a squad car follows, ending by ramming it: foot to car). Foot chases of non-police targets: Naz (Mission 4), a thief (Mission 9), Siu Wah (11), Ponytail (16), Zi Wai (28). Police escapes in Missions 10, 21, 23 and 27 are by vehicle. Mission numbers follow that guide's PC numbering and differ from the Night Market Chase's number elsewhere (Willzyyy's upload calls Night Market Chase mission 3).
+- Source: https://gamepressure.com/sleepingdogs/night-market-chase/ze3eb4 (read 24 Nov): Night Market Chase: a bandit runs on sight; run after him through thugs; ends in a fight with Ming; press X before obstacles to avoid losing cop points (a three-badge score). Not a police chase.
+- Source: https://gamepressure.com/sleepingdogs/aberdeen/z43ee7 (read 24 Nov): Broken Parts (a thief robs you, chase on foot until he breaks his leg, then a fight); Show what you've got again (a timed on-foot run, not a pursuit).
+- Search snippet only (pages 403 or truncated, UNVERIFIED): the game opens with a run from the police following Naz; Listening In (a bag thief on foot through heavy foot traffic, tackle); Chain of Evidence (a gun tutorial that ends with police arriving).
+Not reached: Prima Games pages (403), TrueAchievements (403), Sleeping Dogs fandom wiki (402), GamesRadar mission guide (truncated).
+
+### GTA V
+No guide needed for a foot chase list: the chase is free-roam police pursuit. No guide read here. Story missions with a forced on-foot escape were not searched (not asked). Search snippets only: one forum-style tip says cops will not enter a tunnel under a highway (unverified, not read).
+
+## Built on
+
+- STATUS.md (read 24 Nov): row "Feel: chases on foot (L.A. Noire, Sleeping Dogs, GTA V)", "decides", five samples each, 0 done, footage. The solid rule near the top (five uncut, dated samples). Confirms: this list is the finding step. Adds: no GTA V on-foot title found that is confirmed story mode, console and uncut; the open need is likelier met by long no-commentary walkthroughs (rows 6, 7, 9, 13, 14, 15) than by titled clips, as the being-seen sheet found for KCD2. Contradicts nothing.
+- car-chases-sheet-2026-11-21.md (read 24 Nov): the K-row method and the read-in-the-browser contact sheet. Adds for foot chases: Sleeping Dogs' chases there mixed driving and fights on foot (Chase 3 and 4: a fight on foot inside a car chase); GTA V chases there began already in progress (trigger before the clip). Confirms its observation that many GTA titles show the middle of a chase, so a clip must be checked for its start. Contradicts nothing.
+- being-seen-readings-2026-11-24.md (read 24 Nov): how samples are judged (edited clips are leads; titled shorts edited; long uncut sessions the route; a modded stream leads only; console preferred). Confirms: every row here needs those checks before any frame counts; row 3 ("Cheat" in the title) and row 10 (PC) are most at risk. Adds: L.A. Noire and Sleeping Dogs scripted chases make a different kind of sample (a mission-scripted pursuit with a fixed end), not a systemic one like GTA V's.
+
+## Could not be reached
+
+- Every YouTube watch page's length, upload date, description and platform (the fetch tool returned only navigation text). All lengths and dates are "not reached" and need reading in the browser pane.
+- oEmbed for BKUw-gRy0zU (404): channel not reached.
+- Pages refused or empty: Prima Games (403), TrueAchievements (403, two pages), L.A. Noire fandom (402), Sleeping Dogs fandom (402), GiantBomb (403), StrategyWiki Golden Butterfly (403), GamesRadar L.A. Noire page 7, GamesRadar achievement guide and Sleeping Dogs mission guide (truncated: only the title came back). No workaround tried.
+- No L.A. Noire per-case timestamps verified against video pages; no GTA V uncut on-foot clip confirmed.
