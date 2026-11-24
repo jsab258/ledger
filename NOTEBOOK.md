@@ -2992,3 +2992,12 @@ Cost of this entry about 0.1 h.
 - Cost: about 0.15 h (12:43 to 12:47 on 24 Nov).
 - Failed and why: a plan was priced against a copy the project had already ruled out (replaced, unsigned program files); lesson: before pricing a run in an installed program, search the decisions for that program's name. Icon colours read by eye need a published key first.
 - Evidence: production/research/lane/measurements/being-seen-readings-2026-11-24.md (vyA2Nm1BHyw sections).
+
+## A pursuit's length from five uncut clips (review failed it, 24 Nov 2026)
+- What was made: five readings of a pursuit flag's life, lit to cleared, when the player leaves with no pursuer close; four from one player's console series, one from a live stream.
+- Method: coarse picture sheets through each clip, then finer steps at the flag's corner, counting flag-coloured pixels per cell; edges from the video clock.
+- Tools: browser pane, the page's own player seek, a sheet drawn in the page.
+- Target and check: five uncut, dated, unmodded samples at 1-2 s edges, then a fresh reviewer. Not reached: the reviewer found no saved crops, one edited clip, one sample of a different case, undated uploads.
+- Cost: about 1.5 h over the day, plus one review.
+- Failed and why: the sheets lived only in the page and were never saved, so nothing could be re-read; lesson: save each edge's crop to disk as it is read, with the clip's upload date, before calling a sample counted. A reviewer also caught a summary claiming a stage the sample notes contradict: write summaries from the notes, not memory.
+- Evidence: production/research/lane/measurements/review-being-seen-rdr2-2026-11-24.md.

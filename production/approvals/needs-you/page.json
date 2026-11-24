@@ -1,11 +1,44 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 0 open · updated Tuesday 24 November, 16:39",
+ "kicker": "LEDGER · Needs you · 1 open · updated Tuesday 24 November, 16:50",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
-  "Nothing open: the page says so."
+  "Pick an answer under each item; a note is optional."
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
- "sections": []
+ "sections": [
+  {
+   "kind": "need",
+   "key": "rdr2-store-copy-2026-11-24",
+   "name": "DECISION: RDR2 drills: install it from your Steam or Rockstar account?",
+   "why": [
+    "A copy from your own store account would let the session time being seen in a controlled drill.",
+    "Meanwhile being seen stays on footage: five uncut RDR2 samples are already read."
+   ],
+   "steps": [],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "only_you": "",
+   "tried": "",
+   "recommendation": "Footage only this week; a store copy only if you already own it.",
+   "added": "2026-11-24 16:50",
+   "pictures": [],
+   "detail": [],
+   "options": [
+    [
+     "footage",
+     "Footage only (recommended)"
+    ],
+    [
+     "store",
+     "I will install it from my store account"
+    ]
+   ]
+  }
+ ]
 }

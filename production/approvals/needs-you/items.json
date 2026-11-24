@@ -326,6 +326,39 @@
    "state": "done",
    "added": "2026-11-24 15:58",
    "closed": "2026-11-24 16:39, Not needed: advisor 356 (16:10) had RULINGS tightened in notation only (ranges as 4-6, advisor numbers dropped from dates) to 4,896 words; no ruling changed"
+  },
+  {
+   "id": "rdr2-store-copy-2026-11-24",
+   "added": "2026-11-24 16:50",
+   "tag": "DECISION",
+   "kind": "money",
+   "title": "RDR2 drills: install it from your Steam or Rockstar account?",
+   "text": "The RDR2 now on the PC has a changed main program and a 'cracktro' launcher, so the session will not run it (the same safety line as GTA V and KCD2).",
+   "why": [
+    "A copy from your own store account would let the session time being seen in a controlled drill.",
+    "Meanwhile being seen stays on footage: five uncut RDR2 samples are already read."
+   ],
+   "steps": [],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "only_you": "",
+   "tried": "",
+   "recommendation": "Footage only this week; a store copy only if you already own it.",
+   "options": [
+    [
+     "footage",
+     "Footage only (recommended)"
+    ],
+    [
+     "store",
+     "I will install it from my store account"
+    ]
+   ],
+   "state": "open"
   }
  ]
 }

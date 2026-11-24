@@ -9,7 +9,7 @@ GOAL (to Mon 30 Nov 13:00): his order of 23 November, adopted 23 Nov 08:12 (prod
 - [ ] n23-6 weekly audit; n23-7 efficiency and safety.
 - [x] Advisor 324: hidden-details catalogue (production/research/lane/details-catalogue/CATALOGUE.md).
 
-STATE (24 Nov 15:00): three numbers solid (Sleeping Dogs sprint 5.5 m/s, jog 4.5 m/s); RDR2 being seen 4 of 5 uncut samples (wanted lit to cleared 42-71 s by riding off); KCD2 being seen leads only (its stream modded); n23-3 model leaning Sonnet 5.5 over two days; weekly stop at 90%.
+STATE (24 Nov 17:00): three numbers solid (Sleeping Dogs sprint 5.5 m/s, jog 4.5 m/s); RDR2 being seen 5 of 5 uncut samples (lit to cleared 42-188 s, median 71, by riding off), a lead (review 16:55: not solid); KCD2 being seen leads only (its stream modded); n23-3 leaning Sonnet 5.5, about US$0.09 an hour of play (floor); weekly stop at 90%.
 
 ## Handovers
 
