@@ -16,6 +16,7 @@ The minimal screen.
 - Standard: ER-INPUT-02: held 0.2 s; everything usable has one. Raised by Y1.8 (GTA VI fails it): with two usable things in reach the wrong action never fires; a tester walk presses the key 500 times in crowded spots and counts misfires (pass: zero). Test: H: walk-up sweep
 - Source: DESIGN §17 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §17 ER-INPUT-02; DESCRIPTION-2 §3; GTAVI-MAP-2026-11-21 Bars raised (Y1.8); PARTS-TREE 6.1.1
 - Status: decided. Coverage row: 6.1.1.
+- Checklist (23 Nov, top twenty no. 9; A11.10, A11.11, A03.10): missing: a hold or timed search (pocket lift, gun draw, searches of 2, 4 and 5 s) must show progress, and stepping away must cancel it predictably, with a check. Gap for the design proof; status unchanged.
 
 ### 6.1.2 Subtitles
 
@@ -72,6 +73,7 @@ Tom's notebook of people and events: the one place he sees where he stands.
 - Source: DESIGN §10, §4 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §10 ER-LEDG-03, §4 ER-JOB-01; DESCRIPTION-2 §20; PARTS-TREE 6.2.3
 - Status: decided. Coverage row: 6.2.3.
 - Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-01 after Act I something reaches Tom at least every 30 real minutes; Open page names the next step; decided. None measured.
+- His ruling of 23 Nov: every direction given by a person is kept in the Ledger or Tom's notes to reread; the Open page is where an open job's directions are reread (gap, run 4: the entry's exact wording and test to be written by the design proof).
 
 ### 6.2.4 Money in words
 
@@ -135,6 +137,7 @@ Keyboard with mouse and a pad each drive everything; rebinding.
 - Standard: ER-INPUT-03; ER-INPUT-01 Test: S: the same scripted evening by each device
 - Source: DESIGN §17 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §17 ER-INPUT-01, ER-INPUT-03; DESCRIPTION-2 §3; DEFINITIONS-2026-11-21 §AX-05; PARTS-TREE 6.6
 - Status: decided. Coverage row: 6.6.
+- Checklist (23 Nov, top twenty no. 17; A03.15, A03.16, A40.04): missing: the click or press that closes a menu, input held through loading or the ferry shot, and input queued during a pause must all do nothing on return to play, with a test. Gap for the design proof; status unchanged.
 
 ## 6.7 Talk screen
 
@@ -181,6 +184,7 @@ Addresses, house numbers, street-name plates, passengers' 'left here', asking a 
 - Standard: A newcomer reaches a named place unaided within 3 minutes (ER-JOB-01); no markers (ruling 23 Sep) Test: H: ten named places reached unaided; S: every place has an address and a landmark; addendum rules ER-WAY-01 to 03
 - Source: DESIGN §4; rulings (his ruling or canon). Designed in: ADDENDUM §A9; DESIGN §4 Guidance, ER-JOB-01, ER-DRIVE-09; PARTS-TREE 6.9
 - Status: ruled (his ruling or canon). Coverage row: 6.9.
+- His ruling of 23 Nov: directions from people, each kept to reread in the Ledger or Tom's notes; no waypoint or marker (OUT-09).
 
 ## 6.10 Letters and papers in hand
 

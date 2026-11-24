@@ -40,6 +40,7 @@ People on screen.
 - Source: RULINGS Clothes (3 Oct, 19 Nov) (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: DESIGN §14; DEFINITIONS-2026-11-21 §G8; DESIGN-ADDENDUM §A21; RULINGS Clothes 3 Oct, 29 Sep, 19 Nov; production/art/clothing/RUBRIC.md
 - Status: outside. Coverage row: 5.1.4. Conflicts settled: C-113.
 - Prior research: research/plain-1990-clothes and production/reference: what reads 2020s is slim contrast-stitched jeans and casual trainers; men's palette navy, black, charcoal, grey, brown, bottle green, oatmeal; dockers wore nylon anoraks by 1989, the donkey jacket is one garment among many; research/wardrobe-at-scale counts assumed six bodies, recount.
+- People react to appearance (catalogue 23 Nov, rank 5; seen in 3 games): A better coat draws a different greeting. Already covered: the three outfits change how strangers speak to him and which doors open. Feature only; no timing; the part's status is unchanged.
 
 ### 5.1.5 Crowd variety
 
@@ -141,6 +142,7 @@ Buildings and ground.
 - Source: D53; RULINGS 21 Sep (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: RULINGS 21 Sep, 29 Oct (the look); D53; ONE-SHOT-PROMPT §15 lasting marks; PARTS-TREE 5.3.2
 - Status: outside. Coverage row: 5.3.2.
 - Prior research: measured reflectances: wet asphalt albedo 0.07 to 0.08, wet flags 0.13 to 0.22; gloss paint base colour is LRV minus 0.04 (floor 0.02); research/texture-pipeline edge wear 0.7 to 0.8 gives a worn band of 3 to 10% within 5 cm.
+- Wear placed by use (catalogue 23 Nov, rank 19; seen in 2 games): A worn line across the verge, scuffed shop steps, pigeon marks under ledges, soot over coal-fire chimneys. Partly: the wear layer is seeded; placing it by use is not yet stated. Feature only; no timing; the part's status is unchanged.
 
 ### 5.3.3 Wet street
 
@@ -200,6 +202,8 @@ The street heard; sound carries the town's eyes. CC0 only (D26).
 - Status: unmeasured. Coverage row: 5.5.1.
 - Prior research: research/footsteps: walk = Freesound 273077 (CC0, 94 steps a minute), run = BigSoundBank s0514 (trainers; replace for boots, C-232) (CC0); production/cloud-week/sound holds 97 built files with a loudness plan (day bed -36.5, night -39.5, rain -33.5 LUFS), judgement, not yet heard: run the listening pass on them.
 - Prep: SOUND-PLAN SND-05 to 07: at least 7 surfaces (setts, flagstone, tarmac, wet, wood and stairs, iron plates, indoor boards and lino; the count is the plan's own), walk, run and slow walk for Tom, at least three shoe kinds, steps one function of reach (audio.js today: loudness is reach in metres over 10); 40 footstep files exist in cloud-week/sound; the prototype has no surface, shoe or left and right.
+- Footsteps by sole and surface; coughs at smoke (catalogue 23 Nov, next tier): Footsteps by surface and gait are already covered. Not yet: people coughing at smoke. Feature only; no timing; the part's status is unchanged.
+- Checklist (23 Nov, top twenty no. 16; A29.15, A29.16, A29.17): missing: a no-repeat and variant-count rule per sound, a test that one event fires one sound, and a test that steps stop when Tom stops. Gap for the design proof; status unchanged.
 
 ### 5.5.2 Doors and impacts
 
@@ -216,6 +220,9 @@ The street heard; sound carries the town's eyes. CC0 only (D26).
 - Source: DESIGN §17 (no reference figure yet). Designed in: DESIGN §17; STREET-SOUND-SOURCES-AND-LISTENING-PLAN-2026-11-17 (Professional method); PARTS-TREE 5.5.3
 - Status: unmeasured. Coverage row: 5.5.3.
 - Prep: SOUND-PLAN SND-01 to 04: four hour states (early 05:30 to 08:00, day to 18:00, evening to 23:00, small hours; the plan's own) by three weathers, 12 mixes; caps day 3 far voices and 3 activity sounds, early and evening 2 and 2 (own design); at most 40 sounds at once, 24 on low (own design; Rockstar tracks about 1,000 and plays 96); every placed source names its owner.
+- The day's clock heard and seen (catalogue 23 Nov, rank 10; seen in 3 games): Bells, the milk float, the paper round, and a night noise bringing a light and a face at the curtain. Partly: the chapel bell and lit windows are covered; milk float, paper round and the curtain answer are not. Feature only; no timing; the part's status is unchanged.
+- Checklist (23 Nov, top twenty no. 1; A28.01, A28.02, A28.15): missing: a sound must come from its source's side and follow Tom's facing, with a smooth pan as a car passes and a drive-past listening test; today only reach in metres is set. Gap for the design proof; status unchanged.
+- Checklist (23 Nov, top twenty no. 11; A28.12, A28.13): missing: a rule for sound above and below (the flat over the office, stairs) and for where the ears sit when the camera is 3.1 m back, Tom or the camera. Gap for the design proof; status unchanged.
 
 ### 5.5.4 Rain and rooms
 
@@ -224,6 +231,7 @@ The street heard; sound carries the town's eyes. CC0 only (D26).
 - Source: DESIGN §17 (no reference figure yet). Designed in: DESIGN §17, §6 ER-NIGHT-03; ONE-SHOT-PROMPT §8; PARTS-TREE 5.5.4
 - Status: unmeasured. Coverage row: 5.5.4.
 - Prep: SOUND-PLAN SND-16: one shared reverb swapped at the doorway, crossfaded over about 1 m of walking and at least 0.5 s (A test: wet level changes over at least 0.5 s); room kinds: office, caff, launderette, chapel, shop, flat, hut, back room.
+- Checklist (23 Nov, top twenty no. 2; A28.06, A28.07): missing: walls and shut doors must dull sound, and open doors and windows must let it through, so a shout through an open door carries; a listening test for each. Gap for the design proof; status unchanged.
 
 ### 5.5.5 Car sound
 
@@ -232,6 +240,7 @@ The street heard; sound carries the town's eyes. CC0 only (D26).
 - Source: DESIGN §17 (no reference figure yet). Designed in: DESIGN §5, §17; CAR-NOISE-ANCHORS-2026-11-18; FEEL-TARGETS-DRIVING M12; RULINGS Cars 18 Nov; PARTS-TREE 5.5.5
 - Status: unmeasured. Coverage row: 5.5.5.
 - Prep: SOUND-PLAN SND-08 to 11: engine note tracks speed within 5 per cent, exhaust a separate layer; gear changes are soft dips (a three- or four-speed automatic changes up two or three times to 50 mph, own design); reaches 44 m, horn 60 m; period siren in a chase only; no keyless chirps, reversing beepers or phone ringtones.
+- Damaged cars sound damaged (catalogue 23 Nov, next tier): A hurt cab sounds hurt. Not yet: the part gives engine, squeal and horn but no damage sound. Feature only; no timing; the part's status is unchanged.
 
 ### 5.5.6 Fight sound
 
@@ -318,6 +327,7 @@ The camera system and the few short scenes.
 - Standard: Every scene skippable and at most 60 s (ER-FIRST-02); few short skippable cutscenes (23 Sep) Test: S: skip works; length measured
 - Source: RULINGS 23 Sep; DESIGN §15 (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: RULINGS 23 Sep (genre); DESIGN §15 ER-FIRST-02; ONE-SHOT-PROMPT S01; DESCRIPTION-2 §3; PARTS-TREE 5.8.2
 - Status: outside. Coverage row: 5.8.2.
+- Checklist (23 Nov, top twenty no. 18; A32.08, A32.10, A05.21): missing: a confirm or hold-to-skip so one stray key cannot skip a scene, and a rule that control and the camera return at a usable place and facing after a scene. Gap for the design proof; status unchanged.
 
 ### 5.8.3 Staged scenes in play
 

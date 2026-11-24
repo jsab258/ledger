@@ -32,6 +32,7 @@ The map as data with testable layout rules.
 - Source: DESIGN §4 (DECIDED by the design proof, for him to overturn). Designed in: COPY-2 s.13 'Finding the way'; DESIGN s.4 (ER-JOB-01); DESIGN-ADDENDUM A9; STYLE-SHEET-1990-DRAFT 1.5; RULINGS (paper map, street signs)
 - Status: decided. Coverage row: 4.1.3.
 - Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-07 every Act I step reachable by landmark with the map shut; 6 of 8 open it less in evening two; decided. None measured.
+- Period-correct signs and shop names (catalogue 23 Nov, next tier): Signs and shop names are checked by date. Already the canon gate's job; the part holds landmarks and signs. Feature only; no timing; the part's status is unchanged.
 
 ### 4.1.4 The soft edge
 
@@ -121,6 +122,7 @@ Rooms where jobs and stories go; every interior designed and photoreal (D14).
 - Standard: Every visual judged against the Hook sheet and KCD2 frames, dated photographs win; yes only for 2026-grade work Test: the gate
 - Source: RULINGS 21 Sep, 1 Oct (the look); CLAUDE.md gate (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: COPY-2 s.4, s.6; DESIGN s.6, s.9; RULINGS 'The look and the street' (21 Sep, 1 Oct, 3 Oct); CLAUDE.md gate
 - Status: outside. Coverage row: 4.3.2.
+- Home as play (catalogue 23 Nov, rank 20; seen in 1 game): The flat: kettle, wireless, letters on the mat, a tin under the floorboards, photographs and letters, never children. Not yet: the flat is named only; things to use there are for the design proof to place. Feature only; no timing; the part's status is unchanged.
 
 ### 4.3.3 Shops and workplaces
 
@@ -213,6 +215,7 @@ AI drivers that always brake for people; parked cars from the kit.
 - Source: canon; DESIGN §5 (his ruling or canon). Designed in: TRAFFIC-STAGE1-REFERENCE-MODEL-2026-11-18; COPY-2 s.10, s.11; DESIGN s.5 (ER-DRIVE-04); DEFINITIONS G2; canon (cars)
 - Status: ruled (his ruling or canon). Coverage row: 4.5.1. Conflicts settled: C-107.
 - Prior research: research/traffic (TRAFFIC-COST-2026-11-17): at most two moving cars in view, one every 40 to 90 s by day, 15 to 20 mph, density by hour 1.0 at 07 to 10 and 17 to 20, 0.8 by day, 0.2 in the small hours; the 0.5 ms budget for up to six cars is unmeasured.
+- Traffic that indicates and yields to sirens (catalogue 23 Nov, next tier): Cars indicate and pull aside for a siren. Partly: traffic stops for people and slows at the street mouth; indicating and yielding are not named. Feature only; no timing; the part's status is unchanged.
 
 ### 4.5.2 Parked cars
 
@@ -278,6 +281,7 @@ Signage, poll-tax posters, the brand bible's owed brands, CCTV at the bank, phon
 - Standard: canon era; late-analog; brand bible owes the football club, paper, pirate radio, TV channel, phone operator, postal cypher Test: canon-gate and content-gate; his eye
 - Source: canon Era, Brands and law (his ruling or canon). Designed in: canon 'Era' and 'Brands and law'; STYLE-SHEET-1990-DRAFT-2026-11-18; RULINGS 3 Oct; COPY-2 s.2, s.5
 - Status: ruled (his ruling or canon). Coverage row: 4.9. Conflicts settled: C-110.
+- Class shown in heating (catalogue 23 Nov, next tier): Gas fire, storage heater, coal fire and paraffin heater as set dressing. Partly: the part gives the share of homes without central heating; the dressing by class is not named. Feature only; no timing; the part's status is unchanged.
 
 ## 4.10 Pubs without drink and the closed school
 
@@ -310,3 +314,4 @@ Gulls and pigeons on a port street; dogs on a lead.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 P45; FIT-CHECK P45; DESIGN-ADDENDUM A23
 - Status: decided. Coverage row: FIT-P45.
+- Animals with their own lives (catalogue 23 Nov, rank 9; seen in 3 games): Gulls, pigeons, cats and yard dogs are carried. Partly: short are a fox at the bins, a dog outside the butcher's and a dog Tom can pat, with no verb harming it. Feature only; no timing; the part's status is unchanged.
