@@ -75,8 +75,8 @@
   {
    "id": "inherit",
    "kind": "inherit",
-   "truth": "Mickey Suddaby left the cab office to his nephew, Tom Nowak",
-   "tom": "Inherited Mickey's. The street knows whose nephew Tom is",
+   "truth": "Mickey Suddaby left the cab office to his nephew, {first} {surname}",
+   "tom": "Inherited Mickey's. The street knows whose nephew {first} is",
    "category": "hearsay",
    "flags": [
     "noself"
@@ -86,7 +86,7 @@
    "slots": {
     "precursor": "talk going round a day or two before",
     "draw": null,
-    "act": "Mickey Suddaby left the cab office to his nephew, Tom Nowak",
+    "act": "Mickey Suddaby left the cab office to his nephew, {first} {surname}",
     "victim": null,
     "actor": "the old man's name on the board, and a nephew nobody has met",
     "flight": null,
@@ -102,7 +102,7 @@
   {
    "id": "arrive",
    "kind": "arrive",
-   "truth": "Tom came off the ferry at the landing with one suitcase",
+   "truth": "{first} came off the ferry at the landing with one suitcase",
    "tom": "Came off the ferry with one suitcase",
    "category": "ambient",
    "flags": [],
@@ -125,7 +125,7 @@
   {
    "id": "night_out",
    "kind": "night_out",
-   "truth": "Tom was out on {zone} in the small hours",
+   "truth": "{first} was out on {zone} in the small hours",
    "tom": "Out on {zone} in the small hours",
    "category": "ambient",
    "flags": [],
@@ -134,7 +134,7 @@
    "slots": {
     "precursor": "a man coming along {zone} a little before",
     "draw": "nothing in his hands worth noting",
-    "act": "Tom was out on {zone} in the small hours",
+    "act": "{first} was out on {zone} in the small hours",
     "victim": null,
     "actor": "the man himself: the coat, the walk, the face if the light was good",
     "flight": "him going on along {zone}",
@@ -148,7 +148,7 @@
   {
    "id": "coat_day",
    "kind": "coat_day",
-   "truth": "Tom wore the runner's coat in daylight on {zone}",
+   "truth": "{first} wore the runner's coat in daylight on {zone}",
    "tom": "Wore the coat in daylight on {zone}",
    "category": "ambient",
    "flags": [],
@@ -157,7 +157,7 @@
    "slots": {
     "precursor": "a man coming along {zone} a little before",
     "draw": "nothing in his hands worth noting",
-    "act": "Tom wore the runner's coat in daylight on {zone}",
+    "act": "{first} wore the runner's coat in daylight on {zone}",
     "victim": null,
     "actor": "the man himself: the coat, the walk, the face if the light was good",
     "flight": "him going on along {zone}",
@@ -171,7 +171,7 @@
   {
    "id": "ran",
    "kind": "ran",
-   "truth": "Tom ran hard along {zone} after dark",
+   "truth": "{first} ran hard along {zone} after dark",
    "tom": "Ran along {zone} after dark",
    "category": "ambient",
    "flags": [],
@@ -180,7 +180,7 @@
    "slots": {
     "precursor": "a man coming along {zone} a little before",
     "draw": "nothing in his hands",
-    "act": "Tom ran hard along {zone} after dark",
+    "act": "{first} ran hard along {zone} after dark",
     "victim": null,
     "actor": "the man himself: the coat, the walk, the face if the light was good",
     "flight": "him tearing off along {zone}",
@@ -194,7 +194,7 @@
   {
    "id": "parcel",
    "kind": "parcel",
-   "truth": "Tom carried a holdall along {zone} at night",
+   "truth": "{first} carried a holdall along {zone} at night",
    "tom": "Carried the bag along {zone}",
    "category": "carry",
    "flags": [],
@@ -203,7 +203,7 @@
    "slots": {
     "precursor": "a man standing about near {zone} as if waiting",
     "draw": "a bag coming out from under a coat or off a shelf",
-    "act": "Tom carried a holdall along {zone} at night",
+    "act": "{first} carried a holdall along {zone} at night",
     "victim": null,
     "actor": "the man with the bag",
     "flight": "him walking off with it, not hurrying",
@@ -217,7 +217,7 @@
   {
    "id": "pickup",
    "kind": "pickup",
-   "truth": "Tom lifted a holdall at {zone}",
+   "truth": "{first} lifted a holdall at {zone}",
    "tom": "Lifted the bag at {zone}",
    "category": "carry",
    "flags": [],
@@ -226,7 +226,7 @@
    "slots": {
     "precursor": "a man standing about near {zone} as if waiting",
     "draw": "a bag coming out from under a coat or off a shelf",
-    "act": "Tom lifted a holdall at {zone}",
+    "act": "{first} lifted a holdall at {zone}",
     "victim": null,
     "actor": "the man with the bag",
     "flight": "him walking off with it, not hurrying",
@@ -240,7 +240,7 @@
   {
    "id": "drop",
    "kind": "drop",
-   "truth": "Tom handed a holdall in at {zone}",
+   "truth": "{first} handed a holdall in at {zone}",
    "tom": "Handed the bag in at {zone}",
    "category": "carry",
    "flags": [],
@@ -249,7 +249,7 @@
    "slots": {
     "precursor": "a man standing about near {zone} as if waiting",
     "draw": "a bag coming out from under a coat or off a shelf",
-    "act": "Tom handed a holdall in at {zone}",
+    "act": "{first} handed a holdall in at {zone}",
     "victim": null,
     "actor": "the man with the bag",
     "flight": "him walking off with it, not hurrying",
@@ -263,7 +263,7 @@
   {
    "id": "cab_drive",
    "kind": "cab_drive",
-   "truth": "Tom drives one of Mickey's cars himself",
+   "truth": "{first} drives one of Mickey's cars himself",
    "tom": "Drove the cab",
    "category": "ambient",
    "flags": [],
@@ -272,7 +272,7 @@
    "slots": {
     "precursor": "a man coming along {zone} a little before",
     "draw": "nothing in his hands worth noting",
-    "act": "Tom drives one of Mickey's cars himself",
+    "act": "{first} drives one of Mickey's cars himself",
     "victim": null,
     "actor": "the man himself: the coat, the walk, the face if the light was good",
     "flight": "him going on along {zone}",
@@ -309,7 +309,7 @@
   {
    "id": "fare",
    "kind": "fare",
-   "truth": "Tom drove {name} {dest}",
+   "truth": "{first} drove {name} {dest}",
    "tom": "Drove {name} {dest}",
    "category": "social",
    "flags": [],
@@ -318,7 +318,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom drove {name} {dest}",
+    "act": "{first} drove {name} {dest}",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -330,7 +330,7 @@
   {
    "id": "free_ride",
    "kind": "free_ride",
-   "truth": "Tom would not take {name}'s fare money",
+   "truth": "{first} would not take {name}'s fare money",
    "tom": "Let {name} ride for nothing",
    "category": "social",
    "flags": [],
@@ -339,7 +339,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom would not take {name}'s fare money",
+    "act": "{first} would not take {name}'s fare money",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -351,7 +351,7 @@
   {
    "id": "job_yes",
    "kind": "job_yes",
-   "truth": "Tom took on Mickey's night arrangement",
+   "truth": "{first} took on Mickey's night arrangement",
    "tom": "Said yes to the night work",
    "category": "social",
    "flags": [],
@@ -360,7 +360,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom took on Mickey's night arrangement",
+    "act": "{first} took on Mickey's night arrangement",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -372,7 +372,7 @@
   {
    "id": "job_no",
    "kind": "job_no",
-   "truth": "Tom told the outfit no",
+   "truth": "{first} told the outfit no",
    "tom": "Told them no",
    "category": "social",
    "flags": [],
@@ -381,7 +381,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom told the outfit no",
+    "act": "{first} told the outfit no",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -393,7 +393,7 @@
   {
    "id": "no_show",
    "kind": "no_show",
-   "truth": "Tom never turned up for the night work",
+   "truth": "{first} never turned up for the night work",
    "tom": "Never turned up for the night work",
    "category": "social",
    "flags": [],
@@ -402,7 +402,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom never turned up for the night work",
+    "act": "{first} never turned up for the night work",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -414,7 +414,7 @@
   {
    "id": "tea",
    "kind": "tea",
-   "truth": "Tom took his tea at Ada's",
+   "truth": "{first} took his tea at Ada's",
    "tom": "Took tea at Ada's",
    "category": "social",
    "flags": [],
@@ -423,7 +423,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom took his tea at Ada's",
+    "act": "{first} took his tea at Ada's",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -435,7 +435,7 @@
   {
    "id": "tea_late",
    "kind": "tea_late",
-   "truth": "Tom came late to Ada's tea with his knuckles marked",
+   "truth": "{first} came late to Ada's tea with his knuckles marked",
    "tom": "Came late to Ada's tea",
    "category": "social",
    "flags": [],
@@ -444,7 +444,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom came late to Ada's tea with his knuckles marked",
+    "act": "{first} came late to Ada's tea with his knuckles marked",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -456,7 +456,7 @@
   {
    "id": "tea_snub",
    "kind": "tea_snub",
-   "truth": "Tom left Ada sat waiting with the good cups out",
+   "truth": "{first} left Ada sat waiting with the good cups out",
    "tom": "Left Ada waiting",
    "category": "social",
    "flags": [],
@@ -465,7 +465,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom left Ada sat waiting with the good cups out",
+    "act": "{first} left Ada sat waiting with the good cups out",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -477,7 +477,7 @@
   {
    "id": "chapel",
    "kind": "chapel",
-   "truth": "Tom sat a while in the chapel where they buried his uncle from",
+   "truth": "{first} sat a while in the chapel where they buried his uncle from",
    "tom": "Sat a while in the chapel",
    "category": "ambient",
    "flags": [],
@@ -486,7 +486,7 @@
    "slots": {
     "precursor": "a man coming along {zone} a little before",
     "draw": "nothing in his hands worth noting",
-    "act": "Tom sat a while in the chapel where they buried his uncle from",
+    "act": "{first} sat a while in the chapel where they buried his uncle from",
     "victim": null,
     "actor": "the man himself: the coat, the walk, the face if the light was good",
     "flight": "him going on along {zone}",
@@ -500,7 +500,7 @@
   {
    "id": "talk_ellis",
    "kind": "talk_ellis",
-   "truth": "Tom was seen talking with DS Carol Ellis on {zone}",
+   "truth": "{first} was seen talking with DS Carol Ellis on {zone}",
    "tom": "Talked with Ellis on {zone}",
    "category": "social",
    "flags": [],
@@ -509,7 +509,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom was seen talking with DS Carol Ellis on {zone}",
+    "act": "{first} was seen talking with DS Carol Ellis on {zone}",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -521,7 +521,7 @@
   {
    "id": "talk_press",
    "kind": "talk_press",
-   "truth": "Tom was seen talking with the reporter, Alison Sedman, on {zone}",
+   "truth": "{first} was seen talking with the reporter, Alison Sedman, on {zone}",
    "tom": "Talked with the reporter on {zone}",
    "category": "social",
    "flags": [],
@@ -530,7 +530,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom was seen talking with the reporter, Alison Sedman, on {zone}",
+    "act": "{first} was seen talking with the reporter, Alison Sedman, on {zone}",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -542,7 +542,7 @@
   {
    "id": "asked_fire",
    "kind": "asked_fire",
-   "truth": "Tom asked {name} about the warehouse fire",
+   "truth": "{first} asked {name} about the warehouse fire",
    "tom": "Asked {name} about the fire",
    "category": "social",
    "flags": [],
@@ -551,7 +551,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom asked {name} about the warehouse fire",
+    "act": "{first} asked {name} about the warehouse fire",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -563,7 +563,7 @@
   {
    "id": "stare",
    "kind": "stare",
-   "truth": "Tom stared {name} down on {zone}",
+   "truth": "{first} stared {name} down on {zone}",
    "tom": "Stared {name} down",
    "category": "menace",
    "flags": [
@@ -574,7 +574,7 @@
    "slots": {
     "precursor": "him closing up on {name} on {zone}",
     "draw": "a hand coming up, or a jaw going out",
-    "act": "Tom stared {name} down on {zone}",
+    "act": "{first} stared {name} down on {zone}",
     "victim": "who it was aimed at: {name}",
     "actor": "him, and how he stood",
     "flight": "him walking off, or the other giving way",
@@ -586,7 +586,7 @@
   {
    "id": "squareup",
    "kind": "squareup",
-   "truth": "Tom squared up to {name} on {zone}",
+   "truth": "{first} squared up to {name} on {zone}",
    "tom": "Squared up to {name}",
    "category": "menace",
    "flags": [
@@ -597,7 +597,7 @@
    "slots": {
     "precursor": "him closing up on {name} on {zone}",
     "draw": "a hand coming up, or a jaw going out",
-    "act": "Tom squared up to {name} on {zone}",
+    "act": "{first} squared up to {name} on {zone}",
     "victim": "who it was aimed at: {name}",
     "actor": "him, and how he stood",
     "flight": "him walking off, or the other giving way",
@@ -609,7 +609,7 @@
   {
    "id": "threat",
    "kind": "threat",
-   "truth": "Tom threatened {name} on {zone}",
+   "truth": "{first} threatened {name} on {zone}",
    "tom": "Threatened {name}",
    "category": "menace",
    "flags": [
@@ -621,7 +621,7 @@
    "slots": {
     "precursor": "him closing up on {name} on {zone}",
     "draw": "a hand coming up, or a jaw going out",
-    "act": "Tom threatened {name} on {zone}",
+    "act": "{first} threatened {name} on {zone}",
     "victim": "who it was aimed at: {name}",
     "actor": "him, and how he stood",
     "flight": "him walking off, or the other giving way",
@@ -633,7 +633,7 @@
   {
    "id": "shove",
    "kind": "shove",
-   "truth": "Tom laid hands on {name} on {zone}",
+   "truth": "{first} laid hands on {name} on {zone}",
    "tom": "Laid hands on {name}",
    "category": "violence",
    "flags": [
@@ -645,7 +645,7 @@
    "slots": {
     "precursor": "two men squaring up on {zone}",
     "draw": "a fist closing, or something coming out of a coat",
-    "act": "Tom laid hands on {name} on {zone}",
+    "act": "{first} laid hands on {name} on {zone}",
     "victim": "who took it: {name}",
     "actor": "the man who threw it",
     "flight": "him going off quickly along {zone}",
@@ -657,7 +657,7 @@
   {
    "id": "strike",
    "kind": "strike",
-   "truth": "Tom struck {name} on {zone}",
+   "truth": "{first} struck {name} on {zone}",
    "tom": "Hit {name}",
    "category": "violence",
    "flags": [
@@ -669,7 +669,7 @@
    "slots": {
     "precursor": "two men squaring up on {zone}",
     "draw": "a fist closing, or something coming out of a coat",
-    "act": "Tom struck {name} on {zone}",
+    "act": "{first} struck {name} on {zone}",
     "victim": "who took it: {name}",
     "actor": "the man who threw it",
     "flight": "him going off quickly along {zone}",
@@ -681,7 +681,7 @@
   {
    "id": "weapon_out",
    "kind": "weapon_out",
-   "truth": "Tom pulled a {weapon} on {name} on {zone}",
+   "truth": "{first} pulled a {weapon} on {name} on {zone}",
    "tom": "Pulled the {weapon} on {name}",
    "category": "weapon",
    "flags": [
@@ -693,7 +693,7 @@
    "slots": {
     "precursor": "a man with his hand inside his coat on {zone}",
     "draw": "a {weapon} coming out",
-    "act": "Tom pulled a {weapon} on {name} on {zone}",
+    "act": "{first} pulled a {weapon} on {name} on {zone}",
     "victim": "who it was pointed at: {name}",
     "actor": "the man holding the {weapon}",
     "flight": "him leaving quickly with it still in his hand",
@@ -705,7 +705,7 @@
   {
    "id": "weapon_used",
    "kind": "weapon_used",
-   "truth": "Tom used a {weapon} on {name} on {zone}",
+   "truth": "{first} used a {weapon} on {name} on {zone}",
    "tom": "Used the {weapon} on {name}",
    "category": "weapon",
    "flags": [
@@ -717,7 +717,7 @@
    "slots": {
     "precursor": "a man with his hand inside his coat on {zone}",
     "draw": "a {weapon} coming out",
-    "act": "Tom used a {weapon} on {name} on {zone}",
+    "act": "{first} used a {weapon} on {name} on {zone}",
     "victim": "who it was pointed at: {name}",
     "actor": "the man holding the {weapon}",
     "flight": "him leaving quickly with it still in his hand",
@@ -729,7 +729,7 @@
   {
    "id": "kill",
    "kind": "kill",
-   "truth": "Tom killed {name} on {zone}",
+   "truth": "{first} killed {name} on {zone}",
    "tom": "Killed {name}",
    "category": "dead",
    "flags": [
@@ -741,7 +741,7 @@
    "slots": {
     "precursor": "a man standing about a long while near {zone} after dark",
     "draw": "something heavy lifted, or a bundle dragged",
-    "act": "Tom killed {name} on {zone}",
+    "act": "{first} killed {name} on {zone}",
     "victim": "who was put there: {name}",
     "actor": "the one who did the lifting",
     "flight": "him walking off, wet to the knee, or driving away",
@@ -753,7 +753,7 @@
   {
    "id": "set_on",
    "kind": "set_on",
-   "truth": "Tom was set on by {name} on {zone} and stood his ground",
+   "truth": "{first} was set on by {name} on {zone} and stood his ground",
    "tom": "Was set on by {name}",
    "category": "violence",
    "flags": [
@@ -764,8 +764,8 @@
    "slots": {
     "precursor": "two men squaring up on {zone}",
     "draw": "a fist closing, or something coming out of a coat",
-    "act": "Tom was set on by {name} on {zone} and stood his ground",
-    "victim": "Tom, who took it and stood his ground",
+    "act": "{first} was set on by {name} on {zone} and stood his ground",
+    "victim": "{first}, who took it and stood his ground",
     "actor": "the one who started it: {name}",
     "flight": "him going off quickly along {zone}",
     "aftermath": "a man hurt and sitting or lying, and the mess"
@@ -776,7 +776,7 @@
   {
    "id": "beaten",
    "kind": "beaten",
-   "truth": "Tom took a beating on {zone}",
+   "truth": "{first} took a beating on {zone}",
    "tom": "Took a beating on {zone}",
    "category": "violence",
    "flags": [
@@ -787,8 +787,8 @@
    "slots": {
     "precursor": "two men squaring up on {zone}",
     "draw": "a fist closing, or something coming out of a coat",
-    "act": "Tom took a beating on {zone}",
-    "victim": "who took the beating: Tom",
+    "act": "{first} took a beating on {zone}",
+    "victim": "who took the beating: {first}",
     "actor": "the men who did it, if anyone saw their faces",
     "flight": "him going off quickly along {zone}",
     "aftermath": "a man getting up slowly from the ground"
@@ -799,7 +799,7 @@
   {
    "id": "patched",
    "kind": "patched",
-   "truth": "Grace Rinaldi patched Tom up in the caff kitchen",
+   "truth": "Grace Rinaldi patched {first} up in the caff kitchen",
    "tom": "Patched up in Grace's kitchen",
    "category": "social",
    "flags": [],
@@ -808,7 +808,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Grace Rinaldi patched Tom up in the caff kitchen",
+    "act": "Grace Rinaldi patched {first} up in the caff kitchen",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -820,7 +820,7 @@
   {
    "id": "debt_paid",
    "kind": "debt_paid",
-   "truth": "Tom collected what {name} owed Mickey's book",
+   "truth": "{first} collected what {name} owed Mickey's book",
    "tom": "Collected from {name}",
    "category": "money",
    "flags": [],
@@ -829,7 +829,7 @@
    "slots": {
     "precursor": "two people standing close, one with a hand in his pocket",
     "draw": "a hand going into a pocket",
-    "act": "Tom collected what {name} owed Mickey's book",
+    "act": "{first} collected what {name} owed Mickey's book",
     "victim": "who was paid, or who owed: {name}",
     "actor": "the one handing it over",
     "flight": "the other going off with it in his fist",
@@ -841,7 +841,7 @@
   {
    "id": "debt_forgive",
    "kind": "debt_forgive",
-   "truth": "Tom struck {name}'s debt out of Mickey's book",
+   "truth": "{first} struck {name}'s debt out of Mickey's book",
    "tom": "Struck {name}'s debt out of the book",
    "category": "money",
    "flags": [],
@@ -850,7 +850,7 @@
    "slots": {
     "precursor": "two people standing close, one with a hand in his pocket",
     "draw": "a hand going into a pocket",
-    "act": "Tom struck {name}'s debt out of Mickey's book",
+    "act": "{first} struck {name}'s debt out of Mickey's book",
     "victim": "who was paid, or who owed: {name}",
     "actor": "the one handing it over",
     "flight": "the other going off with it in his fist",
@@ -862,7 +862,7 @@
   {
    "id": "paid_info",
    "kind": "paid_info",
-   "truth": "Tom pays {name} for what the street sees",
+   "truth": "{first} pays {name} for what the street sees",
    "tom": "Paid {name} for what he sees",
    "category": "money",
    "flags": [],
@@ -871,7 +871,7 @@
    "slots": {
     "precursor": "two people standing close, one with a hand in his pocket",
     "draw": "a hand going into a pocket",
-    "act": "Tom pays {name} for what the street sees",
+    "act": "{first} pays {name} for what the street sees",
     "victim": "who was paid, or who owed: {name}",
     "actor": "the one handing it over",
     "flight": "the other going off with it in his fist",
@@ -883,7 +883,7 @@
   {
    "id": "bribe_try",
    "kind": "bribe_try",
-   "truth": "Tom tried to put money in {name}'s hand",
+   "truth": "{first} tried to put money in {name}'s hand",
    "tom": "Tried to put money in {name}'s hand",
    "category": "money",
    "flags": [
@@ -894,7 +894,7 @@
    "slots": {
     "precursor": "two people standing close, one with a hand in his pocket",
     "draw": "a hand going into a pocket",
-    "act": "Tom tried to put money in {name}'s hand",
+    "act": "{first} tried to put money in {name}'s hand",
     "victim": "who was paid, or who owed: {name}",
     "actor": "the one handing it over",
     "flight": "the other going off with it in his fist",
@@ -906,7 +906,7 @@
   {
    "id": "lied",
    "kind": "lied",
-   "truth": "Tom lied to {name}'s face about something they saw",
+   "truth": "{first} lied to {name}'s face about something they saw",
    "tom": "Lied to {name} and was caught",
    "category": "menace",
    "flags": [
@@ -917,7 +917,7 @@
    "slots": {
     "precursor": "him closing up on {name} on {zone}",
     "draw": "a hand coming up, or a jaw going out",
-    "act": "Tom lied to {name}'s face about something they saw",
+    "act": "{first} lied to {name}'s face about something they saw",
     "victim": "who it was aimed at: {name}",
     "actor": "him, and how he stood",
     "flight": "him walking off, or the other giving way",
@@ -956,7 +956,7 @@
   {
    "id": "arrested",
    "kind": "arrested",
-   "truth": "Tom was taken in by the police from {zone}",
+   "truth": "{first} was taken in by the police from {zone}",
    "tom": "Was taken in from {zone}",
    "category": "law",
    "flags": [],
@@ -965,7 +965,7 @@
    "slots": {
     "precursor": "a police car, or an officer on the pavement, a moment before",
     "draw": "a hand on his arm",
-    "act": "Tom was taken in by the police from {zone}",
+    "act": "{first} was taken in by the police from {zone}",
     "victim": "who was stopped or questioned",
     "actor": "the officer, and who he was dealing with",
     "flight": "a man being walked away, or walking away himself",
@@ -977,7 +977,7 @@
   {
    "id": "ran_police",
    "kind": "ran_police",
-   "truth": "Tom ran from the police on {zone}",
+   "truth": "{first} ran from the police on {zone}",
    "tom": "Ran from the police",
    "category": "vehicle",
    "flags": [
@@ -988,7 +988,7 @@
    "slots": {
     "precursor": "a cab coming along {zone} too fast, or sitting with its engine running",
     "draw": "a hand on the wheel and a foot going down",
-    "act": "Tom ran from the police on {zone}",
+    "act": "{first} ran from the police on {zone}",
     "victim": "who or what it hit, or who was in the way",
     "actor": "the driver, if the glass let anybody see",
     "flight": "the cab pulling away, and which way it went",
@@ -1000,7 +1000,7 @@
   {
    "id": "bag_taken",
    "kind": "bag_taken",
-   "truth": "A constable stopped Tom with a bag on {zone} and took it",
+   "truth": "A constable stopped {first} with a bag on {zone} and took it",
    "tom": "The constable took the bag on {zone}",
    "category": "law",
    "flags": [
@@ -1011,7 +1011,7 @@
    "slots": {
     "precursor": "a police car, or an officer on the pavement, a moment before",
     "draw": "a hand on the bag",
-    "act": "A constable stopped Tom with a bag on {zone} and took it",
+    "act": "A constable stopped {first} with a bag on {zone} and took it",
     "victim": "who was stopped or questioned",
     "actor": "the officer, and who he was dealing with",
     "flight": "a man being walked away, or walking away himself",
@@ -1023,8 +1023,8 @@
   {
    "id": "ellis_asked",
    "kind": "ellis_asked",
-   "truth": "DS Ellis came down {zone} asking about Tom",
-   "tom": "Ellis has been asking the street about Tom",
+   "truth": "DS Ellis came down {zone} asking about {first}",
+   "tom": "Ellis has been asking the street about {first}",
    "category": "hearsay",
    "flags": [
     "noself"
@@ -1034,7 +1034,7 @@
    "slots": {
     "precursor": "talk going round a day or two before",
     "draw": null,
-    "act": "DS Ellis came down {zone} asking about Tom",
+    "act": "DS Ellis came down {zone} asking about {first}",
     "victim": null,
     "actor": "a name and no face",
     "flight": null,
@@ -1050,7 +1050,7 @@
   {
    "id": "wash",
    "kind": "wash",
-   "truth": "Mickey's fare book has stopped adding up since Tom came",
+   "truth": "Mickey's fare book has stopped adding up since {first} came",
    "tom": "Put too much through the fare book",
    "category": "paper",
    "flags": [
@@ -1061,7 +1061,7 @@
    "slots": {
     "precursor": "night money coming in and no fares behind it",
     "draw": "a pen over the fare book",
-    "act": "Mickey's fare book has stopped adding up since Tom came",
+    "act": "Mickey's fare book has stopped adding up since {first} came",
     "victim": "whose figures they were",
     "actor": "the hand that wrote the fares",
     "flight": "the book being put away",
@@ -1073,7 +1073,7 @@
   {
    "id": "rent_paid",
    "kind": "rent_paid",
-   "truth": "Tom paid Agar's rent man on the Friday",
+   "truth": "{first} paid Agar's rent man on the Friday",
    "tom": "Paid the rent on Friday",
    "category": "money",
    "flags": [],
@@ -1082,7 +1082,7 @@
    "slots": {
     "precursor": "Agar's man coming along {zone} with his book on Friday",
     "draw": "notes counted onto the counter",
-    "act": "Tom paid Agar's rent man on the Friday",
+    "act": "{first} paid Agar's rent man on the Friday",
     "victim": "Agar's man, who took it",
     "actor": "the one handing it over",
     "flight": "the other going off with it in his fist",
@@ -1094,7 +1094,7 @@
   {
    "id": "rent_late",
    "kind": "rent_late",
-   "truth": "Tom was short with Agar's rent man on the Friday",
+   "truth": "{first} was short with Agar's rent man on the Friday",
    "tom": "Was short with the rent",
    "category": "money",
    "flags": [],
@@ -1103,7 +1103,7 @@
    "slots": {
     "precursor": "Agar's man coming along {zone} with his book on Friday",
     "draw": "a few notes counted onto the counter",
-    "act": "Tom was short with Agar's rent man on the Friday",
+    "act": "{first} was short with Agar's rent man on the Friday",
     "victim": "Agar's man, who did not take it kindly",
     "actor": "the one handing it over",
     "flight": "the other going off with it in his fist",
@@ -1115,7 +1115,7 @@
   {
    "id": "knocked",
    "kind": "knocked",
-   "truth": "Tom knocked {name} down with the cab on {zone}",
+   "truth": "{first} knocked {name} down with the cab on {zone}",
    "tom": "Knocked {name} down with the cab",
    "category": "vehicle",
    "flags": [
@@ -1127,7 +1127,7 @@
    "slots": {
     "precursor": "a cab coming along {zone} too fast, or sitting with its engine running",
     "draw": "a hand on the wheel and a foot going down",
-    "act": "Tom knocked {name} down with the cab on {zone}",
+    "act": "{first} knocked {name} down with the cab on {zone}",
     "victim": "who or what it hit, or who was in the way",
     "actor": "the driver, if the glass let anybody see",
     "flight": "the cab pulling away, and which way it went",
@@ -1139,7 +1139,7 @@
   {
    "id": "crash",
    "kind": "crash",
-   "truth": "Tom put the cab into something on {zone}",
+   "truth": "{first} put the cab into something on {zone}",
    "tom": "Put the cab into something on {zone}",
    "category": "vehicle",
    "flags": [
@@ -1150,7 +1150,7 @@
    "slots": {
     "precursor": "a cab coming along {zone} too fast, or sitting with its engine running",
     "draw": "a hand on the wheel and a foot going down",
-    "act": "Tom put the cab into something on {zone}",
+    "act": "{first} put the cab into something on {zone}",
     "victim": "what the cab hit",
     "actor": "the driver, if the glass let anybody see",
     "flight": "the cab pulling away, and which way it went",
@@ -1189,7 +1189,7 @@
   {
    "id": "choice_wind",
    "kind": "choice_wind",
-   "truth": "Tom is winding Mickey's arrangements down",
+   "truth": "{first} is winding Mickey's arrangements down",
    "tom": "Told Sheila: winding it down, just the cabs",
    "category": "social",
    "flags": [],
@@ -1198,7 +1198,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom is winding Mickey's arrangements down",
+    "act": "{first} is winding Mickey's arrangements down",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -1210,7 +1210,7 @@
   {
    "id": "choice_take",
    "kind": "choice_take",
-   "truth": "Tom is taking Mickey's arrangements over",
+   "truth": "{first} is taking Mickey's arrangements over",
    "tom": "Told Sheila: taking it on, all of it",
    "category": "social",
    "flags": [],
@@ -1219,7 +1219,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom is taking Mickey's arrangements over",
+    "act": "{first} is taking Mickey's arrangements over",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -1231,7 +1231,7 @@
   {
    "id": "choice_silent",
    "kind": "choice_silent",
-   "truth": "Tom would not tell Sheila Dunn which it is going to be",
+   "truth": "{first} would not tell Sheila Dunn which it is going to be",
    "tom": "Would not tell Sheila which",
    "category": "social",
    "flags": [],
@@ -1240,7 +1240,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom would not tell Sheila Dunn which it is going to be",
+    "act": "{first} would not tell Sheila Dunn which it is going to be",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -1284,7 +1284,7 @@
   {
    "id": "nod",
    "kind": "nod",
-   "truth": "Tom gave {name} a nod on {zone}",
+   "truth": "{first} gave {name} a nod on {zone}",
    "tom": "Nodded to {name}",
    "category": "social",
    "flags": [],
@@ -1293,7 +1293,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom gave {name} a nod on {zone}",
+    "act": "{first} gave {name} a nod on {zone}",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -1305,7 +1305,7 @@
   {
    "id": "greet",
    "kind": "greet",
-   "truth": "Tom passed the time of day with {name} on {zone}",
+   "truth": "{first} passed the time of day with {name} on {zone}",
    "tom": "Said good day to {name}",
    "category": "social",
    "flags": [],
@@ -1314,7 +1314,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom passed the time of day with {name} on {zone}",
+    "act": "{first} passed the time of day with {name} on {zone}",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -1326,7 +1326,7 @@
   {
    "id": "hard_look",
    "kind": "hard_look",
-   "truth": "Tom gave {name} a hard look on {zone}",
+   "truth": "{first} gave {name} a hard look on {zone}",
    "tom": "Gave {name} a hard look",
    "category": "menace",
    "flags": [
@@ -1337,7 +1337,7 @@
    "slots": {
     "precursor": "him closing up on {name} on {zone}",
     "draw": "a hand coming up, or a jaw going out",
-    "act": "Tom gave {name} a hard look on {zone}",
+    "act": "{first} gave {name} a hard look on {zone}",
     "victim": "who it was aimed at: {name}",
     "actor": "him, and how he stood",
     "flight": "him walking off, or the other giving way",
@@ -1349,7 +1349,7 @@
   {
    "id": "called_out",
    "kind": "called_out",
-   "truth": "Tom shouted after {name} on {zone}",
+   "truth": "{first} shouted after {name} on {zone}",
    "tom": "Called after {name}",
    "category": "menace",
    "flags": [
@@ -1360,7 +1360,7 @@
    "slots": {
     "precursor": "him closing up on {name} on {zone}",
     "draw": "a hand coming up, or a jaw going out",
-    "act": "Tom shouted after {name} on {zone}",
+    "act": "{first} shouted after {name} on {zone}",
     "victim": "who it was aimed at: {name}",
     "actor": "him, and how he stood",
     "flight": "him walking off, or the other giving way",
@@ -1372,7 +1372,7 @@
   {
    "id": "trespass",
    "kind": "trespass",
-   "truth": "Tom was where he had no business, at {place}",
+   "truth": "{first} was where he had no business, at {place}",
    "tom": "Was caught where he should not be, at {place}",
    "category": "sneak",
    "flags": [],
@@ -1381,7 +1381,7 @@
    "slots": {
     "precursor": "a man hanging about near {place}",
     "draw": "a torch, a key or a crowbar coming out",
-    "act": "Tom was where he had no business, at {place}",
+    "act": "{first} was where he had no business, at {place}",
     "victim": "whose place it was",
     "actor": "the one who went in",
     "flight": "him slipping out and away",
@@ -1420,7 +1420,7 @@
   {
    "id": "followed",
    "kind": "followed",
-   "truth": "Tom was following {name} along {zone}",
+   "truth": "{first} was following {name} along {zone}",
    "tom": "Was made following {name}",
    "category": "menace",
    "flags": [
@@ -1431,7 +1431,7 @@
    "slots": {
     "precursor": "him closing up on {name} on {zone}",
     "draw": "a hand coming up, or a jaw going out",
-    "act": "Tom was following {name} along {zone}",
+    "act": "{first} was following {name} along {zone}",
     "victim": "who it was aimed at: {name}",
     "actor": "him, and how he stood",
     "flight": "him walking off, or the other giving way",
@@ -1443,7 +1443,7 @@
   {
    "id": "collared",
    "kind": "collared",
-   "truth": "Tom ran {name} down and took him by the collar on {zone}",
+   "truth": "{first} ran {name} down and took him by the collar on {zone}",
    "tom": "Ran {name} down",
    "category": "menace",
    "flags": [
@@ -1455,7 +1455,7 @@
    "slots": {
     "precursor": "him closing up on {name} on {zone}",
     "draw": "a hand coming up, or a jaw going out",
-    "act": "Tom ran {name} down and took him by the collar on {zone}",
+    "act": "{first} ran {name} down and took him by the collar on {zone}",
     "victim": "who it was aimed at: {name}",
     "actor": "him, and how he stood",
     "flight": "him walking off, or the other giving way",
@@ -1467,7 +1467,7 @@
   {
    "id": "sparred",
    "kind": "sparred",
-   "truth": "Tom went a few rounds with the gloves on at the boxing club",
+   "truth": "{first} went a few rounds with the gloves on at the boxing club",
    "tom": "Sparred at the boxing club",
    "category": "violence",
    "flags": [],
@@ -1476,7 +1476,7 @@
    "slots": {
     "precursor": "him going into the boxing club with a bag over his shoulder",
     "draw": "gloves going on",
-    "act": "Tom went a few rounds with the gloves on at the boxing club",
+    "act": "{first} went a few rounds with the gloves on at the boxing club",
     "victim": "who he sparred with: {name}",
     "actor": "the man who threw it",
     "flight": "him going off quickly along {zone}",
@@ -1488,7 +1488,7 @@
   {
    "id": "searched_man",
    "kind": "searched_man",
-   "truth": "Tom went through {name}'s pockets while he was down on {zone}",
+   "truth": "{first} went through {name}'s pockets while he was down on {zone}",
    "tom": "Went through {name}'s pockets",
    "category": "violence",
    "flags": [
@@ -1499,7 +1499,7 @@
    "slots": {
     "precursor": "two men squaring up on {zone}",
     "draw": "hands going through a man's coat",
-    "act": "Tom went through {name}'s pockets while he was down on {zone}",
+    "act": "{first} went through {name}'s pockets while he was down on {zone}",
     "victim": "who took it: {name}",
     "actor": "the man who threw it",
     "flight": "him going off quickly along {zone}",
@@ -1511,7 +1511,7 @@
   {
    "id": "quiet_blow",
    "kind": "quiet_blow",
-   "truth": "Tom struck {name} from behind on {zone}",
+   "truth": "{first} struck {name} from behind on {zone}",
    "tom": "Put {name} down from behind",
    "category": "violence",
    "flags": [
@@ -1522,7 +1522,7 @@
    "slots": {
     "precursor": "a man coming up behind another on {zone}",
     "draw": "a fist closing, or something coming out of a coat",
-    "act": "Tom struck {name} from behind on {zone}",
+    "act": "{first} struck {name} from behind on {zone}",
     "victim": "who took it: {name}",
     "actor": "the man who threw it",
     "flight": "him going off quickly along {zone}",
@@ -1534,7 +1534,7 @@
   {
    "id": "hit_stopped",
    "kind": "hit_stopped",
-   "truth": "Tom knocked {name} down with the cab on {zone}, and stopped and stayed with them",
+   "truth": "{first} knocked {name} down with the cab on {zone}, and stopped and stayed with them",
    "tom": "Stopped for {name} after the knock",
    "category": "social",
    "flags": [],
@@ -1543,7 +1543,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "a hand on the wheel and a foot going down",
-    "act": "Tom knocked {name} down with the cab on {zone}, and stopped and stayed with them",
+    "act": "{first} knocked {name} down with the cab on {zone}, and stopped and stayed with them",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -1608,7 +1608,7 @@
   {
    "id": "rode",
    "kind": "rode",
-   "truth": "Tom was driven {dest} by {name}",
+   "truth": "{first} was driven {dest} by {name}",
    "tom": "Was driven {dest} by {name}",
    "category": "social",
    "flags": [],
@@ -1617,7 +1617,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom was driven {dest} by {name}",
+    "act": "{first} was driven {dest} by {name}",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -1673,7 +1673,7 @@
   {
    "id": "took_parcel",
    "kind": "took_parcel",
-   "truth": "Tom took a parcel round for a fare, no questions",
+   "truth": "{first} took a parcel round for a fare, no questions",
    "tom": "Took a parcel round for a fare",
    "category": "carry",
    "flags": [],
@@ -1682,7 +1682,7 @@
    "slots": {
     "precursor": "a man standing about near {zone} as if waiting",
     "draw": "a bag coming out from under a coat or off a shelf",
-    "act": "Tom took a parcel round for a fare, no questions",
+    "act": "{first} took a parcel round for a fare, no questions",
     "victim": null,
     "actor": "the man with the bag",
     "flight": "him walking off with it, not hurrying",
@@ -1696,7 +1696,7 @@
   {
    "id": "runner_let_go",
    "kind": "runner_let_go",
-   "truth": "Tom ran a fare-dodger down on {zone} and let him go",
+   "truth": "{first} ran a fare-dodger down on {zone} and let him go",
    "tom": "Let the runner go",
    "category": "social",
    "flags": [],
@@ -1705,7 +1705,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom ran a fare-dodger down on {zone} and let him go",
+    "act": "{first} ran a fare-dodger down on {zone} and let him go",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -1717,7 +1717,7 @@
   {
    "id": "runner_paid",
    "kind": "runner_paid",
-   "truth": "Tom ran a fare-dodger down on {zone} and had the fare off him",
+   "truth": "{first} ran a fare-dodger down on {zone} and had the fare off him",
    "tom": "Had the fare off the runner",
    "category": "vehicle",
    "flags": [],
@@ -1726,7 +1726,7 @@
    "slots": {
     "precursor": "a cab coming along {zone} too fast, or sitting with its engine running",
     "draw": "a hand on the wheel and a foot going down",
-    "act": "Tom ran a fare-dodger down on {zone} and had the fare off him",
+    "act": "{first} ran a fare-dodger down on {zone} and had the fare off him",
     "victim": "who or what it hit, or who was in the way",
     "actor": "the driver, if the glass let anybody see",
     "flight": "the cab pulling away, and which way it went",
@@ -1738,7 +1738,7 @@
   {
    "id": "drove_quiet",
    "kind": "drove_quiet",
-   "truth": "Tom told the reporter nothing",
+   "truth": "{first} told the reporter nothing",
    "tom": "Told the reporter nothing",
    "category": "social",
    "flags": [],
@@ -1747,7 +1747,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom told the reporter nothing",
+    "act": "{first} told the reporter nothing",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -1759,7 +1759,7 @@
   {
    "id": "minded",
    "kind": "minded",
-   "truth": "Tom stood with {name} at {place}",
+   "truth": "{first} stood with {name} at {place}",
    "tom": "Stood with {name} at {place}",
    "category": "social",
    "flags": [],
@@ -1768,7 +1768,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom stood with {name} at {place}",
+    "act": "{first} stood with {name} at {place}",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -1780,7 +1780,7 @@
   {
    "id": "side_done",
    "kind": "side_done",
-   "truth": "Tom did {name} a turn: {what}",
+   "truth": "{first} did {name} a turn: {what}",
    "tom": "Did {name} a turn",
    "category": "social",
    "flags": [],
@@ -1789,7 +1789,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom did {name} a turn: {what}",
+    "act": "{first} did {name} a turn: {what}",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -1801,7 +1801,7 @@
   {
    "id": "side_bad",
    "kind": "side_bad",
-   "truth": "Tom left {name} to it: {what}",
+   "truth": "{first} left {name} to it: {what}",
    "tom": "Left {name} to it",
    "category": "social",
    "flags": [],
@@ -1810,7 +1810,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom left {name} to it: {what}",
+    "act": "{first} left {name} to it: {what}",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -1822,7 +1822,7 @@
   {
    "id": "window_in",
    "kind": "window_in",
-   "truth": "Tom put {thing} in on {zone}",
+   "truth": "{first} put {thing} in on {zone}",
    "tom": "Put {thing} in",
    "category": "forced",
    "flags": [
@@ -1834,7 +1834,7 @@
    "slots": {
     "precursor": "a man loitering by it on {zone}, looking up and down",
     "draw": "a brick or a boot going back",
-    "act": "Tom put {thing} in on {zone}",
+    "act": "{first} put {thing} in on {zone}",
     "victim": "whose it was",
     "actor": "the one doing it",
     "flight": "a man going off along {zone} with his collar up",
@@ -1846,7 +1846,7 @@
   {
    "id": "forced_door",
    "kind": "forced_door",
-   "truth": "Tom forced {thing} on {zone}",
+   "truth": "{first} forced {thing} on {zone}",
    "tom": "Forced {thing}",
    "category": "forced",
    "flags": [
@@ -1858,7 +1858,7 @@
    "slots": {
     "precursor": "a man loitering by it on {zone}, looking up and down",
     "draw": "a tool or a hand brick coming out",
-    "act": "Tom forced {thing} on {zone}",
+    "act": "{first} forced {thing} on {zone}",
     "victim": "whose it was",
     "actor": "the one doing it",
     "flight": "a man going off along {zone} with his collar up",
@@ -1870,7 +1870,7 @@
   {
    "id": "car_taken",
    "kind": "car_taken",
-   "truth": "Tom broke into {thing} on {zone} and drove it off",
+   "truth": "{first} broke into {thing} on {zone} and drove it off",
    "tom": "Took {thing}",
    "category": "vehicle",
    "flags": [
@@ -1882,7 +1882,7 @@
    "slots": {
     "precursor": "a cab coming along {zone} too fast, or sitting with its engine running",
     "draw": "a hand through the quarter-light",
-    "act": "Tom broke into {thing} on {zone} and drove it off",
+    "act": "{first} broke into {thing} on {zone} and drove it off",
     "victim": "who or what it hit, or who was in the way",
     "actor": "the driver, if the glass let anybody see",
     "flight": "a car pulling out that was not his",
@@ -1894,7 +1894,7 @@
   {
    "id": "broke_in",
    "kind": "broke_in",
-   "truth": "Tom was inside {place} after hours",
+   "truth": "{first} was inside {place} after hours",
    "tom": "Was inside {place} after hours",
    "category": "sneak",
    "flags": [],
@@ -1903,7 +1903,7 @@
    "slots": {
     "precursor": "a man hanging about near {place}",
     "draw": "a torch, a key or a crowbar coming out",
-    "act": "Tom was inside {place} after hours",
+    "act": "{first} was inside {place} after hours",
     "victim": "whose place it was",
     "actor": "the one who went in",
     "flight": "him slipping out and away",
@@ -1915,7 +1915,7 @@
   {
    "id": "searched",
    "kind": "searched",
-   "truth": "Tom went through {thing} at {place}",
+   "truth": "{first} went through {thing} at {place}",
    "tom": "Went through {thing} at {place}",
    "category": "sneak",
    "flags": [],
@@ -1924,7 +1924,7 @@
    "slots": {
     "precursor": "a man hanging about near {place}",
     "draw": "a torch, a key or a crowbar coming out",
-    "act": "Tom went through {thing} at {place}",
+    "act": "{first} went through {thing} at {place}",
     "victim": "whose place it was",
     "actor": "the one who went in",
     "flight": "him slipping out and away",
@@ -1936,7 +1936,7 @@
   {
    "id": "lifted",
    "kind": "lifted",
-   "truth": "Tom took {thing} from {place}",
+   "truth": "{first} took {thing} from {place}",
    "tom": "Took {thing} from {place}",
    "category": "sneak",
    "flags": [],
@@ -1945,7 +1945,7 @@
    "slots": {
     "precursor": "a man hanging about near {place}",
     "draw": "a torch, a key or a crowbar coming out",
-    "act": "Tom took {thing} from {place}",
+    "act": "{first} took {thing} from {place}",
     "victim": "whose place it was",
     "actor": "the one who went in",
     "flight": "him slipping out and away",
@@ -1957,7 +1957,7 @@
   {
    "id": "pocket",
    "kind": "pocket",
-   "truth": "Tom had his hand in {name}'s pocket on {zone}",
+   "truth": "{first} had his hand in {name}'s pocket on {zone}",
    "tom": "Was felt at {name}'s pocket",
    "category": "sneak",
    "flags": [
@@ -1968,7 +1968,7 @@
    "slots": {
     "precursor": "a man hanging about near {place}",
     "draw": "a hand sliding into a pocket",
-    "act": "Tom had his hand in {name}'s pocket on {zone}",
+    "act": "{first} had his hand in {name}'s pocket on {zone}",
     "victim": "whose place it was",
     "actor": "the one who went in",
     "flight": "him slipping out and away",
@@ -1980,7 +1980,7 @@
   {
    "id": "fenced",
    "kind": "fenced",
-   "truth": "Tom sold {thing} in Rita's back room",
+   "truth": "{first} sold {thing} in Rita's back room",
    "tom": "Sold {thing} at Rita's",
    "category": "sneak",
    "flags": [],
@@ -1989,7 +1989,7 @@
    "slots": {
     "precursor": "a man hanging about near {place}",
     "draw": "a torch, a key or a crowbar coming out",
-    "act": "Tom sold {thing} in Rita's back room",
+    "act": "{first} sold {thing} in Rita's back room",
     "victim": "whose place it was",
     "actor": "the one who went in",
     "flight": "him slipping out and away",
@@ -2001,7 +2001,7 @@
   {
    "id": "sold_back",
    "kind": "sold_back",
-   "truth": "Tom tried to sell {name} their own goods",
+   "truth": "{first} tried to sell {name} their own goods",
    "tom": "Tried to sell {name} their own goods",
    "category": "menace",
    "flags": [
@@ -2012,7 +2012,7 @@
    "slots": {
     "precursor": "him closing up on {name} on {zone}",
     "draw": "a hand coming up, or a jaw going out",
-    "act": "Tom tried to sell {name} their own goods",
+    "act": "{first} tried to sell {name} their own goods",
     "victim": "who it was aimed at: {name}",
     "actor": "him, and how he stood",
     "flight": "him walking off, or the other giving way",
@@ -2024,7 +2024,7 @@
   {
    "id": "cased",
    "kind": "cased",
-   "truth": "Tom stood a long while watching {place}",
+   "truth": "{first} stood a long while watching {place}",
    "tom": "Watched {place}",
    "category": "sneak",
    "flags": [],
@@ -2033,7 +2033,7 @@
    "slots": {
     "precursor": "a man hanging about near {place}",
     "draw": "a torch, a key or a crowbar coming out",
-    "act": "Tom stood a long while watching {place}",
+    "act": "{first} stood a long while watching {place}",
     "victim": "whose place it was",
     "actor": "the one who went in",
     "flight": "him slipping out and away",
@@ -2045,7 +2045,7 @@
   {
    "id": "threw_in",
    "kind": "threw_in",
-   "truth": "Tom threw {thing} into the water off {zone}",
+   "truth": "{first} threw {thing} into the water off {zone}",
    "tom": "Threw {thing} in the water",
    "category": "sneak",
    "flags": [],
@@ -2054,7 +2054,7 @@
    "slots": {
     "precursor": "a man hanging about near {place}",
     "draw": "something held out over the edge",
-    "act": "Tom threw {thing} into the water off {zone}",
+    "act": "{first} threw {thing} into the water off {zone}",
     "victim": "whose place it was",
     "actor": "the one who went in",
     "flight": "him slipping out and away",
@@ -2066,7 +2066,7 @@
   {
    "id": "washed",
    "kind": "washed",
-   "truth": "Tom put a coat through a service wash at the Washeteria",
+   "truth": "{first} put a coat through a service wash at the Washeteria",
    "tom": "Washed the coat at the Washeteria",
    "category": "ambient",
    "flags": [],
@@ -2075,7 +2075,7 @@
    "slots": {
     "precursor": "a man coming along {zone} a little before",
     "draw": "a coat over his arm",
-    "act": "Tom put a coat through a service wash at the Washeteria",
+    "act": "{first} put a coat through a service wash at the Washeteria",
     "victim": null,
     "actor": "the man himself: the coat, the walk, the face if the light was good",
     "flight": "him going on along {zone}",
@@ -2118,7 +2118,7 @@
   {
    "id": "holdup",
    "kind": "holdup",
-   "truth": "Tom held up {place} with a {weapon} in his hand",
+   "truth": "{first} held up {place} with a {weapon} in his hand",
    "tom": "Held up {place}",
    "category": "weapon",
    "flags": [
@@ -2130,7 +2130,7 @@
    "slots": {
     "precursor": "a man with his hand inside his coat on {zone}",
     "draw": "a {weapon} coming out",
-    "act": "Tom held up {place} with a {weapon} in his hand",
+    "act": "{first} held up {place} with a {weapon} in his hand",
     "victim": "the keeper, with his hands where they could be seen",
     "actor": "the man holding the {weapon}",
     "flight": "him leaving quickly with it still in his hand",
@@ -2167,7 +2167,7 @@
   {
    "id": "helped",
    "kind": "helped",
-   "truth": "Tom stopped to help on {zone}: {what}",
+   "truth": "{first} stopped to help on {zone}: {what}",
    "tom": "Stopped to help: {what}",
    "category": "social",
    "flags": [],
@@ -2176,7 +2176,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom stopped to help on {zone}: {what}",
+    "act": "{first} stopped to help on {zone}: {what}",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -2188,7 +2188,7 @@
   {
    "id": "stepped_in",
    "kind": "stepped_in",
-   "truth": "Tom stepped in on {zone}: {what}",
+   "truth": "{first} stepped in on {zone}: {what}",
    "tom": "Stepped in: {what}",
    "category": "social",
    "flags": [],
@@ -2197,7 +2197,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom stepped in on {zone}: {what}",
+    "act": "{first} stepped in on {zone}: {what}",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -2209,7 +2209,7 @@
   {
    "id": "walked_past",
    "kind": "walked_past",
-   "truth": "Tom walked past {what} on {zone}",
+   "truth": "{first} walked past {what} on {zone}",
    "tom": "Walked past {what}",
    "category": "social",
    "flags": [],
@@ -2218,7 +2218,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom walked past {what} on {zone}",
+    "act": "{first} walked past {what} on {zone}",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -2230,7 +2230,7 @@
   {
    "id": "body_hidden",
    "kind": "body_hidden",
-   "truth": "Tom put a body in the water off {zone}",
+   "truth": "{first} put a body in the water off {zone}",
    "tom": "Put {name} in the water",
    "category": "dead",
    "flags": [
@@ -2241,7 +2241,7 @@
    "slots": {
     "precursor": "a man standing about a long while near {zone} after dark",
     "draw": "something heavy lifted, or a bundle dragged",
-    "act": "Tom put a body in the water off {zone}",
+    "act": "{first} put a body in the water off {zone}",
     "victim": "who was put there: {name}",
     "actor": "the one who did the lifting",
     "flight": "him walking off, wet to the knee, or driving away",
@@ -2253,7 +2253,7 @@
   {
    "id": "searched_by",
    "kind": "searched_by",
-   "truth": "A constable stopped Tom on {zone} and went through his pockets",
+   "truth": "A constable stopped {first} on {zone} and went through his pockets",
    "tom": "Was searched on {zone}",
    "category": "law",
    "flags": [
@@ -2264,7 +2264,7 @@
    "slots": {
     "precursor": "a police car, or an officer on the pavement, a moment before",
     "draw": "a notebook, a warrant card or a pair of hands going through pockets",
-    "act": "A constable stopped Tom on {zone} and went through his pockets",
+    "act": "A constable stopped {first} on {zone} and went through his pockets",
     "victim": "who was stopped or questioned",
     "actor": "the officer, and who he was dealing with",
     "flight": "a man being walked away, or walking away himself",
@@ -2276,7 +2276,7 @@
   {
    "id": "talked_round",
    "kind": "talked_round",
-   "truth": "Tom talked a constable round on {zone}",
+   "truth": "{first} talked a constable round on {zone}",
    "tom": "Talked the constable round on {zone}",
    "category": "social",
    "flags": [],
@@ -2285,7 +2285,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom talked a constable round on {zone}",
+    "act": "{first} talked a constable round on {zone}",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -2297,7 +2297,7 @@
   {
    "id": "paid_quiet",
    "kind": "paid_quiet",
-   "truth": "Tom put money in {name}'s hand to keep quiet",
+   "truth": "{first} put money in {name}'s hand to keep quiet",
    "tom": "Paid {name} to keep quiet",
    "category": "money",
    "flags": [
@@ -2308,7 +2308,7 @@
    "slots": {
     "precursor": "two people standing close, one with a hand in his pocket",
     "draw": "a hand going into a pocket",
-    "act": "Tom put money in {name}'s hand to keep quiet",
+    "act": "{first} put money in {name}'s hand to keep quiet",
     "victim": "who was paid, or who owed: {name}",
     "actor": "the one handing it over",
     "flight": "the other going off with it in his fist",
@@ -2320,7 +2320,7 @@
   {
    "id": "paid_officer",
    "kind": "paid_officer",
-   "truth": "Tom put money in {name}'s hand",
+   "truth": "{first} put money in {name}'s hand",
    "tom": "Paid {name}",
    "category": "money",
    "flags": [
@@ -2331,7 +2331,7 @@
    "slots": {
     "precursor": "two people standing close, one with a hand in his pocket",
     "draw": "a hand going into a pocket",
-    "act": "Tom put money in {name}'s hand",
+    "act": "{first} put money in {name}'s hand",
     "victim": "who was paid, or who owed: {name}",
     "actor": "the one handing it over",
     "flight": "the other going off with it in his fist",
@@ -2412,7 +2412,7 @@
   {
    "id": "sent",
    "kind": "sent",
-   "truth": "One of Tom's men did it on Tom's word: a job, {name}",
+   "truth": "One of {first}'s men did it on {first}'s word: a job, {name}",
    "tom": "Sent a man: a job, {name}",
    "category": "money",
    "flags": [
@@ -2423,7 +2423,7 @@
    "slots": {
     "precursor": "two people standing close, one with a hand in his pocket",
     "draw": "a hand going into a pocket",
-    "act": "One of Tom's men did it on Tom's word: a job, {name}",
+    "act": "One of {first}'s men did it on {first}'s word: a job, {name}",
     "victim": "who was paid, or who owed: {name}",
     "actor": "the one handing it over",
     "flight": "the other going off with it in his fist",
@@ -2435,7 +2435,7 @@
   {
    "id": "leaned",
    "kind": "leaned",
-   "truth": "One of Tom's men leaned on {name} for Tom",
+   "truth": "One of {first}'s men leaned on {name} for {first}",
    "tom": "Had a man lean on {name}",
    "category": "menace",
    "flags": [
@@ -2446,7 +2446,7 @@
    "slots": {
     "precursor": "him closing up on {name} on {zone}",
     "draw": "a hand coming up, or a jaw going out",
-    "act": "One of Tom's men leaned on {name} for Tom",
+    "act": "One of {first}'s men leaned on {name} for {first}",
     "victim": "who it was aimed at: {name}",
     "actor": "him, and how he stood",
     "flight": "him walking off, or the other giving way",
@@ -2458,7 +2458,7 @@
   {
    "id": "stood_with",
    "kind": "stood_with",
-   "truth": "Tom and {name} were together on {zone}",
+   "truth": "{first} and {name} were together on {zone}",
    "tom": "Was seen with {name} on {zone}",
    "category": "social",
    "flags": [],
@@ -2467,7 +2467,7 @@
    "slots": {
     "precursor": "the two of them drawing together on {zone}",
     "draw": "nothing in either pair of hands",
-    "act": "Tom and {name} were together on {zone}",
+    "act": "{first} and {name} were together on {zone}",
     "victim": "who he spoke to: {name}",
     "actor": "him, and what he looked like while he talked",
     "flight": "him taking his leave",
@@ -2521,7 +2521,7 @@
   {
    "id": "gun_shown",
    "kind": "gun_shown",
-   "truth": "Tom had a gun in his hand on {zone}",
+   "truth": "{first} had a gun in his hand on {zone}",
    "tom": "Showed the gun on {zone}",
    "category": "weapon",
    "flags": [
@@ -2534,7 +2534,7 @@
    "slots": {
     "precursor": "a man with his hand inside his coat on {zone}",
     "draw": "a {weapon} coming out",
-    "act": "Tom had a gun in his hand on {zone}",
+    "act": "{first} had a gun in his hand on {zone}",
     "victim": "who it was pointed at: {name}",
     "actor": "the man holding the {weapon}",
     "flight": "him leaving quickly with it still in his hand",
@@ -2573,7 +2573,7 @@
   {
    "id": "armed_crew",
    "kind": "armed_crew",
-   "truth": "Tom's men are carrying now, and everybody knows who brought the guns in",
+   "truth": "{first}'s men are carrying now, and everybody knows who brought the guns in",
    "tom": "Armed his men",
    "category": "weapon",
    "flags": [
@@ -2584,7 +2584,7 @@
    "slots": {
     "precursor": "talk of a delivery to the lock-ups",
     "draw": null,
-    "act": "Tom's men are carrying now, and everybody knows who brought the guns in",
+    "act": "{first}'s men are carrying now, and everybody knows who brought the guns in",
     "victim": null,
     "actor": "the man holding the {weapon}",
     "flight": null,
@@ -2600,7 +2600,7 @@
   {
    "id": "snooker_frame",
    "kind": "snooker_frame",
-   "truth": "Tom played a frame at the snooker hall on {zone}",
+   "truth": "{first} played a frame at the snooker hall on {zone}",
    "tom": "Played a frame at the snooker hall",
    "category": "pastime",
    "flags": [],
@@ -2610,7 +2610,7 @@
    "slots": {
     "precursor": "him going up the stairs at the snooker hall",
     "draw": "a cue chalked",
-    "act": "Tom played a frame at the snooker hall on {zone}",
+    "act": "{first} played a frame at the snooker hall on {zone}",
     "victim": null,
     "actor": "him at it, plain to see",
     "flight": "him walking back along the quay",
@@ -2624,7 +2624,7 @@
   {
    "id": "fished",
    "kind": "fished",
-   "truth": "Tom fished off the quay at {zone}",
+   "truth": "{first} fished off the quay at {zone}",
    "tom": "Fished off the quay",
    "category": "pastime",
    "flags": [],
@@ -2634,7 +2634,7 @@
    "slots": {
     "precursor": "him settling at the quay edge with a rod",
     "draw": "a line going out",
-    "act": "Tom fished off the quay at {zone}",
+    "act": "{first} fished off the quay at {zone}",
     "victim": null,
     "actor": "him at it, plain to see",
     "flight": "him walking back along the quay",
@@ -2648,7 +2648,7 @@
   {
    "id": "flew_pigeons",
    "kind": "flew_pigeons",
-   "truth": "Tom handled the birds at the pigeon loft on the allotments",
+   "truth": "{first} handled the birds at the pigeon loft on the allotments",
    "tom": "Handled the birds at the pigeon loft",
    "category": "pastime",
    "flags": [],
@@ -2658,7 +2658,7 @@
    "slots": {
     "precursor": "him going in at the gate of the allotments",
     "draw": "a basket opened and a bird in his hands",
-    "act": "Tom handled the birds at the pigeon loft on the allotments",
+    "act": "{first} handled the birds at the pigeon loft on the allotments",
     "victim": null,
     "actor": "him at it, plain to see",
     "flight": "him walking back along the quay",
@@ -2672,7 +2672,7 @@
   {
    "id": "bought_back",
    "kind": "bought_back",
-   "truth": "Tom bought back at {place} what he had sold there",
+   "truth": "{first} bought back at {place} what he had sold there",
    "tom": "Bought back what he sold at {place}",
    "category": "money",
    "flags": [],
@@ -2682,7 +2682,7 @@
    "slots": {
     "precursor": "him going back into the same shop he sold to",
     "draw": "money counted out onto the counter",
-    "act": "Tom bought back at {place} what he had sold there",
+    "act": "{first} bought back at {place} what he had sold there",
     "victim": "the keeper, who sold it back for a quarter more",
     "actor": "the one handing it over",
     "flight": "the other going off with it in his fist",
@@ -2694,7 +2694,7 @@
   {
    "id": "struck_down",
    "kind": "struck_down",
-   "truth": "Tom struck {name} while he was down on {zone}",
+   "truth": "{first} struck {name} while he was down on {zone}",
    "tom": "Hit {name} while he was down",
    "category": "violence",
    "flags": [],
@@ -2704,7 +2704,7 @@
    "slots": {
     "precursor": "a man already on the ground and another standing over him",
     "draw": "a boot drawn back",
-    "act": "Tom struck {name} while he was down on {zone}",
+    "act": "{first} struck {name} while he was down on {zone}",
     "victim": "who took it: {name}",
     "actor": "the man who threw it",
     "flight": "him going off quickly along {zone}",
@@ -2718,40 +2718,40 @@
   {
    "id": "bl_said_named",
    "belief_kind": "said",
-   "template": "Noted in the Ledger: {who} knows that you {tom_lc}.",
+   "template": "Noted in the Ledger: {who} knows that he {tom_lc}.",
    "confidence_word": "knows",
    "sure_level": "sure",
-   "how_text": "He says it to my face",
-   "how_screen": "says it to my face",
-   "who": "a name Tom knows, or the description he gave them",
+   "how_text": "Says it to his face",
+   "how_screen": "says it to his face",
+   "who": "a name {first} knows, or the description he gave them",
    "src": "6.1.3; ledger_screen.js believedLine; ledger.js grounds"
   },
   {
    "id": "bl_said_anon",
    "belief_kind": "said",
-   "template": "Noted in the Ledger: somebody passing knows that you {tom_lc}.",
+   "template": "Noted in the Ledger: somebody passing knows that he {tom_lc}.",
    "confidence_word": "knows",
    "sure_level": "sure",
-   "how_text": "He says it to my face",
-   "how_screen": "says it to my face",
+   "how_text": "Says it to his face",
+   "how_screen": "says it to his face",
    "who": "somebody passing",
    "src": "6.1.3; ledger_screen.js believedLine"
   },
   {
    "id": "bl_there_named",
    "belief_kind": "there",
-   "template": "Noted in the Ledger: {who} knows that you {tom_lc}.",
+   "template": "Noted in the Ledger: {who} knows that he {tom_lc}.",
    "confidence_word": "knows",
    "sure_level": "sure",
    "how_text": "Was there",
    "how_screen": "was there",
-   "who": "a name Tom knows, or the description he gave them",
+   "who": "a name {first} knows, or the description he gave them",
    "src": "6.1.3; ledger_screen.js believedLine; ledger.js grounds"
   },
   {
    "id": "bl_there_anon",
    "belief_kind": "there",
-   "template": "Noted in the Ledger: somebody passing knows that you {tom_lc}.",
+   "template": "Noted in the Ledger: somebody passing knows that he {tom_lc}.",
    "confidence_word": "knows",
    "sure_level": "sure",
    "how_text": "Was there",
@@ -2762,40 +2762,40 @@
   {
    "id": "bl_saw_named",
    "belief_kind": "saw",
-   "template": "Noted in the Ledger: {who} may have seen that you {tom_lc}.",
+   "template": "Noted in the Ledger: {who} may have seen that he {tom_lc}.",
    "confidence_word": "may have seen",
    "sure_level": "thinks so",
    "how_text": "Saw it",
-   "how_screen": "saw me, and I saw them look",
-   "who": "a name Tom knows, or the description he gave them",
+   "how_screen": "saw him, and he saw them look",
+   "who": "a name {first} knows, or the description he gave them",
    "src": "6.1.3; ledger_screen.js believedLine; ledger.js grounds"
   },
   {
    "id": "bl_saw_anon",
    "belief_kind": "saw",
-   "template": "Noted in the Ledger: somebody passing may have seen that you {tom_lc}.",
+   "template": "Noted in the Ledger: somebody passing may have seen that he {tom_lc}.",
    "confidence_word": "may have seen",
    "sure_level": "thinks so",
    "how_text": "Saw it",
-   "how_screen": "saw me, and I saw them look",
+   "how_screen": "saw him, and he saw them look",
    "who": "somebody passing",
    "src": "6.1.3; ledger_screen.js believedLine"
   },
   {
    "id": "bl_window_named",
    "belief_kind": "window",
-   "template": "Noted in the Ledger: {who} may have seen that you {tom_lc}.",
+   "template": "Noted in the Ledger: {who} may have seen that he {tom_lc}.",
    "confidence_word": "may have seen",
    "sure_level": "thinks so",
    "how_text": "Saw it: at the window",
    "how_screen": "was at a window",
-   "who": "a name Tom knows, or the description he gave them",
+   "who": "a name {first} knows, or the description he gave them",
    "src": "6.1.3; ledger_screen.js believedLine; ledger.js grounds"
   },
   {
    "id": "bl_window_anon",
    "belief_kind": "window",
-   "template": "Noted in the Ledger: somebody passing may have seen that you {tom_lc}.",
+   "template": "Noted in the Ledger: somebody passing may have seen that he {tom_lc}.",
    "confidence_word": "may have seen",
    "sure_level": "thinks so",
    "how_text": "Saw it: at the window",
@@ -2806,62 +2806,62 @@
   {
    "id": "bl_asked_named",
    "belief_kind": "asked",
-   "template": "Noted in the Ledger: {who} may have heard that you {tom_lc}.",
+   "template": "Noted in the Ledger: {who} may have heard that he {tom_lc}.",
    "confidence_word": "may have heard",
    "sure_level": "thinks so",
    "how_text": "{Name} says",
-   "how_screen": "told me when I asked",
-   "who": "a name Tom knows, or the description he gave them",
+   "how_screen": "told him when he asked",
+   "who": "a name {first} knows, or the description he gave them",
    "src": "6.1.3; ledger_screen.js believedLine; ledger.js grounds"
   },
   {
    "id": "bl_asked_anon",
    "belief_kind": "asked",
-   "template": "Noted in the Ledger: somebody passing may have heard that you {tom_lc}.",
+   "template": "Noted in the Ledger: somebody passing may have heard that he {tom_lc}.",
    "confidence_word": "may have heard",
    "sure_level": "thinks so",
    "how_text": "{Name} says",
-   "how_screen": "told me when I asked",
+   "how_screen": "told him when he asked",
    "who": "somebody passing",
    "src": "6.1.3; ledger_screen.js believedLine"
   },
   {
    "id": "bl_bought_named",
    "belief_kind": "bought",
-   "template": "Noted in the Ledger: {who} may have heard that you {tom_lc}.",
+   "template": "Noted in the Ledger: {who} may have heard that he {tom_lc}.",
    "confidence_word": "may have heard",
    "sure_level": "thinks so",
    "how_text": "{Name} says",
-   "how_screen": "according to what I paid for",
-   "who": "a name Tom knows, or the description he gave them",
+   "how_screen": "according to what he paid for",
+   "who": "a name {first} knows, or the description he gave them",
    "src": "6.1.3; ledger_screen.js believedLine; ledger.js grounds"
   },
   {
    "id": "bl_bought_anon",
    "belief_kind": "bought",
-   "template": "Noted in the Ledger: somebody passing may have heard that you {tom_lc}.",
+   "template": "Noted in the Ledger: somebody passing may have heard that he {tom_lc}.",
    "confidence_word": "may have heard",
    "sure_level": "thinks so",
    "how_text": "{Name} says",
-   "how_screen": "according to what I paid for",
+   "how_screen": "according to what he paid for",
    "who": "somebody passing",
    "src": "6.1.3; ledger_screen.js believedLine"
   },
   {
    "id": "bl_talking_named",
    "belief_kind": "talking",
-   "template": "Noted in the Ledger: {who} may have heard that you {tom_lc}.",
+   "template": "Noted in the Ledger: {who} may have heard that he {tom_lc}.",
    "confidence_word": "may have heard",
    "sure_level": "a guess",
    "how_text": "Saw them talking",
    "how_screen": "was talking, heads together",
-   "who": "a name Tom knows, or the description he gave them",
+   "who": "a name {first} knows, or the description he gave them",
    "src": "6.1.3; ledger_screen.js believedLine; ledger.js grounds"
   },
   {
    "id": "bl_talking_anon",
    "belief_kind": "talking",
-   "template": "Noted in the Ledger: somebody passing may have heard that you {tom_lc}.",
+   "template": "Noted in the Ledger: somebody passing may have heard that he {tom_lc}.",
    "confidence_word": "may have heard",
    "sure_level": "a guess",
    "how_text": "Saw them talking",
@@ -2890,7 +2890,7 @@
   {
    "id": "bl_call_new",
    "belief_kind": "call",
-   "template": "Noted in the Ledger: {who} now calls you '{call}'.",
+   "template": "Noted in the Ledger: {who} now calls him '{call}'.",
    "confidence_word": "knows",
    "sure_level": null,
    "note": "what somebody calls him (the new owner, Nowak, Tom, Tommy)",
@@ -2899,7 +2899,7 @@
   {
    "id": "bl_call_cooler",
    "belief_kind": "call",
-   "template": "Noted in the Ledger: {who} used to call you '{old_call}' and now says '{call}'.",
+   "template": "Noted in the Ledger: {who} used to call him '{old_call}' and now says '{call}'.",
    "confidence_word": "knows",
    "sure_level": null,
    "note": "a cooler name",
@@ -2908,7 +2908,7 @@
   {
    "id": "bl_talking_heads",
    "belief_kind": "talking",
-   "template": "Noted in the Ledger: {who} had their heads together with {other}, and looked at you.",
+   "template": "Noted in the Ledger: {who} had their heads together with {other}, and looked at him.",
    "confidence_word": "a guess",
    "sure_level": null,
    "note": "two heads together",
@@ -2917,7 +2917,7 @@
   {
    "id": "bl_unseen",
    "belief_kind": "unseen",
-   "template": "Noted in the Ledger: nobody saw that, so far as you know.",
+   "template": "Noted in the Ledger: nobody saw that, so far as he knows.",
    "confidence_word": "thinks so",
    "sure_level": null,
    "note": "written only after the act has gone unseen for two game minutes (4 real seconds on the 120 s hour)",
@@ -3083,17 +3083,17 @@
  },
  "people_recognition_lines": {
   "someone": "{who} saw somebody, and could not say who",
-  "shape": "{who} saw a shape: a man, about my size",
+  "shape": "{who} saw a shape: a man, about his size",
   "mark": "{who} saw a mark: the coat, the cab, a limp",
-  "face": "{who} saw my face, and does not know my name",
-  "recognition": "{who} knows it was me"
+  "face": "{who} saw his face, and does not know his name",
+  "recognition": "{who} knows it was him"
  },
  "people_how_learned": [
   {
    "basis": "said",
    "sure_level": "sure",
-   "how_text": "He says it to my face",
-   "how_screen": "says it to my face"
+   "how_text": "Says it to his face",
+   "how_screen": "says it to his face"
   },
   {
    "basis": "there",
@@ -3105,7 +3105,7 @@
    "basis": "saw",
    "sure_level": "thinks so",
    "how_text": "Saw it",
-   "how_screen": "saw me, and I saw them look"
+   "how_screen": "saw him, and he saw them look"
   },
   {
    "basis": "window",
@@ -3117,13 +3117,13 @@
    "basis": "asked",
    "sure_level": "thinks so",
    "how_text": "{Name} says",
-   "how_screen": "told me when I asked"
+   "how_screen": "told him when he asked"
   },
   {
    "basis": "bought",
    "sure_level": "thinks so",
    "how_text": "{Name} says",
-   "how_screen": "according to what I paid for"
+   "how_screen": "according to what he paid for"
   },
   {
    "basis": "talking",
@@ -3138,15 +3138,15 @@
    "note": "the town calls him this once its rung is reached; the rung is never shown"
   },
   {
-   "call": "Nowak",
+   "call": "{surname}",
    "note": "the town calls him this once its rung is reached; the rung is never shown"
   },
   {
-   "call": "Tom",
+   "call": "{first}",
    "note": "the town calls him this once its rung is reached; the rung is never shown"
   },
   {
-   "call": "Tommy",
+   "call": "{called}",
    "note": "the town calls him this once its rung is reached; the rung is never shown"
   }
  ],
@@ -3395,11 +3395,12 @@
    "people_json_id": "victor",
    "name": "Wayne Harrison",
    "heard_as": "Wayne",
-   "desc_before_name": "the lad from Rita's back room",
-   "public_line": "The pawn's back-room hand.",
-   "page_heading_unknown": "The lad from Rita's back room",
+   "desc_before_name": "the man behind the grille at the pawn on North Road",
+   "public_line": "Keeps Harrison's, the pawn at 16 North Road.",
+   "page_heading_unknown": "The man behind the grille at the pawn on North Road",
    "page_heading_known": "Wayne Harrison",
-   "src": "6.2.1; production/cloud-week/town/people.json; tools/.../cast.js desc"
+   "src": "6.2.1; production/cloud-week/town/people.json; tools/.../cast.js desc",
+   "place": "waynes_pawn"
   },
   {
    "id": "card_hal",
@@ -3681,11 +3682,14 @@
    "people_json_id": "takeaway_m",
    "name": "Peter Tang",
    "heard_as": "Peter",
-   "desc_before_name": "the man at the takeaway",
-   "public_line": "Keeps the takeaway with his wife.",
-   "page_heading_unknown": "The man at the takeaway",
+   "desc_before_name": "a man at a serving hatch",
+   "public_line": "Keeps a takeaway with his wife.",
+   "page_heading_unknown": "A man at a serving hatch",
    "page_heading_known": "Peter Tang",
-   "src": "6.2.1; production/cloud-week/town/people.json; tools/.../cast.js desc"
+   "src": "6.2.1; production/cloud-week/town/people.json; tools/.../cast.js desc",
+   "place": null,
+   "person_ref_only": true,
+   "note": "kept as a person_ref for the story lane; the takeaway is not on the frozen map, so no place is given"
   },
   {
    "id": "card_lily",
@@ -3693,11 +3697,14 @@
    "people_json_id": "takeaway_f",
    "name": "Lily Tang",
    "heard_as": "Lily",
-   "desc_before_name": "the woman at the takeaway hatch",
-   "public_line": "The takeaway's front and its books.",
-   "page_heading_unknown": "The woman at the takeaway hatch",
+   "desc_before_name": "a woman at a serving hatch",
+   "public_line": "Front of a takeaway, and its books.",
+   "page_heading_unknown": "A woman at a serving hatch",
    "page_heading_known": "Lily Tang",
-   "src": "6.2.1; production/cloud-week/town/people.json; tools/.../cast.js desc"
+   "src": "6.2.1; production/cloud-week/town/people.json; tools/.../cast.js desc",
+   "place": null,
+   "person_ref_only": true,
+   "note": "kept as a person_ref for the story lane; the takeaway is not on the frozen map, so no place is given"
   },
   {
    "id": "card_pc",
@@ -3717,7 +3724,7 @@
    "name": "Passers-by",
    "heard_as": "passers-by",
    "desc_before_name": "a passer-by",
-   "public_line": "People Tom has not met and cannot name.",
+   "public_line": "People {first} has not met and cannot name.",
    "page_heading_unknown": "Passers-by",
    "page_heading_known": "Passers-by",
    "src": "ledger_screen.js heading()"
@@ -3800,8 +3807,8 @@
   {
    "id": "db_call",
    "event_type": "call",
-   "line_template": "Calls Tom '{call}'.",
-   "struck_through_reason": "Now calls Tom '{new_call}'.",
+   "line_template": "Calls {first} '{call}'.",
+   "struck_through_reason": "Now calls {first} '{new_call}'.",
    "src": "6.2.2; ledger.js entry(), strike(); jobs.js"
   },
   {
@@ -3814,8 +3821,8 @@
   {
    "id": "db_talking",
    "event_type": "talking",
-   "line_template": "Heads together with {other}, eyes on Tom.",
-   "struck_through_reason": "They were only talking about the weather.",
+   "line_template": "Heads together with {other}, eyes on {first}.",
+   "struck_through_reason": "{first} heard them: only talk about the weather.",
    "src": "6.2.2; ledger.js entry(), strike(); jobs.js"
   },
   {
@@ -3910,7 +3917,7 @@
   {
    "id": "db_rent_third",
    "event_type": "rent_third",
-   "line_template": "Three Fridays short. The flat is let. Tom sleeps in the office now.",
+   "line_template": "Three Fridays short. The flat is let. {first} sleeps in the office now.",
    "struck_through_reason": "Arrears paid, {day}.",
    "src": "6.2.2; ledger.js entry(), strike(); jobs.js",
    "chosen": true
@@ -4183,10 +4190,18 @@
    "chosen": true
   },
   {
+   "id": "db_pawn_sold",
+   "event_type": "pawn_sold",
+   "line_template": "Pawned {thing} at {place} for {amount}. It can be bought back for {back_amount} until {day}.",
+   "struck_through_reason": "Gone: the week is up.",
+   "src": "6.2.2; ledger.js entry(), strike(); jobs.js",
+   "chosen": true
+  },
+  {
    "id": "db_fence_sold",
    "event_type": "fence_sold",
-   "line_template": "Sold {thing} at Rita's for {amount}. He can buy it back for {back_amount} until {day}.",
-   "struck_through_reason": "Gone: the week is up.",
+   "line_template": "Sold {thing} in the back room at Rita's for {amount}. Nothing is held for him; it cannot be bought back.",
+   "struck_through_reason": null,
    "src": "6.2.2; ledger.js entry(), strike(); jobs.js",
    "chosen": true
   },
@@ -4210,7 +4225,7 @@
    "id": "db_shop_round",
    "event_type": "shop_round",
    "line_template": "{name} paid {amount} for the week.",
-   "struck_through_reason": "{name} refused, and has gone to the police.",
+   "struck_through_reason": "{name} refused, and a constable was seen at the shop door.",
    "src": "6.2.2; ledger.js entry(), strike(); jobs.js",
    "chosen": true
   },
@@ -4297,7 +4312,7 @@
   {
    "id": "db_hook_spent",
    "event_type": "hook_spent",
-   "line_template": "Spent what Tom held on {name}: {what}.",
+   "line_template": "Spent what {first} held on {name}: {what}.",
    "struck_through_reason": null,
    "src": "6.2.2; ledger.js entry(), strike(); jobs.js",
    "chosen": true
@@ -4494,7 +4509,7 @@
    "id": "open_debt_wayne",
    "item_kind": "debt",
    "person": "wayne",
-   "landmark": "ritas",
+   "landmark": "waynes_pawn",
    "text": "Wayne owes the book {amount}. He can pay in goods, not money.",
    "day_text": null,
    "how_learned": "Mickey's book",
@@ -4510,7 +4525,7 @@
    "id": "open_debt_lee",
    "item_kind": "debt",
    "person": "lee",
-   "landmark": "quay_road",
+   "landmark": "fish_dock",
    "text": "Lee owes the book {amount}. He is on the quay when there is work.",
    "day_text": null,
    "how_learned": "Mickey's book",
@@ -4525,8 +4540,8 @@
    "id": "open_debt_julie",
    "item_kind": "debt",
    "person": "julie",
-   "landmark": "chapel_lane",
-   "text": "Julie owes the book {amount} and has not got it.",
+   "landmark": "cl_9",
+   "text": "Julie owes the book {amount} and has not got it. She is at 9 Chapel Lane.",
    "day_text": null,
    "how_learned": "Mickey's book",
    "closed_reasons": {
@@ -4541,7 +4556,7 @@
    "item_kind": "promise",
    "person": "{person}",
    "landmark": "{place}",
-   "text": "{Name} has {amount} of Tom's money out. A pound in five a week.",
+   "text": "{Name} has {amount} of {first}'s money out. A pound in five a week.",
    "day_text": "Every Friday",
    "how_learned": "He lent it",
    "closed_reasons": {
@@ -4556,7 +4571,7 @@
    "item_kind": "appointment",
    "person": "agar",
    "landmark": "licensing",
-   "text": "The licence hearing: the council's licensing committee, in the Exchange. He must be there himself.",
+   "text": "The licence hearing: the council's licensing committee, at the Town Hall in the Exchange. He must be there himself.",
    "day_text": "{day_time}",
    "how_learned": "Agar's letter",
    "closed_reasons": {
@@ -4648,7 +4663,7 @@
    "item_kind": "promise",
    "person": "{person}",
    "landmark": "{place}",
-   "text": "{Name} owes Tom a turn, and knows it.",
+   "text": "{Name} said he owed {first} a turn.",
    "day_text": null,
    "how_learned": "He said so",
    "closed_reasons": {
@@ -4707,10 +4722,10 @@
    "id": "open_fixer_page",
    "item_kind": "promise",
    "person": "garbutt",
-   "landmark": "phone_dock_gate",
+   "landmark": "dock_gate",
    "text": "Paged the Fixer from the box. He rings that box back within half an hour.",
    "day_text": null,
-   "how_learned": "Tom paged him",
+   "how_learned": "{first} paged him",
    "closed_reasons": {
     "rang": "He rang",
     "nothing": "He never rang"
@@ -4722,7 +4737,7 @@
    "id": "open_truce",
    "item_kind": "promise",
    "person": "garbutt",
-   "landmark": "phone_dock_gate",
+   "landmark": "dock_gate",
    "text": "The Fixer's truce with {rival} holds for two weeks from {day}.",
    "day_text": "{day}",
    "how_learned": "The Fixer says",
@@ -4796,7 +4811,7 @@
    "item_kind": "appointment",
    "person": "ron",
    "landmark": "boxing_club",
-   "text": "A boxing night at the Drill Hall, {day}. Ron asked him to stand the door.",
+   "text": "A boxing night at the boxing club, {day}. Ron asked him to stand the door.",
    "day_text": "{day}, evening",
    "how_learned": "Ron says",
    "closed_reasons": {
@@ -4933,7 +4948,7 @@
      "place": "metcalfes",
      "landmark": "the back door of Metcalfe's, 5 The Quay, in the alley",
      "line": "Handed the bag in at Metcalfe's back door.",
-     "pay_line": "Twenty pounds in the tin, Tom's cut."
+     "pay_line": "Twenty pounds in the tin, {first}'s cut."
     }
    ],
    "src": "ledger.js openNow; 2.9.1; economy design (the outfit's landing runs, 20 pounds Tom's cut)",
@@ -5019,7 +5034,7 @@
    "name": "Rita's back room",
    "family": "break-in",
    "giver": "wayne",
-   "channel_place": "the rank outside Mickey's",
+   "channel_place": "Harrison's, 16 North Road",
    "take_line": "Wayne's offer: the clock off Rita's back shelf, and a split.",
    "refuse_line": "Told Wayne no.",
    "fail_line": "Left Rita's back room alone.",
@@ -5078,8 +5093,8 @@
    "steps": [
     {
      "id": "stand",
-     "place": "chapel_lane",
-     "landmark": "Julie's door on Chapel Lane, the one with the blue step",
+     "place": "cl_9",
+     "landmark": "Julie's door at 9 Chapel Lane, the one with the blue step",
      "line": "Stood at Julie Kettlewell's door while the rent man came and went. He looked, and said nothing.",
      "window_hours": [
       17.5,
@@ -5118,7 +5133,7 @@
    "name": "The tray in Metcalfe's window",
    "family": "lift",
    "giver": "wayne",
-   "channel_place": "Rita's back room",
+   "channel_place": "Harrison's, 16 North Road",
    "take_line": "Wayne says Metcalfe leaves a tray of medals in his window overnight.",
    "refuse_line": "Told Wayne he was not a window man.",
    "fail_line": "Left Metcalfe's medals where they were.",
@@ -5127,7 +5142,7 @@
      "id": "take",
      "place": "metcalfes",
      "landmark": "Metcalfe's window, 5 The Quay, by the door",
-     "line": "Put Metcalfe's window in and took the tray of medals. Hal Metcalfe never forgets his own goods.",
+     "line": "Put Metcalfe's window in and took the tray of medals.",
      "ev": "crime.damage:coinwin"
     }
    ],
@@ -5147,7 +5162,7 @@
      "id": "do",
      "place": "rank_north",
      "landmark": "the north road rank, at the top of North Road by the car lot",
-     "line": "Put a Portside windscreen in on the north rank. Len Wardle will know who by morning.",
+     "line": "Put a Portside windscreen in on the north rank.",
      "ev": "crime.damage:portside"
     }
    ],
@@ -5167,7 +5182,7 @@
      "id": "fit",
      "place": "adas",
      "landmark": "Ada's, 2 Quay Street, the window opposite Mickey's",
-     "line": "Fitted Ada's landing lamp. She watched from the foot of the stairs and said nothing, which from Ada is thanks.",
+     "line": "Fitted Ada's landing lamp. She watched from the foot of the stairs and said nothing.",
      "good": true
     }
    ],
@@ -5241,7 +5256,7 @@
      "id": "back",
      "place": "dents_warehouses",
      "landmark": "the brick warehouses on Warehouse Row, numbers painted on the doors",
-     "line": "Walked Norman Dent's dog back to the row. He owes him a turn now, and knows it.",
+     "line": "Walked Norman Dent's dog back to the row. Norman said he owed him a turn.",
      "good": true
     }
    ],
@@ -5281,7 +5296,7 @@
    "family": "books",
    "stage": "crossed",
    "reading_phrase": "The inspector wants the other book.",
-   "sign_line": "The inspector: \"I'll want the other book, Mr Nowak.\"",
+   "sign_line": "The inspector: \"I'll want the other book, Mr {surname}.\"",
    "src": "6.2.5; 3.1.5; ending-signs-2026-09-30.md; ledgerx.js; tune/endings.js",
    "shown_when": "the books stop standing",
    "story_check": true
@@ -5320,7 +5335,7 @@
    "family": "books",
    "stage": "crossed",
    "reading_phrase": "Sheila says plainly that the true books will not stand.",
-   "sign_line": "Sheila: \"These will not stand if he asks for the red book, Tom.\"",
+   "sign_line": "Sheila: \"These will not stand if he asks for the red book, {first}.\"",
    "src": "6.2.5; 3.1.5; ending-signs-2026-09-30.md; ledgerx.js; tune/endings.js",
    "shown_when": "the true books cross the line, whatever her loyalty",
    "story_check": true
@@ -5398,8 +5413,8 @@
    "id": "friend_called_tom",
    "family": "friend",
    "stage": "neutral",
-   "reading_phrase": "They call him Tom now.",
-   "sign_line": "{name} called him Tom.",
+   "reading_phrase": "They call him {first} now.",
+   "sign_line": "{name} called him {first}.",
    "src": "6.2.5; 3.1.5; ending-signs-2026-09-30.md; ledgerx.js; tune/endings.js",
    "shown_when": "the name has been learned; known, not warm"
   },
@@ -5416,8 +5431,8 @@
    "id": "friend_lie_caught",
    "family": "friend",
    "stage": "crossed",
-   "reading_phrase": "Somebody knows he lied to their face.",
-   "sign_line": "{name} knows he lied to her face. The door is civil now, and no more.",
+   "reading_phrase": "Somebody said she knew he lied to her face.",
+   "sign_line": "{name} said she knew he lied to her face. The door is civil now, and no more.",
    "src": "6.2.5; 3.1.5; ending-signs-2026-09-30.md; ledgerx.js; tune/endings.js",
    "shown_when": "a lie is caught"
   },
@@ -5445,7 +5460,7 @@
    "family": "telling",
    "stage": "crossed",
    "reading_phrase": "It is said that he talks to the police.",
-   "sign_line": "It is said on the quay that Nowak talks to the police.",
+   "sign_line": "It is said on the quay that {surname} talks to the police.",
    "src": "6.2.5; 3.1.5; ending-signs-2026-09-30.md; ledgerx.js; tune/endings.js",
    "shown_when": "he traded with Ellis"
   },
@@ -5491,10 +5506,10 @@
    "id": "ellis_one_file",
    "family": "law",
    "stage": "crossed",
-   "reading_phrase": "Ellis has the fire and the street crimes in one file.",
-   "sign_line": "DS Ellis has the fire and the street crimes in one file now. Nothing of his will be treated as small again.",
+   "reading_phrase": "Ellis said the fire and the street crimes are one file.",
+   "sign_line": "DS Ellis told him, to his face: the fire and the street crimes are one file now.",
    "src": "6.2.5; 3.1.5; ending-signs-2026-09-30.md; ledgerx.js; tune/endings.js",
-   "shown_when": "the case becomes one"
+   "shown_when": "she says so to him, or he hears it said in her hearing"
   },
   {
    "id": "ellis_trade",
@@ -5665,8 +5680,8 @@
    "id": "crew_other_firm",
    "family": "crew",
    "stage": "crossed",
-   "reading_phrase": "A man of his was seen with another firm.",
-   "sign_line": "{name} was seen with another firm's men.",
+   "reading_phrase": "He saw a man of his with another firm's men.",
+   "sign_line": "{first} saw {name} with another firm's men.",
    "src": "6.2.5; 3.1.5; ending-signs-2026-09-30.md; ledgerx.js; tune/endings.js",
    "shown_when": "a betrayal is coming",
    "story_check": true
@@ -5779,31 +5794,65 @@
    "a meter",
    "a gauge",
    "what the town really holds",
-   "what anybody thinks beyond what Tom was given"
+   "what anybody thinks beyond what {first} was given"
   ],
   "act_end": [
    {
     "id": "reading_act1",
     "act": 1,
-    "template": "How things stand at the end of Act I: {reading_lines} The week is over. Sheila asked which it was to be, and the street has heard the answer.",
+    "template": "How things stand at the end of Act I: {reading_lines}",
+    "clauses": [
+     {
+      "print_if": "Sheila asked on Sunday and he answered",
+      "text": "Sheila asked which it was to be. He told her: {answer}."
+     },
+     {
+      "print_if": "Sheila asked on Sunday and he would not say",
+      "text": "Sheila asked which it was to be. He would not say."
+     },
+     {
+      "print_if": "the street has said something about the answer in his hearing",
+      "text": "He heard the street say it: {street_said}."
+     }
+    ],
+    "print_if": "Act I has ended",
     "src": "3.1.1; ledgerx.js on act.end"
    },
    {
     "id": "reading_act2",
     "act": 2,
-    "template": "How things stand at the end of Act II: {reading_lines} One of the three has sat down with him. The other two have not gone away.",
+    "template": "How things stand at the end of Act II: {reading_lines}",
+    "clauses": [
+     {
+      "print_if": "a sit-down was held",
+      "text": "He sat down with {rival}."
+     },
+     {
+      "print_if": "another rival has not sat down and has been seen about the Hook",
+      "text": "{other_rival} is still about; he saw {sign_seen}."
+     }
+    ],
+    "print_if": "Act II has ended",
     "src": "3.1.2; RT-05"
    },
    {
     "id": "reading_act3",
     "act": 3,
-    "template": "How things stand at the end of Act III: {reading_lines} The books are open. {books_line}",
+    "template": "How things stand at the end of Act III: {reading_lines}",
+    "clauses": [
+     {
+      "print_if": "the books were opened",
+      "text": "{books_line}"
+     }
+    ],
+    "print_if": "Act III has ended",
     "src": "3.1.3"
    },
    {
     "id": "reading_full_stop",
     "act": null,
     "template": "{reading_lines} On him: {carry_words}. {money_words}",
+    "print_if": "asked for, or on Full stop",
     "src": "ledgerx.js readingHTML: Full stop and the key for it",
     "note": "on Full stop and on request"
    }
@@ -5828,17 +5877,17 @@
   "headings": {
    "main": "THE LEDGER",
    "money": "Money",
-   "open": "Waiting on Tom",
+   "open": "Waiting on {first}",
    "week": "The week so far",
    "map": "The Hook"
   },
   "empty": {
-   "people": "Nobody yet. A page is opened for each person Tom meets or catches looking.",
+   "people": "Nobody yet. A page is opened for each person {first} meets or catches looking.",
    "page": "Nothing written here yet.",
    "person_none": "Nothing written about this one yet.",
    "unnamed": "No name learned yet."
   },
-  "footer": "Only what Tom believes, from what he saw and heard. Eyes he did not notice are not in here.",
+  "footer": "Only what {first} believes, from what he saw and heard. Eyes he did not notice are not in here.",
   "slip": {
    "head_folded": "FROM THE LEDGER",
    "open": "Open: {text}"
@@ -5876,7 +5925,27 @@
   "Kinds: the prototype has 111 kinds (kinds.js plus game/kinds/*.js); five new ids are added for the 24 Nov decisions (snooker_frame, fished, flew_pigeons, bought_back, struck_down) and marked chosen. The Tom wording of every kind is the prototype's 'mine' text; the truth wording is the prototype's 'truth' text, with rent_paid, rent_late, ellis_asked and talk_ellis changed to canon.",
   "Slot texts: the prototype has no slot wording, only a witness's whole-act belief. The 116 x 7 slot texts are new, written by category with per-kind overrides, all chosen; null means the kind has no such slot (a noise has no victim).",
   "Seven slots follow BLUEPRINT-02 2.2.1. The five-rung identification ladder is held in people_recognition_lines; the rung itself is the town's, never the Ledger's.",
-  "The takeaway (Peter and Lily Tang) and the Tivoli are in the cast and canon but not on the frozen map; their cards and open items use no map place id.",
-  "The sign list has 45 entries against the sweep's 'about 40'; the three crew signs come from tune/crew.js and the stage signs from tune/law.js."
- ]
+  "The sign list has 45 entries against the sweep's 'about 40'; the three crew signs come from tune/crew.js and the stage signs from tune/law.js.",
+  "Review fixes (24 Nov): fence sale split from pawn sale (db_pawn_sold has the 7-day buy-back at the price paid plus a quarter; db_fence_sold holds nothing); Wayne Harrison keeps Harrison's, 16 North Road (place waynes_pawn); the Tangs are person_ref names only, no place; Lee's landmark is fish_dock and Julie's is plot cl_9 (9 Chapel Lane, chosen).",
+  "Register: all screen text is third person about the lead ('saw him go', 'knows that he'); the elided past of the Tom wording ('Came off the ferry') stays. The lead's name is read from lead_name (defaults Tom, Thomas, Nowak, Tommy).",
+  "Other minds cut: ellis_one_file and crew_other_firm now rest on what Tom is told or sees; the shop round's refusal shows a constable at the door; Portside and Norman lines say only what is said or done in front of him.",
+  "Act-end readings carry print_if on each clause and assert no event; the boxing night is at the boxing club (landmark boxing_club). Map update noted: Mickey's counter is open 07:00 to 23:00 and the door locked 23:00 to 07:00 (notes left at night go under the door); the caff and chip shop shut on Sunday; the Washeteria is open 08:00 to 23:00.",
+  "The lead was renamed Frank Nowak in canon on 24 Nov; player text uses the name placeholders, defaults now Frank, Nowak, Frankie. Any remaining literal \"Tom\" in notes or ids is internal."
+ ],
+ "lead_name": {
+  "first": "Frank",
+  "formal_first": "Frank",
+  "first_initial": "F",
+  "surname": "Nowak",
+  "called": "Frankie",
+  "where": "one cast field (the lead's name), read by every text that names him; the story lane may rename him; the defaults are these values",
+  "placeholders": {
+   "{first}": "Frank",
+   "{formal_first}": "Frank",
+   "{first_initial}": "F",
+   "{surname}": "Nowak",
+   "{called}": "Frankie"
+  },
+  "note": "Defaults set to canon of 24 Nov (the lead is Frank Nowak; the ladder: the new owner, Nowak, Frank, Frankie). formal_first is Frank until canon gives a longer form (open point)."
+ }
 }

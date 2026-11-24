@@ -35,6 +35,17 @@ def validate(v, s, path, errs):
             errs.append('%s: %s above %s' % (path, v, s['maximum']))
     if isinstance(v, str) and 'pattern' in s and not re.search(s['pattern'], v):
         errs.append('%s: %r does not match %s' % (path, v, s['pattern']))
+    if isinstance(v, str) and 'minLength' in s and len(v.strip()) < s['minLength']:
+        errs.append('%s: shorter than %d' % (path, s['minLength']))
+    if isinstance(v, list):
+        if 'minItems' in s and len(v) < s['minItems']:
+            errs.append('%s: %d items, fewer than %d' % (path, len(v), s['minItems']))
+        if 'maxItems' in s and len(v) > s['maxItems']:
+            errs.append('%s: %d items, more than %d' % (path, len(v), s['maxItems']))
+        for i, (x, xs) in enumerate(zip(v, s.get('tuple', []))):
+            validate(x, xs, '%s[%d]' % (path, i), errs)
+    if isinstance(v, dict) and 'oneKeyOf' in s and sum(1 for k in s['oneKeyOf'] if k in v) != 1:
+        errs.append('%s: needs exactly one of %s' % (path, s['oneKeyOf']))
     if isinstance(v, dict):
         for k in s.get('required', []):
             if k not in v:
@@ -122,12 +133,11 @@ def rp(k, v, p):
 walk(R, rp)
 ok(not missing, 'every room prompt is in ui-text.json or listed as needed (%s)' % sorted(missing)[:8])
 S = data.get('sounds.json', {})
-rev = set()
-walk(S, lambda k, v, p: rev.update(v.keys()) if k in ('reverb', 'reverb_kinds', 'room_reverb') and isinstance(v, dict) else None)
-walk(S, lambda k, v, p: [rev.add(x.get('id') or x.get('kind')) for x in v if isinstance(x, dict)] if k in ('reverb', 'reverb_kinds', 'room_reverb') and isinstance(v, list) else None)
-badrev = set()
-walk(R, lambda k, v, p: badrev.add(v) if k in ('reverb', 'reverb_kind') and isinstance(v, str) and v not in rev and v != 'none' else None)
-ok(not badrev, 'every room reverb kind is in sounds.json (%s)' % sorted(badrev))
+rev = {x.get('id') for x in (S.get('rooms') or {}).get('reverbs', []) if isinstance(x, dict)}
+rkind = {x.get('room_kind') for x in (S.get('rooms') or {}).get('reverbs', []) if isinstance(x, dict)}
+ok(len(rev) >= 8, 'sounds.json holds reverb for the eight room kinds (%d)' % len(rev))
+badrev = sorted({str(x.get('reverb_id')) for x in R.get('rooms', []) if x.get('reverb_id') not in rev and x.get('reverb_id') not in (None, 'none')})
+ok(not badrev, 'every room reverb id is in sounds.json (%s)' % badrev)
 T = data.get('tune.json', {})
 tkeys = {n['key'] for n in T.get('numbers', [])}
 refs = {}
@@ -148,22 +158,105 @@ ok('render_map.py' in top, 'map-topdown.svg was drawn from map.json by render_ma
 CW = data.get('content-words.json', {})
 pats = []
 for c in CW.get('categories', []):
-    if isinstance(c, dict) and c.get('id') in ('alcohol', 'gambling', 'children'):
+    if isinstance(c, dict) and c.get('id') in ('alcohol', 'gambling', 'children', 'drugs', 'sex', 'cruelty'):
         for p in c.get('patterns', []):
-            pats.append((c['id'], p if isinstance(p, str) else p.get('pattern', '')))
+            pat = p if isinstance(p, str) else p.get('pattern', '')
+            cased = isinstance(p, dict) and p.get('cased')
+            try:
+                pats.append((c['id'], re.compile(pat if cased else pat, 0 if cased else re.I)))
+            except re.error:
+                pass
 hits = []
-TEXT_KEYS = ('text', 'tom', 'truth', 'headline', 'body', 'label', 'said', 'line', 'lines', 'title')
-for f in ('ui-text.json', 'ledger-texts.json', 'letters-and-print.json', 'places.json', 'sounds.json'):
+TEXT_KEYS = ('text', 'tom', 'truth', 'headline', 'body', 'label', 'said', 'line', 'lines', 'title', 'name', 'label_text', 'landmark', 'which_text', 'string', 'wording')
+for f in ('ui-text.json', 'ledger-texts.json', 'letters-and-print.json', 'places.json', 'sounds.json', 'rooms.json', 'timetables.json', 'crowd.json', 'vehicles.json', 'police.json'):
     def ct(k, v, path, f=f):
         if k in TEXT_KEYS and isinstance(v, str):
-            low = v.lower()
             for cat, p in pats:
-                if p and re.search(p, low):
-                    hits.append((f, path, cat, p))
+                if p.search(v):
+                    hits.append((f, path, cat, p.pattern, v[:50]))
     if f in data:
         walk(data[f], ct)
 ok(not hits, 'no drink, gambling or children word in player-facing text (%d hits, e.g. %s)' % (len(hits), hits[:3]) if pats else 'content patterns loaded')
 
+# ---- hand rules: what a format cannot say
+U = data.get('ui-text.json', {})
+def prompt_records(o, acc):
+    if isinstance(o, dict):
+        if isinstance(o.get('id'), str) and o['id'].startswith('prompt.'):
+            acc.append(o)
+        for v in o.values():
+            prompt_records(v, acc)
+    elif isinstance(o, list):
+        for v in o:
+            prompt_records(v, acc)
+    return acc
+prs = prompt_records(U.get('prompts', {}), [])
+ok(len(prs) >= 100 and all(isinstance(p.get('text'), str) and p['text'].strip() for p in prs if 'text' in p) and all(('text' in p) or ('which_text' in p) or ('tpl' in p) or ('template' in p) for p in prs),
+   'ui-text: %d prompts, every one with words' % len(prs))
+ai = U.get('ai_notice') or {}
+ok(bool(ai) and len(json.dumps(ai)) > 200, 'ui-text: the AI notice is present (RULINGS 24 Sep)')
+ok(isinstance(U.get('save_slots', {}).get('manual_slots'), int) and U['save_slots']['manual_slots'] >= 3 and U['save_slots'].get('autosave_slots', 0) >= 2,
+   'ui-text: at least three manual saves and rotating autosaves (AX-07)')
+ok(isinstance(U.get('subtitles', {}).get('floor_units'), (int, float)) and U['subtitles']['floor_units'] >= 24, 'ui-text: subtitles never below 24 units (AX-01)')
+clash = []
+for ctx, rows in ((r.get('context'), r) for r in (U.get('keys', {}).get('actions') or [])):
+    pass
+acts = U.get('keys', {}).get('actions') or []
+seen = {}
+for a in acts:
+    for dev in ('key', 'pad'):
+        k = a.get(dev)
+        if not k:
+            continue
+        for ctx in (a.get('contexts') or [a.get('context')]):
+            sig = (dev, ctx, str(k), bool(a.get('hold')))
+            if sig in seen and seen[sig] != a.get('id'):
+                clash.append((seen[sig], a.get('id'), sig))
+            seen[sig] = a.get('id')
+ok(not clash, 'ui-text: no key or button clash within a context (%s)' % clash[:3])
+bad_ui = []
+def ui_words(k, v, p):
+    if k in ('text', 'label', 'which_text', 'title') and isinstance(v, str) and re.search(r'\b(minimap|waypoint|quest marker|objective marker|reputation|xp|level up|difficulty)\b', v, re.I):
+        bad_ui.append((p, v[:40]))
+walk(U, ui_words)
+ok(not bad_ui, 'ui-text: no minimap, waypoint, marker, reputation, levels or difficulty in player text (RULINGS) (%s)' % bad_ui[:3])
+# content: the gate's own rules, exactly
+cs_path, up = None, D
+for _ in range(8):
+    cand = os.path.join(up, 'ledger', 'Assets', 'Scripts', 'Core', 'ContentWords.cs')
+    if os.path.exists(cand):
+        cs_path = cand
+        break
+    up = os.path.dirname(up)
+ok(cs_path is not None, 'content-words: the gate source ContentWords.cs is found in the repository')
+if cs_path:
+    cs = open(cs_path).read()
+    gate = set(r for r in re.findall(r'new Rule\("([a-z_]+)",\s*"([^"]+)",\s*(true|false),\s*@"((?:[^"]|"")*)"\)', cs) if r[0] != 'slur')   # slurs are held by reference only
+    mine = set()
+    for c in CW.get('categories', []):
+        for p in c.get('patterns', []):
+            if isinstance(p, dict) and 'ContentWords' in str(p.get('src', '')):
+                mine.add((c['id'], p.get('id'), 'true' if p.get('cased') else 'false', p.get('pattern', '').replace('"', '""')))
+    ok(len(gate) > 50 and gate == mine, 'content-words: the gate patterns equal ContentWords.cs exactly (%d in the gate, %d here, %d differ)' % (len(gate), len(mine), len(gate ^ mine)))
+bad_re = []
+for c in CW.get('categories', []):
+    for p in c.get('patterns', []):
+        pat = p.get('pattern', '') if isinstance(p, dict) else p
+        try:
+            re.compile(pat)
+        except re.error as e:
+            bad_re.append((c.get('id'), pat))
+ok(not bad_re, 'content-words: every pattern compiles (%s)' % bad_re[:3])
+cats = {c.get('id') for c in CW.get('categories', [])}
+ok({'alcohol', 'gambling', 'children'} <= cats, 'content-words: the alcohol, gambling and children categories exist')
+# sounds: licences, file references, no thinking cue
+S = data.get('sounds.json', {})
+fids = {f['id'] for f in S.get('files', [])}
+lic = sorted({f.get('licence') for f in S.get('files', [])})
+ok(lic == ['CC0'], 'sounds: every file CC0 (D56) (%s)' % lic)
+badf = [x.get('id') for x in S.get('sound_list', []) for fid in (x.get('file_ids') or []) if fid not in fids and not str(fid).startswith('see ')]
+ok(not badf, 'sounds: every sound names files that exist (%s)' % badf[:4])
+ok(not re.search(r'thinking', json.dumps([x.get('id', '') + ' ' + x.get('name', '') for x in S.get('sound_list', [])]), re.I), 'sounds: no thinking cue (ruling 24 Nov)')
 print('data files: %d checks passed, %d failed' % (len(OK), len(FAIL)))
 for m in FAIL:
     print('FAIL', m)

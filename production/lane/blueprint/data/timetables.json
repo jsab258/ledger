@@ -25,8 +25,10 @@
   "Rent: £18 every Friday to Mr Leonard Askew of Agar & Co's agents at Mickey's counter, time 11:00 to 12:00 chosen. The story frame's Dawn Pybus (running for the rent collector) is not used (letters-and-print.json open point).",
   "Early closing: none built (see shop_hours.early_closing_note); shop-hours-1990 found Thursday as Hull's early-closing day but no 1990 source.",
   "Beat: G5's cycle of about 7 real minutes is real time, so at 2 s a game minute a 22:00 to 06:00 night holds about 2.4 cycles (about 200 game minutes each). The doors-in-sight standards of G5 still hold (4 and 7.5 real minutes).",
-  "Ferry: half-hourly until 17:30 and the last crossing from the Hook at 23:00 Monday to Saturday are the paper's; the minutes (:10 and :40 arrivals, away five minutes later) and the Sunday service are chosen. Tom's 15:40 arrival on Monday 15 Oct is a regular :40 arrival.",
+  "Ferry: half-hourly until 17:30 and the last crossing from the Hook at 23:00 Monday to Saturday are the paper's (issue_03, issue_11); two boats, 25-minute crossings, five-minute turnarounds, the :10 and :40 arrivals, the evening boat's :55 arrivals and the Sunday service are chosen. Tom's 15:40 arrival on Monday 15 Oct is a regular :40 arrival.",
   "Bin day (Wednesday), post, paper-delivery and bus times, milk float's route, the second post: chosen (no source). Milk float 05:30 to 07:30 is sounds.json's.",
+  "Chip shop Sunday: shut (the Act's Fifth Schedule excludes fried fish and chips; the paper's issue_08 line is lost). Caff Sunday: shut (G10, Monday to Saturday).",
+  "Mickey's: counter 07:00 to 23:00, radio manned 24 hours, street door locked 23:00 to 07:00 and tried by the beat constable (24 Nov decision); the 23:00 count is Regent House, the chip shop, the landing window and the tea stall Monday to Saturday (four), and Regent House, the landing window and the tea stall on Sunday (three).",
   "Dated paper events are fixed in print (the paper's dates do not move with story state): the jumble sale, meetings, gas main, berths, the dance. Items marked story_check (customs seizure 31 Oct, licensing 15 Nov, dock gate chaining 1 Dec) print only if their state holds.",
   "Clock recomputations are in real_time (old figures at 60 s a game hour, new at 120 s)."
  ],
@@ -48,6 +50,7 @@
   "early_closing_note": "None: G10 and 4.3.3 give Monday to Saturday 09:00 to 17:30. Thursday is market day instead (see market).",
   "open_on": {
    "mon": [
+    "mickeys",
     "laveracks",
     "ritas",
     "launderette",
@@ -60,7 +63,6 @@
     "caff",
     "metcalfes",
     "second_hand",
-    "widow_base",
     "boxing_club",
     "customs",
     "harbour_board",
@@ -80,6 +82,7 @@
     "tea_stall"
    ],
    "tue": [
+    "mickeys",
     "laveracks",
     "ritas",
     "launderette",
@@ -92,7 +95,6 @@
     "caff",
     "metcalfes",
     "second_hand",
-    "widow_base",
     "customs",
     "harbour_board",
     "dents_warehouses",
@@ -112,6 +114,7 @@
     "tea_stall"
    ],
    "wed": [
+    "mickeys",
     "laveracks",
     "ritas",
     "launderette",
@@ -124,7 +127,6 @@
     "caff",
     "metcalfes",
     "second_hand",
-    "widow_base",
     "boxing_club",
     "customs",
     "harbour_board",
@@ -144,6 +146,7 @@
     "tea_stall"
    ],
    "thu": [
+    "mickeys",
     "laveracks",
     "ritas",
     "launderette",
@@ -156,7 +159,6 @@
     "caff",
     "metcalfes",
     "second_hand",
-    "widow_base",
     "customs",
     "harbour_board",
     "dents_warehouses",
@@ -175,6 +177,7 @@
     "tea_stall"
    ],
    "fri": [
+    "mickeys",
     "laveracks",
     "ritas",
     "launderette",
@@ -187,7 +190,6 @@
     "caff",
     "metcalfes",
     "second_hand",
-    "widow_base",
     "boxing_club",
     "customs",
     "harbour_board",
@@ -207,6 +209,7 @@
     "tea_stall"
    ],
    "sat": [
+    "mickeys",
     "laveracks",
     "ritas",
     "launderette",
@@ -219,7 +222,6 @@
     "caff",
     "metcalfes",
     "second_hand",
-    "widow_base",
     "boxing_club",
     "cold_stores",
     "car_lot",
@@ -235,9 +237,9 @@
     "tea_stall"
    ],
    "sun": [
+    "mickeys",
     "launderette",
     "newsagent",
-    "caff",
     "chapel",
     "doctors",
     "allotments",
@@ -277,9 +279,9 @@
     "ironmonger",
     "tea_room",
     "snooker_hall",
+    "caff",
     "metcalfes",
     "second_hand",
-    "widow_base",
     "boxing_club",
     "customs",
     "harbour_board",
@@ -295,52 +297,45 @@
     "barber"
    ]
   },
-  "sunday_trading": "only the newsagent, caff (chosen), launderette, boarding house, tea stall and the places that run all night; from Sun 11 Nov the chip shop in the evening (paper issue_09)",
+  "sunday_trading": "only the newsagent (07:00 to 12:00), the launderette, Mickey's (07:00 to 23:00), the boarding house, the tea stall and the landing; the caff and the chip shop are shut (G10; Shops Act 1950 Fifth Schedule)",
   "check_open_with_people_at_2300": {
    "mon": [
-    "mickeys",
     "boarding_house",
     "chip_shop",
     "ferry_landing",
     "tea_stall"
    ],
    "tue": [
-    "mickeys",
     "boarding_house",
     "chip_shop",
     "ferry_landing",
     "tea_stall"
    ],
    "wed": [
-    "mickeys",
     "boarding_house",
     "chip_shop",
     "ferry_landing",
     "tea_stall"
    ],
    "thu": [
-    "mickeys",
     "boarding_house",
     "chip_shop",
     "ferry_landing",
     "tea_stall"
    ],
    "fri": [
-    "mickeys",
     "boarding_house",
     "chip_shop",
     "ferry_landing",
     "tea_stall"
    ],
    "sat": [
-    "mickeys",
     "boarding_house",
     "chip_shop",
     "ferry_landing",
     "tea_stall"
    ],
    "sun": [
-    "mickeys",
     "boarding_house",
     "ferry_landing",
     "tea_stall"
@@ -357,9 +352,9 @@
    "end": "07:00",
    "place": "dock_gate",
    "route": "along the Quay and Quay Street to the dock gate; the breakfast trade at the caff from 06:00",
-   "crowd": "5 to 8 people on the parade front, 10 to 18 on the quay road by the fish dock",
+   "crowd": "counts are crowd.json's, not repeated as G9's older ones: zone z_parade_quay_street band dawn_shift (5 to 8 on the stretch) and zone z_quay_road_fish_dock (10 to 18); the G9 figures 6 to 10 and 15 to 25 were pre-rescale and lose",
    "real_time": "1.5 game hours = 3 real minutes (was 1.5)",
-   "src": "G9; 2.1.x; BLUEPRINT-02 2.1.4",
+   "src": "crowd.json (hour_bands dawn_shift, zones); G9",
    "note": "Sunday: none (chosen)"
   },
   {
@@ -430,18 +425,18 @@
    "person_ref": true,
    "chosen": true,
    "src": "3.4.3; hook-cast.json (older)",
-   "note": "19:00 to 07:00 the radio is manned by the night driver on the set and, from rung 3, the night desk man"
+   "note": "19:00 to 07:00 the radio is manned by the night driver on the set and, from rung 3, the night desk man (radio manned 24 h, 24 Nov decision)"
   },
   {
    "id": "shift_counter",
    "who": "counter and fare book (Sheila)",
    "days": "mon-sun",
    "start": "07:00",
-   "end": "22:00",
+   "end": "23:00",
    "place": "mickeys",
    "person_ref": true,
    "chosen": true,
-   "src": "places.json mickeys counter_hours"
+   "src": "places.json mickeys counter_hours; 24 Nov decision (street door locked 23:00 to 07:00, radio manned 24 h)"
   },
   {
    "id": "shift_beat_night",
@@ -517,6 +512,15 @@
   "winter_service": true,
   "landing": "ferry_landing",
   "rank": "rank_ferry",
+  "boats": {
+   "count": 2,
+   "by_day": "boat A arrives at the Hook at :10 and boat B at :40, each hour from 06:40 (B) and 07:10 (A) to 17:10; each lies five minutes at the Hook and leaves at :15 and :45",
+   "crossing_game_minutes": 25,
+   "turnaround_game_minutes": 5,
+   "round_trip_game_minutes": 60,
+   "evening": "boat A is laid up after its 17:15 sailing; boat B alone runs the hourly evening service: after 16:45 it lays over 20 minutes at the far side, so it arrives at the Hook at :55 and leaves at :00, the last crossing leaving the Hook at 23:00",
+   "sunday": "one boat (B), four crossings"
+  },
   "mon_sat": {
    "arrivals_at_hook": [
     "06:40",
@@ -541,12 +545,12 @@
     "16:10",
     "16:40",
     "17:10",
-    "17:40",
-    "18:40",
-    "19:40",
-    "20:40",
-    "21:40",
-    "22:40"
+    "17:55",
+    "18:55",
+    "19:55",
+    "20:55",
+    "21:55",
+    "22:55"
    ],
    "departures_from_hook": [
     "06:45",
@@ -581,7 +585,8 @@
    "half_hourly_until": "17:30",
    "then": "hourly",
    "last_crossing_from_hook": "23:00",
-   "note": "The paper (issue_04 and issue_12): winter service half-hourly until 5.30 pm, the last crossing from the Hook at 11.00 pm Monday to Saturday. Exact minutes chosen: arrivals at :10 and :40, away five minutes later; after 17:30 arrivals at :40 and away at the next hour."
+   "rule": "every departure is its arrival plus the five-minute turnaround, except the evening's :55 arrivals which leave at :00 (the same five minutes)",
+   "note": "The paper (issue_03 and issue_11): winter service half-hourly until 5.30 pm, the last crossing from the Hook at 11.00 pm Monday to Saturday. Exact minutes and the two boats are chosen."
   },
   "sun": {
    "arrivals_at_hook": [
@@ -591,24 +596,24 @@
     "19:40"
    ],
    "departures_from_hook": [
-    "11:00",
-    "14:00",
-    "17:00",
-    "20:00"
+    "10:45",
+    "13:45",
+    "16:45",
+    "19:45"
    ],
    "chosen": true,
-   "note": "Sunday service chosen (the paper gives Monday to Saturday only); last Sunday crossing 20:00."
+   "note": "Sunday service chosen (the paper gives Monday to Saturday only); last Sunday crossing 19:45."
   },
-  "crossing_game_minutes": 20,
+  "crossing_game_minutes": 25,
   "turnaround_game_minutes": 5,
-  "real_time": "a crossing's 20 game minutes is 40 real seconds at 120 s a game hour (was 20 s at 60 s); the 5-minute turnaround is 10 real seconds",
+  "real_time": "a crossing's 25 game minutes is 50 real seconds at 120 s a game hour (was 25 s at 60 s); the 5-minute turnaround is 10 real seconds",
   "tom_arrival": {
    "date": "1990-10-15",
    "weekday": "mon",
    "time": "15:40",
    "place": "ferry_landing",
    "src": "4.2.1 (about twenty to four on Monday 15 October)",
-   "note": "the 15:40 is the half-hourly :40 arrival; the 20 s skippable shot, control at 0:20"
+   "note": "the 15:40 is boat B's regular :40 arrival; the 20 s skippable shot, control at 0:20"
   },
   "night": {
    "landing_window": [
@@ -621,7 +626,7 @@
    "last_ferry_lodger": "a lodger takes the 23:00 (3.x fare 'a lodger for the last ferry')",
    "turf_post": "post_landing 22:00 to 02:00"
   },
-  "src": "4.2.1; G10; paper issues 04 and 12; chosen minutes",
+  "src": "4.2.1; G10; paper issues 03 and 11; chosen minutes and boats",
   "chosen": true
  },
  "market": {
@@ -636,7 +641,7 @@
   },
   "stalls_on_the_hook": {
    "pitches": "4 trestles and a barrow (a fish stall, a vegetable barrow, a crockery trestle, a hardware barrow)",
-   "where": "the quay road's north pavement between Rinaldi's and Quay Street's foot (x 66 to 114, y 5.5)",
+   "where": "the quay road's north pavement from Rinaldi's to the ginnel's mouth (x 64 to 96, y 5.5, west of bench_quay at x 100)",
    "chosen": true
   },
   "src": "2.1.6; G9; brief; the paper (issue_02: Tuesday, Friday, Saturday) loses",
@@ -1199,7 +1204,7 @@
    "start": "00:00",
    "end": "24:00",
    "crowd_effect": null,
-   "src": "paper issue_04, issue_09"
+   "src": "paper issue_04, issue_08"
   },
   {
    "date": "1990-11-10",
@@ -1213,7 +1218,7 @@
     "shops_daytime_multiplier": 0.75,
     "assembly": "11:00 at the Exchange (off the map)"
    },
-   "src": "paper issue_08, issue_10",
+   "src": "paper issue_06, issue_08, issue_09",
    "chosen": true
   },
   {
@@ -1232,19 +1237,6 @@
    "src": "2.1.6; 4.3.6; 11 Nov 1990 was a Sunday"
   },
   {
-   "date": "1990-11-11",
-   "id": "chip_shop_opens_sundays",
-   "kind": "hours_change",
-   "place": "chip_shop",
-   "start": "17:00",
-   "end": "22:00",
-   "crowd_effect": {
-    "note": "from this Sunday"
-   },
-   "src": "paper issue_09 (open on Sundays from this week)",
-   "chosen": true
-  },
-  {
    "date": "1990-11-15",
    "id": "licensing_committee",
    "kind": "off_map_venue",
@@ -1254,7 +1246,7 @@
    "crowd_effect": {
     "note": "private hire licences renewed; one deferred (a letter follows on story state)"
    },
-   "src": "paper issue_10, issue_11; RT2-18",
+   "src": "paper issue_09, issue_10; RT2-18",
    "story_check": true
   },
   {
@@ -1267,7 +1259,7 @@
    "crowd_effect": {
     "note": "the last wash is at 16:30 from this Friday (a machine out of order)"
    },
-   "src": "paper issue_11",
+   "src": "paper issue_10",
    "chosen": true
   },
   {
@@ -1280,7 +1272,7 @@
    "crowd_effect": {
     "note": "adults leave for the Drill Hall"
    },
-   "src": "paper issue_09, issue_11",
+   "src": "paper issue_09, issue_10",
    "chosen": true
   },
   {
@@ -1294,7 +1286,7 @@
     "note": "tea and sandwiches; admission £1.50; no drink",
     "crowd": "adults on Chapel Lane"
    },
-   "src": "paper issue_09, issue_11"
+   "src": "paper issue_09, issue_10"
   },
   {
    "date": "1990-11-22",
@@ -1328,7 +1320,7 @@
    "crowd_effect": {
     "note": "chained to vehicles from early morning; lorries use Dock Road East (off the map)"
    },
-   "src": "paper issue_13 (print_if; the frame's proposal)",
+   "src": "paper issue_12 and issue_14 (print_if; the frame's proposal)",
    "chosen": true,
    "story_check": true
   }
@@ -1727,8 +1719,7 @@
    "week": 4,
    "act": "II",
    "events": [
-    "remembrance_sunday",
-    "chip_shop_opens_sundays"
+    "remembrance_sunday"
    ],
    "recurring": [
     "shops_shut"
@@ -2077,9 +2068,9 @@
    ],
    [
     "a ferry crossing",
-    "20 min",
-    "40 real seconds",
-    "20 real seconds"
+    "25 min",
+    "50 real seconds",
+    "25 real seconds"
    ],
    [
     "the soft edge out and back",

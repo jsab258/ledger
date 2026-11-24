@@ -21,7 +21,6 @@
   "road_place": "road id, side (left or right of the road in the order its points are listed in map.json), s metres from the road's first point"
  },
  "open_points": [
-  "The traffic gap bands (50, 75, 150, 450 s) are real seconds and were set for a 30 s game hour; on the 120 s hour they give 2.4, 1.6, 0.8 and 0.27 cars per game hour. Kept as written; the keeper should say whether the hour counts should hold instead (then the gaps would be 4 times longer).",
   "2.15.1 says two cars and two drivers at rung 1; no source says which car each drives or when Tom takes one. Shifts (Kevin 07:00-19:00 on car one, Terry 19:00-03:00 on car two, Tom takes the idle one) are chosen.",
   "Rung 2 to 5: car three at rung 2 and cars four and five at rung 3 are slots filled at purchase from the lot or a seller; no source says what the sellers' cars are.",
   "The lot's stock is fixed seven cars; nothing says it restocks.",
@@ -80,6 +79,18 @@
    "length_m": 4.4,
    "width_m": 1.7,
    "doors": 4,
+   "src": "4.6.1 (invented marques; a look-alike check against real makes is owed at the art gate)",
+   "chosen": true
+  },
+  {
+   "id": "harwick_thorne",
+   "make": "harwick",
+   "model": "Thorne",
+   "class": "saloon",
+   "length_m": 4.5,
+   "width_m": 1.75,
+   "doors": 4,
+   "note": "the police panda; no other car in the Hook is this model",
    "src": "4.6.1 (invented marques; a look-alike check against real makes is owed at the art gate)",
    "chosen": true
   },
@@ -248,7 +259,7 @@
    "H": "Aug 1990 on"
   },
   "game_date_note": "the story opens Monday 15 October 1990, so H is current and a G car is under a year old",
-  "older_suffix_style": "cars from before 1983 carry digits then three letters then the year letter (123 ABC A to Y); allowed for tired traffic and the lorry",
+  "older_suffix_style": "cars from before 1983 carry three letters, then digits, then the year letter, written like JHA 916K (K is 1971-72); allowed for tired traffic and the lorries",
   "letters_avoided": "I, Q, Z in the trailing group, and any group that spells a word",
   "src": "period-vehicles-and-props NOTE (plates G until 31 Jul 1990, then H); task brief",
   "traffic_year_letter_weights": {
@@ -403,6 +414,15 @@
     "boot": true
    }
   ],
+  "selling_price_rule": {
+   "share_of_like_lot_price": 0.5,
+   "floor_pounds": 150,
+   "lot_price_of_like_car": "the lot_stock price of the same model and year letter, else the nearest",
+   "chosen": true,
+   "src": "no source gives a selling price; EC-03 gives buying prices only (£600 to £1,200)",
+   "car_two_cannot_be_sold": true,
+   "sold_car_leaves_the_board_and_rank": true
+  },
   "terms": {
    "down_pounds": 90,
    "weekly_pounds": 22,
@@ -436,8 +456,8 @@
    "price_src": "proto tune/econ.js respray 9000 pence (not in the economy file)",
    "price_chosen": true,
    "takes_roof_sign_off": true,
-   "new_colour": "dark_blue",
-   "new_colour_src": "proto cars.js",
+   "new_colour": "navy",
+   "new_colour_src": "proto cars.js ('dark blue'); mapped to the colour id navy",
    "days": 1,
    "days_chosen": true,
    "effect": "earlier sightings no longer name the car (GV-02)"
@@ -456,7 +476,6 @@
   "owner": {
    "role": "other_firm_owner",
    "person_ref": true,
-   "proto_name_hint": "Len Wardle",
    "note": "a new minor person (2.15.3)"
   },
   "src": "2.15.3; proto tune/rise.js; hook-cast.json ranks",
@@ -500,7 +519,7 @@
    "src": "2.6.7; period-vehicles-and-props NOTE; 4.6.1",
    "id": "patrol_panda",
    "role": "patrol_car",
-   "model": "harwick_carrow",
+   "model": "harwick_thorne",
    "colour": "white",
    "livery": "white with a broad blue band along the doors, the word POLICE on the doors and bonnet, a blue lamp on the roof, no Battenburg (1990 stripe)",
    "plate": "G227 PMK",
@@ -508,6 +527,21 @@
    "wear": 1,
    "chosen": true,
    "force_name": "none shown: the word POLICE only, no crest, no force name"
+  },
+  "patrol_panda_two": {
+   "steering_lock": false,
+   "src": "2.6.6, 2.6.7; reviewer fix (both War stops manned 18:00-02:00)",
+   "id": "patrol_panda_two",
+   "role": "patrol_car",
+   "model": "harwick_thorne",
+   "colour": "white",
+   "livery": "as patrol_panda",
+   "plate": "G229 PMK",
+   "first_reg_year_letter": "G",
+   "wear": 1,
+   "only_from_dial_state": "war",
+   "manned_post": "war_stop_north_road_foot",
+   "chosen": true
   },
   "patrol_armed_car": {
    "steering_lock": false,
@@ -608,9 +642,10 @@
   "then_known_to_police": true,
   "taken_car_has_no_roof_sign": true,
   "steering_lock_cars_cannot_be_taken": true,
-  "steering_lock_rule": "chosen: cars first registered F, G or H carry a steering lock (a flag on every car record); older ones do not",
+  "steering_lock_rule": "chosen: private cars (not service vehicles) first registered F, G or H carry a steering lock (a flag on every car record); older ones do not",
   "steering_lock_chosen": true,
-  "never_a_moving_car": true
+  "never_a_moving_car": true,
+  "service_vehicles_exempt": "police cars, the ambulance, vans, lorries and the milk float carry no steering lock flag and can never be taken (they are not in the parked-car kit); the Widow's van and Cammack's car are hit by damage only (RT2-08), never taken"
  },
  "witness_slot_for_the_car": {
   "src": "GV-02; 1.2.9; RT2-16",
@@ -1257,7 +1292,7 @@
     "id": "wv_fish_lorry",
     "model": "stanbridge_hauler",
     "colour": "white",
-    "plate": "916 JHA K",
+    "plate": "JHA 916K",
     "plate_style": "suffix style (1971)",
     "steering_lock": false,
     "count": 1,
@@ -1276,7 +1311,7 @@
     "id": "wv_dock_gate_lorry",
     "model": "stanbridge_hauler",
     "colour": "tan_brown",
-    "plate": "287 DNB L",
+    "plate": "DNB 287L",
     "plate_style": "suffix style (1972)",
     "steering_lock": false,
     "count": 1,
@@ -1344,7 +1379,7 @@
     },
     "src": "chosen: a milk float is a 1990 street sight; no source names one",
     "chosen": true,
-    "note": "carries cartons only"
+    "note": "carries crates of glass milk bottles; no drink but milk"
    },
    {
     "id": "wv_ambulance",
@@ -1391,7 +1426,7 @@
  },
  "traffic": {
   "src": "4.5.1; TRAFFIC-STAGE1-REFERENCE-MODEL rules 1 to 3; FIT-G2; period-vehicles-and-props (Ford, Vauxhall, Rover about 55 per cent)",
-  "gap_clock_note": "gaps are real seconds of unpaused play (the model says so); the bands were set for a 30 s game hour. On the 120 s hour a night band car arrives about every 3.75 game hours: see open_points",
+  "gap_clock_note": "gaps are real seconds of unpaused play (TRAFFIC-STAGE1 rule 1); cars_per_game_hour_at_120s is derived",
   "min_gap_real_s_per_lane": 4,
   "pool_max_cars": 3,
   "waits_up_to_s_then_dropped": 10,
@@ -1496,6 +1531,7 @@
     "stage": 2
    }
   ],
+  "one_shot_uses": "stage1: every random traffic car in the one-shot is a Tarn or Tarn Wagon drawn by stage1.mix in every band; the band gaps and in-view limits apply; the per-band mix_stage2 tables are for a later build when stage 2 kinds are added (4.5.2: after one passes); vans and lorries still appear in the one-shot only as the scheduled working_vehicles",
   "bands": [
    {
     "band": "night",
@@ -1503,7 +1539,7 @@
     "avg_gap_real_s": 450,
     "cars_in_view_limit": 1,
     "cars_per_game_hour_at_120s": 0.27,
-    "mix": {
+    "mix_stage2": {
      "dunmere_tarn": 0.3,
      "orsett_vale": 0.3,
      "dunmere_fenn": 0.15,
@@ -1517,7 +1553,7 @@
     "avg_gap_real_s": 75,
     "cars_in_view_limit": 2,
     "cars_per_game_hour_at_120s": 1.6,
-    "mix": {
+    "mix_stage2": {
      "dunmere_tarn": 0.24,
      "orsett_vale": 0.2,
      "dunmere_fenn": 0.14,
@@ -1532,7 +1568,7 @@
     "avg_gap_real_s": 50,
     "cars_in_view_limit": 2,
     "cars_per_game_hour_at_120s": 2.4,
-    "mix": {
+    "mix_stage2": {
      "dunmere_tarn": 0.28,
      "orsett_vale": 0.27,
      "dunmere_fenn": 0.15,
@@ -1547,7 +1583,7 @@
     "avg_gap_real_s": 75,
     "cars_in_view_limit": 2,
     "cars_per_game_hour_at_120s": 1.6,
-    "mix": {
+    "mix_stage2": {
      "dunmere_tarn": 0.24,
      "orsett_vale": 0.24,
      "dunmere_fenn": 0.14,
@@ -1562,7 +1598,7 @@
     "avg_gap_real_s": 50,
     "cars_in_view_limit": 2,
     "cars_per_game_hour_at_120s": 2.4,
-    "mix": {
+    "mix_stage2": {
      "dunmere_tarn": 0.28,
      "orsett_vale": 0.27,
      "dunmere_fenn": 0.15,
@@ -1577,7 +1613,7 @@
     "avg_gap_real_s": 150,
     "cars_in_view_limit": 1,
     "cars_per_game_hour_at_120s": 0.8,
-    "mix": {
+    "mix_stage2": {
      "dunmere_tarn": 0.32,
      "orsett_vale": 0.3,
      "dunmere_fenn": 0.16,
@@ -1710,6 +1746,6 @@
    }
   ],
   "mix_chosen": true,
-  "mix_note": "band gaps, limits and pool are from the model; the shares of kinds are chosen"
+  "mix_note": "band gaps, limits and pool are from the model; the stage 2 shares of kinds are chosen"
  }
 }

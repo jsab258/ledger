@@ -4,7 +4,18 @@
  "clock": {
   "realSecondsPerGameHour": 120
  },
+ "enterable_note": "Plots the map flags enterable false (dent_1, cold_stores, burned_warehouse, bt_wh_3 the net loft, quay_chandler_store, quay_fish_merchants, qs_cottage_6, the homes) are break-in or job rooms, entered only by the ways listed in their locks; the map's enterable means open to walk in. Rooms in them carry plot_enterable_false.",
+ "gv04_rule": "GV-04: every room has gv04: reopens after its job on the same terms, or closes with the line that says so in the world (only burned_warehouse_shell closes).",
+ "missing_places_json": [
+  "home_nr_12",
+  "home_cl_9",
+  "home_qs_cottage_6",
+  "home_cs_house_3",
+  "chandler_store",
+  "fish_merchants_office"
+ ],
  "sources": [
+  "production/lane/blueprint/data/places.json (hours by reference, access)",
   "production/lane/blueprint/data/map.json (frozen plots and doors)",
   "production/lane/blueprint/data/ui-text.json (prompt ids)",
   "production/lane/blueprint/data/sounds.json (reverb room kinds)",
@@ -23,11 +34,11 @@
   "z": "height_m is the ceiling height; yards and outdoor rooms carry height 0 and outdoor true"
  },
  "counts": {
-  "rooms": 62,
+  "rooms": 63,
   "by_room_kind": {
    "office": 9,
    "back_room": 19,
-   "flat": 13,
+   "flat": 14,
    "null": 2,
    "caff": 2,
    "shop": 12,
@@ -38,12 +49,13 @@
   "by_category": {
    "named_place": 24,
    "other_place": 16,
-   "break_in": 17,
+   "break_in": 18,
    "rival_base": 5
   },
-  "containers": 142,
-  "locks": 36,
-  "locked_doors_listed": 150
+  "containers": 145,
+  "locks": 49,
+  "locked_doors_listed": 140,
+  "open_doors_without_room": 9
  },
  "rules": {
   "search_s": {
@@ -258,7 +270,6 @@
    "room_kind": "office",
    "category": "named_place",
    "access_class": "hours",
-   "hours": "open 07:00 to 23:00 daily; the night desk from rung 3 (chosen); locked and dark at other hours",
    "objects": [
     {
      "id": "door_front",
@@ -574,12 +585,6 @@
      "noise_m": 2,
      "contents": [
       {
-       "item": "dockets"
-      },
-      {
-       "item": "biro"
-      },
-      {
        "item": "cigarettes"
       }
      ],
@@ -659,9 +664,6 @@
      "noise_m": 2,
      "contents": [
       {
-       "item": "spare_microphone_lead"
-      },
-      {
        "item": "cigarettes"
       }
      ],
@@ -708,13 +710,17 @@
      ],
      "place_class": "private",
      "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
-     "hours": "unlocked 07:00-23:00",
      "chosen": true,
      "key_ring_holders": [
       "Sheila Dunn",
       "Ron Kirby",
       "Tom Nowak (from the first hour)"
-     ]
+     ],
+     "locked_between": [
+      "23:00",
+      "07:00"
+     ],
+     "note": "the street door is locked 23:00 to 07:00; the beat constable tries it on his rounds; counter open 07:00 to 23:00, radio manned 24 h (decision 24 Nov)"
     }
    ],
    "entry_door_world": [
@@ -752,13 +758,17 @@
      "to": "mickeys_stair_hall",
      "kind": "door",
      "x": 130.325,
-     "y": 12.7
+     "y": 12.7,
+     "door_id": "i_mickeys_office__mickeys_stair_hall",
+     "door_kind": "inner_door"
     },
     {
      "to": "mickeys_back_room",
      "kind": "door",
      "x": 130.325,
-     "y": 10.9
+     "y": 10.9,
+     "door_id": "i_mickeys_back_room__mickeys_office",
+     "door_kind": "inner_door"
     },
     {
      "to": "mickeys_inner_office",
@@ -766,7 +776,9 @@
      "locked": true,
      "lock": "lock_mickeys_inner_office",
      "x": 130.325,
-     "y": 8.8
+     "y": 8.8,
+     "door_id": "i_mickeys_inner",
+     "door_kind": "inner_door"
     }
    ],
    "states_by_rung": {
@@ -777,7 +789,7 @@
       "two telephones on the counter, one with a line that rings; one radio set and one dispatcher (Pauline Kitching) in the day",
       "inner office locked since Mickey died; its key is Sheila Dunn's",
       "two ashtrays on the counter, one full; the bench holds one or two waiting fares",
-      "the tin sits in the back room cupboard, kept by Sheila"
+      "the night-money tin sits on its shelf in the locked inner office, kept by Sheila"
      ]
     },
     "2": {
@@ -793,7 +805,7 @@
     "3": {
      "label": "Tom: five cars, a night desk, a first front, the cold-store contract",
      "changes": [
-      "a night desk: a second chair, a lamp and a log sheet at the radio desk, manned 22:00 to 06:00",
+      "a night desk: a second chair, a lamp and a log sheet at the radio desk for the night desk man",
       "more telephones: five on the counter and staff side, four lines",
       "the board is crowded: five cars, the night driver, the cold-store packing shift pinned in red",
       "a pin map of the fronts and rounds on the staff-side wall",
@@ -818,7 +830,13 @@
    },
    "what_is_tom_s": "nothing at first; the counter is the firm's",
    "reverb_id": "room_office",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:mickeys",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "mickeys_back_room",
@@ -826,24 +844,24 @@
    "place": "mickeys",
    "plot": "qs_mickeys",
    "door": "d_qs_1_back",
-   "frame_door": "d_qs_1_back",
+   "frame_door": "d_qs_1",
    "floor": 0,
    "outline": [
     [
-     127.925,
-     9.1
+     130.325,
+     11.9
     ],
     [
-     127.925,
-     11.1
+     130.325,
+     9.9
     ],
     [
-     125.125,
-     11.1
+     133.125,
+     9.9
     ],
     [
-     125.125,
-     9.1
+     133.125,
+     11.9
     ]
    ],
    "outline_local": [
@@ -860,8 +878,8 @@
     {
      "id": "door_back_yard",
      "kind": "door",
-     "x": 125.225,
-     "y": 10.6,
+     "x": 133.025,
+     "y": 10.4,
      "w": 0.7,
      "d": 0.1,
      "prompt": "prompt.back_way",
@@ -875,8 +893,8 @@
     {
      "id": "shelf_kettle",
      "kind": "shelf",
-     "x": 125.325,
-     "y": 9.7,
+     "x": 132.925,
+     "y": 11.3,
      "w": 0.9,
      "d": 0.3,
      "prompt": "prompt.kettle",
@@ -888,15 +906,15 @@
      ]
     },
     {
-     "id": "tin_cupboard",
+     "id": "back_cupboard",
      "kind": "cupboard",
-     "x": 127.125,
-     "y": 9.45,
+     "x": 131.125,
+     "y": 11.55,
      "w": 0.5,
      "d": 0.5,
-     "prompt": "prompt.tin",
+     "prompt": "prompt.cupboard_search",
      "usable": true,
-     "note": "the night-money tin lives in this cupboard",
+     "note": "tea things and a spare mug",
      "local": [
       1.95,
       6.0
@@ -905,8 +923,8 @@
     {
      "id": "coat_hook",
      "kind": "hook",
-     "x": 126.825,
-     "y": 11.05,
+     "x": 131.425,
+     "y": 9.95,
      "w": 0.1,
      "d": 0.1,
      "prompt": "prompt.coat_hook",
@@ -920,8 +938,8 @@
     {
      "id": "crowbar_nail",
      "kind": "nail",
-     "x": 125.925,
-     "y": 11.05,
+     "x": 132.325,
+     "y": 9.95,
      "w": 0.1,
      "d": 0.1,
      "prompt": "prompt.crowbar_nail",
@@ -935,8 +953,8 @@
     {
      "id": "kitchen_table",
      "kind": "table",
-     "x": 126.725,
-     "y": 10.4,
+     "x": 131.525,
+     "y": 10.6,
      "w": 0.7,
      "d": 0.7,
      "usable": false,
@@ -948,35 +966,13 @@
    ],
    "containers": [
     {
-     "id": "c_mickeys_tin",
-     "kind": "tin",
-     "at": "tin_cupboard",
-     "search_s": 2,
-     "search_s_dark_no_torch": 4,
-     "noise_m": 2,
-     "contents": [
-      {
-       "item": "night_money"
-      }
-     ],
-     "key_holder": "Sheila Dunn",
-     "ordinary": false,
-     "job_ref": "job_ref:night_money_count",
-     "note": "night money; the count with Sheila turns it into book money (2.7.2); lost only by theft in an office break-in or the office search",
-     "tin": true,
-     "room": "mickeys_back_room"
-    },
-    {
      "id": "c_mickeys_back_cupboard",
      "kind": "cupboard",
-     "at": "tin_cupboard",
+     "at": "back_cupboard",
      "search_s": 4,
      "search_s_dark_no_torch": 8,
      "noise_m": 4,
      "contents": [
-      {
-       "item": "tea_bags"
-      },
       {
        "item": "cigarettes"
       }
@@ -1048,13 +1044,21 @@
     {
      "to": "mickeys_office",
      "kind": "door",
-     "x": 127.925,
-     "y": 10.1
+     "x": 130.325,
+     "y": 10.9,
+     "door_id": "i_mickeys_back_room__mickeys_office",
+     "door_kind": "inner_door"
     }
    ],
    "src": "4.3.1; mickeys-office.json (back room, shelf, kettle); RULINGS 4 Oct",
    "reverb_id": "room_back_room",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:mickeys",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "mickeys_inner_office",
@@ -1091,7 +1095,7 @@
    "height_m": 2.7,
    "room_kind": "office",
    "category": "named_place",
-   "access_class": "private",
+   "access_class": "forbidden",
    "objects": [
     {
      "id": "desk_mickey",
@@ -1124,14 +1128,14 @@
      "id": "drawer_locked",
      "kind": "drawer",
      "x": 132.525,
-     "y": 8.1,
+     "y": 9.0,
      "w": 0.4,
      "d": 0.5,
      "prompt": "prompt.locked_drawer",
      "usable": true,
-     "note": "the locked drawer",
+     "note": "the locked drawer (top left)",
      "local": [
-      5.4,
+      4.5,
       7.4
      ]
     },
@@ -1139,15 +1143,30 @@
      "id": "drawer_bottom",
      "kind": "drawer",
      "x": 132.525,
-     "y": 9.1,
+     "y": 8.2,
      "w": 0.4,
      "d": 0.5,
      "prompt": "prompt.bottom_drawer",
      "usable": true,
-     "note": "the bottom drawer of Mickey's desk",
+     "note": "the bottom right-hand drawer of Mickey's desk (places.json mickeys_desk_drawer): the real book, and under it the service revolver (RT2-14)",
      "local": [
-      4.4,
+      5.3,
       7.4
+     ]
+    },
+    {
+     "id": "tin_shelf",
+     "kind": "tin",
+     "x": 131.425,
+     "y": 9.4,
+     "w": 0.4,
+     "d": 0.3,
+     "prompt": "prompt.tin",
+     "usable": true,
+     "note": "the night-money tin on its shelf (ECONOMY-DESIGN section 2)",
+     "local": [
+      4.1,
+      6.3
      ]
     },
     {
@@ -1163,21 +1182,6 @@
      "local": [
       5.7,
       5.55
-     ]
-    },
-    {
-     "id": "debt_book_real",
-     "kind": "book",
-     "x": 132.425,
-     "y": 8.6,
-     "w": 0.3,
-     "d": 0.25,
-     "prompt": "prompt.debt_book",
-     "usable": true,
-     "note": "Mickey's real book (rung 2, on trust)",
-     "local": [
-      4.9,
-      7.3
      ]
     },
     {
@@ -1247,14 +1251,7 @@
      "noise_m": 3,
      "contents": [
       {
-       "item": "ledger_old_books"
-      },
-      {
-       "item": "biro"
-      },
-      {
-       "item": "cigarettes",
-       "gbp": 0
+       "item": "cigarettes"
       }
      ],
      "key_holder": null,
@@ -1275,10 +1272,6 @@
       },
       {
        "item": "spare_key_to_this_room"
-      },
-      {
-       "item": "cash",
-       "gbp": 2
       }
      ],
      "key_holder": "Sheila Dunn",
@@ -1295,14 +1288,37 @@
      "noise_m": 2,
      "contents": [
       {
-       "item": "tin_of_toffees_empty"
+       "item": "real_book"
       },
       {
-       "item": "photograph"
+       "item": "service_revolver_six_rounds"
       }
      ],
-     "key_holder": null,
-     "ordinary": true,
+     "key_holder": "Sheila Dunn",
+     "ordinary": false,
+     "job_ref": "job_ref:RT2-14_revolver",
+     "note": "the real book lies on top; the service revolver (six rounds) under it; found once when the office opens on Sheila's trust; matches places.json mickeys_desk_drawer",
+     "search_once": true,
+     "weapon": true,
+     "room": "mickeys_inner_office"
+    },
+    {
+     "id": "c_mickeys_tin",
+     "kind": "tin",
+     "at": "tin_shelf",
+     "search_s": 2,
+     "search_s_dark_no_torch": 4,
+     "noise_m": 2,
+     "contents": [
+      {
+       "item": "night_money"
+      }
+     ],
+     "key_holder": "Sheila Dunn",
+     "ordinary": false,
+     "job_ref": "job_ref:night_money_count",
+     "note": "the night money (2.7.2, ECONOMY-DESIGN section 2); the count with Sheila opens the inner office for Tom; lost only by theft in an office break-in or the office search",
+     "tin": true,
      "room": "mickeys_inner_office"
     },
     {
@@ -1314,20 +1330,17 @@
      "noise_m": 2,
      "contents": [
       {
-       "item": "real_book"
-      },
-      {
        "item": "cash",
        "gbp": 140
       },
       {
-       "item": "Mickey_s_will_copy"
+       "item": "will_copy"
       }
      ],
      "key_holder": "Sheila Dunn (key); combination given on trust at rung 2",
      "ordinary": false,
      "job_ref": "job_ref:real_book_on_trust",
-     "note": "the real book and the office cash; needs its key or the number from a person",
+     "note": "the office cash and papers (the real book is in the desk drawer, not here); needs its key or the number from a person",
      "locked": true,
      "room": "mickeys_inner_office"
     }
@@ -1335,8 +1348,8 @@
    "locks": [
     {
      "id": "lock_mickeys_inner_office",
-     "door": "d_qs_1",
-     "key_id": "key_mickeys_inner_office",
+     "door": "i_mickeys_inner",
+     "key_id": "key_mickeys_inner",
      "holder": "Sheila Dunn",
      "person_ref": true,
      "spare_key_at": "Mickey's desk drawer inside",
@@ -1365,7 +1378,8 @@
      ],
      "place_class": "private",
      "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
-     "chosen": true
+     "chosen": true,
+     "inner_door": true
     }
    ],
    "entry_door_world": [
@@ -1392,7 +1406,9 @@
      "locked": true,
      "lock": "lock_mickeys_inner_office",
      "x": 130.325,
-     "y": 8.8
+     "y": 8.8,
+     "door_id": "i_mickeys_inner",
+     "door_kind": "inner_door"
     }
    ],
    "states_by_rung": {
@@ -1401,14 +1417,14 @@
      "changes": [
       "door locked; nothing visible",
       "Mickey's coat still on the stand",
-      "the real book not reachable"
+      "the real book and the revolver not reachable"
      ]
     },
     "2": {
      "label": "Nowak",
      "changes": [
       "door unlocked on Sheila's trust",
-      "the real book on the desk",
+      "the real book readable in the bottom right drawer (the revolver under it)",
       "the desk lamp on"
      ]
     },
@@ -1416,7 +1432,7 @@
      "label": "Tom",
      "changes": [
       "a second telephone on the desk",
-      "the tin moved into the safe for the count",
+      "the night-money tin stays on its shelf and is counted with Sheila each night",
       "Mickey's coat gone to June"
      ]
     },
@@ -1431,7 +1447,14 @@
    },
    "src": "4.3.1; RULINGS 4 Oct; 2.12.5; opens at rung 2 (2.9 rungs)",
    "reverb_id": "room_office",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:mickeys_inner_office",
+   "entered_via_inner_door": "i_mickeys_inner",
+   "gv04": {
+    "rule": "GV-04: stays open to Tom once opened on Sheila's trust (rung 2); before that it is locked and the door says so",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "mickeys_stair_hall",
@@ -1536,9 +1559,6 @@
      "noise_m": 4,
      "contents": [
       {
-       "item": "umbrella"
-      },
-      {
        "item": "letters"
       },
       {
@@ -1573,18 +1593,28 @@
      "to": "mickeys_office",
      "kind": "door",
      "x": 130.325,
-     "y": 12.7
+     "y": 12.7,
+     "door_id": "i_mickeys_office__mickeys_stair_hall",
+     "door_kind": "inner_door"
     },
     {
      "to": "flat_kitchen",
      "kind": "stair",
      "x": 133.125,
-     "y": 12.7
+     "y": 12.7,
+     "door_id": "i_flat_kitchen__mickeys_stair_hall",
+     "door_kind": "inner_stair"
     }
    ],
    "src": "4.3.2; mickeys-office.json (stair strip)",
    "reverb_id": "room_flat",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:mickeys",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "flat_kitchen",
@@ -1743,12 +1773,6 @@
      "noise_m": 4,
      "contents": [
       {
-       "item": "tea_bags"
-      },
-      {
-       "item": "tin_of_biscuits_empty"
-      },
-      {
        "item": "cigarettes"
       }
      ],
@@ -1765,8 +1789,7 @@
      "noise_m": 0,
      "contents": [
       {
-       "item": "letters",
-       "gbp": 0
+       "item": "letters"
       }
      ],
      "key_holder": null,
@@ -1798,19 +1821,25 @@
      "to": "mickeys_stair_hall",
      "kind": "stair",
      "x": 133.125,
-     "y": 12.7
+     "y": 12.7,
+     "door_id": "i_flat_kitchen__mickeys_stair_hall",
+     "door_kind": "inner_stair"
     },
     {
      "to": "flat_living",
      "kind": "door",
      "x": 129.525,
-     "y": 11.7
+     "y": 11.7,
+     "door_id": "i_flat_kitchen__flat_living",
+     "door_kind": "inner_door"
     },
     {
      "to": "flat_bedroom",
      "kind": "door",
      "x": 131.125,
-     "y": 9.9
+     "y": 9.9,
+     "door_id": "i_flat_bedroom__flat_kitchen",
+     "door_kind": "inner_door"
     }
    ],
    "states_by_rung": {
@@ -1849,7 +1878,13 @@
    },
    "src": "4.3.2; RULINGS 4.3.2 list: kettle, wireless, letters on the mat; 2.12.5",
    "reverb_id": "room_flat",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:toms_flat",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "flat_living",
@@ -2002,9 +2037,6 @@
       },
       {
        "item": "photograph"
-      },
-      {
-       "item": "cigarettes"
       }
      ],
      "key_holder": null,
@@ -2041,7 +2073,9 @@
      "to": "flat_kitchen",
      "kind": "door",
      "x": 129.525,
-     "y": 11.7
+     "y": 11.7,
+     "door_id": "i_flat_kitchen__flat_living",
+     "door_kind": "inner_door"
     }
    ],
    "states_by_rung": {
@@ -2080,7 +2114,13 @@
    },
    "src": "4.3.2; prototype ROOMS.flat",
    "reverb_id": "room_flat",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:toms_flat",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "flat_bedroom",
@@ -2317,7 +2357,9 @@
      "to": "flat_kitchen",
      "kind": "door",
      "x": 131.125,
-     "y": 9.9
+     "y": 9.9,
+     "door_id": "i_flat_bedroom__flat_kitchen",
+     "door_kind": "inner_door"
     }
    ],
    "states_by_rung": {
@@ -2356,7 +2398,13 @@
    },
    "src": "4.3.2; RULINGS 4.3.2 (tin under the floorboards); prototype ROOMS.flat (bed, bag)",
    "reverb_id": "room_flat",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:toms_flat",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "mickeys_yard",
@@ -2394,7 +2442,6 @@
    "room_kind": null,
    "category": "named_place",
    "access_class": "hours",
-   "hours": "the quay gate unlocked daylight and evening; the yard is the cabs' park",
    "objects": [
     {
      "id": "gate_quay",
@@ -2550,7 +2597,9 @@
      "to": "mickeys_back_room",
      "kind": "door",
      "x": 133.125,
-     "y": 10.5
+     "y": 10.5,
+     "door_id": "d_qs_1_back",
+     "door_kind": "street_door"
     }
    ],
    "outdoor": true,
@@ -2569,7 +2618,13 @@
    ],
    "second_escape_door": null,
    "reverb_id": null,
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:mickeys_yard",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "caff",
@@ -2607,7 +2662,6 @@
    "room_kind": "caff",
    "category": "named_place",
    "access_class": "hours",
-   "hours": "06:00-15:00 daily; to 22:00 Fri and Sat; tea 30p, a meal 2.50 (4.3.3)",
    "objects": [
     {
      "id": "door_front",
@@ -2862,7 +2916,43 @@
      "room": "caff"
     }
    ],
-   "locks": [],
+   "locks": [
+    {
+     "id": "lock_caff_front",
+     "door": "d_quay_4",
+     "key_id": "key_caff_front",
+     "holder": "Grace Rinaldi",
+     "person_ref": true,
+     "spare_key_at": "under the till tray",
+     "ways_in": [
+      {
+       "way": "key_lent_or_copied",
+       "from": "Ian Megginson (knows every lock on the street)",
+       "cost_gbp": 1.5,
+       "person_ref": true,
+       "note": "a copy cut at the ironmonger counter (prompt.counter_key), or the owner lends it"
+      },
+      {
+       "way": "key_lifted",
+       "from": "Grace Rinaldi",
+       "carried": "her overall pocket",
+       "person_ref": true,
+       "note": "a held pocket lift of about 2 s (3.5.4)"
+      },
+      {
+       "way": "force",
+       "noise_m": 15,
+       "shows_on_door_days": 1,
+       "crime": true,
+       "loud": true
+      }
+     ],
+     "place_class": "hours",
+     "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
+     "chosen": true,
+     "note": "unlocked while the place is open (its places.json hours); locked outside them"
+    }
+   ],
    "entry_door_world": [
     51.75,
     6.625
@@ -2891,12 +2981,20 @@
      "to": "caff_back",
      "kind": "door",
      "x": 51.5,
-     "y": 15.625
+     "y": 15.625,
+     "door_id": "i_caff_kitchen",
+     "door_kind": "inner_door"
     }
    ],
    "src": "4.3.3; prototype ROOMS.caff; shop-interiors.json; 3.5.3",
    "reverb_id": "room_caff",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:caff",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "caff_back",
@@ -3043,12 +3141,6 @@
      "noise_m": 4,
      "contents": [
       {
-       "item": "tea_chests"
-      },
-      {
-       "item": "tins_of_tomatoes"
-      },
-      {
        "item": "cigarettes"
       }
      ],
@@ -3069,10 +3161,6 @@
       },
       {
        "item": "letters"
-      },
-      {
-       "item": "cash",
-       "gbp": 1
       }
      ],
      "key_holder": "Grace Rinaldi",
@@ -3105,8 +3193,8 @@
    "locks": [
     {
      "id": "lock_caff",
-     "door": "d_quay_4",
-     "key_id": "key_caff",
+     "door": "i_caff_kitchen",
+     "key_id": "key_caff_kitchen",
      "holder": "Grace Rinaldi",
      "person_ref": true,
      "spare_key_at": "under the till tray",
@@ -3135,8 +3223,8 @@
      ],
      "place_class": "private",
      "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
-     "hours": "front door unlocked 06:00-15:00; later Fri Sat 22:00",
-     "chosen": true
+     "chosen": true,
+     "inner_door": true
     }
    ],
    "entry_door_world": [
@@ -3161,12 +3249,21 @@
      "to": "caff",
      "kind": "door",
      "x": 51.5,
-     "y": 15.625
+     "y": 15.625,
+     "door_id": "i_caff_kitchen",
+     "door_kind": "inner_door"
     }
    ],
    "src": "4.3.3; 3.5.3 (the caff and its back)",
    "reverb_id": "room_back_room",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:caff",
+   "entered_via_inner_door": "i_caff_kitchen",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "ritas_shop",
@@ -3204,7 +3301,6 @@
    "room_kind": "shop",
    "category": "named_place",
    "access_class": "hours",
-   "hours": "09:00-17:30 Mon-Sat, shut Sun (4.3.3)",
    "objects": [
     {
      "id": "door_front",
@@ -3372,10 +3468,7 @@
      "noise_m": 2,
      "contents": [
       {
-       "item": "pawn_tickets"
-      },
-      {
-       "item": "pencils"
+       "item": "letters"
       }
      ],
      "key_holder": null,
@@ -3383,7 +3476,44 @@
      "room": "ritas_shop"
     }
    ],
-   "locks": [],
+   "locks": [
+    {
+     "id": "lock_i_ritas_back_room__ritas_shop",
+     "door": "i_ritas_back_room__ritas_shop",
+     "key_id": "key_ritas_back_room__ritas_shop",
+     "holder": "Rita Welburn",
+     "person_ref": true,
+     "spare_key_at": "in the till tray",
+     "ways_in": [
+      {
+       "way": "key_lent_or_copied",
+       "from": "Ian Megginson (knows every lock on the street)",
+       "cost_gbp": 1.5,
+       "person_ref": true,
+       "note": "a copy cut at the ironmonger counter (prompt.counter_key), or the owner lends it"
+      },
+      {
+       "way": "key_lifted",
+       "from": "Rita Welburn",
+       "carried": "her wool coat pocket",
+       "person_ref": true,
+       "note": "a held pocket lift of about 2 s (3.5.4)"
+      },
+      {
+       "way": "force",
+       "noise_m": 15,
+       "shows_on_door_days": 1,
+       "crime": true,
+       "loud": true
+      }
+     ],
+     "place_class": "private",
+     "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
+     "chosen": true,
+     "entry": "the back room is entered from the shop by a door; the yard door d_qs_5_back is the break-in door",
+     "inner_door": true
+    }
+   ],
    "entry_door_world": [
     125.125,
     22.5
@@ -3406,14 +3536,22 @@
      "to": "ritas_back_room",
      "kind": "door",
      "locked": true,
-     "lock": "lock_ritas_back_room",
+     "lock": "lock_i_ritas_back_room__ritas_shop",
      "x": 130.125,
-     "y": 20.5
+     "y": 20.5,
+     "door_id": "i_ritas_back_room__ritas_shop",
+     "door_kind": "inner_door"
     }
    ],
    "src": "4.3.3; shop-interiors.json; prototype ROOMS.rita",
    "reverb_id": "room_shop",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:ritas",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "ritas_back_room",
@@ -3421,24 +3559,24 @@
    "place": "ritas",
    "plot": "qs_ritas",
    "door": "d_qs_5_back",
-   "frame_door": "d_qs_5_back",
+   "frame_door": "d_qs_5",
    "floor": 0,
    "outline": [
     [
-     128.125,
-     19.5
-    ],
-    [
-     128.125,
+     130.125,
      25.5
     ],
     [
-     125.125,
-     25.5
+     130.125,
+     19.5
     ],
     [
-     125.125,
+     133.125,
      19.5
+    ],
+    [
+     133.125,
+     25.5
     ]
    ],
    "outline_local": [
@@ -3451,12 +3589,11 @@
    "room_kind": "back_room",
    "category": "named_place",
    "access_class": "private",
-   "hours": "by knock; Wayne's pawn takes goods too; Rita's opens to Tom at rung 2",
    "objects": [
     {
      "id": "door_back",
      "kind": "door",
-     "x": 125.225,
+     "x": 133.025,
      "y": 22.5,
      "w": 0.9,
      "d": 0.1,
@@ -3471,8 +3608,8 @@
     {
      "id": "door_to_shop",
      "kind": "door",
-     "x": 128.075,
-     "y": 24.5,
+     "x": 130.175,
+     "y": 20.5,
      "w": 0.9,
      "d": 0.1,
      "usable": false,
@@ -3484,8 +3621,8 @@
     {
      "id": "safe_rita",
      "kind": "safe",
-     "x": 126.225,
-     "y": 20.1,
+     "x": 132.025,
+     "y": 24.9,
      "w": 0.7,
      "d": 0.6,
      "prompt": "prompt.safe",
@@ -3498,7 +3635,7 @@
     {
      "id": "fence_table",
      "kind": "table",
-     "x": 126.825,
+     "x": 131.425,
      "y": 22.5,
      "w": 1.4,
      "d": 0.8,
@@ -3513,8 +3650,8 @@
     {
      "id": "shelves_back",
      "kind": "shelf",
-     "x": 126.525,
-     "y": 25.1,
+     "x": 131.725,
+     "y": 19.9,
      "w": 0.4,
      "d": 2.0,
      "usable": false,
@@ -3527,8 +3664,8 @@
     {
      "id": "desk_back",
      "kind": "desk",
-     "x": 127.725,
-     "y": 20.7,
+     "x": 130.525,
+     "y": 24.3,
      "w": 1.0,
      "d": 0.5,
      "prompt": "prompt.office_desk",
@@ -3541,8 +3678,8 @@
     {
      "id": "kettle_back",
      "kind": "kettle",
-     "x": 125.425,
-     "y": 23.9,
+     "x": 132.825,
+     "y": 21.1,
      "w": 0.25,
      "d": 0.25,
      "prompt": "prompt.kettle",
@@ -3670,8 +3807,43 @@
      "place_class": "private",
      "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
      "chosen": true,
-     "hours": "front shop by knock, back room to Tom from rung 2",
      "entry": "the back room is entered from the shop by a door; the yard door d_qs_5_back is the break-in door"
+    },
+    {
+     "id": "lock_i_ritas_back_room__ritas_shop",
+     "door": "i_ritas_back_room__ritas_shop",
+     "key_id": "key_ritas_back_room__ritas_shop",
+     "holder": "Rita Welburn",
+     "person_ref": true,
+     "spare_key_at": "in the till tray",
+     "ways_in": [
+      {
+       "way": "key_lent_or_copied",
+       "from": "Ian Megginson (knows every lock on the street)",
+       "cost_gbp": 1.5,
+       "person_ref": true,
+       "note": "a copy cut at the ironmonger counter (prompt.counter_key), or the owner lends it"
+      },
+      {
+       "way": "key_lifted",
+       "from": "Rita Welburn",
+       "carried": "her wool coat pocket",
+       "person_ref": true,
+       "note": "a held pocket lift of about 2 s (3.5.4)"
+      },
+      {
+       "way": "force",
+       "noise_m": 15,
+       "shows_on_door_days": 1,
+       "crime": true,
+       "loud": true
+      }
+     ],
+     "place_class": "private",
+     "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
+     "chosen": true,
+     "entry": "the back room is entered from the shop by a door; the yard door d_qs_5_back is the break-in door",
+     "inner_door": true
     }
    ],
    "entry_door_world": [
@@ -3696,9 +3868,11 @@
      "to": "ritas_shop",
      "kind": "door",
      "locked": true,
-     "lock": "lock_ritas_back_room",
-     "x": 128.125,
-     "y": 24.5
+     "lock": "lock_i_ritas_back_room__ritas_shop",
+     "x": 130.125,
+     "y": 20.5,
+     "door_id": "i_ritas_back_room__ritas_shop",
+     "door_kind": "inner_door"
     }
    ],
    "states_by_rung": {
@@ -3735,7 +3909,13 @@
    },
    "src": "4.3.3; 1.6.3; 2.12.5; 3.5.3 (Rita's back room)",
    "reverb_id": "room_back_room",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:ritas",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "metcalfes_shop",
@@ -3773,7 +3953,6 @@
    "room_kind": "shop",
    "category": "named_place",
    "access_class": "hours",
-   "hours": "09:00-17:30 Mon-Sat, shut Sun (4.3.3)",
    "objects": [
     {
      "id": "door_front",
@@ -3874,9 +4053,6 @@
       },
       {
        "item": "bill"
-      },
-      {
-       "item": "photograph"
       }
      ],
      "key_holder": "Hal Metcalfe",
@@ -3884,7 +4060,43 @@
      "room": "metcalfes_shop"
     }
    ],
-   "locks": [],
+   "locks": [
+    {
+     "id": "lock_metcalfes_shop_front",
+     "door": "d_quay_5",
+     "key_id": "key_metcalfes_shop_front",
+     "holder": "Hal Metcalfe",
+     "person_ref": true,
+     "spare_key_at": "in the teapot on the back shelf",
+     "ways_in": [
+      {
+       "way": "key_lent_or_copied",
+       "from": "Ian Megginson (knows every lock on the street)",
+       "cost_gbp": 1.5,
+       "person_ref": true,
+       "note": "a copy cut at the ironmonger counter (prompt.counter_key), or the owner lends it"
+      },
+      {
+       "way": "key_lifted",
+       "from": "Hal Metcalfe",
+       "carried": "his tweed jacket pocket",
+       "person_ref": true,
+       "note": "a held pocket lift of about 2 s (3.5.4)"
+      },
+      {
+       "way": "force",
+       "noise_m": 15,
+       "shows_on_door_days": 1,
+       "crime": true,
+       "loud": true
+      }
+     ],
+     "place_class": "hours",
+     "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
+     "chosen": true,
+     "note": "unlocked while the place is open (its places.json hours); locked outside them"
+    }
+   ],
    "entry_door_world": [
     167.0,
     6.625
@@ -3909,12 +4121,20 @@
      "locked": true,
      "lock": "lock_metcalfes_back",
      "x": 164.0,
-     "y": 12.625
+     "y": 12.625,
+     "door_id": "i_metcalfes_back",
+     "door_kind": "inner_door"
     }
    ],
    "src": "4.3.3; prototype ROOMS.coin; 3.5.3 (Hal's shop)",
    "reverb_id": "room_shop",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:metcalfes",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "metcalfes_back",
@@ -4047,9 +4267,6 @@
      "noise_m": 3,
      "contents": [
       {
-       "item": "catalogue"
-      },
-      {
        "item": "letters"
       },
       {
@@ -4110,7 +4327,7 @@
    "locks": [
     {
      "id": "lock_metcalfes_back",
-     "door": "d_quay_5",
+     "door": "i_metcalfes_back",
      "key_id": "key_metcalfes_back",
      "holder": "Hal Metcalfe",
      "person_ref": true,
@@ -4140,8 +4357,8 @@
      ],
      "place_class": "private",
      "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
-     "hours": "front unlocked 09:00-17:30 Mon-Sat; Hal calls on Rita's Mondays and leaves the shop on the latch",
-     "chosen": true
+     "chosen": true,
+     "inner_door": true
     }
    ],
    "entry_door_world": [
@@ -4168,12 +4385,21 @@
      "locked": true,
      "lock": "lock_metcalfes_back",
      "x": 164.0,
-     "y": 12.625
+     "y": 12.625,
+     "door_id": "i_metcalfes_back",
+     "door_kind": "inner_door"
     }
    ],
    "src": "3.5.3; prototype ROOMS.coin",
    "reverb_id": "room_back_room",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:metcalfes",
+   "entered_via_inner_door": "i_metcalfes_back",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "ada_front_room",
@@ -4211,7 +4437,6 @@
    "room_kind": "flat",
    "category": "named_place",
    "access_class": "private",
-   "hours": "tea at nine (Ada's pot on at nine); she sits in the dark front room the rest of the day",
    "objects": [
     {
      "id": "door_front",
@@ -4355,10 +4580,6 @@
       },
       {
        "item": "photograph"
-      },
-      {
-       "item": "coins",
-       "gbp": 1
       }
      ],
      "key_holder": "Ada",
@@ -4429,12 +4650,20 @@
      "to": "ada_kitchen",
      "kind": "door",
      "x": 108.875,
-     "y": 10.5
+     "y": 10.5,
+     "door_id": "i_ada_front_room__ada_kitchen",
+     "door_kind": "inner_door"
     }
    ],
    "src": "4.3.4; prototype ROOMS.ada",
    "reverb_id": "room_flat",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:adas",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "ada_kitchen",
@@ -4568,9 +4797,6 @@
      "noise_m": 4,
      "contents": [
       {
-       "item": "tea_caddy"
-      },
-      {
        "item": "letters"
       },
       {
@@ -4666,12 +4892,20 @@
      "to": "ada_front_room",
      "kind": "door",
      "x": 108.875,
-     "y": 10.5
+     "y": 10.5,
+     "door_id": "i_ada_front_room__ada_kitchen",
+     "door_kind": "inner_door"
     }
    ],
    "src": "4.3.4; HOMES.md",
    "reverb_id": "room_flat",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:adas",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "laveracks_front",
@@ -4709,7 +4943,6 @@
    "room_kind": "shop",
    "category": "other_place",
    "access_class": "hours",
-   "hours": "09:00-17:30 Mon-Sat, shut Sun (4.3.3)",
    "objects": [
     {
      "id": "door_front",
@@ -4841,10 +5074,6 @@
       },
       {
        "item": "letters"
-      },
-      {
-       "item": "coins",
-       "gbp": 1
       }
      ],
      "key_holder": null,
@@ -4875,14 +5104,22 @@
      "to": "laveracks_back",
      "kind": "door",
      "locked": true,
-     "lock": "lock_laveracks_back",
+     "lock": "lock_i_laveracks_back__laveracks_front",
      "x": 130.125,
-     "y": 16.5
+     "y": 16.5,
+     "door_id": "i_laveracks_back__laveracks_front",
+     "door_kind": "inner_door"
     }
    ],
    "src": "4.3.3; prototype ROOMS.fish; 3.5.3",
    "reverb_id": "room_shop",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:laveracks",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "laveracks_back",
@@ -5014,13 +5251,6 @@
      "noise_m": 4,
      "contents": [
       {
-       "item": "fish_boxes"
-      },
-      {
-       "item": "cash",
-       "gbp": 0
-      },
-      {
        "item": "bill"
       }
      ],
@@ -5093,6 +5323,41 @@
      "place_class": "private",
      "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
      "chosen": true
+    },
+    {
+     "id": "lock_i_laveracks_back__laveracks_front",
+     "door": "i_laveracks_back__laveracks_front",
+     "key_id": "key_laveracks_back__laveracks_front",
+     "holder": "Brenda Laverack",
+     "person_ref": true,
+     "spare_key_at": "under the ice chest lid",
+     "ways_in": [
+      {
+       "way": "key_lent_or_copied",
+       "from": "Ian Megginson (knows every lock on the street)",
+       "cost_gbp": 1.5,
+       "person_ref": true,
+       "note": "a copy cut at the ironmonger counter (prompt.counter_key), or the owner lends it"
+      },
+      {
+       "way": "key_lifted",
+       "from": "Brenda Laverack",
+       "carried": "her white coat pocket",
+       "person_ref": true,
+       "note": "a held pocket lift of about 2 s (3.5.4)"
+      },
+      {
+       "way": "force",
+       "noise_m": 15,
+       "shows_on_door_days": 1,
+       "crime": true,
+       "loud": true
+      }
+     ],
+     "place_class": "private",
+     "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
+     "chosen": true,
+     "inner_door": true
     }
    ],
    "entry_door_world": [
@@ -5117,12 +5382,20 @@
      "to": "laveracks_front",
      "kind": "door",
      "x": 130.125,
-     "y": 16.5
+     "y": 16.5,
+     "door_id": "i_laveracks_back__laveracks_front",
+     "door_kind": "inner_door"
     }
    ],
    "src": "4.3.3; prototype ROOMS.fish; 3.5.3; 3.5.3 (break-in room)",
    "reverb_id": "room_back_room",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:laveracks",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "launderette_front",
@@ -5160,7 +5433,6 @@
    "room_kind": "launderette",
    "category": "other_place",
    "access_class": "hours",
-   "hours": "08:00-23:00 daily (4.3.3)",
    "objects": [
     {
      "id": "door_front",
@@ -5278,12 +5550,6 @@
      "noise_m": 2,
      "contents": [
       {
-       "item": "odd_glove"
-      },
-      {
-       "item": "headscarf"
-      },
-      {
        "item": "cigarettes"
       }
      ],
@@ -5315,14 +5581,22 @@
      "to": "launderette_back",
      "kind": "door",
      "locked": true,
-     "lock": "lock_launderette_back",
+     "lock": "lock_i_launderette_back__launderette_front",
      "x": 130.125,
-     "y": 34.5
+     "y": 34.5,
+     "door_id": "i_launderette_back__launderette_front",
+     "door_kind": "inner_door"
     }
    ],
    "src": "4.3.3; prototype ROOMS.laund; sounds.json room_launderette",
    "reverb_id": "room_launderette",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:launderette",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "launderette_back",
@@ -5455,10 +5729,7 @@
      "noise_m": 4,
      "contents": [
       {
-       "item": "customer_tickets"
-      },
-      {
-       "item": "soap_powder"
+       "item": "letters"
       }
      ],
      "key_holder": "the launderette keeper",
@@ -5530,6 +5801,41 @@
      "place_class": "private",
      "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
      "chosen": true
+    },
+    {
+     "id": "lock_i_launderette_back__launderette_front",
+     "door": "i_launderette_back__launderette_front",
+     "key_id": "key_launderette_back__launderette_front",
+     "holder": "the launderette keeper",
+     "person_ref": true,
+     "spare_key_at": "on a nail under the boiler hatch",
+     "ways_in": [
+      {
+       "way": "key_lent_or_copied",
+       "from": "Ian Megginson (knows every lock on the street)",
+       "cost_gbp": 1.5,
+       "person_ref": true,
+       "note": "a copy cut at the ironmonger counter (prompt.counter_key), or the owner lends it"
+      },
+      {
+       "way": "key_lifted",
+       "from": "the launderette keeper",
+       "carried": "his keys on a belt",
+       "person_ref": true,
+       "note": "a held pocket lift of about 2 s (3.5.4)"
+      },
+      {
+       "way": "force",
+       "noise_m": 15,
+       "shows_on_door_days": 1,
+       "crime": true,
+       "loud": true
+      }
+     ],
+     "place_class": "private",
+     "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
+     "chosen": true,
+     "inner_door": true
     }
    ],
    "entry_door_world": [
@@ -5554,12 +5860,20 @@
      "to": "launderette_front",
      "kind": "door",
      "x": 130.125,
-     "y": 34.5
+     "y": 34.5,
+     "door_id": "i_launderette_back__launderette_front",
+     "door_kind": "inner_door"
     }
    ],
    "src": "4.3.3; prototype ROOMS.laund; sounds.json room_launderette; 3.5.3 (break-in room)",
    "reverb_id": "room_back_room",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:launderette",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "grocer_front",
@@ -5597,7 +5911,6 @@
    "room_kind": "shop",
    "category": "other_place",
    "access_class": "hours",
-   "hours": "09:00-17:30 Mon-Sat, shut Sun (4.3.3)",
    "objects": [
     {
      "id": "door_front",
@@ -5712,12 +6025,6 @@
      "contents": [
       {
        "item": "bill"
-      },
-      {
-       "item": "string"
-      },
-      {
-       "item": "pencil"
       }
      ],
      "key_holder": null,
@@ -5748,14 +6055,22 @@
      "to": "grocer_back",
      "kind": "door",
      "locked": true,
-     "lock": "lock_grocer_back",
+     "lock": "lock_i_grocer_back__grocer_front",
      "x": 130.125,
-     "y": 40.5
+     "y": 40.5,
+     "door_id": "i_grocer_back__grocer_front",
+     "door_kind": "inner_door"
     }
    ],
    "src": "4.3.3; prototype ROOMS.grocer",
    "reverb_id": "room_shop",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:grocer",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "grocer_back",
@@ -5875,9 +6190,6 @@
      "noise_m": 4,
      "contents": [
       {
-       "item": "tinned_goods"
-      },
-      {
        "item": "cigarettes"
       }
      ],
@@ -5946,6 +6258,41 @@
      "place_class": "private",
      "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
      "chosen": true
+    },
+    {
+     "id": "lock_i_grocer_back__grocer_front",
+     "door": "i_grocer_back__grocer_front",
+     "key_id": "key_grocer_back__grocer_front",
+     "holder": "the grocer",
+     "person_ref": true,
+     "spare_key_at": "in the flour bin",
+     "ways_in": [
+      {
+       "way": "key_lent_or_copied",
+       "from": "Ian Megginson (knows every lock on the street)",
+       "cost_gbp": 1.5,
+       "person_ref": true,
+       "note": "a copy cut at the ironmonger counter (prompt.counter_key), or the owner lends it"
+      },
+      {
+       "way": "key_lifted",
+       "from": "the grocer",
+       "carried": "his apron pocket",
+       "person_ref": true,
+       "note": "a held pocket lift of about 2 s (3.5.4)"
+      },
+      {
+       "way": "force",
+       "noise_m": 15,
+       "shows_on_door_days": 1,
+       "crime": true,
+       "loud": true
+      }
+     ],
+     "place_class": "private",
+     "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
+     "chosen": true,
+     "inner_door": true
     }
    ],
    "entry_door_world": [
@@ -5970,12 +6317,20 @@
      "to": "grocer_front",
      "kind": "door",
      "x": 130.125,
-     "y": 40.5
+     "y": 40.5,
+     "door_id": "i_grocer_back__grocer_front",
+     "door_kind": "inner_door"
     }
    ],
    "src": "4.3.3; prototype ROOMS.grocer; 3.5.3 (break-in room)",
    "reverb_id": "room_back_room",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:grocer",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "newsagent_front",
@@ -6013,7 +6368,6 @@
    "room_kind": "shop",
    "category": "other_place",
    "access_class": "hours",
-   "hours": "06:00-18:00 daily (4.3.3)",
    "objects": [
     {
      "id": "door_front",
@@ -6154,10 +6508,6 @@
       },
       {
        "item": "letters"
-      },
-      {
-       "item": "coins",
-       "gbp": 1
       }
      ],
      "key_holder": null,
@@ -6188,14 +6538,22 @@
      "to": "newsagent_back",
      "kind": "door",
      "locked": true,
-     "lock": "lock_newsagent_back",
+     "lock": "lock_i_newsagent_back__newsagent_front",
      "x": 109.875,
-     "y": 31.5
+     "y": 31.5,
+     "door_id": "i_newsagent_back__newsagent_front",
+     "door_kind": "inner_door"
     }
    ],
    "src": "4.3.3; prototype ROOMS.news",
    "reverb_id": "room_shop",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:newsagent",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "newsagent_back",
@@ -6337,9 +6695,6 @@
      "noise_m": 3,
      "contents": [
       {
-       "item": "account_book"
-      },
-      {
        "item": "letters"
       }
      ],
@@ -6387,6 +6742,41 @@
      "place_class": "private",
      "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
      "chosen": true
+    },
+    {
+     "id": "lock_i_newsagent_back__newsagent_front",
+     "door": "i_newsagent_back__newsagent_front",
+     "key_id": "key_newsagent_back__newsagent_front",
+     "holder": "Peart (the newsagent)",
+     "person_ref": true,
+     "spare_key_at": "under the bundle string box",
+     "ways_in": [
+      {
+       "way": "key_lent_or_copied",
+       "from": "Ian Megginson (knows every lock on the street)",
+       "cost_gbp": 1.5,
+       "person_ref": true,
+       "note": "a copy cut at the ironmonger counter (prompt.counter_key), or the owner lends it"
+      },
+      {
+       "way": "key_lifted",
+       "from": "Peart (the newsagent)",
+       "carried": "his coat pocket",
+       "person_ref": true,
+       "note": "a held pocket lift of about 2 s (3.5.4)"
+      },
+      {
+       "way": "force",
+       "noise_m": 15,
+       "shows_on_door_days": 1,
+       "crime": true,
+       "loud": true
+      }
+     ],
+     "place_class": "private",
+     "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
+     "chosen": true,
+     "inner_door": true
     }
    ],
    "entry_door_world": [
@@ -6411,12 +6801,20 @@
      "to": "newsagent_front",
      "kind": "door",
      "x": 109.875,
-     "y": 31.5
+     "y": 31.5,
+     "door_id": "i_newsagent_back__newsagent_front",
+     "door_kind": "inner_door"
     }
    ],
    "src": "4.3.3; prototype ROOMS.news; 3.5.3 (break-in room)",
    "reverb_id": "room_back_room",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:newsagent",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "ironmonger_front",
@@ -6454,7 +6852,6 @@
    "room_kind": "shop",
    "category": "other_place",
    "access_class": "hours",
-   "hours": "09:00-17:30 Mon-Sat, shut Sun (4.3.3)",
    "objects": [
     {
      "id": "door_front",
@@ -6572,9 +6969,6 @@
      "noise_m": 2,
      "contents": [
       {
-       "item": "key_blank"
-      },
-      {
        "item": "bill"
       }
      ],
@@ -6606,14 +7000,22 @@
      "to": "ironmonger_back",
      "kind": "door",
      "locked": true,
-     "lock": "lock_ironmonger_back",
+     "lock": "lock_i_ironmonger_back__ironmonger_front",
      "x": 109.875,
-     "y": 37.5
+     "y": 37.5,
+     "door_id": "i_ironmonger_back__ironmonger_front",
+     "door_kind": "inner_door"
     }
    ],
    "src": "4.3.3; prototype ROOMS.iron",
    "reverb_id": "room_shop",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:ironmonger",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "ironmonger_back",
@@ -6759,9 +7161,6 @@
      "noise_m": 2,
      "contents": [
       {
-       "item": "lock_book"
-      },
-      {
        "item": "spare_key_to_this_room"
       }
      ],
@@ -6810,6 +7209,41 @@
      "place_class": "private",
      "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
      "chosen": true
+    },
+    {
+     "id": "lock_i_ironmonger_back__ironmonger_front",
+     "door": "i_ironmonger_back__ironmonger_front",
+     "key_id": "key_ironmonger_back__ironmonger_front",
+     "holder": "the ironmonger",
+     "person_ref": true,
+     "spare_key_at": "in the lock cabinet",
+     "ways_in": [
+      {
+       "way": "key_lent_or_copied",
+       "from": "Ian Megginson (knows every lock on the street)",
+       "cost_gbp": 1.5,
+       "person_ref": true,
+       "note": "a copy cut at the ironmonger counter (prompt.counter_key), or the owner lends it"
+      },
+      {
+       "way": "key_lifted",
+       "from": "the ironmonger",
+       "carried": "his apron",
+       "person_ref": true,
+       "note": "a held pocket lift of about 2 s (3.5.4)"
+      },
+      {
+       "way": "force",
+       "noise_m": 15,
+       "shows_on_door_days": 1,
+       "crime": true,
+       "loud": true
+      }
+     ],
+     "place_class": "private",
+     "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
+     "chosen": true,
+     "inner_door": true
     }
    ],
    "entry_door_world": [
@@ -6834,12 +7268,20 @@
      "to": "ironmonger_front",
      "kind": "door",
      "x": 109.875,
-     "y": 37.5
+     "y": 37.5,
+     "door_id": "i_ironmonger_back__ironmonger_front",
+     "door_kind": "inner_door"
     }
    ],
    "src": "4.3.3; prototype ROOMS.iron; 3.5.3 (break-in room)",
    "reverb_id": "room_back_room",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:ironmonger",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "chandlery",
@@ -6877,7 +7319,6 @@
    "room_kind": "shop",
    "category": "other_place",
    "access_class": "hours",
-   "hours": "09:00-17:30 Mon-Sat, shut Sun (4.3.3)",
    "objects": [
     {
      "id": "door_front",
@@ -6995,9 +7436,6 @@
        "item": "bill"
       },
       {
-       "item": "pencil"
-      },
-      {
        "item": "letters"
       }
      ],
@@ -7027,7 +7465,13 @@
    "connections": [],
    "src": "4.3.3 (chandler on the quay road); prototype ROOMS.chandler; 7.16",
    "reverb_id": "room_shop",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:chandlery",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "tea_room",
@@ -7065,7 +7509,6 @@
    "room_kind": "caff",
    "category": "other_place",
    "access_class": "hours",
-   "hours": "09:00-17:30 Mon-Sat, shut Sun (4.3.3)",
    "objects": [
     {
      "id": "door_front",
@@ -7195,9 +7638,6 @@
      "contents": [
       {
        "item": "bill"
-      },
-      {
-       "item": "tea_towel"
       }
      ],
      "key_holder": null,
@@ -7227,7 +7667,13 @@
    "src": "4.3.3; prototype ROOMS.tearoom; reverb caff kind chosen (carpet, but tea-room clatter)",
    "reverb_note": "room_kind caff chosen; carpet would soften it (chosen)",
    "reverb_id": "room_caff",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:tea_room",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "chip_shop",
@@ -7265,7 +7711,6 @@
    "room_kind": "shop",
    "category": "other_place",
    "access_class": "hours",
-   "hours": "11:00 to 23:30 daily (4.3.3; start hour chosen)",
    "objects": [
     {
      "id": "door_front",
@@ -7394,9 +7839,6 @@
      "contents": [
       {
        "item": "bill"
-      },
-      {
-       "item": "paper_rolls"
       }
      ],
      "key_holder": null,
@@ -7426,7 +7868,13 @@
    "src": "4.3.3; G10; 4.1.2",
    "frame_note": "plot is rotated about 13 degrees; local frame follows the door",
    "reverb_id": "room_shop",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:chip_shop",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "iveson_yard",
@@ -7464,7 +7912,6 @@
    "room_kind": null,
    "category": "named_place",
    "access_class": "hours",
-   "hours": "yard gate open 07:30 to 17:00 (map d_br_2); the hut by night",
    "objects": [
     {
      "id": "gate",
@@ -7638,7 +8085,13 @@
    "frame_note": "plot is a skewed quad; the room is inside it",
    "reverb_note": "open air",
    "reverb_id": null,
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:iveson_yard",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "iveson_hut",
@@ -7676,7 +8129,6 @@
    "room_kind": "hut",
    "category": "named_place",
    "access_class": "private",
-   "hours": "Iveson is in the yard 07:30-17:00; the hut stands empty after dark (Darren's tip)",
    "objects": [
     {
      "id": "door_front",
@@ -7789,9 +8241,6 @@
      "noise_m": 3,
      "contents": [
       {
-       "item": "weighbridge_tickets"
-      },
-      {
        "item": "letters"
       },
       {
@@ -7859,7 +8308,6 @@
      ],
      "place_class": "private",
      "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
-     "hours": "hut padlocked at night",
      "chosen": true
     }
    ],
@@ -7883,7 +8331,13 @@
    "connections": [],
    "src": "4.3.5; DEFINITIONS G1 (Basin Road y260-320); 3.5.3",
    "reverb_id": "room_hut",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:iveson_hut",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "chapel",
@@ -7921,7 +8375,6 @@
    "room_kind": "chapel",
    "category": "named_place",
    "access_class": "public",
-   "hours": "open by day; Sunday busy; Remembrance Sunday kept here (4.3.6)",
    "objects": [
     {
      "id": "door_front",
@@ -8119,9 +8572,6 @@
      "noise_m": 2,
      "contents": [
       {
-       "item": "hymn_books"
-      },
-      {
        "item": "letters"
       }
      ],
@@ -8202,7 +8652,13 @@
    ],
    "religion": "never mocked, never a mechanic",
    "reverb_id": "room_chapel",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:chapel",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "chapel_hall",
@@ -8240,7 +8696,6 @@
    "room_kind": "chapel",
    "category": "named_place",
    "access_class": "hours",
-   "hours": "Tuesday 19:00-21:30 tea and talk (4.3.6); locked otherwise",
    "objects": [
     {
      "id": "door_side",
@@ -8392,13 +8847,7 @@
      "noise_m": 4,
      "contents": [
       {
-       "item": "tea_towels"
-      },
-      {
-       "item": "cups_stack"
-      },
-      {
-       "item": "biscuit_tin"
+       "item": "letters"
       }
      ],
      "key_holder": "Father Walsh",
@@ -8415,9 +8864,6 @@
      "contents": [
       {
        "item": "letters"
-      },
-      {
-       "item": "notice_forms"
       }
      ],
      "key_holder": null,
@@ -8458,7 +8904,6 @@
      ],
      "place_class": "private",
      "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
-     "hours": "unlocked Tuesday 18:30-21:45",
      "chosen": true
     }
    ],
@@ -8492,7 +8937,13 @@
    },
    "src": "4.3.6; 3.5.3 (the chapel hall)",
    "reverb_id": "room_chapel",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:chapel_hall",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "priests_front_room",
@@ -8530,7 +8981,6 @@
    "room_kind": "flat",
    "category": "named_place",
    "access_class": "private",
-   "hours": "the first fare goes here; a knock at the door",
    "objects": [
     {
      "id": "door_front",
@@ -8646,9 +9096,6 @@
       },
       {
        "item": "bill"
-      },
-      {
-       "item": "photograph"
       }
      ],
      "key_holder": "Father Walsh",
@@ -8712,7 +9159,13 @@
    "connections": [],
    "src": "4.3.6; prototype (house by the chapel gate)",
    "reverb_id": "room_flat",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:priests_house",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "barber",
@@ -8750,7 +9203,6 @@
    "room_kind": "shop",
    "category": "other_place",
    "access_class": "hours",
-   "hours": "09:00-17:30 Mon-Sat, shut Sun (4.3.3)",
    "objects": [
     {
      "id": "door_front",
@@ -8873,9 +9325,6 @@
      "noise_m": 2,
      "contents": [
       {
-       "item": "combs"
-      },
-      {
        "item": "bill"
       },
       {
@@ -8908,7 +9357,13 @@
    "connections": [],
    "src": "4.1.2; map cl_barber (use \"barber\")",
    "reverb_id": "room_shop",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:barber",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "doctor_front_room",
@@ -8946,7 +9401,6 @@
    "room_kind": "flat",
    "category": "named_place",
    "access_class": "private",
-   "hours": "by knock; the doctor asks nothing",
    "objects": [
     {
      "id": "door_front",
@@ -9063,9 +9517,6 @@
       },
       {
        "item": "bill"
-      },
-      {
-       "item": "cigarettes"
       }
      ],
      "key_holder": "the retired doctor",
@@ -9149,7 +9600,13 @@
    "connections": [],
    "src": "4.3.4 (the retired doctor stitches wounds, 20 pounds)",
    "reverb_id": "room_flat",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:doctors",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "pigeon_loft",
@@ -9187,7 +9644,6 @@
    "room_kind": "hut",
    "category": "other_place",
    "access_class": "hours",
-   "hours": "07:00-19:00 daily (chosen); the keeper is on the allotments",
    "objects": [
     {
      "id": "door_front",
@@ -9299,9 +9755,6 @@
      "noise_m": 1,
      "contents": [
       {
-       "item": "rings"
-      },
-      {
        "item": "cigarettes"
       }
      ],
@@ -9324,7 +9777,13 @@
    "connections": [],
    "src": "7.16 (pigeon loft on the allotments); map pigeon_loft; no keeper named yet (open point)",
    "reverb_id": "room_hut",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:pigeon_loft",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "boxing_hall",
@@ -9362,7 +9821,6 @@
    "room_kind": "back_room",
    "category": "other_place",
    "access_class": "hours",
-   "hours": "18:00-21:30 Mon, Wed, Fri; 10:00-13:00 Sat (7.16); old prototype hours 17-22 superseded",
    "objects": [
     {
      "id": "door_front",
@@ -9515,9 +9973,6 @@
      "noise_m": 2,
      "contents": [
       {
-       "item": "rota"
-      },
-      {
        "item": "bill"
       },
       {
@@ -9594,7 +10049,13 @@
    ],
    "rules": "no stakes of any kind; Tom's line against hitting women, the over sixties and the priest holds",
    "reverb_id": "room_back_room",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:boxing_club",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "snooker_hall",
@@ -9632,7 +10093,6 @@
    "room_kind": "shop",
    "category": "other_place",
    "access_class": "hours",
-   "hours": "10:00-22:00 daily (chosen)",
    "objects": [
     {
      "id": "door_front",
@@ -9785,9 +10245,6 @@
      "noise_m": 2,
      "contents": [
       {
-       "item": "chalk"
-      },
-      {
        "item": "bill"
       },
       {
@@ -9839,7 +10296,13 @@
    "src": "pastimes decision 24 Nov (frames for no money); map quay_snooker",
    "rules": "frames for no money; no stakes of any kind",
    "reverb_id": "room_shop",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:snooker_hall",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "regent_hall",
@@ -9877,7 +10340,6 @@
    "room_kind": "flat",
    "category": "named_place",
    "access_class": "hours",
-   "hours": "hall open by day; the front door on the latch to 23:00 (chosen)",
    "objects": [
     {
      "id": "door_front",
@@ -9977,17 +10439,11 @@
      "noise_m": 3,
      "contents": [
       {
-       "item": "visitors_book"
-      },
-      {
        "item": "letters"
       },
       {
        "item": "coins",
        "gbp": 1
-      },
-      {
-       "item": "bill"
       }
      ],
      "key_holder": "Sylvia Rennison",
@@ -10002,9 +10458,6 @@
      "search_s_dark_no_torch": 4,
      "noise_m": 2,
      "contents": [
-      {
-       "item": "room_keys"
-      },
       {
        "item": "spare_key_to_this_room"
       }
@@ -10048,7 +10501,6 @@
      ],
      "place_class": "private",
      "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
-     "hours": "latch to 23:00",
      "chosen": true
     }
    ],
@@ -10076,12 +10528,20 @@
      "locked": true,
      "lock": "lock_regent_room_2",
      "x": 42.5,
-     "y": 11.625
+     "y": 11.625,
+     "door_id": "i_regent_stair",
+     "door_kind": "inner_door"
     }
    ],
    "src": "prototype ROOMS.boarding; map quay_regent (Karen Grummitt lodges here)",
    "reverb_id": "room_flat",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:boarding_house",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "regent_room_2",
@@ -10119,7 +10579,6 @@
    "room_kind": "flat",
    "category": "named_place",
    "access_class": "private",
-   "hours": "keys held by Sylvia",
    "objects": [
     {
      "id": "bed",
@@ -10241,9 +10700,6 @@
       },
       {
        "item": "photograph"
-      },
-      {
-       "item": "cigarettes"
       }
      ],
      "key_holder": null,
@@ -10254,8 +10710,8 @@
    "locks": [
     {
      "id": "lock_regent_room_2",
-     "door": "d_quay_3",
-     "key_id": "key_regent_room_2",
+     "door": "i_regent_stair",
+     "key_id": "key_regent_stair",
      "holder": "Sylvia Rennison",
      "person_ref": true,
      "spare_key_at": "on the key board in the hall",
@@ -10284,7 +10740,8 @@
      ],
      "place_class": "private",
      "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
-     "chosen": true
+     "chosen": true,
+     "inner_door": true
     }
    ],
    "entry_door_world": [
@@ -10309,12 +10766,21 @@
      "to": "regent_hall",
      "kind": "stair",
      "x": 42.5,
-     "y": 11.625
+     "y": 11.625,
+     "door_id": "i_regent_stair",
+     "door_kind": "inner_door"
     }
    ],
    "src": "prototype ROOMS.boarding (bed, chair, bag); 4.3.4",
    "reverb_id": "room_flat",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:boarding_house",
+   "entered_via_inner_door": "i_regent_stair",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "secondhand_shop",
@@ -10352,7 +10818,6 @@
    "room_kind": "shop",
    "category": "other_place",
    "access_class": "hours",
-   "hours": "09:00-17:30 Mon-Sat, shut Sun (4.3.3)",
    "objects": [
     {
      "id": "door_front",
@@ -10469,9 +10934,6 @@
      "contents": [
       {
        "item": "bill"
-      },
-      {
-       "item": "sale_tags"
       }
      ],
      "key_holder": null,
@@ -10479,7 +10941,43 @@
      "room": "secondhand_shop"
     }
    ],
-   "locks": [],
+   "locks": [
+    {
+     "id": "lock_secondhand_shop_front",
+     "door": "d_quay_6",
+     "key_id": "key_secondhand_shop_front",
+     "holder": "the second-hand shop keeper",
+     "person_ref": true,
+     "spare_key_at": "behind the radios on the shelf",
+     "ways_in": [
+      {
+       "way": "key_lent_or_copied",
+       "from": "Ian Megginson (knows every lock on the street)",
+       "cost_gbp": 1.5,
+       "person_ref": true,
+       "note": "a copy cut at the ironmonger counter (prompt.counter_key), or the owner lends it"
+      },
+      {
+       "way": "key_lifted",
+       "from": "the second-hand shop keeper",
+       "carried": "his coat pocket",
+       "person_ref": true,
+       "note": "a held pocket lift of about 2 s (3.5.4)"
+      },
+      {
+       "way": "force",
+       "noise_m": 15,
+       "shows_on_door_days": 1,
+       "crime": true,
+       "loud": true
+      }
+     ],
+     "place_class": "hours",
+     "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
+     "chosen": true,
+     "note": "unlocked while the place is open (its places.json hours); locked outside them"
+    }
+   ],
    "entry_door_world": [
     180.0,
     6.625
@@ -10504,12 +11002,20 @@
      "locked": true,
      "lock": "lock_secondhand_store",
      "x": 176.0,
-     "y": 14.625
+     "y": 14.625,
+     "door_id": "i_secondhand_store",
+     "door_kind": "inner_door"
     }
    ],
    "src": "map quay_secondhand; 2.7; 1.6.3",
    "reverb_id": "room_shop",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:second_hand",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "secondhand_store",
@@ -10637,9 +11143,6 @@
      "noise_m": 3,
      "contents": [
       {
-       "item": "buy_book"
-      },
-      {
        "item": "letters"
       }
      ],
@@ -10651,7 +11154,7 @@
    "locks": [
     {
      "id": "lock_secondhand_store",
-     "door": "d_quay_6",
+     "door": "i_secondhand_store",
      "key_id": "key_secondhand_store",
      "holder": "the second-hand shop keeper",
      "person_ref": true,
@@ -10681,7 +11184,8 @@
      ],
      "place_class": "private",
      "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
-     "chosen": true
+     "chosen": true,
+     "inner_door": true
     }
    ],
    "entry_door_world": [
@@ -10706,12 +11210,21 @@
      "to": "secondhand_shop",
      "kind": "door",
      "x": 176.0,
-     "y": 14.625
+     "y": 14.625,
+     "door_id": "i_secondhand_store",
+     "door_kind": "inner_door"
     }
    ],
    "src": "3.5.3 (shop back room)",
    "reverb_id": "room_back_room",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:second_hand",
+   "entered_via_inner_door": "i_secondhand_store",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "waynes_pawn",
@@ -10749,7 +11262,6 @@
    "room_kind": "shop",
    "category": "other_place",
    "access_class": "hours",
-   "hours": "10:00-17:00; the back room by knock to 22:00; window lit at night (4.3.3)",
    "objects": [
     {
      "id": "door_front",
@@ -10878,10 +11390,7 @@
      "noise_m": 2,
      "contents": [
       {
-       "item": "pawn_tickets"
-      },
-      {
-       "item": "pencil"
+       "item": "letters"
       }
      ],
      "key_holder": null,
@@ -10912,14 +11421,22 @@
      "to": "waynes_back_room",
      "kind": "door",
      "locked": true,
-     "lock": "lock_waynes_back_room",
+     "lock": "lock_i_waynes_back_room__waynes_pawn",
      "x": 147.375,
-     "y": 134.0
+     "y": 134.0,
+     "door_id": "i_waynes_back_room__waynes_pawn",
+     "door_kind": "inner_door"
     }
    ],
    "src": "4.3.3; 3.5.3; map nr_wayne",
    "reverb_id": "room_shop",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:waynes_pawn",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "waynes_back_room",
@@ -10927,24 +11444,24 @@
    "place": "waynes_pawn",
    "plot": "nr_wayne",
    "door": "d_nr_wayne_back",
-   "frame_door": "d_nr_wayne_back",
+   "frame_door": "d_nr_16",
    "floor": 0,
    "outline": [
     [
-     149.375,
-     140.0
-    ],
-    [
-     149.375,
+     147.375,
      128.0
     ],
     [
-     153.375,
-     128.0
+     147.375,
+     140.0
     ],
     [
-     153.375,
+     143.375,
      140.0
+    ],
+    [
+     143.375,
+     128.0
     ]
    ],
    "outline_local": [
@@ -10957,12 +11474,11 @@
    "room_kind": "back_room",
    "category": "break_in",
    "access_class": "private",
-   "hours": "by knock to 22:00 (4.3.3)",
    "objects": [
     {
      "id": "door_back",
      "kind": "door",
-     "x": 153.275,
+     "x": 143.475,
      "y": 134.0,
      "w": 0.9,
      "d": 0.2,
@@ -10977,7 +11493,7 @@
     {
      "id": "door_to_front",
      "kind": "door",
-     "x": 149.425,
+     "x": 147.325,
      "y": 134.0,
      "w": 0.9,
      "d": 0.1,
@@ -10991,8 +11507,8 @@
     {
      "id": "goods_shelves",
      "kind": "shelf",
-     "x": 151.375,
-     "y": 138.0,
+     "x": 145.375,
+     "y": 130.0,
      "w": 3.0,
      "d": 0.8,
      "prompt": "prompt.cupboard_search",
@@ -11006,8 +11522,8 @@
     {
      "id": "trunk",
      "kind": "chest",
-     "x": 151.375,
-     "y": 130.5,
+     "x": 145.375,
+     "y": 137.5,
      "w": 1.4,
      "d": 0.8,
      "prompt": "prompt.cupboard_search",
@@ -11020,8 +11536,8 @@
     {
      "id": "desk_w",
      "kind": "desk",
-     "x": 150.175,
-     "y": 130.5,
+     "x": 146.575,
+     "y": 137.5,
      "w": 1.4,
      "d": 0.7,
      "prompt": "prompt.drawer_search",
@@ -11034,8 +11550,8 @@
     {
      "id": "radio_stack",
      "kind": "stack",
-     "x": 151.875,
-     "y": 135.0,
+     "x": 144.875,
+     "y": 133.0,
      "w": 1.5,
      "d": 0.8,
      "usable": false,
@@ -11104,9 +11620,6 @@
      "noise_m": 3,
      "contents": [
       {
-       "item": "pawn_book"
-      },
-      {
        "item": "letters"
       }
      ],
@@ -11153,8 +11666,42 @@
      ],
      "place_class": "private",
      "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
-     "hours": "knock to 22:00",
      "chosen": true
+    },
+    {
+     "id": "lock_i_waynes_back_room__waynes_pawn",
+     "door": "i_waynes_back_room__waynes_pawn",
+     "key_id": "key_waynes_back_room__waynes_pawn",
+     "holder": "Wayne Harrison",
+     "person_ref": true,
+     "spare_key_at": "under the third shelf in the shop",
+     "ways_in": [
+      {
+       "way": "key_lent_or_copied",
+       "from": "Ian Megginson (knows every lock on the street)",
+       "cost_gbp": 1.5,
+       "person_ref": true,
+       "note": "a copy cut at the ironmonger counter (prompt.counter_key), or the owner lends it"
+      },
+      {
+       "way": "key_lifted",
+       "from": "Wayne Harrison",
+       "carried": "his boiler suit pocket",
+       "person_ref": true,
+       "note": "a held pocket lift of about 2 s (3.5.4)"
+      },
+      {
+       "way": "force",
+       "noise_m": 15,
+       "shows_on_door_days": 1,
+       "crime": true,
+       "loud": true
+      }
+     ],
+     "place_class": "private",
+     "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
+     "chosen": true,
+     "inner_door": true
     }
    ],
    "entry_door_world": [
@@ -11178,13 +11725,21 @@
     {
      "to": "waynes_pawn",
      "kind": "door",
-     "x": 149.375,
-     "y": 134.0
+     "x": 147.375,
+     "y": 134.0,
+     "door_id": "i_waynes_back_room__waynes_pawn",
+     "door_kind": "inner_door"
     }
    ],
    "src": "4.3.3; 3.5.3",
    "reverb_id": "room_back_room",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:waynes_pawn",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "harbour_board_counter",
@@ -11222,7 +11777,6 @@
    "room_kind": "office",
    "category": "other_place",
    "access_class": "hours",
-   "hours": "09:00-17:00 Mon-Fri (chosen); the counter opens to Tom at rung 3 (2.9 rungs)",
    "objects": [
     {
      "id": "door_front",
@@ -11348,13 +11902,7 @@
      "noise_m": 3,
      "contents": [
       {
-       "item": "shipping_schedule"
-      },
-      {
        "item": "bill"
-      },
-      {
-       "item": "forms"
       }
      ],
      "key_holder": "Christine Pickering",
@@ -11370,10 +11918,7 @@
      "noise_m": 2,
      "contents": [
       {
-       "item": "forms"
-      },
-      {
-       "item": "biro"
+       "item": "letters"
       }
      ],
      "key_holder": null,
@@ -11431,7 +11976,13 @@
    },
    "src": "4.3.3; prototype ROOMS.harbour; 2.9 (rung 3 opens the Harbour Board's counter)",
    "reverb_id": "room_office",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:harbour_board",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "garage_workshop",
@@ -11469,7 +12020,6 @@
    "room_kind": "back_room",
    "category": "other_place",
    "access_class": "hours",
-   "hours": "08:00-17:30 Mon-Sat (chosen)",
    "objects": [
     {
      "id": "door_workshop",
@@ -11580,12 +12130,6 @@
      "noise_m": 4,
      "contents": [
       {
-       "item": "spanner_set"
-      },
-      {
-       "item": "oily_rag"
-      },
-      {
        "item": "cigarettes"
       }
      ],
@@ -11594,7 +12138,43 @@
      "room": "garage_workshop"
     }
    ],
-   "locks": [],
+   "locks": [
+    {
+     "id": "lock_garage_workshop_front",
+     "door": "d_cs_3",
+     "key_id": "key_garage_workshop_front",
+     "holder": "Holt",
+     "person_ref": true,
+     "spare_key_at": "on a hook behind the compressor",
+     "ways_in": [
+      {
+       "way": "key_lent_or_copied",
+       "from": "Ian Megginson (knows every lock on the street)",
+       "cost_gbp": 1.5,
+       "person_ref": true,
+       "note": "a copy cut at the ironmonger counter (prompt.counter_key), or the owner lends it"
+      },
+      {
+       "way": "key_lifted",
+       "from": "Holt",
+       "carried": "his overalls pocket",
+       "person_ref": true,
+       "note": "a held pocket lift of about 2 s (3.5.4)"
+      },
+      {
+       "way": "force",
+       "noise_m": 15,
+       "shows_on_door_days": 1,
+       "crime": true,
+       "loud": true
+      }
+     ],
+     "place_class": "hours",
+     "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
+     "chosen": true,
+     "note": "unlocked while the place is open (its places.json hours); locked outside them"
+    }
+   ],
    "entry_door_world": [
     504,
     356.625
@@ -11619,7 +12199,9 @@
      "locked": true,
      "lock": "lock_garage_office",
      "x": 520.0,
-     "y": 359.625
+     "y": 359.625,
+     "door_id": "i_garage_office",
+     "door_kind": "inner_door"
     }
    ],
    "src": "map cs_garage; prototype garage; 3.5.3",
@@ -11630,7 +12212,13 @@
    ],
    "frame_note": "cold store road",
    "reverb_id": "room_back_room",
-   "break_in_target": false
+   "break_in_target": false,
+   "hours": "places.json:garage",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "garage_office",
@@ -11751,9 +12339,6 @@
      "noise_m": 3,
      "contents": [
       {
-       "item": "job_cards"
-      },
-      {
        "item": "bill"
       },
       {
@@ -11826,7 +12411,7 @@
    "locks": [
     {
      "id": "lock_garage_office",
-     "door": "d_cs_3",
+     "door": "i_garage_office",
      "key_id": "key_garage_office",
      "holder": "Holt",
      "person_ref": true,
@@ -11856,7 +12441,8 @@
      ],
      "place_class": "private",
      "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
-     "chosen": true
+     "chosen": true,
+     "inner_door": true
     }
    ],
    "entry_door_world": [
@@ -11881,12 +12467,21 @@
      "to": "garage_workshop",
      "kind": "door",
      "x": 520.0,
-     "y": 359.625
+     "y": 359.625,
+     "door_id": "i_garage_office",
+     "door_kind": "inner_door"
     }
    ],
    "src": "3.5.3 (garage office)",
    "reverb_id": "room_office",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:garage",
+   "entered_via_inner_door": "i_garage_office",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "home_nr_12",
@@ -12037,10 +12632,6 @@
       },
       {
        "item": "bill"
-      },
-      {
-       "item": "coins",
-       "gbp": 1
       }
      ],
      "key_holder": "the householder (resident)",
@@ -12055,12 +12646,6 @@
      "search_s_dark_no_torch": 10,
      "noise_m": 3,
      "contents": [
-      {
-       "item": "coat"
-      },
-      {
-       "item": "shoes"
-      },
       {
        "item": "spare_key_to_this_room"
       }
@@ -12148,7 +12733,15 @@
    "neighbour_warns": true,
    "frame_note": "ground-floor front room and hall; upstairs not built",
    "reverb_id": "room_flat",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": null,
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   },
+   "plot_enterable_false": true,
+   "entered_only_by": "the ways in listed in locks (key lent or copied, key lifted, back way, force): the map flag enterable false means not open to walk in"
   },
   {
    "id": "home_cl_9",
@@ -12299,10 +12892,6 @@
       },
       {
        "item": "bill"
-      },
-      {
-       "item": "coins",
-       "gbp": 1
       }
      ],
      "key_holder": "the householder (resident)",
@@ -12317,12 +12906,6 @@
      "search_s_dark_no_torch": 10,
      "noise_m": 3,
      "contents": [
-      {
-       "item": "coat"
-      },
-      {
-       "item": "shoes"
-      },
       {
        "item": "spare_key_to_this_room"
       }
@@ -12410,7 +12993,280 @@
    "neighbour_warns": true,
    "frame_note": "ground-floor front room and hall; upstairs not built",
    "reverb_id": "room_flat",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": null,
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   },
+   "plot_enterable_false": true,
+   "entered_only_by": "the ways in listed in locks (key lent or copied, key lifted, back way, force): the map flag enterable false means not open to walk in"
+  },
+  {
+   "id": "home_qs_cottage_6",
+   "name": "6 Quay Street: front room",
+   "place": null,
+   "plot": "qs_cottage_6",
+   "door": "d_qs_6",
+   "frame_door": "d_qs_6",
+   "floor": 0,
+   "outline": [
+    [
+     114.875,
+     19.5
+    ],
+    [
+     114.875,
+     25.5
+    ],
+    [
+     109.875,
+     25.5
+    ],
+    [
+     109.875,
+     19.5
+    ]
+   ],
+   "outline_local": [
+    0,
+    0,
+    6.000000000000001,
+    5
+   ],
+   "height_m": 2.4,
+   "room_kind": "flat",
+   "category": "break_in",
+   "access_class": "private",
+   "objects": [
+    {
+     "id": "door_front",
+     "kind": "door",
+     "x": 114.775,
+     "y": 22.5,
+     "w": 0.9,
+     "d": 0.2,
+     "prompt": "prompt_tpl.door_knock",
+     "usable": true,
+     "note": "d_qs_6",
+     "local": [
+      3.0,
+      0.1
+     ]
+    },
+    {
+     "id": "armchair",
+     "kind": "chair",
+     "x": 112.375,
+     "y": 20.7,
+     "w": 0.9,
+     "d": 0.9,
+     "usable": false,
+     "local": [
+      1.2,
+      2.5
+     ]
+    },
+    {
+     "id": "sofa",
+     "kind": "sofa",
+     "x": 112.875,
+     "y": 24.1,
+     "w": 1.6,
+     "d": 0.8,
+     "usable": false,
+     "local": [
+      4.600000000000001,
+      2.0
+     ]
+    },
+    {
+     "id": "sideboard",
+     "kind": "cabinet",
+     "x": 111.075,
+     "y": 25.1,
+     "w": 0.4,
+     "d": 1.4,
+     "prompt": "prompt.drawer_search",
+     "usable": true,
+     "local": [
+      5.6000000000000005,
+      3.8
+     ]
+    },
+    {
+     "id": "mantel",
+     "kind": "shelf",
+     "x": 109.975,
+     "y": 21.0,
+     "w": 1.6,
+     "d": 0.2,
+     "prompt": "prompt.photograph",
+     "usable": true,
+     "note": "photographs and letters; never children",
+     "local": [
+      1.5,
+      4.9
+     ]
+    },
+    {
+     "id": "wardrobe_hall",
+     "kind": "wardrobe",
+     "x": 113.975,
+     "y": 19.9,
+     "w": 0.6,
+     "d": 0.8,
+     "prompt": "prompt.wardrobe_search",
+     "usable": true,
+     "local": [
+      0.4,
+      0.9
+     ]
+    },
+    {
+     "id": "wireless",
+     "kind": "radio",
+     "x": 110.075,
+     "y": 22.1,
+     "w": 0.5,
+     "d": 0.25,
+     "usable": false,
+     "local": [
+      2.6,
+      4.8
+     ]
+    }
+   ],
+   "containers": [
+    {
+     "id": "c_home_qs_cottage_6_sideboard",
+     "kind": "cabinet",
+     "at": "sideboard",
+     "search_s": 2,
+     "search_s_dark_no_torch": 4,
+     "noise_m": 2,
+     "contents": [
+      {
+       "item": "letters"
+      },
+      {
+       "item": "bill"
+      }
+     ],
+     "key_holder": "the householder (resident)",
+     "ordinary": true,
+     "room": "home_qs_cottage_6"
+    },
+    {
+     "id": "c_home_qs_cottage_6_wardrobe",
+     "kind": "wardrobe",
+     "at": "wardrobe_hall",
+     "search_s": 5,
+     "search_s_dark_no_torch": 10,
+     "noise_m": 3,
+     "contents": [
+      {
+       "item": "spare_key_to_this_room"
+      }
+     ],
+     "key_holder": "the householder (resident)",
+     "ordinary": true,
+     "room": "home_qs_cottage_6"
+    },
+    {
+     "id": "c_home_qs_cottage_6_mantel",
+     "kind": "drawer",
+     "at": "mantel",
+     "search_s": 2,
+     "search_s_dark_no_torch": 4,
+     "noise_m": 2,
+     "contents": [
+      {
+       "item": "photograph"
+      },
+      {
+       "item": "cigarettes"
+      }
+     ],
+     "key_holder": "the householder (resident)",
+     "ordinary": true,
+     "room": "home_qs_cottage_6"
+    }
+   ],
+   "locks": [
+    {
+     "id": "lock_home_qs_cottage_6",
+     "door": "d_qs_6",
+     "key_id": "key_home_qs_cottage_6",
+     "holder": "the householder (resident)",
+     "person_ref": true,
+     "spare_key_at": "under the mat or on the nail inside the back door",
+     "ways_in": [
+      {
+       "way": "key_lent_or_copied",
+       "from": "Ian Megginson (knows every lock on the street)",
+       "cost_gbp": 1.5,
+       "person_ref": true,
+       "note": "a copy cut at the ironmonger counter (prompt.counter_key), or the owner lends it"
+      },
+      {
+       "way": "key_lifted",
+       "from": "the householder (resident)",
+       "carried": "his or her pocket",
+       "person_ref": true,
+       "note": "a held pocket lift of about 2 s (3.5.4)"
+      },
+      {
+       "way": "back_way",
+       "door": "d_qs_6_back",
+       "routine": "the back door is left on the latch while she is out at the line (chosen)"
+      },
+      {
+       "way": "force",
+       "noise_m": 15,
+       "shows_on_door_days": 1,
+       "crime": true,
+       "loud": true
+      }
+     ],
+     "place_class": "private",
+     "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
+     "chosen": true
+    }
+   ],
+   "entry_door_world": [
+    114.875,
+    22.5
+   ],
+   "light": {
+    "windows": "front window, net curtains",
+    "lamps": [
+     {
+      "id": "ceiling",
+      "x": 3.0000000000000004,
+      "y": 2.5,
+      "kind": "pendant bulb"
+     }
+    ],
+    "power": "mains",
+    "dark_search_x2_without_torch": true
+   },
+   "connections": [],
+   "src": "3.5.3 (home break-in); 4.3.4; HOMES.md",
+   "owner": "the householder (a resident id from the cast later)",
+   "neighbour_warns": true,
+   "frame_note": "ground-floor front room and hall; upstairs not built",
+   "reverb_id": "room_flat",
+   "break_in_target": true,
+   "hours": null,
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   },
+   "plot_enterable_false": true,
+   "entered_only_by": "the ways in listed in locks (key lent or copied, key lifted, back way, force): the map flag enterable false means not open to walk in"
   },
   {
    "id": "home_cs_house_3",
@@ -12561,10 +13417,6 @@
       },
       {
        "item": "bill"
-      },
-      {
-       "item": "coins",
-       "gbp": 1
       }
      ],
      "key_holder": "the householder (resident)",
@@ -12579,12 +13431,6 @@
      "search_s_dark_no_torch": 10,
      "noise_m": 3,
      "contents": [
-      {
-       "item": "coat"
-      },
-      {
-       "item": "shoes"
-      },
       {
        "item": "spare_key_to_this_room"
       }
@@ -12672,7 +13518,15 @@
    "neighbour_warns": true,
    "frame_note": "ground-floor front room and hall; upstairs not built",
    "reverb_id": "room_flat",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": null,
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   },
+   "plot_enterable_false": true,
+   "entered_only_by": "the ways in listed in locks (key lent or copied, key lifted, back way, force): the map flag enterable false means not open to walk in"
   },
   {
    "id": "dent_warehouse_office",
@@ -12710,7 +13564,6 @@
    "room_kind": "office",
    "category": "break_in",
    "access_class": "private",
-   "hours": "Dent keeps the watch 22:00 to 06:00 (the night watchman)",
    "objects": [
     {
      "id": "door_loading_office",
@@ -12820,9 +13673,6 @@
      "noise_m": 3,
      "contents": [
       {
-       "item": "tally_sheets"
-      },
-      {
        "item": "letters"
       },
       {
@@ -12930,7 +13780,6 @@
      ],
      "place_class": "private",
      "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
-     "hours": "watch 22:00-06:00",
      "chosen": true
     }
    ],
@@ -12955,7 +13804,15 @@
    "connections": [],
    "src": "3.5.3; map dent_1; RT2-05 (Dent)",
    "reverb_id": "room_office",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:dents_warehouses",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   },
+   "plot_enterable_false": true,
+   "entered_only_by": "the ways in listed in locks (key lent or copied, key lifted, back way, force): the map flag enterable false means not open to walk in"
   },
   {
    "id": "burned_warehouse_shell",
@@ -12992,8 +13849,7 @@
    "height_m": 6.0,
    "room_kind": "back_room",
    "category": "break_in",
-   "access_class": "forbidden",
-   "hours": "police-taped (forbidden): no first warning",
+   "access_class": "private",
    "objects": [
     {
      "id": "door_boarded",
@@ -13193,7 +14049,7 @@
        "loud": true
       }
      ],
-     "place_class": "forbidden",
+     "place_class": "private",
      "owner_warn": "forbidden: no first warning; second warning, then act within 30 s",
      "chosen": true
     }
@@ -13212,7 +14068,15 @@
    "connections": [],
    "src": "3.5.3; prototype (the black shell with the boarded doors); warehouse-fire designs",
    "reverb_id": "room_back_room",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:burned_warehouse",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": false,
+    "closes_with_line": "the Harbour Board boards the shell up again: a fresh notice on the door says \"Unsafe. Keep out.\" (chosen)"
+   },
+   "plot_enterable_false": true,
+   "entered_only_by": "the ways in listed in locks (key lent or copied, key lifted, back way, force): the map flag enterable false means not open to walk in"
   },
   {
    "id": "net_loft",
@@ -13250,7 +14114,6 @@
    "room_kind": "back_room",
    "category": "break_in",
    "access_class": "private",
-   "hours": "Albert Suggitt mends nets some mornings only",
    "objects": [
     {
      "id": "door_loading",
@@ -13385,11 +14248,7 @@
      "noise_m": 2,
      "contents": [
       {
-       "item": "cash",
-       "gbp": 2
-      },
-      {
-       "item": "tobacco"
+       "item": "letters"
       }
      ],
      "key_holder": "Albert Suggitt",
@@ -13405,9 +14264,6 @@
      "search_s_dark_no_torch": 8,
      "noise_m": 4,
      "contents": [
-      {
-       "item": "twine"
-      },
       {
        "item": "letters"
       }
@@ -13478,7 +14334,15 @@
    "connections": [],
    "src": "3.5.3; map bt_wh_3 (the net loft)",
    "reverb_id": "room_back_room",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:net_loft",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   },
+   "plot_enterable_false": true,
+   "entered_only_by": "the ways in listed in locks (key lent or copied, key lifted, back way, force): the map flag enterable false means not open to walk in"
   },
   {
    "id": "cold_store_office",
@@ -13516,7 +14380,6 @@
    "room_kind": "office",
    "category": "break_in",
    "access_class": "private",
-   "hours": "the packing shift leaves at 17:30; the shift manager keeps the office",
    "objects": [
     {
      "id": "door_office",
@@ -13614,9 +14477,6 @@
      "noise_m": 3,
      "contents": [
       {
-       "item": "tally_sheets"
-      },
-      {
        "item": "bill"
       },
       {
@@ -13708,7 +14568,6 @@
      ],
      "place_class": "private",
      "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
-     "hours": "shift manager 06:00-17:30",
      "chosen": true
     }
    ],
@@ -13732,7 +14591,15 @@
    "connections": [],
    "src": "3.5.3; map cold_stores; 2.9 (cold-store contract at rung 3)",
    "reverb_id": "room_office",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:cold_stores",
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   },
+   "plot_enterable_false": true,
+   "entered_only_by": "the ways in listed in locks (key lent or copied, key lifted, back way, force): the map flag enterable false means not open to walk in"
   },
   {
    "id": "chandler_store",
@@ -13889,9 +14756,6 @@
      "noise_m": 3,
      "contents": [
       {
-       "item": "order_book"
-      },
-      {
        "item": "bill"
       }
      ],
@@ -13907,9 +14771,6 @@
      "search_s_dark_no_torch": 8,
      "noise_m": 4,
      "contents": [
-      {
-       "item": "storm_lamp"
-      },
       {
        "item": "letters"
       }
@@ -13975,7 +14836,15 @@
    "connections": [],
    "src": "3.5.3; 7.16 (the boxing club's old hall behind the chandler's)",
    "reverb_id": "room_back_room",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": null,
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   },
+   "plot_enterable_false": true,
+   "entered_only_by": "the ways in listed in locks (key lent or copied, key lifted, back way, force): the map flag enterable false means not open to walk in"
   },
   {
    "id": "fish_merchants_office",
@@ -14111,9 +14980,6 @@
      "noise_m": 3,
      "contents": [
       {
-       "item": "price_lists"
-      },
-      {
        "item": "bill"
       },
       {
@@ -14222,7 +15088,15 @@
    "connections": [],
    "src": "3.5.3; map quay_fish_merchants (Hal retired from a fish merchant's office)",
    "reverb_id": "room_office",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": null,
+   "gv04": {
+    "rule": "GV-04: after its job the room reopens on the same terms (public by its hours, private rooms stay private and the owner warns as before)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   },
+   "plot_enterable_false": true,
+   "entered_only_by": "the ways in listed in locks (key lent or copied, key lifted, back way, force): the map flag enterable false means not open to walk in"
   },
   {
    "id": "widow_net_store",
@@ -14259,8 +15133,7 @@
    "height_m": 4.0,
    "room_kind": "back_room",
    "category": "rival_base",
-   "access_class": "forbidden",
-   "hours": "the Widow's men watch it day and night",
+   "access_class": "private",
    "objects": [
     {
      "id": "door_net_store",
@@ -14407,7 +15280,7 @@
        "loud": true
       }
      ],
-     "place_class": "forbidden",
+     "place_class": "private",
      "owner_warn": "forbidden: no first warning; second warning, then act within 30 s",
      "chosen": true
     }
@@ -14434,7 +15307,9 @@
      "to": "widow_dock_office",
      "kind": "stair",
      "x": 511.5,
-     "y": 12.625
+     "y": 12.625,
+     "door_id": "d_widow_office",
+     "door_kind": "street_door"
     }
    ],
    "src": "RT2-08; map quay_net_store",
@@ -14445,7 +15320,13 @@
    ],
    "night_raid_men_inside": 3,
    "reverb_id": "room_back_room",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:widow_base",
+   "gv04": {
+    "rule": "GV-04: after a raid the base stays enterable on the same terms; the hit door or window carries a mark until mended (RT2-08)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "widow_dock_office",
@@ -14483,7 +15364,6 @@
    "room_kind": "office",
    "category": "rival_base",
    "access_class": "forbidden",
-   "hours": "the Widow's lieutenant keeps it; the Widow herself comes on settling days",
    "objects": [
     {
      "id": "desk_widow",
@@ -14746,7 +15626,9 @@
      "to": "widow_net_store",
      "kind": "stair",
      "x": 511.5,
-     "y": 12.625
+     "y": 12.625,
+     "door_id": "d_widow_office",
+     "door_kind": "street_door"
     }
    ],
    "src": "RT2-08 (a dock office over the fish dock's net store); map rival_bases base_widow",
@@ -14757,7 +15639,13 @@
    ],
    "night_raid_men_inside": 3,
    "reverb_id": "room_office",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:widow_base",
+   "gv04": {
+    "rule": "GV-04: after a raid the base stays enterable on the same terms; the hit door or window carries a mark until mended (RT2-08)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "agar_front_office",
@@ -14795,7 +15683,6 @@
    "room_kind": "office",
    "category": "rival_base",
    "access_class": "hours",
-   "hours": "09:00-17:30 Mon-Sat",
    "objects": [
     {
      "id": "door_front",
@@ -14905,9 +15792,6 @@
      "noise_m": 2,
      "contents": [
       {
-       "item": "particulars"
-      },
-      {
        "item": "letters"
       },
       {
@@ -14927,10 +15811,7 @@
      "noise_m": 3,
      "contents": [
       {
-       "item": "appointment_book"
-      },
-      {
-       "item": "biro"
+       "item": "letters"
       }
      ],
      "key_holder": "Agar's clerk",
@@ -14971,7 +15852,6 @@
      ],
      "place_class": "private",
      "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
-     "hours": "front unlocked in business hours",
      "chosen": true
     }
    ],
@@ -14999,7 +15879,9 @@
      "locked": true,
      "lock": "lock_agar_back",
      "x": 279.0,
-     "y": 335.375
+     "y": 335.375,
+     "door_id": "i_agar_back",
+     "door_kind": "inner_door"
     }
    ],
    "src": "RT2-08; map cs_agar",
@@ -15009,7 +15891,13 @@
    ],
    "night_raid_men_inside": 2,
    "reverb_id": "room_office",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:agar_base",
+   "gv04": {
+    "rule": "GV-04: after a raid the base stays enterable on the same terms; the hit door or window carries a mark until mended (RT2-08)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "agar_back_room",
@@ -15047,7 +15935,6 @@
    "room_kind": "back_room",
    "category": "rival_base",
    "access_class": "private",
-   "hours": "Geoffrey Agar; solicitor and alderman",
    "objects": [
     {
      "id": "door_to_front",
@@ -15226,9 +16113,6 @@
      "noise_m": 3,
      "contents": [
       {
-       "item": "deed_box"
-      },
-      {
        "item": "photograph"
       }
      ],
@@ -15240,7 +16124,7 @@
    "locks": [
     {
      "id": "lock_agar_back",
-     "door": "d_cs_2",
+     "door": "i_agar_back",
      "key_id": "key_agar_back",
      "holder": "Geoffrey Agar",
      "person_ref": true,
@@ -15270,7 +16154,8 @@
      ],
      "place_class": "private",
      "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
-     "chosen": true
+     "chosen": true,
+     "inner_door": true
     }
    ],
    "entry_door_world": [
@@ -15295,7 +16180,9 @@
      "to": "agar_front_office",
      "kind": "door",
      "x": 279.0,
-     "y": 334.875
+     "y": 334.875,
+     "door_id": "i_agar_back",
+     "door_kind": "inner_door"
     }
    ],
    "src": "RT2-08 (Agar an estate agent's office holding his papers)",
@@ -15305,11 +16192,18 @@
    ],
    "night_raid_men_inside": 2,
    "reverb_id": "room_back_room",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:agar_base",
+   "entered_via_inner_door": "i_agar_back",
+   "gv04": {
+    "rule": "GV-04: after a raid the base stays enterable on the same terms; the hit door or window carries a mark until mended (RT2-08)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   },
   {
    "id": "cammack_lockup",
-   "name": "Cammack's end lock-up",
+   "name": "Cammack's end lock-up (north court, bay on d_lockup_3)",
    "place": "cammack_base",
    "plot": "cammack_lockups",
    "door": "d_lockup_3",
@@ -15317,130 +16211,129 @@
    "floor": 0,
    "outline": [
     [
-     167.025,
-     301.3
+     166.925,
+     307.4
     ],
     [
-     174.225,
-     301.3
+     166.925,
+     302.6
     ],
     [
-     174.225,
-     319.5
+     189.625,
+     302.6
     ],
     [
-     167.025,
-     319.5
+     189.625,
+     307.4
     ]
    ],
    "outline_local": [
-    0.4,
+    12.6,
     0.3,
-    7.6,
-    18.5
+    17.4,
+    23
    ],
    "height_m": 3.0,
    "room_kind": "back_room",
    "category": "rival_base",
-   "access_class": "forbidden",
-   "hours": "Danny Cammack's men; loud nights",
+   "access_class": "private",
    "objects": [
     {
      "id": "door_garage",
      "kind": "door",
-     "x": 170.625,
-     "y": 301.4,
+     "x": 167.025,
+     "y": 305.0,
      "w": 0.9,
      "d": 0.2,
      "prompt": "prompt.office_look",
      "usable": true,
-     "note": "d_lockup_3",
+     "note": "d_lockup_3: an up-and-over door on North Road, a car can be driven in",
      "local": [
-      4.0,
+      15.0,
       0.4
      ]
     },
     {
      "id": "car_bay",
      "kind": "bay",
-     "x": 170.625,
-     "y": 306.0,
+     "x": 171.625,
+     "y": 305.0,
      "w": 3.6,
      "d": 4.0,
      "usable": false,
      "note": "Cammack's car stands here",
      "local": [
-      4,
+      15,
       5
      ]
     },
     {
      "id": "workbench",
      "kind": "bench",
-     "x": 167.625,
-     "y": 313.0,
+     "x": 178.625,
+     "y": 306.7,
      "w": 0.8,
      "d": 3.0,
      "prompt": "prompt.cupboard_search",
      "usable": true,
      "local": [
-      1.0,
+      13.3,
       12
      ]
     },
     {
      "id": "table_book",
      "kind": "table",
-     "x": 172.125,
-     "y": 316.5,
+     "x": 182.125,
+     "y": 304.0,
      "w": 1.6,
      "d": 1.0,
      "prompt": "prompt.office_desk",
      "usable": true,
      "local": [
-      5.5,
+      16,
       15.5
      ]
     },
     {
      "id": "crates",
      "kind": "stack",
-     "x": 169.625,
-     "y": 318.0,
+     "x": 185.625,
+     "y": 305.5,
      "w": 2.0,
      "d": 1.0,
      "usable": false,
      "local": [
-      3.0,
-      17.0
+      14.5,
+      19.0
      ]
     },
     {
      "id": "stereo",
      "kind": "radio",
-     "x": 172.425,
-     "y": 313.0,
+     "x": 178.625,
+     "y": 303.3,
      "w": 0.5,
      "d": 0.3,
      "usable": false,
      "note": "a tape deck: loud music",
      "local": [
-      5.8,
+      16.7,
       12.0
      ]
     },
     {
      "id": "safe_cammack",
      "kind": "safe",
-     "x": 173.625,
-     "y": 319.0,
+     "x": 189.125,
+     "y": 303.0,
      "w": 0.6,
      "d": 0.6,
      "prompt": "prompt.safe",
      "usable": true,
      "local": [
-      7.0,
-      18.0
+      17.0,
+      22.5
      ]
     }
    ],
@@ -15537,7 +16430,7 @@
       {
        "way": "back_way",
        "door": "d_lockup_4",
-       "routine": "the next lock-up's roller door is propped open on summer nights; a shared wall door joins them (chosen)"
+       "routine": "the next bay's door (d_lockup_4) is propped up on summer nights and a shared wall door joins the bays (chosen)"
       },
       {
        "way": "force",
@@ -15547,21 +16440,21 @@
        "loud": true
       }
      ],
-     "place_class": "forbidden",
-     "owner_warn": "forbidden: no first warning; second warning, then act within 30 s",
+     "place_class": "private",
+     "owner_warn": "first warning, second warning, then call or act within 30 s at worst; warnings reset, the sighting is kept",
      "chosen": true
     }
    ],
    "entry_door_world": [
-    170.625,
-    301
+    166.625,
+    305
    ],
    "light": {
-    "windows": "no windows; roller door and one bulb",
+    "windows": "no windows; the up-and-over door and one bulb",
     "lamps": [
      {
       "id": "bulb",
-      "x": 4,
+      "x": 15,
       "y": 10,
       "kind": "bulb"
      }
@@ -15570,15 +16463,21 @@
     "dark_search_x2_without_torch": true
    },
    "connections": [],
-   "src": "RT2-08 (Cammack the lock-ups on the north road, east side, y 290 to 320)",
+   "src": "RT2-08 (Cammack the lock-ups on the north road, east side, y 290 to 320); map cammack_lockups enterable true",
    "hit_targets": [
     "base door",
     "Cammack's car"
    ],
    "night_raid_men_inside": 3,
-   "frame_note": "bay 3 of three; d_lockup_3 is the base door in map rival_bases; the end bay by position is d_lockup_5 (open point)",
+   "frame_note": "the north court: d_lockup_3, d_lockup_4 and d_lockup_5 open on North Road (facing west, vehicle access); d_lockup_3 is the base door in map rival_bases; the room is that bay only",
    "reverb_id": "room_back_room",
-   "break_in_target": true
+   "break_in_target": true,
+   "hours": "places.json:cammack_base",
+   "gv04": {
+    "rule": "GV-04: after a raid the base stays enterable on the same terms; the hit door or window carries a mark until mended (RT2-08)",
+    "reopens_after_job": true,
+    "closes_with_line": null
+   }
   }
  ],
  "never_entered": [
@@ -15607,7 +16506,6 @@
    "door": "d_qs_3_yardgate",
    "plot": "qs_laveracks_yard",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "yard_gate"
   },
@@ -15615,7 +16513,6 @@
    "door": "d_qs_5_yardgate",
    "plot": "qs_ritas_yard",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "yard_gate"
   },
@@ -15623,7 +16520,6 @@
    "door": "d_qs_7",
    "plot": "qs_empty_unit",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -15631,7 +16527,6 @@
    "door": "d_qs_7_back",
    "plot": "qs_empty_unit",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "back"
   },
@@ -15639,7 +16534,6 @@
    "door": "d_qs_7_yardgate",
    "plot": "qs_empty_unit_yard",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "yard_gate"
   },
@@ -15647,7 +16541,6 @@
    "door": "d_qs_9_yardgate",
    "plot": "qs_launderette_yard",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "yard_gate"
   },
@@ -15655,24 +16548,13 @@
    "door": "d_qs_11_yardgate",
    "plot": "qs_grocer_yard",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "yard_gate"
-  },
-  {
-   "door": "d_qs_2_yardgate",
-   "plot": "qs_ada_yard",
-   "locked": true,
-   "map_locked_flag": false,
-   "prompt": "prompt_tpl.door_locked",
-   "kind": "yard_gate",
-   "note": "the map flags it unlocked but no room hangs on it (gate, yard or outdoor thing, or open point); the game treats it as locked/shut unless a place file says otherwise"
   },
   {
    "door": "d_qs_4",
    "plot": "qs_cottage_4",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -15680,7 +16562,6 @@
    "door": "d_qs_4_back",
    "plot": "qs_cottage_4",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "back"
   },
@@ -15688,23 +16569,13 @@
    "door": "d_qs_4_yardgate",
    "plot": "qs_cottage_4_yard",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "yard_gate"
-  },
-  {
-   "door": "d_qs_6",
-   "plot": "qs_cottage_6",
-   "locked": true,
-   "map_locked_flag": true,
-   "prompt": "prompt_tpl.door_locked",
-   "kind": "front"
   },
   {
    "door": "d_qs_6_back",
    "plot": "qs_cottage_6",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "back"
   },
@@ -15712,7 +16583,6 @@
    "door": "d_qs_6_yardgate",
    "plot": "qs_cottage_6_yard",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "yard_gate"
   },
@@ -15720,7 +16590,6 @@
    "door": "d_qs_8_yardgate",
    "plot": "qs_pearts_yard",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "yard_gate"
   },
@@ -15728,7 +16597,6 @@
    "door": "d_qs_10_yardgate",
    "plot": "qs_ironmonger_yard",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "yard_gate"
   },
@@ -15736,7 +16604,6 @@
    "door": "d_qs_12_back",
    "plot": "qs_copper_kettle",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "back"
   },
@@ -15744,7 +16611,6 @@
    "door": "d_qs_12_yardgate",
    "plot": "qs_copper_kettle_yard",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "yard_gate"
   },
@@ -15752,7 +16618,6 @@
    "door": "d_qs_14",
    "plot": "qs_corner_store",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -15760,7 +16625,6 @@
    "door": "d_quay_1",
    "plot": "quay_smokehouse",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -15768,7 +16632,6 @@
    "door": "d_quay_8",
    "plot": "quay_ships_stores",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -15776,7 +16639,6 @@
    "door": "d_dock_1",
    "plot": "dock_customs",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -15784,7 +16646,6 @@
    "door": "d_bonded",
    "plot": "dock_bonded",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "loading"
   },
@@ -15792,7 +16653,6 @@
    "door": "d_dock_gate",
    "plot": "dock_gate",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "gate"
   },
@@ -15800,7 +16660,6 @@
    "door": "d_wr_3",
    "plot": "dent_2",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "loading"
   },
@@ -15808,7 +16667,6 @@
    "door": "d_wr_5",
    "plot": "dent_3",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "loading"
   },
@@ -15816,7 +16674,6 @@
    "door": "d_wr_7",
    "plot": "dent_4",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "loading"
   },
@@ -15824,42 +16681,13 @@
    "door": "d_gate_sheds",
    "plot": "dock_gate_sheds",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
-  },
-  {
-   "door": "d_cold_yard",
-   "plot": "cold_stores",
-   "locked": true,
-   "map_locked_flag": false,
-   "prompt": "prompt_tpl.door_locked",
-   "kind": "loading",
-   "note": "the map flags it unlocked but no room hangs on it (gate, yard or outdoor thing, or open point); the game treats it as locked/shut unless a place file says otherwise"
-  },
-  {
-   "door": "d_lot_gate",
-   "plot": "lot",
-   "locked": true,
-   "map_locked_flag": false,
-   "prompt": "prompt_tpl.door_locked",
-   "kind": "gate",
-   "note": "the map flags it unlocked but no room hangs on it (gate, yard or outdoor thing, or open point); the game treats it as locked/shut unless a place file says otherwise"
-  },
-  {
-   "door": "d_lot_hut",
-   "plot": "lot_hut",
-   "locked": true,
-   "map_locked_flag": false,
-   "prompt": "prompt_tpl.door_locked",
-   "kind": "front",
-   "note": "the map flags it unlocked but no room hangs on it (gate, yard or outdoor thing, or open point); the game treats it as locked/shut unless a place file says otherwise"
   },
   {
    "door": "d_cs_5",
    "plot": "cs_house_2",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -15867,7 +16695,6 @@
    "door": "d_cs_9",
    "plot": "cs_house_4",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -15875,7 +16702,6 @@
    "door": "d_cs_11",
    "plot": "cs_house_5",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -15883,7 +16709,6 @@
    "door": "d_cs_13",
    "plot": "cs_house_6",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -15891,7 +16716,6 @@
    "door": "d_cs_15",
    "plot": "cs_house_7",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -15899,7 +16723,6 @@
    "door": "d_cs_17",
    "plot": "cs_house_8",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -15907,7 +16730,6 @@
    "door": "d_cs_19",
    "plot": "cs_house_9",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -15915,7 +16737,6 @@
    "door": "d_cs_4",
    "plot": "cs_workshop_1",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -15923,7 +16744,6 @@
    "door": "d_cs_6",
    "plot": "cs_workshop_2",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -15931,7 +16751,6 @@
    "door": "d_br_1",
    "plot": "basin_wh_1",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "loading"
   },
@@ -15939,7 +16758,6 @@
    "door": "d_br_3",
    "plot": "basin_wh_2",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "loading"
   },
@@ -15947,7 +16765,6 @@
    "door": "d_br_5",
    "plot": "basin_wh_3",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "loading"
   },
@@ -15955,7 +16772,6 @@
    "door": "d_br_7",
    "plot": "basin_wh_4",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "loading"
   },
@@ -15963,7 +16779,6 @@
    "door": "d_br_9",
    "plot": "basin_wh_5",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "loading"
   },
@@ -15971,7 +16786,6 @@
    "door": "d_bt_7",
    "plot": "bt_wh_7",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "loading"
   },
@@ -15979,7 +16793,6 @@
    "door": "d_bt_9",
    "plot": "bt_wh_9",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "loading"
   },
@@ -15987,7 +16800,6 @@
    "door": "d_nr_2",
    "plot": "nr_2",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -15995,7 +16807,6 @@
    "door": "d_nr_4",
    "plot": "nr_4",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16003,7 +16814,6 @@
    "door": "d_nr_6",
    "plot": "nr_6",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16011,7 +16821,6 @@
    "door": "d_nr_8",
    "plot": "nr_8",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16019,7 +16828,6 @@
    "door": "d_nr_10",
    "plot": "nr_10",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16027,7 +16835,6 @@
    "door": "d_nr_14",
    "plot": "nr_14",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16035,7 +16842,6 @@
    "door": "d_nr_18",
    "plot": "nr_18",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16043,7 +16849,6 @@
    "door": "d_nr_20",
    "plot": "nr_20",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16051,7 +16856,6 @@
    "door": "d_nr_22",
    "plot": "nr_22",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16059,7 +16863,6 @@
    "door": "d_nr_24",
    "plot": "nr_24",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16067,7 +16870,6 @@
    "door": "d_nr_26",
    "plot": "nr_26",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16075,7 +16877,6 @@
    "door": "d_nr_28",
    "plot": "nr_28",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16083,7 +16884,6 @@
    "door": "d_nr_30",
    "plot": "nr_30",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16091,7 +16891,6 @@
    "door": "d_nr_32",
    "plot": "nr_32",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16099,24 +16898,13 @@
    "door": "d_nr_34",
    "plot": "nr_34",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
-  },
-  {
-   "door": "d_nr_36",
-   "plot": "nr_corner_shop",
-   "locked": true,
-   "map_locked_flag": false,
-   "prompt": "prompt_tpl.door_locked",
-   "kind": "front",
-   "note": "the map flags it unlocked but no room hangs on it (gate, yard or outdoor thing, or open point); the game treats it as locked/shut unless a place file says otherwise"
   },
   {
    "door": "d_nr_38",
    "plot": "nr_38",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16124,7 +16912,6 @@
    "door": "d_nr_40",
    "plot": "nr_40",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16132,7 +16919,6 @@
    "door": "d_nr_42",
    "plot": "nr_42",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16140,7 +16926,6 @@
    "door": "d_nr_44",
    "plot": "nr_44",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16148,7 +16933,6 @@
    "door": "d_nr_46",
    "plot": "nr_46",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16156,7 +16940,6 @@
    "door": "d_nr_48",
    "plot": "nr_48",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16164,7 +16947,6 @@
    "door": "d_nr_50",
    "plot": "nr_50",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16172,7 +16954,6 @@
    "door": "d_nr_52",
    "plot": "nr_52",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16180,7 +16961,6 @@
    "door": "d_nr_54",
    "plot": "nr_54",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16188,7 +16968,6 @@
    "door": "d_nr_56",
    "plot": "nr_56",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16196,7 +16975,6 @@
    "door": "d_nr_58",
    "plot": "nr_58",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16204,7 +16982,6 @@
    "door": "d_nr_60",
    "plot": "nr_60",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16212,7 +16989,6 @@
    "door": "d_nr_62",
    "plot": "nr_62",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16220,7 +16996,6 @@
    "door": "d_nr_64",
    "plot": "nr_64",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16228,7 +17003,6 @@
    "door": "d_nr_66",
    "plot": "nr_66",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16236,7 +17010,6 @@
    "door": "d_nr_68",
    "plot": "nr_68",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16244,7 +17017,6 @@
    "door": "d_nr_1",
    "plot": "nr_1",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16252,7 +17024,6 @@
    "door": "d_nr_3",
    "plot": "nr_3",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16260,7 +17031,6 @@
    "door": "d_nr_5",
    "plot": "nr_5",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16268,7 +17038,6 @@
    "door": "d_nr_7",
    "plot": "nr_7",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16276,24 +17045,13 @@
    "door": "d_nr_9",
    "plot": "nr_9",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
-  },
-  {
-   "door": "d_nr_11",
-   "plot": "nr_builders",
-   "locked": true,
-   "map_locked_flag": false,
-   "prompt": "prompt_tpl.door_locked",
-   "kind": "yard_gate",
-   "note": "the map flags it unlocked but no room hangs on it (gate, yard or outdoor thing, or open point); the game treats it as locked/shut unless a place file says otherwise"
   },
   {
    "door": "d_nr_13",
    "plot": "nr_13",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16301,7 +17059,6 @@
    "door": "d_nr_15",
    "plot": "nr_15",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16309,7 +17066,6 @@
    "door": "d_nr_17",
    "plot": "nr_17",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16317,7 +17073,6 @@
    "door": "d_nr_19",
    "plot": "nr_19",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16325,7 +17080,6 @@
    "door": "d_nr_21",
    "plot": "nr_21",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16333,7 +17087,6 @@
    "door": "d_nr_23",
    "plot": "nr_23",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16341,7 +17094,6 @@
    "door": "d_nr_25",
    "plot": "nr_25",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16349,7 +17101,6 @@
    "door": "d_nr_27",
    "plot": "nr_27",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16357,7 +17108,6 @@
    "door": "d_nr_29",
    "plot": "nr_old_pub",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16365,7 +17115,6 @@
    "door": "d_nr_31",
    "plot": "nr_31",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16373,7 +17122,6 @@
    "door": "d_nr_33",
    "plot": "nr_33",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16381,7 +17129,6 @@
    "door": "d_nr_35",
    "plot": "nr_35",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16389,7 +17136,6 @@
    "door": "d_nr_37",
    "plot": "nr_37",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16397,7 +17143,6 @@
    "door": "d_nr_39",
    "plot": "nr_39",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16405,7 +17150,6 @@
    "door": "d_nr_41",
    "plot": "nr_41",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16413,7 +17157,6 @@
    "door": "d_nr_43",
    "plot": "nr_43",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16421,7 +17164,6 @@
    "door": "d_nr_45",
    "plot": "nr_45",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16429,7 +17171,6 @@
    "door": "d_nr_47",
    "plot": "nr_47",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16437,7 +17178,6 @@
    "door": "d_nr_49",
    "plot": "nr_49",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16445,7 +17185,6 @@
    "door": "d_lockup_1",
    "plot": "cammack_lockups_s",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "garage"
   },
@@ -16453,7 +17192,6 @@
    "door": "d_lockup_2",
    "plot": "cammack_lockups_s",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "garage"
   },
@@ -16461,7 +17199,6 @@
    "door": "d_lockup_4",
    "plot": "cammack_lockups",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "garage"
   },
@@ -16469,7 +17206,6 @@
    "door": "d_lockup_5",
    "plot": "cammack_lockups",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "garage"
   },
@@ -16477,7 +17213,6 @@
    "door": "d_nr_53",
    "plot": "nr_53",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16485,7 +17220,6 @@
    "door": "d_nr_55",
    "plot": "nr_55",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16493,7 +17227,6 @@
    "door": "d_nr_57",
    "plot": "nr_57",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16501,7 +17234,6 @@
    "door": "d_bp_3",
    "plot": "bp_house_3",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16509,7 +17241,6 @@
    "door": "d_bp_5",
    "plot": "bp_house_5",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16517,7 +17248,6 @@
    "door": "d_cl_7",
    "plot": "cl_7",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16525,7 +17255,6 @@
    "door": "d_cl_11",
    "plot": "cl_11",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16533,7 +17262,6 @@
    "door": "d_cl_13",
    "plot": "cl_13",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16541,7 +17269,6 @@
    "door": "d_cl_15",
    "plot": "cl_15",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16549,7 +17276,6 @@
    "door": "d_cl_17",
    "plot": "cl_17",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16557,7 +17283,6 @@
    "door": "d_cl_19",
    "plot": "cl_19",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16565,7 +17290,6 @@
    "door": "d_cl_21",
    "plot": "cl_21",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16573,7 +17297,6 @@
    "door": "d_cl_25",
    "plot": "cl_25",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16581,7 +17304,6 @@
    "door": "d_cl_27",
    "plot": "cl_27",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16589,7 +17311,6 @@
    "door": "d_cl_29",
    "plot": "cl_29",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16597,7 +17318,6 @@
    "door": "d_cl_31",
    "plot": "cl_31",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16605,7 +17325,6 @@
    "door": "d_cl_33",
    "plot": "cl_33",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16613,7 +17332,6 @@
    "door": "d_cl_35",
    "plot": "cl_35",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16621,7 +17339,6 @@
    "door": "d_cl_2",
    "plot": "school_yard",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "gate"
   },
@@ -16629,7 +17346,6 @@
    "door": "d_school",
    "plot": "school",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16637,7 +17353,6 @@
    "door": "d_cl_4",
    "plot": "cl_4",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16645,7 +17360,6 @@
    "door": "d_cl_6",
    "plot": "cl_6",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16653,7 +17367,6 @@
    "door": "d_cl_8",
    "plot": "cl_8",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16661,7 +17374,6 @@
    "door": "d_cl_10",
    "plot": "cl_10",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16669,7 +17381,6 @@
    "door": "d_cl_12",
    "plot": "cl_12",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16677,7 +17388,6 @@
    "door": "d_cl_14",
    "plot": "cl_14",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16685,7 +17395,6 @@
    "door": "d_cl_16",
    "plot": "cl_16",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16693,7 +17402,6 @@
    "door": "d_cl_18",
    "plot": "cl_18",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16701,7 +17409,6 @@
    "door": "d_cl_20",
    "plot": "cl_20",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16709,7 +17416,6 @@
    "door": "d_cl_22",
    "plot": "cl_22",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16717,24 +17423,13 @@
    "door": "d_cl_24",
    "plot": "cl_24",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
-  },
-  {
-   "door": "d_allot_gate",
-   "plot": "allotments",
-   "locked": true,
-   "map_locked_flag": false,
-   "prompt": "prompt_tpl.door_locked",
-   "kind": "gate",
-   "note": "the map flags it unlocked but no room hangs on it (gate, yard or outdoor thing, or open point); the game treats it as locked/shut unless a place file says otherwise"
   },
   {
    "door": "d_cl_101",
    "plot": "cl_w_0",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16742,7 +17437,6 @@
    "door": "d_cl_103",
    "plot": "cl_w_1",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16750,7 +17444,6 @@
    "door": "d_cl_105",
    "plot": "cl_w_2",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16758,7 +17451,6 @@
    "door": "d_cl_107",
    "plot": "cl_w_3",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16766,7 +17458,6 @@
    "door": "d_cl_109",
    "plot": "cl_w_4",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16774,7 +17465,6 @@
    "door": "d_cl_111",
    "plot": "cl_w_5",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
   },
@@ -16782,48 +17472,103 @@
    "door": "d_cl_113",
    "plot": "cl_w_6",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
-  },
-  {
-   "door": "d_landing_gangway",
-   "plot": "ferry_landing",
-   "locked": true,
-   "map_locked_flag": false,
-   "prompt": "prompt_tpl.door_locked",
-   "kind": "gate",
-   "note": "the map flags it unlocked but no room hangs on it (gate, yard or outdoor thing, or open point); the game treats it as locked/shut unless a place file says otherwise"
   },
   {
    "door": "d_ice_hut",
    "plot": "ice_hut",
    "locked": true,
-   "map_locked_flag": true,
    "prompt": "prompt_tpl.door_locked",
    "kind": "front"
+  }
+ ],
+ "open_doors_without_room": [
+  {
+   "door": "d_qs_2_yardgate",
+   "plot": "qs_ada_yard",
+   "kind": "yard_gate",
+   "public_or_by_hours": true,
+   "hours": "places.json:adas",
+   "note": "not a room: a public or by-hours door, gate or hatch; no room hangs on it"
+  },
+  {
+   "door": "d_cold_yard",
+   "plot": "cold_stores",
+   "kind": "loading",
+   "public_or_by_hours": true,
+   "hours": "places.json:cold_stores",
+   "note": "not a room: a public or by-hours door, gate or hatch; no room hangs on it"
+  },
+  {
+   "door": "d_lot_gate",
+   "plot": "lot",
+   "kind": "gate",
+   "public_or_by_hours": true,
+   "hours": "places.json:car_lot",
+   "note": "not a room: a public or by-hours door, gate or hatch; no room hangs on it"
+  },
+  {
+   "door": "d_lot_hut",
+   "plot": "lot_hut",
+   "kind": "front",
+   "public_or_by_hours": true,
+   "hours": "places.json:car_lot",
+   "note": "not a room: a public or by-hours door, gate or hatch; no room hangs on it"
+  },
+  {
+   "door": "d_nr_36",
+   "plot": "nr_corner_shop",
+   "kind": "front",
+   "public_or_by_hours": true,
+   "hours": null,
+   "note": "not a room: a public or by-hours door, gate or hatch; no room hangs on it"
+  },
+  {
+   "door": "d_nr_11",
+   "plot": "nr_builders",
+   "kind": "yard_gate",
+   "public_or_by_hours": true,
+   "hours": null,
+   "note": "not a room: a public or by-hours door, gate or hatch; no room hangs on it"
+  },
+  {
+   "door": "d_allot_gate",
+   "plot": "allotments",
+   "kind": "gate",
+   "public_or_by_hours": true,
+   "hours": "places.json:allotments",
+   "note": "not a room: a public or by-hours door, gate or hatch; no room hangs on it"
+  },
+  {
+   "door": "d_landing_gangway",
+   "plot": "ferry_landing",
+   "kind": "gate",
+   "public_or_by_hours": true,
+   "hours": "places.json:ferry_landing",
+   "note": "not a room: a public or by-hours door, gate or hatch; no room hangs on it"
   },
   {
    "door": "d_tea_stall",
    "plot": "tea_stall",
-   "locked": true,
-   "map_locked_flag": false,
-   "prompt": "prompt_tpl.door_locked",
    "kind": "hatch",
-   "note": "the map flags it unlocked but no room hangs on it (gate, yard or outdoor thing, or open point); the game treats it as locked/shut unless a place file says otherwise"
+   "public_or_by_hours": true,
+   "hours": "places.json:tea_stall",
+   "note": "not a room: a public or by-hours door, gate or hatch; no room hangs on it"
   }
  ],
- "locked_doors_rule": "every map door not named by a room is locked: pressing says prompt_tpl.door_locked (\"{name}: locked\") or ui-text locked_default; FIT-P34",
+ "locked_doors_rule": "every map door flagged locked and not named by a room is locked; doors the map flags unlocked with no room are public or by hours (open_doors_without_room, hours by reference to places.json): pressing says prompt_tpl.door_locked (\"{name}: locked\") or ui-text locked_default; FIT-P34",
  "chosen_values": [
   "room layouts inside the plot outlines (all rectangles, positions, sizes) are chosen: no source gives world positions",
-  "ceiling heights; hours not in the blueprint (snooker 10:00-22:00, chip shop from 11:00, pigeon loft 07:00-19:00, garage 08:00-17:30, Harbour Board 09:00-17:00 Mon-Fri, Mickey's office 07:00-23:00)",
+  "ceiling heights; hours are no longer held here: every room carries hours as places.json:<place id>",
   "search times beyond drawer 2, desk 4, wardrobe 5 (cupboard 4, chest 5, safe 6); noise for desk 3, wardrobe 4, safe 2; force noise 15 m",
   "owner warning timing: 5 s, 15 s, act by 30 s",
   "boot: 7 slots, constable search 3 s, per-car default contents",
   "every cash figure and goods value in a container, every key holder's hiding place and the back-way routines",
-  "the tin of night money kept in the back room cupboard; the flat's tin under the floorboards is Tom's own stash",
-  "the debt book in Sheila's desk; Mickey's real book and the safe in the inner office (rung 2)",
-  "three homes chosen for break-ins: 12 North Road, 9 Chapel Lane, 3 Cold Store Road",
+  "the night-money tin on a shelf in the inner office (decision 24 Nov); the flat's tin under the floorboards is Tom's own stash",
+  "the debt book in Sheila's desk; the real book and the revolver in the inner office desk's bottom right drawer (decision 24 Nov, RT2-14), the safe holds cash only",
+  "four homes chosen for break-ins: 12 North Road, 9 Chapel Lane, 3 Cold Store Road, and 6 Quay Street (the cottage the map names as a break-in room)",
+  "inner door ids (i_...) and the generic inner-stair ids",
   "room kinds for halls and big rooms: snooker hall shop, boxing hall back_room, chapel hall chapel, tea room caff",
   "Cammack's end lock-up is d_lockup_3 as the map names it"
  ],
@@ -16832,7 +17577,10 @@
   "Dispute: the old boxing hours (17:00-22:00 in way.js) differ from 7.16 (18:00-21:30 Mon, Wed, Fri; 10:00-13:00 Sat). 7.16 is used.",
   "Dispute: the prototype has the Golden River takeaway; it is ruled out (bay 3 empty to let). No room built.",
   "The map has no door for: a caff or shop yard/back door (caff, Metcalfe's, the second-hand shop, the snooker hall, the boxing hall, chandlery, tea room), the caff's delivery door, the net loft's own back, a second escape door from Mickey's yard (only the quay gate and the back-fence vault), and the flat's own door (the stair is internal). Those rooms have lent/lifted/force ways but no back_way; the caff_back delivery door is drawn as an object with no door id.",
-  "The map flags some doors unlocked that no room uses (d_nr_36 corner shop, d_lot_hut, d_cold_yard, the quay and gate doors); they are in locked_doors with a note. Decide whether they need rooms.",
+  "Doors the map flags unlocked that no room uses are public or by-hours doors, in open_doors_without_room with hours by reference to places.json; those with hours null (d_nr_36 corner shop and similar) have no places.json entry.",
+  "places.json mickeys counter_hours says 07:00 to 22:00 and hours_note says the counter is staffed 07:00 to 22:00; the binding decision is counter 07:00 to 23:00, radio 24 h, street door locked 23:00 to 07:00. places.json should change to 23:00. rooms.json carries the decision in lock_mickeys_front.locked_between.",
+  "Rooms with no places.json place (hours null, listed in missing_places_json): homes, the chandler's store, the fish merchants' office, home rooms.",
+  "places.json mickeys_desk_drawer (bottom right-hand drawer, real book on top, revolver under) now matches c_inner_drawer_bottom; no change needed there. places.json has mickeys_inner_office access forbidden: matched. places.json widow_base says private for the net store, matched; the Widow's office upstairs is forbidden and watched.",
   "New prompts are listed in new_prompts_needed (ids prompt.inner_door, prompt.radio_flat, prompt.vault, prompt.kitchen_look, prompt.sit_hal, prompt.sit_ada, prompt.tea_ada, prompt.look_fittings, prompt.front_up_hand, prompt.pension_counter, prompt.stitches, prompt.key_board, prompt.take_rival_book, prompt.sit_stool); they are not in ui-text.json yet.",
   "job_ref:* strings stand for job ids that come from jobs.json later; person names (Sheila Dunn, Ron Kirby, Brenda Laverack, Rita Welburn, Hal Metcalfe, Grace Rinaldi, Ada, Wayne Harrison, Dennis Iveson, Father Walsh, Nora Cronin, Sylvia Rennison, Norman Dent, Albert Suggitt, Christine Pickering, Ian Megginson, Geoffrey Agar) are the blueprint's names as strings with person_ref true; unnamed keepers (the grocer, Peart, the ironmonger, the chandler, the launderette keeper, the barber, the snooker keeper, the head trainer, Holt, Dobson, the fish merchant, the shift manager, the retired doctor, the Widow's and Cammack's lieutenants, Agar's clerk, the householders) wait for the cast.",
   "The retired doctor, the barber, the pigeon loft's keeper and the boxing trainers (three chosen) have no cast entry yet.",
@@ -16841,6 +17589,7 @@
   "The old spec had Sheila at a desk in the back room; she now keeps the counter and the back room is the kettle room and the tin (mickeys-office.json mark note, 29 Oct); the inner office is Mickey's own (27 Oct).",
   "Yards (Mickey's, Iveson's) have room_kind null and reverb_id null: open air uses the street bed; sounds.json has no yard kind (ask whether back_room should serve).",
   "Tin: RULINGS 4.3.2 says a tin under the floorboards in the flat; 2.7.2 says the night-money tin is at the office. Both are built (office tin = night money; flat tin = Tom's own stash) and prompt.tin serves both.",
-  "Real-time figures: none derive from game time in this file; hours are game clock times."
+  "Real-time figures: none derive from game time in this file; hours are game clock times.",
+  "Rung labels say \"Tom\" as a designer label (rung 3 is called by the lead's first name: Frank since 24 Nov); they are not shown to the player."
  ]
 }

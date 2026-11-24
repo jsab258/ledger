@@ -31,7 +31,14 @@
   "WAIT KEY: 7.11 says waiting is 'a key' without naming it; T chosen. The prototype passed the time on Z held, which 6.6 now gives to slow walking.",
   "SAVE LABEL: 6.4 gives 'picture, day, hour, place and rung'; the rung words are the four rung names of 2.12.2. A rung 5 or later would need a word.",
   "CREDITS: the Unreal-only rows (engine, characters, clothes) are marked unreal_only; the browser build ships only voices, type, assets and sound rows it truly uses. 10.4 does not say whether credits can be opened from the title; chosen yes.",
-  "DEFAULTS CHOSEN: subtitle box Half; chatter on; reduce flashing off; music volume 70; the rest 100. Subtitle steps 34, 39, 48 units."
+  "DEFAULTS CHOSEN: subtitle box Half; chatter on; reduce flashing off; music volume 70; the rest 100. Subtitle steps 34, 39, 48 units.",
+  "ESC: Esc pauses everywhere (6.4, AX-10). Leave, Back, Ledger and map closing are on Backspace or the opening key; inside the pause menu Esc resumes.",
+  "PAD HOLDS: Use, held is its own key (F, LB); Tom's reading is a tap (D-pad up); map is R3; slow-walk toggle is L3; Front up on the pad sits in the manners pick.",
+  "FOV: ax.fov has built false until he rules on a field-of-view setting (AX-03).",
+  "999: calls to the police and ambulance are free; the generic phone box call is 10p.",
+  "The stitches prompt has no price yet in PRICES-WAGES-1990.md.",
+  "DRAIN: prompt.drain applies to a drain that map.json does not yet list.",
+  "The lead is Frank Nowak (canon, 24 Nov): the rung words and cue text use {first} and {called}; notes still say Tom (internal)."
  ],
  "prompts": {
   "rules": {
@@ -44,7 +51,8 @@
     "A person with something to say is offered before a door, whichever way Tom faces.",
     "A held prompt (search, pocket lift, forcing) shows a progress line and stepping away cancels it (checklist gap 6.1.1).",
     "A prompt never shows a number except a price; money is in words in the Ledger.",
-    "While a pad is in the hands the prompt names the pad button, else the key (device last used)."
+    "While a pad is in the hands the prompt names the pad button, else the key (device last used).",
+    "Every prompt record has applies_to: the map.json collection and kind, or the rooms.json object kind, or a state or person it fires on."
    ],
    "which_text": "Which?",
    "which_none": "Neither.",
@@ -86,128 +94,209 @@
     "DPadDown": "D-pad down",
     "DPadLeft": "D-pad left",
     "DPadRight": "D-pad right"
-   }
+   },
+   "precedence": "For a door: a door_records entry (named place) beats a door_kind_records entry (the door's kind in map.json) beats the prompt_tpl.door_in or door_knock template. Rooms.json objects name their prompt id and use it as written."
   },
   "templates": [
    {
     "id": "prompt_tpl.person_named",
     "text": "Talk to {name}",
     "use": "a person Tom knows by name",
-    "src": "prototype player.js buildPrompts"
+    "src": "prototype player.js buildPrompts",
+    "applies_to": {
+     "collection": "as the use field says",
+     "kind": "a person Tom knows by name"
+    }
    },
    {
     "id": "prompt_tpl.person_unnamed",
     "text": "Speak to {description}",
     "use": "a person Tom does not know by name; description is lower case ('a man in a donkey jacket')",
-    "src": "prototype player.js"
+    "src": "prototype player.js",
+    "applies_to": {
+     "collection": "as the use field says",
+     "kind": "a person Tom does not know by name; description is lower case ('a man in a donkey jacket')"
+    }
    },
    {
     "id": "prompt_tpl.person_with_word",
     "text": "Talk to {name} (a word)",
     "use": "somebody has something to say to him and stands in reach; offered before a door",
-    "src": "prototype player.js; 6.1.1"
+    "src": "prototype player.js; 6.1.1",
+    "applies_to": {
+     "collection": "as the use field says",
+     "kind": "somebody has something to say to him and stands in reach; offered before a door"
+    }
    },
    {
     "id": "prompt_tpl.front_up",
     "text": "Front up to {name}",
     "use": "1.6.4 fronting up, one key",
-    "src": "prototype player.js (Front up)"
+    "src": "prototype player.js (Front up)",
+    "applies_to": {
+     "collection": "as the use field says",
+     "kind": "1.6.4 fronting up, one key"
+    }
    },
    {
     "id": "prompt_tpl.sit_with",
     "text": "Sit down with {name}",
     "use": "a person met and willing",
-    "src": "prototype game/ (Sit down with)"
+    "src": "prototype game/ (Sit down with)",
+    "applies_to": {
+     "collection": "as the use field says",
+     "kind": "a person met and willing"
+    }
    },
    {
     "id": "prompt_tpl.door_in",
     "text": "Go into {name}",
     "use": "an enterable place that is open; name from map.json plots",
-    "src": "prototype player.js; map.json"
+    "src": "prototype player.js; map.json",
+    "applies_to": {
+     "collection": "as the use field says",
+     "kind": "an enterable place that is open; name from map.json plots"
+    }
    },
    {
     "id": "prompt_tpl.door_knock",
     "text": "Knock at {name}",
     "use": "a home (use 'home' in map.json plots)",
-    "src": "prototype scenes.js"
+    "src": "prototype scenes.js",
+    "applies_to": {
+     "collection": "as the use field says",
+     "kind": "a home (use 'home' in map.json plots)"
+    }
    },
    {
     "id": "prompt_tpl.door_shut",
     "text": "{name}: shut",
     "use": "an enterable place out of hours; pressing says shut_default",
-    "src": "prototype player.js"
+    "src": "prototype player.js",
+    "applies_to": {
+     "collection": "as the use field says",
+     "kind": "an enterable place out of hours; pressing says shut_default"
+    }
    },
    {
     "id": "prompt_tpl.door_locked",
     "text": "{name}: locked",
     "use": "a locked door; pressing says what way is left open, if cased",
-    "src": "prototype game/"
+    "src": "prototype game/",
+    "applies_to": {
+     "collection": "as the use field says",
+     "kind": "a locked door; pressing says what way is left open, if cased"
+    }
    },
    {
     "id": "prompt_tpl.leave_room",
     "text": "Leave {name} by the street door",
     "use": "on the mat inside",
-    "src": "prototype player.js"
+    "src": "prototype player.js",
+    "applies_to": {
+     "collection": "as the use field says",
+     "kind": "on the mat inside"
+    }
    },
    {
     "id": "prompt_tpl.stair_down",
     "text": "Down the stair to {name}",
     "use": "top of a stair",
-    "src": "prototype player.js"
+    "src": "prototype player.js",
+    "applies_to": {
+     "collection": "as the use field says",
+     "kind": "top of a stair"
+    }
    },
    {
     "id": "prompt_tpl.stair_up",
     "text": "Up the stair to {name}",
     "use": "foot of a stair",
-    "src": "prototype scenes.js"
+    "src": "prototype scenes.js",
+    "applies_to": {
+     "collection": "as the use field says",
+     "kind": "foot of a stair"
+    }
    },
    {
     "id": "prompt_tpl.cab_in",
     "text": "Get in the cab",
     "use": "beside a car Tom may open",
-    "src": "1.2.3"
+    "src": "1.2.3",
+    "applies_to": {
+     "collection": "as the use field says",
+     "kind": "beside a car Tom may open"
+    }
    },
    {
     "id": "prompt_tpl.cab_out",
     "text": "Get out",
     "use": "in a car, stopped",
-    "src": "prototype player.js"
+    "src": "prototype player.js",
+    "applies_to": {
+     "collection": "as the use field says",
+     "kind": "in a car, stopped"
+    }
    },
    {
     "id": "prompt_tpl.fare",
     "text": "Take the fare to {where}",
     "use": "a fare is offered",
-    "src": "prototype player.js (Take the fare); 1.2.7"
+    "src": "prototype player.js (Take the fare); 1.2.7",
+    "applies_to": {
+     "collection": "as the use field says",
+     "kind": "a fare is offered"
+    }
    },
    {
     "id": "prompt_tpl.buy",
     "text": "Buy {thing} ({price})",
     "use": "a counter; price from economy PRICES-WAGES-1990.md",
-    "src": "prototype game/ (counter)"
+    "src": "prototype game/ (counter)",
+    "applies_to": {
+     "collection": "as the use field says",
+     "kind": "a counter; price from economy PRICES-WAGES-1990.md"
+    }
    },
    {
     "id": "prompt_tpl.hand_over",
     "text": "Hand over {thing}",
     "use": "a job's handover",
-    "src": "prototype scenes.js"
+    "src": "prototype scenes.js",
+    "applies_to": {
+     "collection": "as the use field says",
+     "kind": "a job's handover"
+    }
    },
    {
     "id": "prompt_tpl.take",
     "text": "Take {thing}",
     "use": "one press takes what is found",
-    "src": "1.6.2"
+    "src": "1.6.2",
+    "applies_to": {
+     "collection": "as the use field says",
+     "kind": "one press takes what is found"
+    }
    },
    {
     "id": "prompt_tpl.put_in",
     "text": "Put {thing} in {container}",
     "use": "a container Tom may use",
-    "src": "prototype game/"
+    "src": "prototype game/",
+    "applies_to": {
+     "collection": "as the use field says",
+     "kind": "a container Tom may use"
+    }
    },
    {
     "id": "prompt_tpl.letter",
     "text": "Open the letter from {sender}",
     "use": "an unread letter at the office",
-    "src": "prototype game/letters; 6.10"
+    "src": "prototype game/letters; 6.10",
+    "applies_to": {
+     "collection": "as the use field says",
+     "kind": "an unread letter at the office"
+    }
    }
   ],
   "door_records": [
@@ -219,6 +308,11 @@
     "key": "use",
     "plot": "qs_mickeys",
     "place": "mickeys",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "qs_mickeys"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -229,6 +323,11 @@
     "key": "use",
     "plot": "qs_laveracks",
     "place": "laveracks",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "qs_laveracks"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -239,6 +338,11 @@
     "key": "use",
     "plot": "qs_ritas",
     "place": "ritas",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "qs_ritas"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -249,6 +353,11 @@
     "key": "use",
     "plot": "qs_launderette",
     "place": "launderette",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "qs_launderette"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -259,6 +368,11 @@
     "key": "use",
     "plot": "qs_grocer",
     "place": "grocer",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "qs_grocer"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -269,6 +383,11 @@
     "key": "use",
     "plot": "qs_chandler",
     "place": "chandlery",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "qs_chandler"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -279,6 +398,11 @@
     "key": "use",
     "plot": "qs_ada",
     "place": "adas",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "qs_ada"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -289,6 +413,11 @@
     "key": "use",
     "plot": "qs_pearts",
     "place": "newsagent",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "qs_pearts"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -299,6 +428,11 @@
     "key": "use",
     "plot": "qs_ironmonger",
     "place": "ironmonger",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "qs_ironmonger"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -309,6 +443,11 @@
     "key": "use",
     "plot": "qs_copper_kettle",
     "place": "tea_room",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "qs_copper_kettle"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -319,6 +458,11 @@
     "key": "use",
     "plot": "quay_snooker",
     "place": "snooker_hall",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "quay_snooker"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -329,6 +473,11 @@
     "key": "use",
     "plot": "quay_regent",
     "place": "boarding_house",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "quay_regent"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -339,6 +488,11 @@
     "key": "use",
     "plot": "quay_caff",
     "place": "caff",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "quay_caff"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -349,6 +503,11 @@
     "key": "use",
     "plot": "quay_metcalfes",
     "place": "metcalfes",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "quay_metcalfes"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -359,7 +518,29 @@
     "key": "use",
     "plot": "quay_secondhand",
     "place": "second_hand",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "quay_secondhand"
+    },
     "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.widow_base",
+    "object": "door of the net store",
+    "text": "Go into the net store",
+    "shut_text": "the net store: shut",
+    "key": "use",
+    "plot": "quay_net_store",
+    "place": "widow_base",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "quay_net_store"
+    },
+    "src": "map.json plots; prototype player.js",
+    "note": "a rival's base (RT2-08): enterable since the map update; the prompt names the building, never the rival's men",
+    "chosen": true
    },
    {
     "id": "prompt.door.boxing_club",
@@ -369,6 +550,11 @@
     "key": "use",
     "plot": "quay_boxing",
     "place": "boxing_club",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "quay_boxing"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -379,6 +565,11 @@
     "key": "use",
     "plot": "dock_harbour_board",
     "place": "harbour_board",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "dock_harbour_board"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -389,7 +580,29 @@
     "key": "use",
     "plot": "cs_garage",
     "place": "garage",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "cs_garage"
+    },
     "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.agar_base",
+    "object": "door of Agar's agents",
+    "text": "Go into Agar's agents",
+    "shut_text": "Agar's agents: shut",
+    "key": "use",
+    "plot": "cs_agar",
+    "place": "agar_base",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "cs_agar"
+    },
+    "src": "map.json plots; prototype player.js",
+    "note": "a rival's base (RT2-08): enterable since the map update; the prompt names the building, never the rival's men",
+    "chosen": true
    },
    {
     "id": "prompt.door.iveson_yard",
@@ -399,6 +612,11 @@
     "key": "use",
     "plot": "iveson_yard",
     "place": "iveson_yard",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "iveson_yard"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -409,6 +627,11 @@
     "key": "use",
     "plot": "iveson_hut",
     "place": "iveson_hut",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "iveson_hut"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -419,7 +642,29 @@
     "key": "use",
     "plot": "nr_wayne",
     "place": "waynes_pawn",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "nr_wayne"
+    },
     "src": "map.json plots; prototype player.js"
+   },
+   {
+    "id": "prompt.door.cammack_base",
+    "object": "door of Cammack's lock-ups",
+    "text": "Go into Cammack's lock-ups",
+    "shut_text": "Cammack's lock-ups: shut",
+    "key": "use",
+    "plot": "cammack_lockups",
+    "place": "cammack_base",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "cammack_lockups"
+    },
+    "src": "map.json plots; prototype player.js",
+    "note": "a rival's base (RT2-08): enterable since the map update; the prompt names the building, never the rival's men",
+    "chosen": true
    },
    {
     "id": "prompt.door.chip_shop",
@@ -429,6 +674,11 @@
     "key": "use",
     "plot": "bp_chippy",
     "place": "chip_shop",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "bp_chippy"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -439,6 +689,11 @@
     "key": "use",
     "plot": "chapel",
     "place": "chapel",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "chapel"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -449,6 +704,11 @@
     "key": "use",
     "plot": "chapel_hall",
     "place": "chapel_hall",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "chapel_hall"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -459,6 +719,11 @@
     "key": "use",
     "plot": "priests_house",
     "place": "priests_house",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "priests_house"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -469,6 +734,11 @@
     "key": "use",
     "plot": "cl_barber",
     "place": "barber",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "cl_barber"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -479,6 +749,11 @@
     "key": "use",
     "plot": "cl_23",
     "place": "doctors",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "cl_23"
+    },
     "src": "map.json plots; prototype player.js"
    },
    {
@@ -489,6 +764,11 @@
     "key": "use",
     "plot": "pigeon_loft",
     "place": "pigeon_loft",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front door of the plot",
+     "plot": "pigeon_loft"
+    },
     "src": "map.json plots; prototype player.js"
    }
   ],
@@ -499,7 +779,10 @@
     "text": "Go in",
     "locked_text": "Locked.",
     "key": "use",
-    "applies_to": "map.json doors where kind == 'front' and the plot has no named door prompt above",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front"
+    },
     "src": "map.json doors; 1.1.3",
     "chosen": true
    },
@@ -509,7 +792,10 @@
     "text": "Through the yard gate",
     "locked_text": "Locked.",
     "key": "use",
-    "applies_to": "map.json doors where kind == 'yard_gate' and the plot has no named door prompt above",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "yard_gate"
+    },
     "src": "map.json doors; 1.1.3",
     "chosen": true
    },
@@ -519,7 +805,10 @@
     "text": "The loading door",
     "locked_text": "Locked.",
     "key": "use",
-    "applies_to": "map.json doors where kind == 'loading' and the plot has no named door prompt above",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "loading"
+    },
     "src": "map.json doors; 1.1.3",
     "chosen": true
    },
@@ -529,7 +818,10 @@
     "text": "The back way",
     "locked_text": "Locked.",
     "key": "use",
-    "applies_to": "map.json doors where kind == 'back' and the plot has no named door prompt above",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "back"
+    },
     "src": "map.json doors; 1.1.3",
     "chosen": true
    },
@@ -539,7 +831,10 @@
     "text": "Through the gate",
     "locked_text": "Locked.",
     "key": "use",
-    "applies_to": "map.json doors where kind == 'gate' and the plot has no named door prompt above",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "gate"
+    },
     "src": "map.json doors; 1.1.3",
     "chosen": true
    },
@@ -549,7 +844,10 @@
     "text": "The garage door",
     "locked_text": "Locked.",
     "key": "use",
-    "applies_to": "map.json doors where kind == 'garage' and the plot has no named door prompt above",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "garage"
+    },
     "src": "map.json doors; 1.1.3",
     "chosen": true
    },
@@ -559,7 +857,10 @@
     "text": "Up the stair",
     "locked_text": "Locked.",
     "key": "use",
-    "applies_to": "map.json doors where kind == 'stair' and the plot has no named door prompt above",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "stair"
+    },
     "src": "map.json doors; 1.1.3",
     "chosen": true
    },
@@ -569,7 +870,10 @@
     "text": "The office door",
     "locked_text": "Locked.",
     "key": "use",
-    "applies_to": "map.json doors where kind == 'office' and the plot has no named door prompt above",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "office"
+    },
     "src": "map.json doors; 1.1.3",
     "chosen": true
    },
@@ -579,7 +883,10 @@
     "text": "The workshop door",
     "locked_text": "Locked.",
     "key": "use",
-    "applies_to": "map.json doors where kind == 'workshop' and the plot has no named door prompt above",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "workshop"
+    },
     "src": "map.json doors; 1.1.3",
     "chosen": true
    },
@@ -589,7 +896,10 @@
     "text": "The side door",
     "locked_text": "Locked.",
     "key": "use",
-    "applies_to": "map.json doors where kind == 'side' and the plot has no named door prompt above",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "side"
+    },
     "src": "map.json doors; 1.1.3",
     "chosen": true
    },
@@ -599,7 +909,10 @@
     "text": "The hatch",
     "locked_text": "Locked.",
     "key": "use",
-    "applies_to": "map.json doors where kind == 'hatch' and the plot has no named door prompt above",
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "hatch"
+    },
     "src": "map.json doors; 1.1.3",
     "chosen": true
    }
@@ -613,7 +926,14 @@
     "src": "1.6.2",
     "hold_s": 4,
     "hold_s_no_torch_dark": 8,
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "desk",
+      "table"
+     ]
+    }
    },
    {
     "id": "prompt.office_look",
@@ -621,7 +941,18 @@
     "text": "Look round the office",
     "key": "use",
     "src": "prototype game/ office",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "board",
+      "counter",
+      "desk",
+      "door",
+      "table",
+      "window"
+     ]
+    }
    },
    {
     "id": "prompt.locked_drawer",
@@ -629,7 +960,13 @@
     "text": "Open the locked drawer",
     "key": "use",
     "src": "1.6.9 (office storage)",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "drawer"
+     ]
+    }
    },
    {
     "id": "prompt.bottom_drawer",
@@ -637,7 +974,13 @@
     "text": "Try the bottom drawer of Mickey's desk",
     "key": "use",
     "src": "1.3.10; prototype game/",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "drawer"
+     ]
+    }
    },
    {
     "id": "prompt.tin",
@@ -645,7 +988,13 @@
     "text": "Open the tin",
     "key": "use",
     "src": "1.6.9, 2.7.2",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "tin"
+     ]
+    }
    },
    {
     "id": "prompt.count",
@@ -653,7 +1002,11 @@
     "text": "The count with Sheila: the tin and the fare book",
     "key": "use",
     "src": "prototype game/count.js; 2.7.2",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": "tin"
+    }
    },
    {
     "id": "prompt.fare_book",
@@ -661,7 +1014,13 @@
     "text": "Read the fare book",
     "key": "use",
     "src": "1.6.8; 6.2.4",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "book"
+     ]
+    }
    },
    {
     "id": "prompt.debt_book",
@@ -669,7 +1028,11 @@
     "text": "Read Mickey's debt book",
     "key": "use",
     "src": "1.6.4; prototype game/",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": "book"
+    }
    },
    {
     "id": "prompt.board",
@@ -677,7 +1040,13 @@
     "text": "The board: cars and drivers",
     "key": "use",
     "src": "1.7.3; prototype game/",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "board"
+     ]
+    }
    },
    {
     "id": "prompt.kettle",
@@ -685,7 +1054,14 @@
     "text": "Put the kettle on",
     "key": "use",
     "src": "1.6.8",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "kettle",
+      "shelf"
+     ]
+    }
    },
    {
     "id": "prompt.radio_office",
@@ -693,7 +1069,13 @@
     "text": "Switch the radio on",
     "key": "use",
     "src": "1.6.8; 3.4.3; 5.7.1",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "desk"
+     ]
+    }
    },
    {
     "id": "prompt.radio_tune",
@@ -701,7 +1083,13 @@
     "text": "Turn the dial",
     "key": "use",
     "src": "5.7.1",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "radio"
+     ]
+    }
    },
    {
     "id": "prompt.radio_off",
@@ -709,7 +1097,13 @@
     "text": "Switch the radio off",
     "key": "use",
     "src": "5.7.1",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "radio"
+     ]
+    }
    },
    {
     "id": "prompt.telephone_office",
@@ -717,7 +1111,13 @@
     "text": "Pick up the telephone",
     "key": "use",
     "src": "canon Era (landlines); 1.6.8",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "telephone"
+     ]
+    }
    },
    {
     "id": "prompt.coat_hook",
@@ -725,7 +1125,13 @@
     "text": "Take the dark coat from its hook",
     "key": "use",
     "src": "prototype scenes.js; 1.6.6",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "hook"
+     ]
+    }
    },
    {
     "id": "prompt.crowbar_nail",
@@ -733,7 +1139,13 @@
     "text": "Take the crowbar from the nail by the yard door",
     "key": "use",
     "src": "prototype scenes.js",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "nail"
+     ]
+    }
    },
    {
     "id": "prompt.photograph",
@@ -741,7 +1153,15 @@
     "text": "Look at the photograph",
     "key": "use",
     "src": "prototype scenes.js",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "photograph",
+      "shelf",
+      "wall_art"
+     ]
+    }
    },
    {
     "id": "prompt.letter_pile",
@@ -749,7 +1169,14 @@
     "text": "Open the post",
     "key": "use",
     "src": "6.10",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "mat",
+      "table"
+     ]
+    }
    },
    {
     "id": "prompt.noticeboard",
@@ -757,7 +1184,14 @@
     "text": "Read the notices",
     "key": "use",
     "src": "6.9 street names and notices",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "board",
+      "noticeboard"
+     ]
+    }
    },
    {
     "id": "prompt.wardrobe_own",
@@ -765,7 +1199,13 @@
     "text": "Open your wardrobe",
     "key": "use",
     "src": "1.6.10",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "wardrobe"
+     ]
+    }
    },
    {
     "id": "prompt.bed",
@@ -773,7 +1213,13 @@
     "text": "Your bed: sleep or rest",
     "key": "use",
     "src": "7.11; prototype scenes.js",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "bed"
+     ]
+    }
    },
    {
     "id": "prompt.sleep_till",
@@ -781,7 +1227,13 @@
     "text": "Sleep till morning",
     "key": "use",
     "src": "prototype game/; 7.11",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "bed"
+     ]
+    }
    },
    {
     "id": "prompt.yard_shed",
@@ -789,7 +1241,13 @@
     "text": "Open the yard shed",
     "key": "use",
     "src": "1.6.9",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "shed"
+     ]
+    }
    },
    {
     "id": "prompt.holdall",
@@ -797,7 +1255,13 @@
     "text": "Pick up the holdall",
     "key": "use",
     "src": "1.1.4",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "bag"
+     ]
+    }
    },
    {
     "id": "prompt.holdall_put",
@@ -805,7 +1269,11 @@
     "text": "Put the holdall down",
     "key": "use",
     "src": "1.1.4",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "state",
+     "kind": "a holdall in the hand"
+    }
    },
    {
     "id": "prompt.boot_open",
@@ -813,7 +1281,11 @@
     "text": "Open the boot",
     "key": "use",
     "src": "1.6.9, 1.6.7",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "vehicles.json",
+     "kind": "cab boot"
+    }
    },
    {
     "id": "prompt.boot_put",
@@ -821,7 +1293,11 @@
     "text": "Put it in the boot",
     "key": "use",
     "src": "1.6.7, 1.6.9",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "vehicles.json",
+     "kind": "cab boot"
+    }
    },
    {
     "id": "prompt.boot_take",
@@ -829,7 +1305,11 @@
     "text": "Take it out of the boot",
     "key": "use",
     "src": "1.6.9",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "vehicles.json",
+     "kind": "cab boot"
+    }
    },
    {
     "id": "prompt.drawer_search",
@@ -839,7 +1319,15 @@
     "src": "1.6.2",
     "hold_s": 2,
     "hold_s_no_torch_dark": 4,
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "cabinet",
+      "desk",
+      "pile"
+     ]
+    }
    },
    {
     "id": "prompt.wardrobe_search",
@@ -849,7 +1337,13 @@
     "src": "1.6.2",
     "hold_s": 5,
     "hold_s_no_torch_dark": 10,
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "wardrobe"
+     ]
+    }
    },
    {
     "id": "prompt.cupboard_search",
@@ -859,7 +1353,23 @@
     "src": "1.6.2",
     "hold_s": 3,
     "chosen": true,
-    "chosen_note": "time not in the blueprint; between drawer 2 s and desk 4 s"
+    "chosen_note": "time not in the blueprint; between drawer 2 s and desk 4 s",
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "bench",
+      "board",
+      "box",
+      "cabinet",
+      "chest",
+      "cupboard",
+      "hook",
+      "rack",
+      "shed",
+      "shelf",
+      "table"
+     ]
+    }
    },
    {
     "id": "prompt.safe",
@@ -867,7 +1377,13 @@
     "text": "The safe: it needs its key or the number",
     "key": "use",
     "src": "1.6.2 (a safe needs a key or a combination from a person)",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "safe"
+     ]
+    }
    },
    {
     "id": "prompt.safe_open",
@@ -875,7 +1391,11 @@
     "text": "Open the safe",
     "key": "use",
     "src": "1.6.2",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": "safe"
+    }
    },
    {
     "id": "prompt.force_door",
@@ -883,7 +1403,11 @@
     "text": "Force the door (loud)",
     "key": "use",
     "src": "1.6.1",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "locked door"
+    }
    },
    {
     "id": "prompt.force_cupboard",
@@ -891,7 +1415,11 @@
     "text": "Force the cupboard (loud)",
     "key": "use",
     "src": "1.6.2",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": "cupboard"
+    }
    },
    {
     "id": "prompt.use_key",
@@ -899,7 +1427,11 @@
     "text": "Use the key",
     "key": "use",
     "src": "1.6.1; prototype game/",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "locked door whose key Tom holds"
+    }
    },
    {
     "id": "prompt.back_way",
@@ -907,7 +1439,13 @@
     "text": "The back way",
     "key": "use",
     "src": "1.6.1; prototype game/",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "door"
+     ]
+    }
    },
    {
     "id": "prompt.search_man",
@@ -917,7 +1455,11 @@
     "src": "1.6.2; prototype game/",
     "hold_s": 3,
     "chosen": true,
-    "chosen_note": "'a few seconds' in 1.6.2"
+    "chosen_note": "'a few seconds' in 1.6.2",
+    "applies_to": {
+     "collection": "people",
+     "kind": "a man down"
+    }
    },
    {
     "id": "prompt.lift_pocket",
@@ -926,7 +1468,11 @@
     "key": "use_hold",
     "src": "1.6.13; prototype game/",
     "hold_s": 2,
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "people",
+     "kind": "a person in a crowd or queue"
+    }
    },
    {
     "id": "prompt.move_body",
@@ -935,7 +1481,11 @@
     "key": "use_hold",
     "src": "1.6.7",
     "hold_s": 1,
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "people",
+     "kind": "a body"
+    }
    },
    {
     "id": "prompt.body_boot",
@@ -944,7 +1494,11 @@
     "key": "use_hold",
     "src": "1.6.7",
     "hold_s": 4,
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "vehicles.json",
+     "kind": "cab boot"
+    }
    },
    {
     "id": "prompt.body_quay",
@@ -953,7 +1507,11 @@
     "key": "use_hold",
     "src": "1.6.7",
     "hold_s": 3,
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "map.json quay_edges",
+     "kind": "quay edge"
+    }
    },
    {
     "id": "prompt.drain",
@@ -961,7 +1519,12 @@
     "text": "Drop it down the drain",
     "key": "use",
     "src": "1.6.7",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "map.json street_furniture",
+     "kind": "drain",
+     "note": "no drain is in map.json yet: the keeper must add them or this prompt is not built"
+    }
    },
    {
     "id": "prompt.dock_throw",
@@ -969,7 +1532,11 @@
     "text": "Throw it in the dock",
     "key": "use",
     "src": "1.6.7; prototype game/",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "map.json quay_edges",
+     "kind": "quay edge"
+    }
    },
    {
     "id": "prompt.wash_coat",
@@ -977,7 +1544,13 @@
     "text": "A service wash for the coat",
     "key": "use",
     "src": "1.6.7; prototype game/",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "machine"
+     ]
+    }
    },
    {
     "id": "prompt.wash_hands",
@@ -985,7 +1558,14 @@
     "text": "Wash the blood off",
     "key": "use",
     "src": "1.6.7",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "basin",
+      "counter"
+     ]
+    }
    },
    {
     "id": "prompt.things_to_hand",
@@ -994,7 +1574,11 @@
     "key": "use",
     "src": "1.3.6; prototype player.js (Pick up a ...)",
     "chosen_note": "chair, brick, dustbin lid, wheel brace",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "map.json props",
+     "kind": "crates, dustbin, bench or a thing to hand"
+    }
    },
    {
     "id": "prompt.hold_up",
@@ -1002,7 +1586,11 @@
     "text": "Hold the place up",
     "key": "use",
     "src": "1.6.15; prototype game/",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "people",
+     "kind": "a keeper at his counter"
+    }
    },
    {
     "id": "prompt.damage_window",
@@ -1010,7 +1598,11 @@
     "text": "Break it (loud)",
     "key": "use",
     "src": "1.6.14",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "map.json plots",
+     "kind": "building window or shop sign"
+    }
    },
    {
     "id": "prompt.phone_box",
@@ -1019,25 +1611,39 @@
     "key": "use",
     "src": "1.6.8; map.json phone_boxes",
     "price_pence": 10,
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "map.json phone_boxes",
+     "kind": "phone_box"
+    }
    },
    {
     "id": "prompt.phone_ambulance",
     "object": "a phone box",
-    "text": "Ring for an ambulance ({price})",
+    "text": "Dial 999 for an ambulance (free)",
     "key": "use",
-    "src": "2.18 ('the nearest phone box (10p)')",
-    "price_pence": 10,
-    "chosen": false
+    "src": "2.18 ('the nearest phone box (10p)'); 999 calls are free from a phone box",
+    "price_pence": 0,
+    "chosen": false,
+    "emergency_free": true,
+    "applies_to": {
+     "collection": "map.json phone_boxes",
+     "kind": "phone_box"
+    }
    },
    {
     "id": "prompt.phone_police",
     "object": "a phone box",
-    "text": "Ring the police ({price})",
+    "text": "Dial 999 for the police (free)",
     "key": "use",
-    "src": "2.6.3",
-    "price_pence": 10,
-    "chosen": false
+    "src": "2.6.3; 999 calls are free from a phone box",
+    "price_pence": 0,
+    "chosen": false,
+    "emergency_free": true,
+    "applies_to": {
+     "collection": "map.json phone_boxes",
+     "kind": "phone_box"
+    }
    },
    {
     "id": "prompt.phone_office",
@@ -1046,7 +1652,11 @@
     "key": "use",
     "src": "1.6.8",
     "price_pence": 10,
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "map.json phone_boxes",
+     "kind": "phone_box"
+    }
    },
    {
     "id": "prompt.pillar_box",
@@ -1054,7 +1664,11 @@
     "text": "Post a letter",
     "key": "use",
     "src": "map.json street_furniture pillar_box",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "map.json street_furniture",
+     "kind": "pillar_box"
+    }
    },
    {
     "id": "prompt.bench",
@@ -1062,7 +1676,13 @@
     "text": "Sit on the bench",
     "key": "use",
     "src": "1.1.7",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "bench"
+     ]
+    }
    },
    {
     "id": "prompt.wall_sit",
@@ -1070,7 +1690,11 @@
     "text": "Sit on the wall",
     "key": "use",
     "src": "1.1.7",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "map.json plots",
+     "kind": "low wall (outline face)"
+    }
    },
    {
     "id": "prompt.step_sit",
@@ -1078,7 +1702,11 @@
     "text": "Sit on the step",
     "key": "use",
     "src": "1.1.7",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "map.json weapon_places.steps",
+     "kind": "step"
+    }
    },
    {
     "id": "prompt.doorway_lean",
@@ -1086,7 +1714,11 @@
     "text": "Lean in the doorway",
     "key": "use",
     "src": "1.1.7",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "any doorway"
+    }
    },
    {
     "id": "prompt.bus_stop",
@@ -1094,7 +1726,11 @@
     "text": "Wait at the bus stop",
     "key": "use",
     "src": "1.1.7; map.json street_furniture bus_stop",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "map.json street_furniture",
+     "kind": "bus_stop"
+    }
    },
    {
     "id": "prompt.stand_up",
@@ -1102,7 +1738,11 @@
     "text": "Get up",
     "key": "use",
     "src": "1.1.7",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "state",
+     "kind": "sitting or leaning; no object"
+    }
    },
    {
     "id": "prompt.bin_rattle",
@@ -1110,7 +1750,13 @@
     "text": "Rattle the bin",
     "key": "use",
     "src": "1.4.8",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "bin"
+     ]
+    }
    },
    {
     "id": "prompt.quay_ladder",
@@ -1118,7 +1764,11 @@
     "text": "Climb the ladder",
     "key": "use",
     "src": "4.2.4; map.json quay_ladders",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "map.json quay_ladders",
+     "kind": "quay_ladder"
+    }
    },
    {
     "id": "prompt.quay_ladder_down",
@@ -1126,7 +1776,11 @@
     "text": "Down the ladder",
     "key": "use",
     "src": "4.2.4; map.json quay_ladders",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "map.json quay_ladders",
+     "kind": "quay_ladder"
+    }
    },
    {
     "id": "prompt.fishing",
@@ -1134,7 +1788,11 @@
     "text": "Fish off the quay",
     "key": "use",
     "src": "24 Nov pastimes ruling; map.json fishing_spots",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "map.json fishing_spots",
+     "kind": "fishing_spot"
+    }
    },
    {
     "id": "prompt.fishing_reel",
@@ -1142,7 +1800,11 @@
     "text": "Wind in",
     "key": "use",
     "src": "24 Nov pastimes ruling",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "map.json fishing_spots",
+     "kind": "fishing_spot"
+    }
    },
    {
     "id": "prompt.tea_stall",
@@ -1151,7 +1813,12 @@
     "key": "use",
     "src": "map.json tea_stall; PRICES tea 30p",
     "price_pence": 30,
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "map.json plots",
+     "kind": "stall",
+     "id": "tea_stall"
+    }
    },
    {
     "id": "prompt.ferry_wait",
@@ -1159,7 +1826,12 @@
     "text": "Wait for the ferry",
     "key": "use",
     "src": "4.2.1; map.json ferry_landing",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "map.json plots",
+     "kind": "landing",
+     "id": "ferry_landing"
+    }
    },
    {
     "id": "prompt.ferry_board",
@@ -1167,7 +1839,12 @@
     "text": "Go aboard",
     "key": "use",
     "src": "4.2.1",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "map.json plots",
+     "kind": "landing",
+     "id": "ferry_landing"
+    }
    },
    {
     "id": "prompt.shelter_man",
@@ -1175,7 +1852,12 @@
     "text": "Hand the envelope to the man by the shelter",
     "key": "use",
     "src": "prototype scenes.js",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "map.json plots",
+     "kind": "shelter",
+     "id": "landing_shelter"
+    }
    },
    {
     "id": "prompt.hand_envelope",
@@ -1183,7 +1865,11 @@
     "text": "Hand over the envelope",
     "key": "use",
     "src": "1.6.6",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "people",
+     "kind": "the man the envelope is for"
+    }
    },
    {
     "id": "prompt.green_door",
@@ -1191,7 +1877,12 @@
     "text": "Hand the parcel in at the green door",
     "key": "use",
     "src": "prototype scenes.js",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "map.json doors",
+     "kind": "front",
+     "plot": "chapel"
+    }
    },
    {
     "id": "prompt.paper_read",
@@ -1199,7 +1890,13 @@
     "text": "Read the local paper",
     "key": "use",
     "src": "6.10; prototype game/",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "rack"
+     ]
+    }
    },
    {
     "id": "prompt.happening",
@@ -1207,7 +1904,11 @@
     "text": "See what is going on",
     "key": "use",
     "src": "prototype game/",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "state",
+     "kind": "a happening placed by a scene"
+    }
    },
    {
     "id": "prompt.watch_place",
@@ -1217,7 +1918,13 @@
     "src": "1.6.11; prototype game/",
     "hold_s": 4,
     "hold_s_note": "the casing stand is measured in real seconds by the blueprint 1.6.11; value chosen",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "window"
+     ]
+    }
    },
    {
     "id": "prompt.rest_here",
@@ -1225,7 +1932,11 @@
     "text": "Stand about a while",
     "key": "use",
     "src": "1.6.5",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "state",
+     "kind": "standing about; no object"
+    }
    },
    {
     "id": "prompt.counter_paper",
@@ -1234,7 +1945,13 @@
     "key": "use",
     "src": "PRICES the paper 25p; prototype ui.js",
     "price_pence": 25,
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "counter"
+     ]
+    }
    },
    {
     "id": "prompt.counter_cigs",
@@ -1243,7 +1960,13 @@
     "key": "use",
     "src": "PRICES 20 cigarettes 1.70",
     "price_pence": 170,
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "gantry"
+     ]
+    }
    },
    {
     "id": "prompt.counter_tea_sit",
@@ -1252,7 +1975,15 @@
     "key": "use",
     "src": "PRICES tea 30p; prototype scenes.js",
     "price_pence": 30,
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "counter",
+      "till",
+      "urn"
+     ]
+    }
    },
    {
     "id": "prompt.counter_breakfast",
@@ -1261,7 +1992,13 @@
     "key": "use",
     "src": "PRICES breakfast 1.80",
     "price_pence": 180,
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "counter"
+     ]
+    }
    },
    {
     "id": "prompt.counter_chips",
@@ -1270,7 +2007,13 @@
     "key": "use",
     "src": "PRICES 1.60",
     "price_pence": 160,
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "counter"
+     ]
+    }
    },
    {
     "id": "prompt.counter_torch",
@@ -1279,7 +2022,13 @@
     "key": "use",
     "src": "1.6.12; PRICES torch 4",
     "price_pence": 400,
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "rack"
+     ]
+    }
    },
    {
     "id": "prompt.counter_crowbar",
@@ -1288,7 +2037,13 @@
     "key": "use",
     "src": "PRICES crowbar 6",
     "price_pence": 600,
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "rack"
+     ]
+    }
    },
    {
     "id": "prompt.counter_key",
@@ -1297,7 +2052,13 @@
     "key": "use",
     "src": "PRICES key cut 1.50",
     "price_pence": 150,
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "counter"
+     ]
+    }
    },
    {
     "id": "prompt.counter_buy",
@@ -1305,7 +2066,14 @@
     "text": "Buy something",
     "key": "use",
     "src": "prototype game/ counter",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "counter",
+      "till"
+     ]
+    }
    },
    {
     "id": "prompt.counter_more",
@@ -1313,7 +2081,16 @@
     "text": "What else do they sell",
     "key": "use",
     "src": "prototype game/ counter",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "case",
+      "rack",
+      "scales",
+      "till"
+     ]
+    }
    },
    {
     "id": "prompt.sell_fence",
@@ -1321,7 +2098,15 @@
     "text": "Show what you have to sell",
     "key": "use",
     "src": "1.6.3; prototype game/",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "counter",
+      "table",
+      "till"
+     ]
+    }
    },
    {
     "id": "prompt.caff_back",
@@ -1329,7 +2114,13 @@
     "text": "Sit at the back a while",
     "key": "use",
     "src": "prototype scenes.js",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "table"
+     ]
+    }
    },
    {
     "id": "prompt.tea_room_table",
@@ -1337,7 +2128,13 @@
     "text": "Take the table by the window",
     "key": "use",
     "src": "prototype game/ (Keith Garbutt's table)",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "table"
+     ]
+    }
    },
    {
     "id": "prompt.pay_window",
@@ -1345,7 +2142,13 @@
     "text": "The pay window",
     "key": "use",
     "src": "4.2.3",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "window"
+     ]
+    }
    },
    {
     "id": "prompt.harbour_counter",
@@ -1353,7 +2156,13 @@
     "text": "Go to the counter",
     "key": "use",
     "src": "2.12.2 rung 3 opens the counter",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "counter"
+     ]
+    }
    },
    {
     "id": "prompt.dock_gate_ask",
@@ -1361,15 +2170,12 @@
     "text": "Ask at the dock gate",
     "key": "use",
     "src": "map.json dock_gate",
-    "chosen": true
-   },
-   {
-    "id": "prompt.estate_agent",
-    "object": "Agar's agents",
-    "text": "Go in to Agar's",
-    "key": "use",
-    "src": "map.json cs_agar (not enterable in map.json: reached by a story door)",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "map.json plots",
+     "kind": "dock_gate",
+     "id": "dock_gate"
+    }
    },
    {
     "id": "prompt.cab_enter",
@@ -1377,7 +2183,11 @@
     "text": "Get in car {n}, by the driver's door",
     "key": "use",
     "src": "1.2.3; prototype player.js",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "vehicles.json",
+     "kind": "car Tom may open"
+    }
    },
    {
     "id": "prompt.cab_locked",
@@ -1385,7 +2195,11 @@
     "text": "Car two (locked: the keys are in the office)",
     "key": "use",
     "src": "prototype player.js",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "vehicles.json",
+     "kind": "the firm's car, keys in the office"
+    }
    },
    {
     "id": "prompt.car_force",
@@ -1394,7 +2208,11 @@
     "key": "use_hold",
     "src": "1.2.10; prototype game/cars.js",
     "hold_s": 6,
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "vehicles.json",
+     "kind": "parked car not the firm's"
+    }
    },
    {
     "id": "prompt.car_exit",
@@ -1402,7 +2220,11 @@
     "text": "Get out",
     "key": "use",
     "src": "1.2.3",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "vehicles.json",
+     "kind": "car Tom is in"
+    }
    },
    {
     "id": "prompt.car_exit_wrecked",
@@ -1410,7 +2232,11 @@
     "text": "Get out: it will not drive on",
     "key": "use",
     "src": "prototype game/cars.js",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "vehicles.json",
+     "kind": "wrecked car with Tom in it"
+    }
    },
    {
     "id": "prompt.fare_take",
@@ -1418,7 +2244,11 @@
     "text": "Take the fare",
     "key": "use",
     "src": "prototype player.js",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "vehicles.json",
+     "kind": "firm car with a fare offered"
+    }
    },
    {
     "id": "prompt.fare_ride",
@@ -1426,7 +2256,11 @@
     "text": "Have {name} drive him",
     "key": "use",
     "src": "prototype game/cars.js",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "vehicles.json",
+     "kind": "firm car with a driver"
+    }
    },
    {
     "id": "prompt.car_repair",
@@ -1434,7 +2268,13 @@
     "text": "Have the cab mended",
     "key": "use",
     "src": "1.2.9",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "counter"
+     ]
+    }
    },
    {
     "id": "prompt.car_plates",
@@ -1442,7 +2282,13 @@
     "text": "Change the plates",
     "key": "use",
     "src": "1.2.9",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "rack"
+     ]
+    }
    },
    {
     "id": "prompt.car_paint",
@@ -1450,7 +2296,13 @@
     "text": "Have the cab resprayed",
     "key": "use",
     "src": "1.2.9 (prototype x.resprayed)",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "booth"
+     ]
+    }
    },
    {
     "id": "prompt.car_horn",
@@ -1458,7 +2310,11 @@
     "text": "Sound the horn",
     "key": "horn",
     "src": "1.2.11",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "vehicles.json",
+     "kind": "car Tom is driving"
+    }
    },
    {
     "id": "prompt.send_man",
@@ -1466,7 +2322,11 @@
     "text": "Send a man",
     "key": "use",
     "src": "1.7.2; prototype game/",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "people",
+     "kind": "a man of the crew"
+    }
    },
    {
     "id": "prompt.buy_front",
@@ -1474,7 +2334,11 @@
     "text": "Buy into {name}",
     "key": "use",
     "src": "2.17; prototype game/",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "map.json plots",
+     "kind": "a business that can be bought into"
+    }
    },
    {
     "id": "prompt.collect_takings",
@@ -1483,7 +2347,11 @@
     "key": "use",
     "src": "2.17",
     "chosen": true,
-    "chosen_note": "the blueprint says 'a round' of payments; the word 'round' is kept out of prompts because the content gate catches 'a round' (see open_points)"
+    "chosen_note": "the blueprint says 'a round' of payments; the word 'round' is kept out of prompts because the content gate catches 'a round' (see open_points)",
+    "applies_to": {
+     "collection": "places.json",
+     "kind": "held business (a front) on its collecting day"
+    }
    },
    {
     "id": "prompt.recruit",
@@ -1491,7 +2359,11 @@
     "text": "Offer him work",
     "key": "use",
     "src": "2.11.1",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "people",
+     "kind": "a man Tom may take on"
+    }
    },
    {
     "id": "prompt.statement",
@@ -1499,7 +2371,11 @@
     "text": "Sign the statement",
     "key": "use",
     "src": "2.6.3",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "map.json off_map",
+     "kind": "police_station"
+    }
    },
    {
     "id": "prompt.sit_down",
@@ -1507,7 +2383,15 @@
     "text": "Take your seat",
     "key": "use",
     "src": "3.5.5",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "bench",
+      "sofa",
+      "table"
+     ]
+    }
    },
    {
     "id": "prompt.boxing_bag",
@@ -1515,7 +2399,13 @@
     "text": "Hit the bag",
     "key": "use",
     "src": "24 Nov pastimes ruling (boxing club)",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "bag"
+     ]
+    }
    },
    {
     "id": "prompt.boxing_spar",
@@ -1523,7 +2413,13 @@
     "text": "Put the gloves on",
     "key": "use",
     "src": "24 Nov pastimes ruling (boxing club)",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "ring"
+     ]
+    }
    },
    {
     "id": "prompt.snooker_play",
@@ -1531,7 +2427,13 @@
     "text": "Play a frame",
     "key": "use",
     "src": "24 Nov pastimes ruling (a snooker hall, frames for no money)",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "snooker"
+     ]
+    }
    },
    {
     "id": "prompt.snooker_watch",
@@ -1539,7 +2441,13 @@
     "text": "Watch the frame",
     "key": "use",
     "src": "24 Nov pastimes ruling",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "snooker"
+     ]
+    }
    },
    {
     "id": "prompt.pigeon_loft",
@@ -1547,7 +2455,13 @@
     "text": "Look in at the loft",
     "key": "use",
     "src": "24 Nov pastimes ruling (a pigeon loft on the allotments)",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "perches"
+     ]
+    }
    },
    {
     "id": "prompt.pigeon_feed",
@@ -1555,7 +2469,13 @@
     "text": "Feed the birds",
     "key": "use",
     "src": "24 Nov pastimes ruling",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "bin"
+     ]
+    }
    },
    {
     "id": "prompt.pigeon_release",
@@ -1563,7 +2483,13 @@
     "text": "Let the birds out",
     "key": "use",
     "src": "24 Nov pastimes ruling",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "hatch"
+     ]
+    }
    },
    {
     "id": "prompt.chapel_sit",
@@ -1571,7 +2497,13 @@
     "text": "Sit a while in the chapel",
     "key": "use",
     "src": "canon (religion present, never mocked, never a mechanic)",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "pew"
+     ]
+    }
    },
    {
     "id": "prompt.barber_chair",
@@ -1579,7 +2511,13 @@
     "text": "Sit in the chair",
     "key": "use",
     "src": "1.6.10 (a barber changes the look for a week)",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "chair"
+     ]
+    }
    },
    {
     "id": "prompt.light_cigarette",
@@ -1587,7 +2525,13 @@
     "text": "Light a cigarette",
     "key": "sit",
     "src": "1.1.7 (key B); canon (tobacco stays)",
-    "chosen": false
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "ashtray"
+     ]
+    }
    },
    {
     "id": "prompt.pick_up_generic",
@@ -1595,7 +2539,11 @@
     "text": "Pick up {thing}",
     "key": "use",
     "src": "1.1.4",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "map.json props",
+     "kind": "any carried prop"
+    }
    },
    {
     "id": "prompt.put_down_generic",
@@ -1603,7 +2551,222 @@
     "text": "Put {thing} down",
     "key": "use",
     "src": "1.1.4",
-    "chosen": true
+    "chosen": true,
+    "applies_to": {
+     "collection": "state",
+     "kind": "a thing in the hand"
+    }
+   },
+   {
+    "id": "prompt.inner_door",
+    "object": "door",
+    "text": "Try the inner office door",
+    "key": "use",
+    "src": "rooms.json new_prompts_needed",
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "door"
+     ]
+    }
+   },
+   {
+    "id": "prompt.radio_flat",
+    "object": "radio",
+    "text": "Switch the wireless on",
+    "key": "use",
+    "src": "rooms.json new_prompts_needed",
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "radio"
+     ]
+    }
+   },
+   {
+    "id": "prompt.vault",
+    "object": "vault",
+    "text": "Over the back fence",
+    "key": "use",
+    "src": "rooms.json new_prompts_needed",
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "vault"
+     ]
+    }
+   },
+   {
+    "id": "prompt.kitchen_look",
+    "object": "table",
+    "text": "Look round the kitchen",
+    "key": "use",
+    "src": "rooms.json new_prompts_needed",
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "table"
+     ]
+    }
+   },
+   {
+    "id": "prompt.sit_hal",
+    "object": "chair",
+    "text": "Sit with Hal a while",
+    "key": "use",
+    "src": "rooms.json new_prompts_needed",
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "chair"
+     ]
+    }
+   },
+   {
+    "id": "prompt.sit_ada",
+    "object": "chair",
+    "text": "Take tea with Ada",
+    "key": "use",
+    "src": "rooms.json new_prompts_needed",
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "chair"
+     ]
+    }
+   },
+   {
+    "id": "prompt.tea_ada",
+    "object": "table",
+    "text": "Take the cup Ada pours",
+    "key": "use",
+    "src": "rooms.json new_prompts_needed",
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "table"
+     ]
+    }
+   },
+   {
+    "id": "prompt.pension_counter",
+    "object": "counter",
+    "text": "Wait at the pension counter",
+    "key": "use",
+    "src": "rooms.json new_prompts_needed",
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "counter"
+     ]
+    }
+   },
+   {
+    "id": "prompt.look_fittings",
+    "object": "pile",
+    "text": "Look over the fittings stacked under the sheet",
+    "key": "use",
+    "src": "rooms.json new_prompts_needed",
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "pile"
+     ]
+    }
+   },
+   {
+    "id": "prompt.front_up_hand",
+    "object": "post",
+    "text": "Speak to the yard hand",
+    "key": "use",
+    "src": "rooms.json new_prompts_needed",
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "post"
+     ]
+    }
+   },
+   {
+    "id": "prompt.stitches",
+    "object": "couch",
+    "text": "Have the wound stitched ({price})",
+    "key": "use",
+    "src": "rooms.json new_prompts_needed",
+    "chosen": false,
+    "price_pence": null,
+    "price_note": "price from the doctor's row in PRICES-WAGES-1990.md at build; none is named there yet",
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "couch"
+     ]
+    }
+   },
+   {
+    "id": "prompt.key_board",
+    "object": "board",
+    "text": "Look at the key board",
+    "key": "use",
+    "src": "rooms.json new_prompts_needed",
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "board"
+     ]
+    }
+   },
+   {
+    "id": "prompt.sit_stool",
+    "object": "stool",
+    "text": "Sit at the mending stool",
+    "key": "use",
+    "src": "rooms.json new_prompts_needed",
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "stool"
+     ]
+    }
+   },
+   {
+    "id": "prompt.take_rival_book",
+    "object": "book",
+    "text": "Take the Widow's book",
+    "key": "use",
+    "src": "rooms.json new_prompts_needed",
+    "chosen": false,
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": [
+      "book"
+     ]
+    }
+   },
+   {
+    "id": "prompt.estate_agent",
+    "object": "Agar's agents",
+    "text": "Go into Agar's agents",
+    "key": "use",
+    "src": "rooms.json (still names it); map.json cs_agar is now enterable and has prompt.door.agar_base",
+    "applies_to": {
+     "collection": "rooms.json objects",
+     "kind": "door"
+    },
+    "chosen": true,
+    "chosen_note": "kept so rooms.json resolves; the door record prompt.door.agar_base has the same text and wins by precedence"
    }
   ]
  },
@@ -1645,8 +2808,9 @@
     "ledger": "Ledger open",
     "map": "paper map open",
     "menu": "any menu",
-    "all": "always"
-   }
+    "all": "always; Esc pauses everywhere"
+   },
+   "clash_rule": "Within one context no two actions share a key or button, including when 'holds as taps' is on: a held action has its own key or button, never the tap action's. Esc is the pause key everywhere and is used for nothing else."
   },
   "actions": [
    {
@@ -1693,14 +2857,15 @@
     "verb": "Walk slowly",
     "context": "foot",
     "key": "Z (held)",
-    "pad": "left stick, a light touch (or a press of the left stick to toggle)",
+    "pad": "left stick, a light touch; left stick press (L3) toggles",
     "hold": true,
     "toggle_alternative": true,
     "rebindable": true,
     "src": "1.1.1; 6.6 (Z slow)",
     "named_in_blueprint": true,
     "chosen_note": "the pad's press-to-toggle is chosen",
-    "chosen": false
+    "chosen": false,
+    "toggle": true
    },
    {
     "id": "key.use",
@@ -1719,14 +2884,15 @@
     "id": "key.use_hold",
     "verb": "Use, held (search, lift, force)",
     "context": "foot",
-    "key": "E (held)",
-    "pad": "A (held)",
+    "key": "F (held)",
+    "pad": "left bumper (LB, held)",
     "hold": true,
     "toggle_alternative": true,
     "rebindable": true,
     "src": "1.6.2, 1.6.13",
-    "chosen": false,
-    "named_in_blueprint": false
+    "chosen": true,
+    "named_in_blueprint": false,
+    "chosen_note": "a separate key and button from Use, so 'holds as taps' never makes E or A mean two things (6.6, AX-05)"
    },
    {
     "id": "key.coat",
@@ -1746,13 +2912,14 @@
     "verb": "Front up",
     "context": "foot",
     "key": "Q",
-    "pad": "left bumper (LB)",
+    "pad": "in the manners pick: right bumper (RB, held), then the right stick",
     "hold": false,
     "toggle_alternative": false,
     "rebindable": true,
     "src": "1.6.4; prototype player.js",
     "chosen": false,
-    "named_in_blueprint": false
+    "named_in_blueprint": false,
+    "chosen_note": "the pad takes it through the manners pick to free LB for held use"
    },
    {
     "id": "key.manners",
@@ -1829,7 +2996,7 @@
     "verb": "The paper map",
     "context": "foot",
     "key": "Comma",
-    "pad": "left stick press (L3)",
+    "pad": "right stick press (R3)",
     "hold": false,
     "toggle_alternative": false,
     "rebindable": true,
@@ -1843,13 +3010,13 @@
     "verb": "Tom's reading",
     "context": "foot",
     "key": "Full stop",
-    "pad": "View (held)",
-    "hold": true,
+    "pad": "D-pad up",
+    "hold": false,
     "toggle_alternative": false,
     "rebindable": true,
     "src": "6.2.5, 6.6 (Full stop reading)",
     "named_in_blueprint": true,
-    "chosen_note": "pad button chosen",
+    "chosen_note": "pad button chosen; a tap, no longer a hold, so it cannot clash with the Ledger's View tap",
     "chosen": false
    },
    {
@@ -1857,7 +3024,7 @@
     "verb": "The Ledger",
     "context": "foot",
     "key": "L",
-    "pad": "View",
+    "pad": "View (tap)",
     "hold": false,
     "toggle_alternative": false,
     "rebindable": true,
@@ -1885,12 +3052,12 @@
     "verb": "Take the fare",
     "context": "foot",
     "key": "Y",
-    "pad": "D-pad up",
+    "pad": "the prompt on the use button (A)",
     "hold": false,
     "toggle_alternative": false,
     "rebindable": true,
     "src": "prototype player.js, main.js",
-    "chosen_note": "not named in the blueprint; kept from the prototype",
+    "chosen_note": "not named in the blueprint; the pad takes the fare through the use prompt so D-pad up serves Tom's reading",
     "chosen": false,
     "named_in_blueprint": false
    },
@@ -2163,7 +3330,7 @@
     "id": "key.talk_choose",
     "verb": "Choose a line",
     "context": "talk",
-    "key": "Up, Down or the number keys",
+    "key": "Up, Down, or the number keys 1 to 9 when suggestions are shown and the box is not focused",
     "pad": "D-pad up and down",
     "hold": false,
     "toggle_alternative": false,
@@ -2189,13 +3356,13 @@
     "id": "key.talk_leave",
     "verb": "Leave",
     "context": "talk",
-    "key": "Esc",
+    "key": "Backspace",
     "pad": "B",
     "hold": false,
     "toggle_alternative": false,
-    "rebindable": false,
+    "rebindable": true,
     "src": "6.7 (Leave is always offered)",
-    "chosen_note": "Esc is fixed so Leave and Back are always one press",
+    "chosen_note": "Esc pauses everywhere (6.4, AX-10), so Leave is Backspace; pad B",
     "chosen": false,
     "named_in_blueprint": false
    },
@@ -2217,14 +3384,15 @@
     "id": "key.ledger_close",
     "verb": "Close the Ledger",
     "context": "ledger",
-    "key": "L or Esc",
+    "key": "L (the key that opened it) or Backspace",
     "pad": "View or B",
     "hold": false,
     "toggle_alternative": false,
     "rebindable": true,
     "src": "6.2; prototype main.js",
     "chosen": false,
-    "named_in_blueprint": false
+    "named_in_blueprint": false,
+    "chosen_note": "Esc is the pause key everywhere, so it does not close the Ledger"
    },
    {
     "id": "key.ledger_part",
@@ -2256,13 +3424,13 @@
     "id": "key.map_close",
     "verb": "Put the map away",
     "context": "map",
-    "key": "Comma or Esc",
-    "pad": "L3 or B",
+    "key": "Comma (the key that opened it) or Backspace",
+    "pad": "R3 or B",
     "hold": false,
     "toggle_alternative": false,
     "rebindable": true,
     "src": "6.3",
-    "chosen_note": "closing keys chosen to match the prototype's rule that the opening key also closes",
+    "chosen_note": "Esc is the pause key everywhere",
     "chosen": false,
     "named_in_blueprint": false
    },
@@ -2277,7 +3445,8 @@
     "rebindable": false,
     "src": "6.4 (Esc pauses everywhere)",
     "named_in_blueprint": true,
-    "chosen": false
+    "chosen": false,
+    "chosen_note": "Esc pauses everywhere, including talk, Ledger, map, car and fights; the only fixed key"
    },
    {
     "id": "key.menu_move",
@@ -2309,14 +3478,15 @@
     "id": "key.menu_back",
     "verb": "Back one level (never quits)",
     "context": "menu",
-    "key": "Esc",
+    "key": "Backspace (Esc in the pause menu resumes)",
     "pad": "B",
     "hold": false,
     "toggle_alternative": false,
     "rebindable": false,
     "src": "AX-06",
     "chosen": false,
-    "named_in_blueprint": false
+    "named_in_blueprint": false,
+    "chosen_note": "Esc always opens the pause menu; inside it, Esc resumes"
    }
   ]
  },
@@ -2649,7 +3819,7 @@
    },
    {
     "rung": 3,
-    "text": "Tom",
+    "text": "{first}",
     "src": "2.12.2"
    },
    {
@@ -2678,7 +3848,7 @@
    "autosave": "Autosave {n}",
    "newest": "Newest",
    "saved": "Saved {real_time}",
-   "line": "{game_date} · {place} · {rung}",
+   "line": "{game_date} \u00b7 {place} \u00b7 {rung}",
    "corrupt": "This save cannot be read. The one before it is kept.",
    "saving": "Saving.",
    "saving_sign": "Saving",
@@ -2870,7 +4040,7 @@
     "trigger": "first drawer, desk or wardrobe",
     "speaker": null,
     "line": null,
-    "key_text": "Hold {Talk} to search. Step away to stop. A drawer is heard about two yards off.",
+    "key_text": "Hold {Search} to search. Step away to stop. A drawer is heard about two yards off.",
     "at_once": true,
     "hesitate_s": 0,
     "stale_s": null,
@@ -2933,7 +4103,8 @@
    "Map": "key.map",
    "Watch": "key.watch",
    "Wait": "key.wait",
-   "Way": "key.car_way"
+   "Way": "key.car_way",
+   "Search": "key.use_hold"
   },
   "session_record": "a 'hint' line (moment) each time one shows (production/specs/session-record.md)"
  },
@@ -3031,7 +4202,7 @@
   "labels": {
    "typing_hint": "Tab: suggested lines",
    "pad_hint": "Y: suggested lines",
-   "leave_hint": "Esc: leave"
+   "leave_hint": "Backspace: leave"
   },
   "typing_never_moves_tom": true,
   "confirm_twice": {
@@ -3047,18 +4218,28 @@
    "I don't follow you.",
    "Say it plain."
   ],
-  "chosen": true
+  "chosen": true,
+  "number_keys": {
+   "src": "6.7, 3.6.8, prototype ui.js",
+   "when_suggestions_shown": "1 to 9 pick that numbered suggested line",
+   "when_box_focused": "1 to 9 type into the box as digits",
+   "focus_rule": "The box is focused when the player clicks it or presses Enter on it; Tab shows the suggestions and takes focus off the box; with suggestions shown and the box not focused, the number keys pick. A pad has no digits.",
+   "chosen": true
+  }
  },
  "ai_notice": {
   "src": "3.6.7, 10.11, PRIVACY-CHECK-2026-11-21, RULINGS 24 Sep (the AI notice before the first talk, a way to report any line)",
   "legal": "EU AI Act Article 50(1) in force since 2 Aug 2026; ICO PECR guidance. A design check, not legal advice.",
   "check_at_build": true,
-  "check_note": "Wording is written for the design; the named service, its retention and its terms are checked when the service is chosen and again at the build date (PRIVACY-CHECK: 'not settled here'). {service_name} and {retention_text} are filled from the build's real values.",
+  "check_note": "Wording is written for the design; the named service, its retention and its terms are checked when the service is chosen and again at the build date (PRIVACY-CHECK: 'not settled here'). {service_name} and {retention_text} are filled from the build's real values. At release the makers' server also keeps the allowance count; say so if it keeps anything else.",
   "when": "its own screen, shown once before the first talk (before the first typed line), and again from the pause menu at any time; nothing typed is sent before it is answered; not in the terms",
   "answer_equal": "the two buttons are the same size, in the same place, one above the other, neither pre-selected; the answer can be changed in Settings at any time",
   "defaults": {
-   "service_name": "Claude, an AI model made by Anthropic",
-   "retention_text": "CHECK AT BUILD: how long the service keeps what it is sent, in its own words"
+   "service_name": "the makers' own server, which passes it to an AI model, {model_name}",
+   "retention_text": "CHECK AT BUILD: how long the service keeps what it is sent, in its own words",
+   "model_name": "Claude, made by Anthropic",
+   "browser_build_service_name": "Claude, an AI model made by Anthropic",
+   "note": "At release talk goes through the makers' own server (RULINGS 24 Sep); in the browser build it goes to the host's model. Use whichever is true for the build; never name one and use the other."
   },
   "screen": {
    "title": "Before you talk to anyone",
@@ -3161,7 +4342,7 @@
    {
     "id": "privacy.who",
     "head": "Who gets it",
-    "text": "{service_name}. The game's makers receive only a line you report."
+    "text": "At release, the makers' own server, which passes it on to {model_name} to write the reply. In the browser build, {service_name}. The makers receive a line only if you report it, and a crash report only if you say yes to one."
    },
    {
     "id": "privacy.how_long",
@@ -3181,7 +4362,7 @@
    {
     "id": "privacy.crash",
     "head": "Crash reports",
-    "text": "A crash report is sent only if you say yes, and you can say no or never as easily as yes. It holds the game's version, the time, the last lines of the log and a short summary of the PC, with no serial number, machine name or user name. A report waiting on this PC is deleted after 30 days if never sent.",
+    "text": "A crash report is sent only if you say yes, and you can say no or never as easily as yes. It holds the game's version, the time, the last lines of the log and a short summary of the PC, with no serial number, machine name or user name. A report waiting on this PC is deleted after 30 days if never sent. A crash report goes to the makers.",
     "src": "PRIVACY-CHECK 8.2.1"
    }
   ],
@@ -3213,7 +4394,8 @@
    "failed": "That could not be done just now. Nothing was changed.",
    "check_at_build": true
   },
-  "version_label": "Privacy notice, version {date}"
+  "version_label": "Privacy notice, version {date}",
+  "model_note": "who receives what must match the build (RULINGS 24 Sep: through the makers' server, the key never shipped)"
  },
  "accessibility": {
   "src": "AX-01 to AX-11, AX-08, 6.5, 7.10",
@@ -3479,7 +4661,9 @@
     "page": "accessibility",
     "src": "AX-03, 8.3.1; his ruling of 21 Nov",
     "kind": "option",
-    "chosen": false
+    "chosen": false,
+    "built": false,
+    "built_note": "AX-03 keeps the view at 86 degrees until he rules on a setting; the record stays so the settings file and this list agree, but the control is not built and not shown."
    },
    {
     "id": "ax.vol_master",
@@ -4128,7 +5312,7 @@
   ]
  },
  "sound_cues": {
-  "src": "8.4.1, SND-26, ONE-SHOT-PROMPT s6; production/cloud-week/sound/manifest.json (ids to be mapped to sounds.json)",
+  "src": "8.4.1, SND-26, ONE-SHOT-PROMPT s6; production/cloud-week/sound/manifest.json ; sounds.json",
   "rule": "With the assist on, one short word at the screen's edge; none when off. It shows what Tom hears, never what anyone knows or thinks; no ring, gauge or meter. With only this assist on, every other measure is unchanged.",
   "show_for_s": 2.5,
   "show_for_s_chosen": true,
@@ -4138,7 +5322,7 @@
   "cue_types": [
    {
     "id": "cue.tom_loud",
-    "text": "a loud noise Tom makes"
+    "text": "a loud noise {first} makes"
    },
    {
     "id": "cue.quiet",
@@ -4157,177 +5341,166 @@
    {
     "id": "sc.door_forced",
     "cue": "cue.tom_loud",
-    "sound_event": "door_forced",
     "word": "door forced",
-    "src": "8.4.1 (example)"
+    "src": "8.4.1 (example)",
+    "sound_id": "door_forced"
    },
    {
     "id": "sc.glass",
     "cue": "cue.tom_loud",
-    "sound_event": "glass_broken",
     "word": "glass",
-    "src": "8.4.1 (example)"
+    "src": "8.4.1 (example)",
+    "sound_id": "glass_break"
    },
    {
     "id": "sc.running_cobbles",
     "cue": "cue.tom_loud",
-    "sound_event": "run_setts",
     "word": "running on cobbles",
-    "src": "8.4.1 (example); manifest step_setts_*"
+    "src": "8.4.1 (example); manifest step_setts_*",
+    "sound_id": "surf_setts",
+    "sound_id_source": "footsteps.surfaces"
    },
    {
     "id": "sc.running_wet",
     "cue": "cue.tom_loud",
-    "sound_event": "run_wet",
     "word": "running in the wet",
     "src": "manifest step_wet_*",
-    "chosen": true
+    "chosen": true,
+    "sound_id": "surf_wet",
+    "sound_id_source": "footsteps.surfaces"
    },
    {
     "id": "sc.running_iron",
     "cue": "cue.tom_loud",
-    "sound_event": "run_iron",
     "word": "boots on iron",
     "src": "SND-05 iron plates",
-    "chosen": true
+    "chosen": true,
+    "sound_id": "surf_iron",
+    "sound_id_source": "footsteps.surfaces"
    },
    {
     "id": "sc.bin",
     "cue": "cue.tom_loud",
-    "sound_event": "bin_rattled",
     "word": "a bin rattles",
     "src": "1.4.8",
-    "chosen": true
+    "chosen": true,
+    "sound_id": "bin_rattle"
    },
    {
     "id": "sc.stone",
     "cue": "cue.tom_loud",
-    "sound_event": "stone_thrown",
     "word": "a stone lands",
     "src": "1.4.8",
-    "chosen": true
-   },
-   {
-    "id": "sc.drawer",
-    "cue": "cue.tom_loud",
-    "sound_event": "drawer_search",
-    "word": "a drawer",
-    "src": "1.6.2 (a drawer is heard at about 2 m)",
-    "chosen": true
+    "chosen": true,
+    "sound_id": "stone_thrown"
    },
    {
     "id": "sc.cupboard_forced",
     "cue": "cue.tom_loud",
-    "sound_event": "cupboard_forced",
-    "word": "a cupboard forced",
+    "word": "something forced",
     "src": "1.6.2",
-    "chosen": true
+    "chosen": true,
+    "sound_id": "door_forced"
    },
    {
     "id": "sc.blow",
     "cue": "cue.tom_loud",
-    "sound_event": "blow_lands",
     "word": "a blow",
     "src": "1.3.1",
-    "chosen": true
+    "chosen": true,
+    "sound_id": "hit_heavy"
    },
    {
     "id": "sc.shot",
     "cue": "cue.tom_loud",
-    "sound_event": "gunshot",
     "word": "a shot",
     "src": "1.3.10 (heard about 177 m by day)",
-    "chosen": true
+    "chosen": true,
+    "sound_id": "revolver_shot"
    },
    {
     "id": "sc.horn",
     "cue": "cue.tom_loud",
-    "sound_event": "horn",
     "word": "the horn",
     "src": "1.2.11",
-    "chosen": true
+    "chosen": true,
+    "sound_id": "car_horn"
    },
    {
     "id": "sc.splash",
     "cue": "cue.tom_loud",
-    "sound_event": "thrown_in_dock",
     "word": "a splash",
     "src": "1.6.7",
-    "chosen": true
+    "chosen": true,
+    "sound_id": "fish_splash"
    },
    {
     "id": "sc.car_force",
     "cue": "cue.tom_loud",
-    "sound_event": "car_forced",
     "word": "a car door forced",
     "src": "1.2.10",
-    "chosen": true
+    "chosen": true,
+    "sound_id": "car_door"
    },
    {
     "id": "sc.quiet",
     "cue": "cue.quiet",
-    "sound_event": "street_goes_quiet",
     "word": "the street goes quiet",
-    "src": "8.4.1 (example)"
+    "src": "8.4.1 (example)",
+    "sound_id": null,
+    "sound_note": "not a sound: fires when the street bed drops to its quiet state (sounds.json hour_states and mixes); no sound id"
    },
    {
     "id": "sc.shout",
     "cue": "cue.shout",
-    "sound_event": "shout",
     "word": "a shout",
-    "src": "8.4.1"
+    "src": "8.4.1",
+    "sound_id": "shout_voice"
    },
    {
     "id": "sc.oi",
     "cue": "cue.shout",
-    "sound_event": "shout_oi",
     "word": "somebody calls out",
     "src": "1.4.7",
-    "chosen": true
+    "chosen": true,
+    "sound_id": "call_across"
    },
    {
-    "id": "sc.bell",
+    "id": "sc.siren",
     "cue": "cue.car",
-    "sound_event": "patrol_bell",
-    "word": "a police bell",
+    "word": "a siren",
     "src": "1.5.3 (the patrol car's bell)",
-    "chosen": true
+    "chosen": true,
+    "sound_id": "siren_patrol",
+    "note": "two-tone patrol siren (siren_patrol); the earlier word 'a police bell' is superseded"
    },
    {
     "id": "sc.car_near",
     "cue": "cue.car",
-    "sound_event": "car_approaching",
     "word": "a car coming",
     "src": "8.4.1",
-    "chosen": true
+    "chosen": true,
+    "sound_id": "car_pass"
    },
    {
     "id": "sc.car_away",
     "cue": "cue.car",
-    "sound_event": "car_leaving",
     "word": "a car going",
     "src": "8.4.1",
-    "chosen": true
-   },
-   {
-    "id": "sc.car_stops",
-    "cue": "cue.car",
-    "sound_event": "car_stops",
-    "word": "a car stops",
-    "src": "8.4.1",
-    "chosen": true
+    "chosen": true,
+    "sound_id": "car_pass"
    },
    {
     "id": "sc.phone_ring",
     "cue": "cue.car",
-    "sound_event": "phone_ring",
     "word": "a telephone ringing",
     "src": "manifest phonebox_ring_*",
     "note": "not one of the four cue types in 8.4.1; added for the ring that calls Tom; a third rule is needed to include it",
-    "chosen": true
+    "chosen": true,
+    "sound_id": "phone_ring_house"
    }
   ],
-  "words_note": "22 words. Four cue types are the blueprint's; the exact words 'door forced', 'glass' and 'running on cobbles' are the blueprint's examples; the rest are chosen to complete the table."
+  "words_note": "20 words. Every sound_id is a sound id in sounds.json (sound_list) or, for footsteps, a surface id in sounds.json footsteps.surfaces; 'the street goes quiet' has none (a state). The four cue types are the blueprint's; the words 'door forced', 'glass' and 'running on cobbles' are its examples; the rest are chosen. Dropped for lack of a sound: 'a drawer', 'a car stops'."
  },
  "credits": {
   "src": "10.4, production/specs/credits.json, THIRD-PARTY.md, ledger-v2/research/license-allowlist.md",
@@ -4362,7 +5535,7 @@
     "unreal_only": true,
     "lines": [
      {
-      "credit_line": "Unreal® Engine, Copyright 1998–2026, Epic Games, Inc. All rights reserved.",
+      "credit_line": "Unreal\u00ae Engine, Copyright 1998\u20132026, Epic Games, Inc. All rights reserved.",
       "maker": "Epic Games, Inc.",
       "licence": "Unreal Engine EULA"
      },

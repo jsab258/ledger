@@ -55,7 +55,7 @@ def offset(pts, off):
 INK, PENCIL, PAPER = '#2a2620', '#5a5148', '#f1e8d2'
 o = ['<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" viewBox="0 0 %d %d" data-file="paper-map.svg" data-version="%s">' % (W, H, W, H, M['version']),
      '<title>The Hook, on paper</title>',
-     '<desc>Tom\'s paper map, drawn from map.json. Streets and water always shown; place marks hidden until known (part 6.3). No position marker.</desc>',
+     '<desc>Tom\'s paper map, drawn from map.json. Chosen: the named streets and the water are printed, as on a bought street plan, and always shown; every place mark (plotted places and spots alike) and every back way (the ginnel, the yards\' lane, the cuts, the gap) is hidden until Tom has been there or been told of it (part 6.3). No position marker (Q20).</desc>',
      '<defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><line x1="0" y1="0" x2="0" y2="6" stroke="#7d8a92" stroke-width="0.7"/></pattern></defs>',
      '<rect width="100%%" height="100%%" fill="%s"/>' % PAPER,
      '<path d="M %.0f 0 V %.0f M 0 %.0f H %.0f" stroke="#d8ccb0" stroke-width="1.2"/>' % (W / 2, H, H / 2, W),  # the fold lines
@@ -69,14 +69,15 @@ o.append('</g><g id="streets">')
 for r in M['roads']:
     half = r['carriageway_m'] / 2.0 + (0 if r['foot_only'] else 2.0)
     if r['foot_only']:
-        o.append('<path d="%s" fill="none" stroke="%s" stroke-width="1" stroke-dasharray="4 3"/>' % (path(wobble(r['pts'], 0.5)), INK))
+        # back ways are pencilled in only once Tom has walked them or been told (the game shows the group)
+        o.append('<g class="way" data-way="%s" visibility="hidden"><path d="%s" fill="none" stroke="%s" stroke-width="1" stroke-dasharray="4 3"/></g>' % (r['id'], path(wobble(r['pts'], 0.5)), PENCIL))
     else:
         for side in (half, -half):
             o.append('<path d="%s" fill="none" stroke="%s" stroke-width="1.2" stroke-linecap="round"/>' % (path(wobble(offset(r['pts'], side), 0.7)), INK))
 o.append('</g><g id="street-names" font-family="Georgia, serif" font-style="italic" font-size="9" fill="%s">' % INK)
 for r in M['roads']:
-    if r['foot_only'] and r['id'] not in ('ginnel', 'yards_lane'):
-        continue
+    if r['foot_only']:
+        continue   # back ways carry no printed name
     pts = r['pts']
     i = max(range(len(pts) - 1), key=lambda k: math.hypot(pts[k + 1][0] - pts[k][0], pts[k + 1][1] - pts[k][1]))
     (ax, ay), (bx, by) = pts[i], pts[i + 1]
@@ -102,6 +103,17 @@ for p in M['plots']:
     vis = 'visible' if pid in start_known else 'hidden'
     o.append('<g class="place" data-place="%s" visibility="%s"><path d="M%.1f %.1f l5 5 M%.1f %.1f l-5 5" stroke="%s" stroke-width="1.3"/><text x="%.1f" y="%.1f">%s</text></g>'
              % (pid, vis, X - 2.5, Y - 2.5, X + 2.5, Y - 2.5, INK, X + 5, Y + 3, escape(name)))
+# places without a plot (phone boxes, ranks, the bus stop, posts, fishing spots, the bonfire ground): hidden marks at their spot
+for pid, p in sorted(PL.items()):
+    if pid in seen or p.get('plot') or pid.startswith('edge_'):
+        continue
+    x, y = p.get('x'), p.get('y')
+    if x is None or y is None:
+        continue
+    seen.add(pid)
+    X, Y = f(x, y)
+    o.append('<g class="place" data-place="%s" visibility="hidden"><circle cx="%.1f" cy="%.1f" r="2.2" fill="none" stroke="%s" stroke-width="1"/><text x="%.1f" y="%.1f">%s</text></g>'
+             % (pid, X, Y, INK, X + 4, Y + 3, escape(p.get('name', pid))))
 for e in M['soft_edges']:
     X, Y = f(e['x'], e['y'])
     txt = 'to ' + ', '.join(d.replace('_', ' ').title().replace('The ', 'the ') for d in e['districts'])

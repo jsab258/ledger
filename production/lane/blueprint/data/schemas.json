@@ -13,7 +13,7 @@
   "Wave 1 formats are read from the files as made: they hold the files to their present shape, not to an ideal one. The keeper may tighten them.",
   "paper-map.svg and map-topdown.svg are drawings, checked by rule in validate_data.py (made from map.json, every place mark present), not by schema."
  ],
- "dialect": "subset of JSON Schema: type, required, properties, items, additionalProperties, enum, minimum, maximum, pattern",
+ "dialect": "subset of JSON Schema: type, required, properties, items, additionalProperties, enum, minimum, maximum, pattern, minLength, minItems, maxItems; plus tuple (a list of item schemas by position) and oneKeyOf (exactly one of these keys)",
  "files": {
   "map.json": {
    "type": "object",
@@ -153,6 +153,9 @@
          "null"
         ]
        },
+       "opens_on": {
+        "type": "string"
+       },
        "plot": {
         "type": "string"
        },
@@ -167,6 +170,9 @@
          "null",
          "string"
         ]
+       },
+       "vehicle_access": {
+        "type": "boolean"
        },
        "x": {
         "type": "number"
@@ -1456,13 +1462,41 @@
     }
    },
    "required": [
+    "bollards",
+    "cab_ranks",
+    "chosen_values",
+    "clock",
+    "doors",
     "file",
+    "fishing_spots",
+    "footprint",
+    "frame",
+    "frozen_ids",
+    "graph",
+    "lamp_columns",
+    "landmarks",
+    "loops",
+    "name_plates",
+    "off_map",
     "open_points",
+    "phone_boxes",
+    "plots",
+    "police_points",
+    "props",
+    "quay_edges",
+    "quay_ladders",
+    "rival_bases",
+    "roads",
+    "soft_edges",
     "sources",
+    "street_furniture",
+    "turf_posts",
+    "vault_places",
     "version",
-    "clock"
+    "water",
+    "weapon_places"
    ],
-   "x-made": "wave 1, read from the file 2026-11-24"
+   "x-made": "wave 1, read from the file 2026-11-24 after its review and fixes; the hand rules in validate_data.py add what a format cannot say"
   },
   "rooms.json": {
    "type": "object",
@@ -1606,10 +1640,16 @@
       "locks": {
        "type": "integer"
       },
+      "open_doors_without_room": {
+       "type": "integer"
+      },
       "rooms": {
        "type": "integer"
       }
      }
+    },
+    "enterable_note": {
+     "type": "string"
     },
     "file": {
      "type": "string"
@@ -1634,6 +1674,9 @@
       }
      }
     },
+    "gv04_rule": {
+     "type": "string"
+    },
     "locked_doors": {
      "type": "array",
      "items": {
@@ -1648,12 +1691,6 @@
        "locked": {
         "type": "boolean"
        },
-       "map_locked_flag": {
-        "type": "boolean"
-       },
-       "note": {
-        "type": "string"
-       },
        "plot": {
         "type": "string"
        },
@@ -1665,7 +1702,6 @@
        "door",
        "kind",
        "locked",
-       "map_locked_flag",
        "plot",
        "prompt"
       ]
@@ -1673,6 +1709,12 @@
     },
     "locked_doors_rule": {
      "type": "string"
+    },
+    "missing_places_json": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
     },
     "never_entered": {
      "type": "array",
@@ -1733,6 +1775,43 @@
       ]
      }
     },
+    "open_doors_without_room": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "door": {
+        "type": "string"
+       },
+       "hours": {
+        "type": [
+         "null",
+         "string"
+        ]
+       },
+       "kind": {
+        "type": "string"
+       },
+       "note": {
+        "type": "string"
+       },
+       "plot": {
+        "type": "string"
+       },
+       "public_or_by_hours": {
+        "type": "boolean"
+       }
+      },
+      "required": [
+       "door",
+       "hours",
+       "kind",
+       "note",
+       "plot",
+       "public_or_by_hours"
+      ]
+     }
+    },
     "open_points": {
      "type": "array",
      "items": {
@@ -1784,6 +1863,12 @@
         "items": {
          "type": "object",
          "properties": {
+          "door_id": {
+           "type": "string"
+          },
+          "door_kind": {
+           "type": "string"
+          },
           "kind": {
            "type": "string"
           },
@@ -1804,6 +1889,8 @@
           }
          },
          "required": [
+          "door_id",
+          "door_kind",
           "kind",
           "to",
           "x",
@@ -1858,6 +1945,9 @@
           "room": {
            "type": "string"
           },
+          "search_once": {
+           "type": "boolean"
+          },
           "search_s": {
            "type": "integer"
           },
@@ -1865,6 +1955,9 @@
            "type": "integer"
           },
           "tin": {
+           "type": "boolean"
+          },
+          "weapon": {
            "type": "boolean"
           }
          },
@@ -1883,6 +1976,12 @@
         }
        },
        "door": {
+        "type": "string"
+       },
+       "entered_only_by": {
+        "type": "string"
+       },
+       "entered_via_inner_door": {
         "type": "string"
        },
        "entry_door_world": {
@@ -1923,6 +2022,28 @@
        "frame_note": {
         "type": "string"
        },
+       "gv04": {
+        "type": "object",
+        "properties": {
+         "closes_with_line": {
+          "type": [
+           "null",
+           "string"
+          ]
+         },
+         "reopens_after_job": {
+          "type": "boolean"
+         },
+         "rule": {
+          "type": "string"
+         }
+        },
+        "required": [
+         "closes_with_line",
+         "reopens_after_job",
+         "rule"
+        ]
+       },
        "height_m": {
         "type": "number"
        },
@@ -1933,7 +2054,10 @@
         }
        },
        "hours": {
-        "type": "string"
+        "type": [
+         "null",
+         "string"
+        ]
        },
        "id": {
         "type": "string"
@@ -1995,17 +2119,23 @@
           "holder": {
            "type": "string"
           },
-          "hours": {
-           "type": "string"
-          },
           "id": {
            "type": "string"
+          },
+          "inner_door": {
+           "type": "boolean"
           },
           "key_id": {
            "type": "string"
           },
           "key_ring_holders": {
            "type": "array"
+          },
+          "locked_between": {
+           "type": "array"
+          },
+          "note": {
+           "type": "string"
           },
           "owner_warn": {
            "type": "string"
@@ -2126,6 +2256,9 @@
        },
        "plot": {
         "type": "string"
+       },
+       "plot_enterable_false": {
+        "type": "boolean"
        },
        "religion": {
         "type": "string"
@@ -2292,7 +2425,9 @@
        "entry_door_world",
        "floor",
        "frame_door",
+       "gv04",
        "height_m",
+       "hours",
        "id",
        "light",
        "locks",
@@ -2434,13 +2569,28 @@
     }
    },
    "required": [
+    "boot",
+    "chosen_values",
+    "clock",
+    "counts",
+    "enterable_note",
     "file",
+    "frame",
+    "gv04_rule",
+    "locked_doors",
+    "locked_doors_rule",
+    "missing_places_json",
+    "never_entered",
+    "new_prompts_needed",
+    "open_doors_without_room",
     "open_points",
+    "ordinary_drawer",
+    "rooms",
+    "rules",
     "sources",
-    "version",
-    "clock"
+    "version"
    ],
-   "x-made": "wave 1, read from the file 2026-11-24"
+   "x-made": "wave 1, read from the file 2026-11-24 after its review and fixes; the hand rules in validate_data.py add what a format cannot say"
   },
   "places.json": {
    "type": "object",
@@ -2473,6 +2623,35 @@
        "place",
        "src"
       ]
+     }
+    },
+    "bank_courier": {
+     "type": "object",
+     "properties": {
+      "at": {
+       "type": "string"
+      },
+      "chosen": {
+       "type": "boolean"
+      },
+      "days": {
+       "type": "string"
+      },
+      "from": {
+       "type": "string"
+      },
+      "person_ref": {
+       "type": "boolean"
+      },
+      "route": {
+       "type": "string"
+      },
+      "src": {
+       "type": "string"
+      },
+      "who": {
+       "type": "string"
+      }
      }
     },
     "clock": {
@@ -2548,30 +2727,33 @@
     "holdup_pay_window": {
      "type": "object",
      "properties": {
-      "chosen": {
-       "type": "boolean"
-      },
       "clock": {
        "type": "array",
        "items": {
         "type": "string"
        }
       },
-      "courier": {
+      "clock_chosen": {
+       "type": "boolean"
+      },
+      "day": {
+       "type": "string"
+      },
+      "lead": {
        "type": "object",
        "properties": {
-        "name": {
+        "chosen": {
+         "type": "boolean"
+        },
+        "place": {
          "type": "string"
         },
-        "person_ref": {
-         "type": "boolean"
+        "what": {
+         "type": "string"
         }
        }
       },
-      "courier_arrives": {
-       "type": "string"
-      },
-      "day": {
+      "place": {
        "type": "string"
       },
       "src": {
@@ -2590,10 +2772,19 @@
        "hour_shape": {
         "type": "string"
        },
+       "pay_window": {
+        "type": "string"
+       },
        "place": {
         "type": "string"
        },
        "src": {
+        "type": "string"
+       },
+       "takings_note": {
+        "type": "string"
+       },
+       "target": {
         "type": "string"
        },
        "temper": {
@@ -2607,13 +2798,27 @@
        }
       },
       "required": [
-       "hour_shape",
        "place",
        "src",
-       "temper",
-       "till",
-       "weekly_takings_gbp"
+       "till"
       ]
+     }
+    },
+    "holdups_why": {
+     "type": "object",
+     "properties": {
+      "also": {
+       "type": "string"
+      },
+      "left_out": {
+       "type": "string"
+      },
+      "never": {
+       "type": "string"
+      },
+      "six_shops": {
+       "type": "string"
+      }
      }
     },
     "open_hours_check_2300": {
@@ -2831,29 +3036,6 @@
          }
         }
        },
-       "hours_changes": {
-        "type": "array",
-        "items": {
-         "type": "object",
-         "properties": {
-          "add": {
-           "type": "array"
-          },
-          "chosen": {
-           "type": "boolean"
-          },
-          "from_date": {
-           "type": "string"
-          },
-          "note": {
-           "type": "string"
-          },
-          "src": {
-           "type": "string"
-          }
-         }
-        }
-       },
        "hours_chosen": {
         "type": "boolean"
        },
@@ -2876,6 +3058,9 @@
         "type": "string"
        },
        "name": {
+        "type": "string"
+       },
+       "night_tin_in": {
         "type": "string"
        },
        "owner": {
@@ -2947,6 +3132,15 @@
        "src": {
         "type": "string"
        },
+       "street_door_locked": {
+        "type": "array",
+        "items": {
+         "type": "array",
+         "items": {
+          "type": "string"
+         }
+        }
+       },
        "sub_hours": {
         "type": "object",
         "properties": {
@@ -2961,8 +3155,8 @@
        "sub_hours_note": {
         "type": "string"
        },
-       "sunday_chosen": {
-        "type": "boolean"
+       "sunday": {
+        "type": "string"
        },
        "tom_can": {
         "type": "array",
@@ -2971,6 +3165,18 @@
         }
        },
        "via": {
+        "type": "string"
+       },
+       "watched_hours": {
+        "type": "array",
+        "items": {
+         "type": "array",
+         "items": {
+          "type": "string"
+         }
+        }
+       },
+       "watched_note": {
         "type": "string"
        },
        "watchers": {
@@ -3070,18 +3276,6 @@
     "till_hour_shape": {
      "type": "object",
      "properties": {
-      "bands": {
-       "type": "array",
-       "items": {
-        "type": "array",
-        "items": {
-         "type": [
-          "number",
-          "string"
-         ]
-        }
-       }
-      },
       "banking": {
        "type": "string"
       },
@@ -3091,7 +3285,65 @@
       "note": {
        "type": "string"
       },
-      "sum": {
+      "shapes": {
+       "type": "object",
+       "properties": {
+        "chip_shop": {
+         "type": "object",
+         "properties": {
+          "bands": {
+           "type": "array",
+           "items": {
+            "type": "array"
+           }
+          },
+          "fri_sat_extra": {
+           "type": "array",
+           "items": {
+            "type": "array"
+           }
+          },
+          "note": {
+           "type": "string"
+          }
+         }
+        },
+        "day_shop": {
+         "type": "object",
+         "properties": {
+          "bands": {
+           "type": "array",
+           "items": {
+            "type": "array"
+           }
+          }
+         }
+        },
+        "launderette": {
+         "type": "object",
+         "properties": {
+          "bands": {
+           "type": "array",
+           "items": {
+            "type": "array"
+           }
+          }
+         }
+        },
+        "newsagent": {
+         "type": "object",
+         "properties": {
+          "bands": {
+           "type": "array",
+           "items": {
+            "type": "array"
+           }
+          }
+         }
+        }
+       }
+      },
+      "sum_each": {
        "type": "number"
       }
      }
@@ -3101,13 +3353,24 @@
     }
    },
    "required": [
+    "accounts",
+    "bank_courier",
+    "clock",
     "file",
+    "format",
+    "fronts",
+    "holdup_pay_window",
+    "holdups",
+    "holdups_why",
+    "open_hours_check_2300",
     "open_points",
+    "places",
+    "ranks",
     "sources",
-    "version",
-    "clock"
+    "till_hour_shape",
+    "version"
    ],
-   "x-made": "wave 1, read from the file 2026-11-24"
+   "x-made": "wave 1, read from the file 2026-11-24 after its review and fixes; the hand rules in validate_data.py add what a format cannot say"
   },
   "timetables.json": {
    "type": "object",
@@ -3403,6 +3666,32 @@
     "ferry": {
      "type": "object",
      "properties": {
+      "boats": {
+       "type": "object",
+       "properties": {
+        "by_day": {
+         "type": "string"
+        },
+        "count": {
+         "type": "integer"
+        },
+        "crossing_game_minutes": {
+         "type": "integer"
+        },
+        "evening": {
+         "type": "string"
+        },
+        "round_trip_game_minutes": {
+         "type": "integer"
+        },
+        "sunday": {
+         "type": "string"
+        },
+        "turnaround_game_minutes": {
+         "type": "integer"
+        }
+       }
+      },
       "chosen": {
        "type": "boolean"
       },
@@ -3434,6 +3723,9 @@
          "type": "string"
         },
         "note": {
+         "type": "string"
+        },
+        "rule": {
          "type": "string"
         },
         "then": {
@@ -4441,13 +4733,28 @@
     }
    },
    "required": [
+    "beat",
+    "calendar",
+    "calendar_span",
+    "clock",
+    "events",
+    "ferry",
     "file",
+    "market",
+    "match",
     "open_points",
+    "real_time",
+    "services",
+    "shifts",
+    "shop_hours",
     "sources",
+    "special_days",
+    "turf_posts",
+    "turf_rules",
     "version",
-    "clock"
+    "weekly"
    ],
-   "x-made": "wave 1, read from the file 2026-11-24"
+   "x-made": "wave 1, read from the file 2026-11-24 after its review and fixes; the hand rules in validate_data.py add what a format cannot say"
   },
   "tune.json": {
    "type": "object",
@@ -4516,6 +4823,9 @@
        "status": {
         "type": "string"
        },
+       "superseded_by": {
+        "type": "string"
+       },
        "unit": {
         "type": "string"
        },
@@ -4530,6 +4840,9 @@
         "items": {
          "type": "string"
         }
+       },
+       "working_value": {
+        "type": "number"
        }
       },
       "required": [
@@ -4560,13 +4873,14 @@
     }
    },
    "required": [
+    "clock",
     "file",
+    "numbers",
     "open_points",
     "sources",
-    "version",
-    "clock"
+    "version"
    ],
-   "x-made": "wave 1, read from the file 2026-11-24"
+   "x-made": "wave 1, read from the file 2026-11-24 after its review and fixes; the hand rules in validate_data.py add what a format cannot say"
   },
   "police.json": {
    "type": "object",
@@ -4582,20 +4896,20 @@
          "ambulance_game_minutes": {
           "type": "integer"
          },
-         "armed_by_dial": {
+         "armed_response_game_minutes": {
           "type": "object",
           "properties": {
            "fired": {
-            "type": "boolean"
+            "type": "integer"
            },
            "fists": {
-            "type": "boolean"
+            "type": "null"
            },
            "shown": {
-            "type": "boolean"
+            "type": "null"
            },
            "war": {
-            "type": "boolean"
+            "type": "integer"
            }
           },
           "required": [
@@ -5250,9 +5564,6 @@
           "longest_unseen_gap_s_with_second_constable_half_cycle_behind": {
            "type": "number"
           },
-          "over_by_s": {
-           "type": "number"
-          },
           "pass_on_edge": {
            "type": "boolean"
           },
@@ -5301,6 +5612,9 @@
       "src": {
        "type": "string"
       },
+      "vault_note": {
+       "type": "string"
+      },
       "vault_s": {
        "type": "number"
       },
@@ -5341,9 +5655,6 @@
          "price_pounds": {
           "type": "integer"
          },
-         "proto_name_hint": {
-          "type": "string"
-         },
          "proto_price_pounds": {
           "type": "integer"
          },
@@ -5369,7 +5680,6 @@
          "past_his_limit",
          "person_ref",
          "price_pounds",
-         "proto_name_hint",
          "role",
          "uses",
          "works_on"
@@ -5597,6 +5907,41 @@
       "bought": {
        "type": "object",
        "properties": {
+        "case_jumps_points": {
+         "type": "integer"
+        },
+        "case_points_scale": {
+         "type": "object",
+         "properties": {
+          "arrest_at": {
+           "type": "integer"
+          },
+          "cool_per_quiet_week": {
+           "type": "number"
+          },
+          "cool_per_quiet_week_bought": {
+           "type": "number"
+          },
+          "squeezed_shopkeeper_adds": {
+           "type": "number"
+          },
+          "src": {
+           "type": "string"
+          },
+          "stage_up_at": {
+           "type": "array",
+           "items": {
+            "type": "integer"
+           }
+          },
+          "unbought_adds": {
+           "type": "number"
+          },
+          "what": {
+           "type": "string"
+          }
+         }
+        },
         "missed_week": {
          "type": "object",
          "properties": {
@@ -5631,9 +5976,6 @@
         },
         "src": {
          "type": "string"
-        },
-        "unit_chosen": {
-         "type": "boolean"
         },
         "unit_of_case_points": {
          "type": "string"
@@ -5895,6 +6237,12 @@
         "at_war_armed": {
          "type": "integer"
         },
+        "at_war_cars": {
+         "type": "array",
+         "items": {
+          "type": "string"
+         }
+        },
         "chosen": {
          "type": "boolean"
         },
@@ -5903,6 +6251,9 @@
         },
         "normal": {
          "type": "integer"
+        },
+        "normal_car": {
+         "type": "string"
         },
         "src": {
          "type": "string"
@@ -6066,6 +6417,20 @@
           "hours": {
            "type": "string"
           },
+          "manned_by": {
+           "type": "object",
+           "properties": {
+            "loop": {
+             "type": "string"
+            },
+            "war_stop_dock_gate": {
+             "type": "string"
+            },
+            "war_stop_north_road_foot": {
+             "type": "string"
+            }
+           }
+          },
           "points": {
            "type": "array",
            "items": {
@@ -6074,9 +6439,6 @@
           },
           "rule": {
            "type": "string"
-          },
-          "stand_real_s": {
-           "type": "integer"
           },
           "wave_down_within_m": {
            "type": "integer"
@@ -6271,6 +6633,9 @@
          "map_point": {
           "type": "string"
          },
+         "node": {
+          "type": "string"
+         },
          "on_edge": {
           "type": "array",
           "items": {
@@ -6303,10 +6668,7 @@
          }
         },
         "required": [
-         "at_m_from_first_node",
          "id",
-         "map_point",
-         "on_edge",
          "road",
          "src",
          "war_hours",
@@ -6492,13 +6854,24 @@
     }
    },
    "required": [
+    "after_a_deed",
+    "armed_response",
+    "beat_constable",
+    "bought_officers",
+    "chase",
+    "clock",
+    "custody",
+    "ellis",
     "file",
+    "memory_and_description",
     "open_points",
+    "patrol_car",
+    "search_rules",
     "sources",
-    "version",
-    "clock"
+    "units",
+    "version"
    ],
-   "x-made": "wave 1, read from the file 2026-11-24"
+   "x-made": "wave 1, read from the file 2026-11-24 after its review and fixes; the hand rules in validate_data.py add what a format cannot say"
   },
   "crowd.json": {
    "type": "object",
@@ -6559,6 +6932,15 @@
        "days": {
         "type": "string"
        },
+       "derivation": {
+        "type": "string"
+       },
+       "derived_from_band": {
+        "type": "string"
+       },
+       "factor": {
+        "type": "integer"
+       },
        "frame_max": {
         "type": "integer"
        },
@@ -6584,7 +6966,10 @@
         "type": "boolean"
        },
        "range_m": {
-        "type": "array",
+        "type": [
+         "array",
+         "null"
+        ],
         "items": {
          "type": "number"
         }
@@ -6605,11 +6990,16 @@
         "type": "string"
        },
        "trades": {
-        "type": "string"
+        "type": "array",
+        "items": {
+         "type": "string"
+        }
        }
       },
       "required": [
        "days",
+       "frame_max",
+       "frame_min",
        "from",
        "id",
        "label",
@@ -6618,6 +7008,8 @@
        "range_m",
        "road",
        "src",
+       "stretch_max",
+       "stretch_min",
        "to",
        "trades"
       ]
@@ -7385,6 +7777,23 @@
       }
      }
     },
+    "status": {
+     "type": "object",
+     "properties": {
+      "2.1.2": {
+       "type": "string"
+      },
+      "FIT-G9": {
+       "type": "string"
+      },
+      "GD-02": {
+       "type": "string"
+      },
+      "counts_24_nov": {
+       "type": "string"
+      }
+     }
+    },
     "version": {
      "type": "string"
     },
@@ -7400,6 +7809,15 @@
       "saturday_match": {
        "type": "object",
        "properties": {
+        "applies_to": {
+         "type": "string"
+        },
+        "events": {
+         "type": "array",
+         "items": {
+          "type": "string"
+         }
+        },
         "factor": {
          "type": "integer"
         },
@@ -7440,13 +7858,28 @@
       "thursday_market": {
        "type": "object",
        "properties": {
-        "applies_to": {
-         "type": "string"
+        "applies_to_bands": {
+         "type": "array",
+         "items": {
+          "type": "string"
+         }
+        },
+        "applies_to_zones": {
+         "type": "array",
+         "items": {
+          "type": "string"
+         }
         },
         "factor": {
          "type": "number"
         },
+        "pitches_event": {
+         "type": "string"
+        },
         "src": {
+         "type": "string"
+        },
+        "window": {
          "type": "string"
         }
        }
@@ -7568,11 +8001,15 @@
          },
          "src": {
           "type": "string"
+         },
+         "status": {
+          "type": "string"
          }
         },
         "required": [
          "note",
-         "src"
+         "src",
+         "status"
         ]
        },
        "note": {
@@ -7594,6 +8031,9 @@
         }
        },
        "road": {
+        "type": "string"
+       },
+       "sampler_rule": {
         "type": "string"
        },
        "shop_daytime": {
@@ -7631,13 +8071,27 @@
     }
    },
    "required": [
+    "chosen_values",
+    "clock",
+    "content_gate",
+    "count_kinds",
+    "events",
     "file",
+    "hour_bands",
+    "look_tables",
+    "made_places",
     "open_points",
+    "rain_shelter_rule",
     "sources",
+    "spawn_rule",
+    "status",
     "version",
-    "clock"
+    "weather_and_day_modifiers",
+    "who_is_out_by_hour",
+    "witnesses",
+    "zones"
    ],
-   "x-made": "wave 1, read from the file 2026-11-24"
+   "x-made": "wave 1, read from the file 2026-11-24 after its review and fixes; the hand rules in validate_data.py add what a format cannot say"
   },
   "vehicles.json": {
    "type": "object",
@@ -8040,6 +8494,32 @@
         }
        }
       },
+      "selling_price_rule": {
+       "type": "object",
+       "properties": {
+        "car_two_cannot_be_sold": {
+         "type": "boolean"
+        },
+        "chosen": {
+         "type": "boolean"
+        },
+        "floor_pounds": {
+         "type": "integer"
+        },
+        "lot_price_of_like_car": {
+         "type": "string"
+        },
+        "share_of_like_lot_price": {
+         "type": "number"
+        },
+        "sold_car_leaves_the_board_and_rank": {
+         "type": "boolean"
+        },
+        "src": {
+         "type": "string"
+        }
+       }
+      },
       "src": {
        "type": "string"
       },
@@ -8420,9 +8900,6 @@
         },
         "person_ref": {
          "type": "boolean"
-        },
-        "proto_name_hint": {
-         "type": "string"
         },
         "role": {
          "type": "string"
@@ -8911,6 +9388,50 @@
         }
        }
       },
+      "patrol_panda_two": {
+       "type": "object",
+       "properties": {
+        "chosen": {
+         "type": "boolean"
+        },
+        "colour": {
+         "type": "string"
+        },
+        "first_reg_year_letter": {
+         "type": "string"
+        },
+        "id": {
+         "type": "string"
+        },
+        "livery": {
+         "type": "string"
+        },
+        "manned_post": {
+         "type": "string"
+        },
+        "model": {
+         "type": "string"
+        },
+        "only_from_dial_state": {
+         "type": "string"
+        },
+        "plate": {
+         "type": "string"
+        },
+        "role": {
+         "type": "string"
+        },
+        "src": {
+         "type": "string"
+        },
+        "steering_lock": {
+         "type": "boolean"
+        },
+        "wear": {
+         "type": "integer"
+        }
+       }
+      },
       "widow_van": {
        "type": "object",
        "properties": {
@@ -8993,6 +9514,9 @@
       "owner_reports_when_he_finds_it_gone": {
        "type": "boolean"
       },
+      "service_vehicles_exempt": {
+       "type": "string"
+      },
       "src": {
        "type": "string"
       },
@@ -9036,7 +9560,7 @@
          "hours": {
           "type": "string"
          },
-         "mix": {
+         "mix_stage2": {
           "type": "object",
           "properties": {
            "dunmere_fenn": {
@@ -9073,7 +9597,7 @@
          "cars_in_view_limit",
          "cars_per_game_hour_at_120s",
          "hours",
-         "mix"
+         "mix_stage2"
         ]
        }
       },
@@ -9171,6 +9695,9 @@
       },
       "never_strikes_people": {
        "type": "boolean"
+      },
+      "one_shot_uses": {
+       "type": "string"
       },
       "plates": {
        "type": "object",
@@ -9559,13 +10086,33 @@
     }
    },
    "required": [
+    "boot",
+    "cab_ranks",
+    "clock",
+    "colours",
+    "fictional_note",
     "file",
+    "firm_fleet",
+    "lot",
+    "makes",
+    "models",
     "open_points",
+    "other_firm",
+    "parked_cars",
+    "parked_places",
+    "parked_rules",
+    "plates",
+    "rank_zones_checked",
     "sources",
+    "special_vehicles",
+    "taking_a_car",
+    "traffic",
+    "units",
     "version",
-    "clock"
+    "witness_slot_for_the_car",
+    "working_vehicles"
    ],
-   "x-made": "wave 1, read from the file 2026-11-24"
+   "x-made": "wave 1, read from the file 2026-11-24 after its review and fixes; the hand rules in validate_data.py add what a format cannot say"
   },
   "ledger-texts.json": {
    "type": "object",
@@ -9938,6 +10485,52 @@
       ]
      }
     },
+    "lead_name": {
+     "type": "object",
+     "properties": {
+      "called": {
+       "type": "string"
+      },
+      "first": {
+       "type": "string"
+      },
+      "first_initial": {
+       "type": "string"
+      },
+      "formal_first": {
+       "type": "string"
+      },
+      "note": {
+       "type": "string"
+      },
+      "placeholders": {
+       "type": "object",
+       "properties": {
+        "{called}": {
+         "type": "string"
+        },
+        "{first_initial}": {
+         "type": "string"
+        },
+        "{first}": {
+         "type": "string"
+        },
+        "{formal_first}": {
+         "type": "string"
+        },
+        "{surname}": {
+         "type": "string"
+        }
+       }
+      },
+      "surname": {
+       "type": "string"
+      },
+      "where": {
+       "type": "string"
+      }
+     }
+    },
     "open_carry": {
      "type": "array",
      "items": {
@@ -10173,6 +10766,9 @@
        "name": {
         "type": "string"
        },
+       "note": {
+        "type": "string"
+       },
        "page_heading_known": {
         "type": "string"
        },
@@ -10184,6 +10780,15 @@
        },
        "person_id": {
         "type": "string"
+       },
+       "person_ref_only": {
+        "type": "boolean"
+       },
+       "place": {
+        "type": [
+         "null",
+         "string"
+        ]
        },
        "public_line": {
         "type": "string"
@@ -10424,10 +11029,19 @@
            "null"
           ]
          },
+         "clauses": {
+          "type": "array",
+          "items": {
+           "type": "object"
+          }
+         },
          "id": {
           "type": "string"
          },
          "note": {
+          "type": "string"
+         },
+         "print_if": {
           "type": "string"
          },
          "src": {
@@ -10440,6 +11054,7 @@
         "required": [
          "act",
          "id",
+         "print_if",
          "src",
          "template"
         ]
@@ -10778,13 +11393,34 @@
     }
    },
    "required": [
+    "belief_lines",
+    "clock",
+    "clock_figures",
+    "day_book",
     "file",
+    "job_steps",
+    "keeper_descriptions",
+    "kinds",
+    "lead_name",
+    "open_carry",
+    "open_directions_note",
+    "open_items",
     "open_points",
+    "people_call_ladder",
+    "people_cards",
+    "people_how_learned",
+    "people_recognition_lines",
+    "people_slot_lines",
+    "reading",
+    "signs",
+    "slot_names",
+    "slot_names_src",
     "sources",
+    "ui",
     "version",
-    "clock"
+    "voice"
    ],
-   "x-made": "wave 1, read from the file 2026-11-24"
+   "x-made": "wave 1, read from the file 2026-11-24 after its review and fixes; the hand rules in validate_data.py add what a format cannot say"
   },
   "letters-and-print.json": {
    "type": "object",
@@ -11014,6 +11650,52 @@
     "file": {
      "type": "string"
     },
+    "lead_name": {
+     "type": "object",
+     "properties": {
+      "called": {
+       "type": "string"
+      },
+      "first": {
+       "type": "string"
+      },
+      "first_initial": {
+       "type": "string"
+      },
+      "formal_first": {
+       "type": "string"
+      },
+      "note": {
+       "type": "string"
+      },
+      "placeholders": {
+       "type": "object",
+       "properties": {
+        "{called}": {
+         "type": "string"
+        },
+        "{first_initial}": {
+         "type": "string"
+        },
+        "{first}": {
+         "type": "string"
+        },
+        "{formal_first}": {
+         "type": "string"
+        },
+        "{surname}": {
+         "type": "string"
+        }
+       }
+      },
+      "surname": {
+       "type": "string"
+      },
+      "where": {
+       "type": "string"
+      }
+     }
+    },
     "letters": {
      "type": "array",
      "items": {
@@ -11055,6 +11737,9 @@
          "type": "string"
         }
        },
+       "retag_note": {
+        "type": "string"
+       },
        "src": {
         "type": "string"
        },
@@ -11088,6 +11773,46 @@
        "trigger",
        "typeface"
       ]
+     }
+    },
+    "licence_schedule": {
+     "type": "object",
+     "properties": {
+      "anchors": {
+       "type": "array",
+       "items": {
+        "type": "object",
+        "properties": {
+         "date": {
+          "type": "string"
+         },
+         "letter": {
+          "type": "string"
+         },
+         "paper": {
+          "type": "string"
+         }
+        },
+        "required": [
+         "date"
+        ]
+       }
+      },
+      "chosen": {
+       "type": "boolean"
+      },
+      "driven_by": {
+       "type": "string"
+      },
+      "hearing_date_default": {
+       "type": "string"
+      },
+      "src": {
+       "type": "string"
+      },
+      "venue": {
+       "type": "string"
+      }
      }
     },
     "open_points": {
@@ -11437,10 +12162,7 @@
         "places": {
          "type": "array",
          "items": {
-          "type": [
-           "null",
-           "string"
-          ]
+          "type": "string"
          }
         },
         "src": {
@@ -11683,13 +12405,20 @@
     }
    },
    "required": [
+    "brands",
+    "calendar",
+    "clock",
     "file",
+    "lead_name",
+    "letters",
+    "licence_schedule",
     "open_points",
+    "paper",
+    "print",
     "sources",
-    "version",
-    "clock"
+    "version"
    ],
-   "x-made": "wave 1, read from the file 2026-11-24"
+   "x-made": "wave 1, read from the file 2026-11-24 after its review and fixes; the hand rules in validate_data.py add what a format cannot say"
   },
   "ui-text.json": {
    "type": "object",
@@ -11727,6 +12456,12 @@
         "type": "object",
         "properties": {
          "ax": {
+          "type": "string"
+         },
+         "built": {
+          "type": "boolean"
+         },
+         "built_note": {
           "type": "string"
          },
          "chosen": {
@@ -11812,6 +12547,15 @@
       "defaults": {
        "type": "object",
        "properties": {
+        "browser_build_service_name": {
+         "type": "string"
+        },
+        "model_name": {
+         "type": "string"
+        },
+        "note": {
+         "type": "string"
+        },
         "retention_text": {
          "type": "string"
         },
@@ -12192,6 +12936,9 @@
         "Run": {
          "type": "string"
         },
+        "Search": {
+         "type": "string"
+        },
         "Talk": {
          "type": "string"
         },
@@ -12347,6 +13094,9 @@
          "src": {
           "type": "string"
          },
+         "toggle": {
+          "type": "boolean"
+         },
          "toggle_alternative": {
           "type": "boolean"
          },
@@ -12374,6 +13124,9 @@
        "properties": {
         "action_answers_within_ms": {
          "type": "integer"
+        },
+        "clash_rule": {
+         "type": "string"
         },
         "contexts": {
          "type": "object",
@@ -12873,6 +13626,9 @@
         }
        }
       },
+      "model_note": {
+       "type": "string"
+      },
       "sections": {
        "type": "array",
        "items": {
@@ -12918,7 +13674,19 @@
         "type": "object",
         "properties": {
          "applies_to": {
-          "type": "string"
+          "type": "object",
+          "properties": {
+           "collection": {
+            "type": "string"
+           },
+           "kind": {
+            "type": "string"
+           }
+          },
+          "required": [
+           "collection",
+           "kind"
+          ]
          },
          "chosen": {
           "type": "boolean"
@@ -12959,10 +13727,35 @@
        "items": {
         "type": "object",
         "properties": {
+         "applies_to": {
+          "type": "object",
+          "properties": {
+           "collection": {
+            "type": "string"
+           },
+           "kind": {
+            "type": "string"
+           },
+           "plot": {
+            "type": "string"
+           }
+          },
+          "required": [
+           "collection",
+           "kind",
+           "plot"
+          ]
+         },
+         "chosen": {
+          "type": "boolean"
+         },
          "id": {
           "type": "string"
          },
          "key": {
+          "type": "string"
+         },
+         "note": {
           "type": "string"
          },
          "object": {
@@ -12985,6 +13778,7 @@
          }
         },
         "required": [
+         "applies_to",
          "id",
          "key",
          "object",
@@ -13001,11 +13795,41 @@
        "items": {
         "type": "object",
         "properties": {
+         "applies_to": {
+          "type": "object",
+          "properties": {
+           "collection": {
+            "type": "string"
+           },
+           "id": {
+            "type": "string"
+           },
+           "kind": {
+            "type": [
+             "array",
+             "string"
+            ]
+           },
+           "note": {
+            "type": "string"
+           },
+           "plot": {
+            "type": "string"
+           }
+          },
+          "required": [
+           "collection",
+           "kind"
+          ]
+         },
          "chosen": {
           "type": "boolean"
          },
          "chosen_note": {
           "type": "string"
+         },
+         "emergency_free": {
+          "type": "boolean"
          },
          "hold_s": {
           "type": "integer"
@@ -13025,8 +13849,14 @@
          "object": {
           "type": "string"
          },
+         "price_note": {
+          "type": "string"
+         },
          "price_pence": {
-          "type": "integer"
+          "type": [
+           "integer",
+           "null"
+          ]
          },
          "src": {
           "type": "string"
@@ -13036,6 +13866,7 @@
          }
         },
         "required": [
+         "applies_to",
          "chosen",
          "id",
          "key",
@@ -13165,6 +13996,9 @@
           }
          }
         },
+        "precedence": {
+         "type": "string"
+        },
         "rules": {
          "type": "array",
          "items": {
@@ -13190,6 +14024,21 @@
        "items": {
         "type": "object",
         "properties": {
+         "applies_to": {
+          "type": "object",
+          "properties": {
+           "collection": {
+            "type": "string"
+           },
+           "kind": {
+            "type": "string"
+           }
+          },
+          "required": [
+           "collection",
+           "kind"
+          ]
+         },
          "id": {
           "type": "string"
          },
@@ -13204,6 +14053,7 @@
          }
         },
         "required": [
+         "applies_to",
          "id",
          "src",
          "text",
@@ -13409,7 +14259,16 @@
          "note": {
           "type": "string"
          },
-         "sound_event": {
+         "sound_id": {
+          "type": [
+           "null",
+           "string"
+          ]
+         },
+         "sound_id_source": {
+          "type": "string"
+         },
+         "sound_note": {
           "type": "string"
          },
          "src": {
@@ -13422,7 +14281,7 @@
         "required": [
          "cue",
          "id",
-         "sound_event",
+         "sound_id",
          "src",
          "word"
         ]
@@ -13677,6 +14536,26 @@
         }
        }
       },
+      "number_keys": {
+       "type": "object",
+       "properties": {
+        "chosen": {
+         "type": "boolean"
+        },
+        "focus_rule": {
+         "type": "string"
+        },
+        "src": {
+         "type": "string"
+        },
+        "when_box_focused": {
+         "type": "string"
+        },
+        "when_suggestions_shown": {
+         "type": "string"
+        }
+       }
+      },
       "offer_too_high": {
        "type": "string"
       },
@@ -13708,13 +14587,26 @@
     }
    },
    "required": [
+    "accessibility",
+    "ai_notice",
+    "clock",
+    "credits",
+    "display_options",
     "file",
+    "hints",
+    "keys",
+    "menus",
     "open_points",
+    "privacy",
+    "prompts",
+    "save_slots",
+    "sound_cues",
     "sources",
-    "version",
-    "clock"
+    "subtitles",
+    "talk",
+    "version"
    ],
-   "x-made": "wave 1, read from the file 2026-11-24"
+   "x-made": "wave 1, read from the file 2026-11-24 after its review and fixes; the hand rules in validate_data.py add what a format cannot say"
   },
   "content-words.json": {
    "type": "object",
@@ -13742,6 +14634,12 @@
        "fallback_line": {
         "type": "string"
        },
+       "fallback_lines": {
+        "type": "array",
+        "items": {
+         "type": "string"
+        }
+       },
        "id": {
         "type": "string"
        },
@@ -13757,6 +14655,9 @@
          "type": "object",
          "properties": {
           "cased": {
+           "type": "boolean"
+          },
+          "chosen": {
            "type": "boolean"
           },
           "id": {
@@ -13803,6 +14704,9 @@
        "rule": {
         "type": "string"
        },
+       "scope": {
+        "type": "string"
+       },
        "src": {
         "type": "string"
        },
@@ -13818,6 +14722,7 @@
        "chosen_note",
        "enforce",
        "fallback_line",
+       "fallback_lines",
        "id",
        "rule",
        "src"
@@ -13957,13 +14862,20 @@
     }
    },
    "required": [
+    "categories",
+    "clause_counts",
+    "clauses",
+    "clock",
     "file",
+    "input_handling",
     "open_points",
+    "pattern_syntax",
+    "prototype_banned",
+    "runtime_guard",
     "sources",
-    "version",
-    "clock"
+    "version"
    ],
-   "x-made": "wave 1, read from the file 2026-11-24"
+   "x-made": "wave 1, read from the file 2026-11-24 after its review and fixes; the hand rules in validate_data.py add what a format cannot say"
   },
   "light-weather.json": {
    "type": "object",
@@ -14022,6 +14934,23 @@
       },
       "realSecondsPerGameMinute": {
        "type": "integer"
+      }
+     }
+    },
+    "clock_change": {
+     "type": "object",
+     "properties": {
+      "chosen": {
+       "type": "boolean"
+      },
+      "id": {
+       "type": "string"
+      },
+      "rule": {
+       "type": "string"
+      },
+      "src": {
+       "type": "string"
       }
      }
     },
@@ -14792,6 +15721,15 @@
         "note": {
          "type": "string"
         },
+        "shadow_note": {
+         "type": "string"
+        },
+        "shadow_softness": {
+         "type": "number"
+        },
+        "source_angle_deg": {
+         "type": "integer"
+        },
         "sun_disc": {
          "type": "boolean"
         },
@@ -15227,6 +16165,9 @@
          "type": "number"
         },
         "picture_floor_note": {
+         "type": "string"
+        },
+        "ref": {
          "type": "string"
         },
         "sim_light_src": {
@@ -15711,8 +16652,8 @@
          "slipperiness_foot": {
           "type": "number"
          },
-         "sound_factor": {
-          "type": "number"
+         "sound_factor_ref": {
+          "type": "string"
          },
          "src": {
           "type": "string"
@@ -15752,7 +16693,7 @@
          "sight_factor",
          "sky_intensity",
          "slipperiness_foot",
-         "sound_factor",
+         "sound_factor_ref",
          "src",
          "umbrella_share",
          "voices_factor",
@@ -15961,6 +16902,20 @@
            "items": {
             "type": "string"
            }
+          }
+         }
+        },
+        "grip": {
+         "type": "object",
+         "properties": {
+          "chosen": {
+           "type": "boolean"
+          },
+          "rule": {
+           "type": "string"
+          },
+          "src": {
+           "type": "string"
           }
          }
         },
@@ -16242,13 +17197,27 @@
     }
    },
    "required": [
+    "calendar",
+    "clock",
+    "clock_change",
+    "colour_grade",
+    "days",
+    "elevation_keys",
     "file",
+    "hourly",
+    "hourly_how_to_read",
+    "lamp",
+    "lamp_rule",
+    "location",
+    "night",
     "open_points",
     "sources",
+    "states",
+    "sun_anchors",
     "version",
-    "clock"
+    "weather"
    ],
-   "x-made": "wave 1, read from the file 2026-11-24"
+   "x-made": "wave 1, read from the file 2026-11-24 after its review and fixes; the hand rules in validate_data.py add what a format cannot say"
   },
   "sounds.json": {
    "type": "object",
@@ -16311,15 +17280,11 @@
       },
       "required": [
        "author",
-       "date_read",
        "host",
        "id",
        "licence",
-       "licence_text",
-       "licence_url",
        "page_url",
        "src",
-       "title",
        "used_for"
       ]
      }
@@ -16333,6 +17298,9 @@
         "type": "integer"
        },
        "class": {
+        "type": "string"
+       },
+       "credit": {
         "type": "string"
        },
        "file": {
@@ -16361,6 +17329,9 @@
        },
        "lufs_m_max": {
         "type": "number"
+       },
+       "path": {
+        "type": "string"
        },
        "sample_rate": {
         "type": "integer"
@@ -16394,18 +17365,13 @@
        }
       },
       "required": [
-       "channels",
        "file",
        "id",
        "kind",
        "licence",
        "loop",
-       "sample_rate",
-       "seconds",
-       "sha256",
        "source_ids",
-       "src",
-       "true_peak_dbtp"
+       "src"
       ]
      }
     },
@@ -16735,25 +17701,36 @@
      }
     },
     "hour_reach_bands_prototype": {
-     "type": "array",
-     "items": {
-      "type": "object",
-      "properties": {
-       "from": {
-        "type": "string"
-       },
-       "times": {
-        "type": "number"
-       },
-       "until": {
-        "type": "string"
+     "type": "object",
+     "properties": {
+      "note": {
+       "type": "string"
+      },
+      "old": {
+       "type": "array",
+       "items": {
+        "type": "object",
+        "properties": {
+         "from": {
+          "type": "string"
+         },
+         "times": {
+          "type": "number"
+         },
+         "until": {
+          "type": "string"
+         }
+        },
+        "required": [
+         "from",
+         "times",
+         "until"
+        ]
        }
       },
-      "required": [
-       "from",
-       "times",
-       "until"
-      ]
+      "superseded": {
+       "type": "boolean"
+      }
      }
     },
     "hour_states": {
@@ -16794,12 +17771,6 @@
          "harbour": {
           "type": "integer"
          },
-         "radio": {
-          "type": [
-           "integer",
-           "null"
-          ]
-         },
          "traffic": {
           "type": "integer"
          },
@@ -16816,14 +17787,13 @@
         "required": [
          "gulls",
          "harbour",
-         "radio",
          "traffic",
          "voices",
          "wind"
         ]
        },
-       "reach_mult": {
-        "type": "number"
+       "reach_ref": {
+        "type": "string"
        },
        "src": {
         "type": "string"
@@ -16838,7 +17808,7 @@
        "hours",
        "id",
        "layer_gain_db",
-       "reach_mult",
+       "reach_ref",
        "src"
       ]
      }
@@ -16901,6 +17871,9 @@
       "src": {
        "type": "string"
       },
+      "street_radio": {
+       "type": "string"
+      },
       "voices_clear_switch_db": {
        "type": "integer"
       }
@@ -16958,14 +17931,8 @@
        "max_spoken_lines_at_once": {
         "type": "integer"
        },
-       "rain_reach_cut_key": {
-        "type": [
-         "null",
-         "string"
-        ]
-       },
-       "reach_mult": {
-        "type": "number"
+       "reach_ref": {
+        "type": "string"
        },
        "src": {
         "type": "string"
@@ -16998,8 +17965,7 @@
        "id",
        "layers",
        "max_spoken_lines_at_once",
-       "rain_reach_cut_key",
-       "reach_mult",
+       "reach_ref",
        "src",
        "state",
        "target_lufs",
@@ -17518,6 +18484,9 @@
         ]
        }
       },
+      "place_id_note": {
+       "type": "string"
+      },
       "presenters": {
        "type": "array",
        "items": {
@@ -17693,6 +18662,12 @@
            "lowpass_hz"
           ]
          },
+         "furniture_id": {
+          "type": "string"
+         },
+         "heard_only": {
+          "type": "string"
+         },
          "hours": {
           "type": "string"
          },
@@ -17706,6 +18681,9 @@
           "type": "integer"
          },
          "note": {
+          "type": "string"
+         },
+         "open_door_bleed_file": {
           "type": "string"
          },
          "owner": {
@@ -17936,6 +18914,9 @@
          "title": {
           "type": "string"
          },
+         "title_check": {
+          "type": "string"
+         },
          "tonic_midi_c4_is_60": {
           "type": "integer"
          },
@@ -17972,6 +18953,7 @@
          "style",
          "swing",
          "title",
+         "title_check",
          "tonic_midi_c4_is_60",
          "use",
          "vocals"
@@ -18335,6 +19317,23 @@
            "type": "integer"
           }
          },
+         "per_game_hour": {
+          "type": "object",
+          "properties": {
+           "horns_per_game_hour": {
+            "type": "number"
+           },
+           "mean_interval_game_min": {
+            "type": "number"
+           },
+           "note": {
+            "type": "string"
+           },
+           "real_seconds_mean_on_120s": {
+            "type": "integer"
+           }
+          }
+         },
          "plays_only_in": {
           "type": "string"
          },
@@ -18454,13 +19453,26 @@
     }
    },
    "required": [
+    "clock",
     "file",
+    "file_sources",
+    "files",
+    "footsteps",
+    "hour_reach_bands_prototype",
+    "hour_states",
+    "mix_rules",
+    "mixes",
     "open_points",
+    "radio",
+    "reach_key_map_suggested",
+    "reach_keys",
+    "rooms",
+    "sound_list",
     "sources",
     "version",
-    "clock"
+    "voice_budget"
    ],
-   "x-made": "wave 1, read from the file 2026-11-24"
+   "x-made": "wave 1, read from the file 2026-11-24 after its review and fixes; the hand rules in validate_data.py add what a format cannot say"
   }
  },
  "files_to_come": {
@@ -18479,7 +19491,6 @@
     "look",
     "temperament",
     "keepsQuiet",
-    "sched",
     "card",
     "can_die",
     "src"
@@ -18526,7 +19537,8 @@
       "rival_man",
       "passer",
       "officer"
-     ]
+     ],
+     "x-note": "TECH-PLAN section 3 kinds plus officer (wave 2 added it; the keeper should add it to TECH-PLAN or fold officers into minor)"
     },
     "voice": {
      "type": [
@@ -18590,10 +19602,28 @@
      "items": {
       "type": "array"
      },
-     "x-note": "[fromHour, where (a places.json id or a map.json door id for a home), act, days?]; derived from routines.json, which is the home of the routine"
+     "x-note": "[fromHour, where (a places.json id or a map.json door id for a home), act, days?]; DERIVED from routines.json, which is the one home of the routine (validate_data.py checks they agree)"
     },
     "lines": {
-     "type": "object"
+     "type": "object",
+     "properties": {
+      "own": {
+       "type": [
+        "array",
+        "string"
+       ],
+       "x-note": "line ids in lines/, or a TO WRITE marker string until the story lane writes them"
+      },
+      "greet": {
+       "type": "array"
+      },
+      "close": {
+       "type": "array"
+      },
+      "situations": {
+       "type": "object"
+      }
+     }
     },
     "card": {
      "type": "object",
@@ -18601,7 +19631,58 @@
       "who",
       "speak",
       "life"
-     ]
+     ],
+     "x-note": "fire, rivals and secret (TECH-PLAN section 3) are expected for principals and named regulars; the reviewer of wave 2 judges which",
+     "properties": {
+      "who": {
+       "type": [
+        "string",
+        "array",
+        "object",
+        "null"
+       ]
+      },
+      "speak": {
+       "type": [
+        "string",
+        "array",
+        "object",
+        "null"
+       ]
+      },
+      "life": {
+       "type": [
+        "string",
+        "array",
+        "object",
+        "null"
+       ]
+      },
+      "fire": {
+       "type": [
+        "string",
+        "array",
+        "object",
+        "null"
+       ]
+      },
+      "rivals": {
+       "type": [
+        "string",
+        "array",
+        "object",
+        "null"
+       ]
+      },
+      "secret": {
+       "type": [
+        "string",
+        "array",
+        "object",
+        "null"
+       ]
+      }
+     }
     },
     "can_die": {
      "type": "boolean"
@@ -18735,7 +19816,27 @@
      "type": "array",
      "items": {
       "type": "array",
-      "x-note": "[a, b, strength 0..1, \"place hh:mm days; ...\"]"
+      "minItems": 4,
+      "maxItems": 4,
+      "tuple": [
+       {
+        "type": "string",
+        "pattern": "^[a-z0-9_.:-]+$"
+       },
+       {
+        "type": "string",
+        "pattern": "^[a-z0-9_.:-]+$"
+       },
+       {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+       },
+       {
+        "type": "string"
+       }
+      ],
+      "x-note": "[a, b, strength 0..1, \"place hh:mm days; ...\"] (hook-cast.json form)"
      }
     }
    }
@@ -18807,7 +19908,7 @@
          "properties": {
           "from": {
            "type": "string",
-           "pattern": "^([01][0-9]|2[0-9]):[0-5][0-9]$"
+           "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
           },
           "place": {
            "type": "string",
@@ -18821,7 +19922,8 @@
            "pattern": "^(mon|tue|wed|thu|fri|sat|sun)(-(mon|tue|wed|thu|fri|sat|sun))?(,(mon|tue|wed|thu|fri|sat|sun)(-(mon|tue|wed|thu|fri|sat|sun))?)*$|^daily$"
           }
          }
-        }
+        },
+        "minItems": 1
        }
       }
      }
@@ -18887,13 +19989,17 @@
         "pattern": "^[a-z0-9_.:-]+$"
        },
        "who": {
-        "type": "string"
+        "type": "string",
+        "pattern": "^([a-z0-9_]+|kind:(man|woman|older_man|older_woman|docker|shopkeeper|constable|driver))$",
+        "x-note": "a people/ id, or kind:<speaker kind> for shared street lines"
        },
        "situation": {
-        "type": "string"
+        "type": "string",
+        "x-note": "from the fixed line table (FIT F19); the table is listed in lines/situations.json when made"
        },
        "text": {
-        "type": "string"
+        "type": "string",
+        "minLength": 1
        },
        "words": {
         "type": "integer"
@@ -18988,6 +20094,26 @@
        },
        "keys": {
         "type": "array",
+        "items": {
+         "type": "object",
+         "required": [
+          "way"
+         ],
+         "properties": {
+          "way": {
+           "type": "string",
+           "enum": [
+            "key",
+            "back_way",
+            "force",
+            "talk",
+            "pay",
+            "threat",
+            "watch"
+           ]
+          }
+         }
+        },
         "x-note": "three ways to every lock"
        },
        "fail": {
@@ -19000,7 +20126,29 @@
      }
     },
     "pay": {
-     "type": "object"
+     "type": "object",
+     "required": [
+      "to"
+     ],
+     "properties": {
+      "to": {
+       "type": "string",
+       "enum": [
+        "pocket",
+        "tin",
+        "book"
+       ]
+      },
+      "pence": {
+       "type": "integer",
+       "minimum": 0
+      },
+      "band": {
+       "type": "array",
+       "minItems": 2,
+       "maxItems": 2
+      }
+     }
     },
     "ledger": {
      "type": "string"
@@ -19053,6 +20201,7 @@
     },
     "fare_people": {
      "type": "array",
+     "minItems": 40,
      "items": {
       "type": "object",
       "required": [
@@ -19069,15 +20218,52 @@
        "name": {
         "type": "string"
        },
+       "person": {
+        "type": "string",
+        "pattern": "^[a-z0-9_.:-]+$"
+       },
        "rides": {
         "type": "array",
+        "minItems": 2,
         "items": {
          "type": "object",
          "required": [
+          "id",
           "from",
           "to",
-          "wrinkle"
-         ]
+          "wrinkle",
+          "when",
+          "lines"
+         ],
+         "properties": {
+          "id": {
+           "type": "string",
+           "pattern": "^[a-z0-9_.:-]+$"
+          },
+          "from": {
+           "type": "string",
+           "pattern": "^[a-z0-9_.:-]+$"
+          },
+          "to": {
+           "type": "string",
+           "pattern": "^[a-z0-9_.:-]+$"
+          },
+          "wrinkle": {
+           "type": [
+            "string",
+            "null"
+           ]
+          },
+          "when": {
+           "type": [
+            "object",
+            "string"
+           ]
+          },
+          "lines": {
+           "type": "array"
+          }
+         }
         }
        },
        "src": {
@@ -19144,7 +20330,17 @@
         "pattern": "^[a-z0-9_.:-]+$"
        },
        "kind": {
-        "type": "string"
+        "type": "string",
+        "enum": [
+         "row",
+         "breakdown",
+         "shoplifter",
+         "lost_man",
+         "dog_loose",
+         "locked_out",
+         "fallen_man",
+         "crate_spill"
+        ]
        },
        "when": {
         "type": [
@@ -19160,7 +20356,18 @@
         "pattern": "^[a-z0-9_.:-]+$"
        },
        "beats": {
-        "type": "array"
+        "type": "array",
+        "items": {
+         "type": "object",
+         "oneKeyOf": [
+          "say",
+          "choose",
+          "walk",
+          "do",
+          "wait"
+         ],
+         "x-note": "each beat is exactly one of {say: line id}, {choose: [...]}, {walk: who, to}, {do: act}, {wait: real seconds}"
+        }
        },
        "sets": {
         "type": "array"
@@ -19180,12 +20387,15 @@
    }
   },
   "side-stories/<id>.json": {
-   "x-made": "by hand from the sweep (file 11)",
+   "x-made": "by hand from the sweep (file 11) and the job shape",
    "type": "object",
    "required": [
     "id",
     "title",
+    "giver",
+    "opens_when",
     "steps",
+    "ends",
     "src"
    ],
    "properties": {
@@ -19196,8 +20406,58 @@
     "title": {
      "type": "string"
     },
+    "giver": {
+     "type": "string"
+    },
+    "opens_when": {
+     "type": [
+      "object",
+      "string"
+     ]
+    },
+    "act_min": {
+     "type": "integer"
+    },
     "steps": {
-     "type": "array"
+     "type": "array",
+     "minItems": 1,
+     "items": {
+      "type": "object",
+      "required": [
+       "id",
+       "at",
+       "verb"
+      ],
+      "properties": {
+       "id": {
+        "type": "string",
+        "pattern": "^[a-z0-9_.:-]+$"
+       },
+       "at": {
+        "type": "string",
+        "pattern": "^[a-z0-9_.:-]+$"
+       },
+       "verb": {
+        "type": "string"
+       },
+       "lines": {
+        "type": "array"
+       },
+       "fail": {
+        "type": [
+         "string",
+         "null"
+        ]
+       }
+      }
+     }
+    },
+    "ends": {
+     "type": "array",
+     "minItems": 1
+    },
+    "minutes": {
+     "type": "number"
     },
     "src": {
      "type": "string"
@@ -19235,7 +20495,18 @@
      "pattern": "^[a-z0-9_.:-]+$"
     },
     "beats": {
-     "type": "array"
+     "type": "array",
+     "items": {
+      "type": "object",
+      "oneKeyOf": [
+       "say",
+       "choose",
+       "walk",
+       "do",
+       "wait"
+      ],
+      "x-note": "each beat is exactly one of {say: line id}, {choose: [...]}, {walk: who, to}, {do: act}, {wait: real seconds}"
+     }
     },
     "sets": {
      "type": "array"

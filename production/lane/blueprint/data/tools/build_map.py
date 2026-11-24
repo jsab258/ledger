@@ -154,10 +154,10 @@ road('quay_gap', 'the gap', [(120, 27.0), (77.647, 27.0)], 3.0, left=dict(kind='
      note='the passage between the west cottages and the west shops, from Quay Street to the ginnel')
 
 # ---------------------------------------------------------------- water and land
-QE = -7.5   # the sea quay's cope line: road edge -4.5, apron 3.0
+QE = -7.625   # the sea quay's cope line: road edge -4.5, kerb line 0.125, apron 3.0
 WATER = [
-    dict(id='sea', name='the harbour', poly=[P(-100, QE), P(250, QE), P(250, -4.5), P(480, -4.5), P(480, QE), P(560, QE), P(560, -45), P(-100, -45)],
-         src='G1 (the water lies south of the quay road)', note='the stretch under the basin bridge (x 250 to 480) runs to the bridge\'s south parapet at y -4.5'),
+    dict(id='sea', name='the harbour', poly=[P(-100, QE), P(250, QE), P(250, -6.625), P(480, -6.625), P(480, QE), P(560, QE), P(560, -45), P(-100, -45)],
+         src='G1 (the water lies south of the quay road)', note='under the basin bridge (x 250 to 480) the water reaches the bridge\'s south parapet line at y -6.625'),
 ]
 # The Old Basin: bounded by Basin Road's quay (centre + 3.5 + 2.0), Basin Top's quay (y 255 - 5.5), Warehouse Row's quay (480 - 5.5)
 # and the bridge's north parapet (y 4.5 + 2.0).
@@ -289,7 +289,7 @@ quay_plots = [
 n = 0
 for pid, name, x0, x1, depth, use, storeys, enter, place, note in quay_plots:
     n += 1
-    plot(pid, name, rect(x0, QN, x1, QN + depth), use, storeys, street='quay_road', number=n, place=place, enterable=enter,
+    plot(pid, name, rect(x0, QN, x1, QN + depth), use, storeys, street='quay_road', number=n, place=place, enterable=(enter or place == 'widow_base'),
          src='FIT-G1 (positions on the quay road where G1 names them); prototype way.js (names, landmarks); chosen', chosen_=True, note=note)
     door('d_quay_%d' % n, pid, (x0 + x1) / 2.0, QN, 180, 'quay_road', n, locked=not enter, chosen_=True)
 # the boxing club's old hall stands behind its own forecourt, beside the chandler's store
@@ -317,7 +317,7 @@ door('d_dock_3', 'dock_harbour_board', DW, 66, 90, 'dock_road', 3, locked=False,
 DE = 540 + 5.0 + KERB_W + PAV   # 547.125
 plot('dock_gate', 'the dock gate', rect(DE, 200, DE + 8, 220), 'dock_gate', 1, street='dock_road', place='dock_gate', enterable=False,
      src='FIT-G1 (the dock gate and its yard mouth at y 210); 4.2.3', note='the gate hut and the striped pole across the yard mouth; the docks beyond are off the map', chosen_=True)
-door('d_dock_gate', 'dock_gate', DE, 210, 270, 'dock_road', None, locked=True, kind='gate', note='the pole across the yard mouth; past it is the working dock, off the map')
+door('d_dock_gate', 'dock_gate', DE, 210, 270, 'dock_road', None, locked=True, kind='gate', vehicle_access=True, note='the pole across the yard mouth; past it is the working dock, off the map')
 
 # --- Warehouse Row, east side: Norman Dent's warehouses
 WE = 480 + 3.5 + KERB_W + PAV   # 485.625
@@ -337,22 +337,22 @@ cold = [P(300, CN), P(334, CN), P(334, 372), P(346, 372), P(346, CN), P(470, CN)
 plot('cold_stores', 'the Old Basin Cold Stores', cold, 'cold_store', 2, street='coldstore_road', number=1, place='cold_stores', enterable=False,
      src='4.2.2 (x 300 to 470, north side, a 170 m block, loading yard mouth at x 340)', note='the grey shed with the frosted pipes; the packing shift leaves at half past five',
      loading_yard=rect(334, CN, 346, 372))
-door('d_cold_yard', 'cold_stores', 340, 372, 180, 'coldstore_road', 1, locked=False, kind='loading', note='the loading doors at the back of the loading yard, whose mouth is at x 340; open on the shift')
+door('d_cold_yard', 'cold_stores', 340, 372, 180, 'coldstore_road', 1, locked=False, kind='loading', vehicle_access=True, note='the loading doors at the back of the loading yard, whose mouth is at x 340; open on the shift')
 door('d_cold_office', 'cold_stores', 360, CN, 180, 'coldstore_road', 1, locked=True, kind='office', chosen_=True, note="the office door (the cold-store deputy's)")
 plot('lot', 'the used-car lot', rect(166.625, 356.625, 202, 395), 'car_lot', None, building=False, street='north_road', place='car_lot',
      src='FIT-G1 (y 360 to 395); 2.15 (a car from the lot, 600 to 1,200 pounds)', note='bunting, cars with prices in the windscreens; the hut', chosen_=True)
-door('d_lot_gate', 'lot', 166.625, 375, 270, 'north_road', None, locked=False, kind='gate', chosen_=True, note='the lot\'s open front on North Road')
+door('d_lot_gate', 'lot', 166.625, 375, 270, 'north_road', None, locked=False, kind='gate', chosen_=True, vehicle_access=True, note='the lot\'s open front on North Road')
 plot('lot_hut', "the lot's hut", rect(192, 384, 200, 393), 'office', 1, street='north_road', src='chosen', chosen_=True)
 door('d_lot_hut', 'lot_hut', 196, 384, 180, None, None, locked=False, chosen_=True)
 plot('cs_garage', "Holt's garage", rect(476, CN, DW, 392), 'garage', 1, street='coldstore_road', number=3, place='garage', enterable=True,
      src='chosen (somewhere to respray or change plates: 2.3, GV-02)', chosen_=True, note='repairs and resprays; a pit and a compressor')
-door('d_cs_3', 'cs_garage', 504, CN, 180, 'coldstore_road', 3, locked=False, kind='workshop', chosen_=True)
+door('d_cs_3', 'cs_garage', 504, CN, 180, 'coldstore_road', 3, locked=False, kind='workshop', chosen_=True, vehicle_access=True)
 n = 4
 for x0 in range(208, 296, 11):
     plot('cs_house_%d' % (n // 2), '%d Cold Store Road' % (n + 1), rect(x0, CN, x0 + 9, CN + 9), 'home', 2, street='coldstore_road', number=n + 1, src='chosen', chosen_=True)
     door('d_cs_%d' % (n + 1), 'cs_house_%d' % (n // 2), x0 + 4.5, CN, 180, 'coldstore_road', n + 1, chosen_=True)
     n += 2
-plot('cs_agar', 'Agar\'s agents', rect(268, 325, 290, CS), 'estate_agent', 2, street='coldstore_road', number=2, place='agar_base', enterable=False,
+plot('cs_agar', 'Agar\'s agents', rect(268, 325, 290, CS), 'estate_agent', 2, street='coldstore_road', number=2, place='agar_base', enterable=True,
      src='RT2-08 (Agar\'s base: an estate agent\'s office on the cold-store road holding his papers)', note='plate glass, a brass plate; his papers in the back room')
 door('d_cs_2', 'cs_agar', 279, CS, 0, 'coldstore_road', 2, locked=True, chosen_=True)
 for i, x0 in enumerate([296, 312]):
@@ -445,7 +445,7 @@ wnext = north_house_rows('west', [(338, 398)], wnext)
 enext = north_house_rows('east', [(72, 102)], 1)
 plot('nr_builders', "the builders' merchant", rect(NE, 104, NE + 16, 146), 'builders_yard', 1, street='north_road', number=enext, src='chosen', chosen_=True,
      note='timber and sand under a lean-to; the yard closed at night')
-door('d_nr_%d' % enext, 'nr_builders', NE, 125, 270, 'north_road', enext, locked=False, kind='yard_gate', chosen_=True)
+door('d_nr_%d' % enext, 'nr_builders', NE, 125, 270, 'north_road', enext, locked=False, kind='yard_gate', chosen_=True, vehicle_access=True)
 enext = north_house_rows('east', [(153, 201)], enext + 2)
 plot('nr_old_pub', 'the Mariner (boarded)', rect(NE, 204, NE + 14, 222), 'pub_boarded', 2, street='north_road', number=enext, src='canon (other pubs remain as buildings, boarded); 4.10', chosen_=True,
      note='boarded since 1988; never entered for drink')
@@ -453,13 +453,14 @@ door('d_nr_%d' % enext, 'nr_old_pub', NE, 213, 270, 'north_road', enext, locked=
 enext = north_house_rows('east', [(226, 286)], enext + 2)
 plot('cammack_lockups_s', "Cammack's lock-ups (south court)", rect(NE, 290, NE + 24, 299), 'lock_ups', 1, street='north_road', src='RT2-08; FIT-G1', chosen_=True,
      note='lock-up garages facing the north warehouse cut')
-plot('cammack_lockups', "Cammack's lock-ups", rect(NE, 301, NE + 24, 320), 'lock_ups', 1, street='north_road', place='cammack_base', enterable=False,
+plot('cammack_lockups', "Cammack's lock-ups", rect(NE, 301, NE + 24, 320), 'lock_ups', 1, street='north_road', place='cammack_base', enterable=True,
      src='RT2-08; FIT-G1 (east side, y 290 to 320)', note="the north court of lock-ups on the cut; Danny Cammack's base (the end lock-up holds his things)", chosen_=True)
 for i in range(5):
     if i < 2:
-        door('d_lockup_%d' % (i + 1), 'cammack_lockups_s', NE + 6 + 8 * i, 299, 0, 'north_road', None, locked=True, kind='garage', chosen_=True, note="a lock-up's up-and-over door on the cut")
+        door('d_lockup_%d' % (i + 1), 'cammack_lockups_s', NE + 6 + 8 * i, 299, 0, 'north_road', None, locked=True, kind='garage', chosen_=True, opens_on='cut_300', note="a lock-up's up-and-over door on the cut")
     else:
-        door('d_lockup_%d' % (i + 1), 'cammack_lockups', NE + 4 + 8 * (i - 2), 301, 180, 'north_road', None, locked=True, kind='garage', chosen_=True, note="a lock-up's up-and-over door on the cut")
+        door('d_lockup_%d' % (i + 1), 'cammack_lockups', NE, 305 + 5 * (i - 2), 270, 'north_road', None, locked=True, kind='garage', chosen_=True,
+             vehicle_access=True, note="a lock-up's up-and-over door on North Road; a car can be driven in")
 enext = north_house_rows('east', [(324, 342)], enext + 2)
 
 # --- Back Parade (north side): the chip shop at the top of the parade and two houses
@@ -653,7 +654,7 @@ RANKS = [
          src='2.15.2 (the ferry rank and a second); prototype (the north road rank)', chosen=True),
 ]
 POSTS = [
-    pt('post_dock_gate', 'turf_post', 547.6, 204.0, hours='06:00-22:00', src='RT2-09'),
+    pt('post_dock_gate', 'turf_post', 546.2, 204.0, hours='06:00-22:00', src='RT2-09'),
     pt('post_cold_store', 'turf_post', 340.0, 355.6, hours='06:00-22:00', src='RT2-09; the loading yard mouth', chosen=True),
     pt('post_landing', 'turf_post', 14.0, -6.2, hours='22:00-02:00', src='RT2-09; 4.2.1 (the landing\'s window 22:00 to 01:00)', chosen=True),
 ]
@@ -719,6 +720,10 @@ OFF_MAP = [
     dict(id='infirmary', name='the Infirmary', district='the_exchange', via='edge_north', src='prototype (out along the west road); 4.3.8', chosen=True),
     dict(id='licensing', name="the council's licensing committee", district='the_exchange', via='edge_north', src='RT2-18'),
 ]
+OPEN.append('The chandler\'s shop stands on Quay Street (the built east_chandler bay, ruling 3 Oct); G1 and 4.3.3 put "the chandler\'s" on the quay road at 190 to 230 with the boxing club behind. Here that quay road plot is the chandler\'s store (a warehouse) beside the boxing club\'s hall.')
+OPEN.append('Added to the built street: the builder\'s store at 14 Quay Street (the top of the west side, which the scene file leaves empty) and the bus stop on the west pavement at street x 30 (from the prototype). Both are the map\'s choices, not the built street\'s.')
+OPEN.append('The parade\'s yard gates open on the yards\' lane, which runs behind the yards; G1 lists "the parade\'s back doors and yard gates" on Back Parade\'s south side, but Back Parade passes the top of the parade, not behind it.')
+OPEN.append('The longest drivable stretch on the chase loop is measured by check_map.py, counting only places a car can turn off (junctions and vehicle entrances such as the builders\' merchant\'s yard, the dock gate\'s yard mouth and the cold stores\' loading yard).')
 OPEN.append('G3 puts the north soft edge at y 440; G1\'s table and footprint end North Road at y 400. The plan uses 400.')
 
 # ---------------------------------------------------------------- props (Study 4: at least 5 per 10 m of street)
@@ -747,6 +752,8 @@ for r in ROADS:
                     sides = [sd for sd in ('left', 'right') if r[sd]['kind'] in ('pavement', 'quay', 'bridge')]
                     sd = rng.choice(sides)
                     w = r[sd]['width_m']
+                    if r['id'] == 'quay_road' and 250 <= pts[i][0] + (s - acc) <= 480:
+                        w = 2.0   # the basin bridge's footways
                     o = r['carriageway_m'] / 2.0 + KERB_W + 0.3 + rng.random() * (w - 0.6)
                     off = o if sd == 'left' else -o
                 kind = rng.choice(PROP_KINDS)
@@ -760,8 +767,8 @@ for r in ROADS:
 STREET_FURNITURE = [
     pt('pillar_box_qs', 'pillar_box', 120 + 3.0 + KERB_W + 0.6 + 0.3, qy(27.0), src='vignette-scene.json furniture E4 (street x 27, east)'),
     pt('dustbin_qs_21', 'dustbin', 120 + 3.0 + KERB_W + 1.6, qy(21.4), src='vignette-scene.json furniture E13'),
-    pt('bus_stop_qs', 'bus_stop', 116.4, qy(14.0), src='prototype (the shelter by the lamp, opposite the launderette); chosen place', chosen=True),
-    pt('bench_triangle', 'bench', 92.0, 7.6, src='chosen (the triangle by the ginnel\'s mouth)', chosen=True),
+    pt('bus_stop_qs', 'bus_stop', 116.4, qy(30.0), src='prototype (the shelter by the lamp, opposite the launderette); chosen place', chosen=True),
+    pt('bench_quay', 'bench', 100.0, 5.6, src='chosen (on The Quay\'s north pavement by the ginnel\'s mouth)', chosen=True),
     pt('pillar_box_north', 'pillar_box', NE - 0.9, 205.0, src='chosen', chosen=True),
     pt('fish_boxes_dock', 'fish_boxes', 520.0, -6.0, src='prototype (stacked fish boxes)', chosen=True),
 ]
@@ -840,11 +847,18 @@ def link(a_id, b_id, length=None, foot_only=True, kind='link', **kw):
 DOOR_ANCHOR = {}
 for d in DOORS:
     best = None
+    if d['kind'] == 'back':
+        continue
+    if d.get('opens_on'):
+        cands = [d['opens_on']]
+    elif d.get('vehicle_access'):
+        cands = [r['id'] for r in ROADS if not r['foot_only']]
+    elif d['street'] and d['kind'] != 'yard_gate':
+        cands = [d['street']]
+    else:
+        cands = [r['id'] for r in ROADS]
     for r in ROADS:
-        if d['street'] and d['kind'] in ('front', 'gate', 'yard_mouth', 'office', 'loading', 'workshop', 'stair', 'garage', 'side', 'yard_gate') and r['id'] != d['street'] and not (d['kind'] == 'yard_gate' and r['foot_only']):
-            if d['kind'] != 'garage':
-                continue
-        if d['kind'] in ('back',):
+        if r['id'] not in cands:
             continue
         pts = r['pts']
         for i in range(len(pts) - 1):
@@ -918,14 +932,14 @@ for r in ROADS:
     for k in range(len(seq) - 1):
         (n1, q1), (n2, q2) = seq[k], seq[k + 1]
         EDGES_G.append(dict(a=n1, b=n2, road=r['id'], length_m=r2(seglen(q1, q2)), foot_only=r['foot_only'],
-                            vault=(NODES[n1].get('vault') or NODES[n2].get('vault'))))
+                            vault=None))
 
 # doors join the graph by a short link from the door's own node
 for d in DOORS:
     did = node('n_' + d['id'], d['x'], d['y'], 'door', door=d['id'])
     if d['id'] in DOOR_ANCHOR:
         nid, dist, rid = DOOR_ANCHOR[d['id']]
-        link(did, nid, foot_only=True, kind='door_link')
+        link(did, nid, foot_only=not d.get('vehicle_access'), kind='door_link')
 # back doors join their own yard; a yard joins its gate (if any) or its building's front door through the building
 for d in DOORS:
     if d['kind'] != 'back':
@@ -958,19 +972,8 @@ link('j_yards_lane_mouth', 'j_yards_lane_foot', foot_only=True, kind='kerb_link'
 link('n_d_br_2', 'n_d_iveson_hut', foot_only=True, kind='across_yard')
 # the chapel hall: by the path past the chapel's west side to Chapel Lane
 link('n_d_chapel_hall', 'n_d_cl_1', length=40.0, foot_only=True, kind='path')
-# the lot's hut: across the lot to North Road
-lot_anchor = node('n_lot_entrance', 160.0, 375.0, 'door_anchor')
-# split North Road at y 375
-for e in list(EDGES_G):
-    if e['road'] == 'north_road':
-        a, b = NODES[e['a']], NODES[e['b']]
-        if min(a['y'], b['y']) < 375 < max(a['y'], b['y']):
-            EDGES_G.remove(e)
-            lo, hi = (a, b) if a['y'] < b['y'] else (b, a)
-            EDGES_G.append(dict(a=lo['id'], b=lot_anchor, road='north_road', length_m=r2(375 - lo['y']), foot_only=False, vault=None))
-            EDGES_G.append(dict(a=lot_anchor, b=hi['id'], road='north_road', length_m=r2(hi['y'] - 375), foot_only=False, vault=None))
-            break
-link('n_d_lot_hut', lot_anchor, foot_only=False, kind='across_lot')
+# the lot's hut: across the lot from its gate (drivable: a car bought there is driven out)
+link('n_d_lot_hut', 'n_d_lot_gate', foot_only=False, kind='across_lot')
 # the pigeon loft: across the allotments from their gate
 link('n_d_pigeon_loft', 'n_d_allot_gate', foot_only=True, kind='path')
 # the yards' lane mouth and the ginnel foot are on the quay road's north kerb: the graph already splits The Quay where the lane meets it

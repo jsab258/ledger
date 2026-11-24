@@ -24,62 +24,56 @@
   "Hours: G10 and BLUEPRINT-04 4.3.3 won every time. Older hook-cast.json hours lost: Mickey's 07:00 to 27:00 (now round the clock with the counter 07:00 to 22:00), the fish market 07:30 to 14:00 (Laverack's follows the shops), Rita's Wednesday to 13:00 and Hal's Wednesday to 13:00 (no early closing day: G10 gives Monday to Saturday 09:00 to 17:30), the launderette 08:00 to 17:30 (now 08:00 to 23:00), the caff 06:30 to 22:00 every day (now 06:00 to 15:00, Friday and Saturday to 22:00), the newsagent 06:00 to 17:30 (now 18:00), the market on Tuesday, Friday and Saturday (now Thursday). The prototype's boxing 17:00 to 22:00, launderette 08:00 to 20:00, tea room 09:00 to 17:00 and coin shop 10:00 to 16:00 lost the same way.",
   "Early closing: shop-hours-1990 finds the Shops Act 1950 required one early-closing afternoon a week (Thursday in Hull and Grimsby, but no 1990 day found) and says the day is the shopkeeper's choice since 1965. G10 and 4.3.3 give Monday to Saturday 09:00 to 17:30 with no early closing, so none is built; Thursday is market day and empties the shops by a third instead. Recommend the keeper confirms.",
   "Two pawns are kept (map open_points): Rita's at 5 Quay Street keeps the Quay Street shops' hours with a back room by knock 17:30 to 22:00 (chosen), Wayne Harrison's at 16 North Road has G10's pawn hours 10:00 to 17:00 and back room to 22:00.",
-  "Sunday: the launderette is open every day 08:00 to 23:00 as G10 gives no day split (chosen reading: not a shop under the Act). The caff is open Sunday 08:00 to 12:00 (hook-cast.json, chosen; meals are legal on Sunday). The chip shop is shut Sunday until the paper's issue_10 (9 Nov) says Mr Dobson opens Sundays from that week: from Sun 11 Nov it opens 17:00 to 22:00 (chosen), which the Act (shop-hours-1990) forbids for fried fish and chips; the street can know it is a breach.",
-  "The paper's issue_11 (16 Nov) says the Washeteria keeps its last wash at 16:30 after a machine was put out of order; G10 says 08:00 to 23:00. Both kept: the hours stand, the last wash is 16:30 from Fri 16 Nov (an event in timetables.json). Decide whether the premises close earlier.",
-  "Hours chosen (not in any source): snooker hall Mon to Sat 11:00 to 22:30 (shut Sunday); pigeon loft 07:00 to 19:00 daily (birds flown Sat and Sun 14:00 to 16:00); fishing spots 05:00 to 23:00 (best bites 05:30 to 09:00 and 16:00 to 20:00); allotments 07:00 to 19:00; cold stores 06:00 to 17:30 Mon to Fri, 06:00 to 13:00 Sat; customs and Harbour Board 09:00 to 16:30 Mon to Fri; Holt's garage; Agar's agents; Iveson's yard (prototype 07:30 to 17:00, kept); the net store; the barber (09:00 to 17:00); the chapel (08:00 to 18:00, Sunday to 19:00); the retired doctor by knock 08:00 to 21:00; the gun seller 00:30 to 02:30 after Tuesday's and Friday's evening.",
-  "Mickey's office hours: the blueprint says the firm runs day and night and the radio is manned. Built as an open door and rank round the clock, counter 07:00 to 22:00, radio manned always (Pauline by day, the night driver on the set and the rung-3 night desk by night, chosen). The older 07:00 to 27:00 is lost.",
+  "Sunday: the launderette is open every day 08:00 to 23:00 as G10 gives no day split (chosen reading: not a shop under the Act). The caff is shut Sunday (G10: Monday to Saturday). The chip shop is shut Sunday: the Shops Act 1950 Fifth Schedule, quoted in shop-hours-1990, excludes fried fish and chips from Sunday meals; I could not reach the Act's text to confirm any later exemption for takeaways, so it stays shut. The paper's issue_08 line (Mr Dobson opens Sundays) conflicts and should be fixed or turned into a breach story.",
+  "The paper's issue_10 (16 Nov) says the Washeteria keeps its last wash at 16:30 after a machine was put out of order; G10 says 08:00 to 23:00. Both kept: the hours stand, the last wash is 16:30 from Fri 16 Nov (an event in timetables.json). Decide whether the premises close earlier.",
+  "Hours chosen (not in any source; the small hours are 00:00 to 05:00 across files): snooker hall Mon to Sat 11:00 to 22:30 (shut Sunday); pigeon loft 07:00 to 19:00 daily (birds flown Sat and Sun 14:00 to 16:00); fishing spots 05:00 to 23:00 (best bites 05:30 to 09:00 and 16:00 to 20:00); allotments 07:00 to 19:00; cold stores 06:00 to 17:30 Mon to Fri, 06:00 to 13:00 Sat; customs and Harbour Board 09:00 to 16:30 Mon to Fri; Holt's garage; Agar's agents; Iveson's yard (prototype 07:30 to 17:00, kept); the net store; the barber (09:00 to 17:00); the chapel (08:00 to 18:00, Sunday to 19:00); the retired doctor by knock 08:00 to 21:00; the gun seller 00:30 to 02:30 (inside the small hours) after Tuesday's and Friday's evening.",
+  "Mickey's (binding decision 24 Nov): counter 07:00 to 23:00, radio manned 24 hours, street door locked 23:00 to 07:00 and tried by the beat constable; tin and revolver in the inner office. Mickey's is therefore not counted at 23:00. The older 07:00 to 27:00 is lost.",
   "Market: the ruled Thursday market is in Copper Row (off the map; 2.1.6); the paper's issue_02 says Copper Row runs Tuesday, Friday and Saturday 08:00 to 16:00 and loses (fix that line). For the Hook the brief's on-map option is chosen: four trestles and a barrow on the quay road's north pavement between Rinaldi's and Quay Street's foot, Thursday 08:00 to 16:00 (market_stalls_quay).",
   "RT2-14: 'on Tuesdays and Fridays, after midnight' is read as the small hours after those evenings (00:30 to 02:30 on the clock of Wednesday and Saturday); the seller is an unnamed deckhand (person_ref). Mickey's desk drawer has no coordinates (the interior is in rooms.json): the bottom right-hand drawer, chosen.",
   "Cold stores: the brief's 17:30 packing shift and the blueprint's 'half past five' mornings are both kept: a day shift leaving 17:30 and a night shift leaving 05:30 (chosen split).",
-  "At 23:00 on every night of the week at least three places are open with people in them (open_hours_check_2300): Monday to Saturday Mickey's, Regent House, the chip shop (to 23:30; to 00:30 Friday and Saturday), the landing's window (22:00 to 01:00) and the tea stall (22:00 to 06:00); Sunday (the chip shop shut until 22:00 from 11 Nov, before that shut all day) Mickey's, Regent House, the landing's window and the tea stall. The launderette closes at 23:00 and is not counted; the snooker hall closes at 22:30.",
+  "At 23:00 (half-open hours: a place closing at 23:00 is shut) the places open with people in them are, by night, in open_hours_check_2300: Monday to Saturday Regent House, the chip shop (to 23:30; to 00:30 Friday and Saturday), the landing's window (22:00 to 01:00) and the tea stall (22:00 to 06:00) make four; Sunday, with the chip shop shut, Regent House, the landing's window and the tea stall make three. Without Mickey's the count reaches three every night. The launderette (closes 23:00), the snooker hall (22:30) and Mickey's counter (23:00) are not counted. Sunday is the thin night.",
   "Ids: places with no plot (spots, off-map places, the soft edges) use the map's ids; places invented here (toms_flat, mickeys_inner_office, mickeys_desk_drawer, mickeys_yard, harbour_board_back_office, market_stalls_quay, bonfire_ground, fireworks_quay, copper_row_market, ropewalk_park, drill_hall, the_exchange_march, solicitor_office, pillar boxes) hang on an existing plot or use the map's coordinates and add no geometry. Bonfire ground (440, 312) is free ground in the map (no plot) but has no road of its own: access by the warehouse row. The soft edge's constable hour is 22:00 to 06:00 (G5), delay 30 game minutes (60 real seconds at 120 s an hour, was 30 s).",
-  "Old and new real-time figures from this file: the edge's 30 game minutes out and back is 60 real seconds (was 30 s at 60 s an hour); the landing window 22:00 to 01:00 is 6 real minutes (was 3); the chapel hall's evening 2.5 game hours is 5 real minutes (was 2.5)."
+  "Old and new real-time figures from this file: the edge's 30 game minutes out and back is 60 real seconds (was 30 s at 60 s an hour); the landing window 22:00 to 01:00 is 6 real minutes (was 3); the chapel hall's evening 2.5 game hours is 5 real minutes (was 2.5).",
+  "Coordinates re-read from the changed map: bus_stop_qs (116.4, 34.5), post_dock_gate (546.2, 204), bench_quay (100, 5.6; market pitches now stop at x 96), the three rival bases enterable, d_lockup_3 on North Road. fishing_quay_west keeps its map id (x 160 is east of Quay Street's foot) with a corrected name; solicitor_office has a record (off map, Copper Row). The two Normans: Norman Dent keeps the warehouses; the cold-store manager is a role string only."
  ],
  "open_hours_check_2300": {
   "mon": [
-   "mickeys",
    "boarding_house",
    "chip_shop",
    "ferry_landing",
    "tea_stall"
   ],
   "tue": [
-   "mickeys",
    "boarding_house",
    "chip_shop",
    "ferry_landing",
    "tea_stall"
   ],
   "wed": [
-   "mickeys",
    "boarding_house",
    "chip_shop",
    "ferry_landing",
    "tea_stall"
   ],
   "thu": [
-   "mickeys",
    "boarding_house",
    "chip_shop",
    "ferry_landing",
    "tea_stall"
   ],
   "fri": [
-   "mickeys",
    "boarding_house",
    "chip_shop",
    "ferry_landing",
    "tea_stall"
   ],
   "sat": [
-   "mickeys",
    "boarding_house",
    "chip_shop",
    "ferry_landing",
    "tea_stall"
   ],
   "sun": [
-   "mickeys",
    "boarding_house",
    "ferry_landing",
    "tea_stall"
@@ -102,8 +96,8 @@
    "hours": [
     [
      "mon-sun",
-     "00:00",
-     "24:00"
+     "07:00",
+     "23:00"
     ]
    ],
    "label_text": "1 Quay Street",
@@ -123,16 +117,23 @@
     "take the key",
     "sleep upstairs (toms_flat)",
     "use the radio",
-    "collect the tin",
-    "ask about debts"
+    "ask about debts",
+    "use the night bell after 23:00 (door locked)"
    ],
    "access": "hours",
-   "hours_note": "Office door and the rank outside are open round the clock; the counter is staffed 07:00 to 22:00 (Sheila by day, Pauline on the radio 07:00 to 19:00); the night bell and the radio are manned all night (the firm runs day and night). The inner office stays locked until Sheila's trust (rung 2).",
+   "hours_note": "Binding decision of 24 Nov: the counter is open 07:00 to 23:00; the radio is manned 24 hours (Pauline 07:00 to 19:00, then the night driver on the set and, from rung 3, the night desk man); the street door is locked 23:00 to 07:00 and the beat constable tries it (beat_mickeys_door). The night-money tin and the revolver (under the real book, in the desk drawer) are in the inner office, locked until Sheila's trust (rung 2). The older 07:00 to 27:00 is lost.",
    "counter_hours": [
     [
      "mon-sun",
      "07:00",
-     "22:00"
+     "23:00"
+    ]
+   ],
+   "street_door_locked": [
+    [
+     "mon-sun",
+     "23:00",
+     "07:00"
     ]
    ],
    "radio_manned": [
@@ -142,6 +143,7 @@
      "24:00"
     ]
    ],
+   "night_tin_in": "mickeys_inner_office",
    "hours_chosen": true,
    "people_when_open": true,
    "watchers": [
@@ -200,6 +202,7 @@
    "tom_can": [
     "open once Sheila trusts him (rung 2)",
     "find the real book",
+    "collect the night-money tin",
     "find the revolver (RT2-14)"
    ],
    "access": "forbidden",
@@ -715,11 +718,6 @@
      "fri,sat",
      "06:00",
      "22:00"
-    ],
-    [
-     "sun",
-     "08:00",
-     "12:00"
     ]
    ],
    "label_text": "4 The Quay",
@@ -736,8 +734,7 @@
     "wake in Grace's kitchen after a beating (4.3.8)"
    ],
    "access": "hours",
-   "sunday_chosen": true,
-   "hours_note": "G10: 06:00 to 15:00 Monday to Saturday, to 22:00 Friday and Saturday (the dock shift's breakfast). Sunday 08:00 to 12:00 kept from hook-cast.json (G10 silent; meals are legal on Sunday): chosen. From Fri 2 Nov the back room opens Friday dinner times for the Harbour Board's staff (paper issue_05).",
+   "hours_note": "G10: 06:00 to 15:00 Monday to Saturday, to 22:00 Friday and Saturday (the dock shift's breakfast); shut Sunday (G10 says Monday to Saturday; the older 08:00 to 12:00 Sunday is lost). From Fri 2 Nov the back room opens Friday dinner times for the Harbour Board's staff (paper issue_05).",
    "src": "G10; 4.3.3; hook-cast.json (06:30 to 22:00 daily: lost)"
   },
   {
@@ -816,28 +813,28 @@
     "name": "the Widow",
     "person_ref": true
    },
-   "hours": [
-    [
-     "mon-sat",
-     "07:00",
-     "17:00"
-    ]
-   ],
+   "hours": [],
    "label_text": "9 The Quay",
    "landmark": "the fish dock's net store, the Widow's dock office over it",
    "who_works": [
     "storeman",
-    "the Widow's dock men"
+    "the Widow's dock men on watch day and night"
    ],
    "tom_can": [
-    "go in (store only)",
-    "watch the office stair (d_widow_office)"
+    "watch the office stair (d_widow_office) from the quay",
+    "be warned off (forbidden skips the first warning)"
    ],
-   "access": "private",
-   "hours_chosen": true,
-   "hours_note": "Store hours chosen; the office over it is private and never opens to Tom.",
-   "src": "RT2-08; map rival_bases; hours chosen",
-   "chosen": true
+   "access": "forbidden",
+   "watched_hours": [
+    [
+     "mon-sun",
+     "00:00",
+     "24:00"
+    ]
+   ],
+   "watched_note": "Binding decision of 24 Nov: the Widow's office is forbidden and watched day and night; Tom does not go in by day.",
+   "hours_note": "Not open to trade to Tom; the older 07:00 to 17:00 store hours are removed.",
+   "src": "RT2-08; map rival_bases (base_widow); 24 Nov decision"
   },
   {
    "id": "boxing_club",
@@ -1047,7 +1044,7 @@
     "d_cold_office"
    ],
    "owner": {
-    "name": "Norman (the cold-store manager) (people file)",
+    "name": "the cold-store company (people file)",
     "person_ref": true
    },
    "hours": [
@@ -1066,7 +1063,7 @@
    "landmark": "the big grey shed on Cold Store Road",
    "who_works": [
     "cold-store hands (packing shifts)",
-    "shift manager (a named minor man)",
+    "cold-store shift manager (role only; a named minor man in the people file, not Norman Dent)",
     "wages clerk (Friday)",
     "the turf post's crewman 06:00 to 22:00"
    ],
@@ -1399,29 +1396,15 @@
     "a fryer"
    ],
    "tom_can": [
-    "buy fish and chips (£1.60, £1.65 from Tue 27 Nov)",
+    "buy fish and chips (£1.60, £1.65 from Tue 27 Nov per the paper)",
     "wait out the street",
     "hear the ferry trade"
    ],
    "access": "hours",
-   "hours_changes": [
-    {
-     "from_date": "1990-11-11",
-     "add": [
-      [
-       "sun",
-       "17:00",
-       "22:00"
-      ]
-     ],
-     "src": "paper issue_10 (9 Nov: open on Sundays from this week)",
-     "chosen": true,
-     "note": "Sunday evening hours chosen; the Shops Act 1950 (shop-hours-1990) bars fish and chips on Sunday, so the opening is a breach the street can talk about"
-    }
-   ],
+   "sunday": "shut: the Shops Act 1950, Fifth Schedule, allows Sunday meals and refreshments 'but not including the sale of fried fish and chips at a fried fish and chip shop' (shop-hours-1990 note, finding 1, Schedule text quoted); the paper's issue_08 line that Mr Dobson opens Sundays is lost and should be fixed",
    "people_when_open": true,
    "hours_note": "G10. Crossing midnight: a window whose close is before its open ends the next morning (Friday 17:00 to 00:30 Saturday).",
-   "src": "G10; 4.3.3; paper issues 10 and 14; map open_points (top of the parade)"
+   "src": "G10; 4.3.3; paper issues 08 and 13; map open_points (top of the parade)"
   },
   {
    "id": "chapel",
@@ -1582,7 +1565,7 @@
    ],
    "tom_can": [
     "be stitched (£20, asks nothing)",
-    "knock at any hour of the day"
+    "wake here? no: hospital is elsewhere (4.3.8)"
    ],
    "access": "private",
    "hours_chosen": true,
@@ -1848,7 +1831,7 @@
    ],
    "access": "public",
    "x": 116.4,
-   "y": 18.5,
+   "y": 34.5,
    "src": "map street_furniture; prototype way.js busstop",
    "chosen": true
   },
@@ -2083,7 +2066,7 @@
    ],
    "access": "public",
    "x": 200.0,
-   "y": -6.9,
+   "y": -7.025,
    "hours_chosen": true,
    "best_hours": [
     [
@@ -2103,7 +2086,7 @@
   },
   {
    "id": "fishing_quay_west",
-   "name": "the west fishing spot on the quay",
+   "name": "the middle fishing spot on the quay (map id fishing_quay_west; x 160 is east of Quay Street's foot)",
    "kind": "fishing_spot",
    "plot": null,
    "doors": [],
@@ -2115,7 +2098,7 @@
      "23:00"
     ]
    ],
-   "label_text": "the Quay, west of Quay Street's foot",
+   "label_text": "the Quay, by the yards' lane mouth, east of Quay Street's foot",
    "landmark": "an iron ladder and a bollard at the edge",
    "who_works": [],
    "tom_can": [
@@ -2125,7 +2108,7 @@
    ],
    "access": "public",
    "x": 160.0,
-   "y": -6.9,
+   "y": -7.025,
    "hours_chosen": true,
    "best_hours": [
     [
@@ -2210,7 +2193,7 @@
     "retake with a man or a fight"
    ],
    "access": "public",
-   "x": 547.6,
+   "x": 546.2,
    "y": 204.0,
    "src": "RT2-09; map turf_posts",
    "chosen": false
@@ -2340,7 +2323,7 @@
      "16:00"
     ]
    ],
-   "label_text": "the Quay, north pavement between Rinaldi's and Quay Street's foot",
+   "label_text": "the Quay, north pavement from Rinaldi's to the ginnel's mouth (west of bench_quay at x 100)",
    "landmark": "the stalls on the quay's north pavement by the ginnel's mouth",
    "who_works": [
     "stallholders (adults)"
@@ -2353,17 +2336,17 @@
    "access": "public",
    "pts": [
     [
-     66.0,
+     64.0,
      5.5
     ],
     [
-     114.0,
+     96.0,
      5.5
     ]
    ],
    "hours_chosen": true,
    "chosen": true,
-   "src": "2.1.6 (Thursday market); brief; map road quay_road (north pavement y 4.5 to 6.5, no doors between x 58.5 and 162)",
+   "src": "2.1.6 (Thursday market); brief; map road quay_road (north pavement y 4.5 to 6.5, no doors between x 58.5 and 162; pitches stop at x 96 so the bench at x 100 stays clear)",
    "hours_note": "The map has no market square and the ruled market is in Copper Row (off the map). A small row of pitches (4 trestles and a barrow) on the quay's open north pavement is chosen so the market is seen on the Hook; its hours follow the paper (08:00 to 16:00)."
   },
   {
@@ -2677,6 +2660,32 @@
    "via": "edge_north",
    "src": "letters-and-print.json issue_09 (the Exchange)",
    "chosen": true
+  },
+  {
+   "id": "solicitor_office",
+   "name": "the solicitor's office",
+   "kind": "off_map",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "mon-fri",
+     "09:30",
+     "16:30"
+    ]
+   ],
+   "label_text": "off the map, Copper Row",
+   "landmark": "the brass plate on the door beside the bank",
+   "who_works": [],
+   "tom_can": [
+    "the third account opens here (2.15.2); not visited"
+   ],
+   "access": "hours",
+   "district": "copper_row",
+   "via": "edge_north",
+   "chosen": true,
+   "src": "2.15.2; prototype way.js solicitor (9:30 to 16:30)"
   }
  ],
  "fronts": [
@@ -2765,129 +2774,235 @@
    "place": "laveracks",
    "till": true,
    "temper": "chosen: quick",
-   "src": "1.6.15; shop-interiors.json; economy PRICES-WAGES-1990 section 5 (weekly takings)",
    "weekly_takings_gbp": 1100,
-   "hour_shape": "till_hour_shape"
-  },
-  {
-   "place": "ritas",
-   "till": true,
-   "temper": "chosen: wary",
-   "src": "1.6.15; shop-interiors.json; economy PRICES-WAGES-1990 section 5 (weekly takings)",
-   "weekly_takings_gbp": 700,
-   "hour_shape": "till_hour_shape"
+   "hour_shape": "day_shop",
+   "src": "1.6.15; PRICES-WAGES-1990 section 5 (weekly takings, INFERRED there)"
   },
   {
    "place": "grocer",
    "till": true,
    "temper": "chosen: steady",
-   "src": "1.6.15; shop-interiors.json; economy PRICES-WAGES-1990 section 5 (weekly takings)",
    "weekly_takings_gbp": 1500,
-   "hour_shape": "till_hour_shape"
+   "hour_shape": "day_shop",
+   "src": "1.6.15; PRICES-WAGES-1990 section 5 (weekly takings, INFERRED there)"
   },
   {
    "place": "newsagent",
    "till": true,
    "temper": "chosen: steady",
-   "src": "1.6.15; shop-interiors.json; economy PRICES-WAGES-1990 section 5 (weekly takings)",
    "weekly_takings_gbp": 1900,
-   "hour_shape": "till_hour_shape"
+   "hour_shape": "newsagent",
+   "src": "1.6.15; PRICES-WAGES-1990 section 5 (weekly takings, INFERRED there)"
   },
   {
    "place": "ironmonger",
    "till": true,
    "temper": "chosen: slow to anger",
-   "src": "1.6.15; shop-interiors.json; economy PRICES-WAGES-1990 section 5 (weekly takings)",
    "weekly_takings_gbp": 650,
-   "hour_shape": "till_hour_shape"
+   "hour_shape": "day_shop",
+   "src": "1.6.15; PRICES-WAGES-1990 section 5 (weekly takings, INFERRED there)"
   },
   {
    "place": "tea_room",
    "till": true,
    "temper": "chosen: timid",
-   "src": "1.6.15; shop-interiors.json; economy PRICES-WAGES-1990 section 5 (weekly takings)",
    "weekly_takings_gbp": 380,
-   "hour_shape": "till_hour_shape"
+   "hour_shape": "day_shop",
+   "src": "1.6.15; PRICES-WAGES-1990 section 5 (weekly takings, INFERRED there)"
   },
   {
    "place": "launderette",
    "till": true,
    "temper": "chosen: steady",
-   "src": "1.6.15; shop-interiors.json; economy PRICES-WAGES-1990 section 5 (weekly takings)",
    "weekly_takings_gbp": 420,
-   "hour_shape": "till_hour_shape"
+   "hour_shape": "launderette",
+   "src": "1.6.15; PRICES-WAGES-1990 section 5 (weekly takings, INFERRED there)"
   },
   {
-   "place": "caff",
+   "place": "ritas",
    "till": true,
-   "temper": "chosen: stubborn",
-   "src": "1.6.15; shop-interiors.json; economy PRICES-WAGES-1990 section 5 (weekly takings)",
-   "weekly_takings_gbp": 750,
-   "hour_shape": "till_hour_shape"
-  },
-  {
-   "place": "chip_shop",
-   "till": true,
-   "temper": "chosen: quick",
-   "src": "1.6.15; shop-interiors.json; economy PRICES-WAGES-1990 section 5 (weekly takings)",
-   "weekly_takings_gbp": 900,
-   "hour_shape": "till_hour_shape"
+   "temper": "chosen: wary",
+   "weekly_takings_gbp": 700,
+   "hour_shape": "day_shop",
+   "src": "1.6.15; PRICES-WAGES-1990 section 5 (weekly takings, INFERRED there)"
   },
   {
    "place": "waynes_pawn",
    "till": true,
    "temper": "chosen: wary",
-   "src": "1.6.15; shop-interiors.json; economy PRICES-WAGES-1990 section 5 (weekly takings)",
    "weekly_takings_gbp": 700,
-   "hour_shape": "till_hour_shape"
+   "hour_shape": "day_shop",
+   "src": "1.6.15; PRICES-WAGES-1990 section 5 (weekly takings, INFERRED there)"
+  },
+  {
+   "place": "chandlery",
+   "till": true,
+   "temper": "chosen: steady",
+   "weekly_takings_gbp": 600,
+   "hour_shape": "day_shop",
+   "src": "1.6.15; PRICES-WAGES-1990 section 5 (weekly takings, INFERRED there)",
+   "takings_note": "the chandlery is not in PRICES-WAGES section 5: £600 a week chosen"
+  },
+  {
+   "place": "harbour_board",
+   "target": "the Harbour Office pay window on a Friday",
+   "till": false,
+   "pay_window": "holdup_pay_window",
+   "src": "1.6.15"
   }
  ],
- "till_hour_shape": {
-  "note": "Share of a day's takings by hour band, chosen to follow the busy bands of DEFINITIONS (08:00 to 09:30, 12:00 to 14:00, 16:30 to 18:00): the till at the moment of a hold-up holds a day's takings times the share so far, less banked amounts. Weekly figures are the economy file's (INFERRED there).",
-  "bands": [
-   [
-    "06:00",
-    "09:00",
-    0.2
-   ],
-   [
-    "09:00",
-    "12:00",
-    0.2
-   ],
-   [
-    "12:00",
-    "14:00",
-    0.25
-   ],
-   [
-    "14:00",
-    "16:30",
-    0.15
-   ],
-   [
-    "16:30",
-    "18:00",
-    0.2
-   ]
-  ],
+ "holdups_why": {
+  "six_shops": "1.6.15 names 'the six shops of Quay Street': Laverack's, Hook Stores, Peart's, the ironmonger's, the Copper Kettle and the Washeteria (Rita's pawn is listed separately as 'the pawn')",
+  "also": "the pawn (Rita's and Wayne's, both kept: two pawns), the chandlery, the Harbour Office pay window on a Friday, and a named adult carrying takings to the bank",
+  "left_out": "Rinaldi's caff and Dobson's chip shop are not in 1.6.15's list (the caff and the chip shop are on the Quay and the parade, not among the six Quay Street shops), so they are not targets; they stay protection-round shops and fronts (2.17)",
+  "never": "Ada, the priest, anyone sixty or over, children (none anywhere)"
+ },
+ "bank_courier": {
+  "who": "a named adult carrying takings to the bank (person_ref, people file)",
+  "person_ref": true,
+  "from": "newsagent",
+  "route": "up Quay Street and North Road to the north edge (the bank is off the map)",
+  "days": "mon-fri",
+  "at": "17:35",
   "chosen": true,
-  "sum": 1.0,
-  "banking": "the keeper banks at 17:30 (chosen), so after closing there is only the float (about £20, chosen)"
+  "src": "1.6.15"
+ },
+ "till_hour_shape": {
+  "note": "Share of a day's takings by hour band; a hold-up finds the day's takings times the share so far, less anything banked. Weekly figures are the economy file's. Three shapes: day_shop (09:00 to 17:30), newsagent (06:00 to 18:00), launderette (08:00 to 23:00); chip_shop (to 23:30, 00:30 Fri and Sat) is given for the economy even though the chip shop is no hold-up target.",
+  "shapes": {
+   "day_shop": {
+    "bands": [
+     [
+      "09:00",
+      "12:00",
+      0.3
+     ],
+     [
+      "12:00",
+      "14:00",
+      0.3
+     ],
+     [
+      "14:00",
+      "16:30",
+      0.15
+     ],
+     [
+      "16:30",
+      "17:30",
+      0.25
+     ]
+    ]
+   },
+   "newsagent": {
+    "bands": [
+     [
+      "06:00",
+      "09:00",
+      0.3
+     ],
+     [
+      "09:00",
+      "12:00",
+      0.2
+     ],
+     [
+      "12:00",
+      "14:00",
+      0.15
+     ],
+     [
+      "14:00",
+      "16:30",
+      0.15
+     ],
+     [
+      "16:30",
+      "18:00",
+      0.2
+     ]
+    ]
+   },
+   "launderette": {
+    "bands": [
+     [
+      "08:00",
+      "12:00",
+      0.25
+     ],
+     [
+      "12:00",
+      "14:00",
+      0.15
+     ],
+     [
+      "14:00",
+      "17:30",
+      0.2
+     ],
+     [
+      "17:30",
+      "20:00",
+      0.25
+     ],
+     [
+      "20:00",
+      "23:00",
+      0.15
+     ]
+    ]
+   },
+   "chip_shop": {
+    "bands": [
+     [
+      "11:30",
+      "14:00",
+      0.25
+     ],
+     [
+      "17:00",
+      "20:00",
+      0.4
+     ],
+     [
+      "20:00",
+      "22:00",
+      0.2
+     ],
+     [
+      "22:00",
+      "23:30",
+      0.15
+     ]
+    ],
+    "fri_sat_extra": [
+     [
+      "23:30",
+      "00:30",
+      0.0
+     ]
+    ],
+    "note": "on Friday and Saturday the last 15% runs to 00:30 (22:00 to 00:30)"
+   }
+  },
+  "chosen": true,
+  "sum_each": 1.0,
+  "banking": "the keeper banks at 17:30 (chosen) except the launderette, whose float of about £20 and the evening's takings stay in the machine till; after closing only the float is there"
  },
  "holdup_pay_window": {
   "day": "fri",
-  "what": "the cold stores' wages are paid out in cash from the office",
+  "place": "harbour_board",
+  "what": "the Harbour Office pay window: the Board's quay labourers and clerks are paid in cash at the counter",
   "clock": [
    "12:00",
    "13:00"
   ],
-  "courier": {
-   "name": "the wages courier from the bank, a named man in the people file",
-   "person_ref": true
-  },
-  "courier_arrives": "10:30 by the dock road",
-  "chosen": true,
-  "src": "1.6.15; PRICES-WAGES-1990 (dockers and cold-store hands paid Friday)"
+  "clock_chosen": true,
+  "src": "1.6.15 (the Harbour Office pay window on a Friday)",
+  "lead": {
+   "place": "cold_stores",
+   "what": "cold-store wages in cash from the office, Friday 12:00 to 13:00, courier from the bank at 10:30: a lead, not the rule",
+   "chosen": true
+  }
  }
 }

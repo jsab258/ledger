@@ -114,13 +114,13 @@
    },
    {
     "id": "tv",
-    "name": "Estuary Television",
+    "name": "Fenmarsh Television",
     "kind": "television",
     "founded": 1968,
-    "register": "\"Estuary\"; \"the telly\"",
-    "physical": "an ident on a shop set in the window of a second-hand shop, a mast on the skyline, \"Estuary\" on a van",
+    "register": "\"Fenmarsh\"; \"the telly\"",
+    "physical": "an ident on a shop set in the window of a second-hand shop, a mast on the skyline, \"Fenmarsh\" on a van",
     "says": "A regional franchise: local news at six, a weather map with the Hook on it, and nothing else anybody remembers",
-    "neverConfuse": "any real regional ITV company",
+    "neverConfuse": "any real regional or national UK channel or franchise (checked: no UK channel or franchise of this name was known to the author; the name should be searched once the network is open)",
     "channel": "the regional channel",
     "license": "invented, original",
     "chosen": true,
@@ -140,7 +140,7 @@
       "INSERT COINS BEFORE DIALLING",
       "LOCAL CALLS 10p",
       "EMERGENCY: DIAL 999, NO COIN NEEDED",
-      "TIDEWIRE TELEPHONES · FAULTS: DIAL 151"
+      "TIDEWIRE TELEPHONES \u00b7 FAULTS: DIAL 151"
      ]
     },
     "says": "A utility that has never once been on time",
@@ -231,7 +231,7 @@
     "id": "tea",
     "name": "Quayside Tea",
     "kind": "product",
-    "note": "80 bags, £1.35 on a bill; the grocer's own special offer is 80 for 99p",
+    "note": "80 bags, \u00a31.35 on a bill; the grocer's own special offer is 80 for 99p",
     "src": "cloud-week posters G02"
    },
    {
@@ -243,9 +243,9 @@
    },
    {
     "id": "cigarettes",
-    "name": "Mariner",
+    "name": "Ashcombe",
     "kind": "cigarettes",
-    "note": "the prototype's cigarette brand; fictional; 20 for £1.70 in the newsagent's",
+    "note": "renamed from the prototype's Mariner (it clashed with the boarded pub on North Road and a real cigar brand); fictional; 20 for \u00a31.70 in the newsagent's",
     "src": "prototype cast.js bark; PRICES-WAGES-1990 section 1"
    },
    {
@@ -266,13 +266,13 @@
   "first_issue": "Tuesday 16 October 1990",
   "last_issue": "Friday 30 November 1990",
   "issues_count": 14,
-  "masthead_line": "THE MERIDIAN PILOT · Meridian's own paper since 1871 · 25p · Tuesday and Friday",
+  "masthead_line": "THE MERIDIAN PILOT \u00b7 Meridian's own paper since 1871 \u00b7 25p \u00b7 Tuesday and Friday",
   "rules": [
    "A story prints only what Alison Sedman knows and chose to write (D56, ER-PAPER-01): every item has a source_fact and an alison_knows.",
    "The fixed items of an issue come from events the town can know (the Board's notices, the council's notices, the posters, the court list, the club's result).",
    "Items marked state_dependent print only when print_if holds; items marked story_check are re-checked against production/lane/story/frame/ once it is final.",
    "No real event, person, party, club, brand or product; the canon content rule applies to every line; British spelling; pounds and pence plain.",
-   "A story about Tom is only as sure as what she was told: see strength_wording."
+   "A story about {first} is only as sure as what she was told: see strength_wording."
   ],
   "strength_wording": {
    "saw_herself": "states it plainly",
@@ -312,7 +312,7 @@
      },
      {
       "id": "issue_01_d",
-      "story": "The Tivoli's new thriller, The Fourth Witness, opens on Thursday. Performances at 5.15 and 8.00, all seats £2.80, pensioners and the unwaged £1.50.",
+      "story": "The Tivoli's new thriller, The Fourth Witness, opens on Thursday. Performances at 5.15 and 8.00, all seats \u00a32.80, pensioners and the unwaged \u00a31.50.",
       "source_fact": "tivoli_programme (poster T03-named)",
       "alison_knows": "the Tivoli's own bill"
      },
@@ -345,7 +345,7 @@
      },
      {
       "id": "issue_02_b",
-      "story": "A man who gave his name as a docker was fined £40 by Meridian magistrates on Thursday for driving without due care on the Dock Road.",
+      "story": "A man who gave his name as a docker was fined \u00a340 by Meridian magistrates on Thursday for driving without due care on the Dock Road.",
       "source_fact": "magistrates_court_list",
       "alison_knows": "court list; she sat in the press seat",
       "chosen": true
@@ -390,7 +390,7 @@
      },
      {
       "id": "issue_03_b",
-      "story": "Quay Print's machine broke down on Friday and the Hook's bills went out a day late, the printer admits. It says the repair cost £140.",
+      "story": "Quay Print's machine broke down on Friday and the Hook's bills went out a day late, the printer admits. It says the repair cost \u00a3140.",
       "source_fact": "quay_print_breakdown",
       "alison_knows": "told by the printer",
       "chosen": true
@@ -488,7 +488,7 @@
      },
      {
       "id": "issue_05_c",
-      "story": "Quay Street will be closed to traffic on Sunday 4 November from 8 am to 6 pm for gas main renewal. Pedestrians may pass. The diversion is by Weighhouse Lane.",
+      "story": "Quay Street will be closed to traffic on Sunday 4 November from 8 am to 6 pm for gas main renewal. Pedestrians may pass. The diversion is by North Road and Back Parade.",
       "source_fact": "road_closure_4_nov (poster C03)",
       "alison_knows": "read off the council's notice"
      },
@@ -521,7 +521,7 @@
     "items": [
      {
       "id": "issue_06_a",
-      "story": "Professional wrestling comes to the Drill Hall tonight at 7.30. Ringside £4, unreserved £2.50, tickets at the door.",
+      "story": "Professional wrestling comes to the Drill Hall tonight at 7.30. Ringside \u00a34, unreserved \u00a32.50, tickets at the door.",
       "source_fact": "wrestling_bill_2_nov (poster W01-named)",
       "alison_knows": "the Drill Hall's bill"
      },
@@ -617,8 +617,8 @@
      },
      {
       "id": "issue_08_b",
-      "story": "The Hook's chip shop on Back Parade is to open on Sundays from this week, Mr Dobson says, to catch the ferry trade.",
-      "source_fact": "dobson_sunday",
+      "story": "Dobson's chip shop on Back Parade has put in a new fryer, Mr Dobson says, and will keep the shop shut on Sundays as ever.",
+      "source_fact": "dobson_fryer",
       "alison_knows": "told by Mr Dobson at the counter",
       "chosen": true
      },
@@ -653,7 +653,7 @@
     "date": "1990-11-13",
     "weekday": "Tuesday",
     "game_week": 5,
-    "headline": "THOUSANDS MARCH FROM THE EXCHANGE",
+    "headline": "HUNDREDS MARCH FROM THE EXCHANGE",
     "items": [
      {
       "id": "issue_09_a",
@@ -663,26 +663,26 @@
      },
      {
       "id": "issue_09_b",
-      "story": "A boxing night is to be held at the Drill Hall on Friday 16 November. Ten bouts, first bout 7.30 pm, ringside £3, unreserved £1.50.",
+      "story": "A boxing night is to be held at the boxing club on The Quay on Friday 16 November. Ten bouts, first bout 7.30 pm, ringside \u00a33, unreserved \u00a31.50.",
       "source_fact": "boxing_bill_16_nov (poster B01)",
       "alison_knows": "the boxing club's secretary rang her"
      },
      {
       "id": "issue_09_c",
-      "story": "The old-time and sequence dance is back at the chapel hall on Saturday 17 November, 7.30 to 11 pm, with live music, tea and sandwiches. Admission £1.50, all welcome.",
+      "story": "The old-time and sequence dance is back at the chapel hall on Saturday 17 November, 7.30 to 11 pm, with live music, tea and sandwiches. Admission \u00a31.50, all welcome.",
       "source_fact": "dance_bill_17_nov (poster D01)",
       "alison_knows": "the chapel hall's bill"
      },
      {
       "id": "issue_09_d",
-      "story": "Hookside Rovers beat Northwold Rangers 3-1 at Ropewalk Park, their first home win since September.",
+      "story": "Hookside Rovers beat Northwold Rangers 3-1 at Ropewalk Park, their second home win in a fortnight.",
       "source_fact": "rovers_result_10_nov",
       "alison_knows": "sports desk sheet",
       "chosen": true
      },
      {
       "id": "issue_09_e",
-      "story": "The council's licensing committee meets on Thursday 15 November. Its agenda includes the renewal of private hire operators' licences.",
+      "story": "The council's licensing committee meets at the Town Hall on {hearing_date} (default Thursday 15 November). Its agenda includes the renewal of private hire operators' licences.",
       "source_fact": "licensing_agenda",
       "alison_knows": "the committee clerk sent the agenda",
       "story_check": true
@@ -698,11 +698,11 @@
     "date": "1990-11-16",
     "weekday": "Friday",
     "game_week": 5,
-    "headline": "LICENCES: THE COMMITTEE SITS YESTERDAY, AND SAYS LITTLE",
+    "headline": "LICENCES: THE COMMITTEE SAT ON THURSDAY, AND SAYS LITTLE",
     "items": [
      {
       "id": "issue_10_a",
-      "story": "The council's licensing committee met on Thursday and dealt with eleven applications. It deferred one private hire operator's licence to a later meeting.",
+      "story": "The council's licensing committee met at the Town Hall on {hearing_date} and dealt with eleven applications. It deferred one private hire operator's licence to a later meeting.",
       "source_fact": "licensing_committee_met",
       "alison_knows": "the committee clerk; she was in the public seat",
       "story_check": true,
@@ -711,13 +711,13 @@
      },
      {
       "id": "issue_10_b",
-      "story": "The Drill Hall holds a boxing night tonight. First bout 7.30 pm, ringside £3, unreserved £1.50, tickets at the door.",
+      "story": "The boxing club on The Quay holds a boxing night tonight. First bout 7.30 pm, ringside \u00a33, unreserved \u00a31.50, tickets at the door.",
       "source_fact": "boxing_bill_16_nov (poster B01)",
       "alison_knows": "the boxing club's secretary"
      },
      {
       "id": "issue_10_c",
-      "story": "Tomorrow is the old-time dance at the chapel hall: 7.30 to 11 pm, admission £1.50.",
+      "story": "Tomorrow is the old-time dance at the chapel hall: 7.30 to 11 pm, admission \u00a31.50.",
       "source_fact": "dance_bill_17_nov (poster D01)",
       "alison_knows": "the chapel hall's bill"
      },
@@ -729,8 +729,8 @@
      },
      {
       "id": "issue_10_e",
-      "story": "The Washeteria on Quay Street will keep its last wash at 4.30 pm, its attendant says, after a machine was put out of order.",
-      "source_fact": "washeteria_notice (poster K06a, K06c)",
+      "story": "Machine four at the Washeteria on Quay Street is out of order this week, its attendant says; a card is on the door. The last wash is still 10.30 pm.",
+      "source_fact": "washeteria_notice (poster K06a, K06c), a temporary notice",
       "alison_knows": "told by the attendant",
       "chosen": true
      }
@@ -845,8 +845,8 @@
     "items": [
      {
       "id": "issue_13_a",
-      "story": "Officers from Customs and Excise were seen at offices and yards on the Hook on Monday. A Customs spokesman said only that routine visits are made to businesses throughout the district.",
-      "source_fact": "customs_visits_26_nov; state-dependent",
+      "story": "An officer from Customs and Excise was seen at offices and yards on the Hook on Monday 26 November. A Customs spokesman said only that routine visits are made to businesses throughout the district.",
+      "source_fact": "customs_visits_26_nov; state-dependent (the five mornings are Monday 26 to Friday 30 November)",
       "alison_knows": "she saw two men in raincoats go into a yard; the Customs office said the line above",
       "story_check": true,
       "state_dependent": true,
@@ -854,21 +854,21 @@
      },
      {
       "id": "issue_13_b",
-      "story": "The chip shop on Back Parade has put its price up by 5p. Fish and chips is £1.65, Mr Dobson says, and he is sorry for it.",
+      "story": "The chip shop on Back Parade has put its price up by 5p. Fish and chips is \u00a31.65, Mr Dobson says, and he is sorry for it.",
       "source_fact": "dobson_price",
       "alison_knows": "told by Mr Dobson",
       "chosen": true
      },
      {
       "id": "issue_13_c",
-      "story": "The Hook's boxing club says the night on Friday was its best attended for six years.",
+      "story": "The Hook's boxing club says its night on 16 November was its best attended for six years.",
       "source_fact": "boxing_night_held",
       "alison_knows": "the secretary rang her",
       "chosen": true
      },
      {
       "id": "issue_13_d",
-      "story": "Hookside Rovers beat Easterby United 2-0 on Saturday to go fourth.",
+      "story": "Hookside Rovers won 2-0 at Easterby United on Saturday to go fourth.",
       "source_fact": "rovers_result_24_nov",
       "alison_knows": "sports desk sheet",
       "chosen": true
@@ -896,30 +896,30 @@
     "items": [
      {
       "id": "issue_14_a",
-      "story": "The dock gate will be chained to vehicles from tomorrow, the Harbour Board has confirmed. Lorries are to use the new gate on Dock Road East.",
+      "story": "The dock gate will be chained to vehicles from tomorrow, the Harbour Board has confirmed. Lorries are asked to report to the Harbour Board's office on Dock Road.",
       "source_fact": "dock_gate_notice",
       "alison_knows": "the Board's secretary",
       "story_check": true
      },
      {
       "id": "issue_14_b",
-      "story": "Customs inspections on the Hook ended on Thursday. No one has been charged.",
-      "source_fact": "customs_visits_ended; state-dependent",
+      "story": "The Customs inspection on the Hook ends today, Friday 30 November; the officer's books are closed at five this afternoon. No one has been charged.",
+      "source_fact": "customs_visits_last_day; state-dependent",
       "alison_knows": "told by the Customs office",
       "story_check": true,
       "state_dependent": true,
-      "print_if": "the inspection is over"
+      "print_if": "the fifth morning of the inspection is Friday 30 November"
      },
      {
       "id": "issue_14_c",
-      "story": "The Tivoli's new programme is on until Wednesday 5 December. All seats £2.80.",
+      "story": "The Tivoli's new programme is on until Wednesday 5 December. All seats \u00a32.80.",
       "source_fact": "tivoli_programme",
       "alison_knows": "the Tivoli's bill",
       "chosen": true
      },
      {
       "id": "issue_14_d",
-      "story": "Hookside Rovers play Northwold Rangers at Ropewalk Park tomorrow, kick-off 3 pm.",
+      "story": "Hookside Rovers travel to Northwold Rangers tomorrow, kick-off 3 pm.",
       "source_fact": "rovers_fixture_1_dec",
       "alison_knows": "sports desk sheet",
       "chosen": true
@@ -989,7 +989,7 @@
     "id": "tom_arrest",
     "needs": "court list or police statement",
     "headline": "CAB OFFICE OWNER ARRESTED",
-    "text": "Thomas Nowak, 32, of Quay Street, was arrested on {day} and later released. A police spokesman declined to say why.",
+    "text": "{formal_first} {surname}, 32, of Quay Street, was arrested on {day} and later released. A police spokesman declined to say why.",
     "sure_word": "arrested",
     "max_strength": "court list or police"
    },
@@ -1036,7 +1036,7 @@
    "from": "Mickey Suddaby (a copy of the letter he left)",
    "title": "The letter that came with the will",
    "body": [
-    "Tom,",
+    "{first},",
     "If you are reading this I have not had the manners to say it to your face. The office is yours, and the flat above it. Sheila knows the book. Ron knows the door.",
     "Do not let anybody tell you what is owed before you have read the book. Do not let anybody tell you what you are, either.",
     "Your uncle, Mickey."
@@ -1050,7 +1050,7 @@
    "story_check": true,
    "chosen": true,
    "chosen_note": "canon: Tom arrives \"with one suitcase and a letter\"; the wording is chosen, the story frame may replace it",
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian"
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian"
   },
   {
    "id": "letter_agar_first",
@@ -1058,7 +1058,7 @@
    "from": "Agar & Co",
    "title": "Premises: 1 Quay Street",
    "body": [
-    "Dear Mr Nowak,",
+    "Dear Mr {surname},",
     "We act for the owners of the freehold of the parade on Quay Street, of which your premises form part. We understand that you have lately succeeded to the occupation of the office and the flat above it.",
     "Rent is collected each Friday by our clients' agent, who will call at the counter. We should be glad if you would call at our offices at your earliest convenience, so that the terms of your occupation may be confirmed in writing.",
     "Yours faithfully,",
@@ -1076,7 +1076,7 @@
     "Exchange Chambers, the Exchange, Meridian",
     "Telephone 960 200"
    ],
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
    "story_check": true,
    "chosen": true,
    "chosen_note": "Simon Ombler signs for Agar (proposed in the story frame); the day is chosen"
@@ -1087,7 +1087,7 @@
    "from": "Agar & Co",
    "title": "Your private hire licence",
    "body": [
-    "Dear Mr Nowak,",
+    "Dear Mr {surname},",
     "We write on behalf of a client who has raised with the Council certain concerns as to the condition of the vehicles operated from your premises, and as to the keeping of records under the conditions of your operator's licence.",
     "The Council's Licensing Section will write to you separately to arrange an inspection of the cars. We should be glad to see you at our offices should you wish to discuss the matter before then.",
     "Yours faithfully,",
@@ -1105,7 +1105,7 @@
     "Exchange Chambers, the Exchange, Meridian",
     "Telephone 960 200"
    ],
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
    "story_check": true
   },
   {
@@ -1114,7 +1114,7 @@
    "from": "Meridian Borough Council, Licensing Section",
    "title": "Inspection of vehicles",
    "body": [
-    "Dear Mr Nowak,",
+    "Dear Mr {surname},",
     "Under the conditions of your private hire operator's licence, an officer of the Council will inspect every vehicle operated from your premises on {date}, at 10 am, at your yard behind 1 Quay Street.",
     "Please have each car's log, test certificate and insurance available. Any defect found will be noted and you will have seven days to put it right.",
     "Yours faithfully,",
@@ -1131,7 +1131,7 @@
     "Licensing Section, Town Hall, Meridian",
     "Telephone 960 300"
    ],
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
    "story_check": true,
    "chosen": true,
    "chosen_note": "the officer's name is left out; the story frame proposes Alan Sowerby as licensing officer"
@@ -1142,25 +1142,25 @@
    "from": "Meridian Borough Council, Licensing Committee",
    "title": "Licence hearing",
    "body": [
-    "Dear Mr Nowak,",
-    "The Licensing Committee will consider the renewal of your private hire operator's licence on Thursday 15 November 1990 at 10.30 am, in the Committee Room, Exchange Chambers.",
+    "Dear Mr {surname},",
+    "The Licensing Committee will consider the renewal of your private hire operator's licence on {hearing_date} at 10.30 am, in the Committee Room at the Town Hall, in the Exchange.",
     "You may attend, and you are advised to do so. The Committee will have before it the report of the Council's inspection of your vehicles and the record of your fares for the last four weeks.",
     "If you do not attend, the Committee will decide in your absence.",
     "Yours faithfully,",
     "Clerk to the Committee"
    ],
    "act": 2,
-   "day": "Thursday 15 November 1990 (the hearing); the letter ten days before",
+   "day": "{hearing_date} (default Thursday 15 November 1990); this letter is dated hearing minus 10 days",
    "goes_in_ledger": true,
    "typeface": "courier_prime",
    "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
-   "trigger": "Agar's threat rung: his solicitor names the date (RT-06, RT2-18)",
+   "trigger": "Agar's threat rung: his solicitor names the date (RT-06, RT2-18); the date is driven by the state, and the earlier licence letters are anchored to it (licence_schedule)",
    "letterhead": [
     "MERIDIAN BOROUGH COUNCIL",
     "Licensing Section, Town Hall, Meridian",
     "Telephone 960 300"
    ],
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
    "story_check": true,
    "chosen": true,
    "chosen_note": "the date is chosen from the paper's licensing agenda; the hearing's four conditions (cars passed, no week put off, attends in a decent jacket or better, no road charge outstanding) are never printed"
@@ -1171,7 +1171,7 @@
    "from": "Meridian Borough Council, Licensing Committee",
    "title": "Your licence",
    "body": [
-    "Dear Mr Nowak,",
+    "Dear Mr {surname},",
     "The Licensing Committee has renewed your private hire operator's licence for twelve months from today, subject to the usual conditions.",
     "Yours faithfully,",
     "Clerk to the Committee"
@@ -1187,7 +1187,7 @@
     "Licensing Section, Town Hall, Meridian",
     "Telephone 960 300"
    ],
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
    "story_check": true
   },
   {
@@ -1196,7 +1196,7 @@
    "from": "Meridian Borough Council, Licensing Committee",
    "title": "Your licence",
    "body": [
-    "Dear Mr Nowak,",
+    "Dear Mr {surname},",
     "The Licensing Committee has decided to suspend your private hire operator's licence for two weeks from {date}. During the suspension no vehicle operated from your premises may carry a booked fare.",
     "Any vehicle found carrying a booked fare during the suspension will be stopped. A second such stop will lead to the licence being revoked.",
     "Yours faithfully,",
@@ -1213,7 +1213,7 @@
     "Licensing Section, Town Hall, Meridian",
     "Telephone 960 300"
    ],
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
    "story_check": true
   },
   {
@@ -1222,7 +1222,7 @@
    "from": "Meridian Borough Council, Licensing Committee",
    "title": "Your licence",
    "body": [
-    "Dear Mr Nowak,",
+    "Dear Mr {surname},",
     "A vehicle operated from your premises was stopped on {date} carrying a booked fare during the period of suspension. The Committee has therefore revoked your private hire operator's licence.",
     "Yours faithfully,",
     "Clerk to the Committee"
@@ -1238,7 +1238,7 @@
     "Licensing Section, Town Hall, Meridian",
     "Telephone 960 300"
    ],
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
    "story_check": true
   },
   {
@@ -1247,7 +1247,7 @@
    "from": "Agar & Co",
    "title": "Our fee",
    "body": [
-    "Dear Mr Nowak,",
+    "Dear Mr {surname},",
     "We act for you in the matter of the charge brought against you on {date}, at the request of those who attended at the police station on your behalf. Our professional fee to date is {amount}, which we should be glad to have settled within the month.",
     "Yours faithfully,",
     "S. Ombler\nfor Agar & Co"
@@ -1264,7 +1264,7 @@
     "Exchange Chambers, the Exchange, Meridian",
     "Telephone 960 200"
    ],
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
    "story_check": true
   },
   {
@@ -1273,7 +1273,7 @@
    "from": "Meridian Magistrates' Court",
    "title": "Summons",
    "body": [
-    "Mr Thomas Nowak is summoned to appear before Meridian Magistrates on {date} at 10 am to answer an information alleging {offence}.",
+    "Mr {formal_first} {surname} is summoned to appear before Meridian Magistrates on {date} at 10 am to answer an information alleging {offence}.",
     "If you do not attend, the case may be heard in your absence.",
     "By order of the Clerk to the Justices."
    ],
@@ -1287,7 +1287,7 @@
     "MERIDIAN MAGISTRATES' COURT",
     "Court House, the Exchange, Meridian"
    ],
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
    "chosen": true
   },
   {
@@ -1296,19 +1296,20 @@
    "from": "Agar & Co's rent man, Mr L. Askew",
    "title": "Left on the counter",
    "body": [
-    "Called Friday at the counter. Nobody to take the rent. £18 due.",
+    "Called Friday at the counter. Nobody to take the rent. \u00a318 due.",
     "Will call again Monday.",
     "L. Askew\nfor Agar & Co's agents"
    ],
-   "act": 1,
+   "act": 2,
    "day": "the Monday after a missed Friday",
    "goes_in_ledger": true,
    "typeface": "hand",
    "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
    "trigger": "one missed Friday (RT-16: said by the agent on the Monday)",
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
    "chosen": true,
-   "chosen_note": "Mr Leonard Askew is a minted name: the agent is \"a named man\" in the blueprint"
+   "chosen_note": "Mr Leonard Askew is a minted name: the agent is \"a named man\" in the blueprint",
+   "retag_note": "the rent ladder needs a missed Friday and the Monday after: Friday 19 October is the first, so no rung of it can fall inside Act I (one week); retagged Act II"
   },
   {
    "id": "letter_rent_second",
@@ -1316,20 +1317,21 @@
    "from": "Agar & Co's agents",
    "title": "Rent arrears: 1 Quay Street",
    "body": [
-    "Dear Mr Nowak,",
-    "The rent of £18 a week for the office and the flat above has not been paid for the last two Fridays, a total of £36.",
+    "Dear Mr {surname},",
+    "The rent of \u00a318 a week for the office and the flat above has not been paid for the last two Fridays, a total of \u00a336.",
     "Unless the arrears are paid, our clients will require the flat over the office to be given up in a fortnight, and notice to that effect is enclosed.",
     "Yours faithfully,",
     "L. Askew\nfor Agar & Co's agents"
    ],
-   "act": 1,
+   "act": 2,
    "day": "the Monday after the second missed Friday",
    "goes_in_ledger": true,
    "typeface": "courier_prime",
    "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
    "trigger": "two missed Fridays (RT-16)",
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
-   "chosen": true
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
+   "chosen": true,
+   "retag_note": "the rent ladder needs a missed Friday and the Monday after: Friday 19 October is the first, so no rung of it can fall inside Act I (one week); retagged Act II"
   },
   {
    "id": "letter_notice_to_quit",
@@ -1338,20 +1340,21 @@
    "title": "Notice to quit",
    "body": [
     "NOTICE TO QUIT",
-    "To Mr T. Nowak,",
+    "To Mr {first_initial}. {surname},",
     "TAKE NOTICE that your occupation of the flat over 1 Quay Street will end on {date}, being fourteen days from the date of this notice, unless the arrears of rent are paid in full before then.",
     "This notice does not affect the office on the ground floor.",
     "Dated {date_served}.",
     "L. Askew\nfor Agar & Co's agents"
    ],
-   "act": 1,
+   "act": 2,
    "day": "the same day as the second letter",
    "goes_in_ledger": true,
    "typeface": "courier_prime",
    "src": "RT-16 (the office itself is never lost)",
    "trigger": "two missed Fridays (RT-16)",
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
-   "chosen": true
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
+   "chosen": true,
+   "retag_note": "the rent ladder needs a missed Friday and the Monday after: Friday 19 October is the first, so no rung of it can fall inside Act I (one week); retagged Act II"
   },
   {
    "id": "letter_flat_let",
@@ -1359,20 +1362,21 @@
    "from": "Agar & Co's agents",
    "title": "The flat",
    "body": [
-    "Dear Mr Nowak,",
+    "Dear Mr {surname},",
     "The flat over 1 Quay Street has been let to another tenant from today. The office on the ground floor remains yours on the terms already agreed.",
-    "Arrears of £54 remain due and may be paid at any time.",
+    "Arrears of \u00a354 remain due and may be paid at any time.",
     "Yours faithfully,",
     "L. Askew\nfor Agar & Co's agents"
    ],
-   "act": 1,
+   "act": 2,
    "day": "the Monday after the third missed Friday",
    "goes_in_ledger": true,
    "typeface": "courier_prime",
    "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
    "trigger": "three missed Fridays (RT-16)",
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
-   "chosen": true
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
+   "chosen": true,
+   "retag_note": "the rent ladder needs a missed Friday and the Monday after: Friday 19 October is the first, so no rung of it can fall inside Act I (one week); retagged Act II"
   },
   {
    "id": "letter_rent_cleared",
@@ -1380,18 +1384,19 @@
    "from": "Agar & Co's rent man, Mr L. Askew",
    "title": "Receipt",
    "body": [
-    "Received of Mr T. Nowak, in full settlement of arrears, the sum of {amount}.",
+    "Received of Mr {first_initial}. {surname}, in full settlement of arrears, the sum of {amount}.",
     "Notice to quit withdrawn.",
     "L. Askew"
    ],
-   "act": 1,
+   "act": 2,
    "day": "the day the arrears are paid",
    "goes_in_ledger": true,
    "typeface": "hand",
    "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
    "trigger": "paying the arrears (RT-16: ends the ladder)",
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
-   "chosen": true
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
+   "chosen": true,
+   "retag_note": "the rent ladder needs a missed Friday and the Monday after: Friday 19 October is the first, so no rung of it can fall inside Act I (one week); retagged Act II"
   },
   {
    "id": "letter_cold_store",
@@ -1399,23 +1404,23 @@
    "from": "Old Basin Cold Stores",
    "title": "Haulage: terms",
    "body": [
-    "Dear Mr Nowak,",
-    "We should be glad to put our morning and evening haulage to your firm on the following terms: five cars in good order, a current operator's licence, and references as to the firm's books.",
+    "Dear Mr {surname},",
+    "We should be glad to put our morning and evening haulage to your firm on the following terms: at least four cars in good order, every car on time on five mornings in one week, a current operator's licence, and references as to the firm's books.",
     "Please call at the office on Cold Store Road to discuss.",
     "Yours faithfully,",
     "The Manager"
    ],
    "act": 2,
-   "day": "rung 3 (blueprint 2.15; the cold-store contract)",
+   "day": "before rung 3 (RT2-01: the contract comes first, and rung 3 needs it)",
    "goes_in_ledger": true,
    "typeface": "courier_prime",
    "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
-   "trigger": "the firm reaches rung 3",
+   "trigger": "five on-time mornings in a week and at least four cars (RT2-01)",
    "letterhead": [
     "OLD BASIN COLD STORES",
     "Cold Store Road, Meridian"
    ],
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
    "story_check": true,
    "chosen": true
   },
@@ -1425,10 +1430,10 @@
    "from": "Customs and Excise, Value Added Tax Office",
    "title": "Value Added Tax: inspection of records",
    "body": [
-    "Dear Mr Nowak,",
+    "Dear Mr {surname},",
     "I write to inform you that an officer of this Department will call at your premises on Monday 26 November 1990 at 9 am to inspect your records for value added tax, under the Value Added Tax Act 1983.",
     "He will wish to see your books of account, including the record of fares, the records of the vehicles, the payroll and the purchase invoices, for the period since you took over the business. You may produce each item on the morning it is asked for, or ask for it to be put in writing and produced the next day. You may ask for this twice.",
-    "I should be grateful if you would arrange for the books to be available. The inspection will last a week and the books will be closed at five o'clock on the last afternoon.",
+    "I should be grateful if you would arrange for the books to be available. The inspection will take five mornings, Monday 26 to Friday 30 November, and the books will be opened at five o'clock on the last afternoon, Friday 30 November.",
     "Yours sincerely,",
     "D. Hebblewhite\nVAT Officer"
    ],
@@ -1443,7 +1448,7 @@
     "Value Added Tax Office, Meridian",
     "Telephone 960 410"
    ],
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
    "story_check": true,
    "chosen": true,
    "chosen_note": "spelt Nowak (the frame's running joke: the Customs letter gets it right); Mr Hebblewhite is the frame's proposed name; the five-day plan follows 3.1.3, RT-01"
@@ -1454,7 +1459,7 @@
    "from": "Customs and Excise, Value Added Tax Office",
    "title": "Records to be produced: the fare book",
    "body": [
-    "Dear Mr Nowak,",
+    "Dear Mr {surname},",
     "Further to my visit, I should be glad if you would produce the fare book for the four weeks to the last Friday, by 9 am on {date}.",
     "Yours sincerely,",
     "D. Hebblewhite\nVAT Officer"
@@ -1470,7 +1475,7 @@
     "Value Added Tax Office, Meridian",
     "Telephone 960 410"
    ],
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
    "story_check": true,
    "chosen": true
   },
@@ -1480,7 +1485,7 @@
    "from": "Customs and Excise, Value Added Tax Office",
    "title": "Records to be produced: the cars",
    "body": [
-    "Dear Mr Nowak,",
+    "Dear Mr {surname},",
     "Further to my visit, I should be glad if you would produce the log of each vehicle, with its mileage, for the same weeks, by 9 am on {date}.",
     "Yours sincerely,",
     "D. Hebblewhite\nVAT Officer"
@@ -1496,7 +1501,7 @@
     "Value Added Tax Office, Meridian",
     "Telephone 960 410"
    ],
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
    "story_check": true,
    "chosen": true
   },
@@ -1506,7 +1511,7 @@
    "from": "Customs and Excise, Value Added Tax Office",
    "title": "Records to be produced: the wages",
    "body": [
-    "Dear Mr Nowak,",
+    "Dear Mr {surname},",
     "Further to my visit, I should be glad if you would produce the wages book and the name of every man paid, for the same weeks, by 9 am on {date}.",
     "Yours sincerely,",
     "D. Hebblewhite\nVAT Officer"
@@ -1522,7 +1527,7 @@
     "Value Added Tax Office, Meridian",
     "Telephone 960 410"
    ],
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
    "story_check": true,
    "chosen": true
   },
@@ -1532,7 +1537,7 @@
    "from": "Customs and Excise, Value Added Tax Office",
    "title": "Records to be produced: an account",
    "body": [
-    "Dear Mr Nowak,",
+    "Dear Mr {surname},",
     "Further to my visit, I should be glad if you would produce the invoices of one account, the cold store's, for the period since you took over, by 9 am on {date}.",
     "Yours sincerely,",
     "D. Hebblewhite\nVAT Officer"
@@ -1548,9 +1553,36 @@
     "Value Added Tax Office, Meridian",
     "Telephone 960 410"
    ],
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
    "story_check": true,
    "chosen": true
+  },
+  {
+   "id": "letter_vat_m5",
+   "kind": "letter",
+   "from": "Customs and Excise, Value Added Tax Office",
+   "title": "Records to be produced: week one",
+   "body": [
+    "Dear Mr {surname},",
+    "Further to my visit, I should be glad if you would produce the record of the first week's fares, from the day you took over, by 9 am on {date}.",
+    "Yours sincerely,",
+    "D. Hebblewhite\nVAT Officer"
+   ],
+   "act": 3,
+   "day": "in writing, the fifth morning (Friday 30 November), if he asks",
+   "goes_in_ledger": true,
+   "typeface": "courier_prime",
+   "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
+   "trigger": "\"in writing\" at morning 5",
+   "letterhead": [
+    "CUSTOMS AND EXCISE",
+    "Value Added Tax Office, Meridian",
+    "Telephone 960 410"
+   ],
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
+   "story_check": true,
+   "chosen": true,
+   "chosen_note": "the frame keeps week one for the last morning"
   },
   {
    "id": "letter_vat_result_holds",
@@ -1558,7 +1590,7 @@
    "from": "Customs and Excise, Value Added Tax Office",
    "title": "Value Added Tax: result of inspection",
    "body": [
-    "Dear Mr Nowak,",
+    "Dear Mr {surname},",
     "I have completed my inspection of your records and find them in order for the period examined. No further action is proposed.",
     "Yours sincerely,",
     "D. Hebblewhite\nVAT Officer"
@@ -1574,7 +1606,7 @@
     "Value Added Tax Office, Meridian",
     "Telephone 960 410"
    ],
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
    "story_check": true
   },
   {
@@ -1583,7 +1615,7 @@
    "from": "Customs and Excise, Value Added Tax Office",
    "title": "Value Added Tax: result of inspection",
    "body": [
-    "Dear Mr Nowak,",
+    "Dear Mr {surname},",
     "I have completed my inspection and I am not satisfied that your records give a true account of the takings of the business. I shall be reporting to my Controller, and you will hear further.",
     "Yours sincerely,",
     "D. Hebblewhite\nVAT Officer"
@@ -1599,7 +1631,7 @@
     "Value Added Tax Office, Meridian",
     "Telephone 960 410"
    ],
-   "to": "Mr T. Nowak\nMickey's\n1 Quay Street\nMeridian",
+   "to": "Mr {first_initial}. {surname}\nMickey's\n1 Quay Street\nMeridian",
    "story_check": true
   },
   {
@@ -1618,7 +1650,7 @@
    "typeface": "hand",
    "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
    "trigger": "Sheila leaves it when she has counted the tin",
-   "to": "Tom",
+   "to": "{first}",
    "chosen": true
   },
   {
@@ -1636,8 +1668,8 @@
    "goes_in_ledger": true,
    "typeface": "hand",
    "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
-   "trigger": "a call came and Tom was out",
-   "to": "Tom",
+   "trigger": "a call came and {first} was out",
+   "to": "{first}",
    "chosen": true
   },
   {
@@ -1656,7 +1688,7 @@
    "typeface": "hand",
    "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
    "trigger": "the outfit's man comes by day",
-   "to": "Tom",
+   "to": "{first}",
    "chosen": true
   },
   {
@@ -1669,12 +1701,12 @@
     "On the back, in pencil: \"Ring me. C.E.\""
    ],
    "act": 2,
-   "day": "the day she first calls and finds Tom out",
+   "day": "the day she first calls and finds {first} out",
    "goes_in_ledger": true,
    "typeface": "hand",
    "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
    "trigger": "Ellis reaches asking (stage 1)",
-   "to": "Tom",
+   "to": "{first}",
    "chosen": true
   },
   {
@@ -1692,7 +1724,7 @@
    "typeface": "hand",
    "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
    "trigger": "Alison asks about the warehouse fire (flags.alison)",
-   "to": "Tom",
+   "to": "{first}",
    "chosen": true
   },
   {
@@ -1711,7 +1743,7 @@
    "typeface": "hand",
    "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
    "trigger": "June calls and finds him out",
-   "to": "Tom",
+   "to": "{first}",
    "chosen": true,
    "story_check": true
   },
@@ -1721,7 +1753,7 @@
    "from": "The Widow's man at the dock gate",
    "title": "A slip handed to a driver",
    "body": [
-    "Dock gate. Car {n}. £5 received.",
+    "Dock gate. Car {n}. \u00a35 received.",
     "Weekly, Friday. M.J."
    ],
    "act": 2,
@@ -1730,7 +1762,7 @@
    "typeface": "hand",
    "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
    "trigger": "the Widow taxes his drivers at the dock gate (2.10.3; economy)",
-   "to": "Tom",
+   "to": "{first}",
    "chosen": true
   },
   {
@@ -1748,7 +1780,7 @@
    "typeface": "hand",
    "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
    "trigger": "Cammack's first rung (2.10.3)",
-   "to": "Tom",
+   "to": "{first}",
    "chosen": true,
    "story_check": true
   },
@@ -1767,7 +1799,7 @@
    "typeface": "hand",
    "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
    "trigger": "job: Iveson's hut (2.9; jobsx.js hut)",
-   "to": "Tom",
+   "to": "{first}",
    "chosen": true
   },
   {
@@ -1785,7 +1817,7 @@
    "typeface": "hand",
    "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
    "trigger": "the sign painter is doing the street's boards this month (people.json)",
-   "to": "Tom",
+   "to": "{first}",
    "chosen": true
   },
   {
@@ -1794,7 +1826,7 @@
    "from": "Father Walsh",
    "title": "Brought round by Mrs Cronin",
    "body": [
-    "Mr Nowak,",
+    "Mr {surname},",
     "The hall is free on Thursday evenings if the firm has a use for it. You will find the key at the house.",
     "B. Walsh"
    ],
@@ -1804,7 +1836,7 @@
    "typeface": "hand",
    "src": "6.10; 2.4.5; blueprint 2.7.4, RT-16, RT2-18, 3.1.3, 2.10.3",
    "trigger": "Father Walsh met (jobsx.js: metWalsh)",
-   "to": "Tom",
+   "to": "{first}",
    "chosen": true
   }
  ],
@@ -1978,7 +2010,7 @@
     ],
     "sign_kind": "painted fascia",
     "window_lettering": [
-     "ROPE · PAINT · CHARTS · TWINE"
+     "ROPE \u00b7 PAINT \u00b7 CHARTS \u00b7 TWINE"
     ],
     "other_texts": [
      "13 (fanlight)",
@@ -2051,12 +2083,12 @@
     "sign_kind": "painted fascia",
     "window_lettering": [
      "TOBACCONIST & CONFECTIONER",
-     "NEWSPAPERS · TOBACCO"
+     "NEWSPAPERS \u00b7 TOBACCO"
     ],
     "other_texts": [
      "8 (fanlight)",
      "the Pilot, 25p (a window card)",
-     "20 MARINER 1.70 (a window card)"
+     "20 ASHCOMBE 1.70 (a window card)"
     ],
     "hours_plate": true,
     "note": "the newsagent holds the window cards SA01 to SA15 (print.posters_and_cards); the paper is the Pilot",
@@ -2167,7 +2199,7 @@
     ],
     "sign_kind": "painted board over a stair door",
     "window_lettering": [
-     "UPSTAIRS · TABLES FREE · ALL WELCOME"
+     "UPSTAIRS \u00b7 TABLES FREE \u00b7 ALL WELCOME"
     ],
     "other_texts": [
      "2 The Quay"
@@ -2193,9 +2225,9 @@
     ],
     "other_texts": [
      "3 The Quay",
-     "ROOMS £25 A WEEK (a card)"
+     "ROOMS \u00a325 A WEEK (a card)"
     ],
-    "note": "the boarding house; rooms at the economy file's £25 a week",
+    "note": "the boarding house; rooms at the economy file's \u00a325 a week",
     "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
     "chosen": true
    },
@@ -2209,20 +2241,20 @@
     "use": "caff",
     "fascia_text": [
      "RINALDI'S",
-     "Breakfasts · Dinners · Teas"
+     "Breakfasts \u00b7 Dinners \u00b7 Teas"
     ],
     "sign_kind": "painted board; a chalkboard on the pavement",
     "window_lettering": [
      "TEA 30p",
-     "BREAKFAST £1.80",
-     "DINNER £2.50"
+     "BREAKFAST \u00a31.80",
+     "DINNER \u00a32.50"
     ],
     "other_texts": [
      "4 The Quay",
      "the board prices are in print.price_boards"
     ],
     "hours_plate": true,
-    "note": "the caff: tea 30p, breakfast £1.80, dinner £2.50 (economy)",
+    "note": "the caff: tea 30p, breakfast \u00a31.80, dinner \u00a32.50 (economy)",
     "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
     "chosen": true
    },
@@ -2239,7 +2271,7 @@
     ],
     "sign_kind": "painted fascia",
     "window_lettering": [
-     "COINS · MEDALS · BADGES",
+     "COINS \u00b7 MEDALS \u00b7 BADGES",
      "BOUGHT AND SOLD"
     ],
     "other_texts": [
@@ -2262,7 +2294,7 @@
     ],
     "sign_kind": "painted board",
     "window_lettering": [
-     "COATS FROM £15",
+     "COATS FROM \u00a315",
      "BOUGHT & SOLD"
     ],
     "other_texts": [
@@ -2342,7 +2374,7 @@
     "number": 10,
     "use": "office",
     "fascia_text": [
-     "FISH MERCHANTS · OFFICE"
+     "FISH MERCHANTS \u00b7 OFFICE"
     ],
     "sign_kind": "painted board",
     "other_texts": [
@@ -2364,7 +2396,7 @@
     ],
     "sign_kind": "painted board over a hall door; a bare bulb",
     "window_lettering": [
-     "MEMBERS · TRAINING NIGHTS"
+     "MEMBERS \u00b7 TRAINING NIGHTS"
     ],
     "other_texts": [
      "11 The Quay"
@@ -2488,7 +2520,7 @@
     "sign_kind": "large painted board",
     "other_texts": [
      "1 Cold Store Road",
-     "GOODS IN · GOODS OUT",
+     "GOODS IN \u00b7 GOODS OUT",
      "NO ADMITTANCE EXCEPT ON BUSINESS"
     ],
     "hours_plate": true,
@@ -2507,7 +2539,7 @@
     ],
     "sign_kind": "painted board",
     "window_lettering": [
-     "REPAIRS · SERVICING · RECOVERY"
+     "REPAIRS \u00b7 SERVICING \u00b7 RECOVERY"
     ],
     "other_texts": [
      "3 Cold Store Road"
@@ -2529,7 +2561,7 @@
     ],
     "sign_kind": "brass plate and painted fascia",
     "window_lettering": [
-     "PROPERTY · LETTINGS",
+     "PROPERTY \u00b7 LETTINGS",
      "ENQUIRIES 960 335"
     ],
     "other_texts": [
@@ -2604,7 +2636,7 @@
     "use": "scrap_yard",
     "fascia_text": [
      "IVESON",
-     "SCRAP METALS · BUYERS OF ALL SCRAP"
+     "SCRAP METALS \u00b7 BUYERS OF ALL SCRAP"
     ],
     "sign_kind": "hand-painted board on a steel gate",
     "other_texts": [
@@ -2733,7 +2765,7 @@
     ],
     "sign_kind": "painted fascia",
     "window_lettering": [
-     "LOANS · WATCHES · JEWELLERY"
+     "LOANS \u00b7 WATCHES \u00b7 JEWELLERY"
     ],
     "other_texts": [
      "16 North Road",
@@ -2757,7 +2789,7 @@
     ],
     "sign_kind": "painted board",
     "window_lettering": [
-     "NEWSPAPERS · GROCERIES · TOBACCO"
+     "NEWSPAPERS \u00b7 GROCERIES \u00b7 TOBACCO"
     ],
     "other_texts": [
      "36 North Road"
@@ -2818,10 +2850,9 @@
     ],
     "sign_kind": "painted board; numbered roller doors",
     "other_texts": [
-     "TO LET",
-     "ENQUIRIES 960 335"
+     "TO LET"
     ],
-    "note": "Cammack's base; the lock-ups stand on ground Agar's agents hold (the freehold of half the warehouse row), so the board carries the agents' number",
+    "note": "Cammack's base; the lock-ups stand on ground Agar's agents hold (the freehold of half the warehouse row), so the board carries only TO LET (no agent is named on it, so no number)",
     "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
     "chosen": true
    },
@@ -2838,14 +2869,13 @@
     ],
     "sign_kind": "painted board; a lit sign",
     "window_lettering": [
-     "FISH & CHIPS",
-     "OPEN SUNDAYS FROM 11 NOVEMBER"
+     "FISH & CHIPS"
     ],
     "other_texts": [
      "1 Back Parade"
     ],
     "hours_plate": true,
-    "note": "the chip shop; the Sunday opening is the paper's item of 9 November",
+    "note": "the chip shop; shut on Sundays (places.json)",
     "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
     "chosen": true
    },
@@ -2882,7 +2912,7 @@
     ],
     "sign_kind": "painted board",
     "other_texts": [
-     "MEETINGS · SALES · DANCES",
+     "MEETINGS \u00b7 SALES \u00b7 DANCES",
      "THURSDAYS 7.30 PM POLL TAX MEETINGS (poster)"
     ],
     "note": "where the poll-tax meetings, the jumble sale and the dance are held",
@@ -2921,7 +2951,7 @@
     "sign_kind": "a pole and a painted board",
     "window_lettering": [
      "GENTS HAIRDRESSING",
-     "HAIRCUT £4"
+     "HAIRCUT \u00a34"
     ],
     "other_texts": [
      "5 Chapel Lane"
@@ -2944,7 +2974,7 @@
      "23 Chapel Lane",
      "SURGERY CLOSED (a faded card)"
     ],
-    "note": "the retired doctor's house; he stitches for £20 (economy)",
+    "note": "the retired doctor's house; he stitches for \u00a320 (economy)",
     "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
     "chosen": true
    },
@@ -3060,7 +3090,7 @@
     ],
     "sign_kind": "a painted board on the fish dock",
     "other_texts": [
-     "FISH BOXES · RETURN EMPTY"
+     "FISH BOXES \u00b7 RETURN EMPTY"
     ],
     "src": "map.json plot name, street and number; cloud-week/targets/fascia-signs/target.json (older texts, reconciled to the frozen map)",
     "chosen": true
@@ -3121,12 +3151,12 @@
     "kind": "sheet",
     "title": "Poll tax: don't pay bill",
     "lines": [
-     "DON’T",
+     "DON\u2019T",
      "PAY",
      "THE POLL TAX",
-     "CAN’T PAY - WON’T PAY",
+     "CAN\u2019T PAY - WON\u2019T PAY",
      "JOIN US EVERY THURSDAY",
-     "7.30 PM · THE CHAPEL HALL",
+     "7.30 PM \u00b7 THE CHAPEL HALL",
      "MERIDIAN AGAINST THE POLL TAX",
      "Published by Meridian Against the Poll Tax. Printed by Quay Print, Meridian."
     ],
@@ -3173,7 +3203,7 @@
     "lines": [
      "GOT A POLL TAX",
      "SUMMONS?",
-     "DON’T PANIC.",
+     "DON\u2019T PANIC.",
      "ADVICE EVENING",
      "TUESDAY 30 OCTOBER, 7 PM",
      "THE CHAPEL HALL",
@@ -3208,7 +3238,7 @@
     "kind": "sticker",
     "title": "Poll tax: sticker, 148 x 52",
     "lines": [
-     "CAN’T PAY - WON’T PAY",
+     "CAN\u2019T PAY - WON\u2019T PAY",
      "MERIDIAN AGAINST THE POLL TAX"
     ],
     "src": "cloud-week/targets/posters-boards-plates/target.json P06"
@@ -3224,7 +3254,7 @@
      "THE CHAPEL HALL",
      "SATURDAY 20 OCTOBER",
      "DOORS OPEN 2 PM",
-     "CLOTHING · BOOKS · BRIC-A-BRAC · HOUSEHOLD",
+     "CLOTHING \u00b7 BOOKS \u00b7 BRIC-A-BRAC \u00b7 HOUSEHOLD",
      "Teas and cakes",
      "ADMISSION 20p",
      "IN AID OF THE CHAPEL ROOF FUND",
@@ -3253,7 +3283,7 @@
      "Music by",
      "THE SANDERLING TRIO",
      "TEA AND SANDWICHES",
-     "ADMISSION £1.50",
+     "ADMISSION \u00a31.50",
      "ALL WELCOME",
      "Printed by Quay Print, Meridian."
     ],
@@ -3286,7 +3316,7 @@
      "v",
      "THE STEVEDORE",
      "AND SUPPORT BOUTS",
-     "RINGSIDE £4 · UNRESERVED £2.50",
+     "RINGSIDE \u00a34 \u00b7 UNRESERVED \u00a32.50",
      "TICKETS AT THE DOOR",
      "Printed by Quay Print, Meridian."
     ],
@@ -3312,7 +3342,7 @@
      "THE DRILL HALL",
      "FRIDAY 16 NOVEMBER",
      "FIRST BOUT 7.30 PM",
-     "RINGSIDE £3 · UNRESERVED £1.50",
+     "RINGSIDE \u00a33 \u00b7 UNRESERVED \u00a31.50",
      "TICKETS AT THE DOOR",
      "Printed by Quay Print, Meridian."
     ],
@@ -3331,9 +3361,9 @@
     "lines": [
      "COPPER ROW",
      "MARKET",
-     "TUESDAYS · FRIDAYS · SATURDAYS",
+     "TUESDAYS \u00b7 FRIDAYS \u00b7 SATURDAYS",
      "8 AM TO 4 PM",
-     "FRUIT · VEG · FISH · HOUSEHOLD · CLOTHING",
+     "FRUIT \u00b7 VEG \u00b7 FISH \u00b7 HOUSEHOLD \u00b7 CLOTHING",
      "NEW STALLS WELCOME",
      "ENQUIRIES: THE MARKET OFFICE",
      "Printed by Quay Print, Meridian."
@@ -3362,7 +3392,7 @@
      "QUAYSIDE",
      "TEA",
      "A good strong cup",
-     "80 BAGS · £1.35",
+     "80 BAGS \u00b7 \u00a31.35",
      "Printed by Quay Print, Meridian."
     ],
     "src": "cloud-week/targets/posters-boards-plates/target.json G02"
@@ -3376,8 +3406,8 @@
      "Somebody saw. Somebody will pay.",
      "THE FOURTH",
      "WITNESS",
-     "A MARSHLAND PICTURES PRODUCTION · SCREENPLAY BY A. VENN",
-     "MUSIC BY R. CORLEY · DIRECTED BY H. MADDOX"
+     "A MARSHLAND PICTURES PRODUCTION \u00b7 SCREENPLAY BY A. VENN",
+     "MUSIC BY R. CORLEY \u00b7 DIRECTED BY H. MADDOX"
     ],
     "src": "cloud-week/targets/posters-boards-plates/target.json T01",
     "notes": [
@@ -3399,7 +3429,7 @@
      "A WEEK AT",
      "GULLWING",
      "The funniest week of their lives.",
-     "A MARSHLAND PICTURES PRODUCTION · DIRECTED BY H. MADDOX"
+     "A MARSHLAND PICTURES PRODUCTION \u00b7 DIRECTED BY H. MADDOX"
     ],
     "src": "cloud-week/targets/posters-boards-plates/target.json T02",
     "notes": [
@@ -3425,8 +3455,8 @@
      "A WEEK AT GULLWING",
      "PERFORMANCES 5.15 AND 8.00",
      "SATURDAY ALSO 2.30",
-     "ALL SEATS £2.80",
-     "O.A.P. AND UNWAGED £1.50",
+     "ALL SEATS \u00a32.80",
+     "O.A.P. AND UNWAGED \u00a31.50",
      "Printed by Quay Print, Meridian."
     ],
     "src": "cloud-week/targets/posters-boards-plates/target.json T03",
@@ -3501,8 +3531,8 @@
      "until 6.00 PM",
      "9.15 AM and hourly",
      "until 6.15 PM",
-     "FARES · FOOT PASSENGERS",
-     "SINGLE 60p · RETURN £1.00 · CYCLES 30p",
+     "FARES \u00b7 FOOT PASSENGERS",
+     "SINGLE 60p \u00b7 RETURN \u00a31.00 \u00b7 CYCLES 30p",
      "O.A.P. HALF FARE",
      "CROSSINGS MAY BE CANCELLED IN FOG OR HIGH WIND",
      "Printed by Quay Print, Meridian."
@@ -3727,7 +3757,7 @@
      "FROM 8 AM TO 6 PM",
      "FOR GAS MAIN RENEWAL.",
      "PEDESTRIAN ACCESS WILL BE MAINTAINED.",
-     "DIVERSION VIA WEIGHHOUSE LANE.",
+     "DIVERSION VIA NORTH ROAD AND BACK PARADE.",
      "We apologise for any inconvenience."
     ],
     "src": "cloud-week/targets/posters-boards-plates/target.json C03",
@@ -3744,7 +3774,7 @@
     "title": "Closed for lunch card (felt pen)",
     "lines": [
      "CLOSED FOR LUNCH",
-     "BACK AT 2 O’CLOCK"
+     "BACK AT 2 O\u2019CLOCK"
     ],
     "src": "cloud-week/targets/posters-boards-plates/target.json K01"
    },
@@ -3807,7 +3837,7 @@
     "title": "Launderette: LAST WASH (felt pen)",
     "lines": [
      "LAST WASH",
-     "4.30 PM"
+     "10.30 PM"
     ],
     "src": "cloud-week/targets/posters-boards-plates/target.json K06a"
    },
@@ -3899,11 +3929,11 @@
     "title": "Fish price ticket: COD FILLET",
     "lines": [
      "COD FILLET",
-     "£2.60 lb"
+     "\u00a32.60 lb"
     ],
     "src": "cloud-week/targets/posters-boards-plates/target.json K09a",
     "notes": [
-     "cod £2.60 a pound (economy)"
+     "cod \u00a32.60 a pound (economy)"
     ],
     "chosen": true
    },
@@ -3914,11 +3944,11 @@
     "title": "Fish price ticket: HADDOCK",
     "lines": [
      "HADDOCK",
-     "£2.40 lb"
+     "\u00a32.40 lb"
     ],
     "src": "cloud-week/targets/posters-boards-plates/target.json K09b",
     "notes": [
-     "haddock £2.40, chosen to sit under the cod"
+     "haddock \u00a32.40, chosen to sit under the cod"
     ],
     "chosen": true
    },
@@ -3929,7 +3959,7 @@
     "title": "Fish price ticket: PLAICE",
     "lines": [
      "PLAICE",
-     "£2.30 lb"
+     "\u00a32.30 lb"
     ],
     "src": "cloud-week/targets/posters-boards-plates/target.json K09c"
    },
@@ -3951,7 +3981,7 @@
     "title": "Fish price ticket: SMOKED HADDOCK",
     "lines": [
      "SMOKED HADDOCK",
-     "£2.90 lb"
+     "\u00a32.90 lb"
     ],
     "src": "cloud-week/targets/posters-boards-plates/target.json K09e"
    },
@@ -3974,12 +4004,12 @@
     "lines": [
      "ROOM TO LET",
      "Clean, quiet, gas fire.",
-     "£25 per week. No pets.",
+     "\u00a325 per week. No pets.",
      "Ring 960 471 after 5."
     ],
     "src": "cloud-week/targets/posters-boards-plates/target.json SA01",
     "notes": [
-     "rent changed from £28 to the economy file's £25 a week for a room"
+     "rent changed from \u00a328 to the economy file's \u00a325 a week for a room"
     ],
     "chosen": true
    },
@@ -3991,7 +4021,7 @@
     "lines": [
      "GENTS BICYCLE",
      "3-speed, good tyres.",
-     "£18 or nearest offer.",
+     "\u00a318 or nearest offer.",
      "Tel. 960 233."
     ],
     "src": "cloud-week/targets/posters-boards-plates/target.json SA02"
@@ -4004,7 +4034,7 @@
     "lines": [
      "PIANO FOR SALE",
      "Upright, good tone.",
-     "Buyer collects. £120.",
+     "Buyer collects. \u00a3120.",
      "Ring 960 528."
     ],
     "src": "cloud-week/targets/posters-boards-plates/target.json SA03"
@@ -4092,7 +4122,7 @@
     "lines": [
      "GAS COOKER",
      "4 ring, hardly used.",
-     "£35. Ring 960 307."
+     "\u00a335. Ring 960 307."
     ],
     "src": "cloud-week/targets/posters-boards-plates/target.json SA10"
    },
@@ -4115,7 +4145,7 @@
     "title": "Newsagent window card 12",
     "lines": [
      "SEWING MACHINE",
-     "Electric. £25.",
+     "Electric. \u00a325.",
      "Tel. 960 912."
     ],
     "src": "cloud-week/targets/posters-boards-plates/target.json SA12"
@@ -4127,7 +4157,7 @@
     "title": "Newsagent window card 13",
     "lines": [
      "COLOUR TV",
-     "22 inch, working. £40.",
+     "22 inch, working. \u00a340.",
      "Ring 960 483."
     ],
     "src": "cloud-week/targets/posters-boards-plates/target.json SA13"
@@ -4175,7 +4205,7 @@
      "AGAR & CO",
      "ESTATE AGENTS & SURVEYORS",
      "TO LET",
-     "SHOP AND PREMISES · APPROX. 520 SQ. FT.",
+     "SHOP AND PREMISES \u00b7 APPROX. 520 SQ. FT.",
      "ENQUIRIES 960 335"
     ],
     "src": "cloud-week/targets/posters-boards-plates/target.json L01",
@@ -4209,8 +4239,7 @@
     "title": "Letting board, flat, no agent (600 x 400)",
     "lines": [
      "TO LET",
-     "SELF-CONTAINED FLAT",
-     "ENQUIRIES 960 335"
+     "SELF-CONTAINED FLAT"
     ],
     "src": "cloud-week/targets/posters-boards-plates/target.json L03n",
     "chosen": true
@@ -4222,8 +4251,7 @@
     "title": "Letting board, house, no agent (600 x 400)",
     "lines": [
      "TO LET",
-     "TWO BEDROOMS",
-     "ENQUIRIES 960 335"
+     "TWO BEDROOMS"
     ],
     "src": "cloud-week/targets/posters-boards-plates/target.json L04"
    },
@@ -4298,8 +4326,8 @@
     "title": "Rinaldi's board",
     "lines": [
      "TEA 30p",
-     "BREAKFAST £1.80",
-     "DINNER £2.50",
+     "BREAKFAST \u00a31.80",
+     "DINNER \u00a32.50",
      "(egg, bacon, sausage, beans, toast, tea)",
      "DINNER 12 TILL 2"
     ],
@@ -4311,13 +4339,13 @@
     "place": "bp_chippy",
     "title": "Dobson's menu board",
     "lines": [
-     "FISH & CHIPS £1.60",
+     "FISH & CHIPS \u00a31.60",
      "CHIPS 40p",
-     "SAUSAGE & CHIPS £1.10",
+     "SAUSAGE & CHIPS \u00a31.10",
      "TEA 30p"
     ],
     "chosen": true,
-    "note": "fish and chips £1.60 (economy); the others are chosen at the economy's scale",
+    "note": "fish and chips \u00a31.60 (economy); the others are chosen at the economy's scale",
     "src": "PRICES-WAGES-1990"
    },
    {
@@ -4326,7 +4354,7 @@
     "title": "Peart's window cards",
     "lines": [
      "THE PILOT 25p",
-     "20 MARINER £1.70",
+     "20 ASHCOMBE \u00a31.70",
      "MILK 30p",
      "SLICED LOAF 52p"
     ],
@@ -4337,9 +4365,9 @@
     "place": "qs_ironmonger",
     "title": "the ironmonger's card",
     "lines": [
-     "CROWBAR £6",
-     "TORCH £4",
-     "KEYS CUT £1.50",
+     "CROWBAR \u00a36",
+     "TORCH \u00a34",
+     "KEYS CUT \u00a31.50",
      "PARAFFIN BY THE GALLON"
     ],
     "src": "PRICES-WAGES-1990 section 1"
@@ -4349,10 +4377,10 @@
     "place": "qs_launderette",
     "title": "the Washeteria's tariff",
     "lines": [
-     "WASH £1",
-     "SERVICE WASH £1",
+     "WASH \u00a31",
+     "SERVICE WASH \u00a31",
      "DRY 20p",
-     "LAST WASH 4.30 PM"
+     "LAST WASH 10.30 PM"
     ],
     "chosen": true,
     "note": "the prototype's bark: service wash is a pound",
@@ -4363,7 +4391,7 @@
     "place": "cl_barber",
     "title": "the barber's card",
     "lines": [
-     "GENTS HAIRCUT £4"
+     "GENTS HAIRCUT \u00a34"
     ],
     "src": "PRICES-WAGES-1990 section 1"
    },
@@ -4372,9 +4400,9 @@
     "place": "quay_secondhand",
     "title": "the second-hand shop's card",
     "lines": [
-     "COATS FROM £15",
-     "JACKETS £45",
-     "OVERCOATS £90"
+     "COATS FROM \u00a315",
+     "JACKETS \u00a345",
+     "OVERCOATS \u00a390"
     ],
     "src": "PRICES-WAGES-1990 section 1 (second-hand, decent jacket, good overcoat)"
    },
@@ -4396,7 +4424,7 @@
     "lines": [
      "POT OF TEA FOR ONE 45p",
      "SCONE AND BUTTER 40p",
-     "BREAKFAST £1.80"
+     "BREAKFAST \u00a31.80"
     ],
     "chosen": true,
     "src": "economy shop table (tea room); prices chosen"
@@ -4408,8 +4436,8 @@
     "lines": [
      "PERFORMANCES 5.15 AND 8.00",
      "SATURDAY ALSO 2.30",
-     "ALL SEATS £2.80",
-     "O.A.P. AND UNWAGED £1.50"
+     "ALL SEATS \u00a32.80",
+     "O.A.P. AND UNWAGED \u00a31.50"
     ],
     "src": "cloud-week posters T03"
    }
@@ -4421,14 +4449,14 @@
     "place": "mickeys",
     "title": "Mickey's fare card, on the counter",
     "lines": [
-     "MICKEY'S CARS · FARES",
-     "80p to start, then £1.10 a mile",
+     "MICKEY'S CARS \u00b7 FARES",
+     "80p to start, then \u00a31.10 a mile",
      "Nights 10 pm to 6 am and Sundays: add one quarter",
      "Waiting: 20p a minute after the first five",
      "Ring 960 418"
     ],
     "chosen": true,
-    "note": "the firm's fare: 80p then £1.10 a mile, a quarter more nights and Sundays (PRICES-WAGES-1990 section 2); the waiting charge is chosen",
+    "note": "the firm's fare: 80p then \u00a31.10 a mile, a quarter more nights and Sundays (PRICES-WAGES-1990 section 2); the waiting charge is chosen",
     "src": "economy file; 2.7.2; 1.7.3 (the cab office's board)"
    },
    {
@@ -4511,7 +4539,7 @@
     "INSERT COINS BEFORE DIALLING",
     "LOCAL CALLS 10p",
     "EMERGENCY: DIAL 999, NO COIN NEEDED",
-    "TIDEWIRE TELEPHONES · FAULTS: DIAL 151"
+    "TIDEWIRE TELEPHONES \u00b7 FAULTS: DIAL 151"
    ],
    "boxes": "map.json phone_boxes (landing, by Rita's, dock gate)",
    "chosen": true
@@ -4541,15 +4569,15 @@
     "AGAR & CO",
     "ESTATE AGENTS & SURVEYORS",
     "TO LET",
-    "SHOP AND PREMISES · APPROX. 520 SQ. FT.",
+    "SHOP AND PREMISES \u00b7 APPROX. 520 SQ. FT.",
     "ENQUIRIES 960 335"
    ],
-   "rent_if_asked": "£25 to £35 a week (economy section 3)",
+   "rent_if_asked": "\u00a325 to \u00a335 a week (economy section 3)",
    "src": "blueprint 4.9; cloud-week fascia target small_panels letting_board; L01",
    "chosen": true
   },
   "hours_plate_rule": {
-   "text_rule": "lines of day names, times H or H.MM and a dash, set from the town's opening hours (production/specs/hook-cast.json) at build time; never in a fixed word list",
+   "text_rule": "lines of day names, times H or H.MM and a dash, set from the town's opening hours (production/lane/blueprint/data/places.json hours) at build time; never in a fixed word list",
    "example": [
     "MON-SAT 9-5.30",
     "WED 9-1"
@@ -4564,26 +4592,74 @@
     "caff",
     "cold_stores",
     "waynes_pawn",
-    null,
     "chip_shop",
     "barber"
    ],
-   "src": "cloud-week fascia target hours_plate_rule"
+   "src": "cloud-week fascia target hours_plate_rule; places.json (opening hours)"
   },
   "content_rule_checked": "every text in this file was scanned against the canon content rule and the cloud-week real-marks list before writing; a record that must name a closed place does so by its map name only"
  },
  "open_points": [
-  "Paper name: The Meridian Pilot, minted here (chosen). The prototype's 'Evening Mail' is a real title and is retired; so is its cigarette 'Mariners' as a paper-shop line (kept as a fictional brand 'Mariner').",
-  "Six owed brands minted (chosen, for his tap): Hookside Rovers (club), The Meridian Pilot (paper), Cutter FM (pirate radio), Estuary Television (TV), Tidewire Telephones (operator, the kiosk's mark), Realm Post (postal cypher). The brand bible file (content/brands/brand-bible-v1.json) is not in the repository; the entries follow its field list.",
+  "Paper name: The Meridian Pilot, minted here (chosen). The prototype's 'Evening Mail' is a real title and is retired; its cigarette 'Mariner' is renamed Ashcombe (the Mariner is the boarded pub).",
+  "Six owed brands minted (chosen, for his tap): Hookside Rovers (club), The Meridian Pilot (paper), Cutter FM (pirate radio), Fenmarsh Television (TV; renamed from Estuary Television, which may be a real later channel), Tidewire Telephones (operator, the kiosk's mark), Realm Post (postal cypher). The brand bible file (content/brands/brand-bible-v1.json) is not in the repository; the entries follow its field list.",
   "Numbers and names in the frozen map override the cloud week's fascias: the older target numbered the newsagent 18, ironmonger 16, tea rooms 14 and used 'FISH MARKET', 'STEAM LAUNDRY' and 'FAMILY GROCER' as names; the map has Laverack's (3), the Washeteria (9), Hook Stores (11), Peart's (8), the ironmonger's (10), the Copper Kettle (12). The fascias here follow the map. The cloud week's pictures were built to the old names and will not match; the keeper should decide whether the pictures are rebuilt.",
   "The held names of the cloud week (the Sanderling Trio, the wrestlers' ring names, the Drill Hall, The Fourth Witness, A Week at Gullwing, Marshland Pictures, Meridian Against the Poll Tax, Quay Print) are adopted as chosen. The estate agent on the letting boards is Agar & Co, not the held Armitage & Stobbs, because the frozen map's estate agent is Agar's agents at 2 Cold Store Road.",
   "The telephone numbers use a six-digit local form (960 xxx). Mickey's is 960 418; the older target's '0632 960418' is not used (0632 is a real code).",
-  "The Drill Hall, the Exchange, the town hall, the Tivoli and Copper Row are not on the frozen map (off the Hook); posters name them as venues only.",
-  "Rent is £18 (blueprint 2.7.4 and economy), not the story bibles' £38. The rent man is minted as Mr Leonard Askew of Agar & Co's agents (chosen); the story frame lists Dawn Pybus as running for the rent collector.",
+  "The Drill Hall (wrestling), the Exchange, the Town Hall, the Tivoli and Copper Row are off the frozen map; posters name them as venues only. The boxing night is at the boxing club on The Quay (map plot quay_boxing).",
+  "Rent is \u00a318 (blueprint 2.7.4 and economy), not the story bibles' \u00a338. The rent man is minted as Mr Leonard Askew of Agar & Co's agents (chosen); the story frame lists Dawn Pybus as running for the rent collector.",
   "story_check: every letter or note that rests on a story beat (Mickey's letter, Agar's first and licence letters, the council's inspection and hearing, the Customs letter and its five mornings, the cold-store contract, the notes of June, Cammack and Ellis) is marked story_check and its date or day is chosen; the frame in production/lane/story/frame/ is a draft. The Customs officer's name Hebblewhite and Agar's clerk Ombler are the frame's proposals.",
   "Customs and Excise, the Value Added Tax Act 1983 and 999 are real public bodies, an Act and a number; the blueprint itself names Customs and Excise. No crest, logo or real person is shown.",
   "Items in the paper that report a fixed date but depend on a state (the 28 October assault, the licensing hearing, the Customs visits, the dock gate chain) carry print_if and print only when the state holds; the dock gate chaining on Saturday 1 December is the frame's proposal.",
-  "Prices in print: tea 30p, breakfast £1.80, dinner £2.50, fares 80p plus £1.10 a mile, the paper 25p, 20 cigarettes £1.70, fish and chips £1.60, milk 30p, loaf 52p, key cut £1.50, crowbar £6, torch £4, barber £4, rooms £25 a week, second-hand coats £15, jackets £45, overcoats £90 (economy files). Fish prices of the older target changed to cod £2.60 and haddock £2.40; the other prices are the older target's or chosen, marked.",
-  "The Tom story templates need Alison to hold the fact; their wording follows strength_wording. 'Kill' is only ever printed as a police statement about a body, never as a rumour."
- ]
+  "Prices in print: tea 30p, breakfast \u00a31.80, dinner \u00a32.50, fares 80p plus \u00a31.10 a mile, the paper 25p, 20 cigarettes \u00a31.70, fish and chips \u00a31.60, milk 30p, loaf 52p, key cut \u00a31.50, crowbar \u00a36, torch \u00a34, barber \u00a34, rooms \u00a325 a week, second-hand coats \u00a315, jackets \u00a345, overcoats \u00a390 (economy files). Fish prices of the older target changed to cod \u00a32.60 and haddock \u00a32.40; the other prices are the older target's or chosen, marked.",
+  "The Tom story templates need Alison to hold the fact; their wording follows strength_wording. 'Kill' is only ever printed as a police statement about a body, never as a rumour.",
+  "Review fixes (24 Nov): cold-store letter now before rung 3 (RT2-01); Rovers results made consistent (Northwold at home once, away on 1 December); five Customs mornings Monday 26 to Friday 30 November with five written-request letters and the books opened at five on the Friday; the licence hearing date is state-driven with the earlier letters anchored to it and held at the Town Hall; the chip shop is shut on Sundays; the Washeteria's last wash is 10.30 pm; the road diversion is by North Road and Back Parade and the lorries use the dock gate on Dock Road; hours plates point at places.json; no-agent boards carry no number.",
+  "Map update noted: Mickey's counter is open 07:00 to 23:00 and the door locked 23:00 to 07:00, so notes left at night go under the door; the rival bases are enterable.",
+  "All player-facing text uses {first}, {formal_first}, {first_initial}, {surname} and {called} fed from lead_name (defaults Tom, Thomas, T, Nowak, Tommy); the story lane may rename him.",
+  "The lead was renamed Frank Nowak in canon on 24 Nov; player text uses the name placeholders, defaults now Frank, Nowak, Frankie. Any remaining literal \"Tom\" in notes or ids is internal."
+ ],
+ "licence_schedule": {
+  "hearing_date_default": "Thursday 15 November 1990",
+  "driven_by": "the state: the hearing date is set when Agar's threat rung is reached; every letter below is anchored to it",
+  "anchors": [
+   {
+    "letter": "letter_agar_licence",
+    "date": "hearing minus 14 days"
+   },
+   {
+    "letter": "letter_council_inspection",
+    "date": "the inspection is hearing minus 7 days"
+   },
+   {
+    "letter": "letter_licence_hearing",
+    "date": "hearing minus 10 days"
+   },
+   {
+    "letter": "letter_licence_stands / letter_licence_suspended",
+    "date": "the day of the hearing"
+   },
+   {
+    "paper": "issue_09_e and issue_10_a",
+    "date": "print the committee date as the hearing date"
+   }
+  ],
+  "venue": "the Town Hall (the council offices), in the Exchange, off the frozen map; never Agar & Co's address",
+  "src": "RT2-18; reviewer fix 24 Nov",
+  "chosen": true
+ },
+ "lead_name": {
+  "first": "Frank",
+  "formal_first": "Frank",
+  "first_initial": "F",
+  "surname": "Nowak",
+  "called": "Frankie",
+  "where": "one cast field (the lead's name), read by every text that names him; the story lane may rename him; the defaults are these values",
+  "placeholders": {
+   "{first}": "Frank",
+   "{formal_first}": "Frank",
+   "{first_initial}": "F",
+   "{surname}": "Nowak",
+   "{called}": "Frankie"
+  },
+  "note": "Defaults set to canon of 24 Nov (the lead is Frank Nowak; the ladder: the new owner, Nowak, Frank, Frankie). formal_first is Frank until canon gives a longer form (open point)."
+ }
 }

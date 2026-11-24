@@ -9,7 +9,7 @@ from shapely.ops import unary_union
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 M = json.load(open(os.path.join(HERE, '..', 'map.json')))
-FAIL, OK = [], []
+FAIL, OK, WARN = [], [], []
 
 def check(cond, msg):
     (OK if cond else FAIL).append(msg)
@@ -28,7 +28,7 @@ for r in M['roads']:
         measured = r['built']['length_m'] if r['id'] == 'quay_street' else L
         dev = (measured - g) / g
         if r['id'].startswith('cut_'):
-            check(True, f"{r['id']}: {measured:.1f} m against G1 {g} m ({dev:+.0%}), G1's own Basin Road line fixes this distance (open point)")
+            WARN.append(f"{r['id']}: {measured:.1f} m against G1 {g} m ({dev:+.0%}): G1's own Basin Road line fixes this distance (open point, not a pass)")
         else:
             check(abs(dev) <= 0.05, f"{r['id']}: {measured:.1f} m against G1 {g} m ({dev:+.1%})")
     w = r.get('g1_width_m')
@@ -37,6 +37,13 @@ for r in M['roads']:
         check(abs(width - w) <= 1.0, f"{r['id']}: width {width} m against G1 {w} m")
 
 qs = roads['quay_street']['built']
+qpts = roads['quay_street']['pts']
+built_drawn = [p for p in qpts if 4.5 - 0.01 <= p[1] <= 52.5 + 0.01]
+check(abs(plen(built_drawn) - 48.0) < 0.01, f"Quay Street's drawn centre line holds the built 48 m between y 4.5 and 52.5 ({plen(built_drawn):.2f})")
+east = [p for p in M['plots'] if p['street'] == 'quay_street' and p['building'] and p['number'] and p['number'] % 2 == 1]
+west = [p for p in M['plots'] if p['street'] == 'quay_street' and p['building'] and p['number'] and p['number'] % 2 == 0 and p['number'] <= 12]
+check(all(abs(min(x for x, y in p['outline']) - 125.125) < 0.01 for p in east) and all(abs(max(x for x, y in p['outline']) - 114.875) < 0.01 for p in west),
+      'Quay Street drawn 10.25 m front to front (east frontage x 125.125, west 114.875)')
 check(qs['length_m'] == 48.0 and qs['front_to_front_m'] == 10.25 and qs['bay_m'] == 6.0 and qs['kerb_upstand_m'] == 0.115,
       'Quay Street as built: 48 m, 10.25 m front to front, 6 m bays, 115 mm kerb')
 qlamps = sorted([l for l in M['lamp_columns'] if l['road'] == 'quay_street'], key=lambda l: l['y'])
@@ -74,9 +81,16 @@ check(abs(cr - 548) <= 548 * 0.05, f'crossing by road {cr:.1f} m against 548 m')
 cf = nx.shortest_path_length(G, 'j_landing', 'j_north_edge', weight='length')
 check(abs(cf - 475) <= 475 * 0.05, f'crossing on foot {cf:.1f} m against 475 m')
 # the chase loop's six junctions shared with the other loops
-shared = set(loops['chase_loop']['nodes']) & (set(loops['basin_ring']['nodes']) | set(loops['parade_loop']['nodes']))
-check(len(set(loops['chase_loop']['nodes']) | set(loops['basin_ring']['nodes']) | set(loops['parade_loop']['nodes'])) >= 8,
-      f'the three loops meet at junctions ({len(shared)} of the chase loop\'s corners shared directly)')
+def loop_path(seq):
+    pth = []
+    for a, b in zip(seq, seq[1:]):
+        pth += nx.shortest_path(D, a, b, weight='length')[:-1]
+    return pth
+lp = {k: set(n for n in loop_path(loops[k]['nodes']) if nodes[n]['kind'] == 'junction' and D.degree(n) > 2) for k in ('chase_loop', 'basin_ring', 'parade_loop')}
+shared = (lp['chase_loop'] & lp['basin_ring']) | (lp['chase_loop'] & lp['parade_loop']) | (lp['basin_ring'] & lp['parade_loop'])
+check(len(shared) >= 6, f'the three loops share at least six drivable junctions, so a chase can change loop ({len(shared)}: {sorted(shared)})')
+comps = list(nx.connected_components(D))
+check(len(comps) == 1, f'the driving graph is one piece ({len(comps)} pieces; the smaller ones {[sorted(c)[:3] for c in sorted(comps, key=len)[:-1]][:3]})')
 
 # 3. every door reachable on foot from Mickey's front door; every place-door's street drivable or within 60 m of a drivable node
 start = 'n_d_qs_1'
@@ -108,6 +122,10 @@ def corridor(r):
     right = line.buffer(-rw, cap_style=2, single_sided=True)
     return unary_union([left, right])
 cors = {r['id']: corridor(r) for r in M['roads']}
+from shapely.geometry import box
+qr = roads['quay_road']
+bridge = LineString([(250, 0), (480, 0)]).buffer(qr['carriageway_m'] / 2.0 + 0.125 + 2.0, cap_style=2)
+cors['quay_road'] = unary_union([cors['quay_road'].difference(box(250, -50, 480, 50)), bridge])
 waters = [Polygon(w['poly']) for w in M['water']]
 polys = {p['id']: Polygon(p['outline']) for p in M['plots']}
 bad_shape = [k for k, v in polys.items() if not v.is_valid or v.area <= 0]
@@ -145,8 +163,6 @@ check(not wover, f'no plot stands in the water except the landing pontoon ({wove
 for rid, c in cors.items():
     for w, wd in zip(waters, M['water']):
         a = c.intersection(w).area
-        if rid == 'quay_road':
-            continue
         check(a < 0.5, f'{rid} keeps out of {wd["id"]} ({a:.1f} m2)')
 # road centre lines cross only at named junctions
 jxy = {(round(n['x'], 1), round(n['y'], 1)) for n in M['graph']['nodes'] if n['kind'] in ('junction', 'bend', 'vault')}
@@ -222,6 +238,24 @@ for e in M['quay_edges']:
         worst = max(worst, min(p.distance(q) for q in lads))
 check(worst <= 25, f'no point on a quay edge more than 25 m from a ladder (worst {worst:.1f} m)')
 
+# 8b. point features stand on land, outside every building (yards and lots allowed for posts and stalls)
+bpolys = [Polygon(p['outline']) for p in M['plots'] if p['building'] and not p.get('on_quay_apron')]
+def on_land(x, y):
+    q = Point(x, y)
+    return not any(w.contains(q) for w in waters)
+def in_bldg(x, y):
+    q = Point(x, y)
+    return any(b.contains(q) for b in bpolys)
+pts_all = [(k, f) for k in ('phone_boxes', 'turf_posts', 'lamp_columns', 'street_furniture', 'fishing_spots', 'name_plates', 'vault_places', 'police_points') for f in M[k]]
+wet = [f['id'] for k, f in pts_all if not on_land(f['x'], f['y'])]
+check(not wet, f'no point feature stands in the water ({wet[:6]})')
+inb = [f['id'] for k, f in pts_all if k not in ('landmarks',) and in_bldg(f['x'], f['y'])]
+check(not inb, f'no point feature stands inside a building ({inb[:6]})')
+wetp = [p['id'] for p in M['props']['items'] if not on_land(p['x'], p['y'])]
+check(not wetp, f'no prop stands in the water ({len(wetp)}: {wetp[:4]})')
+for rk in M['cab_ranks']:
+    check(all(on_land(x, y) and not in_bldg(x, y) for x, y in rk['pts']), f"rank {rk['id']} is on the kerb, on land")
+
 # 9. props: at least 5 per 10 m of every drivable road
 pc = Counter(p['kind'] for p in M['props']['items'])
 check(not (set(pc) & set(M['props']['forbidden'])), 'no forbidden prop kinds')
@@ -236,15 +270,15 @@ path = []
 seq = loops['chase_loop']['nodes']
 for a, b in zip(seq, seq[1:]):
     path += nx.shortest_path(D, a, b, weight='length')[:-1]
-stops = [n for n in path if nodes[n]['kind'] in ('junction',) or G.degree(n) > 2]
+stops = [n for n in path if D.degree(n) > 2]
 longest = 0
 acc = 0
 for a, b in zip(path, path[1:] + path[:1]):
-    acc += G[a][b]['length']
+    acc += D[a][b]['length']
     if b in stops:
         longest = max(longest, acc)
         acc = 0
-check(longest <= 290, f'the longest stretch of the chase loop with no junction, yard mouth or door is {longest:.0f} m (G1: 280)')
+check(longest <= 280 * 1.05, f'the longest stretch of the chase loop with no place a car can turn off is {longest:.0f} m (G1: 280, within 5%)')
 
 # 11. Quay Street's trades and canon's three sides
 qsp = {p['number']: p for p in M['plots'] if p['street'] == 'quay_street' and p['building'] and p['number']}
@@ -257,7 +291,9 @@ bad_words = ['bookmaker', 'betting', 'bookie', 'casino', 'arcade', 'bingo', 'off
 hits = [p['id'] for p in M['plots'] for w in bad_words if w in (p['name'] + ' ' + p['use'] + ' ' + p.get('note', '')).lower()]
 check(not hits, f'no plot is a drink or gambling place, nor holds children ({hits})')
 
-print(f"map.json: {len(OK)} checks passed, {len(FAIL)} failed")
+print(f"map.json: {len(OK)} checks passed, {len(FAIL)} failed, {len(WARN)} warnings (open points)")
+for m in WARN:
+    print('WARN', m)
 for m in FAIL:
     print('FAIL', m)
 if '-v' in sys.argv:

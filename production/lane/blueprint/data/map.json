@@ -722,27 +722,27 @@
    "poly": [
     [
      -100,
-     -7.5
+     -7.625
     ],
     [
      250,
-     -7.5
+     -7.625
     ],
     [
      250,
-     -4.5
+     -6.625
     ],
     [
      480,
-     -4.5
+     -6.625
     ],
     [
      480,
-     -7.5
+     -7.625
     ],
     [
      560,
-     -7.5
+     -7.625
     ],
     [
      560,
@@ -754,7 +754,7 @@
     ]
    ],
    "src": "G1 (the water lies south of the quay road)",
-   "note": "the stretch under the basin bridge (x 250 to 480) runs to the bridge's south parapet at y -4.5"
+   "note": "under the basin bridge (x 250 to 480) the water reaches the bridge's south parapet line at y -6.625"
   },
   {
    "id": "old_basin",
@@ -788,11 +788,11 @@
    "pts": [
     [
      -80,
-     -7.5
+     -7.625
     ],
     [
      250,
-     -7.5
+     -7.625
     ]
    ],
    "water": "sea",
@@ -806,11 +806,11 @@
    "pts": [
     [
      480,
-     -7.5
+     -7.625
     ],
     [
      540,
-     -7.5
+     -7.625
     ]
    ],
    "water": "sea",
@@ -2012,7 +2012,7 @@
    "street": "quay_road",
    "number": 9,
    "place": "widow_base",
-   "enterable": false,
+   "enterable": true,
    "src": "FIT-G1 (positions on the quay road where G1 names them); prototype way.js (names, landmarks); chosen",
    "note": "the fish dock's net store, the Widow's dock office over it (RT2-08)",
    "chosen": true
@@ -2827,7 +2827,7 @@
    "street": "coldstore_road",
    "number": 2,
    "place": "agar_base",
-   "enterable": false,
+   "enterable": true,
    "src": "RT2-08 (Agar's base: an estate agent's office on the cold-store road holding his papers)",
    "note": "plate glass, a brass plate; his papers in the back room"
   },
@@ -5129,7 +5129,7 @@
    "street": "north_road",
    "number": null,
    "place": "cammack_base",
-   "enterable": false,
+   "enterable": true,
    "src": "RT2-08; FIT-G1 (east side, y 290 to 320)",
    "note": "the north court of lock-ups on the cut; Danny Cammack's base (the end lock-up holds his things)",
    "chosen": true
@@ -6632,11 +6632,11 @@
    "outline": [
     [
      4,
-     -7.5
+     -7.625
     ],
     [
      26,
-     -7.5
+     -7.625
     ],
     [
      26,
@@ -7468,7 +7468,8 @@
    "locked": true,
    "kind": "gate",
    "src": "",
-   "note": "the pole across the yard mouth; past it is the working dock, off the map"
+   "note": "the pole across the yard mouth; past it is the working dock, off the map",
+   "vehicle_access": true
   },
   {
    "id": "d_wr_1",
@@ -7546,7 +7547,8 @@
    "locked": false,
    "kind": "loading",
    "src": "",
-   "note": "the loading doors at the back of the loading yard, whose mouth is at x 340; open on the shift"
+   "note": "the loading doors at the back of the loading yard, whose mouth is at x 340; open on the shift",
+   "vehicle_access": true
   },
   {
    "id": "d_cold_office",
@@ -7574,7 +7576,8 @@
    "kind": "gate",
    "src": "",
    "note": "the lot's open front on North Road",
-   "chosen": true
+   "chosen": true,
+   "vehicle_access": true
   },
   {
    "id": "d_lot_hut",
@@ -7600,7 +7603,8 @@
    "locked": false,
    "kind": "workshop",
    "src": "",
-   "chosen": true
+   "chosen": true,
+   "vehicle_access": true
   },
   {
    "id": "d_cs_5",
@@ -8422,7 +8426,8 @@
    "locked": false,
    "kind": "yard_gate",
    "src": "",
-   "chosen": true
+   "chosen": true,
+   "vehicle_access": true
   },
   {
    "id": "d_nr_13",
@@ -8683,7 +8688,8 @@
    "kind": "garage",
    "src": "",
    "note": "a lock-up's up-and-over door on the cut",
-   "chosen": true
+   "chosen": true,
+   "opens_on": "cut_300"
   },
   {
    "id": "d_lockup_2",
@@ -8697,49 +8703,53 @@
    "kind": "garage",
    "src": "",
    "note": "a lock-up's up-and-over door on the cut",
-   "chosen": true
+   "chosen": true,
+   "opens_on": "cut_300"
   },
   {
    "id": "d_lockup_3",
    "plot": "cammack_lockups",
-   "x": 170.625,
-   "y": 301,
-   "facing": 180,
+   "x": 166.625,
+   "y": 305,
+   "facing": 270,
    "street": "north_road",
    "number": null,
    "locked": true,
    "kind": "garage",
    "src": "",
-   "note": "a lock-up's up-and-over door on the cut",
-   "chosen": true
+   "note": "a lock-up's up-and-over door on North Road; a car can be driven in",
+   "chosen": true,
+   "vehicle_access": true
   },
   {
    "id": "d_lockup_4",
    "plot": "cammack_lockups",
-   "x": 178.625,
-   "y": 301,
-   "facing": 180,
+   "x": 166.625,
+   "y": 310,
+   "facing": 270,
    "street": "north_road",
    "number": null,
    "locked": true,
    "kind": "garage",
    "src": "",
-   "note": "a lock-up's up-and-over door on the cut",
-   "chosen": true
+   "note": "a lock-up's up-and-over door on North Road; a car can be driven in",
+   "chosen": true,
+   "vehicle_access": true
   },
   {
    "id": "d_lockup_5",
    "plot": "cammack_lockups",
-   "x": 186.625,
-   "y": 301,
-   "facing": 180,
+   "x": 166.625,
+   "y": 315,
+   "facing": 270,
    "street": "north_road",
    "number": null,
    "locked": true,
    "kind": "garage",
    "src": "",
-   "note": "a lock-up's up-and-over door on the cut",
-   "chosen": true
+   "note": "a lock-up's up-and-over door on North Road; a car can be driven in",
+   "chosen": true,
+   "vehicle_access": true
   },
   {
    "id": "d_nr_53",
@@ -9360,7 +9370,7 @@
    "id": "d_landing_gangway",
    "plot": "ferry_landing",
    "x": 15,
-   "y": -7.5,
+   "y": -7.625,
    "facing": 0,
    "street": "quay_road",
    "number": null,
@@ -10810,7 +10820,7 @@
    "id": "ladder_sea_west_1",
    "kind": "quay_ladder",
    "x": -61.667,
-   "y": -7.5,
+   "y": -7.625,
    "edge": "edge_sea_west",
    "src": "4.2.4 (a man put in climbs out at the nearest ladder); chosen spacing",
    "chosen": true
@@ -10819,7 +10829,7 @@
    "id": "ladder_sea_west_2",
    "kind": "quay_ladder",
    "x": -25.0,
-   "y": -7.5,
+   "y": -7.625,
    "edge": "edge_sea_west",
    "src": "4.2.4 (a man put in climbs out at the nearest ladder); chosen spacing",
    "chosen": true
@@ -10828,7 +10838,7 @@
    "id": "ladder_sea_west_3",
    "kind": "quay_ladder",
    "x": 11.667,
-   "y": -7.5,
+   "y": -7.625,
    "edge": "edge_sea_west",
    "src": "4.2.4 (a man put in climbs out at the nearest ladder); chosen spacing",
    "chosen": true
@@ -10837,7 +10847,7 @@
    "id": "ladder_sea_west_4",
    "kind": "quay_ladder",
    "x": 48.333,
-   "y": -7.5,
+   "y": -7.625,
    "edge": "edge_sea_west",
    "src": "4.2.4 (a man put in climbs out at the nearest ladder); chosen spacing",
    "chosen": true
@@ -10846,7 +10856,7 @@
    "id": "ladder_sea_west_5",
    "kind": "quay_ladder",
    "x": 85.0,
-   "y": -7.5,
+   "y": -7.625,
    "edge": "edge_sea_west",
    "src": "4.2.4 (a man put in climbs out at the nearest ladder); chosen spacing",
    "chosen": true
@@ -10855,7 +10865,7 @@
    "id": "ladder_sea_west_6",
    "kind": "quay_ladder",
    "x": 121.667,
-   "y": -7.5,
+   "y": -7.625,
    "edge": "edge_sea_west",
    "src": "4.2.4 (a man put in climbs out at the nearest ladder); chosen spacing",
    "chosen": true
@@ -10864,7 +10874,7 @@
    "id": "ladder_sea_west_7",
    "kind": "quay_ladder",
    "x": 158.333,
-   "y": -7.5,
+   "y": -7.625,
    "edge": "edge_sea_west",
    "src": "4.2.4 (a man put in climbs out at the nearest ladder); chosen spacing",
    "chosen": true
@@ -10873,7 +10883,7 @@
    "id": "ladder_sea_west_8",
    "kind": "quay_ladder",
    "x": 195.0,
-   "y": -7.5,
+   "y": -7.625,
    "edge": "edge_sea_west",
    "src": "4.2.4 (a man put in climbs out at the nearest ladder); chosen spacing",
    "chosen": true
@@ -10882,7 +10892,7 @@
    "id": "ladder_sea_west_9",
    "kind": "quay_ladder",
    "x": 231.667,
-   "y": -7.5,
+   "y": -7.625,
    "edge": "edge_sea_west",
    "src": "4.2.4 (a man put in climbs out at the nearest ladder); chosen spacing",
    "chosen": true
@@ -10891,7 +10901,7 @@
    "id": "ladder_sea_east_1",
    "kind": "quay_ladder",
    "x": 495.0,
-   "y": -7.5,
+   "y": -7.625,
    "edge": "edge_sea_east",
    "src": "4.2.4 (a man put in climbs out at the nearest ladder); chosen spacing",
    "chosen": true
@@ -10900,7 +10910,7 @@
    "id": "ladder_sea_east_2",
    "kind": "quay_ladder",
    "x": 525.0,
-   "y": -7.5,
+   "y": -7.625,
    "edge": "edge_sea_east",
    "src": "4.2.4 (a man put in climbs out at the nearest ladder); chosen spacing",
    "chosen": true
@@ -11091,7 +11101,7 @@
    "id": "bollard_sea_west_1",
    "kind": "mooring_bollard",
    "x": -72.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11100,7 +11110,7 @@
    "id": "bollard_sea_west_2",
    "kind": "mooring_bollard",
    "x": -57.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11109,7 +11119,7 @@
    "id": "bollard_sea_west_3",
    "kind": "mooring_bollard",
    "x": -42.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11118,7 +11128,7 @@
    "id": "bollard_sea_west_4",
    "kind": "mooring_bollard",
    "x": -27.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11127,7 +11137,7 @@
    "id": "bollard_sea_west_5",
    "kind": "mooring_bollard",
    "x": -12.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11136,7 +11146,7 @@
    "id": "bollard_sea_west_6",
    "kind": "mooring_bollard",
    "x": 2.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11145,7 +11155,7 @@
    "id": "bollard_sea_west_7",
    "kind": "mooring_bollard",
    "x": 17.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11154,7 +11164,7 @@
    "id": "bollard_sea_west_8",
    "kind": "mooring_bollard",
    "x": 32.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11163,7 +11173,7 @@
    "id": "bollard_sea_west_9",
    "kind": "mooring_bollard",
    "x": 47.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11172,7 +11182,7 @@
    "id": "bollard_sea_west_10",
    "kind": "mooring_bollard",
    "x": 62.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11181,7 +11191,7 @@
    "id": "bollard_sea_west_11",
    "kind": "mooring_bollard",
    "x": 77.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11190,7 +11200,7 @@
    "id": "bollard_sea_west_12",
    "kind": "mooring_bollard",
    "x": 92.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11199,7 +11209,7 @@
    "id": "bollard_sea_west_13",
    "kind": "mooring_bollard",
    "x": 107.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11208,7 +11218,7 @@
    "id": "bollard_sea_west_14",
    "kind": "mooring_bollard",
    "x": 122.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11217,7 +11227,7 @@
    "id": "bollard_sea_west_15",
    "kind": "mooring_bollard",
    "x": 137.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11226,7 +11236,7 @@
    "id": "bollard_sea_west_16",
    "kind": "mooring_bollard",
    "x": 152.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11235,7 +11245,7 @@
    "id": "bollard_sea_west_17",
    "kind": "mooring_bollard",
    "x": 167.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11244,7 +11254,7 @@
    "id": "bollard_sea_west_18",
    "kind": "mooring_bollard",
    "x": 182.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11253,7 +11263,7 @@
    "id": "bollard_sea_west_19",
    "kind": "mooring_bollard",
    "x": 197.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11262,7 +11272,7 @@
    "id": "bollard_sea_west_20",
    "kind": "mooring_bollard",
    "x": 212.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11271,7 +11281,7 @@
    "id": "bollard_sea_west_21",
    "kind": "mooring_bollard",
    "x": 227.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11280,7 +11290,7 @@
    "id": "bollard_sea_west_22",
    "kind": "mooring_bollard",
    "x": 242.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_west",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11289,7 +11299,7 @@
    "id": "bollard_sea_east_1",
    "kind": "mooring_bollard",
    "x": 487.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_east",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11298,7 +11308,7 @@
    "id": "bollard_sea_east_2",
    "kind": "mooring_bollard",
    "x": 502.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_east",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11307,7 +11317,7 @@
    "id": "bollard_sea_east_3",
    "kind": "mooring_bollard",
    "x": 517.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_east",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -11316,7 +11326,7 @@
    "id": "bollard_sea_east_4",
    "kind": "mooring_bollard",
    "x": 532.5,
-   "y": -6.9,
+   "y": -7.025,
    "edge": "edge_sea_east",
    "src": "4.2.1; chosen spacing",
    "chosen": true
@@ -12003,7 +12013,7 @@
   {
    "id": "post_dock_gate",
    "kind": "turf_post",
-   "x": 547.6,
+   "x": 546.2,
    "y": 204.0,
    "hours": "06:00-22:00",
    "src": "RT2-09"
@@ -12193,11 +12203,11 @@
     "pts": [
      [
       4,
-      -7.7
+      -7.825
      ],
      [
       26,
-      -7.7
+      -7.825
      ]
     ],
     "height_m": 1.0,
@@ -12462,16 +12472,16 @@
    "id": "bus_stop_qs",
    "kind": "bus_stop",
    "x": 116.4,
-   "y": 18.5,
+   "y": 34.5,
    "src": "prototype (the shelter by the lamp, opposite the launderette); chosen place",
    "chosen": true
   },
   {
-   "id": "bench_triangle",
+   "id": "bench_quay",
    "kind": "bench",
-   "x": 92.0,
-   "y": 7.6,
-   "src": "chosen (the triangle by the ginnel's mouth)",
+   "x": 100.0,
+   "y": 5.6,
+   "src": "chosen (on The Quay's north pavement by the ginnel's mouth)",
    "chosen": true
   },
   {
@@ -12496,7 +12506,7 @@
    "id": "fishing_quay_east",
    "kind": "fishing_spot",
    "x": 200.0,
-   "y": -6.9,
+   "y": -7.025,
    "src": "24 Nov pastimes ruling (fishing off the quay)",
    "chosen": true
   },
@@ -12504,7 +12514,7 @@
    "id": "fishing_quay_west",
    "kind": "fishing_spot",
    "x": 160.0,
-   "y": -6.9,
+   "y": -7.025,
    "src": "24 Nov pastimes ruling",
    "chosen": true
   },
@@ -13418,14 +13428,14 @@
     "id": "prop_quay_road_126",
     "kind": "sign",
     "x": 250.622,
-    "y": -5.491,
+    "y": -5.255,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_127",
     "kind": "sign",
     "x": 252.078,
-    "y": -5.977,
+    "y": -5.539,
     "road": "quay_road"
    },
    {
@@ -13467,14 +13477,14 @@
     "id": "prop_quay_road_133",
     "kind": "crates",
     "x": 264.083,
-    "y": -6.409,
+    "y": -5.791,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_134",
     "kind": "tub",
     "x": 266.495,
-    "y": -5.323,
+    "y": -5.157,
     "road": "quay_road"
    },
    {
@@ -13488,7 +13498,7 @@
     "id": "prop_quay_road_136",
     "kind": "bench",
     "x": 271.86,
-    "y": -5.866,
+    "y": -5.474,
     "road": "quay_road"
    },
    {
@@ -13509,14 +13519,14 @@
     "id": "prop_quay_road_139",
     "kind": "sign",
     "x": 276.473,
-    "y": -6.774,
+    "y": -6.004,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_140",
     "kind": "litter",
     "x": 278.08,
-    "y": -5.552,
+    "y": -5.291,
     "road": "quay_road"
    },
    {
@@ -13537,7 +13547,7 @@
     "id": "prop_quay_road_143",
     "kind": "dustbin",
     "x": 285.985,
-    "y": -5.692,
+    "y": -5.372,
     "road": "quay_road"
    },
    {
@@ -13558,7 +13568,7 @@
     "id": "prop_quay_road_146",
     "kind": "crates",
     "x": 290.164,
-    "y": -5.09,
+    "y": -5.021,
     "road": "quay_road"
    },
    {
@@ -13572,7 +13582,7 @@
     "id": "prop_quay_road_148",
     "kind": "bicycle",
     "x": 295.16,
-    "y": -7.199,
+    "y": -6.251,
     "road": "quay_road"
    },
    {
@@ -13593,21 +13603,21 @@
     "id": "prop_quay_road_151",
     "kind": "fish_boxes",
     "x": 300.114,
-    "y": -5.453,
+    "y": -5.233,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_152",
     "kind": "bench",
     "x": 303.346,
-    "y": -5.544,
+    "y": -5.286,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_153",
     "kind": "sign",
     "x": 305.746,
-    "y": -6.11,
+    "y": -5.616,
     "road": "quay_road"
    },
    {
@@ -13621,28 +13631,28 @@
     "id": "prop_quay_road_155",
     "kind": "crates",
     "x": 308.192,
-    "y": -5.205,
+    "y": -5.088,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_156",
     "kind": "grit_bin",
     "x": 310.223,
-    "y": -5.936,
+    "y": -5.515,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_157",
     "kind": "sign",
     "x": 313.05,
-    "y": -6.564,
+    "y": -5.881,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_158",
     "kind": "bench",
     "x": 315.815,
-    "y": -6.58,
+    "y": -5.89,
     "road": "quay_road"
    },
    {
@@ -13656,21 +13666,21 @@
     "id": "prop_quay_road_160",
     "kind": "crates",
     "x": 318.8,
-    "y": -5.563,
+    "y": -5.297,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_161",
     "kind": "crates",
     "x": 321.05,
-    "y": -5.146,
+    "y": -5.054,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_162",
     "kind": "grit_bin",
     "x": 322.951,
-    "y": -7.301,
+    "y": -6.311,
     "road": "quay_road"
    },
    {
@@ -13684,14 +13694,14 @@
     "id": "prop_quay_road_164",
     "kind": "sign",
     "x": 326.315,
-    "y": -7.22,
+    "y": -6.263,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_165",
     "kind": "bicycle",
     "x": 329.899,
-    "y": -7.103,
+    "y": -6.195,
     "road": "quay_road"
    },
    {
@@ -13726,7 +13736,7 @@
     "id": "prop_quay_road_170",
     "kind": "grit_bin",
     "x": 338.205,
-    "y": -6.258,
+    "y": -5.702,
     "road": "quay_road"
    },
    {
@@ -13740,7 +13750,7 @@
     "id": "prop_quay_road_172",
     "kind": "dustbin",
     "x": 342.902,
-    "y": -6.377,
+    "y": -5.772,
     "road": "quay_road"
    },
    {
@@ -13754,7 +13764,7 @@
     "id": "prop_quay_road_174",
     "kind": "dustbin",
     "x": 346.012,
-    "y": -6.578,
+    "y": -5.889,
     "road": "quay_road"
    },
    {
@@ -13775,7 +13785,7 @@
     "id": "prop_quay_road_177",
     "kind": "bicycle",
     "x": 352.59,
-    "y": -7.048,
+    "y": -6.163,
     "road": "quay_road"
    },
    {
@@ -13789,14 +13799,14 @@
     "id": "prop_quay_road_179",
     "kind": "bicycle",
     "x": 356.793,
-    "y": -6.659,
+    "y": -5.936,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_180",
     "kind": "sign",
     "x": 358.895,
-    "y": -6.674,
+    "y": -5.945,
     "road": "quay_road"
    },
    {
@@ -13810,21 +13820,21 @@
     "id": "prop_quay_road_182",
     "kind": "dustbin",
     "x": 363.522,
-    "y": -5.177,
+    "y": -5.072,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_183",
     "kind": "sign",
     "x": 365.743,
-    "y": -6.065,
+    "y": -5.59,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_184",
     "kind": "litter",
     "x": 367.1,
-    "y": -7.13,
+    "y": -6.211,
     "road": "quay_road"
    },
    {
@@ -13845,21 +13855,21 @@
     "id": "prop_quay_road_187",
     "kind": "crates",
     "x": 373.087,
-    "y": -5.68,
+    "y": -5.366,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_188",
     "kind": "sign",
     "x": 374.082,
-    "y": -6.414,
+    "y": -5.794,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_189",
     "kind": "bicycle",
     "x": 376.915,
-    "y": -7.147,
+    "y": -6.221,
     "road": "quay_road"
    },
    {
@@ -13873,7 +13883,7 @@
     "id": "prop_quay_road_191",
     "kind": "dustbin",
     "x": 381.836,
-    "y": -7.223,
+    "y": -6.266,
     "road": "quay_road"
    },
    {
@@ -13887,7 +13897,7 @@
     "id": "prop_quay_road_193",
     "kind": "dustbin",
     "x": 384.539,
-    "y": -6.544,
+    "y": -5.87,
     "road": "quay_road"
    },
    {
@@ -13908,7 +13918,7 @@
     "id": "prop_quay_road_196",
     "kind": "crates",
     "x": 390.376,
-    "y": -6.125,
+    "y": -5.625,
     "road": "quay_road"
    },
    {
@@ -13922,7 +13932,7 @@
     "id": "prop_quay_road_198",
     "kind": "grit_bin",
     "x": 394.096,
-    "y": -5.769,
+    "y": -5.417,
     "road": "quay_road"
    },
    {
@@ -13950,7 +13960,7 @@
     "id": "prop_quay_road_202",
     "kind": "dustbin",
     "x": 402.932,
-    "y": -5.512,
+    "y": -5.267,
     "road": "quay_road"
    },
    {
@@ -13971,7 +13981,7 @@
     "id": "prop_quay_road_205",
     "kind": "litter",
     "x": 409.387,
-    "y": -6.587,
+    "y": -5.895,
     "road": "quay_road"
    },
    {
@@ -13999,7 +14009,7 @@
     "id": "prop_quay_road_209",
     "kind": "bench",
     "x": 417.444,
-    "y": -5.617,
+    "y": -5.329,
     "road": "quay_road"
    },
    {
@@ -14034,28 +14044,28 @@
     "id": "prop_quay_road_214",
     "kind": "dustbin",
     "x": 427.233,
-    "y": -6.856,
+    "y": -6.052,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_215",
     "kind": "dustbin",
     "x": 429.192,
-    "y": -5.019,
+    "y": -4.98,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_216",
     "kind": "dustbin",
     "x": 430.273,
-    "y": -7.272,
+    "y": -6.294,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_217",
     "kind": "tub",
     "x": 432.455,
-    "y": -4.94,
+    "y": -4.934,
     "road": "quay_road"
    },
    {
@@ -14076,14 +14086,14 @@
     "id": "prop_quay_road_220",
     "kind": "grit_bin",
     "x": 439.474,
-    "y": -6.673,
+    "y": -5.944,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_221",
     "kind": "litter",
     "x": 441.706,
-    "y": -6.315,
+    "y": -5.736,
     "road": "quay_road"
    },
    {
@@ -14097,7 +14107,7 @@
     "id": "prop_quay_road_223",
     "kind": "sign",
     "x": 444.893,
-    "y": -6.338,
+    "y": -5.749,
     "road": "quay_road"
    },
    {
@@ -14146,21 +14156,21 @@
     "id": "prop_quay_road_230",
     "kind": "bench",
     "x": 459.844,
-    "y": -5.741,
+    "y": -5.401,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_231",
     "kind": "sign",
     "x": 461.303,
-    "y": -6.187,
+    "y": -5.661,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_232",
     "kind": "sign",
     "x": 463.3,
-    "y": -6.596,
+    "y": -5.9,
     "road": "quay_road"
    },
    {
@@ -14174,14 +14184,14 @@
     "id": "prop_quay_road_234",
     "kind": "crates",
     "x": 466.602,
-    "y": -6.107,
+    "y": -5.615,
     "road": "quay_road"
    },
    {
     "id": "prop_quay_road_235",
     "kind": "fish_boxes",
     "x": 468.423,
-    "y": -5.472,
+    "y": -5.244,
     "road": "quay_road"
    },
    {
@@ -24519,7 +24529,7 @@
    {
     "id": "n_d_landing_gangway",
     "x": 15,
-    "y": -7.5,
+    "y": -7.625,
     "kind": "door",
     "door": "d_landing_gangway"
    },
@@ -24539,22 +24549,22 @@
    },
    {
     "id": "n_d_lockup_3",
-    "x": 170.625,
-    "y": 301,
+    "x": 166.625,
+    "y": 305,
     "kind": "door",
     "door": "d_lockup_3"
    },
    {
     "id": "n_d_lockup_4",
-    "x": 178.625,
-    "y": 301,
+    "x": 166.625,
+    "y": 310,
     "kind": "door",
     "door": "d_lockup_4"
    },
    {
     "id": "n_d_lockup_5",
-    "x": 186.625,
-    "y": 301,
+    "x": 166.625,
+    "y": 315,
     "kind": "door",
     "door": "d_lockup_5"
    },
@@ -25932,22 +25942,22 @@
    },
    {
     "id": "n_door_d_lockup_3",
-    "x": 170.625,
-    "y": 300.0,
+    "x": 160.0,
+    "y": 305.0,
     "kind": "door_anchor",
     "door": "d_lockup_3"
    },
    {
     "id": "n_door_d_lockup_4",
-    "x": 178.625,
-    "y": 300.0,
+    "x": 160.0,
+    "y": 310.0,
     "kind": "door_anchor",
     "door": "d_lockup_4"
    },
    {
     "id": "n_door_d_lockup_5",
-    "x": 186.625,
-    "y": 300.0,
+    "x": 160.0,
+    "y": 315.0,
     "kind": "door_anchor",
     "door": "d_lockup_5"
    },
@@ -26713,12 +26723,6 @@
     "y": 324.688,
     "kind": "door_anchor",
     "door": "d_wr_7"
-   },
-   {
-    "id": "n_lot_entrance",
-    "x": 160.0,
-    "y": 375.0,
-    "kind": "door_anchor"
    },
    {
     "id": "n_vault_cut_150",
@@ -27535,9 +27539,33 @@
    },
    {
     "a": "j_cut300_west",
+    "b": "n_door_d_lockup_3",
+    "road": "north_road",
+    "length_m": 5.0,
+    "foot_only": false,
+    "vault": null
+   },
+   {
+    "a": "n_door_d_lockup_3",
+    "b": "n_door_d_lockup_4",
+    "road": "north_road",
+    "length_m": 5.0,
+    "foot_only": false,
+    "vault": null
+   },
+   {
+    "a": "n_door_d_lockup_4",
+    "b": "n_door_d_lockup_5",
+    "road": "north_road",
+    "length_m": 5.0,
+    "foot_only": false,
+    "vault": null
+   },
+   {
+    "a": "n_door_d_lockup_5",
     "b": "n_door_d_nr_53",
     "road": "north_road",
-    "length_m": 27.0,
+    "length_m": 12.0,
     "foot_only": false,
     "vault": null
    },
@@ -28523,7 +28551,7 @@
     "road": "ginnel",
     "length_m": 2.334,
     "foot_only": true,
-    "vault": "vault_ginnel_backs"
+    "vault": null
    },
    {
     "a": "n_vault_ginnel_backs",
@@ -28531,7 +28559,7 @@
     "road": "ginnel",
     "length_m": 3.861,
     "foot_only": true,
-    "vault": "vault_ginnel_backs"
+    "vault": null
    },
    {
     "a": "n_door_d_qs_12_yardgate",
@@ -28539,7 +28567,7 @@
     "road": "ginnel",
     "length_m": 118.991,
     "foot_only": true,
-    "vault": "vault_ginnel_bins"
+    "vault": null
    },
    {
     "a": "n_vault_ginnel_bins",
@@ -28547,7 +28575,7 @@
     "road": "ginnel",
     "length_m": 104.27,
     "foot_only": true,
-    "vault": "vault_ginnel_bins"
+    "vault": null
    },
    {
     "a": "j_ginnel_chapel",
@@ -28555,7 +28583,7 @@
     "road": "ginnel",
     "length_m": 36.541,
     "foot_only": true,
-    "vault": "vault_ginnel_fence"
+    "vault": null
    },
    {
     "a": "n_vault_ginnel_fence",
@@ -28563,7 +28591,7 @@
     "road": "ginnel",
     "length_m": 36.541,
     "foot_only": true,
-    "vault": "vault_ginnel_fence"
+    "vault": null
    },
    {
     "a": "j_cut150_east",
@@ -28571,7 +28599,7 @@
     "road": "cut_150",
     "length_m": 36.427,
     "foot_only": true,
-    "vault": "vault_cut_150"
+    "vault": null
    },
    {
     "a": "n_vault_cut_150",
@@ -28579,7 +28607,7 @@
     "road": "cut_150",
     "length_m": 36.43,
     "foot_only": true,
-    "vault": "vault_cut_150"
+    "vault": null
    },
    {
     "a": "j_cut300_east",
@@ -28587,53 +28615,29 @@
     "road": "cut_300",
     "length_m": 27.854,
     "foot_only": true,
-    "vault": "vault_cut_300"
+    "vault": null
    },
    {
     "a": "n_vault_cut_300",
-    "b": "n_door_d_lockup_5",
-    "road": "cut_300",
-    "length_m": 1.235,
-    "foot_only": true,
-    "vault": "vault_cut_300"
-   },
-   {
-    "a": "n_door_d_lockup_5",
     "b": "n_door_d_lockup_2",
     "road": "cut_300",
-    "length_m": 6.0,
+    "length_m": 7.235,
     "foot_only": true,
     "vault": null
    },
    {
     "a": "n_door_d_lockup_2",
-    "b": "n_door_d_lockup_4",
-    "road": "cut_300",
-    "length_m": 2.0,
-    "foot_only": true,
-    "vault": null
-   },
-   {
-    "a": "n_door_d_lockup_4",
     "b": "n_door_d_lockup_1",
     "road": "cut_300",
-    "length_m": 6.0,
+    "length_m": 8.0,
     "foot_only": true,
     "vault": null
    },
    {
     "a": "n_door_d_lockup_1",
-    "b": "n_door_d_lockup_3",
-    "road": "cut_300",
-    "length_m": 2.0,
-    "foot_only": true,
-    "vault": null
-   },
-   {
-    "a": "n_door_d_lockup_3",
     "b": "j_cut300_west",
     "road": "cut_300",
-    "length_m": 10.625,
+    "length_m": 12.625,
     "foot_only": true,
     "vault": null
    },
@@ -28952,7 +28956,7 @@
     "a": "n_d_dock_gate",
     "b": "j_dock_gate",
     "length_m": 7.125,
-    "foot_only": true,
+    "foot_only": false,
     "kind": "door_link"
    },
    {
@@ -28994,7 +28998,7 @@
     "a": "n_d_cold_yard",
     "b": "j_cold_yard_mouth",
     "length_m": 22.0,
-    "foot_only": true,
+    "foot_only": false,
     "kind": "door_link"
    },
    {
@@ -29008,7 +29012,7 @@
     "a": "n_d_lot_gate",
     "b": "n_door_d_lot_gate",
     "length_m": 6.625,
-    "foot_only": true,
+    "foot_only": false,
     "kind": "door_link"
    },
    {
@@ -29022,7 +29026,7 @@
     "a": "n_d_cs_3",
     "b": "n_door_d_cs_3",
     "length_m": 6.625,
-    "foot_only": true,
+    "foot_only": false,
     "kind": "door_link"
    },
    {
@@ -29456,7 +29460,7 @@
     "a": "n_d_nr_11",
     "b": "n_door_d_nr_11",
     "length_m": 6.625,
-    "foot_only": true,
+    "foot_only": false,
     "kind": "door_link"
    },
    {
@@ -29609,22 +29613,22 @@
    {
     "a": "n_d_lockup_3",
     "b": "n_door_d_lockup_3",
-    "length_m": 1.0,
-    "foot_only": true,
+    "length_m": 6.625,
+    "foot_only": false,
     "kind": "door_link"
    },
    {
     "a": "n_d_lockup_4",
     "b": "n_door_d_lockup_4",
-    "length_m": 1.0,
-    "foot_only": true,
+    "length_m": 6.625,
+    "foot_only": false,
     "kind": "door_link"
    },
    {
     "a": "n_d_lockup_5",
     "b": "n_door_d_lockup_5",
-    "length_m": 1.0,
-    "foot_only": true,
+    "length_m": 6.625,
+    "foot_only": false,
     "kind": "door_link"
    },
    {
@@ -29959,7 +29963,7 @@
    {
     "a": "n_d_landing_gangway",
     "b": "n_door_d_landing_gangway",
-    "length_m": 7.5,
+    "length_m": 7.625,
     "foot_only": true,
     "kind": "door_link"
    },
@@ -30198,8 +30202,8 @@
    },
    {
     "a": "n_d_lot_hut",
-    "b": "n_lot_entrance",
-    "length_m": 37.108,
+    "b": "n_d_lot_gate",
+    "length_m": 30.723,
     "foot_only": false,
     "kind": "across_lot"
    },
@@ -30240,6 +30244,10 @@
   "Bay 2 is Rita's pawn (hook-cast.json and the built fascia); the blueprint also names Wayne Harrison's pawn (4.3.3, 2.7). Both are kept: Rita's on Quay Street, Wayne's on North Road. The keeper should confirm two pawns are meant.",
   "The chip shop is \"on the parade\" (G10) but the six parade bays are all taken (Mickey's and the five ruled or built trades); it stands at the top of the parade on Back Parade's north side.",
   "RT2-19 puts a phone box \"at the parade's north end\"; the built KX100 kiosk stands at street x 16.5 by Rita's (RULINGS 2 Oct: the phone box stays). The built place is kept.",
+  "The chandler's shop stands on Quay Street (the built east_chandler bay, ruling 3 Oct); G1 and 4.3.3 put \"the chandler's\" on the quay road at 190 to 230 with the boxing club behind. Here that quay road plot is the chandler's store (a warehouse) beside the boxing club's hall.",
+  "Added to the built street: the builder's store at 14 Quay Street (the top of the west side, which the scene file leaves empty) and the bus stop on the west pavement at street x 30 (from the prototype). Both are the map's choices, not the built street's.",
+  "The parade's yard gates open on the yards' lane, which runs behind the yards; G1 lists \"the parade's back doors and yard gates\" on Back Parade's south side, but Back Parade passes the top of the parade, not behind it.",
+  "The longest drivable stretch on the chase loop is measured by check_map.py, counting only places a car can turn off (junctions and vehicle entrances such as the builders' merchant's yard, the dock gate's yard mouth and the cold stores' loading yard).",
   "G3 puts the north soft edge at y 440; G1's table and footprint end North Road at y 400. The plan uses 400."
  ]
 }

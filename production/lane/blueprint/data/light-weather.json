@@ -30,7 +30,6 @@
  ],
  "open_points": [
   "Place: canon names no region or latitude. The sun times use Hull, 53.74 N (the brief), where LIGHT-WEATHER-VALUES used 54.6 N (Tynemouth weather). Hull sunset on 17 Nov is about 16:01 either way within 3 minutes; weather anchors (rain days) are still Tynemouth's. Not canon.",
-  "Clock change: BST ended at 02:00 on Sun 28 Oct 1990. The day table is in local civil time, so game clock 18:05 sunset on Sat 27 Oct becomes 16:37 on Sun 28 Oct. The build should either model clocks going back that night (an hour repeated) or hold the whole story on GMT (then add 60 minutes to every BST row before 28 Oct; sunset on 15 Oct would read 17:05). Needs a ruling; neither is in the blueprint.",
   "Old 'dusk at 18.25 to night at 19.75' in the prototype (rules.js time) is for a fixed unnamed date and is replaced by the sun-elevation curves here.",
   "Prototype had five weathers (dry, drizzle, rain, heavy, mist). Ruling 5 Oct names three; heavy rain is the 'rain' profile and mist is folded into each profile's mist value. Night mist (prototype) is dropped.",
   "Photocell on 70, off 35 lux is the SC 1000 figure; that 1990 lamps used it is a guess (LIGHT-WEATHER-VALUES review).",
@@ -39,7 +38,9 @@
   "Prototype shop-window channel 'early closing' ran 15:30 to 19:30; DEFINITIONS G10 (newer) shuts Quay Street shops at 17:30, so the channel here ends 17:45. Needs the map file's window list to key by door.",
   "Damp floor 0.4 (the street never drier): prototype 0.45; this keeps 'dry overcast' still dark and damp as the 3 and 29 Oct bars need. A fully dry matt road is never shown.",
   "The grade (5.4.3) is written nowhere else: every number in grade is chosen and must be judged in the assembled game against the Hook sheet and KCD2 frames (a rough proof is a finding).",
-  "The 4.7 sweep asked for 'sodium warm-up' and 'night visibility radius': both given. Real lux per state is informative only (clear-sky lux above 0 degrees is chosen, not sourced); the game runs on pins and gains."
+  "The 4.7 sweep asked for 'sodium warm-up' and 'night visibility radius': both given. Real lux per state is informative only (clear-sky lux above 0 degrees is chosen, not sourced); the game runs on pins and gains.",
+  "Clock change is decided (see clock_change); the old open question is closed.",
+  "Lamp pool lumens 185 (look file and 4.4 say 167): chosen so pool to fill is at least 10 to 1. The look file's lantern_pool_lumens must change to match, or the finding be logged if it is kept at 167."
  ],
  "location": {
   "id": "loc_hull",
@@ -48,7 +49,7 @@
   "lat_deg_n": 53.7456,
   "lon_deg_e": -0.3367,
   "note": "working assumption, not canon",
-  "clock_rule": "local civil time: BST (UTC+1) up to 27 Oct 1990, GMT from 28 Oct 1990"
+  "clock_rule": "local civil time: BST (UTC+1) up to 02:00 BST on 28 Oct 1990, then GMT; the 01:00 to 02:00 hour is played twice"
  },
  "calendar": {
   "id": "calendar",
@@ -515,7 +516,10 @@
    "sun_disc": false,
    "sun_intensity_by_day": 3,
    "note": "no moving sun (RULINGS 7 Oct) and never sunshine (5 Oct): the sun_intensity 3 of overcast_day is a fixed soft key from one fixed direction, azimuth 200 degrees, elevation 25 degrees (chosen); elevation of the real sun only drives the curves above",
-   "chosen": true
+   "chosen": true,
+   "source_angle_deg": 30,
+   "shadow_softness": 1.0,
+   "shadow_note": "soft overcast key: a large source angle (30 degrees, chosen) and full shadow softness so shadows are faint and wide and never read as sunshine (5 Oct ruling)"
   }
  },
  "states": [
@@ -540,7 +544,7 @@
   {
    "id": "state_dusk",
    "src": "4.7; production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md",
-   "range": "sunset to nautical dusk (-12), about 85 to 90 minutes",
+   "range": "sunset to nautical dusk (-12): 76 minutes on 15 Oct to 86 on 30 Nov (computed)",
    "lux_dry_overcast": "100 down to 0.01",
    "exposure_pin": "2.0 to 0.4",
    "lamps": "strike when overcast lux falls below 70, take 12 game minutes to full yellow (individual lamps 0 to 6 minutes apart)",
@@ -549,7 +553,7 @@
   {
    "id": "state_night",
    "src": "4.7",
-   "range": "nautical dusk to 00:36",
+   "range": "nautical dusk to 00:00",
    "lux_dry_overcast": "under 0.01 (the fill 0.4 lux is the town sky)",
    "exposure_pin": "0.4",
    "lamps": "on, pools with darkness between; late windows on",
@@ -558,7 +562,7 @@
   {
    "id": "state_small_hours",
    "src": "4.7; tools/lane/prototype/project/src/rules.js light",
-   "range": "00:36 to 05:00 (and until nautical dawn where later)",
+   "range": "00:00 to 05:00 (chosen, both files)",
    "lux_dry_overcast": "under 0.01",
    "exposure_pin": "0.4",
    "lamps": "on; late windows out; ferry landing dark 23:00 to 05:00",
@@ -581,7 +585,7 @@
      "time": "00:00",
      "game_hour": 0.0,
      "sun_elevation_deg": -43.59,
-     "state": "night",
+     "state": "small_hours",
      "exposure_pin": 0.4,
      "sky_intensity": 0.35,
      "ambient_rgb_linear": [
@@ -2204,7 +2208,7 @@
      "time": "00:00",
      "game_hour": 0.0,
      "sun_elevation_deg": -53.71,
-     "state": "night",
+     "state": "small_hours",
      "exposure_pin": 0.4,
      "sky_intensity": 0.35,
      "ambient_rgb_linear": [
@@ -3831,7 +3835,7 @@
      "time": "00:00",
      "game_hour": 0.0,
      "sun_elevation_deg": -57.76,
-     "state": "night",
+     "state": "small_hours",
      "exposure_pin": 0.4,
      "sky_intensity": 0.35,
      "ambient_rgb_linear": [
@@ -6873,8 +6877,8 @@
   "src": "4.4, 5.4.2",
   "type": "low-pressure sodium, boat-shaped aluminium lantern",
   "watts": 35,
-  "pool_lumens": 167,
-  "pool_lumens_note": "game-scaled; real SOX 35 W is about 4,770 lm (modern sheet) or 4,550 (look note)",
+  "pool_lumens": 185,
+  "pool_lumens_note": "raised from 167 to 185 (chosen) so pool to fill reaches 10 to 1, 5.4.2's 'about ten times'; the fill (0.4 lux) is not touched. 167 gave 9.3 to 1. Real SOX 35 W is about 4,770 lm (modern sheet) or 4,550 (look note); the game lamp is game-scaled.",
   "bulb_glow_lumens": 40,
   "bulb_glow_radius_m": 1.0,
   "bulb_note": "reaches 1 m since 28 Oct, adds nothing on the ground",
@@ -6887,44 +6891,44 @@
    "outer": 5.0,
    "src": "computed"
   },
-  "candela": 87.0,
-  "lux_under_lamp": 3.73,
-  "lux_under_lamp_src": "computed: 167 lm over the 46 degree cone (production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md review correction says about 3.7)",
-  "pool_to_fill_ratio": 9.3,
+  "candela": 96.4,
+  "lux_under_lamp": 4.13,
+  "lux_under_lamp_src": "computed: 185 lm over the 46 degree cone",
+  "pool_to_fill_ratio": 10.3,
   "pool_to_fill_target": "at least 10 to 1 under the lamp (judgement, 10 to 25 real)",
   "lux_profile": [
    {
     "radius_m": 0,
     "angle_deg": 0.0,
-    "lux": 3.73,
+    "lux": 4.13,
     "chosen": true,
     "chosen_note": "inverse-square with cosine and a smoothstep edge from 22 to 46 degrees; the edge shape is chosen"
    },
    {
     "radius_m": 1,
     "angle_deg": 11.7,
-    "lux": 3.5,
+    "lux": 3.88,
     "chosen": true,
     "chosen_note": "inverse-square with cosine and a smoothstep edge from 22 to 46 degrees; the edge shape is chosen"
    },
    {
     "radius_m": 2,
     "angle_deg": 22.5,
-    "lux": 2.94,
+    "lux": 3.26,
     "chosen": true,
     "chosen_note": "inverse-square with cosine and a smoothstep edge from 22 to 46 degrees; the edge shape is chosen"
    },
    {
     "radius_m": 3,
     "angle_deg": 31.8,
-    "lux": 1.45,
+    "lux": 1.6,
     "chosen": true,
     "chosen_note": "inverse-square with cosine and a smoothstep edge from 22 to 46 degrees; the edge shape is chosen"
    },
    {
     "radius_m": 4,
     "angle_deg": 39.6,
-    "lux": 0.3,
+    "lux": 0.33,
     "chosen": true,
     "chosen_note": "inverse-square with cosine and a smoothstep edge from 22 to 46 degrees; the edge shape is chosen"
    },
@@ -6965,9 +6969,10 @@
    "tom_ground_radius_m": 5,
    "picture_floor_mean_display_luminance_linear": 0.05,
    "picture_floor_chosen": true,
-   "picture_floor_note": "ER-NIGHT-01 keeps Tom and the ground 5 m round him above a floor kept in the tuning table; no number was written. 0.05 linear (about 0.25 in sRGB) is the chosen floor, measured as the mean over the 5 m disc round Tom in the night view; the test is darkest-spot screenshots",
+   "picture_floor_note": "home is tune.json key light.night_floor (0.05): read it from there; ER-NIGHT-01 keeps Tom and the ground 5 m round him above a floor kept in the tuning table; no number was written. 0.05 linear (about 0.25 in sRGB) is the chosen floor, measured as the mean over the 5 m disc round Tom in the night view; the test is darkest-spot screenshots",
    "near_black_share_max": 0.45,
-   "near_black_share_src": "BLUEPRINT-05 5.4.2 prior research: the readable-night fix took the near-black share from 66 percent to 45 percent"
+   "near_black_share_src": "BLUEPRINT-05 5.4.2 prior research: the readable-night fix took the near-black share from 66 percent to 45 percent",
+   "ref": "tune:light.night_floor"
   },
   "corners_darken_with_light_value": true,
   "sim_light": {
@@ -7110,7 +7115,6 @@
     "ambient_mult": 1.0,
     "saturation_mult": 1.0,
     "sight_factor": 1.0,
-    "sound_factor": 1.0,
     "crowd_factor": 1.0,
     "voices_factor": 1.0,
     "grip_factor": 1.0,
@@ -7119,7 +7123,8 @@
     "doorway_shelter_share": 0.0,
     "puddle_target": 0.0,
     "chosen": true,
-    "chosen_note": "rain_level 0 and mist 0.15 from prototype rules.js weather.dry; sky 0.70 from vignette-pieces overcast_day; the rest chosen"
+    "chosen_note": "rain_level 0 and mist 0.15 from prototype rules.js weather.dry; sky 0.70 from vignette-pieces overcast_day; the rest chosen",
+    "sound_factor_ref": "tune:noise.rain_factor"
    },
    {
     "id": "drizzle",
@@ -7136,7 +7141,6 @@
     "ambient_mult": 0.9,
     "saturation_mult": 0.96,
     "sight_factor": 0.916,
-    "sound_factor": 0.832,
     "crowd_factor": 0.75,
     "voices_factor": 0.75,
     "grip_factor": 0.83,
@@ -7145,7 +7149,8 @@
     "doorway_shelter_share": 0.05,
     "puddle_target": 0.35,
     "chosen": true,
-    "chosen_note": "rain_level and mist from prototype; sight 1-0.3*rain_level and sound 1-0.6*rain_level from prototype rainCutsRangeByShare and noise.rainCutsByShare; crowd and voices midway between dry and rain (chosen); grip: wet braking 1.3 to 1.6 times dry (BLUEPRINT-01 3.1.x driving) so drizzle taken as 1.2 times (chosen); umbrellas and shelter shares have no source (2.1.4 says not yet named)"
+    "chosen_note": "rain_level and mist from prototype; sight 1-0.3*rain_level and sight 1-0.3*rain_level from prototype rainCutsRangeByShare; sound reach is the one figure tune:noise.rain_factor (0.6 rain, 0.8 drizzle) in tune.json; crowd and voices midway between dry and rain (chosen); grip: wet braking 1.3 to 1.6 times dry (BLUEPRINT-01 3.1.x driving) so drizzle taken as 1.2 times (chosen); umbrellas and shelter shares have no source (2.1.4 says not yet named)",
+    "sound_factor_ref": "tune:noise.rain_factor"
    },
    {
     "id": "rain",
@@ -7161,7 +7166,6 @@
     "ambient_mult": 0.8,
     "saturation_mult": 0.92,
     "sight_factor": 0.82,
-    "sound_factor": 0.64,
     "crowd_factor": 0.5,
     "voices_factor": 0.5,
     "grip_factor": 0.69,
@@ -7170,7 +7174,8 @@
     "doorway_shelter_share": 0.2,
     "puddle_target": 1.0,
     "chosen": true,
-    "chosen_note": "crowd 0.5: DEFINITIONS G9 'rain halves each band'; voices 0.5: SOUND-PLAN SND-02; grip 1/1.45 from wet braking 1.3 to 1.6 times dry (midpoint); other values as drizzle"
+    "chosen_note": "crowd 0.5: DEFINITIONS G9 'rain halves each band'; voices 0.5: SOUND-PLAN SND-02; grip 1/1.45 from wet braking 1.3 to 1.6 times dry (midpoint); other values as drizzle",
+    "sound_factor_ref": "tune:noise.rain_factor"
    }
   ],
   "weights_by_period": [
@@ -7374,6 +7379,11 @@
     "overcast_day_wetness": 0.85,
     "wet_night_wetness": 0.9,
     "src": "production/specs/unreal-look.json and production/specs/vignette-pieces.json"
+   },
+   "grip": {
+    "rule": "car grip follows the one wetness value: grip = 1 - 0.31 * wetness (wet braking 1.3 to 1.6 times dry, midpoint 1/1.45 = 0.69 at wetness 1), clamped; the profile grip_factor values are steady-state samples of this",
+    "chosen": true,
+    "src": "4.8; BLUEPRINT-01 driving"
    }
   },
   "wet_street_table": [
@@ -7462,9 +7472,9 @@
   "who_is_out": {
    "id": "who_is_out",
    "src": "2.1.4, 4.8; DEFINITIONS G9",
-   "rule": "crowd band counts are multiplied by the profile's crowd_factor (dry 1.0, drizzle 0.75, rain 0.5); the same factor halves far voices and activity sounds in sounds.json states; sight_factor multiplies the seeing range; sound_factor multiplies every noise reach; grip_factor multiplies tyre grip and braking; slipperiness_foot is the chance multiplier for a slip on a sprint or a turn (chosen).",
+   "rule": "crowd band counts are multiplied by the profile's crowd_factor (dry 1.0, drizzle 0.75, rain 0.5); the same factor halves far voices and activity sounds in sounds.json states; sight_factor multiplies the seeing range; tune:noise.rain_factor multiplies every noise reach (one figure, in tune.json); grip_factor multiplies tyre grip and braking; slipperiness_foot is the chance multiplier for a slip on a sprint or a turn (chosen).",
    "reach_ref": "tune:sound.reach.*",
-   "rain_cut_ref": "tune:sound.reach.rain_cut",
+   "rain_cut_ref": "tune:noise.rain_factor",
    "note": "the heard-line radius in rain (7 m dry, 6 drizzle, 5 rain) is lines/rules.json and stays there"
   }
  },
@@ -7616,7 +7626,7 @@
    "shoulder": 0.26,
    "black_clip": 0.0,
    "white_clip": 0.04,
-   "note": "Unreal's default filmic values as recalled, not re-read today (chosen)",
+   "note": "unverified: Unreal's default filmic values as recalled, not re-read; check against the engine's documentation at build",
    "chosen": true
   },
   "grain": {
@@ -7674,5 +7684,11 @@
    "vignette"
   ],
   "chosen": true
+ },
+ "clock_change": {
+  "id": "clock_change",
+  "src": "decision 24 Nov; brief",
+  "chosen": true,
+  "rule": "the game shows local civil time. At 02:00 BST on Sunday 28 Oct 1990 the clock reads 01:00 GMT again and that hour (01:00 to 02:00) is played twice. Routines keyed to clock time simply hold, so night people stay put. Sun times before 28 Oct are BST, after are GMT (the days table already is)."
  }
 }

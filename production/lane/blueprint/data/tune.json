@@ -22,7 +22,6 @@
   "WQ-02 (Act II in stages of at most 4 real hours) now needs seven or more stages in 18.6 to 28 h.",
   "Act II fail-safe, dial and Ellis falls, cooling and buyback keep their game-day counts; their real durations doubled (listed with old values).",
   "Prototype walks 1.85 and runs 4.5 (or 4.2); blueprint G4 walks 1.6 and runs 5.5. Blueprint used; prototype figures still sit in the prototype.",
-  "Rain reach factor: rules.js cuts 60 percent, foot.js x0.6. x0.4 chosen.",
   "Knockout: prototype 25 game minutes (50 s on this clock) against blueprint 10 to 30 s. Blueprint kept.",
   "Beat hours: prototype 21 to 5, G5 22 to 06. G5 used. Ellis talk from day 2 (blueprint) against prototype day 4.",
   "Rung 4 fronts: blueprint at least 2; prototype 3. Blueprint used (rise.rung4.fronts is still listed as a working value; use act/rung rows from RT-04: five cars, night desk, one front, one round and the cold-store contract for rung 3).",
@@ -30,7 +29,8 @@
   "Owed from footage (value null): firearm hit chance, timings, recoil, rate, reload; crowd avoid radius, step-aside time, look-before-step, spawn distance; sound reach of scuffle, voices, doors, engines; witness report strength by kind; car pull amount.",
   "Traffic arrival gaps are real seconds, but their hour bands are game hours, now 120 s each (the model was written for 30 s hours).",
   "Entries with status 'working' are prototype values the blueprint relies on but does not state; 'ref' entries are held by the economy design.",
-  "Added 24 Nov by the data build: 53 sound.reach.* keys so sounds.json and light-weather.json resolve; aliases where tune.json already held the figure, owed (value null) where nothing gives one."
+  "Added 24 Nov by the data build: 53 sound.reach.* keys so sounds.json and light-weather.json resolve; aliases where tune.json already held the figure, owed (value null) where nothing gives one.",
+  "Superseded keys (status superseded, superseded_by names the live key) keep their prototype value but are not read by the build."
  ],
  "numbers": [
   {
@@ -129,7 +129,7 @@
   },
   {
    "key": "clock.dark_real_min_per_day",
-   "value": 28,
+   "value": 29.3,
    "unit": "min",
    "group": "clock",
    "src": "4.7; CLK-05",
@@ -139,7 +139,7 @@
     "value": 14,
     "clock": "60s"
    },
-   "note": "Of 48 real minutes a day."
+   "note": "light-weather.json mean on the 120 s clock (rounded 28 before)."
   },
   {
    "key": "clock.watch_show_s",
@@ -418,10 +418,10 @@
    "basis": "game",
    "chosen": false,
    "old": {
-    "value": 5.6,
-    "clock": "60s"
+    "value": 14,
+    "clock": "game days, unchanged"
    },
-   "note": "= 11.2 real h at 120 s (old 5.6 h at 60 s, 4.2 h at 45 s). Prototype rise.dialFallsAfterQuietGameDays is 14."
+   "note": "14 game days = 11.2 real h at 120 s (old 5.6 h at 60 s, 4.2 h at 45 s). Game-day count unchanged; the old real-time figure was 5.6 h."
   },
   {
    "key": "act2.manhunt_falls_after_game_days",
@@ -624,7 +624,7 @@
   },
   {
    "key": "place.routine_reach_game_h",
-   "value": 1,
+   "value": 1.04,
    "unit": "game_h",
    "group": "place",
    "src": "CLK-03 recomputed",
@@ -634,7 +634,7 @@
     "value": 2,
     "clock": "60s"
    },
-   "note": "125 real s is about 1.04 game hours at 120 s (old: 2)."
+   "note": "125 real s at 1.6 m/s is 1.04 game hours at 120 s (a game hour is 192 m of walking)."
   },
   {
    "key": "job.window_min_game_h",
@@ -1873,7 +1873,7 @@
    "src": "C-03",
    "basis": "real",
    "chosen": false,
-   "note": "Replaces prototype 60 game min / 30 s."
+   "note": "Replaces prototype 60 game min / 30 s (the prototype cap was 45 s at 45 s a game hour, 30 s as written)."
   },
   {
    "key": "chase.edge_ends_within_s",
@@ -3654,7 +3654,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from firearms footage (GTA V, RDR2, KCD2 bows excluded); MEASUREMENTS-NEEDED A12"
+   "note": "Owed: measure from firearms footage (GTA V, RDR2, KCD2 bows excluded); MEASUREMENTS-NEEDED A12 working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 0.9
   },
   {
    "key": "gun.hit_chance_moving_modifier",
@@ -3665,7 +3666,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from firearms footage; MEASUREMENTS-NEEDED A12"
+   "note": "Owed: measure from firearms footage; MEASUREMENTS-NEEDED A12 working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 0.5
   },
   {
    "key": "gun.aim_time_s",
@@ -3676,7 +3678,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from firearms footage"
+   "note": "Owed: measure from firearms footage working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 0.4
   },
   {
    "key": "gun.recoil_deg",
@@ -3687,7 +3690,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from firearms footage"
+   "note": "Owed: measure from firearms footage working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 3
   },
   {
    "key": "gun.aim_return_s",
@@ -3698,7 +3702,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from firearms footage"
+   "note": "Owed: measure from firearms footage working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 0.5
   },
   {
    "key": "gun.rate_of_fire_per_s",
@@ -3709,7 +3714,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from firearms footage"
+   "note": "Owed: measure from firearms footage working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 1.5
   },
   {
    "key": "gun.reload_s",
@@ -3720,7 +3726,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from firearms footage"
+   "note": "Owed: measure from firearms footage working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 3
   },
   {
    "key": "gun.empty_click_cue_s",
@@ -3731,7 +3738,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from firearms footage"
+   "note": "Owed: measure from firearms footage working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 0.3
   },
   {
    "key": "gun.leg_shot_stops_runner_s",
@@ -3742,7 +3750,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from firearms footage (Y1.5)"
+   "note": "Owed: measure from firearms footage (Y1.5) working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 1
   },
   {
    "key": "gun.arm_shot_disarms_chance",
@@ -3753,7 +3762,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from firearms footage (Y1.5)"
+   "note": "Owed: measure from firearms footage (Y1.5) working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 0.8
   },
   {
    "key": "crowd.avoid_radius_m",
@@ -3764,7 +3774,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from KCD2 and GTA V footage on the PC (A4, 26 to 28 Nov)"
+   "note": "Owed: measure from KCD2 and GTA V footage on the PC (A4, 26 to 28 Nov) working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 1.2
   },
   {
    "key": "crowd.step_aside_time_s",
@@ -3775,7 +3786,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from KCD2 and GTA V footage on the PC (A4, 26 to 28 Nov)"
+   "note": "Owed: measure from KCD2 and GTA V footage on the PC (A4, 26 to 28 Nov) working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 0.6
   },
   {
    "key": "crowd.look_before_step_s",
@@ -3786,7 +3798,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from KCD2 and GTA V footage on the PC (A4, 26 to 28 Nov)"
+   "note": "Owed: measure from KCD2 and GTA V footage on the PC (A4, 26 to 28 Nov) working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 0.5
   },
   {
    "key": "crowd.spawn_min_distance_m",
@@ -3797,7 +3810,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from KCD2 and GTA V footage on the PC (A4, 26 to 28 Nov)"
+   "note": "Owed: measure from KCD2 and GTA V footage on the PC (A4, 26 to 28 Nov) working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 40
   },
   {
    "key": "crowd.road_clearance_m",
@@ -3871,7 +3885,7 @@
    "src": "1.4.3; SND-07",
    "basis": "real",
    "chosen": true,
-   "note": "Nothing at noon; the prototype factor 0.5 on 1.8 m would give 0.9 m."
+   "note": "Kept model: reach by act (foot.js table), footstep 3.6 m at 03:00, nothing at noon."
   },
   {
    "key": "noise.cab_day_m",
@@ -4000,7 +4014,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from KCD2 by ear against known distances (A7) and SOUND-PLAN SND-07"
+   "note": "Owed: measure from KCD2 by ear against known distances (A7) and SOUND-PLAN SND-07 working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 20
   },
   {
    "key": "noise.reach_day_m.voice_talk",
@@ -4011,7 +4026,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from KCD2 by ear against known distances (A7) and SOUND-PLAN SND-07"
+   "note": "Owed: measure from KCD2 by ear against known distances (A7) and SOUND-PLAN SND-07 working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 6
   },
   {
    "key": "noise.reach_day_m.voice_raised",
@@ -4022,7 +4038,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from KCD2 by ear against known distances (A7) and SOUND-PLAN SND-07"
+   "note": "Owed: measure from KCD2 by ear against known distances (A7) and SOUND-PLAN SND-07 working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 25
   },
   {
    "key": "noise.reach_day_m.door_open_close",
@@ -4033,7 +4050,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from KCD2 by ear against known distances (A7) and SOUND-PLAN SND-07"
+   "note": "Owed: measure from KCD2 by ear against known distances (A7) and SOUND-PLAN SND-07 working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 8
   },
   {
    "key": "noise.reach_day_m.engine_idle_by_type",
@@ -4044,7 +4062,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from KCD2 by ear against known distances (A7) and SOUND-PLAN SND-07"
+   "note": "Owed: measure from KCD2 by ear against known distances (A7) and SOUND-PLAN SND-07 working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 15
   },
   {
    "key": "noise.reach_day_m.engine_revving_by_type",
@@ -4055,7 +4074,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from KCD2 by ear against known distances (A7) and SOUND-PLAN SND-07"
+   "note": "Owed: measure from KCD2 by ear against known distances (A7) and SOUND-PLAN SND-07 working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 45
   },
   {
    "key": "noise.reach_day_m.glass_small",
@@ -4066,7 +4086,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from KCD2 by ear against known distances (A7) and SOUND-PLAN SND-07"
+   "note": "Owed: measure from KCD2 by ear against known distances (A7) and SOUND-PLAN SND-07 working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 15
   },
   {
    "key": "noise.night_factor",
@@ -4079,13 +4100,13 @@
   },
   {
    "key": "noise.rain_factor",
-   "value": 0.4,
+   "value": 0.6,
    "unit": "ratio",
    "group": "noise",
    "src": "2.2.4 (rain cuts all of it)",
    "basis": "none",
    "chosen": true,
-   "note": "Prototype disagrees with itself: rules.js cuts by 60 percent (x0.4), foot.js x0.6. x0.4 chosen."
+   "note": "Rain: x0.6 (decision of 24 Nov); light-weather.json and sounds.json reference this key. Replaces x0.4 chosen earlier."
   },
   {
    "key": "noise.after_seen_deed_bed_fall_db",
@@ -4176,8 +4197,8 @@
    "group": "witness",
    "src": "prototype foot.js walk.payPenceByCrime",
    "basis": "none",
-   "chosen": false,
-   "status": "working",
+   "chosen": true,
+   "status": "economy_owes",
    "note": "Price formula owed to the economy; working value."
   },
   {
@@ -4187,8 +4208,8 @@
    "group": "witness",
    "src": "prototype foot.js walk.payPenceByCrime",
    "basis": "none",
-   "chosen": false,
-   "status": "working",
+   "chosen": true,
+   "status": "economy_owes",
    "note": "Price formula owed to the economy; working value."
   },
   {
@@ -4200,7 +4221,8 @@
    "basis": "real",
    "chosen": false,
    "status": "owed",
-   "note": "Owed: measure from the 1991 reporting-rate research (police-response-1990) and golden rows: vandalism 27%, burglary 92%, common assault 25.5%, wounding 47.7%, robbery 47.2%"
+   "note": "Owed: measure from the 1991 reporting-rate research (police-response-1990) and golden rows: vandalism 27%, burglary 92%, common assault 25.5%, wounding 47.7%, robbery 47.2% working_value is a placeholder so the build has a number; replace from footage.",
+   "working_value": 0.5
   },
   {
    "key": "witness.report_rate_vandalism",
@@ -4868,7 +4890,8 @@
    "src": "prototype rules.js:duskStartsHour",
    "basis": "game",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "light-weather.json"
   },
   {
    "key": "time.night_full_hour",
@@ -4878,7 +4901,8 @@
    "src": "prototype rules.js:nightFullHour",
    "basis": "game",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "light-weather.json"
   },
   {
    "key": "time.dawn_starts_hour",
@@ -4888,7 +4912,8 @@
    "src": "prototype rules.js:dawnStartsHour",
    "basis": "game",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "light-weather.json"
   },
   {
    "key": "time.day_full_hour",
@@ -4898,17 +4923,20 @@
    "src": "prototype rules.js:dayFullHour",
    "basis": "game",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "light-weather.json"
   },
   {
    "key": "time.small_hours_from_hour",
-   "value": 23.5,
+   "value": 0,
    "unit": "hour",
    "group": "time",
    "src": "prototype rules.js:smallHoursFromHour",
    "basis": "game",
-   "chosen": false,
-   "status": "working"
+   "chosen": true,
+   "status": "superseded",
+   "superseded_by": "light-weather.json",
+   "note": "Small hours are 00:00 to 05:00 (decision of 24 Nov)."
   },
   {
    "key": "time.small_hours_until_hour",
@@ -4917,8 +4945,10 @@
    "group": "time",
    "src": "prototype rules.js:smallHoursUntilHour",
    "basis": "game",
-   "chosen": false,
-   "status": "working"
+   "chosen": true,
+   "status": "superseded",
+   "superseded_by": "light-weather.json",
+   "note": "Small hours are 00:00 to 05:00 (decision of 24 Nov)."
   },
   {
    "key": "time.morning_until_hour",
@@ -5380,7 +5410,9 @@
    "src": "prototype rules.js:standingMetres",
    "basis": "real",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "noise.reach_day_m.* and noise.night_factor",
+   "note": "One model kept: the foot.js reach table and the blueprint figures. This rules.js base radius is not read."
   },
   {
    "key": "noise.walking_metres",
@@ -5390,7 +5422,9 @@
    "src": "prototype rules.js:walkingMetres",
    "basis": "real",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "noise.reach_day_m.* and noise.night_factor",
+   "note": "One model kept: the foot.js reach table and the blueprint figures. This rules.js base radius is not read."
   },
   {
    "key": "noise.running_metres",
@@ -5400,7 +5434,9 @@
    "src": "prototype rules.js:runningMetres",
    "basis": "real",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "noise.reach_day_m.* and noise.night_factor",
+   "note": "One model kept: the foot.js reach table and the blueprint figures. This rules.js base radius is not read."
   },
   {
    "key": "noise.cab_idling_metres",
@@ -5410,7 +5446,9 @@
    "src": "prototype rules.js:cabIdlingMetres",
    "basis": "real",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "noise.reach_day_m.* and noise.night_factor",
+   "note": "One model kept: the foot.js reach table and the blueprint figures. This rules.js base radius is not read."
   },
   {
    "key": "noise.cab_added_at_speed_metres",
@@ -5420,7 +5458,9 @@
    "src": "prototype rules.js:cabAddedAtSpeedMetres",
    "basis": "real",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "noise.reach_day_m.* and noise.night_factor",
+   "note": "One model kept: the foot.js reach table and the blueprint figures. This rules.js base radius is not read."
   },
   {
    "key": "noise.cab_full_noise_at_metres_per_second",
@@ -5430,7 +5470,9 @@
    "src": "prototype rules.js:cabFullNoiseAtMetresPerSecond",
    "basis": "real",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "noise.reach_day_m.* and noise.night_factor",
+   "note": "One model kept: the foot.js reach table and the blueprint figures. This rules.js base radius is not read."
   },
   {
    "key": "noise.still_below_metres_per_second",
@@ -5450,7 +5492,9 @@
    "src": "prototype rules.js:noonTimes",
    "basis": "none",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "noise.reach_day_m.* and noise.night_factor",
+   "note": "One model kept: the foot.js reach table and the blueprint figures. This rules.js base radius is not read."
   },
   {
    "key": "noise.noon_from_hour",
@@ -5460,7 +5504,9 @@
    "src": "prototype rules.js:noonFromHour",
    "basis": "game",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "noise.reach_day_m.* and noise.night_factor",
+   "note": "One model kept: the foot.js reach table and the blueprint figures. This rules.js base radius is not read."
   },
   {
    "key": "noise.noon_until_hour",
@@ -5470,7 +5516,9 @@
    "src": "prototype rules.js:noonUntilHour",
    "basis": "game",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "noise.reach_day_m.* and noise.night_factor",
+   "note": "One model kept: the foot.js reach table and the blueprint figures. This rules.js base radius is not read."
   },
   {
    "key": "noise.dead_of_night_until_hour",
@@ -5480,7 +5528,8 @@
    "src": "prototype rules.js:deadOfNightUntilHour",
    "basis": "game",
    "chosen": false,
-   "status": "working"
+   "status": "working",
+   "note": "Small hours 00:00 to 05:00 (chosen)."
   },
   {
    "key": "noise.early_times",
@@ -5490,7 +5539,9 @@
    "src": "prototype rules.js:earlyTimes",
    "basis": "none",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "noise.reach_day_m.* and noise.night_factor",
+   "note": "One model kept: the foot.js reach table and the blueprint figures. This rules.js base radius is not read."
   },
   {
    "key": "noise.early_until_hour",
@@ -5510,7 +5561,9 @@
    "src": "prototype rules.js:lateEveningTimes",
    "basis": "none",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "noise.reach_day_m.* and noise.night_factor",
+   "note": "One model kept: the foot.js reach table and the blueprint figures. This rules.js base radius is not read."
   },
   {
    "key": "noise.late_evening_from_hour",
@@ -5530,7 +5583,9 @@
    "src": "prototype rules.js:otherwiseTimes",
    "basis": "none",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "noise.reach_day_m.* and noise.night_factor",
+   "note": "One model kept: the foot.js reach table and the blueprint figures. This rules.js base radius is not read."
   },
   {
    "key": "noise.through_awindow_times",
@@ -5901,7 +5956,9 @@
    "src": "prototype rules.js:arrivesAtXMetres",
    "basis": "real",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "map.json j_north_edge",
+   "note": "Police arrive by North Road from the north edge, node j_north_edge."
   },
   {
    "key": "police.arrives_at_zmetres",
@@ -5911,7 +5968,9 @@
    "src": "prototype rules.js:arrivesAtZMetres",
    "basis": "real",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "map.json j_north_edge",
+   "note": "Police arrive by North Road from the north edge, node j_north_edge."
   },
   {
    "key": "police.walking_metres_per_second",
@@ -5921,7 +5980,9 @@
    "src": "prototype rules.js:walkingMetresPerSecond",
    "basis": "real",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "foot.constable_run_mps / foot.constable_walk_mps",
+   "note": "Contradicts G4 (1.1 walk, 5.2 run)."
   },
   {
    "key": "police.chasing_metres_per_second",
@@ -5931,7 +5992,9 @@
    "src": "prototype rules.js:chasingMetresPerSecond",
    "basis": "real",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "foot.constable_run_mps / foot.constable_walk_mps",
+   "note": "Contradicts G4 (1.1 walk, 5.2 run)."
   },
   {
    "key": "police.chase_hurry",
@@ -6043,8 +6106,9 @@
    "group": "police",
    "src": "prototype rules.js:briefBillPence",
    "basis": "none",
-   "chosen": false,
-   "status": "working"
+   "chosen": true,
+   "status": "economy_owes",
+   "note": "Value kept. The economy sets the brief at 50 pounds a week (200 on arrest in economy_run.py); refer to economy."
   },
   {
    "key": "police.brief_bill_pence_if_he_ran",
@@ -6053,8 +6117,9 @@
    "group": "police",
    "src": "prototype rules.js:briefBillPenceIfHeRan",
    "basis": "none",
-   "chosen": false,
-   "status": "working"
+   "chosen": true,
+   "status": "economy_owes",
+   "note": "Value kept. The economy sets the brief at 50 pounds a week (200 on arrest in economy_run.py); refer to economy."
   },
   {
    "key": "police.released_at_xmetres",
@@ -6064,7 +6129,9 @@
    "src": "prototype rules.js:releasedAtXMetres",
    "basis": "real",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "map.json j_north_edge",
+   "note": "Released at the north edge, node j_north_edge."
   },
   {
    "key": "police.released_at_zmetres",
@@ -6074,7 +6141,9 @@
    "src": "prototype rules.js:releasedAtZMetres",
    "basis": "real",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "map.json j_north_edge",
+   "note": "Released at the north edge, node j_north_edge."
   },
   {
    "key": "police.ellis_first_day_index",
@@ -6084,7 +6153,8 @@
    "src": "prototype rules.js:ellisFirstDayIndex",
    "basis": "none",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "ellis.talk_from_day_index"
   },
   {
    "key": "police.ellis_last_day_index",
@@ -6094,7 +6164,8 @@
    "src": "prototype rules.js:ellisLastDayIndex",
    "basis": "none",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "ellis.talk_from_day_index"
   },
   {
    "key": "police.ellis_from_hour",
@@ -6524,7 +6595,9 @@
    "src": "prototype game/tune/foot.js:nightFromHour",
    "basis": "game",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "beat.night_from_hour / beat.night_until_hour",
+   "note": "G5 says 22:00 to 06:00."
   },
   {
    "key": "foot.night_until_hour",
@@ -6534,7 +6607,9 @@
    "src": "prototype game/tune/foot.js:nightUntilHour",
    "basis": "game",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "beat.night_from_hour / beat.night_until_hour",
+   "note": "G5 says 22:00 to 06:00."
   },
   {
    "key": "foot.horn_fare_comes_within_metres",
@@ -6998,8 +7073,8 @@
    "group": "foot",
    "src": "prototype game/tune/foot.js:walk.putRightPence",
    "basis": "none",
-   "chosen": false,
-   "status": "working"
+   "chosen": true,
+   "status": "economy_owes"
   },
   {
    "key": "foot.walk.put_right_needs_regard_above",
@@ -7401,7 +7476,8 @@
    "src": "prototype game/tune/fightx.js:breaksAfterBlows.bottle",
    "basis": "none",
    "chosen": false,
-   "status": "working"
+   "status": "working",
+   "note": "A non-drink bottle (milk or pop bottle)."
   },
   {
    "key": "fightx.breaks_after_blows.plank",
@@ -7581,8 +7657,9 @@
    "src": "prototype game/tune/cars.js:helpTakesGameMinutes",
    "basis": "game",
    "chosen": false,
-   "status": "working",
-   "note": "Game time; = 24 real s at 120 s an hour."
+   "status": "superseded",
+   "note": "Game time; = 24 real s at 120 s an hour. Pick 10 (blueprint).",
+   "superseded_by": "car.ambulance_game_min"
   },
   {
    "key": "car.ride_metres_per_second",
@@ -7638,62 +7715,68 @@
   {
    "key": "law.custody_game_hours.damage",
    "value": 6,
-   "unit": "number",
+   "unit": "game_h",
    "group": "law",
    "src": "prototype game/tune/law.js:custodyGameHours.damage",
-   "basis": "none",
+   "basis": "game",
    "chosen": false,
-   "status": "working"
+   "status": "working",
+   "note": "Game hours in custody; = 12 real min at 120 s."
   },
   {
    "key": "law.custody_game_hours.damage_owned_up",
    "value": 2,
-   "unit": "number",
+   "unit": "game_h",
    "group": "law",
    "src": "prototype game/tune/law.js:custodyGameHours.damageOwnedUp",
-   "basis": "none",
+   "basis": "game",
    "chosen": false,
-   "status": "working"
+   "status": "working",
+   "note": "Game hours in custody; = 4 real min at 120 s."
   },
   {
    "key": "law.custody_game_hours.assault",
    "value": 6,
-   "unit": "number",
+   "unit": "game_h",
    "group": "law",
    "src": "prototype game/tune/law.js:custodyGameHours.assault",
-   "basis": "none",
+   "basis": "game",
    "chosen": false,
-   "status": "working"
+   "status": "working",
+   "note": "Game hours in custody; = 12 real min at 120 s."
   },
   {
    "key": "law.custody_game_hours.wounding",
    "value": 8,
-   "unit": "number",
+   "unit": "game_h",
    "group": "law",
    "src": "prototype game/tune/law.js:custodyGameHours.wounding",
-   "basis": "none",
+   "basis": "game",
    "chosen": false,
-   "status": "working"
+   "status": "working",
+   "note": "Game hours in custody; = 16 real min at 120 s."
   },
   {
    "key": "law.custody_game_hours.robbery",
    "value": 12,
-   "unit": "number",
+   "unit": "game_h",
    "group": "law",
    "src": "prototype game/tune/law.js:custodyGameHours.robbery",
-   "basis": "none",
+   "basis": "game",
    "chosen": false,
-   "status": "working"
+   "status": "working",
+   "note": "Game hours in custody; = 24 real min at 120 s."
   },
   {
    "key": "law.custody_game_hours.killing",
    "value": 22,
-   "unit": "number",
+   "unit": "game_h",
    "group": "law",
    "src": "prototype game/tune/law.js:custodyGameHours.killing",
-   "basis": "none",
+   "basis": "game",
    "chosen": false,
-   "status": "working"
+   "status": "working",
+   "note": "Game hours in custody; = 44 real min at 120 s."
   },
   {
    "key": "law.arrest_real_seconds_at_most",
@@ -7914,32 +7997,35 @@
   {
    "key": "law.hospital_days_by_hurt.bruise",
    "value": 0,
-   "unit": "number",
+   "unit": "game_day",
    "group": "law",
    "src": "prototype game/tune/law.js:hospitalDaysByHurt.bruise",
-   "basis": "none",
+   "basis": "game",
    "chosen": false,
-   "status": "working"
+   "status": "working",
+   "note": "Game days in hospital; = 0 real min."
   },
   {
    "key": "law.hospital_days_by_hurt.broken_leg",
    "value": 14,
-   "unit": "number",
+   "unit": "game_day",
    "group": "law",
    "src": "prototype game/tune/law.js:hospitalDaysByHurt.broken leg",
-   "basis": "none",
+   "basis": "game",
    "chosen": false,
-   "status": "working"
+   "status": "working",
+   "note": "Game days in hospital; = 672 real min."
   },
   {
    "key": "law.hospital_days_by_hurt.badly",
    "value": 30,
-   "unit": "number",
+   "unit": "game_day",
    "group": "law",
    "src": "prototype game/tune/law.js:hospitalDaysByHurt.badly",
-   "basis": "none",
+   "basis": "game",
    "chosen": false,
-   "status": "working"
+   "status": "working",
+   "note": "Game days in hospital; = 1440 real min."
   },
   {
    "key": "law.car_hurt_at_metres_per_second.bruise",
@@ -8041,7 +8127,9 @@
    "src": "prototype game/tune/law.js:constableStartsAfterRealSeconds",
    "basis": "real",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "foot.constable_run_mps / foot.constable_walk_mps",
+   "note": "Contradicts G4 (1.1 walk, 5.2 run)."
   },
   {
    "key": "law.constable_blown_after_real_seconds",
@@ -8051,7 +8139,9 @@
    "src": "prototype game/tune/law.js:constableBlownAfterRealSeconds",
    "basis": "real",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "foot.constable_run_mps / foot.constable_walk_mps",
+   "note": "Contradicts G4 (1.1 walk, 5.2 run)."
   },
   {
    "key": "law.constable_blown_metres_per_second",
@@ -8061,7 +8151,9 @@
    "src": "prototype game/tune/law.js:constableBlownMetresPerSecond",
    "basis": "real",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "foot.constable_run_mps / foot.constable_walk_mps",
+   "note": "Contradicts G4 (1.1 walk, 5.2 run)."
   },
   {
    "key": "law.constable_looks_about_real_seconds",
@@ -8071,7 +8163,9 @@
    "src": "prototype game/tune/law.js:constableLooksAboutRealSeconds",
    "basis": "real",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "foot.constable_run_mps / foot.constable_walk_mps",
+   "note": "Contradicts G4 (1.1 walk, 5.2 run)."
   },
   {
    "key": "law.patrol_sees_within_metres",
@@ -8201,7 +8295,8 @@
    "src": "prototype game/tune/rise.js:rung4.fronts",
    "basis": "none",
    "chosen": false,
-   "status": "working"
+   "status": "superseded",
+   "superseded_by": "RT-04: at least two fronts (rung 4)"
   },
   {
    "key": "rise.rung4.rounds",
@@ -9115,6 +9210,271 @@
    "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
    "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
    "chosen": false
+  },
+  {
+   "key": "noise.drizzle_factor",
+   "value": 0.8,
+   "unit": "ratio",
+   "group": "noise",
+   "src": "decision 24 Nov",
+   "basis": "none",
+   "chosen": true,
+   "note": "Drizzle: x0.8."
+  },
+  {
+   "key": "light.night_floor",
+   "value": 0.05,
+   "unit": "light",
+   "group": "light",
+   "src": "light-weather.json 5.4.2; ER-NIGHT-01",
+   "basis": "none",
+   "chosen": false,
+   "note": "Night brightness floor."
+  },
+  {
+   "key": "police.arrive_node",
+   "value": "j_north_edge",
+   "unit": "map_id",
+   "group": "police",
+   "src": "map.json; 2.6",
+   "basis": "none",
+   "chosen": true
+  },
+  {
+   "key": "police.release_node",
+   "value": "j_north_edge",
+   "unit": "map_id",
+   "group": "police",
+   "src": "map.json; 2.6",
+   "basis": "none",
+   "chosen": true
+  },
+  {
+   "key": "place.walk_m_per_game_hour",
+   "value": 192,
+   "unit": "m",
+   "group": "place",
+   "src": "derived 1.6 m/s x 120 s",
+   "basis": "real",
+   "chosen": false
+  },
+  {
+   "key": "fight.tom_state_hurt_starts_share",
+   "value": 0.35,
+   "unit": "ratio",
+   "group": "fight",
+   "src": "RT-11; prototype fightx.js hurt scale",
+   "basis": "none",
+   "chosen": true,
+   "note": "hurt: guard slower to rise, breath shorter, a stagger. Hurt threshold chosen; state shown only in the body."
+  },
+  {
+   "key": "fight.tom_state_beaten_share",
+   "value": 1.0,
+   "unit": "ratio",
+   "group": "fight",
+   "src": "RT-11; prototype fightx.js hurt scale",
+   "basis": "none",
+   "chosen": true,
+   "note": "beaten: down (prototype: a body goes down at 1). Hurt threshold chosen; state shown only in the body."
+  },
+  {
+   "key": "fight.tom_hurt_guard_slower_times",
+   "value": 1.3,
+   "unit": "ratio",
+   "group": "fight",
+   "src": "RT-11",
+   "basis": "none",
+   "chosen": true,
+   "note": "Chosen."
+  },
+  {
+   "key": "fight.tom_hurt_breath_shorter_times",
+   "value": 0.7,
+   "unit": "ratio",
+   "group": "fight",
+   "src": "RT-11",
+   "basis": "none",
+   "chosen": true,
+   "note": "Chosen."
+  },
+  {
+   "key": "fight.hurt_does_not_stack_past_beaten",
+   "value": true,
+   "unit": "flag",
+   "group": "fight",
+   "src": "RT-11",
+   "basis": "none",
+   "chosen": false
+  },
+  {
+   "key": "fight.knife_wound_bleeds_until_stitched",
+   "value": true,
+   "unit": "flag",
+   "group": "fight",
+   "src": "RT-11; 1.3.11",
+   "basis": "none",
+   "chosen": false
+  },
+  {
+   "key": "fight.bat_limp_game_days",
+   "value": 1,
+   "unit": "game_day",
+   "group": "fight",
+   "src": "RT-11; 1.3.11",
+   "basis": "game",
+   "chosen": false,
+   "note": "= 48 real min."
+  },
+  {
+   "key": "shed.change_coat.clears",
+   "value": "coat",
+   "unit": "slot",
+   "group": "shed",
+   "src": "1.4.4; MEM-02; IM-05",
+   "basis": "none",
+   "chosen": true,
+   "note": "Shed action; a witness who has not yet told: clears the coat link, never the car and never what gossip carried. Gossip already carried is never undone."
+  },
+  {
+   "key": "shed.second_car_or_respray.clears",
+   "value": "car",
+   "unit": "slot",
+   "group": "shed",
+   "src": "1.4.4; MEM-02; IM-05",
+   "basis": "none",
+   "chosen": true,
+   "note": "Shed action; clears the car link. Gossip already carried is never undone."
+  },
+  {
+   "key": "shed.cap_and_scarf_at_night.clears",
+   "value": "face",
+   "unit": "slot",
+   "group": "shed",
+   "src": "1.4.4; MEM-02; IM-05",
+   "basis": "none",
+   "chosen": true,
+   "note": "Shed action; clears the face at night for strangers. Gossip already carried is never undone."
+  },
+  {
+   "key": "shed.barber.clears",
+   "value": "face and hair",
+   "unit": "slot",
+   "group": "shed",
+   "src": "1.4.4; MEM-02; IM-05",
+   "basis": "none",
+   "chosen": true,
+   "note": "Shed action; clears hair and face marks for 7 game days. Gossip already carried is never undone."
+  },
+  {
+   "key": "shed.walk_apart_from_ron.clears",
+   "value": "company",
+   "unit": "slot",
+   "group": "shed",
+   "src": "1.4.4; MEM-02; IM-05",
+   "basis": "none",
+   "chosen": true,
+   "note": "Shed action; clears the link through Ron. Gossip already carried is never undone."
+  },
+  {
+   "key": "shed.get_rid_of_weapon.clears",
+   "value": "weapon",
+   "unit": "slot",
+   "group": "shed",
+   "src": "1.4.4; MEM-02; IM-05",
+   "basis": "none",
+   "chosen": true,
+   "note": "Shed action; clears the weapon in hand. Gossip already carried is never undone."
+  },
+  {
+   "key": "shed.wash_blood_water_in_private.clears",
+   "value": "blood",
+   "unit": "slot",
+   "group": "shed",
+   "src": "1.4.4; MEM-02; IM-05",
+   "basis": "none",
+   "chosen": true,
+   "note": "Shed action; clears blood only. Gossip already carried is never undone."
+  },
+  {
+   "key": "shed.only_before_witness_tells",
+   "value": true,
+   "unit": "flag",
+   "group": "shed",
+   "src": "1.4.4",
+   "basis": "none",
+   "chosen": false
+  },
+  {
+   "key": "tail.ladder_state_1_shape",
+   "value": 35,
+   "unit": "m",
+   "group": "tail",
+   "src": "1.1.6; prototype foot.js shapeAt/markAt/faceAt",
+   "basis": "real",
+   "chosen": false,
+   "status": "working",
+   "note": "a shape is nothing. Catch distance in full light."
+  },
+  {
+   "key": "tail.ladder_state_2_mark",
+   "value": 18,
+   "unit": "m",
+   "group": "tail",
+   "src": "1.1.6; prototype foot.js shapeAt/markAt/faceAt",
+   "basis": "real",
+   "chosen": false,
+   "status": "working",
+   "note": "a mark is a doubt: he speeds up or changes route, always shown first. Catch distance in full light."
+  },
+  {
+   "key": "tail.ladder_state_3_face",
+   "value": 8,
+   "unit": "m",
+   "group": "tail",
+   "src": "1.1.6; prototype foot.js shapeAt/markAt/faceAt",
+   "basis": "real",
+   "chosen": false,
+   "status": "working",
+   "note": "a face he knows ends the tail: he turns and says so, or runs. Catch distance in full light."
+  },
+  {
+   "key": "tail.recognised_at_m",
+   "value": 25,
+   "unit": "m",
+   "group": "tail",
+   "src": "1.1.6; foot.js recognisedAtMetres",
+   "basis": "real",
+   "chosen": false,
+   "status": "working",
+   "note": "Only by somebody who knows him."
+  },
+  {
+   "key": "tail.losing_sight_is_not_failing",
+   "value": true,
+   "unit": "flag",
+   "group": "tail",
+   "src": "1.1.6",
+   "basis": "none",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.splash_thrown",
+   "value": 15,
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "chosen": true,
+   "src": "chosen 24 Nov (sounds.json splash records; 4.2.4)"
+  },
+  {
+   "key": "sound.reach.splash_man",
+   "value": 25,
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "chosen": true,
+   "src": "chosen 24 Nov (sounds.json splash records; 4.2.4)"
   }
  ]
 }

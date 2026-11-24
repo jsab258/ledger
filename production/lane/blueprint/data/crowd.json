@@ -16,15 +16,24 @@
   "production/cloud-week/town/people.json (kept extras, seven days)"
  ],
  "open_points": [
+  "STATUS: GD-02, FIT-G9 and 2.1.2 are pending (design-pending-B4); the 24 Nov counts are leads, not solid, so every record here is provisional true.",
+  "Match derivation: doubling the band in force gives 4 to 14 a frame at 15:00 and 8 to 20 at 17:00, below GD-02's event range of 15 to 25; the file derives as the rule says, the design should decide whether the match band is raised.",
   "The measuring lane's crowd-count rows of 24 Nov (production/research/lane/measurements/) are not in the repository: only DECIDES-CHECK-2026-11-24.md (a plan) and DEFINITIONS line 77, which quotes the builder's row of 24 Nov 09:46 (busiest daytime streets about 5 to 10 in view in KCD2 and RDR2, middle about 6, quiet 0 to 3). Those figures are recorded under measured_frame_check on the parade and the quiet zones. Every other band is provisional until the rows land.",
-  "G9's parade front is 100 m on both pavements, but map.json's quay_street is 57.1 m. The front is read as quay_street plus back_parade (98.2 m); stretch counts for that zone cover both roads.",
+  "G9's parade front is 100 m on both pavements; it is read as Quay Street's 48 built metres only (map.json quay_street is 57.1 m). Back Parade has its own band and is never summed in. The G9 stretch figures are kept as given, so they are dense for 48 m.",
   "Clock: any real-time figure here is on 120 s a game hour. The repeat gap of KCD2's pool (32 s, a file-read lead) is matched by 16 game minutes (32 real seconds); the old 60 s clock would have made it 32 game minutes.",
   "The 1990 pavement study (CLOUD-FIGURES B4, who walked a Humber port's pavements by hour) is still owed; the hour bands are the design's.",
   "Step-aside distance and timing are owed from reference footage (DEFINITIONS 2.x, 26 to 28 Nov). tune.json crowd.avoid_radius_m, crowd.step_aside_time_s, crowd.look_before_step_s, crowd.spawn_min_distance_m are null there; this file keeps them null and owed, and gives a chosen working spawn distance separately.",
   "G9 first pass counts (25 to 35 busy) and design pass 4 (12 to 20) differ; pass 4 is followed. street-wear.json holds wall wear decals only, so the look tables come from the plain-1990-clothes note and the clothes' floor; Jafar's ruling of 1 Oct (no trainers, no contrast stitching) is followed for every extra.",
-  "Match, bonfire, remembrance and chapel counts are chosen; the design gives only 'double at 15:00 and 17:00' and 'chapel is busy'.",
-  "ev_coldstore_in and ev_coldstore_out overlap on purpose: the map says the shift leaves at half past five; the arrival is a chosen mirror."
+  "Bonfire, remembrance, chapel and market-peak counts are chosen; the design gives only 'double at 15:00 and 17:00', 'chapel is busy' and 'market 15 to 25'.",
+  "ev_coldstore_in and ev_coldstore_out overlap on purpose: the map says the shift leaves at half past five; the arrival is a chosen mirror. The cold store second shift change runs Mon-Fri only (Saturday close 13:00).",
+  "The bus stop moved to (116.4, 34.5) in map.json; this file keys it by id bus_stop_qs only."
  ],
+ "status": {
+  "GD-02": "pending (design-pending-B4)",
+  "FIT-G9": "pending (design-pending-B4)",
+  "2.1.2": "pending (design-pending-B4)",
+  "counts_24_nov": "leads, not solid; every record is provisional until STATUS.md marks them solid and the B4 pavement study lands"
+ },
  "hour_bands": [
   {
    "id": "night_deep",
@@ -116,8 +125,19 @@
   "rain_note": "G9: rain halves each band, frame and stretch, rounded up for the max and down for the min; tune/light-weather crowd_factor must read 0.5 for rain. Drizzle uses the light-weather profile's own crowd_factor if it differs.",
   "thursday_market": {
    "factor": 0.667,
-   "applies_to": "zones with shop_daytime true, bands early to afternoon (09:00 to 17:30)",
-   "src": "2.1.2"
+   "applies_to_zones": [
+    "z_parade_quay_street"
+   ],
+   "applies_to_bands": [
+    "busy_am",
+    "morning",
+    "busy_noon",
+    "afternoon",
+    "busy_pm"
+   ],
+   "window": "09:00 to 17:30, the Quay Street shops' hours; the factor does not apply to other zones",
+   "src": "2.1.2; shops 09:00 to 17:30 (BLUEPRINT-02)",
+   "pitches_event": "ev_market_pitches and ev_market_pitches_peak add the market crowd on the Quay"
   },
   "saturday_match": {
    "windows": [
@@ -131,8 +151,13 @@
     ]
    ],
    "factor": 2,
+   "applies_to": "the band in force (afternoon at 15:00, busy_pm at 17:00), on z_parade_quay_street",
    "frame_cap": 25,
    "stretch_cap": 30,
+   "events": [
+    "ev_match_1500",
+    "ev_match_1700"
+   ],
    "src": "2.1.2; GD-02"
   },
   "sunday": {
@@ -225,16 +250,17 @@
      "stretch_max": 5
     }
    ],
-   "src": "G9 rescaled in design pass 4; GD-02 settled",
-   "provisional": false,
-   "note": "With back_parade this is the 98.2 m the design calls the 100 m parade front; stretch rows give the whole front, not each road.",
+   "src": "G9 rescaled in design pass 4; GD-02 settled (pending, design-pending-B4)",
+   "provisional": true,
+   "note": "The parade front is Quay Street's 48 built metres, both pavements, and nothing else. Back Parade has its own band below and is never added to this count.",
    "stretch_covers": [
-    "quay_street",
-    "back_parade"
+    "quay_street"
    ],
-   "stretch_length_m": 98.2,
-   "stretch_note": "stretch_min and max are people on the whole 98.2 m front, both pavements (G9). Other zones: stretch counts are people per 100 m of their own road, both pavements.",
+   "stretch_length_m": 48.0,
+   "sampler_rule": "One rule: sample the parade front on quay_street only (48 built metres, both pavements); sample Back Parade on its own band; never sum them.",
+   "stretch_note": "stretch_min and max are the design's G9 people on the parade front (read as Quay Street's 48 built metres, both pavements). Other zones, Back Parade included: stretch counts are people per 100 m of their own road, both pavements.",
    "measured_frame_check": {
+    "status": "lead, not solid (fewer than five samples; STATUS.md has not marked them solid)",
     "busy_band_measured": [
      5,
      10
@@ -245,14 +271,14 @@
   },
   {
    "id": "z_parade_back_parade",
-   "label": "Back Parade (the parade front's turn)",
+   "label": "Back Parade (the top of the parade and the yards' side; its own band)",
    "road": "back_parade",
    "range_m": [
     0,
     41.09
    ],
    "place": null,
-   "shop_daytime": true,
+   "shop_daytime": false,
    "bands": [
     {
      "band": "night_deep",
@@ -325,9 +351,9 @@
      "stretch_max": 4
     }
    ],
-   "src": "derived from the parade front: 41 m of the same front",
+   "src": "derived from the parade band by factor 0.7; its own band, not part of the parade front",
    "provisional": true,
-   "note": "Scaled from the parade."
+   "note": "Own band; never added to the parade front count."
   },
   {
    "id": "z_quay_road_landing",
@@ -424,7 +450,7 @@
     460
    ],
    "place": null,
-   "shop_daytime": true,
+   "shop_daytime": false,
    "bands": [
     {
      "band": "night_deep",
@@ -584,7 +610,7 @@
     }
    ],
    "src": "2.1.2 (fish dock 05:30 to 07:00, 10 to 18)",
-   "provisional": false,
+   "provisional": true,
    "note": "Dawn is the design's own figure; other bands are chosen."
   },
   {
@@ -596,7 +622,7 @@
     333.5
    ],
    "place": null,
-   "shop_daytime": true,
+   "shop_daytime": false,
    "bands": [
     {
      "band": "night_deep",
@@ -671,7 +697,7 @@
    ],
    "src": "chosen; measured quiet 0 to 3 on busy bands read as the ceiling",
    "provisional": true,
-   "note": "The match crowd walks this road at 14:30 to 15:00 and 17:00 to 17:30."
+   "note": "The match crowd walks in along this road 14:30 to 15:00 and out 17:30 to 18:00 (ev_match_walk_north, no doubling); the doubled windows are on Quay Street at 15:00 and 17:00."
   },
   {
    "id": "z_chapel_lane",
@@ -759,6 +785,7 @@
    "provisional": true,
    "note": "Quiet outside chapel times.",
    "measured_frame_check": {
+    "status": "lead, not solid",
     "quiet_measured": [
      0,
      3
@@ -853,6 +880,7 @@
    "provisional": true,
    "note": "Quiet outside the packing shift.",
    "measured_frame_check": {
+    "status": "lead, not solid",
     "quiet_measured": [
      0,
      3
@@ -947,6 +975,7 @@
    "provisional": true,
    "note": "Quiet outside shift changes.",
    "measured_frame_check": {
+    "status": "lead, not solid",
     "quiet_measured": [
      0,
      3
@@ -1041,6 +1070,7 @@
    "provisional": true,
    "note": "Warehouse side: day trade only.",
    "measured_frame_check": {
+    "status": "lead, not solid",
     "quiet_measured": [
      0,
      3
@@ -1135,6 +1165,7 @@
    "provisional": true,
    "note": "",
    "measured_frame_check": {
+    "status": "lead, not solid",
     "quiet_measured": [
      0,
      3
@@ -1229,6 +1260,7 @@
    "provisional": true,
    "note": "Night: one watchman at most; the street is the player's to be seen or not.",
    "measured_frame_check": {
+    "status": "lead, not solid",
     "quiet_measured": [
      0,
      3
@@ -1250,9 +1282,11 @@
    "place": "cold_stores",
    "from": "05:00",
    "to": "05:45",
-   "days": "daily Mon-Sat",
-   "trades": "cold_store_hand",
-   "src": "2.1.2; map cold_stores note 'packing shift leaves at half past five' read as arrival 05:00-05:45 and leaving 05:30-06:15",
+   "days": "Mon-Sat",
+   "trades": [
+    "cold_store_hand"
+   ],
+   "src": "2.1.2; map cold_stores note 'packing shift leaves at half past five' read as arrival 05:00-05:45; places.json cold_stores hours 06:00 to 17:30 Mon-Fri, to 13:00 Sat",
    "provisional": true,
    "frame_min": 4,
    "frame_max": 10,
@@ -1270,18 +1304,42 @@
    "place": "cold_stores",
    "from": "05:30",
    "to": "06:15",
-   "days": "daily Mon-Sat",
-   "trades": "cold_store_hand",
-   "src": "map.json cold_stores note; the contract's 'packing shift met on time' (BLUEPRINT-02)",
-   "provisional": false,
+   "days": "Mon-Sat",
+   "trades": [
+    "cold_store_hand"
+   ],
+   "src": "map.json cold_stores note",
+   "provisional": true,
    "frame_min": 4,
    "frame_max": 10,
    "stretch_min": 10,
    "stretch_max": 20
   },
   {
+   "id": "ev_coldstore_sat_close",
+   "label": "Cold stores: Saturday close",
+   "road": "coldstore_road",
+   "range_m": [
+    300,
+    470
+   ],
+   "place": "cold_stores",
+   "from": "12:45",
+   "to": "13:30",
+   "days": "Saturday",
+   "trades": [
+    "cold_store_hand"
+   ],
+   "src": "places.json cold_stores Saturday 06:00 to 13:00 (chosen counts)",
+   "provisional": true,
+   "frame_min": 2,
+   "frame_max": 6,
+   "stretch_min": 5,
+   "stretch_max": 12
+  },
+  {
    "id": "ev_coldstore_pm",
-   "label": "Cold stores: second shift change",
+   "label": "Cold stores: second shift change (no Saturday one)",
    "road": "coldstore_road",
    "range_m": [
     300,
@@ -1290,9 +1348,11 @@
    "place": "cold_stores",
    "from": "17:30",
    "to": "18:15",
-   "days": "daily Mon-Sat",
-   "trades": "cold_store_hand",
-   "src": "chosen",
+   "days": "Mon-Fri",
+   "trades": [
+    "cold_store_hand"
+   ],
+   "src": "places.json cold_stores close 17:30 Mon-Fri; chosen counts",
    "provisional": true,
    "frame_min": 3,
    "frame_max": 8,
@@ -1310,8 +1370,10 @@
    "place": "dock_gate",
    "from": "05:30",
    "to": "06:30",
-   "days": "daily Mon-Sat",
-   "trades": "docker",
+   "days": "Mon-Sat",
+   "trades": [
+    "docker"
+   ],
    "src": "2.1.2 dock shift at dawn; chosen figures",
    "provisional": true,
    "frame_min": 4,
@@ -1330,8 +1392,10 @@
    "place": "dock_gate",
    "from": "13:30",
    "to": "14:15",
-   "days": "daily Mon-Sat",
-   "trades": "docker",
+   "days": "Mon-Sat",
+   "trades": [
+    "docker"
+   ],
    "src": "chosen",
    "provisional": true,
    "frame_min": 3,
@@ -1351,7 +1415,10 @@
    "from": "22:00",
    "to": "06:00",
    "days": "daily",
-   "trades": "docker, night watchman",
+   "trades": [
+    "docker",
+    "night_watch"
+   ],
    "src": "4.2.3 (a tea stall 22:00 to 06:00); chosen counts, tea only",
    "provisional": true,
    "frame_min": 0,
@@ -1361,18 +1428,21 @@
   },
   {
    "id": "ev_chapel_sun_am",
-   "label": "Chapel Lane: Sunday service",
+   "label": "Chapel Lane: Sunday service (09:30)",
    "road": "chapel_lane",
    "range_m": [
     0,
     60
    ],
    "place": "chapel",
-   "from": "10:00",
-   "to": "11:45",
+   "from": "09:00",
+   "to": "10:30",
    "days": "Sunday",
-   "trades": "chapel_goer",
-   "src": "BLUEPRINT-02 (on Sunday the chapel is busy); chosen times and counts",
+   "trades": [
+    "chapel_goer",
+    "retired"
+   ],
+   "src": "places.json chapel: Sunday services 09:30 and 18:00 busy; chosen counts",
    "provisional": true,
    "frame_min": 4,
    "frame_max": 10,
@@ -1381,18 +1451,21 @@
   },
   {
    "id": "ev_chapel_sun_pm",
-   "label": "Chapel Lane: Sunday evening service",
+   "label": "Chapel Lane: Sunday evening service (18:00)",
    "road": "chapel_lane",
    "range_m": [
     0,
     60
    ],
    "place": "chapel",
-   "from": "18:00",
+   "from": "17:30",
    "to": "19:00",
    "days": "Sunday",
-   "trades": "chapel_goer",
-   "src": "chosen",
+   "trades": [
+    "chapel_goer",
+    "retired"
+   ],
+   "src": "places.json chapel; chosen counts",
    "provisional": true,
    "frame_min": 2,
    "frame_max": 6,
@@ -1411,9 +1484,11 @@
    "from": "18:45",
    "to": "21:45",
    "days": "Tuesday",
-   "trades": "chapel_goer",
+   "trades": [
+    "chapel_goer"
+   ],
    "src": "places hours: chapel hall 19:00 to 21:30 Tuesday",
-   "provisional": false,
+   "provisional": true,
    "frame_min": 1,
    "frame_max": 4,
    "stretch_min": 3,
@@ -1421,18 +1496,21 @@
   },
   {
    "id": "ev_remembrance",
-   "label": "Remembrance Sunday at the chapel (11 Nov 1990)",
+   "label": "Remembrance Sunday at the chapel (11 Nov 1990; service 10:30, silence 11:00)",
    "road": "chapel_lane",
    "range_m": [
     0,
     60
    ],
    "place": "chapel",
-   "from": "10:30",
+   "from": "10:00",
    "to": "11:30",
    "days": "11 Nov 1990",
-   "trades": "chapel_goer, retired",
-   "src": "BLUEPRINT-02 dated days; chosen counts",
+   "trades": [
+    "chapel_goer",
+    "retired"
+   ],
+   "src": "places.json chapel hours_note; chosen counts",
    "provisional": true,
    "frame_min": 8,
    "frame_max": 15,
@@ -1440,19 +1518,22 @@
    "stretch_max": 35
   },
   {
-   "id": "ev_bonfire",
-   "label": "Bonfire Night display on the quay (5 Nov 1990), adults only",
-   "road": "quay_road",
-   "range_m": [
-    180,
-    300
-   ],
-   "place": null,
-   "from": "19:00",
-   "to": "21:30",
+   "id": "ev_bonfire_ground",
+   "label": "Bonfire Night: the crowd at the bonfire ground behind Basin Top, adults only",
+   "road": "basin_top",
+   "range_m": null,
+   "place": "bonfire_ground",
+   "from": "18:30",
+   "to": "22:00",
    "days": "5 Nov 1990",
-   "trades": "adults only",
-   "src": "BLUEPRINT-02 dated days; adults only",
+   "trades": [
+    "shopper",
+    "retired",
+    "docker",
+    "office",
+    "shop_staff"
+   ],
+   "src": "places.json bonfire_ground (440, 312), Mon 5 Nov 18:30 to 22:00, adults only; chosen counts",
    "provisional": true,
    "frame_min": 8,
    "frame_max": 18,
@@ -1460,8 +1541,34 @@
    "stretch_max": 50
   },
   {
+   "id": "ev_bonfire_quay",
+   "label": "Bonfire Night: onlookers on the quay for the display, adults only",
+   "road": "quay_road",
+   "range_m": [
+    180,
+    300
+   ],
+   "place": "fireworks_quay",
+   "from": "19:15",
+   "to": "20:15",
+   "days": "5 Nov 1990",
+   "trades": [
+    "shopper",
+    "retired",
+    "docker",
+    "office",
+    "shop_staff"
+   ],
+   "src": "places.json fireworks_quay; BLUEPRINT-02 dated days; chosen counts",
+   "provisional": true,
+   "frame_min": 6,
+   "frame_max": 14,
+   "stretch_min": 15,
+   "stretch_max": 35
+  },
+  {
    "id": "ev_match_1500",
-   "label": "Saturday match: kick-off crowd on Quay Street and North Road",
+   "label": "Saturday match: kick-off crowd on Quay Street (double the afternoon band)",
    "road": "quay_street",
    "range_m": [
     0,
@@ -1471,17 +1578,22 @@
    "from": "15:00",
    "to": "15:30",
    "days": "Saturday",
-   "trades": "match_goer",
-   "src": "2.1.2 / G9: doubles at 15:00 and 17:00 for half an hour; GD-02 15 to 25 a frame, stretch up to 30",
-   "provisional": false,
-   "frame_min": 15,
-   "frame_max": 25,
-   "stretch_min": 24,
-   "stretch_max": 30
+   "trades": [
+    "match_goer"
+   ],
+   "src": "2.1.2 / G9: doubles the band in force at 15:00 (afternoon, 14:00 to 16:30); derived",
+   "provisional": true,
+   "derived_from_band": "afternoon",
+   "factor": 2,
+   "frame_min": 4,
+   "frame_max": 14,
+   "stretch_min": 12,
+   "stretch_max": 24,
+   "derivation": "double the parade band in force; capped at 25 a frame and 30 a stretch; gd02_event_range 15 to 25 is not reached by doubling the daytime band (open point)"
   },
   {
    "id": "ev_match_1700",
-   "label": "Saturday match: full-time crowd",
+   "label": "Saturday match: full-time crowd on Quay Street (double the busy_pm band)",
    "road": "quay_street",
    "range_m": [
     0,
@@ -1491,29 +1603,88 @@
    "from": "17:00",
    "to": "17:30",
    "days": "Saturday",
-   "trades": "match_goer",
-   "src": "same",
-   "provisional": false,
-   "frame_min": 15,
-   "frame_max": 25,
+   "trades": [
+    "match_goer"
+   ],
+   "src": "2.1.2 / G9: doubles the band in force at 17:00 (busy_pm, 16:30 to 18:00); derived and capped",
+   "provisional": true,
+   "derived_from_band": "busy_pm",
+   "factor": 2,
+   "frame_min": 8,
+   "frame_max": 20,
    "stretch_min": 24,
+   "stretch_max": 30,
+   "derivation": "double the parade band in force; capped at 25 a frame and 30 a stretch; gd02_event_range 15 to 25 is not reached by doubling the daytime band (open point)"
+  },
+  {
+   "id": "ev_match_walk_north",
+   "label": "Saturday match: walking in and out along North Road (no doubling)",
+   "road": "north_road",
+   "range_m": [
+    100,
+    333.5
+   ],
+   "place": null,
+   "from": "14:30",
+   "to": "15:00",
+   "days": "Saturday",
+   "trades": [
+    "match_goer"
+   ],
+   "src": "chosen; out-walk 17:30 to 18:00 uses the same counts",
+   "provisional": true,
+   "frame_min": 3,
+   "frame_max": 8,
+   "stretch_min": 8,
+   "stretch_max": 16
+  },
+  {
+   "id": "ev_market_pitches",
+   "label": "Thursday market pitches on the Quay's north pavement (4 trestles and a barrow)",
+   "road": "quay_road",
+   "range_m": [
+    64,
+    96
+   ],
+   "place": "market_stalls_quay",
+   "from": "08:00",
+   "to": "16:00",
+   "days": "Thursday",
+   "trades": [
+    "shopper",
+    "retired",
+    "shop_staff"
+   ],
+   "src": "places.json market_stalls_quay (Thu 08:00 to 16:00); shoulders chosen",
+   "provisional": true,
+   "frame_min": 8,
+   "frame_max": 15,
+   "stretch_min": 15,
    "stretch_max": 30
   },
   {
-   "id": "ev_market_thu",
-   "label": "Thursday market: a third off the shops' daytime bands (rule, not a count)",
-   "road": "quay_street",
+   "id": "ev_market_pitches_peak",
+   "label": "Thursday market pitches at their height",
+   "road": "quay_road",
    "range_m": [
-    0,
-    57.1
+    64,
+    96
    ],
-   "place": null,
-   "from": "09:00",
-   "to": "17:30",
+   "place": "market_stalls_quay",
+   "from": "11:00",
+   "to": "14:00",
    "days": "Thursday",
-   "trades": "shopper",
-   "src": "2.1.2",
-   "provisional": false
+   "trades": [
+    "shopper",
+    "retired",
+    "shop_staff"
+   ],
+   "src": "GD-02: market 15 to 25 a frame; peak window chosen",
+   "provisional": true,
+   "frame_min": 15,
+   "frame_max": 25,
+   "stretch_min": 25,
+   "stretch_max": 40
   },
   {
    "id": "ev_ferry_window",
@@ -1527,9 +1698,11 @@
    "from": "22:00",
    "to": "01:00",
    "days": "daily",
-   "trades": "ferry_passenger",
+   "trades": [
+    "ferry_passenger"
+   ],
    "src": "places hours: ferry landing window 22:00 to 01:00",
-   "provisional": false,
+   "provisional": true,
    "frame_min": 1,
    "frame_max": 4,
    "stretch_min": 3,
@@ -1547,7 +1720,10 @@
    "from": "06:00",
    "to": "09:00",
    "days": "Mon-Sat",
-   "trades": "docker, shop_staff",
+   "trades": [
+    "docker",
+    "shop_staff"
+   ],
    "src": "places hours: caff 06:00 to 15:00 Mon-Sat",
    "provisional": true,
    "frame_min": 2,
@@ -2273,6 +2449,7 @@
      "f"
     ],
     "ages": [
+     "a18_29",
      "a30_44",
      "a45_59",
      "a60_plus"
@@ -2302,6 +2479,7 @@
      "m"
     ],
     "ages": [
+     "a18_29",
      "a30_44",
      "a45_59",
      "a60_plus"
@@ -2597,6 +2775,7 @@
   "check": "after generation, assert every spawned record has age >= 18 and look ids from look_tables.looks only; fail the build otherwise"
  },
  "chosen_values": [
+  "market and bonfire event counts and the market peak window 11:00 to 14:00",
   "hour_band splits early, morning and afternoon",
   "per-zone factors for frame and stretch for every zone but the parade and the fish dock dawn",
   "evening frame 1 to 4, late 0 to 2, night_deep 0 to 1",

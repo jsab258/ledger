@@ -21,20 +21,19 @@
   "clock_note": "1 game minute = 2 real seconds; 1 game hour = 120 real seconds; 48 real minutes a game day"
  },
  "open_points": [
-  "FIT-G5 standard 'every 2 minutes with the street on edge' for Mickey's door comes out at about 123 s (3 s over) on the frozen graph: the path from Quay Street's top round the yards' lane to the foot is 140 m (127 s) and the door is out of sight all that way. Every other G5 figure passes (one constable: door 222 s of 240; yards' lane and landing under 450; on edge under 240). Fix if wanted: a 3 s longer look at the foot (no effect), or the keeper reads 'every 2 minutes' as 'about 2'.",
-  "The War stop 'the north road's junction at Quay Street's top' (RT2-17, 2.6.6) is not the same place as map point stop_north_road (160-ish, y 230, chosen by the map keeper). The map point is used because the map is frozen; the built stop is 164 m north of the top of Quay Street's street.",
-  "FIT-G3's 'out and back' is 30 game minutes: 60 real seconds on the 120 s hour (30 s on the old 60 s hour). DATA-SWEEP.csv says 15 s: that figure is wrong; 60 s is used.",
-  "2.6.5 says a manhunt's sign shows 'one game hour (60 real seconds)': on the 120 s hour it is 120 real seconds; used.",
-  "2.6.5 says Ellis comes 'from the second day for talk'; the prototype says day 4 (ellisFromDayIndex 3). The blueprint is newer: day 2 used.",
-  "The night is 8 game hours = 960 real seconds, so a night holds about 2.3 beat cycles of 7 real minutes (G5 'the same under either clock' holds for the beat but a night under the old 60 s clock held only 1.1). Tuning of how the beat reads over a night is open.",
-  "G5 and 2.6.1 say 'round the bend to the yards' lane'; on the frozen graph the lane is a foot-only way with a vault by Mickey's fence, so the constable vaults it (1.2 s) on every short round; if the map keeper opens the lane, drop the vault.",
-  "DS Ellis can be bought (24 Nov): this file follows it and overrides 4.3.7 and 2.6.8 (the keeper should change both rows).",
-  "Bought officers: the blueprint says each acts once; the prototype let the look-away man act 99 times and priced the statement man at 150: blueprint and economy used.",
-  "Custody 'about 6 hours' for a window: 6 used; assault also 6 (proto) because the blueprint gives no figure for a plain assault.",
-  "Response times per deed are game minutes chosen from the prototype's single 20-minute figure; 2.6.10 gives no per-deed times and is itself 'pending'.",
-  "Search length 30 to 120 real seconds is from 2.6.10; DEFINITIONS marks the band PENDING.",
-  "Patrol count at War (3, one armed) is the prototype's; 2.6.6/2.6.7 say only 'at least one armed car' and 'more only at War'.",
-  "G4's constable run speed 5.2 m/s (just under Tom's 5.5) is PENDING on footage; the prototype used 4.2."
+  "FIT-G5 on edge for Mickey's door passes only with a chosen sight rule: the door counts as in sight within 10 m of Quay Street's foot on the quay road. With 6 m the gap is 122 s against 120. The numbers are in sight_checks.",
+  "FIT-G3 out and back is 30 game minutes = 60 real seconds on the 120 s hour (30 s on the old hour). DATA-SWEEP.csv says 15 s: wrong; 60 s used.",
+  "2.6.5 says a manhunt sign shows one game hour (60 real seconds): 120 real seconds on the 120 s hour; used.",
+  "2.6.5 says Ellis comes for talk from the second day; the prototype says day 4. Blueprint (day 2) used.",
+  "A night is 960 real seconds, about 2.3 beat cycles of 7 real minutes.",
+  "DS Ellis can be bought (24 Nov); overrides 4.3.7 and 2.6.8, which the keeper must change.",
+  "Bought officers act once each (blueprint); the prototype let the look-away man act 99 times and priced the statement man at 150; blueprint and economy used. Officers are roles with person_ref; the cast comes from the story.",
+  "Custody: 6 hours for a window and also for a plain assault (no source); gun possession 12 hours is chosen to match RT2-17.",
+  "Response times per deed are game minutes chosen from the prototype's one 20-minute figure; 2.6.10 is pending. Gun calls: the first unarmed officer comes at the ordinary time, armed men at 45 game minutes at Fired and 10 at War.",
+  "Search length 30 to 120 real seconds is from 2.6.10; DEFINITIONS marks it PENDING.",
+  "Three cars at War (one armed) so both War stops are manned 18:00 to 02:00; 2.6.6/2.6.7 say only 'at least one armed car' and 'more only at War'.",
+  "G4's constable run speed 5.2 m/s is PENDING on footage (prototype 4.2).",
+  "Ellis case points use the economy run's scale (stage up at 4, 8, 12; arrest at 8), which is not the same thing as the charges list; the build must map one to the other."
  ],
  "beat_constable": {
   "id": "beat_constable",
@@ -46,6 +45,7 @@
   "walk_speed_mps": 1.1,
   "run_speed_mps": 5.2,
   "vault_s": 1.2,
+  "vault_note": "constable vaults the set places in 1.2 s (G4); none on the beat",
   "note_speed": "G4 (1.1 walk, 5.2 run) is newer than the prototype (1.5 walk, 4.2 run) and wins; G4 is PENDING on footage",
   "carries": "truncheon only (2.6.6)",
   "night": {
@@ -109,8 +109,8 @@
    "cycle_length_m": 437.224,
    "short_round_length_m": 197.224,
    "landing_leg_length_m": 240.0,
-   "cycle_real_s": 419.68,
-   "cycle_real_minutes": 6.99,
+   "cycle_real_s": 418.48,
+   "cycle_real_minutes": 6.97,
    "arrival_s_at_node": [
     0.0,
     4.09,
@@ -141,25 +141,25 @@
     123.79,
     129.24,
     134.24,
-    138.17,
-    146.95,
-    151.04,
-    167.4,
-    186.49,
-    241.04,
-    248.54,
-    260.13,
-    274.68,
-    281.95,
-    304.22,
-    310.59,
-    316.95,
-    324.22,
-    331.49,
-    346.04,
-    357.63,
-    365.13,
-    419.68
+    136.97,
+    145.75,
+    149.84,
+    166.2,
+    185.29,
+    239.84,
+    247.34,
+    258.93,
+    273.48,
+    280.75,
+    303.02,
+    309.39,
+    315.75,
+    323.02,
+    330.29,
+    344.84,
+    356.43,
+    363.93,
+    418.48
    ],
    "leave_s_at_node": [
     0.0,
@@ -190,26 +190,26 @@
     118.33,
     123.79,
     129.24,
-    135.44,
-    138.17,
-    146.95,
-    151.04,
-    167.4,
-    186.49,
-    241.04,
-    248.54,
-    260.13,
-    274.68,
-    296.95,
-    304.22,
-    310.59,
-    316.95,
-    324.22,
-    331.49,
-    346.04,
-    357.63,
-    365.13,
-    419.68
+    134.24,
+    136.97,
+    145.75,
+    149.84,
+    166.2,
+    185.29,
+    239.84,
+    247.34,
+    258.93,
+    273.48,
+    295.75,
+    303.02,
+    309.39,
+    315.75,
+    323.02,
+    330.29,
+    344.84,
+    356.43,
+    363.93,
+    418.48
    ],
    "waypoints": [
     {
@@ -258,13 +258,6 @@
      "what": "passes beat_yards_lane (150, 35) on the lane",
      "beat_point": "beat_yards_lane",
      "index": 24
-    },
-    {
-     "id": "lane_fence_vault",
-     "node": "n_vault_mickeys_fence_lane",
-     "dwell_s": 1.2,
-     "what": "vaults the fence by Mickey's yard (a constable vaults in 1.2 s, G4)",
-     "index": 28
     },
     {
      "id": "yards_lane_foot",
@@ -341,16 +334,9 @@
     },
     {
      "from": "yards_lane_pass",
-     "to": "lane_fence_vault",
-     "length_m": 23.5,
-     "walk_real_s": 21.4,
-     "dwell_at_end_s": 1.2
-    },
-    {
-     "from": "lane_fence_vault",
      "to": "yards_lane_foot",
-     "length_m": 17.157,
-     "walk_real_s": 15.6,
+     "length_m": 40.657,
+     "walk_real_s": 37.0,
      "dwell_at_end_s": 0
     },
     {
@@ -387,7 +373,7 @@
   },
   "second_constable": {
    "when": "the street on edge (A37: three seen deeds on one street within two game days; eases three game days after the last); also from the next night if the first constable is put out of the way (DEFINITIONS, 'the beat constable: the second constable takes the beat from the next night')",
-   "offset_s": 209.84,
+   "offset_s": 209.24,
    "offset_rule": "half a cycle behind on the same route"
   },
   "day": {
@@ -471,6 +457,9 @@
     "n_door_d_nr_47",
     "n_door_d_nr_49",
     "j_cut300_west",
+    "n_door_d_lockup_3",
+    "n_door_d_lockup_4",
+    "n_door_d_lockup_5",
     "n_door_d_nr_53",
     "j_ginnel_top",
     "n_door_d_nr_55",
@@ -484,6 +473,9 @@
     "n_door_d_nr_55",
     "j_ginnel_top",
     "n_door_d_nr_53",
+    "n_door_d_lockup_5",
+    "n_door_d_lockup_4",
+    "n_door_d_lockup_3",
     "j_cut300_west",
     "n_door_d_nr_49",
     "n_door_d_nr_47",
@@ -637,9 +629,9 @@
    "chosen_note": "G5 gives only \"Quay Street and the north road to the cold-store road and back\"; the junctions and 10 s stands are chosen"
   },
   "sight_checks": {
-   "method": "walked from the node path at 0.25 s steps; sight windows are chosen: Mickey's door in sight on Quay Street and within 6 m of its foot on the quay road; the yards' lane in sight on the lane, its two ends and within 8 m of its foot; the landing within 20 m of the landing node",
+   "method": "walked from the node path at 0.25 s steps; sight windows are chosen: Mickey's door in sight on Quay Street and within 10 m of its foot on the quay road (chosen rule, was 6 m; with it the on-edge door gap passes); the yards' lane in sight on the lane, its two ends and within 8 m of its foot; the landing within 20 m of the landing node",
    "chosen": true,
-   "cycle_real_s": 419.68,
+   "cycle_real_s": 418.48,
    "mickeys_door": {
     "sight_windows_s_in_cycle": [
      [
@@ -647,47 +639,46 @@
       58.0
      ],
      [
-      181.2,
-      192.0
+      176.2,
+      194.5
      ],
      [
-      414.2,
-      419.8
+      409.5,
+      418.5
      ]
     ],
-    "longest_unseen_gap_s_one_constable": 222.2,
+    "longest_unseen_gap_s_one_constable": 215.0,
     "limit_s_one": 240,
     "pass_one": true,
-    "longest_unseen_gap_s_with_second_constable_half_cycle_behind": 123.2,
+    "longest_unseen_gap_s_with_second_constable_half_cycle_behind": 118.2,
     "limit_s_on_edge": 120,
-    "pass_on_edge": false,
-    "over_by_s": 3.2
+    "pass_on_edge": true
    },
    "yards_lane": {
     "sight_windows_s_in_cycle": [
      [
       83.0,
-      158.5
+      157.2
      ]
     ],
     "longest_unseen_gap_s_one_constable": 344.2,
     "limit_s_one": 450,
     "pass_one": true,
-    "longest_unseen_gap_s_with_second_constable_half_cycle_behind": 134.3,
+    "longest_unseen_gap_s_with_second_constable_half_cycle_behind": 135.0,
     "limit_s_on_edge": 240,
     "pass_on_edge": true
    },
    "landing": {
     "sight_windows_s_in_cycle": [
      [
-      277.5,
-      329.0
+      276.2,
+      327.8
      ]
     ],
-    "longest_unseen_gap_s_one_constable": 368.2,
+    "longest_unseen_gap_s_one_constable": 367.0,
     "limit_s_one": 450,
     "pass_one": true,
-    "longest_unseen_gap_s_with_second_constable_half_cycle_behind": 158.3,
+    "longest_unseen_gap_s_with_second_constable_half_cycle_behind": 157.7,
     "limit_s_on_edge": 240,
     "pass_on_edge": true
    }
@@ -736,11 +727,17 @@
   "person_ref": true,
   "second_role": "patrol_passenger",
   "second_person_ref": true,
-  "vehicle": "patrol_panda (vehicles.json)",
+  "vehicle": "patrol_panda, patrol_panda_two, patrol_armed_car (vehicles.json)",
   "count": {
    "normal": 1,
    "at_war": 3,
    "at_war_armed": 1,
+   "normal_car": "patrol_panda",
+   "at_war_cars": [
+    "patrol_panda",
+    "patrol_panda_two",
+    "patrol_armed_car"
+   ],
    "src": "2.6.7 (one patrol car by day and night; more only at War); 2.6.6 (at War at least one armed car); proto patrolCarsAtWar 3",
    "chosen": true,
    "chosen_note": "three at War (proto), one of them the armed car"
@@ -824,6 +821,9 @@
     "n_door_d_nr_47",
     "n_door_d_nr_49",
     "j_cut300_west",
+    "n_door_d_lockup_3",
+    "n_door_d_lockup_4",
+    "n_door_d_lockup_5",
     "n_door_d_nr_53",
     "j_ginnel_top",
     "n_door_d_nr_55",
@@ -1003,12 +1003,16 @@
    "order_resets_at": "22:00 and 06:00",
    "war_posts": {
     "points": [
-     "stop_north_road",
-     "stop_dock_road"
+     "war_stop_north_road_foot",
+     "war_stop_dock_gate"
     ],
     "hours": "18:00-02:00",
-    "rule": "at War the armed car stands at each war stop in turn, 90 real s at a post then moves to the other (chosen); every vehicle passing within 12 m is waved down (chosen); a man on foot only with cause",
-    "stand_real_s": 90,
+    "rule": "at War each war stop is manned all of 18:00 to 02:00: the armed car (patrol_armed_car) stands at the dock gate and the second panda (patrol_panda_two) at the north road foot; the first panda keeps working the loop and its posts; every vehicle passing within 12 m is waved down (chosen); a man on foot only with cause",
+    "manned_by": {
+     "war_stop_dock_gate": "patrol_armed_car",
+     "war_stop_north_road_foot": "patrol_panda_two",
+     "loop": "patrol_panda"
+    },
     "wave_down_within_m": 12,
     "chosen": true,
     "gun_found": {
@@ -1044,9 +1048,9 @@
      "n_door_d_nr_44"
     ],
     "at_m_from_first_node": 1.0,
-    "war_stop": true,
-    "war_hours": "18:00-02:00",
-    "what": "the north road's junction, between the quay road and the cold-store road; the War stop (RT2-17: 'the north road's junction at Quay Street's top' is read as this chosen map point; see open_points)",
+    "war_stop": false,
+    "war_hours": null,
+    "what": "an ordinary stop place on the north road (map point; the War stop is war_stop_north_road_foot). Was: the north road's junction, between the quay road and the cold-store road; the War stop (RT2-17: 'the north road's junction at Quay Street's top' is read as this chosen map point; see open_points)",
     "src": "map.json police_points; 2.6.6, 2.6.7, RT2-17, FIT-G2"
    },
    {
@@ -1060,9 +1064,9 @@
      "j_harbour_board"
     ],
     "at_m_from_first_node": 77.5,
-    "war_stop": true,
-    "war_hours": "18:00-02:00",
-    "what": "the dock road by the dock gate; the War stop",
+    "war_stop": false,
+    "war_hours": null,
+    "what": "an ordinary stop place on the dock road (map point; the War stop is war_stop_dock_gate)",
     "src": "map.json police_points; 2.6.6, 2.6.7, RT2-17, FIT-G2"
    },
    {
@@ -1096,6 +1100,28 @@
     "war_hours": null,
     "what": "on the cold-store road; an ordinary stop place",
     "src": "map.json police_points; 2.6.6, 2.6.7, RT2-17, FIT-G2"
+   },
+   {
+    "id": "war_stop_dock_gate",
+    "node": "j_dock_gate",
+    "x": 540,
+    "y": 210,
+    "road": "dock_road",
+    "war_stop": true,
+    "war_hours": "18:00-02:00",
+    "what": "the dock gate (RT2-17, 2.6.6): the dock road at the gate node",
+    "src": "2.6.6; RT2-17; reviewer fix 24 Nov"
+   },
+   {
+    "id": "war_stop_north_road_foot",
+    "node": "j_north_road_foot",
+    "x": 160,
+    "y": 66.5,
+    "road": "back_parade",
+    "war_stop": true,
+    "war_hours": "18:00-02:00",
+    "what": "the north road's junction at Quay Street's top (RT2-17, 2.6.6): the node where Back Parade meets the north road; j_bend_top is 41 m back along Back Parade",
+    "src": "2.6.6; RT2-17; reviewer fix 24 Nov"
    }
   ],
   "edge_waits": [
@@ -1186,6 +1212,9 @@
      "n_door_d_nr_47",
      "n_door_d_nr_49",
      "j_cut300_west",
+     "n_door_d_lockup_3",
+     "n_door_d_lockup_4",
+     "n_door_d_lockup_5",
      "n_door_d_nr_53",
      "j_ginnel_top",
      "n_door_d_nr_55",
@@ -1575,17 +1604,18 @@
    {
     "id": "gun_shown_reported",
     "deed": "a gun seen and reported",
-    "officer_response_game_minutes": 15,
-    "officer_response_real_s": 30,
+    "officer_response_game_minutes": 20,
+    "officer_response_real_s": 40,
     "offence": "gun",
     "tape": false,
     "ellis_next_morning": false,
-    "armed_by_dial": {
-     "fists": false,
-     "shown": false,
-     "fired": true,
-     "war": true
+    "armed_response_game_minutes": {
+     "fists": null,
+     "shown": null,
+     "fired": 45,
+     "war": 10
     },
+    "note": "the first unarmed officer comes at the ordinary time (20 game minutes, as any deed); armed men follow later by the dial: 45 game minutes at Fired, 10 at War (armed_response)",
     "chosen": true,
     "src": "2.6.10; proto pieces/law.js afterDeed; response time chosen",
     "reported_needed": true
@@ -1593,18 +1623,19 @@
    {
     "id": "shot_fired",
     "deed": "a shot fired",
-    "officer_response_game_minutes": 6,
-    "officer_response_real_s": 12,
+    "officer_response_game_minutes": 20,
+    "officer_response_real_s": 40,
     "offence": "gun",
     "tape": false,
     "ellis_next_morning": true,
     "detective_crime": true,
-    "armed_by_dial": {
-     "fists": false,
-     "shown": false,
-     "fired": true,
-     "war": true
+    "armed_response_game_minutes": {
+     "fists": null,
+     "shown": null,
+     "fired": 45,
+     "war": 10
     },
+    "note": "the first unarmed officer comes at the ordinary time (20 game minutes, as any deed); armed men follow later by the dial: 45 game minutes at Fired, 10 at War (armed_response)",
     "chosen": true,
     "src": "2.6.10; proto pieces/law.js afterDeed; response time chosen",
     "reported_needed": true
@@ -1695,13 +1726,20 @@
     "src": "RT2-02"
    },
    {
+    "offence": "gun",
+    "game_hours": 12,
+    "ends": "a charge; the gun kept; any gun found on him or in the cab, at a stop or by a search (RT2-17 sets 12 at a War stop; chosen for the others)",
+    "src": "RT2-17",
+    "chosen": true
+   },
+   {
     "offence": "gun_found_at_war_stop",
     "game_hours": 12,
     "ends": "always a charge, gun kept, Ellis up one stage",
     "src": "RT2-17"
    },
    {
-    "offence": "refused_stop_no_deed",
+    "offence": "refused_stop",
     "game_hours": 2,
     "ends": "a caution; a charge the second time",
     "src": "RT2-16"
@@ -1875,6 +1913,21 @@
     "case_cools_times_faster": 2,
     "loses_best_line_once": true
    },
+   "case_jumps_points": 3,
+   "case_points_scale": {
+    "src": "production/lane/blueprint/economy/economy_run.py (heat)",
+    "what": "Ellis's case points: stage up at 4, 8, 12; an arrest when the case reaches 8; a quiet week cools 0.8 (1.6 while she is bought); a shopkeeper squeezed past bearing adds 1; her unbuying adds 3",
+    "stage_up_at": [
+     4,
+     8,
+     12
+    ],
+    "arrest_at": 8,
+    "cool_per_quiet_week": 0.8,
+    "cool_per_quiet_week_bought": 1.6,
+    "squeezed_shopkeeper_adds": 1.0,
+    "unbought_adds": 3.0
+   },
    "missed_week": {
     "ends_for_good": true,
     "case_jumps_points": 3,
@@ -1884,8 +1937,7 @@
    "pay_day": "every seventh game day from the day she was bought",
    "pay_day_chosen": true,
    "src": "ECONOMY-DESIGN 5.7, EC-11, choice 2; PRICES-WAGES-1990 s.4",
-   "unit_of_case_points": "charges (the economy run counts \"points\"; read as charges on her file)",
-   "unit_chosen": true
+   "unit_of_case_points": "economy_run.py's heat: a case point; 3 points is three-eighths of an arrest, most of a stage (stage ups at 4, 8, 12)"
   }
  },
  "bought_officers": {
@@ -1896,7 +1948,6 @@
     "id": "bought_look_away",
     "role": "patrol_driver",
     "person_ref": true,
-    "proto_name_hint": "PC Harker",
     "price_pounds": 50,
     "does": "looks away from a car once",
     "uses": 1,
@@ -1909,7 +1960,6 @@
     "id": "bought_lose_statement",
     "role": "station_detective_constable",
     "person_ref": true,
-    "proto_name_hint": "DC Pollitt",
     "price_pounds": 200,
     "does": "loses a statement once",
     "uses": 1,

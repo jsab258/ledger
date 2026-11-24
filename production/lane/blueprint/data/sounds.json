@@ -21,11 +21,9 @@
   "production/lane/blueprint/data/content-words.json (content check run over this file's text)"
  ],
  "open_points": [
-  "Tom's own steps: the 16 files step-walk-0..7 and step-run-0..7 live in production/assets/steps (outside the cloud-week manifest); the manifest's 40 surface files carry every other step. Their licences are CC0 per production/research/footsteps/NOTE-2026-09-30.md, but they are not in the cloud-week manifest, so the one-shot's file check must read them from that folder.",
   "Setts have no recording (cloud-week NOTES): step_setts is a stone patio and old slabs, the nearest hard stone. Wet steps are the weakest set. The cloud week's own caution stands: nobody has heard any of the 97 files in the game; the listening pass (MEASUREMENTS-NEEDED A7) has not been done.",
   "The three voices-through-a-window and radio loops (amb_voices_*, amb_radio_*) are cut from speech recordings: they need the content check (no word, no child's voice, nothing about drink or gambling) before shipping; the cloud-week notes say that listening has not happened.",
   "Rule files: the sound reach of each deed (how far a step, door, shot is heard) is in tune.json under the keys listed in reach_keys; this file only names the key. The one function here is the footstep loudness = reach in metres / 10.",
-  "Hour reach multipliers: the prototype's finer bands (2.0 midnight to 05:00, 1.5 to 07:00, 0.8, 0.5 for 10:00 to 16:00, 0.8, 1.3 from 22:00) are kept in hour_bands; SOUND-PLAN's plain 'small hours doubled' (23:00 to 05:30) is the state value. They differ between 22:00 and 24:00 and at 05:00 to 05:30; tune.json should own the final bands.",
   "Evening sound state starts at the lamp strike when that is before 18:00 (chosen) so the sound follows the light file: sunset is about 15:46 on 30 Nov, when a fixed 18:00 would leave the street 'day' for two dark hours.",
   "Drizzle far-voice cap is a floor of three quarters and rain a floor of half (chosen); SND-02 gives only 'halves the far voices allowed' for rain.",
   "Synthesis recipes are specifications for the one-shot's Web Audio code (noise, oscillators, filters, envelopes), not tested sounds; every level target marked chosen is a guess to be set by ear. Voices (shouts, pain cries) are voice-tool lines; recipes are test stand-ins only.",
@@ -35,7 +33,11 @@
   "The tune melodies are generated from fixed seeds and never compared with any real tune; a resemblance by chance is unlikely but nobody has listened. A rendering pass with the allowlist's item 5 tool is optional and waits for the radio production start.",
   "RULINGS 24 Nov: no thinking sound before a talk answer. The 28 Sep line asking for a short thinking sound is dropped: no such cue is in this file. The cab radio squelch plays only on a radio call.",
   "Prototype gull and ship's horn intervals (every 55 to 140 s real) were set on the 45 s hour; on the 120 s hour the horn interval is 27 to 70 game minutes (about 54 to 140 real seconds, so the same real-time rate); old 55 to 140 s, new 54 to 140 s real.",
-  "The pirate station was minted twice in parallel (Slack Tide FM here, Cutter FM in letters-and-print.json); letters-and-print.json is the brand list, so Cutter FM is used here too."
+  "The pirate station was minted twice in parallel (Slack Tide FM here, Cutter FM in letters-and-print.json); letters-and-print.json is the brand list, so Cutter FM is used here too.",
+  "Small hours are 00:00 to 05:00 in both files (decision 24 Nov): early state 05:00 to 08:00, evening 18:00 to 24:00; the sound plan's 23:00 to 05:30 is superseded. Rain's effect on reach is the single figure tune:noise.rain_factor (0.6 rain, 0.8 drizzle) in tune.json.",
+  "Hour reach: one scheme in tune.json; this file holds no reach multiplier.",
+  "Tune titles are checked only from recall; run a title search before shipping.",
+  "Tom's 16 step files are in production/assets/steps, outside the cloud-week manifest; added to files with CC0 licence from research/footsteps/NOTE-2026-09-30.md (checked 30 Sep 2026)."
  ],
  "files": [
   {
@@ -1987,6 +1989,246 @@
    "target_lufs_m": -27,
    "true_peak_dbtp": -5.75,
    "class": "step"
+  },
+  {
+   "id": "step-walk-0",
+   "src": "production/research/footsteps/NOTE-2026-09-30.md",
+   "file": "step-walk-0.wav",
+   "path": "production/assets/steps/step-walk-0.wav",
+   "kind": "one-shot",
+   "group": "tom_steps",
+   "class": "step",
+   "loop": false,
+   "source_ids": [
+    "fs_273077"
+   ],
+   "licence": "CC0",
+   "credit": "sturmankin, Freesound 273077"
+  },
+  {
+   "id": "step-run-0",
+   "src": "production/research/footsteps/NOTE-2026-09-30.md",
+   "file": "step-run-0.wav",
+   "path": "production/assets/steps/step-run-0.wav",
+   "kind": "one-shot",
+   "group": "tom_steps",
+   "class": "step",
+   "loop": false,
+   "source_ids": [
+    "bsb_s0514"
+   ],
+   "licence": "CC0",
+   "credit": "Joseph Sardin, BigSoundBank s0514"
+  },
+  {
+   "id": "step-walk-1",
+   "src": "production/research/footsteps/NOTE-2026-09-30.md",
+   "file": "step-walk-1.wav",
+   "path": "production/assets/steps/step-walk-1.wav",
+   "kind": "one-shot",
+   "group": "tom_steps",
+   "class": "step",
+   "loop": false,
+   "source_ids": [
+    "fs_273077"
+   ],
+   "licence": "CC0",
+   "credit": "sturmankin, Freesound 273077"
+  },
+  {
+   "id": "step-run-1",
+   "src": "production/research/footsteps/NOTE-2026-09-30.md",
+   "file": "step-run-1.wav",
+   "path": "production/assets/steps/step-run-1.wav",
+   "kind": "one-shot",
+   "group": "tom_steps",
+   "class": "step",
+   "loop": false,
+   "source_ids": [
+    "bsb_s0514"
+   ],
+   "licence": "CC0",
+   "credit": "Joseph Sardin, BigSoundBank s0514"
+  },
+  {
+   "id": "step-walk-2",
+   "src": "production/research/footsteps/NOTE-2026-09-30.md",
+   "file": "step-walk-2.wav",
+   "path": "production/assets/steps/step-walk-2.wav",
+   "kind": "one-shot",
+   "group": "tom_steps",
+   "class": "step",
+   "loop": false,
+   "source_ids": [
+    "fs_273077"
+   ],
+   "licence": "CC0",
+   "credit": "sturmankin, Freesound 273077"
+  },
+  {
+   "id": "step-run-2",
+   "src": "production/research/footsteps/NOTE-2026-09-30.md",
+   "file": "step-run-2.wav",
+   "path": "production/assets/steps/step-run-2.wav",
+   "kind": "one-shot",
+   "group": "tom_steps",
+   "class": "step",
+   "loop": false,
+   "source_ids": [
+    "bsb_s0514"
+   ],
+   "licence": "CC0",
+   "credit": "Joseph Sardin, BigSoundBank s0514"
+  },
+  {
+   "id": "step-walk-3",
+   "src": "production/research/footsteps/NOTE-2026-09-30.md",
+   "file": "step-walk-3.wav",
+   "path": "production/assets/steps/step-walk-3.wav",
+   "kind": "one-shot",
+   "group": "tom_steps",
+   "class": "step",
+   "loop": false,
+   "source_ids": [
+    "fs_273077"
+   ],
+   "licence": "CC0",
+   "credit": "sturmankin, Freesound 273077"
+  },
+  {
+   "id": "step-run-3",
+   "src": "production/research/footsteps/NOTE-2026-09-30.md",
+   "file": "step-run-3.wav",
+   "path": "production/assets/steps/step-run-3.wav",
+   "kind": "one-shot",
+   "group": "tom_steps",
+   "class": "step",
+   "loop": false,
+   "source_ids": [
+    "bsb_s0514"
+   ],
+   "licence": "CC0",
+   "credit": "Joseph Sardin, BigSoundBank s0514"
+  },
+  {
+   "id": "step-walk-4",
+   "src": "production/research/footsteps/NOTE-2026-09-30.md",
+   "file": "step-walk-4.wav",
+   "path": "production/assets/steps/step-walk-4.wav",
+   "kind": "one-shot",
+   "group": "tom_steps",
+   "class": "step",
+   "loop": false,
+   "source_ids": [
+    "fs_273077"
+   ],
+   "licence": "CC0",
+   "credit": "sturmankin, Freesound 273077"
+  },
+  {
+   "id": "step-run-4",
+   "src": "production/research/footsteps/NOTE-2026-09-30.md",
+   "file": "step-run-4.wav",
+   "path": "production/assets/steps/step-run-4.wav",
+   "kind": "one-shot",
+   "group": "tom_steps",
+   "class": "step",
+   "loop": false,
+   "source_ids": [
+    "bsb_s0514"
+   ],
+   "licence": "CC0",
+   "credit": "Joseph Sardin, BigSoundBank s0514"
+  },
+  {
+   "id": "step-walk-5",
+   "src": "production/research/footsteps/NOTE-2026-09-30.md",
+   "file": "step-walk-5.wav",
+   "path": "production/assets/steps/step-walk-5.wav",
+   "kind": "one-shot",
+   "group": "tom_steps",
+   "class": "step",
+   "loop": false,
+   "source_ids": [
+    "fs_273077"
+   ],
+   "licence": "CC0",
+   "credit": "sturmankin, Freesound 273077"
+  },
+  {
+   "id": "step-run-5",
+   "src": "production/research/footsteps/NOTE-2026-09-30.md",
+   "file": "step-run-5.wav",
+   "path": "production/assets/steps/step-run-5.wav",
+   "kind": "one-shot",
+   "group": "tom_steps",
+   "class": "step",
+   "loop": false,
+   "source_ids": [
+    "bsb_s0514"
+   ],
+   "licence": "CC0",
+   "credit": "Joseph Sardin, BigSoundBank s0514"
+  },
+  {
+   "id": "step-walk-6",
+   "src": "production/research/footsteps/NOTE-2026-09-30.md",
+   "file": "step-walk-6.wav",
+   "path": "production/assets/steps/step-walk-6.wav",
+   "kind": "one-shot",
+   "group": "tom_steps",
+   "class": "step",
+   "loop": false,
+   "source_ids": [
+    "fs_273077"
+   ],
+   "licence": "CC0",
+   "credit": "sturmankin, Freesound 273077"
+  },
+  {
+   "id": "step-run-6",
+   "src": "production/research/footsteps/NOTE-2026-09-30.md",
+   "file": "step-run-6.wav",
+   "path": "production/assets/steps/step-run-6.wav",
+   "kind": "one-shot",
+   "group": "tom_steps",
+   "class": "step",
+   "loop": false,
+   "source_ids": [
+    "bsb_s0514"
+   ],
+   "licence": "CC0",
+   "credit": "Joseph Sardin, BigSoundBank s0514"
+  },
+  {
+   "id": "step-walk-7",
+   "src": "production/research/footsteps/NOTE-2026-09-30.md",
+   "file": "step-walk-7.wav",
+   "path": "production/assets/steps/step-walk-7.wav",
+   "kind": "one-shot",
+   "group": "tom_steps",
+   "class": "step",
+   "loop": false,
+   "source_ids": [
+    "fs_273077"
+   ],
+   "licence": "CC0",
+   "credit": "sturmankin, Freesound 273077"
+  },
+  {
+   "id": "step-run-7",
+   "src": "production/research/footsteps/NOTE-2026-09-30.md",
+   "file": "step-run-7.wav",
+   "path": "production/assets/steps/step-run-7.wav",
+   "kind": "one-shot",
+   "group": "tom_steps",
+   "class": "step",
+   "loop": false,
+   "source_ids": [
+    "bsb_s0514"
+   ],
+   "licence": "CC0",
+   "credit": "Joseph Sardin, BigSoundBank s0514"
   }
  ],
  "file_sources": [
@@ -2587,6 +2829,24 @@
    "licence_url": "http://creativecommons.org/publicdomain/zero/1.0/",
    "used_for": "phonebox_ring: a British GPO 746 telephone ringing (a house telephone; no kiosk payphone recording was found)",
    "date_read": "2026-10-12"
+  },
+  {
+   "id": "fs_273077",
+   "src": "production/research/footsteps/NOTE-2026-09-30.md",
+   "host": "freesound",
+   "author": "sturmankin",
+   "page_url": "https://freesound.org/s/273077/",
+   "licence": "CC0",
+   "used_for": "Tom's walking steps"
+  },
+  {
+   "id": "bsb_s0514",
+   "src": "production/research/footsteps/NOTE-2026-09-30.md",
+   "host": "bigsoundbank",
+   "author": "Joseph Sardin",
+   "page_url": "https://bigsoundbank.com/",
+   "licence": "CC0",
+   "used_for": "Tom's running steps"
   }
  ],
  "sound_list": [
@@ -2662,7 +2922,7 @@
   {
    "id": "tone_office",
    "group": "room_tones",
-   "name": "the office radio set's low hiss and a wall clock",
+   "name": "the office's quiet: wall clock and a faint mains hum",
    "src": "SND-17; 5.5.4",
    "kind": "room_tone",
    "loop": true,
@@ -2697,8 +2957,8 @@
    },
    "origin": "synthesis",
    "target_lufs_m_max": -50,
-   "owner": "the radio set and the wall clock",
-   "note": "room kind office; place Mickey's office (qs_mickeys); must sit at least 10 dB under speech (SND-17)",
+   "owner": "the wall clock and the strip light",
+   "note": "room kind office; place Mickey's office (mickeys); must sit at least 10 dB under speech (SND-17)",
    "chosen": true
   },
   {
@@ -2742,7 +3002,7 @@
    "origin": "synthesis",
    "target_lufs_m_max": -50,
    "owner": "the urn",
-   "note": "room kind caff; place Rinaldi's (quay_caff); must sit at least 10 dB under speech (SND-17)",
+   "note": "room kind caff; place Rinaldi's (caff); must sit at least 10 dB under speech (SND-17)",
    "chosen": true
   },
   {
@@ -2796,7 +3056,7 @@
    "origin": "synthesis",
    "target_lufs_m_max": -50,
    "owner": "the washing machines",
-   "note": "room kind launderette; place the Washeteria (qs_launderette); must sit at least 10 dB under speech (SND-17)",
+   "note": "room kind launderette; place the Washeteria (launderette); must sit at least 10 dB under speech (SND-17)",
    "chosen": true
   },
   {
@@ -3027,22 +3287,6 @@
    "owner": "a strip light and a pipe",
    "note": "room kind back_room; place Rita's back room, bare stores; must sit at least 10 dB under speech (SND-17)",
    "chosen": true
-  },
-  {
-   "id": "tone_office_radio",
-   "group": "room_tones",
-   "name": "the office radio set playing low (a tune from the radio list)",
-   "src": "SND-17, SND-21",
-   "kind": "room_tone",
-   "loop": true,
-   "file_ids": [
-    "amb_radio_day",
-    "amb_radio_night"
-   ],
-   "origin": "file",
-   "owner": "the radio set in Mickey's",
-   "note": "speech-like radio loop from the cloud week; unintelligible grains, no word",
-   "chosen": false
   },
   {
    "id": "door_creak_house",
@@ -5401,7 +5645,13 @@
     "interval_game_min": [
      27,
      70
-    ]
+    ],
+    "per_game_hour": {
+     "mean_interval_game_min": 48.5,
+     "horns_per_game_hour": 1.24,
+     "real_seconds_mean_on_120s": 97,
+     "note": "27 to 70 game minutes; the prototype's 55 to 140 real seconds on the 45 s hour was about 2 horns a game hour"
+    }
    },
    "chosen": true
   },
@@ -7136,7 +7386,7 @@
    "origin": "synthesis",
    "target_lufs_m_max": -30,
    "reach_key": "tune:sound.reach.snooker",
-   "owner": "the snooker hall (quay_snooker)",
+   "owner": "the snooker hall (snooker_hall)",
    "chosen": true
   },
   {
@@ -7284,7 +7534,7 @@
    "origin": "synthesis",
    "target_lufs_m_max": -28,
    "reach_key": "tune:sound.reach.boxing",
-   "owner": "the boxing club (quay_boxing)",
+   "owner": "the boxing club (boxing_club)",
    "chosen": true
   },
   {
@@ -8079,7 +8329,7 @@
   {
    "id": "paper_round",
    "group": "daily",
-   "name": "a paper round: a letterbox flap and a bicycle's tick",
+   "name": "a paper round by an adult on a bicycle: a letterbox flap and a bicycle's tick",
    "src": "5.5.3 catalogue",
    "kind": "one_shot",
    "loop": false,
@@ -8211,9 +8461,264 @@
    "owner": "a man with a penny whistle (an adult)",
    "filter_ref": "rsrc_busker",
    "chosen": true
+  },
+  {
+   "id": "drawer_search",
+   "group": "things",
+   "name": "a drawer searched: runner scrape, papers shifted, small items rattled",
+   "src": "tune.json noise.drawer_search_m; 5.5.2",
+   "kind": "one_shot",
+   "loop": false,
+   "origin": "synthesis",
+   "recipe": {
+    "engine": "web_audio",
+    "length_s": 1.4,
+    "loop": false,
+    "layers": [
+     {
+      "layer": "noise",
+      "colour": "brown",
+      "filter": "bandpass",
+      "freq_hz": 700,
+      "gain_db": -20,
+      "attack_s": 0.02,
+      "decay_s": 0.35,
+      "start_s": 0,
+      "q": 1
+     },
+     {
+      "layer": "noise",
+      "colour": "pink",
+      "filter": "bandpass",
+      "freq_hz": 2800,
+      "gain_db": -26,
+      "attack_s": 0.02,
+      "decay_s": 0.3,
+      "start_s": 0.4,
+      "q": 1.0
+     },
+     {
+      "layer": "noise",
+      "colour": "white",
+      "filter": "bandpass",
+      "freq_hz": 3500,
+      "gain_db": -30,
+      "attack_s": 0.001,
+      "decay_s": 0.05,
+      "start_s": 0.8,
+      "q": 2
+     },
+     {
+      "layer": "noise",
+      "colour": "white",
+      "filter": "bandpass",
+      "freq_hz": 3000,
+      "gain_db": -32,
+      "attack_s": 0.001,
+      "decay_s": 0.05,
+      "start_s": 1.0,
+      "q": 2
+     }
+    ],
+    "chosen": true,
+    "note": ""
+   },
+   "target_lufs_m_max": -33,
+   "reach_key": "tune:noise.drawer_search_m",
+   "owner": "a drawer (mickeys_desk_drawer)",
+   "note": "heard 2 m (tune.json)",
+   "chosen": true
+  },
+  {
+   "id": "cupboard_forced",
+   "group": "doors",
+   "name": "a cupboard forced: wood groan, a crack, a hinge giving way",
+   "src": "tune.json noise.forced_cupboard_night_m",
+   "kind": "one_shot",
+   "loop": false,
+   "origin": "synthesis",
+   "recipe": {
+    "engine": "web_audio",
+    "length_s": 1.0,
+    "loop": false,
+    "layers": [
+     {
+      "layer": "osc",
+      "wave": "sawtooth",
+      "freq_hz": 160,
+      "gain_db": -18,
+      "attack_s": 0.05,
+      "decay_s": 0.4,
+      "start_s": 0,
+      "freq_end_hz": 95
+     },
+     {
+      "layer": "noise",
+      "colour": "white",
+      "filter": "highpass",
+      "freq_hz": 2200,
+      "gain_db": -14,
+      "attack_s": 0.001,
+      "decay_s": 0.06,
+      "start_s": 0.4,
+      "q": 1.0
+     },
+     {
+      "layer": "osc",
+      "wave": "sine",
+      "freq_hz": 85,
+      "gain_db": -12,
+      "attack_s": 0.001,
+      "decay_s": 0.15,
+      "start_s": 0.42,
+      "freq_end_hz": 50
+     },
+     {
+      "layer": "noise",
+      "colour": "brown",
+      "filter": "lowpass",
+      "freq_hz": 500,
+      "gain_db": -20,
+      "attack_s": 0.001,
+      "decay_s": 0.25,
+      "start_s": 0.42,
+      "q": 1.0
+     }
+    ],
+    "chosen": true,
+    "note": ""
+   },
+   "target_lufs_m_max": -27,
+   "reach_key": "tune:noise.forced_cupboard_night_m",
+   "owner": "a cupboard",
+   "note": "heard 10 m at night (tune.json)",
+   "chosen": true
+  },
+  {
+   "id": "splash_thrown",
+   "group": "docks",
+   "name": "something thrown into the dock: a heavy plop and rings",
+   "src": "BLUEPRINT-02 (a bag thrown in the dock)",
+   "kind": "one_shot",
+   "loop": false,
+   "origin": "synthesis",
+   "recipe": {
+    "engine": "web_audio",
+    "length_s": 1.6,
+    "loop": false,
+    "layers": [
+     {
+      "layer": "noise",
+      "colour": "white",
+      "filter": "bandpass",
+      "freq_hz": 900,
+      "gain_db": -14,
+      "attack_s": 0.001,
+      "decay_s": 0.25,
+      "start_s": 0,
+      "q": 0.8
+     },
+     {
+      "layer": "osc",
+      "wave": "sine",
+      "freq_hz": 180,
+      "gain_db": -14,
+      "attack_s": 0.001,
+      "decay_s": 0.2,
+      "start_s": 0,
+      "freq_end_hz": 70
+     },
+     {
+      "layer": "noise",
+      "colour": "pink",
+      "filter": "bandpass",
+      "freq_hz": 2200,
+      "gain_db": -30,
+      "attack_s": 0.05,
+      "decay_s": 0.8,
+      "start_s": 0.1,
+      "q": 0.6
+     }
+    ],
+    "chosen": true,
+    "note": ""
+   },
+   "target_lufs_m_max": -26,
+   "reach_key": "tune:sound.reach.splash_thrown",
+   "owner": "the dock water",
+   "chosen": true
+  },
+  {
+   "id": "splash_man",
+   "group": "docks",
+   "name": "a man put into the water: a large splash, slap, churn and gasp of water",
+   "src": "BLUEPRINT-02 (body into the water); canon allows violence, not cruelty as spectacle",
+   "kind": "one_shot",
+   "loop": false,
+   "origin": "synthesis",
+   "recipe": {
+    "engine": "web_audio",
+    "length_s": 3.0,
+    "loop": false,
+    "layers": [
+     {
+      "layer": "noise",
+      "colour": "white",
+      "filter": "bandpass",
+      "freq_hz": 700,
+      "gain_db": -8,
+      "attack_s": 0.001,
+      "decay_s": 0.6,
+      "start_s": 0,
+      "q": 0.7
+     },
+     {
+      "layer": "osc",
+      "wave": "sine",
+      "freq_hz": 120,
+      "gain_db": -8,
+      "attack_s": 0.001,
+      "decay_s": 0.35,
+      "start_s": 0,
+      "freq_end_hz": 45
+     },
+     {
+      "layer": "noise",
+      "colour": "white",
+      "filter": "bandpass",
+      "freq_hz": 1800,
+      "gain_db": -18,
+      "attack_s": 0.02,
+      "decay_s": 1.4,
+      "start_s": 0.15,
+      "q": 0.6
+     },
+     {
+      "layer": "noise",
+      "colour": "brown",
+      "filter": "lowpass",
+      "freq_hz": 400,
+      "gain_db": -20,
+      "attack_s": 0.05,
+      "decay_s": 2.0,
+      "start_s": 0.3,
+      "q": 1.0
+     }
+    ],
+    "chosen": true,
+    "note": ""
+   },
+   "target_lufs_m_max": -22,
+   "reach_key": "tune:sound.reach.splash_man",
+   "owner": "the dock water and the person in it",
+   "note": "no voice and no gore; the water only (a cry, if any, is a pain_cry line)",
+   "chosen": true
   }
  ],
  "reach_keys": [
+  "tune:noise.drawer_search_m",
+  "tune:noise.forced_cupboard_night_m",
+  "tune:noise.rain_factor",
   "tune:sound.reach.bin",
   "tune:sound.reach.boxing",
   "tune:sound.reach.boxing_bell",
@@ -8250,13 +8755,14 @@
   "tune:sound.reach.phone_ring",
   "tune:sound.reach.pigeon",
   "tune:sound.reach.plant",
-  "tune:sound.reach.rain_cut",
   "tune:sound.reach.ship_horn",
   "tune:sound.reach.shop_bell",
   "tune:sound.reach.shot",
   "tune:sound.reach.shout",
   "tune:sound.reach.siren",
   "tune:sound.reach.snooker",
+  "tune:sound.reach.splash_man",
+  "tune:sound.reach.splash_thrown",
   "tune:sound.reach.stair",
   "tune:sound.reach.stamp",
   "tune:sound.reach.step_stand",
@@ -8269,21 +8775,20 @@
   {
    "id": "state_early",
    "src": "5.5.3; SND-02",
-   "hours": "05:30-08:00",
+   "hours": "05:00-08:00",
    "bed_variant": "day",
    "layer_gain_db": {
     "traffic": -3,
     "harbour": 0,
     "voices": -4,
     "wind": 0,
-    "gulls": 3,
-    "radio": -6
+    "gulls": 3
    },
    "far_voice_cap_dry": 2,
    "activity_cap_dry": 2,
-   "reach_mult": 1.5,
    "chosen": true,
-   "chosen_note": "the four hour states and their hours are SOUND-PLAN's own design (the sources name none); the evening state starts at the lamp strike when that is before 18:00 (chosen, so sound and light agree in late November)"
+   "chosen_note": "the four hour states and their hours are SOUND-PLAN's own design (the sources name none); the evening state starts at the lamp strike when that is before 18:00 (chosen, so sound and light agree in late November)",
+   "reach_ref": "tune.json time.small_hours_from_hour 0 and until 5, noise.night_factor, noise.*_times; 'every reach doubled' in the small hours is noise.night_factor 2"
   },
   {
    "id": "state_day",
@@ -8295,86 +8800,87 @@
     "harbour": 0,
     "voices": 0,
     "wind": 0,
-    "gulls": 0,
-    "radio": 0
+    "gulls": 0
    },
    "far_voice_cap_dry": 3,
    "activity_cap_dry": 3,
-   "reach_mult": 0.8,
    "chosen": true,
-   "chosen_note": "the four hour states and their hours are SOUND-PLAN's own design (the sources name none); the evening state starts at the lamp strike when that is before 18:00 (chosen, so sound and light agree in late November)"
+   "chosen_note": "the four hour states and their hours are SOUND-PLAN's own design (the sources name none); the evening state starts at the lamp strike when that is before 18:00 (chosen, so sound and light agree in late November)",
+   "reach_ref": "tune.json time.small_hours_from_hour 0 and until 5, noise.night_factor, noise.*_times; 'every reach doubled' in the small hours is noise.night_factor 2"
   },
   {
    "id": "state_evening",
    "src": "5.5.3; SND-02",
-   "hours": "18:00-23:00 (starts at lamp strike when that is earlier)",
+   "hours": "18:00-24:00 (starts at lamp strike when that is earlier)",
    "bed_variant": "night",
    "layer_gain_db": {
     "traffic": 2,
     "harbour": 0,
     "voices": 3,
     "wind": 0,
-    "gulls": null,
-    "radio": 3
+    "gulls": null
    },
    "far_voice_cap_dry": 2,
    "activity_cap_dry": 2,
-   "reach_mult": 0.8,
    "chosen": true,
-   "chosen_note": "the four hour states and their hours are SOUND-PLAN's own design (the sources name none); the evening state starts at the lamp strike when that is before 18:00 (chosen, so sound and light agree in late November)"
+   "chosen_note": "the four hour states and their hours are SOUND-PLAN's own design (the sources name none); the evening state starts at the lamp strike when that is before 18:00 (chosen, so sound and light agree in late November)",
+   "reach_ref": "tune.json time.small_hours_from_hour 0 and until 5, noise.night_factor, noise.*_times; 'every reach doubled' in the small hours is noise.night_factor 2"
   },
   {
    "id": "state_small_hours",
    "src": "5.5.3; SND-02",
-   "hours": "23:00-05:30",
+   "hours": "00:00-05:00",
    "bed_variant": "night",
    "layer_gain_db": {
     "traffic": 0,
     "harbour": 1,
     "voices": null,
     "wind": 0,
-    "gulls": null,
-    "radio": null
+    "gulls": null
    },
    "far_voice_cap_dry": 0,
    "activity_cap_dry": 0,
-   "reach_mult": 2.0,
    "chosen": true,
-   "chosen_note": "the four hour states and their hours are SOUND-PLAN's own design (the sources name none); the evening state starts at the lamp strike when that is before 18:00 (chosen, so sound and light agree in late November)"
+   "chosen_note": "the four hour states and their hours are SOUND-PLAN's own design (the sources name none); the evening state starts at the lamp strike when that is before 18:00 (chosen, so sound and light agree in late November)",
+   "reach_ref": "tune.json time.small_hours_from_hour 0 and until 5, noise.night_factor, noise.*_times; 'every reach doubled' in the small hours is noise.night_factor 2"
   }
  ],
- "hour_reach_bands_prototype": [
-  {
-   "from": "00:00",
-   "until": "05:00",
-   "times": 2.0
-  },
-  {
-   "from": "05:00",
-   "until": "07:00",
-   "times": 1.5
-  },
-  {
-   "from": "07:00",
-   "until": "10:00",
-   "times": 0.8
-  },
-  {
-   "from": "10:00",
-   "until": "16:00",
-   "times": 0.5
-  },
-  {
-   "from": "16:00",
-   "until": "22:00",
-   "times": 0.8
-  },
-  {
-   "from": "22:00",
-   "until": "24:00",
-   "times": 1.3
-  }
- ],
+ "hour_reach_bands_prototype": {
+  "superseded": true,
+  "note": "one hour-reach scheme, held in tune.json (noise.noon_times, early_times, late_evening_times, otherwise_times, night_factor and the hour keys); this file keeps none",
+  "old": [
+   {
+    "from": "00:00",
+    "until": "05:00",
+    "times": 2.0
+   },
+   {
+    "from": "05:00",
+    "until": "07:00",
+    "times": 1.5
+   },
+   {
+    "from": "07:00",
+    "until": "10:00",
+    "times": 0.8
+   },
+   {
+    "from": "10:00",
+    "until": "16:00",
+    "times": 0.5
+   },
+   {
+    "from": "16:00",
+    "until": "22:00",
+    "times": 0.8
+   },
+   {
+    "from": "22:00",
+    "until": "24:00",
+    "times": 1.3
+   }
+  ]
+ },
  "mixes": [
   {
    "id": "mix_early_dry_overcast",
@@ -8411,12 +8917,6 @@
      "file_id": "amb_gulls_day",
      "gain_db": 3,
      "loop": true
-    },
-    {
-     "layer": "radio",
-     "file_id": "amb_radio_day",
-     "gain_db": -6,
-     "loop": true
     }
    ],
    "est_lufs_integrated": -37.2,
@@ -8424,11 +8924,10 @@
    "target_src": null,
    "far_voice_cap": 2,
    "activity_cap": 2,
-   "reach_mult": 1.5,
-   "rain_reach_cut_key": null,
    "max_spoken_lines_at_once": 2,
    "chosen": true,
-   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)"
+   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)",
+   "reach_ref": "tune:noise.* (night_factor, hour times, rain_factor, drizzle_factor)"
   },
   {
    "id": "mix_early_drizzle",
@@ -8467,12 +8966,6 @@
      "loop": true
     },
     {
-     "layer": "radio",
-     "file_id": "amb_radio_day",
-     "gain_db": -6,
-     "loop": true
-    },
-    {
      "layer": "rain_pavement",
      "file_id": "amb_rain_pavement",
      "gain_db": -6.6,
@@ -8490,11 +8983,10 @@
    "target_src": null,
    "far_voice_cap": 1,
    "activity_cap": 2,
-   "reach_mult": 1.5,
-   "rain_reach_cut_key": "tune:sound.reach.rain_cut",
    "max_spoken_lines_at_once": 2,
    "chosen": true,
-   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)"
+   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)",
+   "reach_ref": "tune:noise.* (night_factor, hour times, rain_factor, drizzle_factor)"
   },
   {
    "id": "mix_early_rain",
@@ -8533,12 +9025,6 @@
      "loop": true
     },
     {
-     "layer": "radio",
-     "file_id": "amb_radio_rain",
-     "gain_db": -6,
-     "loop": true
-    },
-    {
      "layer": "rain_pavement",
      "file_id": "amb_rain_pavement",
      "gain_db": 0.0,
@@ -8562,11 +9048,10 @@
    "target_src": null,
    "far_voice_cap": 1,
    "activity_cap": 2,
-   "reach_mult": 1.5,
-   "rain_reach_cut_key": "tune:sound.reach.rain_cut",
    "max_spoken_lines_at_once": 2,
    "chosen": true,
-   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)"
+   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)",
+   "reach_ref": "tune:noise.* (night_factor, hour times, rain_factor, drizzle_factor)"
   },
   {
    "id": "mix_day_dry_overcast",
@@ -8603,24 +9088,17 @@
      "file_id": "amb_gulls_day",
      "gain_db": 0,
      "loop": true
-    },
-    {
-     "layer": "radio",
-     "file_id": "amb_radio_day",
-     "gain_db": 0,
-     "loop": true
     }
    ],
-   "est_lufs_integrated": -36.3,
+   "est_lufs_integrated": -36.4,
    "target_lufs": -36.5,
    "target_src": "cloud-week loudness plan (judgement, never heard in the game)",
    "far_voice_cap": 3,
    "activity_cap": 3,
-   "reach_mult": 0.8,
-   "rain_reach_cut_key": null,
    "max_spoken_lines_at_once": 3,
    "chosen": true,
-   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)"
+   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)",
+   "reach_ref": "tune:noise.* (night_factor, hour times, rain_factor, drizzle_factor)"
   },
   {
    "id": "mix_day_drizzle",
@@ -8659,12 +9137,6 @@
      "loop": true
     },
     {
-     "layer": "radio",
-     "file_id": "amb_radio_day",
-     "gain_db": 0,
-     "loop": true
-    },
-    {
      "layer": "rain_pavement",
      "file_id": "amb_rain_pavement",
      "gain_db": -6.6,
@@ -8677,16 +9149,15 @@
      "loop": true
     }
    ],
-   "est_lufs_integrated": -35.4,
+   "est_lufs_integrated": -35.5,
    "target_lufs": null,
    "target_src": null,
    "far_voice_cap": 2,
    "activity_cap": 3,
-   "reach_mult": 0.8,
-   "rain_reach_cut_key": "tune:sound.reach.rain_cut",
    "max_spoken_lines_at_once": 3,
    "chosen": true,
-   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)"
+   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)",
+   "reach_ref": "tune:noise.* (night_factor, hour times, rain_factor, drizzle_factor)"
   },
   {
    "id": "mix_day_rain",
@@ -8725,12 +9196,6 @@
      "loop": true
     },
     {
-     "layer": "radio",
-     "file_id": "amb_radio_rain",
-     "gain_db": 0,
-     "loop": true
-    },
-    {
      "layer": "rain_pavement",
      "file_id": "amb_rain_pavement",
      "gain_db": 0.0,
@@ -8754,11 +9219,10 @@
    "target_src": "cloud-week loudness plan (judgement, never heard in the game)",
    "far_voice_cap": 1,
    "activity_cap": 2,
-   "reach_mult": 0.8,
-   "rain_reach_cut_key": "tune:sound.reach.rain_cut",
    "max_spoken_lines_at_once": 3,
    "chosen": true,
-   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)"
+   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)",
+   "reach_ref": "tune:noise.* (night_factor, hour times, rain_factor, drizzle_factor)"
   },
   {
    "id": "mix_evening_dry_overcast",
@@ -8789,24 +9253,17 @@
      "file_id": "amb_wind_night",
      "gain_db": 0,
      "loop": true
-    },
-    {
-     "layer": "radio",
-     "file_id": "amb_radio_night",
-     "gain_db": 3,
-     "loop": true
     }
    ],
-   "est_lufs_integrated": -38.6,
+   "est_lufs_integrated": -38.9,
    "target_lufs": null,
    "target_src": null,
    "far_voice_cap": 2,
    "activity_cap": 2,
-   "reach_mult": 0.8,
-   "rain_reach_cut_key": null,
    "max_spoken_lines_at_once": 2,
    "chosen": true,
-   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)"
+   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)",
+   "reach_ref": "tune:noise.* (night_factor, hour times, rain_factor, drizzle_factor)"
   },
   {
    "id": "mix_evening_drizzle",
@@ -8839,12 +9296,6 @@
      "loop": true
     },
     {
-     "layer": "radio",
-     "file_id": "amb_radio_night",
-     "gain_db": 3,
-     "loop": true
-    },
-    {
      "layer": "rain_pavement",
      "file_id": "amb_rain_pavement",
      "gain_db": -6.6,
@@ -8857,16 +9308,15 @@
      "loop": true
     }
    ],
-   "est_lufs_integrated": -37.3,
+   "est_lufs_integrated": -37.4,
    "target_lufs": null,
    "target_src": null,
    "far_voice_cap": 1,
    "activity_cap": 2,
-   "reach_mult": 0.8,
-   "rain_reach_cut_key": "tune:sound.reach.rain_cut",
    "max_spoken_lines_at_once": 2,
    "chosen": true,
-   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)"
+   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)",
+   "reach_ref": "tune:noise.* (night_factor, hour times, rain_factor, drizzle_factor)"
   },
   {
    "id": "mix_evening_rain",
@@ -8899,12 +9349,6 @@
      "loop": true
     },
     {
-     "layer": "radio",
-     "file_id": "amb_radio_rain",
-     "gain_db": 3,
-     "loop": true
-    },
-    {
      "layer": "rain_pavement",
      "file_id": "amb_rain_pavement",
      "gain_db": 0.0,
@@ -8923,16 +9367,15 @@
      "loop": true
     }
    ],
-   "est_lufs_integrated": -33.0,
+   "est_lufs_integrated": -33.1,
    "target_lufs": null,
    "target_src": null,
    "far_voice_cap": 1,
    "activity_cap": 2,
-   "reach_mult": 0.8,
-   "rain_reach_cut_key": "tune:sound.reach.rain_cut",
    "max_spoken_lines_at_once": 2,
    "chosen": true,
-   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)"
+   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)",
+   "reach_ref": "tune:noise.* (night_factor, hour times, rain_factor, drizzle_factor)"
   },
   {
    "id": "mix_small_hours_dry_overcast",
@@ -8964,11 +9407,10 @@
    "target_src": "cloud-week loudness plan (judgement, never heard in the game)",
    "far_voice_cap": 0,
    "activity_cap": 0,
-   "reach_mult": 2.0,
-   "rain_reach_cut_key": null,
    "max_spoken_lines_at_once": 1,
    "chosen": true,
-   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)"
+   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)",
+   "reach_ref": "tune:noise.* (night_factor, hour times, rain_factor, drizzle_factor)"
   },
   {
    "id": "mix_small_hours_drizzle",
@@ -9012,11 +9454,10 @@
    "target_src": null,
    "far_voice_cap": 0,
    "activity_cap": 0,
-   "reach_mult": 2.0,
-   "rain_reach_cut_key": "tune:sound.reach.rain_cut",
    "max_spoken_lines_at_once": 1,
    "chosen": true,
-   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)"
+   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)",
+   "reach_ref": "tune:noise.* (night_factor, hour times, rain_factor, drizzle_factor)"
   },
   {
    "id": "mix_small_hours_rain",
@@ -9066,11 +9507,10 @@
    "target_src": null,
    "far_voice_cap": 0,
    "activity_cap": 0,
-   "reach_mult": 2.0,
-   "rain_reach_cut_key": "tune:sound.reach.rain_cut",
    "max_spoken_lines_at_once": 1,
    "chosen": true,
-   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)"
+   "chosen_note": "layer gains per state, drizzle layer levels, cap rounding and spoken-line limit chosen; far voice and activity caps for dry day (3 and 3) and small hours (none) from BLUEPRINT-05 5.5.3, early and evening 2 and 2 from SOUND-PLAN SND-02; rain halves far voices (SND-02), drizzle three quarters (chosen); est_lufs is a power sum of the files' own levels, not a measurement (the cloud week measured the day bed -36.6, night -40.3, rain -33.5 over 300 s)",
+   "reach_ref": "tune:noise.* (night_factor, hour times, rain_factor, drizzle_factor)"
   }
  ],
  "voice_budget": {
@@ -9614,7 +10054,7 @@
    "through_wall_multiplier": 0.7,
    "through_wall_src": "prototype noise.throughAWindowTimes 0.7",
    "chosen": true,
-   "rain_reach_cut_key": "tune:sound.reach.rain_cut"
+   "rain_reach_cut_key": "tune:noise.rain_factor"
   }
  },
  "mix_rules": {
@@ -9641,8 +10081,9 @@
    "for_game_hours": 1,
    "src": "SND-13"
   },
-  "doubling_small_hours": "every reach doubled (states.small_hours.reach_mult 2.0)",
-  "chosen": false
+  "doubling_small_hours": "reference tune:noise.night_factor (2) for 00:00 to 05:00",
+  "chosen": false,
+  "street_radio": "no radio layer in any street mix: a radio is heard only as a placed source (radio.sources) at an open door or window near its place; amb_radio_* loops serve as that source's bleed (open_door_bleed_file)"
  },
  "radio": {
   "id": "radio",
@@ -9652,20 +10093,21 @@
    "every tune made for the game; no real song, band or lyric; titles invented; no vocals (SND-22)",
    "every world source passes its small-speaker filter and falls with distance and walls (SND-23)",
    "no thinking sound before a talk answer (RULINGS 24 Nov): there is no cue of that kind anywhere in this file",
-   "none of the content-words.json patterns matches any tune, act, line or programme text (canon content rule; checked when this file was built)"
+   "none of the content-words.json patterns matches any tune, act, line or programme text (canon content rule; checked when this file was built)",
+   "a radio plays only at its place (radio sources); no radio in the street beds (5.7.1)"
   ],
   "station": {
-   "id": "station_slack_tide",
+   "id": "station_cutter_fm",
    "src": "5.7.1; canon.md brand owes",
    "name": "Cutter FM",
-   "said_as": "the Tide",
-   "dial": "94.6 on the FM dial",
+   "said_as": "Cutter; the pirate",
+   "dial": "96.4 FM (letters-and-print.json)",
    "kind": "radio (pirate)",
-   "physical": "a transmitter in the loft over the net store on the quay road (plot quay_net_store), a landline phone-in, an aerial lashed to a fishing pole; no stream, no mobile phone (late-analog 1990)",
+   "physical": "a transmitter in the loft over the net store on the quay road (plot net_loft), a landline phone-in, an aerial lashed to a fishing pole; no stream, no mobile phone (late-analog 1990)",
    "history": "raided twice since the summer and back on air within the week; the signal wanders when the ferry passes",
    "never_confuse": "any real station or pirate of the period; checked only against the author's recall, so tools/brand-verify.py and canon-gate must still run over it",
    "chosen": true,
-   "chosen_note": "minted here because the brand bible owes it (canon.md); 'slack tide' is the pause between tides, in keeping with the brand bible's tone: wet, worked, unglamorous, slightly disappointing"
+   "chosen_note": "name minted first in letters-and-print.json (Cutter FM, founded 1989, 96.4 FM, landline phone-in); this file's own Slack Tide FM is dropped"
   },
   "presenters": [
    {
@@ -9707,7 +10149,7 @@
     "live": true,
     "tune_pool": [
      "tune_lamp_light_walk",
-     "tune_half_a_sixpence_short",
+     "tune_quay_gate_shuffle",
      "tune_slow_kettle"
     ],
     "link_every_n_tunes": 3
@@ -9723,7 +10165,7 @@
      "tune_fog_signal",
      "tune_lamp_light_walk",
      "tune_slow_kettle",
-     "tune_half_a_sixpence_short"
+     "tune_quay_gate_shuffle"
     ],
     "link_every_n_tunes": 0,
     "note": "idents only between tunes"
@@ -9737,7 +10179,7 @@
     "live": true,
     "tune_pool": [
      "tune_ropewalk_rain",
-     "tune_half_a_sixpence_short",
+     "tune_quay_gate_shuffle",
      "tune_lamp_light_walk"
     ],
     "link_every_n_tunes": 2
@@ -9954,11 +10396,11 @@
    {
     "id": "rsrc_caff_radio",
     "src": "5.7.1; SND-21",
-    "place_id": "quay_caff",
+    "place_id": "caff",
     "place": "Rinaldi's caff",
     "kind": "radio",
     "hours": "06:00-15:00 Mon-Sat, to 22:00 Fri and Sat (G10)",
-    "station": "station_slack_tide",
+    "station": "station_cutter_fm",
     "tune_use": "tune_pool of the hour's programme",
     "filter": {
      "highpass_hz": 250,
@@ -9974,16 +10416,18 @@
     "owner": "the caff's radio on the shelf",
     "radio_speech": true,
     "level_lufs": -46,
-    "chosen": true
+    "chosen": true,
+    "open_door_bleed_file": "amb_radio_day (day) / amb_radio_night (night)",
+    "heard_only": "at an open door or window near its place, or inside the room"
    },
    {
     "id": "rsrc_office_radio",
     "src": "5.7.1; SND-17",
-    "place_id": "qs_mickeys",
+    "place_id": "mickeys",
     "place": "Mickey's office",
     "kind": "radio",
     "hours": "08:00-23:00 (chosen)",
-    "station": "station_slack_tide",
+    "station": "station_cutter_fm",
     "filter": {
      "highpass_hz": 200,
      "lowpass_hz": 5500,
@@ -9998,16 +10442,18 @@
     "radio_speech": true,
     "level_lufs": -48,
     "chosen": true,
-    "note": "Pauline's dispatch radio is separate: see cab_radio_squelch"
+    "note": "Pauline's dispatch radio is separate: see cab_radio_squelch",
+    "open_door_bleed_file": "amb_radio_day (day) / amb_radio_night (night)",
+    "heard_only": "at an open door or window near its place, or inside the room"
    },
    {
     "id": "rsrc_shop_radio",
     "src": "5.7.1",
-    "place_id": "qs_pearts",
+    "place_id": "newsagent",
     "place": "Peart's newsagent",
     "kind": "radio",
     "hours": "06:00-18:00 (G10)",
-    "station": "station_slack_tide",
+    "station": "station_cutter_fm",
     "filter": {
      "highpass_hz": 350,
      "lowpass_hz": 3800,
@@ -10022,16 +10468,18 @@
     "owner": "a transistor on the counter",
     "radio_speech": true,
     "level_lufs": -48,
-    "chosen": true
+    "chosen": true,
+    "open_door_bleed_file": "amb_radio_day (day) / amb_radio_night (night)",
+    "heard_only": "at an open door or window near its place, or inside the room"
    },
    {
     "id": "rsrc_boxing_radio",
     "src": "5.7.1; SND-21",
-    "place_id": "quay_boxing",
+    "place_id": "boxing_club",
     "place": "the boxing club",
     "kind": "radio",
     "hours": "Mon, Wed, Fri 18:00-21:30; Sat 10:00-13:00 (G10)",
-    "station": "station_slack_tide",
+    "station": "station_cutter_fm",
     "filter": {
      "highpass_hz": 300,
      "lowpass_hz": 4200,
@@ -10046,13 +10494,15 @@
     "radio_speech": true,
     "level_lufs": -44,
     "chosen": true,
-    "note": "room reverb: the hut's, a bare timber hall; chosen"
+    "note": "room reverb: the hut's, a bare timber hall; chosen",
+    "open_door_bleed_file": "amb_radio_day (day) / amb_radio_night (night)",
+    "heard_only": "at an open door or window near its place, or inside the room"
    },
    {
     "id": "rsrc_window_record",
     "src": "5.7.1; SND-21",
-    "place_id": "cl_11",
-    "place": "a first-floor flat window on Chapel Lane (11)",
+    "place_id": "boarding_house",
+    "place": "a first-floor window of the boarding house",
     "kind": "record_player",
     "hours": "19:00-22:30",
     "station": null,
@@ -10109,8 +10559,8 @@
    {
     "id": "rsrc_busker",
     "src": "SND-21 (the busker is our addition)",
-    "place_id": "bench_triangle",
-    "place": "the bench at the triangle by the ginnel's mouth",
+    "place_id": "bus_stop_qs",
+    "place": "the bench on the quay (bench_quay), by the bus stop",
     "kind": "busker",
     "hours": "Saturday 11:00-16:00, dry or drizzle only",
     "station": null,
@@ -10130,7 +10580,8 @@
     "radio_speech": false,
     "level_lufs": -44,
     "chosen": true,
-    "chosen_note": "the busker's spot, hours and instrument chosen"
+    "chosen_note": "the busker's spot, hours and instrument chosen",
+    "furniture_id": "bench_quay"
    }
   ],
   "tunes": [
@@ -11197,10 +11648,11 @@
     "chosen": true,
     "licence_line": "made for the game by this project: data recipe rendered by Web Audio synthesis in the browser (project's own, no sample, no lyrics, no reference melody; melody drawn from a fixed random seed). Any later studio render uses the allowlist's item 5 tool (self-hosted MusicGen or Stable Audio Open, weights licence re-verified when radio production starts).",
     "seed": 101,
-    "src": "5.7.1; SOUND-PLAN SND-21 to 23"
+    "src": "5.7.1; SOUND-PLAN SND-21 to 23",
+    "title_check": "invented title, checked against the author's recall of 1980s and 1990s song titles only: no known song of this title; not searched online"
    },
    {
-    "id": "tune_half_a_sixpence_short",
+    "id": "tune_quay_gate_shuffle",
     "bpm": 138,
     "steps_per_bar": 16,
     "step_note": "one step = one sixteenth note",
@@ -12334,7 +12786,7 @@
      ]
     },
     "swing": 0.15,
-    "title": "Half a Sixpence Short",
+    "title": "Quay Gate Shuffle",
     "act": "The Tallow Boys",
     "style": "skiffle-pop, bouncy, brisk",
     "meter": "4/4",
@@ -12347,7 +12799,8 @@
     "chosen": true,
     "licence_line": "made for the game by this project: data recipe rendered by Web Audio synthesis in the browser (project's own, no sample, no lyrics, no reference melody; melody drawn from a fixed random seed). Any later studio render uses the allowlist's item 5 tool (self-hosted MusicGen or Stable Audio Open, weights licence re-verified when radio production starts).",
     "seed": 102,
-    "src": "5.7.1; SOUND-PLAN SND-21 to 23"
+    "src": "5.7.1; SOUND-PLAN SND-21 to 23",
+    "title_check": "invented title, checked against the author's recall of 1980s and 1990s song titles only: no known song of this title; not searched online"
    },
    {
     "id": "tune_ropewalk_rain",
@@ -12932,7 +13385,8 @@
     "chosen": true,
     "licence_line": "made for the game by this project: data recipe rendered by Web Audio synthesis in the browser (project's own, no sample, no lyrics, no reference melody; melody drawn from a fixed random seed). Any later studio render uses the allowlist's item 5 tool (self-hosted MusicGen or Stable Audio Open, weights licence re-verified when radio production starts).",
     "seed": 103,
-    "src": "5.7.1; SOUND-PLAN SND-21 to 23"
+    "src": "5.7.1; SOUND-PLAN SND-21 to 23",
+    "title_check": "invented title, checked against the author's recall of 1980s and 1990s song titles only: no known song of this title; not searched online"
    },
    {
     "id": "tune_quay_dance",
@@ -14624,7 +15078,8 @@
     "chosen": true,
     "licence_line": "made for the game by this project: data recipe rendered by Web Audio synthesis in the browser (project's own, no sample, no lyrics, no reference melody; melody drawn from a fixed random seed). Any later studio render uses the allowlist's item 5 tool (self-hosted MusicGen or Stable Audio Open, weights licence re-verified when radio production starts).",
     "seed": 104,
-    "src": "5.7.1; SOUND-PLAN SND-21 to 23"
+    "src": "5.7.1; SOUND-PLAN SND-21 to 23",
+    "title_check": "invented title, checked against the author's recall of 1980s and 1990s song titles only: no known song of this title; not searched online"
    },
    {
     "id": "tune_fog_signal",
@@ -15721,7 +16176,8 @@
     "chosen": true,
     "licence_line": "made for the game by this project: data recipe rendered by Web Audio synthesis in the browser (project's own, no sample, no lyrics, no reference melody; melody drawn from a fixed random seed). Any later studio render uses the allowlist's item 5 tool (self-hosted MusicGen or Stable Audio Open, weights licence re-verified when radio production starts).",
     "seed": 105,
-    "src": "5.7.1; SOUND-PLAN SND-21 to 23"
+    "src": "5.7.1; SOUND-PLAN SND-21 to 23",
+    "title_check": "invented title, checked against the author's recall of 1980s and 1990s song titles only: no known song of this title; not searched online"
    },
    {
     "id": "tune_for_a_wet_sunday",
@@ -16303,7 +16759,8 @@
     "chosen": true,
     "licence_line": "made for the game by this project: data recipe rendered by Web Audio synthesis in the browser (project's own, no sample, no lyrics, no reference melody; melody drawn from a fixed random seed). Any later studio render uses the allowlist's item 5 tool (self-hosted MusicGen or Stable Audio Open, weights licence re-verified when radio production starts).",
     "seed": 106,
-    "src": "5.7.1; SOUND-PLAN SND-21 to 23"
+    "src": "5.7.1; SOUND-PLAN SND-21 to 23",
+    "title_check": "invented title, checked against the author's recall of 1980s and 1990s song titles only: no known song of this title; not searched online"
    },
    {
     "id": "tune_slow_kettle",
@@ -17377,7 +17834,8 @@
     "chosen": true,
     "licence_line": "made for the game by this project: data recipe rendered by Web Audio synthesis in the browser (project's own, no sample, no lyrics, no reference melody; melody drawn from a fixed random seed). Any later studio render uses the allowlist's item 5 tool (self-hosted MusicGen or Stable Audio Open, weights licence re-verified when radio production starts).",
     "seed": 107,
-    "src": "5.7.1; SOUND-PLAN SND-21 to 23"
+    "src": "5.7.1; SOUND-PLAN SND-21 to 23",
+    "title_check": "invented title, checked against the author's recall of 1980s and 1990s song titles only: no known song of this title; not searched online"
    },
    {
     "id": "tune_tide_table_jig",
@@ -18127,7 +18585,8 @@
     "chosen": true,
     "licence_line": "made for the game by this project: data recipe rendered by Web Audio synthesis in the browser (project's own, no sample, no lyrics, no reference melody; melody drawn from a fixed random seed). Any later studio render uses the allowlist's item 5 tool (self-hosted MusicGen or Stable Audio Open, weights licence re-verified when radio production starts).",
     "seed": 108,
-    "src": "5.7.1; SOUND-PLAN SND-21 to 23"
+    "src": "5.7.1; SOUND-PLAN SND-21 to 23",
+    "title_check": "invented title, checked against the author's recall of 1980s and 1990s song titles only: no known song of this title; not searched online"
    },
    {
     "id": "tune_blue_hour_waltz",
@@ -18982,7 +19441,8 @@
     "chosen": true,
     "licence_line": "made for the game by this project: data recipe rendered by Web Audio synthesis in the browser (project's own, no sample, no lyrics, no reference melody; melody drawn from a fixed random seed). Any later studio render uses the allowlist's item 5 tool (self-hosted MusicGen or Stable Audio Open, weights licence re-verified when radio production starts).",
     "seed": 109,
-    "src": "5.7.1; SOUND-PLAN SND-21 to 23"
+    "src": "5.7.1; SOUND-PLAN SND-21 to 23",
+    "title_check": "invented title, checked against the author's recall of 1980s and 1990s song titles only: no known song of this title; not searched online"
    },
    {
     "id": "tune_heavy_bag_boogie",
@@ -20429,7 +20889,8 @@
     "chosen": true,
     "licence_line": "made for the game by this project: data recipe rendered by Web Audio synthesis in the browser (project's own, no sample, no lyrics, no reference melody; melody drawn from a fixed random seed). Any later studio render uses the allowlist's item 5 tool (self-hosted MusicGen or Stable Audio Open, weights licence re-verified when radio production starts).",
     "seed": 110,
-    "src": "5.7.1; SOUND-PLAN SND-21 to 23"
+    "src": "5.7.1; SOUND-PLAN SND-21 to 23",
+    "title_check": "invented title, checked against the author's recall of 1980s and 1990s song titles only: no known song of this title; not searched online"
    }
   ],
   "instruments": {
@@ -20860,7 +21321,8 @@
   },
   "speech_rule": "radio_speech lines are played through the source's filter as voice-tool speech by fictional presenters (made like any other voice, SND-22); a link plays between tunes by the programme's link_every_n_tunes; weather lines match the current profile; a live programme may drop a line for 'rl_lost' for 20 s at random 1 time in 6 hours (chosen)",
   "tune_choice": "next tune is the next in the programme's tune_pool, wrapping; a tune loops from its beginning if the player stays near; start offset is seeded by game day so the same seed gives the same radio",
-  "chosen": true
+  "chosen": true,
+  "place_id_note": "place_id values are places.json ids"
  },
  "reach_key_map_suggested": {
   "id": "reach_key_map_suggested",

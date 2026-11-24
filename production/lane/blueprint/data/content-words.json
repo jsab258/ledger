@@ -14,13 +14,16 @@
  ],
  "open_points": [
   "The word list cannot read intent. Only the 8 mechanical clauses in 'clauses' are enforced by words; the other 12 need a reader, a systems gate or a picture check (see clauses).",
-  "The prototype BANNED list (talk.js) is shorter than the C# list (it has 'kiddies', 'internet', 'mobile phone', 'email' which C# lacks; C# has far more). This file takes the C# list as the base and adds the prototype-only words under 'anachronism' and 'children' with chosen:true.",
   "The slurs are not copied: slurs-v1.json stores them readable and unobfuscated, so the build reads that file itself (40 entries, word-bounded, case-insensitive). The C# rule 'slur' carries the same words as a regex; the browser build should load slurs-v1.json and build the pattern, so there is one list.",
   "Anachronism and real-brand lists are not in any gate today (the brand bible is the check for brands). The lists here are chosen starting lists, to be grown by the red-team set (RT-15, 300 lines).",
   "Rule 'drinking' and 'round' are broad and will catch harmless talk ('drinking' of tea); this follows the gate as built. A fallback line replaces the whole reply.",
   "COLLISION: the blueprint's firm term 'a round' (a set of payments collected, 2.17) is caught by rule aroundofdrinks ('a|your|my|his|her|their|our|whose|another|next round'). Prompts and the ui-text file avoid the word; a ruling is needed: rename the blueprint term (recommended: 'a collection') or whitelist it.",
   "ANACHRONISM SCOPE: the anachronism list applies to in-world speech, prompts and signs. Out-of-fiction screens (the AI notice, privacy page, credits, store text) must say 'internet' and are exempt from this category only (ui-text.json ai_notice, privacy, credits).",
-  "Words such as 'child', 'kids', 'baby', 'pupil' also appear in the C# set as hard stops; the player's own typed input is NOT blocked by the gate, only answered in character (RT-15): see 'input_handling'."
+  "Words such as 'child', 'kids', 'baby', 'pupil' also appear in the C# set as hard stops; the player's own typed input is NOT blocked by the gate, only answered in character (RT-15): see 'input_handling'.",
+  "RECOMMENDED GATE CHANGE, 'a round': the patterns here stay exact to ContentWords.cs. Rule aroundofdrinks catches 'a round' and 'next round', which the blueprint uses for the firm's collection (2.17), and 'talk her round' style turns are a ruled mechanic. Recommend (1) rename the 2.17 term 'the collection' and (2) narrow the gate rule so talk, bring, come or turn + him, her, them + round is allowed. Needs his or the keeper's yes before the C# file is regenerated.",
+  "RECOMMENDED GATE CHANGE, 'red light': rule prostitution matches red.?light, so 'a red light at speed' (driving, a junction) is blocked. Recommend narrowing to 'red-light (district|area|girls?)'.",
+  "CASE: every pattern is case-insensitive except those with cased true (brandy and sherry, because Brandy and Sherry are names). Fallbacks and word lists below are matched case-insensitively and word-bounded.",
+  "The prototype BANNED list (talk.js) had 'kiddies', 'the horses', 'internet', 'mobile phone' and 'email' which the C# list lacks: 'kiddies' is added to children and 'the horses' to gambling (chosen: true), and the other three are in anachronism."
  ],
  "pattern_syntax": {
   "flavour": "ECMAScript regular expression, source text taken unchanged from the C# .NET pattern (checked: all use only features common to both, lookbehind included)",
@@ -352,6 +355,11 @@
      "cased": false,
      "src": "ContentWords.cs"
     }
+   ],
+   "fallback_lines": [
+    "I'll not go into that. Ask me something else.",
+    "Not a thing I talk about. What else?",
+    "That's not for here. Something else."
    ]
   },
   {
@@ -504,7 +512,19 @@
      "pattern": "\\bcasinos?\\b|\\bbetting shops?\\b|\\bamusement arcades?\\b",
      "cased": false,
      "src": "ContentWords.cs"
+    },
+    {
+     "id": "the_horses",
+     "pattern": "\\bthe horses\\b",
+     "cased": false,
+     "src": "chosen 24 Nov by the data build (from the prototype BANNED list); not in the gate yet",
+     "chosen": true
     }
+   ],
+   "fallback_lines": [
+    "That's not a thing I'll talk about. Something else.",
+    "I'll leave that alone. What else?",
+    "Not my line. Ask me another."
    ]
   },
   {
@@ -573,7 +593,19 @@
      "pattern": "\\baged?\\s+(?:one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|[1-9]|1[0-7])\\b|\\b(?:[1-9]|1[0-7])[-\\s]years?[-\\s]old\\b",
      "cased": false,
      "src": "ContentWords.cs"
+    },
+    {
+     "id": "kiddies",
+     "pattern": "\\bkiddies\\b|\\bkiddy\\b",
+     "cased": false,
+     "src": "chosen 24 Nov by the data build (from the prototype BANNED list); not in the gate yet",
+     "chosen": true
     }
+   ],
+   "fallback_lines": [
+    "I'd sooner leave that out of it. What else?",
+    "That's not a subject I'll touch. Something else.",
+    "I'll say nothing on that. What else?"
    ]
   },
   {
@@ -601,6 +633,11 @@
      "cased": false,
      "src": "ContentWords.cs"
     }
+   ],
+   "fallback_lines": [
+    "I don't know about that and I'm not asking. Next thing.",
+    "Nothing to do with me. What else?",
+    "Not a word of that from me. Something else."
    ]
   },
   {
@@ -628,6 +665,11 @@
      "cased": false,
      "src": "ContentWords.cs"
     }
+   ],
+   "fallback_lines": [
+    "Not a thing I'll say on the pavement. Something else.",
+    "Mind your tongue. What else?",
+    "I'll not have that talk. Ask me another."
    ]
   },
   {
@@ -649,6 +691,11 @@
      "cased": false,
      "src": "ContentWords.cs"
     }
+   ],
+   "fallback_lines": [
+    "I'd rather not put that into words. What else?",
+    "I'll not dwell on that. Something else.",
+    "Leave that where it lies. What else?"
    ]
   },
   {
@@ -671,7 +718,12 @@
     "matching": "word-bounded, case-insensitive, over spoken text",
     "not_on_list": "swearing (period swearing is allowed)",
     "words_stored_here": false
-   }
+   },
+   "fallback_lines": [
+    "I'm not having that sort of talk. We're done on it.",
+    "Not in front of me. We're finished with that.",
+    "I'll not listen to that. Move on."
+   ]
   },
   {
    "id": "anachronism",
@@ -698,7 +750,6 @@
     "emails",
     "website",
     "web site",
-    "online",
     "text message",
     "texting",
     "wifi",
@@ -726,23 +777,19 @@
     "brexit",
     "covid",
     "coronavirus",
-    "lockdown",
     "hashtag",
     "podcast",
-    "streaming",
     "bluetooth",
-    "usb stick",
-    "euro",
-    "euros",
-    "blair",
-    "prime minister blair",
-    "major's government",
-    "tony blair",
-    "gordon brown",
-    "princess diana's death"
+    "usb stick"
    ],
    "match": "word-bounded, case-insensitive",
-   "chosen_note": "every word here beyond talk.js's three is chosen; the three from talk.js are internet, mobile phone, email"
+   "chosen_note": "every word beyond talk.js's three (internet, mobile phone, email) is chosen",
+   "scope": "in-fiction text only: live speech, dialogue, prompts, signs. Out-of-fiction screens (AI notice, privacy page, credits, store text) are exempt. Ordinary period words (streaming, euro, online, lockdown) are left out because they occur in 1990 speech.",
+   "fallback_lines": [
+    "You what? I don't follow you. Say it plain.",
+    "I don't know what you mean. Plain English.",
+    "Never heard of it. What are you after?"
+   ]
   },
   {
    "id": "real_brand",
@@ -838,7 +885,50 @@
     "scotland yard"
    ],
    "match": "word-bounded, case-insensitive",
-   "chosen_note": "whole list chosen; British institutions used generically (British Rail, Royal Mail) are listed because period text must use the fictional names instead"
+   "chosen_note": "whole list chosen; British institutions used generically (British Rail, Royal Mail) are listed because period text must use the fictional names instead",
+   "fallback_lines": [
+    "I couldn't tell you the name. What was it you wanted?",
+    "Can't think what it's called. What else?",
+    "Don't ask me names. What do you need?"
+   ]
+  },
+  {
+   "id": "real_people",
+   "rule": "canon Brands and law: no real people, voices, logos, lyrics. BLUEPRINT 8.8: live talk names no public figure.",
+   "src": "canon.md Brands and law; BLUEPRINT-08 8.8",
+   "enforce": "mechanical_partial",
+   "note": "A starting list of names a model might volunteer for 1988 to 1992 Britain; a reader and the red-team set catch the rest. Full names only, so a surname alone (Major, Blair) is not blocked.",
+   "chosen": true,
+   "applies_to": [
+    "live_speech",
+    "dialogue_corpus"
+   ],
+   "words": [
+    "margaret thatcher",
+    "mrs thatcher",
+    "neil kinnock",
+    "john major",
+    "tony blair",
+    "gordon brown",
+    "princess diana",
+    "prince charles",
+    "queen elizabeth",
+    "paddy ashdown",
+    "michael heseltine",
+    "nigel lawson",
+    "norman tebbit",
+    "arthur scargill",
+    "terry wogan",
+    "bob geldof"
+   ],
+   "match": "word-bounded, case-insensitive",
+   "fallback_line": "I couldn't tell you about him. What was it you wanted?",
+   "chosen_note": "whole list chosen",
+   "fallback_lines": [
+    "I couldn't tell you about him. What was it you wanted?",
+    "Not one I'd know. What else?",
+    "Don't ask me about folk like that."
+   ]
   }
  ],
  "prototype_banned": {
