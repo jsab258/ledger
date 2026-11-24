@@ -34,7 +34,23 @@ One RDR2 incident, edited: the flag rises within about 4 to 8 s of a fist fight;
 ## RDR2, 2uugZeY_mLQ (Saint Denis, 'act normal after a crime', day; coarse sheet every 10 s, read by 09:53 Swiss)
 - WANTED at 0 and 10 s; no flag at 20 and 30 s; WITNESS at 40 s; WANTED from 50 to 100 s while Arthur stands near a lawman and walks off; no flag at 110 s. More than one incident and likely cuts (the flag changes faster than the spells read elsewhere): a lead that a wanted state can clear within about 10 s near a lawman when the player acts normal; fine sheet 100 to 110 s owed.
 
+## KCD2, olf2KJN5VV8 ("Committed Small Crimes But Talked My Way Out!", Kuttenberg-style market town, day; read 10:44 to 10:47 Swiss)
+- Mostly guard dialogues after crimes (coarse sheet every 33 s: 9 of 12 cells are talk). Edited: a tilted-photo transition at 263 s, so a compilation; leads only.
+- 240 to 260 s: a guard demands Henry return what he stole and pay damages; persuasion "Success" at 260 s ("don't do anything like that again"). A talk-out exists, no fine paid.
+- 265 s: banner "Hitting a horse" (the deed, at a stable pen). 267 s: a stable hand stands facing Henry; 269 s he waves his arms; 273 s a guard in view behind him; 275 to 277 s the guard beside the hand, walking up; 279 to 284 s guard dialogue. One incident, uncut by eye from 265 to 284 s: deed to a bystander's reaction about 2 s; to a guard arriving about 8 to 12 s; to the guard's challenge about 14 s.
+
+## KCD2, AlNbGAgF3EM ("The Thieves' Code", no commentary, 1,088 s; read 10:45)
+- Coarse sheets (every 90 s, then 680 to 880 s): dialogue, map, a night break-in with lockpicking (830 s) and a cellar search, no one sees Henry. No being-seen incident: not a sample.
+
+## KCD2, vyA2Nm1BHyw ("How Crime Works ... Can We Break it", 14,878 s stream, uploaded 11 Jan 2026; read 10:46 to 10:48)
+- Coarse sheet every 20 min. At 12,600 s a debug console fills the screen and at 13,720 to 13,850 s Henry shoots and cuts down a village with bodies lying about: console-assisted chaos, the systems possibly altered. Set aside for being seen; the first three hours may hold plain crimes (not yet read), but the whole stream counts only as leads.
+
+## RDR2, 2uugZeY_mLQ fine sheets (0 to 114 s every 2 to 10 s; read 10:50 to 10:53 Swiss)
+- 0 to 12 s: WANTED while Arthur walks past a lawman in a courtyard; 16 to 34 s another place, no flag (a cut between 12 and 16 s).
+- 36 s no flag; 38 s red WITNESS up (an alley); 38 to 45 s WITNESS; 46 s WANTED. Witness to wanted about 8 s (a camera swing at 44 to 45 s, no cut seen).
+- 46 to 99 s WANTED throughout, Arthur walking near lawmen and a wagon; 102 s no flag, running in another street; 106 to 114 s a man lies in an alley (a cut back). So wanted held at least 53 s while acting normal; its clearing is behind a cut. The earlier "cleared within about 10 s" lead is withdrawn: it was a cut.
+
 ## Count so far
-RDR2: three clips read, all leads (one edited, one likely cut). KCD2: none. Five uncut incidents a game owed.
+RDR2: three clips read, all leads (one edited, one likely cut, one cut twice); witness to wanted about 8 s (one incident). KCD2: one incident timed (deed to guard challenge about 14 s, edited clip: lead); two clips held none. Five uncut incidents a game owed; the published ladder plus these leads is all KCD2 has so far.
 ## Next
-2uugZeY_mLQ (RDR2; IBsRlI5GfWs's 73 to 77 s step), olf2KJN5VV8 and AlNbGAgF3EM (KCD2), coarse sheet then fine; look for uncut stretches from deed to flag and flag to wanted or fine. Further uncut no-commentary clips by web search if these fall short.
+2uugZeY_mLQ (RDR2; IBsRlI5GfWs's 73 to 77 s step); for KCD2, long uncut play sessions (streams or "Part N" walkthroughs without commentary) are likelier than titled crime clips, which are edited; vyA2Nm1BHyw's first three hours by 10-minute sheets before 12,600 s if nothing better turns up.

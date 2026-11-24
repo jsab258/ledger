@@ -2,9 +2,9 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed, the next steps and the tries used.
 
-**Started:** 2026-11-24 09:36 (the hourly run)
+**Started:** 2026-11-24 10:37 (the hourly run)
 
-**Row due:** 10:46 (last row 09:46; page read 09:58; filter verdicts after 2026-11-24T08:58 UTC, advisor after 2026-11-24T09:10:00+01:00; last acks 2026-11-24-0905-340 and -0910-341 at 09:43).
+**Row due:** 11:46 (last row 10:46; page read 10:38; filter verdicts after 2026-11-24T09:38 UTC, advisor after 2026-11-24T10:30:00+01:00; last acks 342 to 346 at 10:41).
 **Uncommitted:** nothing (commits 6577f564d, 8363fa56a, 3e5e275ac and this one). Local commits since da1cb7941 NOT pushed: ci fails page-answers-fresh (next step 0).
 **Stopped:** 2026-11-24 09:54 (the 09:36 run: advisors 340 and 341 recorded and acked; crowd counts solid; being seen begun; history at its point)
 
@@ -38,7 +38,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Crowd counts SOLID by count** (crowd-counts-2026-11-24.md): five busiest daytime views KCD2 about 10, 9, 6, 6, 5; RDR2 about 7, 6, 6, 5, 5; quiet 0 to 3; four clips dated. NOTEBOOK entry written.
 - **Being seen, first readings** (being-seen-readings-2026-11-24.md): three RDR2 clips, all leads (flag within about 4 to 8 s of a fight; investigating to seen about 27 s; wanted cleared within about 10 s near a lawman); KCD2 none. tools/drills/frame_sheet.js: twelve frames a picture, works.
 - Readers: ON-FOOT-RULERS (no on-screen ruler; heights community estimates only) and BEING-SEEN-CLIPS (leads by title).
-- 08:51 run: advisor 339 in RULINGS (five samples only on deciding rows; measuring about 35 points, story about 10 beyond 35%, stop 88%; pace_line.py's over-6 line ignored to Mon 30 Nov). Detail and the 23:51 Sleeping Dogs speeds moved to TRIED-ARCHIVE.md 'Moved 24 Nov 09:55'.
+- 08:51 run: advisor 339 in RULINGS (five samples only on deciding rows; measuring about 35 points, story about 10 beyond 35%, stop 95% (advisor 346 corrected 88%); pace_line.py's over-6 line ignored to Mon 30 Nov). Detail and the 23:51 Sleeping Dogs speeds moved to TRIED-ARCHIVE.md 'Moved 24 Nov 09:55'.
 - 23 Nov runs (order adopted, star reader, catalogue, n23-5, n23-3 first numbers, the fast film; GTA IV, GTA V, KCD2 copies NOT run, DECISIONS 23 Nov 20:30, do not re-ask him) and the night's quiet runs: moved to TRIED-ARCHIVE.md, 'Moved 24 Nov 09:01'.
 
 ## In flight

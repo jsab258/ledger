@@ -2,7 +2,7 @@
  "about": "Each standing line of RULINGS.md and the checks that enforce it (tools/rulings_check.py; advisor 205, 17 Nov).",
  "entries": [
   {
-   "line": "Authored breadth (13 Nov 2026): LEDGER gets",
+   "line": "Authored breadth (13 Nov 2026): AAA brea",
    "by": [
     "tools/catalogue.py::EVERY FOLDER OF ART AND RESEARCH HAS A LINE IN THE CATALOGUE, OR THE BUILD FAILS",
     "monday-audit"
@@ -15,10 +15,10 @@
     "monday-audit",
     "tools/driving_feel_check.py::gearbox automatic by default"
    ],
-   "note": "scope, length, map, story: judgement; cars (17 Nov, advisor 208/209): the order of 23 November carries the traffic item, and the Monday audit checks the order and the progress page against the Cars line; feel (18 Nov, advisors 222-223): tools/driving_feel_check.py fails when the drives tool's default targets are not the game band, or a study copy newer than the ruling starts in manual Combat 18 Nov (advisor 226): the weapons spec lists no silenced .22 and names the escalation dial; Monday audit checks both. Cars canon 18 Nov (advisor 234): a car hurts, never kills; enforcers owed: a Core/simulation test that no car contact produces a death (none yet: no car contact code exists), and the cloud lane publish gate clumsy-player tester; Monday audit checks both exist once cars hit people. Hold-ups 20 Nov (advisor 263, his yes 07:39): enforcers owed: a consequence check in the simulation tests that every hold-up is witnessed, remembered and carries police and town-talk consequences and never ends the game (none yet: no hold-up code exists), then the cloud lane publish gate; Monday audit checks the spec and the check exist once hold-ups are built."
+   "note": "scope, length, map, story: judgement; cars (17 Nov, advisor 208/209): the order of 23 November carries the traffic item, and the Monday audit checks the order and the progress page against the Cars line; feel (18 Nov, advisors 222-223): tools/driving_feel_check.py fails when the drives tool's default targets are not the game band, or a study copy newer than the ruling starts in manual Combat 18 Nov (advisor 226): the weapons spec lists no silenced .22 and names the escalation dial; Monday audit checks both. Cars canon 18 Nov (advisor 234): a car hurts, never kills; enforcers owed: a Core/simulation test that no car contact produces a death (none yet: no car contact code exists), and the cloud lane publish gate clumsy-player tester; Monday audit checks both exist once cars hit people. Hold-ups 20 Nov (advisor 263, his yes 07:39): enforcers owed: a consequence check in the simulation tests that every hold-up is witnessed, remembered and carries police and town-talk consequences and never ends the game (none yet: no hold-up code exists), then the cloud lane publish gate; Monday audit checks the spec and the check exist once hold-ups are built. 24 Nov (advisors 342-346, his decisions page): the sub-line's choices are design inputs the blueprint keeper reads from RULINGS; the Monday audit checks the blueprint against them (clock 48 real minutes a game day, PEGI 18 within canon, in/out lists)."
   },
   {
-   "line": "5 and 6 Nov: Full scope stays the target",
+   "line": "5 and 6 Nov: Full scope the target; no p",
    "by": [
     "monday-audit"
    ]
@@ -50,7 +50,7 @@
    ]
   },
   {
-   "line": "11 Nov: efficiency, never at quality",
+   "line": "11 Nov: efficiency first, never at quali",
    "by": [
     "advisor:watchdog",
     "advisor:daily-backstop",
@@ -409,7 +409,7 @@
    ]
   },
   {
-   "line": "28 Sep: Before an answer, a short thinking",
+   "line": "28 Sep: Before an answer, no loading sig",
    "by": [
     "monday-audit"
    ]
