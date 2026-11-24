@@ -8,7 +8,7 @@ Unique: "LEDGER's own" means none of the catalogue's games shows it in the notes
 
 | # | Detail | Backed by | Status | Unique or seen in | If not designed |
 |---|---|---|---|---|---|
-| 1 | Rob the grocer in your brown coat and she knows the coat next week; change the coat and she doubts the face, but a job done from the cab always names the cab | 2.2.5, GV-02, 1.4.4, 1.6.10 | designed | also in GTA VI, RDR2, KCD2 (descriptions by clothes, a bandana, a stolen hat); the cab rule is LEDGER's own | |
+| 1 | Rob the grocer in your brown coat and she knows the coat next week; change the coat and she doubts the face, but a job done from the cab always names the cab | 2.2.5, GV-02, 1.4.4, 1.6.10 | designed | also in GTA VI, RDR2, KCD2 (GTA VI's police record the outfit and the vehicle; RDR2 a bandana; KCD2 a stolen hat) | |
 | 2 | A stranger who saw Frank's face clearly can point him out ("that's the man") but can never say his name; people learn it only four ways (he spoke to them, rode with him, heard him named in sight, saw him at the office on two days) | 2.2.2, RT2-03 | designed | LEDGER's own | |
 | 3 | A witness has no mobile: she walks to the phone box, and Frank can watch her go; shout "Oi!" and she stops for two seconds while he talks, pays or threatens | 2.5.1, 1.4.5, 1.4.7 | designed | nearest GTA V (bystanders phone the police at once); the walk as the timer is LEDGER's own | |
 | 4 | Threaten a witness and she will not sign for the police, but she still tells her sister | 2.5.2, temper | designed (the Core still has to stop treating a threat as silencing both) | LEDGER's own | |
