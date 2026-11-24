@@ -409,34 +409,34 @@
       "2026-11-20",
       "2026-11-21",
       "2026-11-22",
-      "2026-11-23"
+      "2026-11-23",
+      "2026-11-24"
     ],
     "gap_note": "No pictures from 9 to 20 October: the PC was off.",
     "morning": {
-      "date": "2026-11-23",
-      "line": "Morning, Monday 23 November. Phase 2. On: n16-1 Kiln, clothing: breadth set, held-back jobs, M5, M6 (Kiln's design note). Next: n16-2 Ron as one complete person (CLOTHES.md).",
+      "date": "2026-11-24",
+      "line": "Morning, Tuesday 24 November. No phase open. On: n23-1 measuring block: every row solid or not needed (production/research/lane/measurements/STATUS.md) by Fri 27 Nov. Next: n23-2 our own build filmed and measured (tools/star_slots.py).",
       "failure": "",
       "views": [
         {
           "label": "The hook camera by day",
-          "today": "production/previews/morning-hook-day-2026-11-23.jpg",
-          "yesterday": "production/previews/morning-hook-day-2026-11-22.jpg"
+          "today": "production/previews/morning-hook-day-2026-11-24.jpg",
+          "yesterday": "production/previews/morning-hook-day-2026-11-23.jpg"
         },
         {
           "label": "The reverse view",
-          "today": "production/previews/morning-reverse-day-2026-11-23.jpg",
-          "yesterday": "production/previews/morning-reverse-day-2026-11-22.jpg"
+          "today": "production/previews/morning-reverse-day-2026-11-24.jpg",
+          "yesterday": "production/previews/morning-reverse-day-2026-11-23.jpg"
         },
         {
           "label": "The street at night",
-          "today": "production/previews/morning-night-2026-11-23.jpg",
-          "yesterday": "production/previews/morning-night-2026-11-22.jpg"
+          "today": "production/previews/morning-night-2026-11-24.jpg",
+          "yesterday": "production/previews/morning-night-2026-11-23.jpg"
         }
       ],
       "hook_sheet": "production/previews/hook-sheet-2026-10-05.jpg",
       "note": "No decision asked: these are for watching the street change.",
-      "by": "tools/morning_pictures.py",
-      "repo_size": "3.49 GB on GitHub; 4.65 GB packed on this PC (the history was 30.8 GB before 5 October's cleaning; a guard refuses large files before every push)."
+      "by": "tools/morning_pictures.py"
     }
   },
   "studies": {
