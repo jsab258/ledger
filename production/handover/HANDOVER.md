@@ -2,10 +2,10 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed, the next steps and the tries used.
 
-**Started:** 2026-11-24 21:36 (the hourly run)
+**Started:** 2026-11-24 22:37 (the hourly run)
 
-**Row due:** 22:46 (last row 21:46; page read 21:52; filter verdicts after 2026-11-24T20:52 UTC, advisor after 2026-11-24T21:35:00+01:00; last ack 365 at 21:50).
-**Uncommitted:** this file only; work pushed.
+**Row due:** 23:50 (last row 22:50; page read 22:58; filter verdicts after 2026-11-24T21:58 UTC, advisor after 2026-11-24T22:50:00+01:00; last ack 369 at 23:00).
+**Uncommitted:** nothing; work pushed with this file.
 **Stopped:** 2026-11-24 22:00 (the 21:36 run: advisors 364-365 done; n23-3 cost closed; history near its point, no room for a scan)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
@@ -15,7 +15,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 ## Standing ways of working (carry across every rewrite)
 - **The night (advisor 42 and 44, 9 Nov):** round the clock; during the night's build and walk only work touching Unreal and heavy local jobs pause; never stop for the night. Space checked before the night build by 23:30.
 - The hourly start round the clock, nothing touching Unreal 01:15 to 04:30, stopping before 01:40.
-- A short row to 'reports' at least once an hour while working, leading 'v1: N of 6', ending 'Allowance: N% at HH:MM, pace X; my spend US$Y since HH:MM' and the model (get_usage Weekly all models; `python tools/pace_line.py <percent>`; `python tools/token_measures.py --spend HH:MM`). "at" is +01:00. Each row: helper count and rate, F:'s free room and the next 12 h's need, what fills each helper place.
+- A short row to 'reports' at least once an hour while working, leading 'v1: N of 6', ending 'Allowance: N% at HH:MM (this week the newest reading, no pace clause: advisor 366); my spend US$Y since HH:MM' and the model (get_usage Weekly all models; `python tools/pace_line.py <percent>`; `python tools/token_measures.py --spend HH:MM`). "at" is +01:00. Each row: helper count and rate, F:'s free room and the next 12 h's need, what fills each helper place.
 - Never end a turn while work remains (the stop hook enforces it); the Stopped line is the last thing written.
 - **The lean start's page reads, filtered (advisor 97):** advisor-acks ordered by "at" desc, limit 1, then advisor where "at" after it (Swiss +01:00); verdicts where "at" after the last read, in UTC; open items by filter on items.json state "open". Never list collections whole.
 - Publishing to his page: read the live page first, diff, then publish index.html with items.json.
@@ -34,31 +34,31 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- 21:36 run: **advisor 364** RULINGS cleaned whole (4,900 to 4,869; record production/records/rulings-cleanup-2026-11-24.md; the 4,000 aim not reached); page item closed. Three questions to him in ack 364 (Kiln vs 'stopped: procedural tailoring'; friends' evenings 1 Nov vs 21 Nov; talk C# helper vs 19 Nov port): **watch the advisor channel for his answers and apply them** (each answer replaces its line; record in the cleanup file). **Advisor 365**: the people's brain level an open question in RULINGS (back at 4,900 exactly); the cloud lane's brain job runs it, not ours. **n23-3 Q4 closed** without code: talk-runs.jsonl holds tokens per model; per-model dollars add up; prices re-read (PRICES-2026-11-24.md), rate card unchanged.
-- 19:37 run: advisors 361-363 (RDR2 drill recorder: tools/drills/rdr2_record.py, his card in advisor 361; Frank fully written; a temper each); **RDR2 being seen SOLID** (median ~70.5 s, five samples; review d); KCD2 being seen shortfall (story walkthroughs hold no witnessed crime); foot-chase-candidates-2026-11-24.md. Detail in TRIED-ARCHIVE.md, 24 Nov 22:00.
+- 22:37 run: **advisor 367** done: his answers 1-3 applied in RULINGS; the 14 lines whose every enforcer is a check tool moved word for word to RULINGS-ENFORCED.md (cap 900, 765 words; RULINGS then 4,275); rulings_check, retention and research_rules_check read both; CLAUDE.md read-first names it. **Advisor 368**: fresh Opus recheck (DECIDES-RECHECK-2026-11-24.md): crowd counts a lead, headlamps and frame times not needed, being seen no longer sets lamp spacing; new order in STATUS. **Advisor 369**: killing a constable recorded in RULINGS (4,380 words); the keeper told RT2-02 is the lane's. **366** acked; pace clause dropped from rows this week. KCD2 thief Part 1 scanned: no witnessed crime (all 75 hits menus; parchment filter in frame_sheet.js). GTA V walk first look (ON-FOOT-METHOD, last section): unsure.
+- Earlier runs today: TRIED-ARCHIVE.md, "Moved from the handover, 24 Nov 23:05".
 
 ## In flight
-- Nothing running.
+- Nothing running. Browser pane on rzz5BOoJ9Rc (viewport reset to desktop).
 
 ## Next, in order
-00. Pace: 75% at 21:37; **the weekly stop is 90%** (advisor 352): at the newest reading of 90% finish the step, commit, push, one row, write production/weekly-stop.json {"until": "2026-11-30T13:00", "reading": N}, set "**Next due:** 2026-11-30 13:00", one page item (switch off the scheduled task ledger-daily-fresh-session, Code tab, Scheduled; on after Monday 13:00), stop all work. Full pace until then (advisor 359).
-0. If he types "RDR2 drill starting": run `python tools/drills/rdr2_record.py start` in the background at once; on "RDR2 drill done": `python tools/drills/rdr2_record.py stop`; then read the frames by his card (advisor 361) and fold usable trials into being seen, crowd reactions and chases on foot.
-1. **Chases on foot (deciding):** GTA V first: a whole-session scan of the wanted stars (top right; calibrate on one known spell first, as the hare scan was) over the PS4 walkthrough asdZoAycD1o (71,588 s, uploaded 11 Oct 2026, likely cut between missions: about 1.2 h to scan at 4 s, so start it at a run's beginning) and any uncut console free-roam session; on-foot spells only. Sleeping Dogs: "Meet the New Boss" ends in a run from police to a limo; Santosx07's ~13-min parts name no mission: frame-sheet parts ~20-28 (ids in sleeping-dogs-foot-chase-clips-2026-11-24.md). L.A. Noire chases end in tackles: a lead for chase length only.
-2. KCD2 being seen: find in the browser pane BlackTorito TV's trophy-run parts for crime trophies, the ibyJamin thief series, pmWPl64nqhg; scan whole; skip menu frames.
-3. On-foot cadence leads; crowd reactions Q3 leads on two games.
-4. n23-3: Q2 second half and Q3 (voice under the game's load; player's line to first word inside the packaged game) need a free machine with him away, outside the night jobs; then a fresh reviewer on the results. The probes' "I'm Tom": waiting list.
-5. n23-4 voice scan; n23-7 (DAILY-2026-11-25 by 19:00 with the advisor's restored rows; credit row). Advisor 320 (backup's 28 GB on C:): two tries used; research before a third.
-0a. Advisor 277: Kiln, hair and the crowd paused. 0b. Next night walk Mon 30 Nov 01:30 (held while the stop file holds). 4p. Marvelous stays open. No Unreal work until the browser prototype is done (advisor 288). 5p. History rewrite HELD for his word. Progress page daily (progress.json only; publish the LIVE index.html read back).
+00. Pace: 77% at 22:37; **the weekly stop is 90%** (advisor 352): at the newest reading of 90% finish the step, commit, push, one row, write production/weekly-stop.json {"until": "2026-11-30T13:00", "reading": N}, set "**Next due:** 2026-11-30 13:00", one page item (switch off the scheduled task ledger-daily-fresh-session, Code tab, Scheduled; on after Monday 13:00), stop all work. Full pace until then (advisors 359, 366: no pace-line holds).
+0. If he types "RDR2 drill starting": `python tools/drills/rdr2_record.py start` in the background; on "RDR2 drill done": the same with stop; read the frames by his card (advisor 361).
+1. **On foot, the walk (GTA V, rzz5BOoJ9Rc):** leg crop x 42-50%, y 58-80% (at 360 s; move it with Franklin), 12 cells of 260x440, at 0.05 s; re-read 360-362.3 and three more stretches (about 1,260, 2,460, 3,060 s); two sheets show the same pose every 0.6-0.65 s (about 3.3 steps a second, a jog's rate): UNSURE whether this stretch is a walk; check a whole-body crop and a plainly walking stretch first. Then a fresh small-reviewer on the sheets. Step length: find a side-on stretch, heel gap over height.
+2. **RDR2 being seen, ladder timings** (witness to wanted, wanted to pursuit) from the clips already read (being-seen-readings-2026-11-24.md).
+3. **Chases on foot:** GTA V wanted-star scan (asdZoAycD1o, calibrate first); Sleeping Dogs parts 20-28; L.A. Noire length leads.
+4. **KCD2 being seen with crowd reactions** (one town crime clip serves both): ibyJamin Part 4 (wMk2tFAd26E) or 5 (AK8xLkS1Cfs), hare scan with the parchment filter (drop hits above 12% beige); first check by eye that this player shows the behaviour icon at a known alarm. If none by the week's end, say so in STATUS.
+5. 1990 sources the recheck moved: crowd counts (period footage, footfall records), headlamp reach (period lighting regulations), car braking against the Highway Code (flag: ours 8-11 m at 30 mph against its 14 m, unchecked).
+6. n23-3 Q2-Q3 need a free machine with him away; n23-4 voice scan; n23-7 DAILY-2026-11-25 by 19:00.
+0a. Advisor 277: Kiln, hair and the crowd paused. 0b. Next night walk Mon 30 Nov 01:30 (held while the stop file holds). 4p. Marvelous stays open. No Unreal work until the browser prototype is done (advisor 288). 5p. History rewrite HELD for his word. Progress page daily (progress.json only).
 
 ## Footage tools
 All in tools/drills/frame_sheet.js (each with its known faults): sheet, SAVED EVIDENCE (pane screenshots copied to F:/LedgerTools/game-inputs/footage/<id>/ with index.json and upload date), RED SCAN (RDR2 flag), HARE BOX SCAN (KCD2). Stamp every time from Get-Date: guesses ran 10-25 min ahead today too. NEW: YouTube's storyboard sprites (in-page fetch of /watch?v=ID, "playerStoryboardSpecRenderer"; L1 80x45, one frame per 5 s; URL storyboard3_L<n>/M<k>.jpg?sqp=...&sigh=<that level's rs$ token>) show a whole video in a few images: too small to tell missions; use for colour cues before seeking.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
-- 24 Nov 21:55: a Sonnet reader by web fetch cannot read YouTube (watch pages return the footer only; channel pages go to a consent page): KCD2's BlackTorito TV and ibyJamin parts not found (kcd2-crime-clips-2026-11-24.md; one candidate pmWPl64nqhg, xGarbett, "caught pickpocketing"). Find clips in the built-in browser pane yourself, as the 19:37 run did.
-- 24 Nov 20:50: KCD2 story walkthroughs (two PS5 sessions, ~5 h) hold no witnessed crime; orange hits in the hare box are menu tabs. Search trophy-run parts named for crime trophies instead.
-- 24 Nov 20:05: the 360p red scan caught a flashing RDR2 wanted spell on one row only (the word mostly white or pink); look at every short hit, or count bright pixels in the word's own box.
-- 24 Nov 19:55: a hidden browser pane unloads the YouTube video mid-scan (duration null) and long waits close the call: re-query the video each step, a 5 s watchdog (movie_player.seekTo, playVideo), polls under 35 s; a quality change mid-scan changes the frame size (compute the box each step).
-- 24 Nov 19:55: two scans in one page fight over the video; reload the page before starting another.
+- 24 Nov 23:00: automatic walk cadence from frame differences (GTA V, behind camera): a wide box reads only camera drift; a tight leg box with drift removed gives weak peaks. Two tries: set aside; read by eye on leg crops.
+- 24 Nov 22:55: a hare scan on a thief run hits only menus (75 of 75); filter by parchment share before looking.
+- 24 Nov 23:04: my own times ran up to 30 min ahead again (acks and records corrected from the clock and commit times): Get-Date before every written time.
+- 24 Nov 21:55: a Sonnet reader by web fetch cannot read YouTube; find clips in the browser pane yourself (search via an in-page fetch of /results and its ytInitialData works).
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3.

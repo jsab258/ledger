@@ -177,3 +177,29 @@ hair colour 2 of 2; worn paint 2 of 2; the office and sit on by default 2 of 2; 
 - Chases on foot: foot-chase-candidates-2026-11-24.md (15 unverified rows; mission lists).
 - 24 Nov 19:00: a sample kept despite a solid red stage while another was dropped for one; review c caught it. Write the inclusion rule first.
 - 24 Nov 18:55: the KCD2 hare colour scan counts menu icons and adverts as alerts; needs a menu filter.
+
+## Moved from the handover, 24 Nov 23:05
+### Done today
+- 21:36 run: **advisor 364** RULINGS cleaned whole (4,900 to 4,869; record production/records/rulings-cleanup-2026-11-24.md; the 4,000 aim not reached); page item closed. Three questions to him in ack 364 (Kiln vs 'stopped: procedural tailoring'; friends' evenings 1 Nov vs 21 Nov; talk C# helper vs 19 Nov port): **watch the advisor channel for his answers and apply them** (each answer replaces its line; record in the cleanup file). **Advisor 365**: the people's brain level an open question in RULINGS (back at 4,900 exactly); the cloud lane's brain job runs it, not ours. **n23-3 Q4 closed** without code: talk-runs.jsonl holds tokens per model; per-model dollars add up; prices re-read (PRICES-2026-11-24.md), rate card unchanged.
+- 19:37 run: advisors 361-363 (RDR2 drill recorder: tools/drills/rdr2_record.py, his card in advisor 361; Frank fully written; a temper each); **RDR2 being seen SOLID** (median ~70.5 s, five samples; review d); KCD2 being seen shortfall (story walkthroughs hold no witnessed crime); foot-chase-candidates-2026-11-24.md. Detail in TRIED-ARCHIVE.md, 24 Nov 22:00.
+
+### In flight
+- Nothing running.
+
+### Next, in order
+00. Pace: 75% at 21:37; **the weekly stop is 90%** (advisor 352): at the newest reading of 90% finish the step, commit, push, one row, write production/weekly-stop.json {"until": "2026-11-30T13:00", "reading": N}, set "**Next due:** 2026-11-30 13:00", one page item (switch off the scheduled task ledger-daily-fresh-session, Code tab, Scheduled; on after Monday 13:00), stop all work. Full pace until then (advisor 359).
+0. If he types "RDR2 drill starting": run `python tools/drills/rdr2_record.py start` in the background at once; on "RDR2 drill done": `python tools/drills/rdr2_record.py stop`; then read the frames by his card (advisor 361) and fold usable trials into being seen, crowd reactions and chases on foot.
+1. **Chases on foot (deciding):** GTA V first: a whole-session scan of the wanted stars (top right; calibrate on one known spell first, as the hare scan was) over the PS4 walkthrough asdZoAycD1o (71,588 s, uploaded 11 Oct 2026, likely cut between missions: about 1.2 h to scan at 4 s, so start it at a run's beginning) and any uncut console free-roam session; on-foot spells only. Sleeping Dogs: "Meet the New Boss" ends in a run from police to a limo; Santosx07's ~13-min parts name no mission: frame-sheet parts ~20-28 (ids in sleeping-dogs-foot-chase-clips-2026-11-24.md). L.A. Noire chases end in tackles: a lead for chase length only.
+2. KCD2 being seen: find in the browser pane BlackTorito TV's trophy-run parts for crime trophies, the ibyJamin thief series, pmWPl64nqhg; scan whole; skip menu frames.
+3. On-foot cadence leads; crowd reactions Q3 leads on two games.
+4. n23-3: Q2 second half and Q3 (voice under the game's load; player's line to first word inside the packaged game) need a free machine with him away, outside the night jobs; then a fresh reviewer on the results. The probes' "I'm Tom": waiting list.
+5. n23-4 voice scan; n23-7 (DAILY-2026-11-25 by 19:00 with the advisor's restored rows; credit row). Advisor 320 (backup's 28 GB on C:): two tries used; research before a third.
+0a. Advisor 277: Kiln, hair and the crowd paused. 0b. Next night walk Mon 30 Nov 01:30 (held while the stop file holds). 4p. Marvelous stays open. No Unreal work until the browser prototype is done (advisor 288). 5p. History rewrite HELD for his word. Progress page daily (progress.json only; publish the LIVE index.html read back).
+
+### Tried (as it stood)
+- 24 Nov 21:55: a Sonnet reader by web fetch cannot read YouTube (watch pages return the footer only; channel pages go to a consent page): KCD2's BlackTorito TV and ibyJamin parts not found (kcd2-crime-clips-2026-11-24.md; one candidate pmWPl64nqhg, xGarbett, "caught pickpocketing"). Find clips in the built-in browser pane yourself, as the 19:37 run did.
+- 24 Nov 20:50: KCD2 story walkthroughs (two PS5 sessions, ~5 h) hold no witnessed crime; orange hits in the hare box are menu tabs. Search trophy-run parts named for crime trophies instead.
+- 24 Nov 20:05: the 360p red scan caught a flashing RDR2 wanted spell on one row only (the word mostly white or pink); look at every short hit, or count bright pixels in the word's own box.
+- 24 Nov 19:55: a hidden browser pane unloads the YouTube video mid-scan (duration null) and long waits close the call: re-query the video each step, a 5 s watchdog (movie_player.seekTo, playVideo), polls under 35 s; a quality change mid-scan changes the frame size (compute the box each step).
+- 24 Nov 19:55: two scans in one page fight over the video; reload the page before starting another.
+
