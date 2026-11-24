@@ -2,11 +2,11 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed, the next steps and the tries used.
 
-**Started:** 2026-11-24 01:36 (the hourly run)
+**Started:** 2026-11-24 07:22 (the hourly run)
 
-**Row due:** at the next start (last row 01:39; page read 01:37: nothing new; filter verdicts after 2026-11-24T00:37 UTC, advisor after 2026-11-23T22:35:00+01:00; last ack 2026-11-23-2235-336 at 22:55).
-**Uncommitted:** nothing; the 01:36 run's commit (his page's new item and this file) and da1cb7941 (the solid speeds) are NOT pushed: ci fails page-answers-fresh (see next step 0).
-**Stopped:** 2026-11-24 01:39 (the 01:36 run: read-back refused a second time, his page item added; stopped on the pace rule, 27 points ahead)
+**Row due:** at the next start (last row 07:27; page read 07:23; filter verdicts after 2026-11-24T06:23 UTC, advisor after 2026-11-24T07:27:00+01:00; last ack 2026-11-24-0710-337 at 07:27).
+**Uncommitted:** nothing (07:22 run committed STATUS.md's decides section with this file); the 01:36 run's commit (his page's new item and this file) and da1cb7941 (the solid speeds) are NOT pushed: ci fails page-answers-fresh (see next step 0).
+**Stopped:** 2026-11-24 07:26 (the 07:22 run: advisor 337 answered; stopped on the pace rule, 24.8 points ahead; no jobs of its own started)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -35,10 +35,12 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 ## Done today
 - Earlier runs (13:07-21:03): order adopted, star reader, installed-game method, catalogue, n23-5 recipe rewrite, n23-3 first numbers, the fast film, Sleeping Dogs' opening scripted (watch_opening.py); GTA IV, GTA V, KCD2 copies NOT run (replaced unsigned launcher files, DECISIONS 23 Nov 20:30), their rows go to footage; do not re-ask him.
-- 21:36 run: advisors 334, 335, 336 all recorded and acked. RULINGS now holds (within its 4,900 cap, 4,899): the one-shot waits for the complete blueprint, no early Unreal test; Kiln mission critical, Fable leads it on resuming; loops few, large, measured with a minimum-gain stop. Room came from removing replaced or repeated lines (DECISIONS 23 Nov 22:00). NOTEBOOK.md has the day's nine lessons; the recipe map (Claude Docs) has a new story-judge step, the rewritten loops step and Kiln's line.
-- Sleeping Dogs speeds: the ruler is the chase's distance readout while Naz stands at 45 m (he stands from about 12 s after a checkpoint restart, for over 23 s); Enter on the fail screen restarts the chase in about 6 s; Shift is sprint (the game's own prompt). tools/drills/marker_read.py finds the green marker and tiles its numbers with grab times. Samples 1 to 3: sprint 5.5 m/s each; jog (W alone) about 4.4. Sample 4 lost (see Tried). SLEEPING-DOGS-DRILL-2026-11-23.md; STATUS.md on-foot 2.0 h logged.
+- 21:36 run: advisors 334-336 recorded and acked (RULINGS at 4,899 of its cap; DECISIONS 23 Nov 22:00); NOTEBOOK's nine lessons; recipe map updated.
+- Sleeping Dogs speeds method: the chase's distance readout toward the standing Naz; Enter on the fail screen restarts in about 6 s; tools/drills/marker_read.py (SLEEPING-DOGS-DRILL-2026-11-23.md).
 - n23-3 voice alone, no game open: first heard 0.15 s median, worst 0.29 to 0.35 s (N23-3-QUESTIONS).
 - Rows at 21:40 and 22:28. Pushed through 2541d1f1e; this handover's commit carries sample 4's note.
+- 07:22 run: advisor 337 (for his dates question today) answered early: STATUS.md section 'Decides or a lead is enough'; six rows decide, about 29 h strict (drills 4.5, footage 24), 6.5 h as leads; acked 07:27; row 07:27; pace 35% vs 10.2% (+24.8). Listening extra rows unverified (sheet on the lane branch).
+- 03:36, 04:22, 05:06, 05:51, 06:36 runs: page read, nothing new, a row each, pace +25 to +26; started nothing.
 - 01:36 run: page read (nothing new), read-back refused again, his page item added, row 01:39; pace 34% vs 7.0% (+27).
 - 23:51 run: **Sleeping Dogs on foot SOLID** (five samples each): sprint 5.5 m/s (5.5 x4, 5.6), jog 4.5 m/s (4.1 to 4.9); STATUS.md solid count three; drill note and NOTEBOOK entry; DAILY 23 Nov measuring line closed (about 2.2 drill hours). Committed da1cb7941, not pushed. Rows 23:56 and 00:53.
 
@@ -48,6 +50,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 ## Next, in order
 00. Pace first: `python tools/pace_line.py <week> --fable <fable>`. 00:52 read 33% against 6.6% (+26.4): lean, no helpers; the 23:51 run stopped after its item on the pace rule (start nothing new while over 6 ahead).
 0. **Push blocked: page-answers-fresh fails. Second refusal 01:38; his page now carries ACTION item page-read-back-2026-11-24 (published v186, in the items data); do not try the read-back again until his yes, then run it, ci to failed=none, push wip, close the item.** Read-back last 21 Nov; the nightly task has not run since 12 Nov; the read is verdicts after 2026-11-20T23:00 UTC with out_dir production/approvals/answers/1VZHkCBAHdw8HBdNHrByL8, then `python tools/page_answers.py --index`.
+0b'. When he answers his dates question: follow it on STATUS.md's decides section (if he picks decides-only, footage for the six decides rows first).
 1. Sleeping Dogs on foot is done (solid). Driving and fists in Sleeping Dogs still open: fists need about 60 fps (item 2).
 2. Fists in Sleeping Dogs need about 60 fps (grabs here are 11 a second): recorder item or footage.
 3. n23-3: order-swapped repeat pair (B then C) on measure-2026-11-24's dollar; the voice beside the game goes with question 3's packaged run (him away); cost per hour. Due Fri 27 Nov.
@@ -61,7 +64,6 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
 - 24 Nov 01:38: page read-back with out_dir refused again (Undermining Oversight); two tries used; asked on his page.
 - 24 Nov 00:50: page read-back with out_dir refused by the permission check (Undermining Oversight); ci then fails page-answers-fresh; nothing pushed.
-- 24 Nov 00:25: one run's Shift hold gave jog speed (4.0 m/s, an obstacle in view): check every run's speed band before counting; a sixth run replaced it.
 - 24 Nov 00:10: sample 5 rerun filmed a white window for all 305 s (every grab mean 255): the game likely not recovered after the forced close. Try 2 queued at once; a second white run sets the fault aside.
 - 24 Nov 00:09: sample 5 lost: a queue started with a shell '&' was still alive though ps did not show it, so a second queue launched a second game 13 s later; the game is single-instance, both runs ended (20 and 0 frames) and the game was left running (closed by taskkill /T). Queue only with run_in_background, one at a time; check with PowerShell's process list, not ps.
 
