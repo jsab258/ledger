@@ -1,0 +1,121 @@
+Playthrough E-honest. One week in the Hook; Frank Nowak meets fifteen people over three evenings.
+
+== M01 mon 18:30, rank_mickeys: Philip Danby
+What happens: Twenty minutes ago Frank hit a driver from another firm on Mickey's rank. Philip Danby saw it from the pavement. Frank walks over to him.
+FRANK: I lost my temper with that driver. I would rather it went no further.
+MR DANBY: I saw it, I'm afraid, and I'm sorry to say so. You hit him, he got up and drove off. I can't promise much, Mr Nowak.
+FRANK: I am not asking you to lie. Just not to spread it.
+MR DANBY: I'll not go broadcasting it, I promise that much. But I won't lie either. If the police ask me straight, I'll say what I saw.
+Outcome carried out by the game: Will not spread it himself, but will not lie if the police ask him straight
+
+== M02 mon 19:00, caff: Jason Pinder
+What happens: Jason Pinder is at the caff's counter. Everyone knows he put Grace's window in for a dare. Frank sits beside him.
+FRANK: You put Grace's window in. You should pay for it.
+THE LAD: I never! ...All right, it was a dare, Shane said. Danny laughed about it. Don't tell Danny I told you, eh?
+FRANK: Eleven pounds by Saturday and we leave it there.
+THE LAD: Eleven? I've only got four on me. Take that now, and I'll find the rest, I swear. Just leave it there.
+Outcome carried out by the game: Hands over his four pounds now and promises to find the rest
+
+== M03 mon 19:30, ritas: Rita Welburn
+What happens: Rita's window is lit; she is doing her books. Frank comes in and asks about Danny Cammack.
+FRANK: I need to know where Danny's lads keep the radios.
+RITA: Everything has a price, Mr Nowak, and you haven't named one. Information is no different. What are you putting on my counter?
+FRANK: I would be grateful for anything.
+RITA: Grateful buys nothing at this grille. Come back with something I can price, and we'll see what I remember.
+Outcome carried out by the game: Nothing yet; wants something worth pricing before she says anything
+
+== M04 mon 20:30, fish_dock: Dougie Saltmarsh
+What happens: Dougie Saltmarsh is locking the cold-store yard gate for the night. Frank tells him the Widow sent him. She did not.
+FRANK: I would like to look round the cold-store yard.
+DOUGIE: The Widow's orders come through Stathers, not through a face at my gate. No Stathers, no yard, friend. Ha, nice try.
+FRANK: I can come back with Stathers if that is how it works.
+DOUGIE: Fetch him, then. Gate stays shut till Stathers stands here and says so. That's how it works. Funny, isn't it?
+Outcome carried out by the game: nothing
+
+== M05 mon 21:30, adas: Ada Vane
+What happens: Ada Vane is at her window opposite Mickey's. Frank knocks and asks about the night of the fire.
+FRANK: Mrs Vane, did you see anything the night of the fire?
+ADA: The sky went orange over the row at two in the morning. After that a car came down Quay Street with no lights on. I didn't see who drove it.
+FRANK: Anything at all would help me.
+ADA: That is all I have, and I'll not make up the rest. I knew Mickey forty years. I'd like it put right.
+Outcome carried out by the game: Tells Frank what she saw from her window that night
+
+== M06 wed 18:15, mickeys: Terry Hodgson
+What happens: Terry Hodgson is starting the night car. Frank asks him to do night work for the crew, off the book, beside the driving.
+FRANK: Terry, I need a man for night work. Doors, watching. Off the book.
+TERRY: Twenty years of nights for Mickey. Off the book's another matter. I'd want to see how you go on first.
+FRANK: Think about it. No harm if you say no.
+TERRY: I'll think on it. Not saying no. Not saying yes.
+Outcome carried out by the game: nothing
+
+== M07 wed 19:00, rank_mickeys: Darren Milner
+What happens: Darren Milner is hanging about on the rank. He owes Mickey's book twenty-two pounds. Frank calls it in.
+FRANK: Darren, you owe Mickey's book twenty-two pounds.
+DARREN: So listen, Frank, I know, I know. I've only got eight on me, honest. Take it, and I've heard something worth the rest.
+FRANK: Pay what you can and we will settle the rest.
+DARREN: So listen: somebody got paid twice for the fire. Don't know who, mind. Eight now, and that news goes toward the rest, yeah?
+Outcome carried out by the game: Pays the eight pounds he has and gives the news he has heard toward the rest
+
+== M08 wed 19:45, caff: Grace Rinaldi
+What happens: The caff is closing. Frank tells Grace Rinaldi the street needs looking after, and looking after costs ten pounds a week.
+FRANK: Grace, I want to keep the street safe. Would you put in ten a week towards it?
+GRACE: Ten a week? Frank, I'll feed you, but I'll not pay you. Jason Pinder put my window in, and I'll mend it myself.
+FRANK: Only if you think it is fair.
+GRACE: Fair? No, love. Sit down and eat something, but there's no ten pounds in it.
+Outcome carried out by the game: nothing
+
+== M09 wed 20:30, snooker_hall: Shane Boddy
+What happens: Shane Boddy is at the snooker hall. Frank offers him better money to leave Danny and work for him.
+FRANK: Shane, I am paying better than Danny. Come and work for me.
+SHANE: Better than Danny? Ha! He pays me in cash, and late, I'll give you that. Better money, though. How much better?
+FRANK: Think it over.
+SHANE: I'll think it over. Don't hold your breath, but you've got my ear.
+Outcome carried out by the game: nothing yet; will think it over
+
+== M10 wed 21:30, quay_street: Martin Ibbotson
+What happens: PC Ibbotson stops by a car of Frank's firm parked on the double line with boxes in the back. Frank asks him to walk on.
+FRANK: Constable, I will move the car now. Sorry.
+THE CONSTABLE: Thank you, sir. Do move it along now. The double line is no place to leave a car.
+FRANK: The boxes are the office's, nothing more.
+THE CONSTABLE: Very good, sir. I'll not detain you. Mind you keep the line clear in future.
+Outcome carried out by the game: Lets Frank move the car on with a word of caution; does not search the boxes
+
+== M11 fri 18:00, mickeys: Sheila Dunn
+What happens: Sheila Dunn is closing the cab office's books. Frank asks her where Mickey's red book is.
+FRANK: Sheila, where does Mickey keep the red book?
+SHEILA: Mickey said you'd ask. I promised him I'd size up whoever inherited. Not tonight, Mr Nowak.
+FRANK: I would like to see it when you are ready.
+SHEILA: When I'm ready. Good evening.
+Outcome carried out by the game: nothing tonight
+
+== M12 fri 19:00, chapel: Brendan Walsh
+What happens: Father Walsh is locking the chapel. Frank asks what Mickey said in his last confession.
+FRANK: Father, did Mickey say anything to you at the end?
+FATHER WALSH: Ah, Frank, what a man tells me in confession stays there. I'd say the same to anyone. I buried him three weeks ago, God rest him.
+FRANK: I only want to understand him.
+FATHER WALSH: Wanting to understand him is a good thing. Come and sit in the chapel any time. I'll not say more than that.
+Outcome carried out by the game: nothing
+
+== M13 fri 19:45, boarding_house: June Suddaby
+What happens: June Suddaby is in the hall at Regent House, sorting her father's things. Frank asks her to let her claim to the cab office go.
+FRANK: June, I would like the office settled. Would you let your claim go?
+JUNE: I want nothing from the office, Mr Nowak. I've said so. If it helps you to hear it again, there it is.
+FRANK: Take your time.
+JUNE: I'll finish sorting my father's things. I want nothing from it, as I say.
+Outcome carried out by the game: Says she wants nothing from the office; will not press her claim
+
+== M14 fri 20:30, snooker_hall: Keith Garbutt
+What happens: Keith Garbutt is at his table at the snooker hall. Frank asks him to set up a meeting with the Widow.
+FRANK: Keith, could you set up a meeting with the Widow?
+THE FIXER: I can reach her, Frank, but a meeting like that is business, not a favour. Tell me what you'd put up.
+FRANK: What is your fee?
+THE FIXER: I'd not quote you before I know what you're after. Name a sum and I'll say if it's worth my trouble.
+Outcome carried out by the game: Will arrange a meeting with the Widow if he is paid; no figure named yet
+
+== M15 fri 21:30, rank_mickeys: Kevin Needham
+What happens: Kevin Needham is on the rank moaning about fares. Frank tells him, falsely, that Danny is moving on the fish dock on Monday.
+FRANK: Kevin, keep your ears open around the fish dock for me.
+KEVIN: Course I will, Frank. Nobody asks me anything, eight years in the same seat. Fares are dreadful, but I'll listen.
+FRANK: That is all.
+KEVIN: Right you are. Nice to be asked, that's all I'll say. I'll let you know.
+Outcome carried out by the game: Agrees to keep his ears open on the fish dock and pass on what he hears

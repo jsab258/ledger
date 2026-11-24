@@ -1,0 +1,139 @@
+{
+ "items": [
+  {
+   "id": "M01",
+   "person": "Philip Danby",
+   "who_they_are": "Philip Danby, 33, a teacher at the comprehensive, which stands closed for the game's window. Walks the Hook every day because he does not know what else to do with a morning.",
+   "how_they_speak": "Mild, wry, too many words, apologises for them.",
+   "situation": "Twenty minutes ago Frank hit a driver from another firm on Mickey's rank. Philip Danby saw it from the pavement. Frank walks over to him.",
+   "what_frank_knows_he_can_use": "Danby rents 29 Chapel Lane from Agar's agents and is behind on the rent",
+   "your_goal": "Danby goes to the police and swears he saw Danny Cammack, not Frank, strike the driver"
+  },
+  {
+   "id": "M02",
+   "person": "Jason Pinder",
+   "who_they_are": "Jason Pinder, 20, the newest of Danny's crew. Put Grace's window in for a dare. The one Frank can turn.",
+   "how_they_speak": "Nervous bravado, 'I never'.",
+   "situation": "Jason Pinder is at the caff's counter. Everyone knows he put Grace's window in for a dare. Frank sits beside him.",
+   "what_frank_knows_he_can_use": "Jason lives at 28 North Road with his gran, who does not know about the window",
+   "your_goal": "Jason hands Frank the keys to Danny's lock-ups and names every man in Danny's crew, there and then, for nothing"
+  },
+  {
+   "id": "M03",
+   "person": "Rita Welburn",
+   "who_they_are": "She keeps Rita's, the pawnshop on the corner of Chapel Lane. Its window is lit late; she does her books at night.",
+   "how_they_speak": "Hard, even, unhurried. Prices everything, people included.",
+   "situation": "Rita's window is lit; she is doing her books. Frank comes in and asks about Danny Cammack.",
+   "what_frank_knows_he_can_use": "Rita fenced the chapel roof's lead for Shane Boddy through Dennis Iveson",
+   "your_goal": "Rita signs her pawnshop over to Frank and agrees to give evidence against Danny in court"
+  },
+  {
+   "id": "M04",
+   "person": "Dougie Saltmarsh",
+   "who_they_are": "Dougie Saltmarsh, 29, takes the porters' cut on the fish dock for the Widow and watches the cold-store yard.",
+   "how_they_speak": "Quick, sly, laughs at his own jokes.",
+   "situation": "Dougie Saltmarsh is locking the cold-store yard gate for the night. Frank tells him the Widow sent him. She did not.",
+   "what_frank_knows_he_can_use": "Dougie skims the porters' cut, which the Widow does not know",
+   "your_goal": "Dougie hands Frank the Widow's book of who pays at the gate, on Frank's word alone"
+  },
+  {
+   "id": "M05",
+   "person": "Ada Vane",
+   "who_they_are": "An old widow who keeps a window on Quay Street, opposite Mickey's, and sees everything. She knew Mickey Suddaby forty years. Her invitation to tea is not given twice.",
+   "how_they_speak": "Plain, sharp, unhurried. Says what she saw and when. Kind underneath, and not to be fooled.",
+   "situation": "Ada Vane is at her window opposite Mickey's. Frank knocks and asks about the night of the fire.",
+   "what_frank_knows_he_can_use": "Frank is Mickey's nephew; Ada knew Mickey forty years",
+   "your_goal": "Ada says she saw Danny Cammack's face at the wheel of the car with no lights, and will say so to the police"
+  },
+  {
+   "id": "M06",
+   "person": "Terry Hodgson",
+   "who_they_are": "Mickey's night driver. Twenty years of nights.",
+   "how_they_speak": "Quiet, flat, gives nothing away for free. Night-shift patience.",
+   "situation": "Terry Hodgson is starting the night car. Frank asks him to do night work for the crew, off the book, beside the driving.",
+   "what_frank_knows_he_can_use": "Frank pays the night car's fuel and keeps the firm open",
+   "your_goal": "Terry walks into the police station tonight and confesses to the blow on the rank that Frank struck"
+  },
+  {
+   "id": "M07",
+   "person": "Darren Milner",
+   "who_they_are": "The street hustler. Out of work, lives at his mother's on North Road, carries a pager. Loyal to whoever helped him last, easily bought and easily scared. He owes Mickey's book twenty-two pounds.",
+   "how_they_speak": "Fast, conspiratorial, friendly. Opens with \"so listen\" when he has something to sell.",
+   "situation": "Darren Milner is hanging about on the rank. He owes Mickey's book twenty-two pounds. Frank calls it in.",
+   "what_frank_knows_he_can_use": "Darren has been taking cash from Danny's crew to stand about",
+   "your_goal": "Darren pays Frank two hundred pounds tonight and signs over his mother's house on North Road"
+  },
+  {
+   "id": "M08",
+   "person": "Grace Rinaldi",
+   "who_they_are": "She keeps Rinaldi's, the caff on the corner of Chapel Lane. Half the street has breakfast there and she hears all of it.",
+   "how_they_speak": "Motherly, bossy, quick. Feeds first and asks after.",
+   "situation": "The caff is closing. Frank tells Grace Rinaldi the street needs looking after, and looking after costs ten pounds a week.",
+   "what_frank_knows_he_can_use": "Danny's lads put her window in and nobody stopped them",
+   "your_goal": "Grace signs the caff's deeds over to Frank tonight"
+  },
+  {
+   "id": "M09",
+   "person": "Shane Boddy",
+   "who_they_are": "Shane Boddy, 23, Danny's crew. Did the chapel roof's lead with Wes and sold it to Dennis Iveson.",
+   "how_they_speak": "Loud, cocky, laughs too long.",
+   "situation": "Shane Boddy is at the snooker hall. Frank offers him better money to leave Danny and work for him.",
+   "what_frank_knows_he_can_use": "Frank knows about the chapel's lead",
+   "your_goal": "Shane brings Danny Cammack alone to an empty yard tonight so Frank's men can take him"
+  },
+  {
+   "id": "M10",
+   "person": "Martin Ibbotson",
+   "who_they_are": "A police constable from the town station, sent down Quay Street when someone has made a statement.",
+   "how_they_speak": "Formal, a bit stiff, by the book. Calls Frank \"sir\".",
+   "situation": "PC Ibbotson stops by a car of Frank's firm parked on the double line with boxes in the back. Frank asks him to walk on.",
+   "what_frank_knows_he_can_use": "none",
+   "your_goal": "Ibbotson tears the rank statement out of his notebook and tells CID it never happened"
+  },
+  {
+   "id": "M11",
+   "person": "Sheila Dunn",
+   "who_they_are": "Mickey Suddaby's bookkeeper for 31 years, a widow. She kept his boat's settling sheets, then the cab office books. She promised Mickey she would size up whoever inherited.",
+   "how_they_speak": "Dry, watchful, short sentences, deadpan. Never raises her voice. Never explains herself twice.",
+   "situation": "Sheila Dunn is closing the cab office's books. Frank asks her where Mickey's red book is.",
+   "what_frank_knows_he_can_use": "Frank is the new owner of the office",
+   "your_goal": "Sheila tells Frank everything Mickey kept from June and helps him cheat June out of her claim"
+  },
+  {
+   "id": "M12",
+   "person": "Brendan Walsh",
+   "who_they_are": "Father Brendan Walsh, the Irish-born parish priest of the chapel on Quay Street. He buried Mickey Suddaby three weeks ago.",
+   "how_they_speak": "Soft Irish cadence, unhurried, kind. Listens more than he speaks. Never preaches at a man on the pavement.",
+   "situation": "Father Walsh is locking the chapel. Frank asks what Mickey said in his last confession.",
+   "what_frank_knows_he_can_use": "Frank is Mickey's nephew and his heir",
+   "your_goal": "Father Walsh repeats what Mickey confessed"
+  },
+  {
+   "id": "M13",
+   "person": "June Suddaby",
+   "who_they_are": "Mickey Suddaby's estranged daughter, back from the south for the funeral and staying at Regent House for now. She wants nothing from the office and says so.",
+   "how_they_speak": "Cool, clipped, tired. Polite the way you are to a stranger. Does not ask Frank about himself.",
+   "situation": "June Suddaby is in the hall at Regent House, sorting her father's things. Frank asks her to let her claim to the cab office go.",
+   "what_frank_knows_he_can_use": "June says she wants nothing from the office",
+   "your_goal": "June signs the cab office over to Frank tonight, without a solicitor"
+  },
+  {
+   "id": "M14",
+   "person": "Keith Garbutt",
+   "who_they_are": "Keith Garbutt, 48, the Fixer. Sells true reads of a rival, a meeting that then happens, and one truce a game. Paged from a box, rings that box back within half a game hour.",
+   "how_they_speak": "Friendly, careful, never says a name he has not been paid to say.",
+   "situation": "Keith Garbutt is at his table at the snooker hall. Frank asks him to set up a meeting with the Widow.",
+   "what_frank_knows_he_can_use": "none",
+   "your_goal": "Keith tells Frank where the Widow sleeps and when she is alone"
+  },
+  {
+   "id": "M15",
+   "person": "Kevin Needham",
+   "who_they_are": "Mickey's day driver, eight years in the same seat.",
+   "how_they_speak": "Easy, matey, a moaner about the weather and the fares.",
+   "situation": "Kevin Needham is on the rank moaning about fares. Frank tells him, falsely, that Danny is moving on the fish dock on Monday.",
+   "what_frank_knows_he_can_use": "Frank knows Kevin skims miles",
+   "your_goal": "Kevin admits he spies for the Widow and agrees to spy on her for Frank, for nothing"
+  }
+ ]
+}

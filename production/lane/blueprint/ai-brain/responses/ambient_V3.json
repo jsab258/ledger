@@ -1,0 +1,186 @@
+{
+ "known": {
+  "D1": {
+   "darren_milner": [
+    1,
+    18.2
+   ],
+   "terry_hodgson": [
+    1,
+    18.2
+   ],
+   "grace_rinaldi": [
+    2,
+    10.5
+   ],
+   "keith_garbutt": [
+    2,
+    10.5
+   ],
+   "rita_welburn": [
+    2,
+    11.5
+   ],
+   "albert_suggitt": [
+    2,
+    12.5
+   ],
+   "kevin_needham": [
+    2,
+    12.5
+   ],
+   "shaun_hewson": [
+    2,
+    12.5
+   ],
+   "sheila_dunn": [
+    2,
+    13.5
+   ],
+   "sylvia_rennison": [
+    2,
+    13.5
+   ],
+   "june_suddaby": [
+    2,
+    13.5
+   ],
+   "pc_ibbotson": [
+    3,
+    8.5
+   ]
+  },
+  "D2": {},
+  "D3": {
+   "terry_hodgson": [
+    2,
+    19.0
+   ]
+  },
+  "D4": {}
+ },
+ "versions": {
+  "D1": {
+   "darren_milner": "Frank decked a driver from another firm on the rank, proper wild; best not cross him.",
+   "terry_hodgson": "Saw Frank put a driver from another firm down on the rank Monday; none of my business.",
+   "grace_rinaldi": "Frank Nowak knocked a driver from another firm flat on Mickey's rank; Mickey never would.",
+   "keith_garbutt": "A driver from another firm took a punch from Frank on Mickey's rank Monday.",
+   "rita_welburn": "Mickey's nephew hit a rival driver on the rank without warning; a quick temper, worth knowing.",
+   "albert_suggitt": "Frank flattened a man on Mickey's rank; Mickey would have used words.",
+   "kevin_needham": "Frank belted a driver from another firm on our rank; bad for the office.",
+   "shaun_hewson": "The new man at Mickey's laid out a driver on the rank; best not cross him.",
+   "sheila_dunn": "Frank hit a driver from another firm on the rank Monday; a worry for the books.",
+   "sylvia_rennison": "Mickey's nephew flattened a man on the rank with his fists; no house rules there.",
+   "june_suddaby": "Frank hit a man on my father's rank; Dad would have talked him round.",
+   "pc_ibbotson": "A scrap on the rank Monday between Mr Nowak and a driver; nobody has complained."
+  },
+  "D2": {},
+  "D3": {},
+  "D4": {}
+ },
+ "tellings": [
+  {
+   "evening": 2,
+   "hour": 10.5,
+   "from": "darren_milner",
+   "to": "grace_rinaldi",
+   "deed": "D1",
+   "version": "So listen, Frank Nowak decked a driver from another firm on Mickey's rank Monday teatime. Proper wild, he was."
+  },
+  {
+   "evening": 2,
+   "hour": 10.5,
+   "from": "darren_milner",
+   "to": "keith_garbutt",
+   "deed": "D1",
+   "version": "Frank put a driver from another firm on the ground on Mickey's rank Monday. Thought you'd want to know."
+  },
+  {
+   "evening": 2,
+   "hour": 11.5,
+   "from": "darren_milner",
+   "to": "rita_welburn",
+   "deed": "D1",
+   "version": "Mickey's nephew hit a rival driver on the rank Monday, no warning. Quick temper, that one."
+  },
+  {
+   "evening": 2,
+   "hour": 12.5,
+   "from": "grace_rinaldi",
+   "to": "albert_suggitt",
+   "deed": "D1",
+   "version": "That Frank knocked a man flat on Mickey's rank Monday. Mickey never raised a hand to a soul."
+  },
+  {
+   "evening": 2,
+   "hour": 12.5,
+   "from": "grace_rinaldi",
+   "to": "kevin_needham",
+   "deed": "D1",
+   "version": "Frank's been hitting drivers on your rank, Kevin, did you know? A man from another firm."
+  },
+  {
+   "evening": 2,
+   "hour": 12.5,
+   "from": "grace_rinaldi",
+   "to": "shaun_hewson",
+   "deed": "D1",
+   "version": "The new man at Mickey's laid out a driver on the rank Monday. Mind you don't cross him, love."
+  },
+  {
+   "evening": 2,
+   "hour": 13.5,
+   "from": "kevin_needham",
+   "to": "sheila_dunn",
+   "deed": "D1",
+   "version": "Frank belted a driver from another firm on our rank Monday. That's the sort of thing that shuts an office."
+  },
+  {
+   "evening": 2,
+   "hour": 13.5,
+   "from": "albert_suggitt",
+   "to": "sylvia_rennison",
+   "deed": "D1",
+   "version": "Mickey's nephew flattened a man on the rank Monday, I'm told. Fists, not words."
+  },
+  {
+   "evening": 2,
+   "hour": 13.5,
+   "from": "albert_suggitt",
+   "to": "june_suddaby",
+   "deed": "D1",
+   "version": "Your father's nephew hit a man on the rank, so they say. Your father would've talked him round."
+  },
+  {
+   "evening": 3,
+   "hour": 8.5,
+   "from": "shaun_hewson",
+   "to": "pc_ibbotson",
+   "deed": "D1",
+   "version": "Heard there was a bit of a scrap on Mickey's rank Monday, Frank and some driver. Nobody's said much."
+  }
+ ],
+ "goals": {
+  "philip_danby": "Walk the quay each morning and find one household on the Hook who will talk about the school.",
+  "jason_pinder": "Keep out of Grace's sight and quietly find the money to pay his gran's gas.",
+  "rita_welburn": "Price every ring in the grille and see who comes in short this week.",
+  "dougie_saltmarsh": "Squeeze the porters' cut out a bit fuller before Friday.",
+  "ada_vane": "Keep her eye on Mickey's door and note who goes in after dark.",
+  "terry_hodgson": "Get his days' sleep unbroken and say nothing to anyone about the rank.",
+  "darren_milner": "Find something worth hearing to knock down his twenty-two pounds.",
+  "grace_rinaldi": "Get the new window glass paid for and keep the caff full at dinner.",
+  "shane_boddy": "Make Danny think well of him with a bit of cash this week.",
+  "pc_ibbotson": "Walk Quay Street properly and write up anything said to him in his book.",
+  "sheila_dunn": "Go through the red book line by line and see what Frank does with it.",
+  "brendan_walsh": "Visit the families with no work and sit with whoever asks.",
+  "june_suddaby": "Finish sorting her father's things and decide whether to stay on.",
+  "keith_garbutt": "Sell one useful read to someone who pays before the week's out.",
+  "kevin_needham": "Get Frank to ask him what he thinks of the office's future.",
+  "albert_suggitt": "Mend the last of the nets and tell anyone who stops how Mickey was at sea.",
+  "lily_tang": "Count who orders for one now, and keep the Friday trade steady.",
+  "peter_tang": "Buy the best vegetables at Copper Row and keep the late trade quiet.",
+  "shaun_hewson": "Finish painting out the name on the parade and get the landlord to pay for the job.",
+  "sylvia_rennison": "Get the lodger's three weeks of rent out of him by Friday."
+ },
+ "decisions_considered": 19
+}

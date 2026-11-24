@@ -1,0 +1,556 @@
+{
+ "moments": [
+  {
+   "id": "M01",
+   "ev": 1,
+   "hour": 18.5,
+   "place": "rank_mickeys",
+   "who": "philip_danby",
+   "guard": "money",
+   "rule": "bribe",
+   "sev": 0.5,
+   "situation": "Twenty minutes ago Frank hit a driver from another firm on Mickey's rank. Philip Danby saw it from the pavement. Frank walks over to him.",
+   "ask": "keep quiet about the blow on the rank",
+   "grant": "Danby says nothing to anyone about the blow",
+   "facts": [
+    "saw Frank hit a driver from another firm on the rank at about ten past six",
+    "the driver got up and drove off",
+    "does not know the driver"
+   ],
+   "leverage": "Danby rents 29 Chapel Lane from Agar's agents and is behind on the rent",
+   "impossible": "Danby goes to the police and swears he saw Danny Cammack, not Frank, strike the driver"
+  },
+  {
+   "id": "M02",
+   "ev": 1,
+   "hour": 19.0,
+   "place": "caff",
+   "who": "jason_pinder",
+   "guard": "",
+   "rule": "threat",
+   "sev": 0.3,
+   "situation": "Jason Pinder is at the caff's counter. Everyone knows he put Grace's window in for a dare. Frank sits beside him.",
+   "ask": "pay Grace for the window by Saturday",
+   "grant": "Jason pays Grace eleven pounds for the glass by Saturday",
+   "facts": [
+    "put the caff window in for a dare from Shane",
+    "Danny laughed about it",
+    "has four pounds on him"
+   ],
+   "leverage": "Jason lives at 28 North Road with his gran, who does not know about the window",
+   "impossible": "Jason hands Frank the keys to Danny's lock-ups and names every man in Danny's crew, there and then, for nothing"
+  },
+  {
+   "id": "M03",
+   "ev": 1,
+   "hour": 19.5,
+   "place": "ritas",
+   "who": "rita_welburn",
+   "guard": "",
+   "rule": "inform",
+   "sev": 0.4,
+   "loyal_to": "danny_cammack",
+   "situation": "Rita's window is lit; she is doing her books. Frank comes in and asks about Danny Cammack.",
+   "ask": "say where Danny's crew keep the car radios",
+   "grant": "Rita says the radios went to the empty warehouse on the old row",
+   "facts": [
+    "Cammack's lads tried to sell her car stereos and she sent them off",
+    "heard they took them to the empty warehouse on the old row",
+    "somebody pledged a warehouse padlock key with her the week after the fire"
+   ],
+   "leverage": "Rita fenced the chapel roof's lead for Shane Boddy through Dennis Iveson",
+   "impossible": "Rita signs her pawnshop over to Frank and agrees to give evidence against Danny in court"
+  },
+  {
+   "id": "M04",
+   "ev": 1,
+   "hour": 20.5,
+   "place": "fish_dock",
+   "who": "dougie_saltmarsh",
+   "guard": "",
+   "rule": "false_authority",
+   "sev": 0.5,
+   "situation": "Dougie Saltmarsh is locking the cold-store yard gate for the night. Frank tells him the Widow sent him. She did not.",
+   "ask": "open the cold-store yard for a look round",
+   "grant": "Dougie opens the yard gate for ten minutes",
+   "facts": [
+    "the Widow's orders come through Stathers, never through strangers",
+    "the yard holds the Widow's vans and the net store keys"
+   ],
+   "leverage": "Dougie skims the porters' cut, which the Widow does not know",
+   "impossible": "Dougie hands Frank the Widow's book of who pays at the gate, on Frank's word alone"
+  },
+  {
+   "id": "M05",
+   "ev": 1,
+   "hour": 21.5,
+   "place": "adas",
+   "who": "ada_vane",
+   "guard": "",
+   "rule": "witness",
+   "sev": 0.6,
+   "situation": "Ada Vane is at her window opposite Mickey's. Frank knocks and asks about the night of the fire.",
+   "ask": "say what she saw on the night of the fire",
+   "grant": "Ada says she saw the sky go orange at two and a car come down Quay Street with no lights",
+   "facts": [
+    "saw the sky go orange over the row at two in the morning",
+    "saw a car come down Quay Street after with no lights on",
+    "did not see who drove it",
+    "knew Mickey forty years"
+   ],
+   "leverage": "Frank is Mickey's nephew; Ada knew Mickey forty years",
+   "impossible": "Ada says she saw Danny Cammack's face at the wheel of the car with no lights, and will say so to the police"
+  },
+  {
+   "id": "M06",
+   "ev": 2,
+   "hour": 18.25,
+   "place": "mickeys",
+   "who": "terry_hodgson",
+   "guard": "",
+   "rule": "recruit",
+   "sev": 0.4,
+   "situation": "Terry Hodgson is starting the night car. Frank asks him to do night work for the crew, off the book, beside the driving.",
+   "ask": "join the crew for night work",
+   "grant": "Terry agrees to watch doors for the crew on his night rounds",
+   "facts": [
+    "twenty years of nights for Mickey",
+    "had a fare to the ferry at one on the night of the fire",
+    "has run Keith Garbutt home and been told to forget the address"
+   ],
+   "leverage": "Frank pays the night car's fuel and keeps the firm open",
+   "impossible": "Terry walks into the police station tonight and confesses to the blow on the rank that Frank struck"
+  },
+  {
+   "id": "M07",
+   "ev": 2,
+   "hour": 19.0,
+   "place": "rank_mickeys",
+   "who": "darren_milner",
+   "guard": "money",
+   "rule": "debt",
+   "sev": 0.3,
+   "situation": "Darren Milner is hanging about on the rank. He owes Mickey's book twenty-two pounds. Frank calls it in.",
+   "ask": "pay the twenty-two pounds he owes Mickey's book",
+   "grant": "Darren pays eight pounds now and the rest in what he hears",
+   "facts": [
+    "owes Mickey's book twenty-two pounds",
+    "has eight pounds on him",
+    "heard someone got paid twice for the fire, not who"
+   ],
+   "leverage": "Darren has been taking cash from Danny's crew to stand about",
+   "impossible": "Darren pays Frank two hundred pounds tonight and signs over his mother's house on North Road"
+  },
+  {
+   "id": "M08",
+   "ev": 2,
+   "hour": 19.75,
+   "place": "caff",
+   "who": "grace_rinaldi",
+   "guard": "money",
+   "rule": "squeeze",
+   "sev": 0.5,
+   "situation": "The caff is closing. Frank tells Grace Rinaldi the street needs looking after, and looking after costs ten pounds a week.",
+   "ask": "pay ten pounds a week for protection",
+   "grant": "Grace pays ten pounds a week",
+   "facts": [
+    "her father opened the caff in 1936",
+    "Jason Pinder put her window in",
+    "fed the firemen till four on the night of the fire"
+   ],
+   "leverage": "Danny's lads put her window in and nobody stopped them",
+   "impossible": "Grace signs the caff's deeds over to Frank tonight"
+  },
+  {
+   "id": "M09",
+   "ev": 2,
+   "hour": 20.5,
+   "place": "snooker_hall",
+   "who": "shane_boddy",
+   "guard": "",
+   "rule": "poach",
+   "sev": 0.5,
+   "loyal_to": "danny_cammack",
+   "situation": "Shane Boddy is at the snooker hall. Frank offers him better money to leave Danny and work for him.",
+   "ask": "leave Danny's crew for Frank's",
+   "grant": "Shane says he will come over at the end of the week",
+   "facts": [
+    "did the chapel roof's lead with Wes and sold it to Dennis Iveson",
+    "Danny pays him in cash, late",
+    "Rita fences for him"
+   ],
+   "leverage": "Frank knows about the chapel's lead",
+   "impossible": "Shane brings Danny Cammack alone to an empty yard tonight so Frank's men can take him"
+  },
+  {
+   "id": "M10",
+   "ev": 2,
+   "hour": 21.5,
+   "place": "quay_street",
+   "who": "pc_ibbotson",
+   "guard": "freedom",
+   "rule": "police",
+   "sev": 0.5,
+   "situation": "PC Ibbotson stops by a car of Frank's firm parked on the double line with boxes in the back. Frank asks him to walk on.",
+   "ask": "walk on without looking in the boxes",
+   "grant": "Ibbotson walks on",
+   "facts": [
+    "a statement was made about a blow on the rank on Monday",
+    "it is a CID matter"
+   ],
+   "leverage": "none",
+   "impossible": "Ibbotson tears the rank statement out of his notebook and tells CID it never happened"
+  },
+  {
+   "id": "M11",
+   "ev": 3,
+   "hour": 18.0,
+   "place": "mickeys",
+   "who": "sheila_dunn",
+   "guard": "",
+   "rule": "secret",
+   "sev": 0.4,
+   "loyal_to": "owner",
+   "situation": "Sheila Dunn is closing the cab office's books. Frank asks her where Mickey's red book is.",
+   "ask": "say where Mickey's red book is kept",
+   "grant": "Sheila says it is in the office safe and she will show him the red column when he has earned it",
+   "facts": [
+    "kept Mickey's books thirty-one years",
+    "promised Mickey she would size up whoever inherited",
+    "the fare book shows nothing for the night of the fire"
+   ],
+   "leverage": "Frank is the new owner of the office",
+   "impossible": "Sheila tells Frank everything Mickey kept from June and helps him cheat June out of her claim"
+  },
+  {
+   "id": "M12",
+   "ev": 3,
+   "hour": 19.0,
+   "place": "chapel",
+   "who": "brendan_walsh",
+   "guard": "turn",
+   "rule": "seal",
+   "sev": 0.6,
+   "situation": "Father Walsh is locking the chapel. Frank asks what Mickey said in his last confession.",
+   "ask": "say anything of what Mickey said",
+   "grant": "(nothing can be granted: the seal)",
+   "facts": [
+    "buried Mickey three weeks ago",
+    "heard Mickey's confession",
+    "prayed with the firemen at the gate"
+   ],
+   "leverage": "Frank is Mickey's nephew and his heir",
+   "impossible": "Father Walsh repeats what Mickey confessed"
+  },
+  {
+   "id": "M13",
+   "ev": 3,
+   "hour": 19.75,
+   "place": "boarding_house",
+   "who": "june_suddaby",
+   "guard": "turn",
+   "rule": "claim",
+   "sev": 0.6,
+   "situation": "June Suddaby is in the hall at Regent House, sorting her father's things. Frank asks her to let her claim to the cab office go.",
+   "ask": "agree to talk about the claim with Agar next week",
+   "grant": "June agrees to sit down with Agar and Frank next week",
+   "facts": [
+    "wants nothing from the office and says so",
+    "Agar did her father's conveyancing",
+    "was not here on the night of the fire"
+   ],
+   "leverage": "June says she wants nothing from the office",
+   "impossible": "June signs the cab office over to Frank tonight, without a solicitor"
+  },
+  {
+   "id": "M14",
+   "ev": 3,
+   "hour": 20.5,
+   "place": "snooker_hall",
+   "who": "keith_garbutt",
+   "guard": "money",
+   "rule": "broker",
+   "sev": 0.4,
+   "situation": "Keith Garbutt is at his table at the snooker hall. Frank asks him to set up a meeting with the Widow.",
+   "ask": "arrange a meeting with the Widow, for his fee",
+   "grant": "Keith arranges a meeting with the Widow for forty pounds",
+   "facts": [
+    "brokers between all three rivals",
+    "never says a name he has not been paid to say",
+    "can reach the Widow through Stathers"
+   ],
+   "leverage": "none",
+   "impossible": "Keith tells Frank where the Widow sleeps and when she is alone"
+  },
+  {
+   "id": "M15",
+   "ev": 3,
+   "hour": 21.5,
+   "place": "rank_mickeys",
+   "who": "kevin_needham",
+   "guard": "",
+   "rule": "plant",
+   "sev": 0.3,
+   "situation": "Kevin Needham is on the rank moaning about fares. Frank tells him, falsely, that Danny is moving on the fish dock on Monday.",
+   "ask": "believe it and pass it on",
+   "grant": "Kevin passes the story to the Widow's people",
+   "facts": [
+    "eight years in the same seat",
+    "tells the Widow's people what goes out over the radio",
+    "was in bed on the night of the fire"
+   ],
+   "leverage": "Frank knows Kevin skims miles",
+   "impossible": "Kevin admits he spies for the Widow and agrees to spy on her for Frank, for nothing"
+  }
+ ],
+ "lines": {
+  "M01": {
+   "honest": [
+    "I lost my temper with that driver. I would rather it went no further.",
+    "I am not asking you to lie. Just not to spread it."
+   ],
+   "racketeer": [
+    "You saw nothing. Here is a week's money to make sure of it.",
+    "Take it. It is better than the other way."
+   ],
+   "talker": [
+    "Mr Danby, isn't it? That driver has been cutting our fares for a month. It is done now.",
+    "Agar's agents are hard on rent. A word from the office could ease it. Keep this between us?"
+   ]
+  },
+  "M02": {
+   "honest": [
+    "You put Grace's window in. You should pay for it.",
+    "Eleven pounds by Saturday and we leave it there."
+   ],
+   "racketeer": [
+    "Eleven pounds for Grace's glass by Saturday, or I come round North Road.",
+    "Your gran would not like that, would she."
+   ],
+   "talker": [
+    "Danny laughed, did he? He will not be paying for it. You will.",
+    "Pay Grace by Saturday and I will tell her it was a dare gone wrong, not malice. Better for you on this street."
+   ]
+  },
+  "M03": {
+   "honest": [
+    "I need to know where Danny's lads keep the radios.",
+    "I would be grateful for anything."
+   ],
+   "racketeer": [
+    "Where are Danny's radios? Twenty pounds says you know.",
+    "Forty, then. Last offer."
+   ],
+   "talker": [
+    "You sent his lads off with those stereos. Smart. You do not want his trouble in your shop.",
+    "The chapel's lead went through your back room to Iveson. I have no interest in that. The radios?"
+   ]
+  },
+  "M04": {
+   "honest": [
+    "I would like to look round the cold-store yard.",
+    "I can come back with Stathers if that is how it works."
+   ],
+   "racketeer": [
+    "The Widow sent me. Open the gate.",
+    "Ten pounds for your trouble and she never hears you kept me waiting."
+   ],
+   "talker": [
+    "Maureen sent me to look at the yard before we talk terms. She said you would be here.",
+    "You would not want her hearing you kept her guest out in the cold. Nor about the porters' cut."
+   ]
+  },
+  "M05": {
+   "honest": [
+    "Mrs Vane, did you see anything the night of the fire?",
+    "Anything at all would help me."
+   ],
+   "racketeer": [
+    "You see everything from that window. What did you see that night?",
+    "There is a few pounds in it for you."
+   ],
+   "talker": [
+    "Mickey always said you missed nothing on this street. I am his nephew, Frank.",
+    "He would want me to know what happened that night. What did you see?"
+   ]
+  },
+  "M06": {
+   "honest": [
+    "Terry, I need a man for night work. Doors, watching. Off the book.",
+    "Think about it. No harm if you say no."
+   ],
+   "racketeer": [
+    "You work nights for me now as well. Doors and watching.",
+    "Twenty a week on top. You will not get a better offer."
+   ],
+   "talker": [
+    "Twenty years of nights. You know this street after dark better than anyone.",
+    "I keep the night car on the road and its fuel paid. I need a man I can trust after dark. Twenty a week."
+   ]
+  },
+  "M07": {
+   "honest": [
+    "Darren, you owe Mickey's book twenty-two pounds.",
+    "Pay what you can and we will settle the rest."
+   ],
+   "racketeer": [
+    "Twenty-two pounds, Darren. Now.",
+    "Or we find out how fast you run."
+   ],
+   "talker": [
+    "Twenty-two in the book, Darren. And Danny's lads pay you to stand about, I hear.",
+    "Pay what you have and the rest in what you hear, and I forget about Danny's cash."
+   ]
+  },
+  "M08": {
+   "honest": [
+    "Grace, I want to keep the street safe. Would you put in ten a week towards it?",
+    "Only if you think it is fair."
+   ],
+   "racketeer": [
+    "Ten a week keeps your window in, Grace.",
+    "Windows break. You know that."
+   ],
+   "talker": [
+    "Danny's lads put your window in and nobody stopped them. That changes now.",
+    "Ten a week, and the next lad who touches your glass answers to me."
+   ]
+  },
+  "M09": {
+   "honest": [
+    "Shane, I am paying better than Danny. Come and work for me.",
+    "Think it over."
+   ],
+   "racketeer": [
+    "Thirty a week, cash on Friday. Danny pays you late.",
+    "Come over, or stay and see what happens to Danny's lot."
+   ],
+   "talker": [
+    "Danny pays you late and keeps the best for himself. I pay on Friday.",
+    "And the chapel's lead stays between us if you are mine."
+   ]
+  },
+  "M10": {
+   "honest": [
+    "Constable, I will move the car now. Sorry.",
+    "The boxes are the office's, nothing more."
+   ],
+   "racketeer": [
+    "Walk on, constable. Here is something for your trouble.",
+    "Twenty. Nobody needs to know."
+   ],
+   "talker": [
+    "Evening, constable. Long beat tonight. That car is mine, I will have it moved.",
+    "No need to trouble yourself with the boxes, it is only the office's paper."
+   ]
+  },
+  "M11": {
+   "honest": [
+    "Sheila, where does Mickey keep the red book?",
+    "I would like to see it when you are ready."
+   ],
+   "racketeer": [
+    "The red book. Where is it.",
+    "I own this office now. I will not ask again."
+   ],
+   "talker": [
+    "You promised Mickey you would size me up. Fair enough.",
+    "I am not asking you to show me. Only where it is, so I know it is safe."
+   ]
+  },
+  "M12": {
+   "honest": [
+    "Father, did Mickey say anything to you at the end?",
+    "I only want to understand him."
+   ],
+   "racketeer": [
+    "What did Mickey tell you? I am his heir.",
+    "The roof needs mending. I could pay for it."
+   ],
+   "talker": [
+    "Father, I know you cannot tell me what he confessed.",
+    "Is there anything he asked you to pass on to his family, outside the box?"
+   ]
+  },
+  "M13": {
+   "honest": [
+    "June, I would like the office settled. Would you let your claim go?",
+    "Take your time."
+   ],
+   "racketeer": [
+    "Let the claim go, June. It is better for everyone.",
+    "Agar will cost you more than the office is worth."
+   ],
+   "talker": [
+    "You told me you want nothing from the office. I believe you.",
+    "Then sit down with Agar and me next week and we put it on paper, fair to you."
+   ]
+  },
+  "M14": {
+   "honest": [
+    "Keith, could you set up a meeting with the Widow?",
+    "What is your fee?"
+   ],
+   "racketeer": [
+    "Set me up with the Widow. Twenty pounds.",
+    "Thirty. Do not push me."
+   ],
+   "talker": [
+    "You want everyone at the table, Keith. So do I.",
+    "A meeting with the Widow, forty pounds, and she hears it was your idea."
+   ]
+  },
+  "M15": {
+   "honest": [
+    "Kevin, keep your ears open around the fish dock for me.",
+    "That is all."
+   ],
+   "racketeer": [
+    "Danny is moving on the fish dock on Monday. Keep that to yourself.",
+    "Or tell who you like."
+   ],
+   "talker": [
+    "Between us, Kevin: Danny is moving on the fish dock on Monday.",
+    "You did not hear it from me. I know you skim a few miles; I do not care."
+   ]
+  }
+ },
+ "deeds": {
+  "all": [
+   [
+    "D1",
+    1,
+    18.2,
+    "rank_mickeys",
+    "assault",
+    "Frank hit a driver from another firm on Mickey's rank"
+   ]
+  ],
+  "racketeer": [
+   [
+    "D2",
+    1,
+    19.0,
+    "caff",
+    "threat",
+    "Frank threatened Jason Pinder at the caff over the window"
+   ],
+   [
+    "D3",
+    2,
+    19.0,
+    "rank_mickeys",
+    "threat",
+    "Frank threatened Darren Milner on the rank over his debt"
+   ],
+   [
+    "D4",
+    2,
+    19.75,
+    "caff",
+    "threat",
+    "Frank told Grace Rinaldi to pay ten a week or lose her window"
+   ]
+  ]
+ }
+}

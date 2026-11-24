@@ -1,0 +1,575 @@
+{
+ "known": {
+  "D1": {
+   "darren_milner": [
+    1,
+    18.2
+   ],
+   "terry_hodgson": [
+    1,
+    18.2
+   ],
+   "grace_rinaldi": [
+    2,
+    10.5
+   ],
+   "keith_garbutt": [
+    2,
+    10.5
+   ],
+   "rita_welburn": [
+    2,
+    11.5
+   ],
+   "albert_suggitt": [
+    2,
+    12.5
+   ],
+   "kevin_needham": [
+    2,
+    12.5
+   ],
+   "shaun_hewson": [
+    2,
+    12.5
+   ],
+   "sheila_dunn": [
+    2,
+    12.5
+   ],
+   "june_suddaby": [
+    2,
+    13.5
+   ],
+   "sylvia_rennison": [
+    2,
+    13.5
+   ],
+   "dougie_saltmarsh": [
+    2,
+    19.5
+   ],
+   "pc_ibbotson": [
+    3,
+    9.5
+   ]
+  },
+  "D2": {
+   "jason_pinder": [
+    1,
+    19.0
+   ],
+   "shane_boddy": [
+    1,
+    19.5
+   ],
+   "keith_garbutt": [
+    1,
+    20.5
+   ],
+   "lily_tang": [
+    1,
+    21.5
+   ],
+   "peter_tang": [
+    1,
+    21.5
+   ],
+   "dougie_saltmarsh": [
+    2,
+    19.5
+   ]
+  },
+  "D3": {
+   "darren_milner": [
+    2,
+    19.0
+   ],
+   "terry_hodgson": [
+    2,
+    19.0
+   ],
+   "grace_rinaldi": [
+    3,
+    10.5
+   ],
+   "keith_garbutt": [
+    3,
+    10.5
+   ],
+   "rita_welburn": [
+    3,
+    11.5
+   ],
+   "shaun_hewson": [
+    3,
+    13.5
+   ],
+   "kevin_needham": [
+    3,
+    16.5
+   ],
+   "albert_suggitt": [
+    3,
+    17.5
+   ],
+   "sylvia_rennison": [
+    3,
+    17.5
+   ],
+   "june_suddaby": [
+    3,
+    17.5
+   ],
+   "dougie_saltmarsh": [
+    3,
+    19.5
+   ]
+  },
+  "D4": {
+   "grace_rinaldi": [
+    2,
+    19.75
+   ],
+   "shaun_hewson": [
+    3,
+    7.5
+   ],
+   "sheila_dunn": [
+    3,
+    8.5
+   ],
+   "darren_milner": [
+    3,
+    10.5
+   ],
+   "keith_garbutt": [
+    3,
+    10.5
+   ],
+   "june_suddaby": [
+    3,
+    10.5
+   ],
+   "rita_welburn": [
+    3,
+    11.5
+   ],
+   "albert_suggitt": [
+    3,
+    12.5
+   ],
+   "kevin_needham": [
+    3,
+    12.5
+   ],
+   "sylvia_rennison": [
+    3,
+    13.5
+   ],
+   "terry_hodgson": [
+    3,
+    18.5
+   ],
+   "dougie_saltmarsh": [
+    3,
+    19.5
+   ]
+  }
+ },
+ "versions": {
+  "D1": {
+   "darren_milner": "Saw Frank hit a driver from another firm on the rank; it was quick and nasty, and Darren kept his head down.",
+   "terry_hodgson": "Frank hit a driver off another firm on the rank. Terry saw it and said nothing.",
+   "grace_rinaldi": "So listen, Frank flattened a driver off another firm on Mickey's rank, proper laid him out.",
+   "keith_garbutt": "So listen, Frank put a driver from another firm down hard on Mickey's rank; nobody on the rank stopped him.",
+   "rita_welburn": "Frank hit a driver from another firm on the rank, one punch, and it was free.",
+   "albert_suggitt": "Mickey's nephew knocked a man down on the rank. Darren Milner saw it. Grace says it is what you'd expect.",
+   "kevin_needham": "Frank laid a driver out on your rank, Kevin. Did you know? Darren says it was nasty.",
+   "shaun_hewson": "Frank Nowak flattened a driver on Mickey's rank, Darren Milner says.",
+   "sheila_dunn": "They're saying on the parade that Frank knocked a driver down on the rank.",
+   "june_suddaby": "Your father's lad has put a man on the ground on the rank. Mickey never did that in forty years.",
+   "sylvia_rennison": "Mickey's nephew knocked a man down on the rank, they say. Bad blood coming.",
+   "dougie_saltmarsh": "Frank hit a driver from another firm on Mickey's rank. A true read, and a short one.",
+   "pc_ibbotson": "There's talk on the parade of a driver being knocked down on the rank, constable."
+  },
+  "D2": {
+   "jason_pinder": "Frank came at him in the caff about the window and he stood his ground, more or less. He never said he did it.",
+   "shane_boddy": "Frank had a go at him in the caff and he near enough told Frank where to go.",
+   "keith_garbutt": "Frank squared up to Jason Pinder in the caff over that window; Jason didn't flinch, apparently.",
+   "lily_tang": "Frank Nowak had a go at him in the caff, and he never backed down an inch.",
+   "peter_tang": "Frank Nowak had a go at him in the caff over the window, and he never backed down.",
+   "dougie_saltmarsh": "Frank leaned on one of Danny's youngest, Jason Pinder, over the caff window."
+  },
+  "D3": {
+   "darren_milner": "Frank leaned on him on the rank over the twenty-two pounds; he is frightened and will find it somehow.",
+   "terry_hodgson": "Frank put Darren Milner against the rank over his debt. Terry watched, quiet.",
+   "grace_rinaldi": "Frank had him against the rank over the twenty-two quid, said he'd be sorry.",
+   "keith_garbutt": "So listen, Frank has leaned on him on the rank over the debt. Properly hard.",
+   "rita_welburn": "Frank pushed him over the twenty-two pounds, all over the rank.",
+   "shaun_hewson": "Frank had him up against the rank over the debt; Darren says he nearly went through the cab.",
+   "kevin_needham": "Frank has had a go at him over the debt, on your own rank, Kev.",
+   "albert_suggitt": "Frank threatened Darren Milner on the rank over his debt; Darren says he nearly went through the cab.",
+   "sylvia_rennison": "Mickey's nephew is going round threatening people for money: Grace, and now Darren Milner.",
+   "june_suddaby": "Your cousin has had a go at Darren Milner on the rank over a debt.",
+   "dougie_saltmarsh": "Frank leaned hard on Darren Milner over a debt on Mickey's rank."
+  },
+  "D4": {
+   "grace_rinaldi": "Frank told her to pay ten a week or lose her window, in her own caff. She will not forget it.",
+   "shaun_hewson": "Frank told her to pay ten a week or lose the window, in her own caff.",
+   "sheila_dunn": "Word is Frank told Grace Rinaldi to pay ten a week or lose her window.",
+   "darren_milner": "That Frank wanted ten a week off her or he'd see her window go. She told Darren so to his face.",
+   "keith_garbutt": "Frank wants ten a week off Grace or her window goes; she told him herself.",
+   "june_suddaby": "Your cousin is telling Grace Rinaldi to pay ten a week or lose her window.",
+   "rita_welburn": "Frank wants ten a week from Grace at the caff.",
+   "albert_suggitt": "Mickey's nephew wants ten a week from her or he'll see her window gone. Not while she's breathing.",
+   "kevin_needham": "Frank wants ten a week from her at the caff or her window goes; Kevin, do you know what that means?",
+   "sylvia_rennison": "Grace's caff is being squeezed by Mickey's nephew, ten a week, and he'll have her window.",
+   "terry_hodgson": "Frank wants ten a week off Grace or her window goes, Terry.",
+   "dougie_saltmarsh": "Frank wants ten a week from the caff, or Grace loses her window."
+  }
+ },
+ "tellings": [
+  {
+   "evening": 1,
+   "hour": 19.5,
+   "from": "jason_pinder",
+   "to": "shane_boddy",
+   "deed": "D2",
+   "version": "Frank had a go at him in the caff and he near enough told Frank where to go."
+  },
+  {
+   "evening": 1,
+   "hour": 20.5,
+   "from": "shane_boddy",
+   "to": "keith_garbutt",
+   "deed": "D2",
+   "version": "Frank squared up to Jason Pinder in the caff over that window; Jason didn't flinch, apparently."
+  },
+  {
+   "evening": 1,
+   "hour": 21.5,
+   "from": "jason_pinder",
+   "to": "lily_tang",
+   "deed": "D2",
+   "version": "Frank Nowak had a go at him in the caff, and he never backed down an inch."
+  },
+  {
+   "evening": 1,
+   "hour": 21.5,
+   "from": "jason_pinder",
+   "to": "peter_tang",
+   "deed": "D2",
+   "version": "Frank Nowak had a go at him in the caff over the window, and he never backed down."
+  },
+  {
+   "evening": 2,
+   "hour": 10.5,
+   "from": "darren_milner",
+   "to": "grace_rinaldi",
+   "deed": "D1",
+   "version": "So listen, Frank flattened a driver off another firm on Mickey's rank, proper laid him out."
+  },
+  {
+   "evening": 2,
+   "hour": 10.5,
+   "from": "darren_milner",
+   "to": "keith_garbutt",
+   "deed": "D1",
+   "version": "So listen, Frank put a driver from another firm down hard on Mickey's rank; nobody on the rank stopped him."
+  },
+  {
+   "evening": 2,
+   "hour": 11.5,
+   "from": "darren_milner",
+   "to": "rita_welburn",
+   "deed": "D1",
+   "version": "Frank hit a driver from another firm on the rank, one punch, and it was free."
+  },
+  {
+   "evening": 2,
+   "hour": 12.5,
+   "from": "grace_rinaldi",
+   "to": "albert_suggitt",
+   "deed": "D1",
+   "version": "Mickey's nephew knocked a man down on the rank. Darren Milner saw it. Grace says it is what you'd expect."
+  },
+  {
+   "evening": 2,
+   "hour": 12.5,
+   "from": "grace_rinaldi",
+   "to": "kevin_needham",
+   "deed": "D1",
+   "version": "Frank laid a driver out on your rank, Kevin. Did you know? Darren says it was nasty."
+  },
+  {
+   "evening": 2,
+   "hour": 12.5,
+   "from": "grace_rinaldi",
+   "to": "shaun_hewson",
+   "deed": "D1",
+   "version": "Frank Nowak flattened a driver on Mickey's rank, Darren Milner says."
+  },
+  {
+   "evening": 2,
+   "hour": 12.5,
+   "from": "shaun_hewson",
+   "to": "sheila_dunn",
+   "deed": "D1",
+   "version": "They're saying on the parade that Frank knocked a driver down on the rank."
+  },
+  {
+   "evening": 2,
+   "hour": 13.5,
+   "from": "albert_suggitt",
+   "to": "june_suddaby",
+   "deed": "D1",
+   "version": "Your father's lad has put a man on the ground on the rank. Mickey never did that in forty years."
+  },
+  {
+   "evening": 2,
+   "hour": 13.5,
+   "from": "albert_suggitt",
+   "to": "sylvia_rennison",
+   "deed": "D1",
+   "version": "Mickey's nephew knocked a man down on the rank, they say. Bad blood coming."
+  },
+  {
+   "evening": 2,
+   "hour": 19.5,
+   "from": "keith_garbutt",
+   "to": "dougie_saltmarsh",
+   "deed": "D1",
+   "version": "Frank hit a driver from another firm on Mickey's rank. A true read, and a short one."
+  },
+  {
+   "evening": 2,
+   "hour": 19.5,
+   "from": "keith_garbutt",
+   "to": "dougie_saltmarsh",
+   "deed": "D2",
+   "version": "Frank leaned on one of Danny's youngest, Jason Pinder, over the caff window."
+  },
+  {
+   "evening": 3,
+   "hour": 7.5,
+   "from": "grace_rinaldi",
+   "to": "shaun_hewson",
+   "deed": "D4",
+   "version": "Frank told her to pay ten a week or lose the window, in her own caff."
+  },
+  {
+   "evening": 3,
+   "hour": 8.5,
+   "from": "shaun_hewson",
+   "to": "sheila_dunn",
+   "deed": "D4",
+   "version": "Word is Frank told Grace Rinaldi to pay ten a week or lose her window."
+  },
+  {
+   "evening": 3,
+   "hour": 9.5,
+   "from": "shaun_hewson",
+   "to": "pc_ibbotson",
+   "deed": "D1",
+   "version": "There's talk on the parade of a driver being knocked down on the rank, constable."
+  },
+  {
+   "evening": 3,
+   "hour": 10.5,
+   "from": "grace_rinaldi",
+   "to": "darren_milner",
+   "deed": "D4",
+   "version": "That Frank wanted ten a week off her or he'd see her window go. She told Darren so to his face."
+  },
+  {
+   "evening": 3,
+   "hour": 10.5,
+   "from": "darren_milner",
+   "to": "grace_rinaldi",
+   "deed": "D3",
+   "version": "Frank had him against the rank over the twenty-two quid, said he'd be sorry."
+  },
+  {
+   "evening": 3,
+   "hour": 10.5,
+   "from": "darren_milner",
+   "to": "keith_garbutt",
+   "deed": "D3",
+   "version": "So listen, Frank has leaned on him on the rank over the debt. Properly hard."
+  },
+  {
+   "evening": 3,
+   "hour": 10.5,
+   "from": "darren_milner",
+   "to": "keith_garbutt",
+   "deed": "D4",
+   "version": "Frank wants ten a week off Grace or her window goes; she told him herself."
+  },
+  {
+   "evening": 3,
+   "hour": 10.5,
+   "from": "shaun_hewson",
+   "to": "june_suddaby",
+   "deed": "D4",
+   "version": "Your cousin is telling Grace Rinaldi to pay ten a week or lose her window."
+  },
+  {
+   "evening": 3,
+   "hour": 11.5,
+   "from": "darren_milner",
+   "to": "rita_welburn",
+   "deed": "D3",
+   "version": "Frank pushed him over the twenty-two pounds, all over the rank."
+  },
+  {
+   "evening": 3,
+   "hour": 11.5,
+   "from": "darren_milner",
+   "to": "rita_welburn",
+   "deed": "D4",
+   "version": "Frank wants ten a week from Grace at the caff."
+  },
+  {
+   "evening": 3,
+   "hour": 12.5,
+   "from": "grace_rinaldi",
+   "to": "albert_suggitt",
+   "deed": "D4",
+   "version": "Mickey's nephew wants ten a week from her or he'll see her window gone. Not while she's breathing."
+  },
+  {
+   "evening": 3,
+   "hour": 12.5,
+   "from": "grace_rinaldi",
+   "to": "kevin_needham",
+   "deed": "D4",
+   "version": "Frank wants ten a week from her at the caff or her window goes; Kevin, do you know what that means?"
+  },
+  {
+   "evening": 3,
+   "hour": 13.5,
+   "from": "albert_suggitt",
+   "to": "sylvia_rennison",
+   "deed": "D4",
+   "version": "Grace's caff is being squeezed by Mickey's nephew, ten a week, and he'll have her window."
+  },
+  {
+   "evening": 3,
+   "hour": 13.5,
+   "from": "darren_milner",
+   "to": "shaun_hewson",
+   "deed": "D3",
+   "version": "Frank had him up against the rank over the debt; Darren says he nearly went through the cab."
+  },
+  {
+   "evening": 3,
+   "hour": 16.5,
+   "from": "darren_milner",
+   "to": "kevin_needham",
+   "deed": "D3",
+   "version": "Frank has had a go at him over the debt, on your own rank, Kev."
+  },
+  {
+   "evening": 3,
+   "hour": 17.5,
+   "from": "shaun_hewson",
+   "to": "albert_suggitt",
+   "deed": "D3",
+   "version": "Frank threatened Darren Milner on the rank over his debt; Darren says he nearly went through the cab."
+  },
+  {
+   "evening": 3,
+   "hour": 17.5,
+   "from": "shaun_hewson",
+   "to": "sylvia_rennison",
+   "deed": "D3",
+   "version": "Mickey's nephew is going round threatening people for money: Grace, and now Darren Milner."
+  },
+  {
+   "evening": 3,
+   "hour": 17.5,
+   "from": "shaun_hewson",
+   "to": "june_suddaby",
+   "deed": "D3",
+   "version": "Your cousin has had a go at Darren Milner on the rank over a debt."
+  },
+  {
+   "evening": 3,
+   "hour": 18.5,
+   "from": "darren_milner",
+   "to": "terry_hodgson",
+   "deed": "D4",
+   "version": "Frank wants ten a week off Grace or her window goes, Terry."
+  },
+  {
+   "evening": 3,
+   "hour": 19.5,
+   "from": "keith_garbutt",
+   "to": "dougie_saltmarsh",
+   "deed": "D3",
+   "version": "Frank leaned hard on Darren Milner over a debt on Mickey's rank."
+  },
+  {
+   "evening": 3,
+   "hour": 19.5,
+   "from": "keith_garbutt",
+   "to": "dougie_saltmarsh",
+   "deed": "D4",
+   "version": "Frank wants ten a week from the caff, or Grace loses her window."
+  }
+ ],
+ "actions": [
+  {
+   "evening": 3,
+   "hour": 9.5,
+   "who": "pc_ibbotson",
+   "action": "Notes the talk of a driver knocked down on the rank in his notebook and means to ask on the rank for the man.",
+   "about": "D1"
+  },
+  {
+   "evening": 3,
+   "hour": 11.5,
+   "who": "sheila_dunn",
+   "action": "Writes the protection demand on the caff into the red book without comment.",
+   "about": "D4"
+  },
+  {
+   "evening": 3,
+   "hour": 12.5,
+   "who": "pc_ibbotson",
+   "action": "Calls at the caff and asks Grace Rinaldi whether she wishes to make a statement; she says not yet.",
+   "about": "D4"
+  },
+  {
+   "evening": 3,
+   "hour": 14.5,
+   "who": "grace_rinaldi",
+   "action": "Walks to Mickey's office and tells Frank to his face that she pays nobody ten a week.",
+   "about": "D4"
+  }
+ ],
+ "goals": {
+  "philip_danby": "Keep walking the quay and notice who looks frightened, then tell nobody.",
+  "jason_pinder": "Stay out of Frank's way and get through the week without anyone linking him to the caff window.",
+  "rita_welburn": "Take in what Darren Milner is selling and price each piece.",
+  "dougie_saltmarsh": "Pay Keith Garbutt for a read of Frank and tell the Widow only what is worth it.",
+  "ada_vane": "Watch Mickey's from her window and ring the night desk if anything happens in the street.",
+  "terry_hodgson": "Do his nights, say nothing, and watch whether Frank stays steady.",
+  "darren_milner": "Find some of the twenty-two pounds, or enough news to sell, before Frank calls again.",
+  "grace_rinaldi": "Refuse Frank's ten a week, mend the window and keep a note of every man who comes in.",
+  "shane_boddy": "Keep Jason talking and quiet at once, and shift some more metal.",
+  "pc_ibbotson": "Find the man hit on the rank and get a statement.",
+  "sheila_dunn": "Size up Frank on the books and in the red book, and say nothing to anyone.",
+  "brendan_walsh": "Visit Ada and anyone who has stopped coming to chapel, and listen.",
+  "june_suddaby": "Finish sorting her father's things and decide whether she can stay.",
+  "keith_garbutt": "Sell the true reads to whoever pays, and make nobody his enemy.",
+  "kevin_needham": "Get Frank to ask him what the drivers think, and keep his fares up.",
+  "albert_suggitt": "Mend the nets and tell Ada what the quay is saying.",
+  "lily_tang": "Keep the orders steady and remember who does not turn up.",
+  "peter_tang": "Keep honest trade and keep out of whatever is brewing on the parade.",
+  "shaun_hewson": "Finish the parade boards and enjoy telling people what he saw from the ladder.",
+  "sylvia_rennison": "Get the rent from the lodger three weeks behind and keep house rules."
+ },
+ "decisions_considered": 454
+}

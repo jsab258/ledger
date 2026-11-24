@@ -1,0 +1,148 @@
+{
+ "honest": {
+  "D1": {
+   "darren_milner": [
+    1,
+    18.2
+   ],
+   "terry_hodgson": [
+    1,
+    18.2
+   ],
+   "rita_welburn": [
+    2,
+    12.5
+   ],
+   "kevin_needham": [
+    2,
+    14.5
+   ],
+   "sheila_dunn": [
+    3,
+    8.5
+   ]
+  }
+ },
+ "racketeer": {
+  "D1": {
+   "darren_milner": [
+    1,
+    18.2
+   ],
+   "terry_hodgson": [
+    1,
+    18.2
+   ],
+   "rita_welburn": [
+    2,
+    12.5
+   ],
+   "kevin_needham": [
+    2,
+    14.5
+   ],
+   "sheila_dunn": [
+    3,
+    8.5
+   ]
+  },
+  "D2": {
+   "darren_milner": [
+    2,
+    13.5
+   ],
+   "kevin_needham": [
+    2,
+    16.5
+   ],
+   "terry_hodgson": [
+    2,
+    18.5
+   ],
+   "ada_vane": [
+    3,
+    9.5
+   ],
+   "rita_welburn": [
+    3,
+    12.5
+   ],
+   "brendan_walsh": [
+    3,
+    13.5
+   ]
+  },
+  "D3": {
+   "terry_hodgson": [
+    2,
+    19.0
+   ],
+   "darren_milner": [
+    3,
+    18.5
+   ]
+  },
+  "D4": {
+   "darren_milner": [
+    3,
+    13.5
+   ],
+   "kevin_needham": [
+    3,
+    16.5
+   ],
+   "terry_hodgson": [
+    3,
+    18.5
+   ]
+  }
+ },
+ "talker": {
+  "D1": {
+   "darren_milner": [
+    1,
+    18.2
+   ],
+   "terry_hodgson": [
+    1,
+    18.2
+   ],
+   "rita_welburn": [
+    2,
+    12.5
+   ],
+   "kevin_needham": [
+    2,
+    14.5
+   ],
+   "sheila_dunn": [
+    3,
+    8.5
+   ]
+  }
+ },
+ "breaker": {
+  "D1": {
+   "darren_milner": [
+    1,
+    18.2
+   ],
+   "terry_hodgson": [
+    1,
+    18.2
+   ],
+   "rita_welburn": [
+    2,
+    12.5
+   ],
+   "kevin_needham": [
+    2,
+    14.5
+   ],
+   "sheila_dunn": [
+    3,
+    8.5
+   ]
+  }
+ }
+}

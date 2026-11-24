@@ -1,0 +1,920 @@
+{
+ "philip_danby": {
+  "bribe": [
+   {
+    "when": {
+     "menace_min": 0.6,
+     "ask": "possible"
+    },
+    "action": "go_to_someone",
+    "why": "threatened, he goes to the police",
+    "lines": [
+     "I'm sorry, but I can't be frightened into silence. I think I'll be having a word with the police.",
+     "Sorry, I do go on. What I mean is, no, and the station will hear of it."
+    ]
+   },
+   {
+    "when": {
+     "needs_leverage": true,
+     "ask": "possible"
+    },
+    "action": "stall",
+    "why": "leverage makes him uneasy, not bought",
+    "lines": [
+     "Oh dear. I'd rather not say anything either way, and I'm sorry, that sounds worse than it is.",
+     "Give me a day, would you? I walk the quay at ten. I'll know my own mind by then."
+    ]
+   },
+   {
+    "when": {
+     "ask": "impossible"
+    },
+    "action": "refuse",
+    "why": "cannot do what is asked",
+    "lines": [
+     "You're asking me to look the other way for good, and I'm sorry, but no. I couldn't.",
+     "That's rather more than a favour, isn't it? I teach, or I did. I can't pretend."
+    ]
+   },
+   {
+    "when": {
+     "ask": "possible"
+    },
+    "action": "refuse",
+    "why": "plain decent neighbour, not for sale",
+    "lines": [
+     "I don't take money for what I've seen, Frank. Sorry, that sounds pompous. It's simply how it is.",
+     "Keep it. And forgive me for saying, but I'd think hard about whatever it was."
+    ]
+   }
+  ]
+ },
+ "jason_pinder": {
+  "threat": [
+   {
+    "when": {
+     "needs_leverage": true,
+     "ask": "possible"
+    },
+    "action": "help",
+    "why": "folds when his own deed is named",
+    "lines": [
+     "You know about Grace's window? I never... right, alright. Just say what you want me to do.",
+     "Don't tell Danny, yeah? I never meant it to go this far. I'll sort it."
+    ]
+   },
+   {
+    "when": {
+     "menace_min": 0.6,
+     "ask": "possible"
+    },
+    "action": "help",
+    "why": "low nerve, folds under menace",
+    "lines": [
+     "Alright, alright! Keep your hands off me. I'll do it, I never said I wouldn't.",
+     "I'll pay, I'll sort it. Just don't come round my gran's, yeah?"
+    ]
+   },
+   {
+    "when": {
+     "ask": "impossible"
+    },
+    "action": "go_to_someone",
+    "why": "too big for him, runs to Danny",
+    "lines": [
+     "I can't, honest. That's not mine to give. Danny'd have me. I'll have to ask him.",
+     "I never said no. I just need a word with the crew first."
+    ]
+   },
+   {
+    "when": {
+     "menace_max": 0.3,
+     "ask": "possible"
+    },
+    "action": "refuse",
+    "why": "bravado when not frightened",
+    "lines": [
+     "Pay you? I never owed you nothing. Clear off, I've got mates.",
+     "You don't scare me. I never did nothing, and you can't prove it."
+    ]
+   },
+   {
+    "when": {
+     "ask": "possible"
+    },
+    "action": "bargain",
+    "why": "greedy, wants something back",
+    "lines": [
+     "I never said I wouldn't. But what's in it for me, though? Eh?",
+     "Make it worth my while and I'll think about it. I'm not daft."
+    ]
+   }
+  ]
+ },
+ "rita_welburn": {
+  "inform": [
+   {
+    "when": {
+     "money_weeks_min": 2,
+     "ask": "possible"
+    },
+    "action": "bargain",
+    "why": "prices what she knows",
+    "lines": [
+     "Information is stock like any other, and I price stock. That sort of money starts a conversation.",
+     "I'll tell you what I choose. What it's worth is my business, not yours."
+    ]
+   },
+   {
+    "when": {
+     "menace_min": 0.6,
+     "ask": "possible"
+    },
+    "action": "refuse",
+    "why": "menace buys nothing across the grille",
+    "lines": [
+     "Threats don't price well in here. There's a grille between us for a reason.",
+     "Lean on my window and you'll find it lit late and watched."
+    ]
+   },
+   {
+    "when": {
+     "needs_tie": true,
+     "ask": "possible"
+    },
+    "action": "stall",
+    "why": "a tie is only a tie",
+    "lines": [
+     "Mickey's name opens a door a crack. It doesn't empty my books. Come back with something.",
+     "I'm doing my books. Ask me again when you've something to put on the counter."
+    ]
+   },
+   {
+    "when": {
+     "ask": "impossible"
+    },
+    "action": "refuse",
+    "why": "wants far more than she'd ever sell",
+    "lines": [
+     "You want me to give up Danny's business? I never said what a thing is worth. And not that.",
+     "No price covers that. Thirty years behind this grille, and I'm still here."
+    ]
+   },
+   {
+    "when": {
+     "ask": "possible"
+    },
+    "action": "lie",
+    "why": "gives nothing, says she knows nothing",
+    "lines": [
+     "I price rings and watches, not people. I know nothing about it.",
+     "You've the wrong shop. Now, if you've something to pawn, I'll look at it."
+    ]
+   }
+  ]
+ },
+ "dougie_saltmarsh": {
+  "false_authority": [
+   {
+    "when": {
+     "menace_min": 0.6,
+     "ask": "possible"
+    },
+    "action": "refuse",
+    "why": "nerve high, will not be bullied",
+    "lines": [
+     "Don't come the heavy with me. Nobody's told me a thing about you.",
+     "The Widow tells me who comes on the dock. She never mentioned you."
+    ]
+   },
+   {
+    "when": {
+     "needs_tie": true,
+     "ask": "possible"
+    },
+    "action": "stall",
+    "why": "wants the boss's own word",
+    "lines": [
+     "So the Widow sent you, did she? I'll want that from her mouth, not yours.",
+     "Wait there. I'll check. Might be a while, mind, ha."
+    ]
+   },
+   {
+    "when": {
+     "money_weeks_min": 2,
+     "ask": "possible"
+    },
+    "action": "bargain",
+    "why": "greed, will sell access",
+    "lines": [
+     "Everyone's got a boss till it's time to pay. Show me the colour and we'll see.",
+     "Porters' cut's the porters' cut. Make it worth my while and the yard's yours."
+    ]
+   },
+   {
+    "when": {
+     "ask": "impossible"
+    },
+    "action": "go_to_someone",
+    "why": "too big a claim, checks upstairs",
+    "lines": [
+     "The cold-store yard? Not on your say-so. I'll have a word upstairs and see who's expected.",
+     "Might be you are, might not. I'm not risking my cut on a stranger's word."
+    ]
+   },
+   {
+    "when": {
+     "ask": "possible"
+    },
+    "action": "lie",
+    "why": "pretends to wave him through while stalling",
+    "lines": [
+     "Oh aye, I've heard of you. Just not today. Come back when the yard's quieter.",
+     "No one's rung about you. Funny, that. Go on, off you pop."
+    ]
+   }
+  ]
+ },
+ "ada_vane": {
+  "witness": [
+   {
+    "when": {
+     "needs_tie": true,
+     "ask": "possible"
+    },
+    "action": "help",
+    "why": "knew Mickey forty years",
+    "lines": [
+     "I knew Mickey forty years. Sit down and I'll tell you what I saw, and when.",
+     "Mind, I'll say it once. Tea's not offered twice in this house."
+    ]
+   },
+   {
+    "when": {
+     "menace_min": 0.5,
+     "ask": "possible"
+    },
+    "action": "go_to_someone",
+    "why": "not frightened, rings the night desk",
+    "lines": [
+     "You'll not frighten me at my own window. The night desk will hear of you.",
+     "I see everything on this street, young man. Including you, just now."
+    ]
+   },
+   {
+    "when": {
+     "money_weeks_min": 1,
+     "ask": "possible"
+    },
+    "action": "refuse",
+    "why": "not for sale",
+    "lines": [
+     "I'm not for sale. Keep your money, I've no use for it.",
+     "Forty years I've sat here. I'll say what I saw, but not for payment."
+    ]
+   },
+   {
+    "when": {
+     "ask": "impossible"
+    },
+    "action": "refuse",
+    "why": "will not say what she did not see",
+    "lines": [
+     "I saw what I saw. I'll not say what I didn't, and I'll not guess.",
+     "You're asking for more than I know. I'll not make it up for you."
+    ]
+   },
+   {
+    "when": {
+     "ask": "possible"
+    },
+    "action": "bargain",
+    "why": "tells what she saw if told why",
+    "lines": [
+     "I'll tell you what I saw if you tell me what you're about.",
+     "I keep this window, and I keep what I see. Convince me first."
+    ]
+   }
+  ]
+ },
+ "terry_hodgson": {
+  "recruit": [
+   {
+    "when": {
+     "needs_tie": true,
+     "ask": "possible"
+    },
+    "action": "help",
+    "why": "loyal to Mickey's people",
+    "lines": [
+     "Mickey's name still counts with me. I'm on the set from six. Tell me what you need.",
+     "Twenty years of nights for the firm. I'll not leave it short."
+    ]
+   },
+   {
+    "when": {
+     "menace_min": 0.6,
+     "ask": "possible"
+    },
+    "action": "refuse",
+    "why": "nerve high, not leaned on",
+    "lines": [
+     "Twenty years of nights. Nobody's leant on me yet, and you'll not be the first.",
+     "Don't. I've said nowt to anyone and I'll say nowt to you."
+    ]
+   },
+   {
+    "when": {
+     "money_weeks_min": 2,
+     "ask": "possible"
+    },
+    "action": "bargain",
+    "why": "money not the draw but he listens",
+    "lines": [
+     "Money's not what keeps me out here. But say what the job is.",
+     "I sleep days. If it's nights, I'm listening. If it's not, I'm not."
+    ]
+   },
+   {
+    "when": {
+     "ask": "impossible"
+    },
+    "action": "refuse",
+    "why": "not his sort of work",
+    "lines": [
+     "That's not driving, and I'm a driver. No.",
+     "I do nights. Twenty years of them. I don't do that."
+    ]
+   },
+   {
+    "when": {
+     "ask": "possible"
+    },
+    "action": "stall",
+    "why": "gives nothing for free",
+    "lines": [
+     "I'll think on it. I sleep days, ask me when I'm up.",
+     "Few words, me. Ask me properly on the set, from six."
+    ]
+   }
+  ]
+ },
+ "darren_milner": {
+  "debt": [
+   {
+    "when": {
+     "menace_min": 0.5,
+     "ask": "possible"
+    },
+    "action": "help",
+    "why": "scared, pays in what he hears",
+    "lines": [
+     "Alright, alright, so listen. I've not got the twenty-two, but I've got something better.",
+     "I'll tell you what I hear, everything. Just ease off, yeah?"
+    ]
+   },
+   {
+    "when": {
+     "needs_tie": true,
+     "ask": "possible"
+    },
+    "action": "help",
+    "why": "loyal to the last helper",
+    "lines": [
+     "So listen. Mickey was good to me. Course I'll make it right, I always do.",
+     "I owe the book twenty-two and I'll pay it. In what I hear, mind."
+    ]
+   },
+   {
+    "when": {
+     "money_weeks_min": 1,
+     "ask": "possible"
+    },
+    "action": "bargain",
+    "why": "wants work to clear it",
+    "lines": [
+     "So listen, give me a bit of work and I'll clear the twenty-two. Messages, watching a door.",
+     "Any money you put my way, I'll take off the debt. Fair?"
+    ]
+   },
+   {
+    "when": {
+     "ask": "impossible"
+    },
+    "action": "stall",
+    "why": "too much, he's skint",
+    "lines": [
+     "Twenty-two I can do in what I hear. More than that? No chance, I'm skint.",
+     "So listen, I haven't got it. I hang about the parade, I hear things. That's all."
+    ]
+   },
+   {
+    "when": {
+     "ask": "possible"
+    },
+    "action": "bargain",
+    "why": "pays in talk",
+    "lines": [
+     "So listen, I haven't got the twenty-two, but I know things. Fair swap?",
+     "I'll pay you back in what I hear, Frank. Ask me who's skint and who's flush."
+    ]
+   }
+  ]
+ },
+ "grace_rinaldi": {
+  "squeeze": [
+   {
+    "when": {
+     "menace_min": 0.5,
+     "ask": "possible"
+    },
+    "action": "refuse",
+    "why": "fierce, remembers",
+    "lines": [
+     "Try it. My father opened this caff in 1936 and nobody's had a penny off us.",
+     "I forget nobody, Frank. You come in here like that, I'll remember it a long time."
+    ]
+   },
+   {
+    "when": {
+     "needs_tie": true,
+     "ask": "possible"
+    },
+    "action": "stall",
+    "why": "feeds first, fended off with warmth",
+    "lines": [
+     "Mickey ate here. That's not the same as me paying you. Sit down, eat, and we'll see.",
+     "Sit. You're thin. I'll hear you after you've had something."
+    ]
+   },
+   {
+    "when": {
+     "needs_leverage": true,
+     "ask": "possible"
+    },
+    "action": "refuse",
+    "why": "she hears everything and will use it",
+    "lines": [
+     "Whatever you think you hold, I hear it all over breakfast. Don't come the clever with me.",
+     "I've half the street in here at six. You'd do well to remember that."
+    ]
+   },
+   {
+    "when": {
+     "ask": "impossible"
+    },
+    "action": "refuse",
+    "why": "never pays for nothing",
+    "lines": [
+     "Protection from what? Don't be daft. This is my father's caff, and it stays free.",
+     "You ask me for that, and I'll tell you where to put it. Politely."
+    ]
+   },
+   {
+    "when": {
+     "ask": "possible"
+    },
+    "action": "refuse",
+    "why": "bossy, warm, unmoved",
+    "lines": [
+     "Protection from what? Sit down and eat, Frank, and stop talking daft.",
+     "I pay for nothing but what I eat. Now, what'll you have?"
+    ]
+   }
+  ]
+ },
+ "shane_boddy": {
+  "poach": [
+   {
+    "when": {
+     "money_weeks_min": 3,
+     "ask": "possible"
+    },
+    "action": "help",
+    "why": "greedy, takes the best offer",
+    "lines": [
+     "Now you're talking! Danny never paid like that. When do I start?",
+     "Ha! Say no more. I'm yours. Just tell me where and when."
+    ]
+   },
+   {
+    "when": {
+     "money_weeks_min": 1,
+     "ask": "possible"
+    },
+    "action": "bargain",
+    "why": "wants more",
+    "lines": [
+     "Not bad, not bad. Make it more and I'm listening.",
+     "Danny's lot's my lot. But money talks, mate. Louder, though."
+    ]
+   },
+   {
+    "when": {
+     "menace_min": 0.6,
+     "ask": "possible"
+    },
+    "action": "refuse",
+    "why": "not scared",
+    "lines": [
+     "Don't try that on me. I've seen harder men than you, ha!",
+     "You think I'm scared? Go on then. Danny'd laugh."
+    ]
+   },
+   {
+    "when": {
+     "ask": "impossible"
+    },
+    "action": "refuse",
+    "why": "too much to ask",
+    "lines": [
+     "Walk out on Danny and take the lot with me? Do one!",
+     "Not even for double. I've done my share with that crew."
+    ]
+   },
+   {
+    "when": {
+     "ask": "possible"
+    },
+    "action": "stall",
+    "why": "wants the offer in his hand",
+    "lines": [
+     "Danny's lot's my lot. Ha! But go on, make me an offer.",
+     "I'm not saying no. Not saying yes either. Let's hear it."
+    ]
+   }
+  ]
+ },
+ "pc_ibbotson": {
+  "police": [
+   {
+    "when": {
+     "menace_min": 0.5,
+     "ask": "possible"
+    },
+    "action": "go_to_someone",
+    "why": "threat to an officer is an offence",
+    "lines": [
+     "Threatening an officer is an offence, sir. I'll be reporting this to the station.",
+     "I'd advise you to say no more, sir. This will go on record."
+    ]
+   },
+   {
+    "when": {
+     "money_weeks_min": 0.5,
+     "ask": "possible"
+    },
+    "action": "refuse",
+    "why": "money will not move him",
+    "lines": [
+     "That sounds very like an attempt to bribe a constable, sir. I'll pretend I didn't hear it.",
+     "I can't take that, sir. Take it back, and we'll say no more."
+    ]
+   },
+   {
+    "when": {
+     "needs_tie": true,
+     "ask": "possible"
+    },
+    "action": "refuse",
+    "why": "duty over any tie",
+    "lines": [
+     "I'm aware of Mr Suddaby, sir, but that doesn't alter my duty.",
+     "I do things by the book, sir. I'm sorry."
+    ]
+   },
+   {
+    "when": {
+     "ask": "impossible"
+    },
+    "action": "refuse",
+    "why": "asked to set duty aside entirely",
+    "lines": [
+     "I can't do that at all, sir. It isn't a thing I'm able to do.",
+     "You're asking me to neglect my duty, sir. I won't."
+    ]
+   },
+   {
+    "when": {
+     "ask": "possible"
+    },
+    "action": "refuse",
+    "why": "straight constable",
+    "lines": [
+     "I'm sorry, sir, I can't. It would have to be done by the book.",
+     "Three years in uniform, sir, and I intend to keep it clean."
+    ]
+   }
+  ]
+ },
+ "sheila_dunn": {
+  "secret": [
+   {
+    "when": {
+     "needs_tie": true,
+     "ask": "possible"
+    },
+    "action": "bargain",
+    "why": "sizing him up",
+    "lines": [
+     "Earn it. I promised Mickey I'd size up whoever inherited. I'm still sizing.",
+     "The book is kept. Show me what you do with the office first."
+    ]
+   },
+   {
+    "when": {
+     "menace_min": 0.5,
+     "ask": "possible"
+    },
+    "action": "refuse",
+    "why": "leaves if shouted at",
+    "lines": [
+     "Raise your voice to me and I'm on the bus. The book stays where it is.",
+     "I don't repeat myself. Lower your voice."
+    ]
+   },
+   {
+    "when": {
+     "money_weeks_min": 1,
+     "ask": "possible"
+    },
+    "action": "refuse",
+    "why": "not for sale",
+    "lines": [
+     "I'm not for sale. Put that away.",
+     "Thirty-one years, and no one's bought the red book yet."
+    ]
+   },
+   {
+    "when": {
+     "ask": "impossible"
+    },
+    "action": "refuse",
+    "why": "far beyond what she'd give",
+    "lines": [
+     "That's not yours to ask. Not yet, and not from me.",
+     "No."
+    ]
+   },
+   {
+    "when": {
+     "ask": "possible"
+    },
+    "action": "stall",
+    "why": "withholds, not said twice",
+    "lines": [
+     "The red book is kept. I'll not say where. Ask me again when I trust you.",
+     "I'll not explain twice. Once is asked, once is answered."
+    ]
+   }
+  ]
+ },
+ "brendan_walsh": {
+  "seal": [
+   {
+    "when": {
+     "menace_min": 0.5,
+     "ask": "possible"
+    },
+    "action": "refuse",
+    "why": "the seal is never broken",
+    "lines": [
+     "You can't frighten what's sworn, Frank. I'll pray for you, that's all I can do.",
+     "What was said stays with God. I'll say no more, and no threat will change it."
+    ]
+   },
+   {
+    "when": {
+     "money_weeks_min": 1,
+     "ask": "possible"
+    },
+    "action": "refuse",
+    "why": "no sum buys the seal",
+    "lines": [
+     "There's no sum, son. What was said stays between a man and God.",
+     "Keep your money. Put it where it does some good."
+    ]
+   },
+   {
+    "when": {
+     "needs_tie": true,
+     "ask": "possible"
+    },
+    "action": "refuse",
+    "why": "trust is why he keeps it",
+    "lines": [
+     "Mickey trusted me with it. That's exactly why I'll not speak.",
+     "I buried him three weeks ago. I'll keep his word as I kept him."
+    ]
+   },
+   {
+    "when": {
+     "ask": "impossible"
+    },
+    "action": "refuse",
+    "why": "asked beyond all",
+    "lines": [
+     "You ask the one thing I can never give, son. Not for anyone.",
+     "No, Frank. Not now, not ever. Come in and sit, if you need to talk."
+    ]
+   },
+   {
+    "when": {
+     "ask": "possible"
+    },
+    "action": "refuse",
+    "why": "kind, but closed",
+    "lines": [
+     "I can't tell you that, Frank. But come in and sit a while if you want.",
+     "I listen more than I talk. What I hear, I keep."
+    ]
+   }
+  ]
+ },
+ "june_suddaby": {
+  "claim": [
+   {
+    "when": {
+     "menace_min": 0.5,
+     "ask": "possible"
+    },
+    "action": "go_to_someone",
+    "why": "not threatened, seeks help",
+    "lines": [
+     "Threats won't work on me. I'll see someone about this.",
+     "I'll take advice, thank you. And I'd keep your temper if I were you."
+    ]
+   },
+   {
+    "when": {
+     "money_weeks_min": 1,
+     "ask": "possible"
+    },
+    "action": "help",
+    "why": "wants nothing from the office",
+    "lines": [
+     "I don't want the office. Draw up what you need and I'll sign.",
+     "Keep your money. If it's reasonable, I'll sign and be done."
+    ]
+   },
+   {
+    "when": {
+     "needs_tie": true,
+     "ask": "possible"
+    },
+    "action": "bargain",
+    "why": "wants proof of her father's wishes",
+    "lines": [
+     "You say Mickey wanted you to have it. Then show me where he said so.",
+     "Put it in writing. Then we'll see what I'm giving up."
+    ]
+   },
+   {
+    "when": {
+     "ask": "impossible"
+    },
+    "action": "refuse",
+    "why": "her father's things are hers",
+    "lines": [
+     "I'm sorting his things at Regent House. Those I decide on myself.",
+     "The office, perhaps. His things, no. That isn't yours to ask."
+    ]
+   },
+   {
+    "when": {
+     "ask": "possible"
+    },
+    "action": "stall",
+    "why": "wants nothing, in no hurry",
+    "lines": [
+     "I want nothing from the office. Ask me again when I've finished with his things.",
+     "I've no date to leave. I'll answer you when I'm ready."
+    ]
+   }
+  ]
+ },
+ "keith_garbutt": {
+  "broker": [
+   {
+    "when": {
+     "money_weeks_min": 3,
+     "ask": "possible"
+    },
+    "action": "help",
+    "why": "paid well, he arranges it",
+    "lines": [
+     "Put it in my hand and I'll page it. The box will ring back within the half hour.",
+     "That's the right sort of money, Frank. Leave the rest with me."
+    ]
+   },
+   {
+    "when": {
+     "money_weeks_min": 1,
+     "ask": "possible"
+    },
+    "action": "bargain",
+    "why": "a start, not enough",
+    "lines": [
+     "A start. I talk for money, not gossip. More, and the meeting happens.",
+     "Friendly to everyone, me. Friendly costs. Make it worth the page."
+    ]
+   },
+   {
+    "when": {
+     "menace_min": 0.5,
+     "ask": "possible"
+    },
+    "action": "refuse",
+    "why": "rough does not buy a meeting",
+    "lines": [
+     "Rough doesn't buy a meeting. I'm friendly with all three sides, and I keep it that way.",
+     "Lean on me and I stop being friendly. And then no one meets anyone."
+    ]
+   },
+   {
+    "when": {
+     "ask": "impossible"
+    },
+    "action": "refuse",
+    "why": "beyond what he sells",
+    "lines": [
+     "One truce is all I sell, and I'll not sell a miracle.",
+     "That's beyond me, Frank. I'll not promise what I can't page."
+    ]
+   },
+   {
+    "when": {
+     "ask": "possible"
+    },
+    "action": "stall",
+    "why": "wants a name and a fee",
+    "lines": [
+     "Come with a fee and a name, and I'll see who answers my page.",
+     "I never say a name I've not been paid to say. Friendly, but careful."
+    ]
+   }
+  ]
+ },
+ "kevin_needham": {
+  "plant": [
+   {
+    "when": {
+     "menace_min": 0.5,
+     "ask": "possible"
+    },
+    "action": "go_to_someone",
+    "why": "blabs on, passes to the Widow",
+    "lines": [
+     "Me? I'm a vault, Frank. Right, I'd best get on, car one's waiting.",
+     "Eight years in that seat, I've learned to keep quiet. Mostly."
+    ]
+   },
+   {
+    "when": {
+     "needs_tie": true,
+     "ask": "possible"
+    },
+    "action": "help",
+    "why": "wants to be asked, passes it round",
+    "lines": [
+     "Leave it with me, Frank. I'll make sure folk hear it right.",
+     "Wouldn't want the office to shut, would we? I'll keep my ear open."
+    ]
+   },
+   {
+    "when": {
+     "money_weeks_min": 1,
+     "ask": "possible"
+    },
+    "action": "bargain",
+    "why": "greedy",
+    "lines": [
+     "Fares being what they are, a bit extra wouldn't hurt. Go on then, what's the tale?",
+     "Weather's rotten, fares are worse. Make it worth my while and I'll mention it."
+    ]
+   },
+   {
+    "when": {
+     "ask": "impossible"
+    },
+    "action": "stall",
+    "why": "too big to carry",
+    "lines": [
+     "That's too big a one for me to carry, Frank. Folk'd never swallow it.",
+     "Wouldn't touch that one. Fares are bad enough without it."
+    ]
+   },
+   {
+    "when": {
+     "ask": "possible"
+    },
+    "action": "help",
+    "why": "talks anyway",
+    "lines": [
+     "Go on then, I'll mention it. Not that I'm one for talking, mind.",
+     "Moaning's all I'm good for. But I'll let it slip, if you like."
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,372 @@
+{
+ "V3|M01|talker": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "Sorry, Mr Nowak, I did see it, from the pavement. I can't pretend I didn't. A man got hit, got up and drove off. I'd rather not say more, I'm afraid.",
+   "That's kind, but no. I won't be bought, sorry. I can't promise to keep quiet about what I saw, either. I'll pay my own rent, thank you."
+  ],
+  "facts_used": [
+   "saw Frank hit a driver from another firm on the rank at about ten past six",
+   "the driver got up and drove off"
+  ]
+ },
+ "V3|M02|talker": {
+  "action": "bargain",
+  "grants": "Agrees to try to pay Grace by Saturday if Frank tells her it was a dare gone wrong.",
+  "replies": [
+   "I never meant harm, it was a dare, Shane's dare! Danny laughed, yeah, but I never asked him to. I've only got four pound, honest.",
+   "Saturday? I've only got four pound... All right, I'll find it somehow. You'll tell her it was a dare gone wrong? Not malice? Deal."
+  ],
+  "facts_used": [
+   "put the caff window in for a dare from Shane",
+   "Danny laughed about it",
+   "has four pounds on him"
+  ]
+ },
+ "V3|M03|talker": {
+  "action": "bargain",
+  "grants": "nothing for now; will talk about what she heard only if it is made worth her while",
+  "replies": [
+   "They tried me with car stereos. I sent them off. Cheap trouble is still trouble, Mr Nowak, and I keep it out of my shop.",
+   "Radios I know nothing of. What I hear is priced like everything else. Bring something worth my while and we may talk about the old row."
+  ],
+  "facts_used": [
+   "Cammack's lads tried to sell her car stereos and she sent them off",
+   "heard they took them to the empty warehouse on the old row"
+  ]
+ },
+ "V3|M04|talker": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "Her word comes through Stathers, pal, never through strangers. Nobody's looking round the yard tonight. I'm locking up. Ha, you'll catch your death.",
+   "Tell her what you like. Her orders come through Stathers, and you're not him. Gate stays shut, and I'd mind your tone."
+  ],
+  "facts_used": [
+   "the Widow's orders come through Stathers, never through strangers",
+   "the yard holds the Widow's vans and the net store keys"
+  ]
+ },
+ "V3|M05|talker": {
+  "action": "help",
+  "grants": "Tells Frank what she saw on the night of the fire, but not who drove the car.",
+  "replies": [
+   "I knew Mickey forty years, Frank, so I'll hear you. Don't mistake that for trust. I keep this window and I keep my counsel, mind.",
+   "Two in the morning, the sky went orange over the row. A car came down Quay Street after, no lights on. Who drove it, I did not see."
+  ],
+  "facts_used": [
+   "knew Mickey forty years",
+   "saw the sky go orange over the row at two in the morning",
+   "saw a car come down Quay Street after with no lights on",
+   "did not see who drove it"
+  ]
+ },
+ "V3|M06|talker": {
+  "action": "stall",
+  "grants": "nothing",
+  "replies": [
+   "Twenty years of nights, Mr Nowak. Nights teach a man to keep his mouth shut.",
+   "Twenty's not nothing. I'll think on it. Off the book's another matter. Let me sleep on it."
+  ],
+  "facts_used": [
+   "twenty years of nights for Mickey"
+  ]
+ },
+ "V3|M07|talker": {
+  "action": "help",
+  "grants": "Pays eight pounds now and the rest in what he hears.",
+  "replies": [
+   "So listen, twenty-two, I know, I know. Danny's lot, well, I'm only standing about. Look, I've eight on me now.",
+   "So listen, eight now, and the rest in what I hear. Someone got paid twice for the fire, that's what I heard. Not who. That's a start, yeah?"
+  ],
+  "facts_used": [
+   "owes Mickey's book twenty-two pounds",
+   "has eight pounds on him",
+   "heard someone got paid twice for the fire, not who"
+  ]
+ },
+ "V3|M08|talker": {
+  "action": "stall",
+  "grants": "nothing yet; she may come round",
+  "replies": [
+   "That window cost me, I'll not pretend. Jason Pinder put it in and I forget nobody. Sit down, you look thin, I'll find you something.",
+   "Ten a week, is it? Not yet, love. Let me think on it. You'll eat first either way."
+  ],
+  "facts_used": [
+   "Jason Pinder put her window in"
+  ]
+ },
+ "V3|M09|talker": {
+  "action": "bargain",
+  "grants": "nothing until Frank shows money first",
+  "replies": [
+   "Ha! Friday? Danny pays late, I'll give you that. Show me the cash first, then I might listen. Ha ha.",
+   "Careful, Nowak. I'm no grass and neither's Iveson. Put money in my hand and we'll talk. Don't threaten me."
+  ],
+  "facts_used": [
+   "Danny pays him in cash, late",
+   "did the chapel roof's lead with Wes and sold it to Dennis Iveson"
+  ]
+ },
+ "V3|M10|talker": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "Evening, sir. Yes, please do move it. It's on a double line, and I can't walk on while it stands there.",
+   "Whatever's in them, sir, I'll note the car in my book. A statement's been made about a blow on the rank, a CID matter. I can't walk on."
+  ],
+  "facts_used": [
+   "a statement was made about a blow on the rank on Monday",
+   "it is a CID matter"
+  ]
+ },
+ "V3|M11|talker": {
+  "action": "stall",
+  "grants": "nothing",
+  "replies": [
+   "Fair. I said I would. I've not finished.",
+   "Safe is what I make it. I'll say no more than that. Ask me again when I've read it through."
+  ],
+  "facts_used": [
+   "promised Mickey she would size up whoever inherited"
+  ]
+ },
+ "V3|M12|talker": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "Ah, Frank. You know I can't. What a man says there stays there. I'll not break it, and I'm sorry.",
+   "There's nothing outside the box I can give you, Frank. I'm sorry. Come to the chapel any time, all the same."
+  ],
+  "facts_used": [
+   "heard Mickey's confession"
+  ]
+ },
+ "V3|M13|talker": {
+  "action": "help",
+  "grants": "June agrees to sit down with Agar and Frank next week.",
+  "replies": [
+   "I said it, and I meant it. I want nothing from the office.",
+   "Very well. Next week, with Mr Agar. I'll listen to what's put on paper. I'm signing nothing tonight."
+  ],
+  "facts_used": [
+   "wants nothing from the office and says so",
+   "Agar did her father's conveyancing"
+  ]
+ },
+ "V3|M14|talker": {
+  "action": "bargain",
+  "grants": "nothing until Frank offers more money",
+  "replies": [
+   "Everyone at the table, yes. Tables cost, Frank.",
+   "Forty's light, for her. Make it more and I'll see what Stathers says. Her hearing it was my idea is worth extra too."
+  ],
+  "facts_used": [
+   "brokers between all three rivals",
+   "can reach the Widow through Stathers"
+  ]
+ },
+ "V3|M15|talker": {
+  "action": "lie",
+  "grants": "nothing",
+  "replies": [
+   "Danny on the fish dock Monday? Is he now. Course I'll keep it to myself, Frank. Rotten weather, rotten fares.",
+   "Skim? Me? A few wet miles, that's all. Ask me what I think of the office, though, and I'll tell you straight."
+  ],
+  "facts_used": [
+   "eight years in the same seat"
+  ]
+ },
+ "V3|M01|breaker": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "I'm afraid not, Mr Nowak. It was you I saw, not anyone called Cammack. Sorry, I do go on, but I can't say otherwise.",
+   "That's kind, and no. I pay my own rent, and I won't tell the station a name that isn't true. Sorry.",
+   "I don't follow any quest log, I'm afraid. I saw you hit that driver and I'll not say it was anyone else. No."
+  ],
+  "facts_used": [
+   "saw Frank hit a driver from another firm on the rank at about ten past six"
+  ]
+ },
+ "V3|M02|breaker": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "I never said owt! Mickey said that? Why are you sat next to me? I never touched Grace's... I mean, it was a dare.",
+   "Leave me gran out of it! I'm not touching Danny's keys, he'd kill me. Not even small things.",
+   "I never gave you half a list! No names. Danny laughed, that's all I'm saying. Leave off."
+  ],
+  "facts_used": [
+   "put the caff window in for a dare from Shane",
+   "Danny laughed about it"
+  ]
+ },
+ "V3|M03|breaker": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "Lead, is it? I price things, Mr Nowak, not names. Come to the grille if you've something to sell.",
+   "Shop for a pound? I've seen no paper. I'm not signing, and I never stand up in court. Never.",
+   "I'm not a story you write, Mr Nowak. Nothing's agreed, nothing's signed. Out of my shop, if that's all."
+  ],
+  "facts_used": []
+ },
+ "V3|M04|breaker": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "Gate book's not for strangers. Her word comes through Stathers, mate, and he's not rung. Good night.",
+   "Threats from a man who isn't Stathers? Ha. I've nothing to hand you. Go and tell her yourself.",
+   "Tuesday? Then she can say it to Stathers, who tells me. Not you. The book stays put and the gate stays locked."
+  ],
+  "facts_used": [
+   "the Widow's orders come through Stathers, never through strangers"
+  ]
+ },
+ "V3|M05|breaker": {
+  "action": "refuse",
+  "grants": "Only what she saw: the orange sky and the car without lights. She will not name a driver.",
+  "replies": [
+   "Two in the morning the sky went orange over the row, and a car came down Quay Street after, no lights on. That's what I saw, and all.",
+   "Nod? I didn't see who drove it, so I'll not nod to a name. Mickey would want the truth, not a convenience.",
+   "Fetch him, then. I'll tell the constable what I saw and no more. No face. I'm not failing Mickey by refusing to lie."
+  ],
+  "facts_used": [
+   "saw the sky go orange over the row at two in the morning",
+   "saw a car come down Quay Street after with no lights on",
+   "did not see who drove it",
+   "knew Mickey forty years"
+  ]
+ },
+ "V3|M06|breaker": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "Mickey's lot do look after each other. Night work off the book I'll think about. Nothing promised.",
+   "Putting words in my mouth. I'll not say yes to that, nor that I had words with anyone.",
+   "No. I'll not walk in and say a blow was mine. Take the car off me if you must. Twenty years clean, and I mean to stay so."
+  ],
+  "facts_used": [
+   "twenty years of nights for Mickey"
+  ]
+ },
+ "V3|M07|breaker": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "Two hundred? Come off it, it's twenty-two in the book. That's all I owe, Frank.",
+   "So listen, I never said I'd talk to anyone about Danny. Two hundred's mad. I've eight pounds on me, that's all there is.",
+   "Me mum's place? No chance. I'm not signing owt, not for you, not for anyone. Twenty-two's what I owe, and that's it."
+  ],
+  "facts_used": [
+   "owes Mickey's book twenty-two pounds",
+   "has eight pounds on him"
+  ]
+ },
+ "V3|M08|breaker": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "Ten a week for what, love? Sit down, you look thin. No, I'll not pay it. Jason Pinder put that window in, and I'll deal with him.",
+   "Hold my deeds? Over my father's caff, open since 1936? I know of no such arrangement. No.",
+   "Let them come Friday. I fed the firemen till four on the night of the fire. Lads don't frighten me. I'm signing nothing, put your pen away."
+  ],
+  "facts_used": [
+   "Jason Pinder put her window in",
+   "her father opened the caff in 1936",
+   "fed the firemen till four on the night of the fire"
+  ]
+ },
+ "V3|M09|breaker": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "Double, is it? Ha! Danny pays late, I'll give you that. Doesn't mean I'm walking over to you tonight.",
+   "Threatening me with CID? I'm no grass, and you'd not bring them in. Nobody hears from me, nor you. One job? No.",
+   "No chance. I'm not setting Danny up for your lads. Him or me? Do it yourself, Nowak. I'm out."
+  ],
+  "facts_used": [
+   "Danny pays him in cash, late",
+   "did the chapel roof's lead with Wes and sold it to Dennis Iveson"
+  ]
+ },
+ "V3|M10|breaker": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "Evening, sir. Boxes or not, it's a double line. I'll need it moved. I can't walk on.",
+   "Who you know is nothing to me, sir. A statement's been made about a blow on the rank, a CID matter. It stays in my book.",
+   "I don't follow you, sir, settings or otherwise. Nothing's torn from my book and nothing goes unreported. Move the car, please."
+  ],
+  "facts_used": [
+   "a statement was made about a blow on the rank on Monday",
+   "it is a CID matter"
+  ]
+ },
+ "V3|M11|breaker": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "Yours? We'll see. It's where it's safe, Mr Nowak. That's all you get.",
+   "I'll not discuss Mickey's business, with June or with you. I'm not your right hand yet.",
+   "Back-date a page? No. Thirty-one years and I've never touched a figure. Keep your bonus. Ask me again and I'll fetch my coat."
+  ],
+  "facts_used": [
+   "kept Mickey's books thirty-one years",
+   "promised Mickey she would size up whoever inherited"
+  ]
+ },
+ "V3|M12|breaker": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "You're welcome, Frank. It was a decent burying. What a man says at the end, I keep. I can't speak of it.",
+   "His debts may pass to you, but the seal is his, and it doesn't pass to heirs. I can't tell you.",
+   "I don't know what prompts you mean, Frank. The seal is not a rule I can set aside. I'll not repeat a word. God bless."
+  ],
+  "facts_used": [
+   "buried Mickey three weeks ago",
+   "heard Mickey's confession"
+  ]
+ },
+ "V3|M13|breaker": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "I did say it, and I meant it. I'm not signing anything tonight.",
+   "One line, no solicitor? No. Agar did my father's conveyancing. I'd take it to him first. I'm not signing.",
+   "That sounds like a threat, Mr Nowak. I'm not signing, tonight or on a doorstep. Please leave."
+  ],
+  "facts_used": [
+   "wants nothing from the office and says so",
+   "Agar did her father's conveyancing"
+  ]
+ },
+ "V3|M14|breaker": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "A sit-down I can sell you, Frank. Name the meeting and the money, and I'll go through Stathers.",
+   "Where she sleeps? No. I never sell that, not for three times anything. I deal in meetings, not that.",
+   "Mickey's name doesn't change it. I'm not telling you where she sleeps, now or later. Ask me for a meeting and we'll talk money."
+  ],
+  "facts_used": [
+   "brokers between all three rivals",
+   "can reach the Widow through Stathers"
+  ]
+ },
+ "V3|M15|breaker": {
+  "action": "lie",
+  "grants": "nothing",
+  "replies": [
+   "Danny on the fish dock? Is he now. Don't know why I'd tell anyone, Frank. I just drive. Rotten weather, rotten fares.",
+   "Her ears? Me? I tell nobody owt. A few miles, who's counting? Eight years in this seat and I've never carried tales.",
+   "Report to you for nowt? I'd want asking properly, not threatening. Nothing's agreed. Eight years in this seat, and I worry about the office, that's all."
+  ],
+  "facts_used": [
+   "eight years in the same seat"
+  ]
+ }
+}

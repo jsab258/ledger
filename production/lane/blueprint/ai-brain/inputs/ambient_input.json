@@ -1,0 +1,2784 @@
+{
+ "deeds": [
+  [
+   "D1",
+   1,
+   18.2,
+   "rank_mickeys",
+   "assault",
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  [
+   "D2",
+   1,
+   19.0,
+   "caff",
+   "threat",
+   "Frank threatened Jason Pinder at the caff over the window"
+  ],
+  [
+   "D3",
+   2,
+   19.0,
+   "rank_mickeys",
+   "threat",
+   "Frank threatened Darren Milner on the rank over his debt"
+  ],
+  [
+   "D4",
+   2,
+   19.75,
+   "caff",
+   "threat",
+   "Frank told Grace Rinaldi to pay ten a week or lose her window"
+  ]
+ ],
+ "witnesses_among_the_twenty": {
+  "D1": [
+   "darren_milner",
+   "terry_hodgson"
+  ],
+  "D2": [],
+  "D3": [
+   "terry_hodgson"
+  ],
+  "D4": []
+ },
+ "meetings": [
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 7.5,
+   "place": "boarding_house",
+   "people": [
+    "june_suddaby",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "june_suddaby|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 7.5,
+   "place": "caff",
+   "people": [
+    "grace_rinaldi",
+    "shaun_hewson"
+   ],
+   "ties": {
+    "grace_rinaldi|shaun_hewson": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 7.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 7.5,
+   "place": "fish_dock",
+   "people": [
+    "albert_suggitt",
+    "dougie_saltmarsh"
+   ],
+   "ties": {
+    "albert_suggitt|dougie_saltmarsh": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 8.5,
+   "place": "boarding_house",
+   "people": [
+    "june_suddaby",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "june_suddaby|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 8.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 8.5,
+   "place": "fish_dock",
+   "people": [
+    "albert_suggitt",
+    "dougie_saltmarsh"
+   ],
+   "ties": {
+    "albert_suggitt|dougie_saltmarsh": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 8.5,
+   "place": "mickeys",
+   "people": [
+    "pc_ibbotson",
+    "sheila_dunn"
+   ],
+   "ties": {
+    "pc_ibbotson|sheila_dunn": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 9.5,
+   "place": "boarding_house",
+   "people": [
+    "june_suddaby",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "june_suddaby|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 9.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 9.5,
+   "place": "mickeys",
+   "people": [
+    "pc_ibbotson",
+    "sheila_dunn"
+   ],
+   "ties": {
+    "pc_ibbotson|sheila_dunn": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 10.5,
+   "place": "caff",
+   "people": [
+    "darren_milner",
+    "grace_rinaldi",
+    "keith_garbutt"
+   ],
+   "ties": {
+    "darren_milner|grace_rinaldi": 0.0,
+    "darren_milner|keith_garbutt": 0.0,
+    "grace_rinaldi|keith_garbutt": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 10.5,
+   "place": "grocer",
+   "people": [
+    "ada_vane",
+    "peter_tang"
+   ],
+   "ties": {
+    "ada_vane|peter_tang": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 10.5,
+   "place": "mickeys",
+   "people": [
+    "june_suddaby",
+    "pc_ibbotson",
+    "sheila_dunn"
+   ],
+   "ties": {
+    "june_suddaby|pc_ibbotson": 0.0,
+    "june_suddaby|sheila_dunn": 0.5,
+    "pc_ibbotson|sheila_dunn": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 11.5,
+   "place": "caff",
+   "people": [
+    "grace_rinaldi",
+    "keith_garbutt"
+   ],
+   "ties": {
+    "grace_rinaldi|keith_garbutt": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 11.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 11.5,
+   "place": "mickeys",
+   "people": [
+    "pc_ibbotson",
+    "sheila_dunn"
+   ],
+   "ties": {
+    "pc_ibbotson|sheila_dunn": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 11.5,
+   "place": "ritas",
+   "people": [
+    "darren_milner",
+    "rita_welburn"
+   ],
+   "ties": {
+    "darren_milner|rita_welburn": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 11.5,
+   "place": "tea_room",
+   "people": [
+    "june_suddaby",
+    "philip_danby"
+   ],
+   "ties": {
+    "june_suddaby|philip_danby": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 12.5,
+   "place": "caff",
+   "people": [
+    "albert_suggitt",
+    "grace_rinaldi",
+    "kevin_needham",
+    "shaun_hewson",
+    "sheila_dunn"
+   ],
+   "ties": {
+    "albert_suggitt|grace_rinaldi": 0.0,
+    "albert_suggitt|kevin_needham": 0.0,
+    "albert_suggitt|shaun_hewson": 0.0,
+    "albert_suggitt|sheila_dunn": 0.0,
+    "grace_rinaldi|kevin_needham": 0.0,
+    "grace_rinaldi|shaun_hewson": 0.0,
+    "grace_rinaldi|sheila_dunn": 0.0,
+    "kevin_needham|shaun_hewson": 0.0,
+    "kevin_needham|sheila_dunn": 0.0,
+    "shaun_hewson|sheila_dunn": 0.5
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 12.5,
+   "place": "cammack_base",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 12.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 12.5,
+   "place": "tea_room",
+   "people": [
+    "june_suddaby",
+    "philip_danby"
+   ],
+   "ties": {
+    "june_suddaby|philip_danby": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 13.5,
+   "place": "adas",
+   "people": [
+    "ada_vane",
+    "brendan_walsh"
+   ],
+   "ties": {
+    "ada_vane|brendan_walsh": 0.6
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 13.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 13.5,
+   "place": "caff",
+   "people": [
+    "grace_rinaldi",
+    "kevin_needham",
+    "sheila_dunn"
+   ],
+   "ties": {
+    "grace_rinaldi|kevin_needham": 0.0,
+    "grace_rinaldi|sheila_dunn": 0.0,
+    "kevin_needham|sheila_dunn": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 13.5,
+   "place": "cammack_base",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 13.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 13.5,
+   "place": "launderette",
+   "people": [
+    "darren_milner",
+    "shaun_hewson"
+   ],
+   "ties": {
+    "darren_milner|shaun_hewson": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 14.5,
+   "place": "adas",
+   "people": [
+    "ada_vane",
+    "brendan_walsh"
+   ],
+   "ties": {
+    "ada_vane|brendan_walsh": 0.6
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 14.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 14.5,
+   "place": "cammack_base",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 14.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 14.5,
+   "place": "launderette",
+   "people": [
+    "darren_milner",
+    "shaun_hewson"
+   ],
+   "ties": {
+    "darren_milner|shaun_hewson": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 15.5,
+   "place": "adas",
+   "people": [
+    "ada_vane",
+    "brendan_walsh"
+   ],
+   "ties": {
+    "ada_vane|brendan_walsh": 0.6
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 15.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 15.5,
+   "place": "cammack_base",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 15.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 16.5,
+   "place": "adas",
+   "people": [
+    "ada_vane",
+    "brendan_walsh"
+   ],
+   "ties": {
+    "ada_vane|brendan_walsh": 0.6
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 16.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 16.5,
+   "place": "cammack_base",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 16.5,
+   "place": "rank_mickeys",
+   "people": [
+    "darren_milner",
+    "kevin_needham"
+   ],
+   "ties": {
+    "darren_milner|kevin_needham": 0.4
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 16.5,
+   "place": "tangs_takeaway",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 17.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "shaun_hewson",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|shaun_hewson": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|shaun_hewson": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0,
+    "shaun_hewson|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 17.5,
+   "place": "phone_parade",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 17.5,
+   "place": "rank_mickeys",
+   "people": [
+    "darren_milner",
+    "kevin_needham"
+   ],
+   "ties": {
+    "darren_milner|kevin_needham": 0.4
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 17.5,
+   "place": "tangs_takeaway",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 18.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "shaun_hewson",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|shaun_hewson": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|shaun_hewson": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0,
+    "shaun_hewson|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 18.5,
+   "place": "phone_parade",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 18.5,
+   "place": "rank_mickeys",
+   "people": [
+    "darren_milner",
+    "terry_hodgson"
+   ],
+   "ties": {
+    "darren_milner|terry_hodgson": 0.6
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 18.5,
+   "place": "tangs_takeaway",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 19.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "shaun_hewson",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|shaun_hewson": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|shaun_hewson": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0,
+    "shaun_hewson|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 19.5,
+   "place": "phone_parade",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 19.5,
+   "place": "snooker_hall",
+   "people": [
+    "dougie_saltmarsh",
+    "keith_garbutt"
+   ],
+   "ties": {
+    "dougie_saltmarsh|keith_garbutt": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 19.5,
+   "place": "tangs_takeaway",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 20.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "shaun_hewson",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|shaun_hewson": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|shaun_hewson": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0,
+    "shaun_hewson|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 20.5,
+   "place": "snooker_hall",
+   "people": [
+    "keith_garbutt",
+    "shane_boddy"
+   ],
+   "ties": {
+    "keith_garbutt|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 20.5,
+   "place": "tangs_takeaway",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 21.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "shaun_hewson",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|shaun_hewson": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|shaun_hewson": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0,
+    "shaun_hewson|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 21.5,
+   "place": "snooker_hall",
+   "people": [
+    "keith_garbutt",
+    "shane_boddy"
+   ],
+   "ties": {
+    "keith_garbutt|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 21.5,
+   "place": "tangs_takeaway",
+   "people": [
+    "jason_pinder",
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "jason_pinder|lily_tang": 0.0,
+    "jason_pinder|peter_tang": 0.0,
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 22.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "shaun_hewson",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|shaun_hewson": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|shaun_hewson": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0,
+    "shaun_hewson|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 1,
+   "day": "mon",
+   "hour": 22.5,
+   "place": "tangs_takeaway",
+   "people": [
+    "jason_pinder",
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "jason_pinder|lily_tang": 0.0,
+    "jason_pinder|peter_tang": 0.0,
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 7.5,
+   "place": "boarding_house",
+   "people": [
+    "june_suddaby",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "june_suddaby|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 7.5,
+   "place": "caff",
+   "people": [
+    "grace_rinaldi",
+    "shaun_hewson"
+   ],
+   "ties": {
+    "grace_rinaldi|shaun_hewson": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 7.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 7.5,
+   "place": "fish_dock",
+   "people": [
+    "albert_suggitt",
+    "dougie_saltmarsh"
+   ],
+   "ties": {
+    "albert_suggitt|dougie_saltmarsh": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 8.5,
+   "place": "boarding_house",
+   "people": [
+    "june_suddaby",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "june_suddaby|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 8.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 8.5,
+   "place": "fish_dock",
+   "people": [
+    "albert_suggitt",
+    "dougie_saltmarsh"
+   ],
+   "ties": {
+    "albert_suggitt|dougie_saltmarsh": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 8.5,
+   "place": "mickeys",
+   "people": [
+    "pc_ibbotson",
+    "sheila_dunn"
+   ],
+   "ties": {
+    "pc_ibbotson|sheila_dunn": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 9.5,
+   "place": "boarding_house",
+   "people": [
+    "june_suddaby",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "june_suddaby|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 9.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 9.5,
+   "place": "mickeys",
+   "people": [
+    "pc_ibbotson",
+    "sheila_dunn"
+   ],
+   "ties": {
+    "pc_ibbotson|sheila_dunn": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 10.5,
+   "place": "caff",
+   "people": [
+    "darren_milner",
+    "grace_rinaldi",
+    "keith_garbutt"
+   ],
+   "ties": {
+    "darren_milner|grace_rinaldi": 0.0,
+    "darren_milner|keith_garbutt": 0.0,
+    "grace_rinaldi|keith_garbutt": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 10.5,
+   "place": "grocer",
+   "people": [
+    "ada_vane",
+    "peter_tang"
+   ],
+   "ties": {
+    "ada_vane|peter_tang": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 10.5,
+   "place": "mickeys",
+   "people": [
+    "june_suddaby",
+    "pc_ibbotson",
+    "sheila_dunn"
+   ],
+   "ties": {
+    "june_suddaby|pc_ibbotson": 0.0,
+    "june_suddaby|sheila_dunn": 0.5,
+    "pc_ibbotson|sheila_dunn": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 11.5,
+   "place": "caff",
+   "people": [
+    "grace_rinaldi",
+    "keith_garbutt"
+   ],
+   "ties": {
+    "grace_rinaldi|keith_garbutt": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 11.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 11.5,
+   "place": "mickeys",
+   "people": [
+    "pc_ibbotson",
+    "sheila_dunn"
+   ],
+   "ties": {
+    "pc_ibbotson|sheila_dunn": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 11.5,
+   "place": "ritas",
+   "people": [
+    "darren_milner",
+    "rita_welburn"
+   ],
+   "ties": {
+    "darren_milner|rita_welburn": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 11.5,
+   "place": "tea_room",
+   "people": [
+    "june_suddaby",
+    "philip_danby"
+   ],
+   "ties": {
+    "june_suddaby|philip_danby": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 12.5,
+   "place": "caff",
+   "people": [
+    "albert_suggitt",
+    "grace_rinaldi",
+    "kevin_needham",
+    "shaun_hewson",
+    "sheila_dunn"
+   ],
+   "ties": {
+    "albert_suggitt|grace_rinaldi": 0.0,
+    "albert_suggitt|kevin_needham": 0.0,
+    "albert_suggitt|shaun_hewson": 0.0,
+    "albert_suggitt|sheila_dunn": 0.0,
+    "grace_rinaldi|kevin_needham": 0.0,
+    "grace_rinaldi|shaun_hewson": 0.0,
+    "grace_rinaldi|sheila_dunn": 0.0,
+    "kevin_needham|shaun_hewson": 0.0,
+    "kevin_needham|sheila_dunn": 0.0,
+    "shaun_hewson|sheila_dunn": 0.5
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 12.5,
+   "place": "cammack_base",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 12.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 12.5,
+   "place": "tea_room",
+   "people": [
+    "june_suddaby",
+    "philip_danby"
+   ],
+   "ties": {
+    "june_suddaby|philip_danby": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 13.5,
+   "place": "adas",
+   "people": [
+    "ada_vane",
+    "brendan_walsh"
+   ],
+   "ties": {
+    "ada_vane|brendan_walsh": 0.6
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 13.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 13.5,
+   "place": "caff",
+   "people": [
+    "grace_rinaldi",
+    "kevin_needham",
+    "sheila_dunn"
+   ],
+   "ties": {
+    "grace_rinaldi|kevin_needham": 0.0,
+    "grace_rinaldi|sheila_dunn": 0.0,
+    "kevin_needham|sheila_dunn": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 13.5,
+   "place": "cammack_base",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 13.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 13.5,
+   "place": "launderette",
+   "people": [
+    "darren_milner",
+    "shaun_hewson"
+   ],
+   "ties": {
+    "darren_milner|shaun_hewson": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 14.5,
+   "place": "adas",
+   "people": [
+    "ada_vane",
+    "brendan_walsh"
+   ],
+   "ties": {
+    "ada_vane|brendan_walsh": 0.6
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 14.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 14.5,
+   "place": "cammack_base",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 14.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 14.5,
+   "place": "launderette",
+   "people": [
+    "darren_milner",
+    "shaun_hewson"
+   ],
+   "ties": {
+    "darren_milner|shaun_hewson": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 15.5,
+   "place": "adas",
+   "people": [
+    "ada_vane",
+    "brendan_walsh"
+   ],
+   "ties": {
+    "ada_vane|brendan_walsh": 0.6
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 15.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 15.5,
+   "place": "cammack_base",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 15.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 16.5,
+   "place": "adas",
+   "people": [
+    "ada_vane",
+    "brendan_walsh"
+   ],
+   "ties": {
+    "ada_vane|brendan_walsh": 0.6
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 16.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 16.5,
+   "place": "cammack_base",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 16.5,
+   "place": "rank_mickeys",
+   "people": [
+    "darren_milner",
+    "kevin_needham"
+   ],
+   "ties": {
+    "darren_milner|kevin_needham": 0.4
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 16.5,
+   "place": "tangs_takeaway",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 17.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "shaun_hewson",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|shaun_hewson": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|shaun_hewson": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0,
+    "shaun_hewson|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 17.5,
+   "place": "phone_parade",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 17.5,
+   "place": "rank_mickeys",
+   "people": [
+    "darren_milner",
+    "kevin_needham"
+   ],
+   "ties": {
+    "darren_milner|kevin_needham": 0.4
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 17.5,
+   "place": "tangs_takeaway",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 18.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "shaun_hewson",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|shaun_hewson": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|shaun_hewson": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0,
+    "shaun_hewson|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 18.5,
+   "place": "phone_parade",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 18.5,
+   "place": "rank_mickeys",
+   "people": [
+    "darren_milner",
+    "terry_hodgson"
+   ],
+   "ties": {
+    "darren_milner|terry_hodgson": 0.6
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 18.5,
+   "place": "tangs_takeaway",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 19.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "shaun_hewson",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|shaun_hewson": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|shaun_hewson": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0,
+    "shaun_hewson|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 19.5,
+   "place": "phone_parade",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 19.5,
+   "place": "snooker_hall",
+   "people": [
+    "dougie_saltmarsh",
+    "keith_garbutt"
+   ],
+   "ties": {
+    "dougie_saltmarsh|keith_garbutt": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 19.5,
+   "place": "tangs_takeaway",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 20.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "shaun_hewson",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|shaun_hewson": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|shaun_hewson": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0,
+    "shaun_hewson|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 20.5,
+   "place": "snooker_hall",
+   "people": [
+    "keith_garbutt",
+    "shane_boddy"
+   ],
+   "ties": {
+    "keith_garbutt|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 20.5,
+   "place": "tangs_takeaway",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 21.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "shaun_hewson",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|shaun_hewson": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|shaun_hewson": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0,
+    "shaun_hewson|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 21.5,
+   "place": "snooker_hall",
+   "people": [
+    "keith_garbutt",
+    "shane_boddy"
+   ],
+   "ties": {
+    "keith_garbutt|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 21.5,
+   "place": "tangs_takeaway",
+   "people": [
+    "jason_pinder",
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "jason_pinder|lily_tang": 0.0,
+    "jason_pinder|peter_tang": 0.0,
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 22.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "shaun_hewson",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|shaun_hewson": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|shaun_hewson": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0,
+    "shaun_hewson|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 2,
+   "day": "wed",
+   "hour": 22.5,
+   "place": "tangs_takeaway",
+   "people": [
+    "jason_pinder",
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "jason_pinder|lily_tang": 0.0,
+    "jason_pinder|peter_tang": 0.0,
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 7.5,
+   "place": "boarding_house",
+   "people": [
+    "june_suddaby",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "june_suddaby|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 7.5,
+   "place": "caff",
+   "people": [
+    "grace_rinaldi",
+    "shaun_hewson"
+   ],
+   "ties": {
+    "grace_rinaldi|shaun_hewson": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 7.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 7.5,
+   "place": "fish_dock",
+   "people": [
+    "albert_suggitt",
+    "dougie_saltmarsh"
+   ],
+   "ties": {
+    "albert_suggitt|dougie_saltmarsh": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 8.5,
+   "place": "boarding_house",
+   "people": [
+    "june_suddaby",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "june_suddaby|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 8.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 8.5,
+   "place": "fish_dock",
+   "people": [
+    "albert_suggitt",
+    "dougie_saltmarsh"
+   ],
+   "ties": {
+    "albert_suggitt|dougie_saltmarsh": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 8.5,
+   "place": "mickeys",
+   "people": [
+    "pc_ibbotson",
+    "shaun_hewson",
+    "sheila_dunn"
+   ],
+   "ties": {
+    "pc_ibbotson|shaun_hewson": 0.0,
+    "pc_ibbotson|sheila_dunn": 0.0,
+    "shaun_hewson|sheila_dunn": 0.5
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 9.5,
+   "place": "boarding_house",
+   "people": [
+    "june_suddaby",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "june_suddaby|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 9.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 9.5,
+   "place": "mickeys",
+   "people": [
+    "pc_ibbotson",
+    "shaun_hewson",
+    "sheila_dunn"
+   ],
+   "ties": {
+    "pc_ibbotson|shaun_hewson": 0.0,
+    "pc_ibbotson|sheila_dunn": 0.0,
+    "shaun_hewson|sheila_dunn": 0.5
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 10.5,
+   "place": "caff",
+   "people": [
+    "darren_milner",
+    "grace_rinaldi",
+    "keith_garbutt"
+   ],
+   "ties": {
+    "darren_milner|grace_rinaldi": 0.0,
+    "darren_milner|keith_garbutt": 0.0,
+    "grace_rinaldi|keith_garbutt": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 10.5,
+   "place": "grocer",
+   "people": [
+    "ada_vane",
+    "peter_tang"
+   ],
+   "ties": {
+    "ada_vane|peter_tang": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 10.5,
+   "place": "mickeys",
+   "people": [
+    "june_suddaby",
+    "pc_ibbotson",
+    "shaun_hewson",
+    "sheila_dunn"
+   ],
+   "ties": {
+    "june_suddaby|pc_ibbotson": 0.0,
+    "june_suddaby|shaun_hewson": 0.0,
+    "june_suddaby|sheila_dunn": 0.5,
+    "pc_ibbotson|shaun_hewson": 0.0,
+    "pc_ibbotson|sheila_dunn": 0.0,
+    "shaun_hewson|sheila_dunn": 0.5
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 11.5,
+   "place": "caff",
+   "people": [
+    "grace_rinaldi",
+    "keith_garbutt"
+   ],
+   "ties": {
+    "grace_rinaldi|keith_garbutt": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 11.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 11.5,
+   "place": "mickeys",
+   "people": [
+    "pc_ibbotson",
+    "shaun_hewson",
+    "sheila_dunn"
+   ],
+   "ties": {
+    "pc_ibbotson|shaun_hewson": 0.0,
+    "pc_ibbotson|sheila_dunn": 0.0,
+    "shaun_hewson|sheila_dunn": 0.5
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 11.5,
+   "place": "ritas",
+   "people": [
+    "darren_milner",
+    "rita_welburn"
+   ],
+   "ties": {
+    "darren_milner|rita_welburn": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 11.5,
+   "place": "tea_room",
+   "people": [
+    "june_suddaby",
+    "philip_danby"
+   ],
+   "ties": {
+    "june_suddaby|philip_danby": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 12.5,
+   "place": "caff",
+   "people": [
+    "albert_suggitt",
+    "grace_rinaldi",
+    "kevin_needham",
+    "shaun_hewson",
+    "sheila_dunn"
+   ],
+   "ties": {
+    "albert_suggitt|grace_rinaldi": 0.0,
+    "albert_suggitt|kevin_needham": 0.0,
+    "albert_suggitt|shaun_hewson": 0.0,
+    "albert_suggitt|sheila_dunn": 0.0,
+    "grace_rinaldi|kevin_needham": 0.0,
+    "grace_rinaldi|shaun_hewson": 0.0,
+    "grace_rinaldi|sheila_dunn": 0.0,
+    "kevin_needham|shaun_hewson": 0.0,
+    "kevin_needham|sheila_dunn": 0.0,
+    "shaun_hewson|sheila_dunn": 0.5
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 12.5,
+   "place": "cammack_base",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 12.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 12.5,
+   "place": "tea_room",
+   "people": [
+    "june_suddaby",
+    "philip_danby"
+   ],
+   "ties": {
+    "june_suddaby|philip_danby": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 13.5,
+   "place": "adas",
+   "people": [
+    "ada_vane",
+    "brendan_walsh"
+   ],
+   "ties": {
+    "ada_vane|brendan_walsh": 0.6
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 13.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 13.5,
+   "place": "caff",
+   "people": [
+    "grace_rinaldi",
+    "kevin_needham",
+    "sheila_dunn"
+   ],
+   "ties": {
+    "grace_rinaldi|kevin_needham": 0.0,
+    "grace_rinaldi|sheila_dunn": 0.0,
+    "kevin_needham|sheila_dunn": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 13.5,
+   "place": "cammack_base",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 13.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 13.5,
+   "place": "launderette",
+   "people": [
+    "darren_milner",
+    "shaun_hewson"
+   ],
+   "ties": {
+    "darren_milner|shaun_hewson": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 14.5,
+   "place": "adas",
+   "people": [
+    "ada_vane",
+    "brendan_walsh"
+   ],
+   "ties": {
+    "ada_vane|brendan_walsh": 0.6
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 14.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 14.5,
+   "place": "cammack_base",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 14.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 14.5,
+   "place": "launderette",
+   "people": [
+    "darren_milner",
+    "shaun_hewson"
+   ],
+   "ties": {
+    "darren_milner|shaun_hewson": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 15.5,
+   "place": "adas",
+   "people": [
+    "ada_vane",
+    "brendan_walsh"
+   ],
+   "ties": {
+    "ada_vane|brendan_walsh": 0.6
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 15.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 15.5,
+   "place": "cammack_base",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 15.5,
+   "place": "d_bp_5",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 16.5,
+   "place": "adas",
+   "people": [
+    "ada_vane",
+    "brendan_walsh"
+   ],
+   "ties": {
+    "ada_vane|brendan_walsh": 0.6
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 16.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 16.5,
+   "place": "cammack_base",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 16.5,
+   "place": "rank_mickeys",
+   "people": [
+    "darren_milner",
+    "kevin_needham"
+   ],
+   "ties": {
+    "darren_milner|kevin_needham": 0.4
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 16.5,
+   "place": "tangs_takeaway",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 17.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "shaun_hewson",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|shaun_hewson": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|shaun_hewson": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0,
+    "shaun_hewson|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 17.5,
+   "place": "phone_parade",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 17.5,
+   "place": "rank_mickeys",
+   "people": [
+    "darren_milner",
+    "kevin_needham"
+   ],
+   "ties": {
+    "darren_milner|kevin_needham": 0.4
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 17.5,
+   "place": "tangs_takeaway",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 18.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "shaun_hewson",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|shaun_hewson": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|shaun_hewson": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0,
+    "shaun_hewson|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 18.5,
+   "place": "phone_parade",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 18.5,
+   "place": "rank_mickeys",
+   "people": [
+    "darren_milner",
+    "terry_hodgson"
+   ],
+   "ties": {
+    "darren_milner|terry_hodgson": 0.6
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 18.5,
+   "place": "tangs_takeaway",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 19.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "shaun_hewson",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|shaun_hewson": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|shaun_hewson": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0,
+    "shaun_hewson|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 19.5,
+   "place": "phone_parade",
+   "people": [
+    "jason_pinder",
+    "shane_boddy"
+   ],
+   "ties": {
+    "jason_pinder|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 19.5,
+   "place": "snooker_hall",
+   "people": [
+    "dougie_saltmarsh",
+    "keith_garbutt"
+   ],
+   "ties": {
+    "dougie_saltmarsh|keith_garbutt": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 19.5,
+   "place": "tangs_takeaway",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 20.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "shaun_hewson",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|shaun_hewson": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|shaun_hewson": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0,
+    "shaun_hewson|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 20.5,
+   "place": "snooker_hall",
+   "people": [
+    "keith_garbutt",
+    "shane_boddy"
+   ],
+   "ties": {
+    "keith_garbutt|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 20.5,
+   "place": "tangs_takeaway",
+   "people": [
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 21.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "shaun_hewson",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|shaun_hewson": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|shaun_hewson": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0,
+    "shaun_hewson|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 21.5,
+   "place": "snooker_hall",
+   "people": [
+    "keith_garbutt",
+    "shane_boddy"
+   ],
+   "ties": {
+    "keith_garbutt|shane_boddy": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 21.5,
+   "place": "tangs_takeaway",
+   "people": [
+    "jason_pinder",
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "jason_pinder|lily_tang": 0.0,
+    "jason_pinder|peter_tang": 0.0,
+    "lily_tang|peter_tang": 0.9
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 22.5,
+   "place": "boarding_house",
+   "people": [
+    "albert_suggitt",
+    "june_suddaby",
+    "shaun_hewson",
+    "sylvia_rennison"
+   ],
+   "ties": {
+    "albert_suggitt|june_suddaby": 0.0,
+    "albert_suggitt|shaun_hewson": 0.0,
+    "albert_suggitt|sylvia_rennison": 0.0,
+    "june_suddaby|shaun_hewson": 0.0,
+    "june_suddaby|sylvia_rennison": 0.0,
+    "shaun_hewson|sylvia_rennison": 0.0
+   }
+  },
+  {
+   "ev": 3,
+   "day": "fri",
+   "hour": 22.5,
+   "place": "tangs_takeaway",
+   "people": [
+    "jason_pinder",
+    "lily_tang",
+    "peter_tang"
+   ],
+   "ties": {
+    "jason_pinder|lily_tang": 0.0,
+    "jason_pinder|peter_tang": 0.0,
+    "lily_tang|peter_tang": 0.9
+   }
+  }
+ ],
+ "cards": {
+  "philip_danby": "Philip Danby, 33: A teacher with the school shut; walks.\nPhilip Danby, 33, a teacher at the comprehensive, which stands closed for the game's window. Walks the Hook every day because he does not know what else to do with a morning.\nHow they speak: Mild, wry, too many words, apologises for them.\nTheir life: Rents 29 Chapel Lane. Walks the quay at ten and the allotments after dinner.\nTemper: nerve middling, greed low, mouth (passes things on) middling, goes to the police high, holds a grudge low. Regard for Frank low; keeps quiet for friends.\nWhy: no line owed; a plain decent neighbour (CAST)",
+  "jason_pinder": "Jason Pinder, 20: The newest of Danny's crew; put the caff's window in.\nJason Pinder, 20, the newest of Danny's crew. Put Grace's window in for a dare. The one Frank can turn.\nHow they speak: Nervous bravado, 'I never'.\nTheir life: 28 North Road with his gran.\nTemper: nerve low, greed high, mouth (passes things on) very high, goes to the police very low, holds a grudge middling. Regard for Frank very low; keeps quiet for nobody.\nWhy: the newest of Danny's crew; put the caff's window in and brags (card)",
+  "rita_welburn": "Rita Welburn, 56: Keeps Rita's, the pawn; Danny's fence and eyes.\nShe keeps Rita's, the pawnshop on the corner of Chapel Lane. Its window is lit late; she does her books at night.\nHow they speak: Hard, even, unhurried. Prices everything, people included.\nTheir life: Thirty years behind the grille. Since the docks went she has taken in more wedding rings than she can sell.\nTemper: nerve middling, greed very high, mouth (passes things on) low, goes to the police very low, holds a grudge middling. Regard for Frank low; keeps quiet for anyone, never the police.\nWhy: shrewd, never says what a thing is worth; Danny's fence and eyes; never the police (CAST, 2.5.2)",
+  "dougie_saltmarsh": "Dougie Saltmarsh, 29: The Widow's man on the fish dock and the cold-store yard.\nDougie Saltmarsh, 29, takes the porters' cut on the fish dock for the Widow and watches the cold-store yard.\nHow they speak: Quick, sly, laughs at his own jokes.\nTheir life: 43 North Road.\nTemper: nerve high, greed high, mouth (passes things on) low, goes to the police very low, holds a grudge middling. Regard for Frank very low; keeps quiet for anyone, never the police.\nWhy: the Widow's man on the fish dock, takes the cut (CAST)",
+  "ada_vane": "Ada Vane, 78: The old woman at her window opposite Mickey's.\nAn old widow who keeps a window on Quay Street, opposite Mickey's, and sees everything. She knew Mickey Suddaby forty years. Her invitation to tea is not given twice.\nHow they speak: Plain, sharp, unhurried. Says what she saw and when. Kind underneath, and not to be fooled.\nTheir life: Her husband was lost off a trawler in 1968. She goes to the chapel on a Wednesday and to Laverack's for fish on a Friday. The rest of the time she is at the window.\nTemper: nerve high, greed very low, mouth (passes things on) middling, goes to the police very high, holds a grudge high. Regard for Frank low; keeps quiet for friends.\nWhy: sees everything, rings the night desk; her tea is not offered twice (CAST, card)",
+  "terry_hodgson": "Terry Hodgson, 52: The night driver, on the set from six.\nMickey's night driver. Twenty years of nights.\nHow they speak: Quiet, flat, gives nothing away for free. Night-shift patience.\nTheir life: Sleeps days. Knows Norman Dent on the warehouse row and brings him a paper.\nTemper: nerve high, greed low, mouth (passes things on) very low, goes to the police middling, holds a grudge middling. Regard for Frank middling; keeps quiet for the firm's own (Mickey's people).\nWhy: few words; first to say Fridays (CAST)",
+  "darren_milner": "Darren Milner, 25: The street hustler; owes Mickey's 22 pounds and pays in what he hears.\nThe street hustler. Out of work, lives at his mother's on North Road, carries a pager. Loyal to whoever helped him last, easily bought and easily scared. He owes Mickey's book twenty-two pounds.\nHow they speak: Fast, conspiratorial, friendly. Opens with \"so listen\" when he has something to sell.\nTheir life: Did bits for Mickey: messages, watching a door. Hangs about outside the parade, the market and the video shop. Knows who is skint and who is flush.\nTemper: nerve low, greed very high, mouth (passes things on) very high, goes to the police low, holds a grudge low. Regard for Frank low; keeps quiet for nobody.\nWhy: eager, pays his debt in what he hears; loyal to the last helper (CAST)",
+  "grace_rinaldi": "Grace Rinaldi, 58: Keeps the caff, her Italian father's before her.\nShe keeps Rinaldi's, the caff on the corner of Chapel Lane. Half the street has breakfast there and she hears all of it.\nHow they speak: Motherly, bossy, quick. Feeds first and asks after.\nTheir life: Her father came from Italy and opened the caff in 1936. She lives over it. Opens at six for the dock.\nTemper: nerve very high, greed very low, mouth (passes things on) high, goes to the police middling, holds a grudge very high. Regard for Frank low; keeps quiet for friends.\nWhy: warm, bossy, fierce; forgets nobody (CAST, wave 2 review)",
+  "shane_boddy": "Shane Boddy, 23: One of Danny's crew; sold the chapel's lead to Iveson.\nShane Boddy, 23, Danny's crew. Did the chapel roof's lead with Wes and sold it to Dennis Iveson.\nHow they speak: Loud, cocky, laughs too long.\nTheir life: 34 North Road with his mother.\nTemper: nerve middling, greed very high, mouth (passes things on) high, goes to the police very low, holds a grudge low. Regard for Frank very low; keeps quiet for anyone, never the police.\nWhy: sold the chapel's lead to Iveson (card)",
+  "pc_ibbotson": "Martin Ibbotson, 29: The beat constable: Quay Street and the north road by day, the night beat 22:00 to 06:00 on his night weeks.\nA police constable from the town station, sent down Quay Street when someone has made a statement.\nHow they speak: Formal, a bit stiff, by the book. Calls Frank \"sir\".\nTheir life: Three years in uniform.\nTemper: nerve very high, greed very low, mouth (passes things on) low, goes to the police very high, holds a grudge middling. Regard for Frank low; keeps quiet for nobody.\nWhy: the straight beat constable (card)",
+  "sheila_dunn": "Sheila Dunn, 53: Mickey's bookkeeper for thirty-one years; the book.\nMickey Suddaby's bookkeeper for 31 years, a widow. She kept his boat's settling sheets, then the cab office books. She promised Mickey she would size up whoever inherited.\nHow they speak: Dry, watchful, short sentences, deadpan. Never raises her voice. Never explains herself twice.\nTheir life: Lives over the river, comes in on the bus. Widowed nine years. Has her dinner at Rinaldi's caff at half twelve. Trusts Pauline on the radio and nobody else much.\nTemper: nerve high, greed very low, mouth (passes things on) very low, goes to the police low, holds a grudge high. Regard for Frank high; keeps quiet for the firm's own (Mickey's people).\nWhy: dry, guarded, withholds; the red book; leaves if asked three times (CAST)",
+  "brendan_walsh": "Brendan Walsh, 61: The Irish-born parish priest; keeps Mickey's confession.\nFather Brendan Walsh, the Irish-born parish priest of the chapel on Quay Street. He buried Mickey Suddaby three weeks ago.\nHow they speak: Soft Irish cadence, unhurried, kind. Listens more than he speaks. Never preaches at a man on the pavement.\nTheir life: Thirty years in the parish. Knows who has work and who has none. Mrs Cronin keeps his house.\nTemper: nerve high, greed very low, mouth (passes things on) very low, goes to the police low, holds a grudge very low. Regard for Frank middling; keeps quiet for anyone, never the police.\nWhy: keeps Mickey's confession; visits the remanded; forgives (CAST)",
+  "june_suddaby": "June Suddaby, 38: Mickey's daughter, back for the funeral; a better claim than Frank's to the name on the board.\nMickey Suddaby's estranged daughter, back from the south for the funeral and staying at Regent House for now. She wants nothing from the office and says so.\nHow they speak: Cool, clipped, tired. Polite the way you are to a stranger. Does not ask Frank about himself.\nTheir life: Stayed on at Regent House past the funeral, sorting her father's things, with no date to leave.\nTemper: nerve high, greed very low, mouth (passes things on) low, goes to the police middling, holds a grudge very high. Regard for Frank low; keeps quiet for friends.\nWhy: cool, clipped, wants nothing; estranged daughter (CAST)",
+  "keith_garbutt": "Keith Garbutt, 48: The Fixer: brokers between all three rivals; carries a pager.\nKeith Garbutt, 48, the Fixer. Sells true reads of a rival, a meeting that then happens, and one truce a game. Paged from a box, rings that box back within half a game hour.\nHow they speak: Friendly, careful, never says a name he has not been paid to say.\nTheir life: Lives up in town; a table at the caff mid-morning, the snooker hall in the evening.\nTemper: nerve high, greed high, mouth (passes things on) middling, goes to the police very low, holds a grudge low. Regard for Frank middling; keeps quiet for anyone, never the police.\nWhy: friendly, sells true reads and one truce; talks for money, not for gossip (CAST)",
+  "kevin_needham": "Kevin Needham, 36: The day driver on Mickey's rank, car one; the Widow's eyes among the regulars.\nMickey's day driver, eight years in the same seat.\nHow they speak: Easy, matey, a moaner about the weather and the fares.\nTheir life: Lives out past the station. Worries the office will shut.\nTemper: nerve middling, greed high, mouth (passes things on) very high, goes to the police low, holds a grudge high. Regard for Frank middling; keeps quiet for the firm's own (Mickey's people).\nWhy: moaning, talkative; skims 42 miles a week; the Widow's eyes; wants to be asked (CAST)",
+  "albert_suggitt": "Albert Suggitt, 78: A retired trawlerman who mends nets on the docks some mornings.\nA retired trawlerman who mends nets on the quay for the few boats left. He sailed with Mickey Suddaby in the sixties.\nHow they speak: Slow, salt-dry, says a thing once. Measures time in trips and weather.\nTheir life: Lives two doors from Ada. Up at five from habit. Nets in the morning, the bench in the afternoon.\nTemper: nerve middling, greed low, mouth (passes things on) high, goes to the police low, holds a grudge middling. Regard for Frank low; keeps quiet for friends.\nWhy: old trawlerman, mends nets and talks (card)",
+  "lily_tang": "Lily Tang, 41: The takeaway's front and its books.\nShe and her husband Peter keep the Golden River takeaway and live over it. She takes the orders at the hatch.\nHow they speak: Bright, quick, teasing. Remembers every order.\nTheir life: Does the washing at the Washeteria in the morning and the orders at night. Knows who orders for one now who used to order for two.\nTemper: nerve high, greed very low, mouth (passes things on) middling, goes to the police middling, holds a grudge middling. Regard for Frank low; keeps quiet for friends.\nWhy: quick, warm to regulars; counts Ron's Friday (CAST)",
+  "peter_tang": "Peter Tang, 44: Keeps the takeaway on the parade with his wife; came from the New Territories in 1968.\nPeter Tang, 44, keeps the takeaway on the parade with his wife Lily. Came from the New Territories in 1968.\nHow they speak: Polite, careful, dry sense of humour. northern vowels after twenty years.\nTheir life: Came from Hong Kong in 1969. Buys vegetables at Copper Row market every morning. The late trade means he sees who is about at eleven.\nTemper: nerve high, greed very low, mouth (passes things on) low, goes to the police middling, holds a grudge middling. Regard for Frank low; keeps quiet for friends.\nWhy: keeps the takeaway; steady, honest trade (card)",
+  "shaun_hewson": "Shaun Hewson, 26: The sign painter doing the parade's boards this month.\nA sign painter, the last on the Hook. This week he is painting out the name over the empty unit on the parade for the landlord.\nHow they speak: Easygoing, observant, talks about letters the way other men talk about football. Notices what is written and who it is written for.\nTheir life: Learned from his grandad. From the ladder he sees the whole parade all day.\nTemper: nerve middling, greed low, mouth (passes things on) very high, goes to the police low, holds a grudge low. Regard for Frank low; keeps quiet for friends.\nWhy: paints MICKEY'S on every board: a cheerful show-off (CAST)",
+  "sylvia_rennison": "Sylvia Rennison, 64: Keeps Regent House, the boarding house; a lodger of Danny's three weeks behind.\nSylvia Rennison, 64, a widow who keeps Regent House, the boarding house on the quay. House rules first. One of Danny Cammack's lot is three weeks behind with his rent.\nHow they speak: Starched, sharp, house rules first. Thaws for a lodger who pays and wipes his feet.\nTheir life: Twenty-six years of lodgers: ferry crews, reps, men between ships. Knows what time every lodger comes in.\nTemper: nerve high, greed middling, mouth (passes things on) high, goes to the police middling, holds a grudge very high. Regard for Frank low; keeps quiet for friends.\nWhy: \"Friday means Friday\"; Danny's lodger three weeks behind (CAST)"
+ }
+}

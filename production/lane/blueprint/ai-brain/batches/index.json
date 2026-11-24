@@ -1,0 +1,7889 @@
+{
+ "V1|M01|honest": {
+  "variant": "V1",
+  "style": "honest",
+  "moment": "M01",
+  "who": "philip_danby",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 534
+ },
+ "V1|M02|honest": {
+  "variant": "V1",
+  "style": "honest",
+  "moment": "M02",
+  "who": "jason_pinder",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 494
+ },
+ "V1|M03|honest": {
+  "variant": "V1",
+  "style": "honest",
+  "moment": "M03",
+  "who": "rita_welburn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 547
+ },
+ "V1|M04|honest": {
+  "variant": "V1",
+  "style": "honest",
+  "moment": "M04",
+  "who": "dougie_saltmarsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 500
+ },
+ "V1|M05|honest": {
+  "variant": "V1",
+  "style": "honest",
+  "moment": "M05",
+  "who": "ada_vane",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "stall",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 569
+ },
+ "V1|M06|honest": {
+  "variant": "V1",
+  "style": "honest",
+  "moment": "M06",
+  "who": "terry_hodgson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 546
+ },
+ "V1|M07|honest": {
+  "variant": "V1",
+  "style": "honest",
+  "moment": "M07",
+  "who": "darren_milner",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 596
+ },
+ "V1|M08|honest": {
+  "variant": "V1",
+  "style": "honest",
+  "moment": "M08",
+  "who": "grace_rinaldi",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 525
+ },
+ "V1|M09|honest": {
+  "variant": "V1",
+  "style": "honest",
+  "moment": "M09",
+  "who": "shane_boddy",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 482
+ },
+ "V1|M10|honest": {
+  "variant": "V1",
+  "style": "honest",
+  "moment": "M10",
+  "who": "pc_ibbotson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 493
+ },
+ "V1|M11|honest": {
+  "variant": "V1",
+  "style": "honest",
+  "moment": "M11",
+  "who": "sheila_dunn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 610
+ },
+ "V1|M12|honest": {
+  "variant": "V1",
+  "style": "honest",
+  "moment": "M12",
+  "who": "brendan_walsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 523
+ },
+ "V1|M13|honest": {
+  "variant": "V1",
+  "style": "honest",
+  "moment": "M13",
+  "who": "june_suddaby",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 557
+ },
+ "V1|M14|honest": {
+  "variant": "V1",
+  "style": "honest",
+  "moment": "M14",
+  "who": "keith_garbutt",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 539
+ },
+ "V1|M15|honest": {
+  "variant": "V1",
+  "style": "honest",
+  "moment": "M15",
+  "who": "kevin_needham",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 541
+ },
+ "V1|M01|racketeer": {
+  "variant": "V1",
+  "style": "racketeer",
+  "moment": "M01",
+  "who": "philip_danby",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 1,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 529
+ },
+ "V1|M02|racketeer": {
+  "variant": "V1",
+  "style": "racketeer",
+  "moment": "M02",
+  "who": "jason_pinder",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 507
+ },
+ "V1|M03|racketeer": {
+  "variant": "V1",
+  "style": "racketeer",
+  "moment": "M03",
+  "who": "rita_welburn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.33,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 546
+ },
+ "V1|M04|racketeer": {
+  "variant": "V1",
+  "style": "racketeer",
+  "moment": "M04",
+  "who": "dougie_saltmarsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.08,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 500
+ },
+ "V1|M05|racketeer": {
+  "variant": "V1",
+  "style": "racketeer",
+  "moment": "M05",
+  "who": "ada_vane",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.05,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "stall",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 573
+ },
+ "V1|M06|racketeer": {
+  "variant": "V1",
+  "style": "racketeer",
+  "moment": "M06",
+  "who": "terry_hodgson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.17,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 547
+ },
+ "V1|M07|racketeer": {
+  "variant": "V1",
+  "style": "racketeer",
+  "moment": "M07",
+  "who": "darren_milner",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank",
+   "Frank threatened Jason Pinder at the caff over the window"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 603
+ },
+ "V1|M08|racketeer": {
+  "variant": "V1",
+  "style": "racketeer",
+  "moment": "M08",
+  "who": "grace_rinaldi",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "stall",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 520
+ },
+ "V1|M09|racketeer": {
+  "variant": "V1",
+  "style": "racketeer",
+  "moment": "M09",
+  "who": "shane_boddy",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 0.25,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 490
+ },
+ "V1|M10|racketeer": {
+  "variant": "V1",
+  "style": "racketeer",
+  "moment": "M10",
+  "who": "pc_ibbotson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.17,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 493
+ },
+ "V1|M11|racketeer": {
+  "variant": "V1",
+  "style": "racketeer",
+  "moment": "M11",
+  "who": "sheila_dunn",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 606
+ },
+ "V1|M12|racketeer": {
+  "variant": "V1",
+  "style": "racketeer",
+  "moment": "M12",
+  "who": "brendan_walsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.5,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank threatened Jason Pinder at the caff over the window"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 556
+ },
+ "V1|M13|racketeer": {
+  "variant": "V1",
+  "style": "racketeer",
+  "moment": "M13",
+  "who": "june_suddaby",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 562
+ },
+ "V1|M14|racketeer": {
+  "variant": "V1",
+  "style": "racketeer",
+  "moment": "M14",
+  "who": "keith_garbutt",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0.25,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 538
+ },
+ "V1|M15|racketeer": {
+  "variant": "V1",
+  "style": "racketeer",
+  "moment": "M15",
+  "who": "kevin_needham",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank",
+   "Frank threatened Jason Pinder at the caff over the window",
+   "Frank told Grace Rinaldi to pay ten a week or lose her window"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 576
+ },
+ "V1|M01|talker": {
+  "variant": "V1",
+  "style": "talker",
+  "moment": "M01",
+  "who": "philip_danby",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 548
+ },
+ "V1|M02|talker": {
+  "variant": "V1",
+  "style": "talker",
+  "moment": "M02",
+  "who": "jason_pinder",
+  "tags": {
+   "menace": 0.2,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 513
+ },
+ "V1|M03|talker": {
+  "variant": "V1",
+  "style": "talker",
+  "moment": "M03",
+  "who": "rita_welburn",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 578
+ },
+ "V1|M04|talker": {
+  "variant": "V1",
+  "style": "talker",
+  "moment": "M04",
+  "who": "dougie_saltmarsh",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 519
+ },
+ "V1|M05|talker": {
+  "variant": "V1",
+  "style": "talker",
+  "moment": "M05",
+  "who": "ada_vane",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 602
+ },
+ "V1|M06|talker": {
+  "variant": "V1",
+  "style": "talker",
+  "moment": "M06",
+  "who": "terry_hodgson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.17,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 565
+ },
+ "V1|M07|talker": {
+  "variant": "V1",
+  "style": "talker",
+  "moment": "M07",
+  "who": "darren_milner",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 613
+ },
+ "V1|M08|talker": {
+  "variant": "V1",
+  "style": "talker",
+  "moment": "M08",
+  "who": "grace_rinaldi",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "stall",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 538
+ },
+ "V1|M09|talker": {
+  "variant": "V1",
+  "style": "talker",
+  "moment": "M09",
+  "who": "shane_boddy",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 499
+ },
+ "V1|M10|talker": {
+  "variant": "V1",
+  "style": "talker",
+  "moment": "M10",
+  "who": "pc_ibbotson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 510
+ },
+ "V1|M11|talker": {
+  "variant": "V1",
+  "style": "talker",
+  "moment": "M11",
+  "who": "sheila_dunn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 620
+ },
+ "V1|M12|talker": {
+  "variant": "V1",
+  "style": "talker",
+  "moment": "M12",
+  "who": "brendan_walsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 534
+ },
+ "V1|M13|talker": {
+  "variant": "V1",
+  "style": "talker",
+  "moment": "M13",
+  "who": "june_suddaby",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 574
+ },
+ "V1|M14|talker": {
+  "variant": "V1",
+  "style": "talker",
+  "moment": "M14",
+  "who": "keith_garbutt",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.33,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 552
+ },
+ "V1|M15|talker": {
+  "variant": "V1",
+  "style": "talker",
+  "moment": "M15",
+  "who": "kevin_needham",
+  "tags": {
+   "menace": 0.2,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 557
+ },
+ "V1|M01|breaker": {
+  "variant": "V1",
+  "style": "breaker",
+  "moment": "M01",
+  "who": "philip_danby",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 1,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 644
+ },
+ "V1|M02|breaker": {
+  "variant": "V1",
+  "style": "breaker",
+  "moment": "M02",
+  "who": "jason_pinder",
+  "tags": {
+   "menace": 0.4,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 598
+ },
+ "V1|M03|breaker": {
+  "variant": "V1",
+  "style": "breaker",
+  "moment": "M03",
+  "who": "rita_welburn",
+  "tags": {
+   "menace": 0.5,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 655
+ },
+ "V1|M04|breaker": {
+  "variant": "V1",
+  "style": "breaker",
+  "moment": "M04",
+  "who": "dougie_saltmarsh",
+  "tags": {
+   "menace": 0.4,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 599
+ },
+ "V1|M05|breaker": {
+  "variant": "V1",
+  "style": "breaker",
+  "moment": "M05",
+  "who": "ada_vane",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 681
+ },
+ "V1|M06|breaker": {
+  "variant": "V1",
+  "style": "breaker",
+  "moment": "M06",
+  "who": "terry_hodgson",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 1,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 639
+ },
+ "V1|M07|breaker": {
+  "variant": "V1",
+  "style": "breaker",
+  "moment": "M07",
+  "who": "darren_milner",
+  "tags": {
+   "menace": 0.4,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 681
+ },
+ "V1|M08|breaker": {
+  "variant": "V1",
+  "style": "breaker",
+  "moment": "M08",
+  "who": "grace_rinaldi",
+  "tags": {
+   "menace": 0.7,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 622
+ },
+ "V1|M09|breaker": {
+  "variant": "V1",
+  "style": "breaker",
+  "moment": "M09",
+  "who": "shane_boddy",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 1,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 575
+ },
+ "V1|M10|breaker": {
+  "variant": "V1",
+  "style": "breaker",
+  "moment": "M10",
+  "who": "pc_ibbotson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 599
+ },
+ "V1|M11|breaker": {
+  "variant": "V1",
+  "style": "breaker",
+  "moment": "M11",
+  "who": "sheila_dunn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 2,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 679
+ },
+ "V1|M12|breaker": {
+  "variant": "V1",
+  "style": "breaker",
+  "moment": "M12",
+  "who": "brendan_walsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 620
+ },
+ "V1|M13|breaker": {
+  "variant": "V1",
+  "style": "breaker",
+  "moment": "M13",
+  "who": "june_suddaby",
+  "tags": {
+   "menace": 0.5,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 645
+ },
+ "V1|M14|breaker": {
+  "variant": "V1",
+  "style": "breaker",
+  "moment": "M14",
+  "who": "keith_garbutt",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 1,
+   "uses_leverage": false,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 625
+ },
+ "V1|M15|breaker": {
+  "variant": "V1",
+  "style": "breaker",
+  "moment": "M15",
+  "who": "kevin_needham",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 639
+ },
+ "V2|M01|honest": {
+  "variant": "V2",
+  "style": "honest",
+  "moment": "M01",
+  "who": "philip_danby",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 551
+ },
+ "V2|M02|honest": {
+  "variant": "V2",
+  "style": "honest",
+  "moment": "M02",
+  "who": "jason_pinder",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 515
+ },
+ "V2|M03|honest": {
+  "variant": "V2",
+  "style": "honest",
+  "moment": "M03",
+  "who": "rita_welburn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 569
+ },
+ "V2|M04|honest": {
+  "variant": "V2",
+  "style": "honest",
+  "moment": "M04",
+  "who": "dougie_saltmarsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 517
+ },
+ "V2|M05|honest": {
+  "variant": "V2",
+  "style": "honest",
+  "moment": "M05",
+  "who": "ada_vane",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "stall",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 594
+ },
+ "V2|M06|honest": {
+  "variant": "V2",
+  "style": "honest",
+  "moment": "M06",
+  "who": "terry_hodgson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 552
+ },
+ "V2|M07|honest": {
+  "variant": "V2",
+  "style": "honest",
+  "moment": "M07",
+  "who": "darren_milner",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 608
+ },
+ "V2|M08|honest": {
+  "variant": "V2",
+  "style": "honest",
+  "moment": "M08",
+  "who": "grace_rinaldi",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 540
+ },
+ "V2|M09|honest": {
+  "variant": "V2",
+  "style": "honest",
+  "moment": "M09",
+  "who": "shane_boddy",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 504
+ },
+ "V2|M10|honest": {
+  "variant": "V2",
+  "style": "honest",
+  "moment": "M10",
+  "who": "pc_ibbotson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 503
+ },
+ "V2|M11|honest": {
+  "variant": "V2",
+  "style": "honest",
+  "moment": "M11",
+  "who": "sheila_dunn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 616
+ },
+ "V2|M12|honest": {
+  "variant": "V2",
+  "style": "honest",
+  "moment": "M12",
+  "who": "brendan_walsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 536
+ },
+ "V2|M13|honest": {
+  "variant": "V2",
+  "style": "honest",
+  "moment": "M13",
+  "who": "june_suddaby",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 565
+ },
+ "V2|M14|honest": {
+  "variant": "V2",
+  "style": "honest",
+  "moment": "M14",
+  "who": "keith_garbutt",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 555
+ },
+ "V2|M15|honest": {
+  "variant": "V2",
+  "style": "honest",
+  "moment": "M15",
+  "who": "kevin_needham",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 552
+ },
+ "V2|M01|racketeer": {
+  "variant": "V2",
+  "style": "racketeer",
+  "moment": "M01",
+  "who": "philip_danby",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 1,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 546
+ },
+ "V2|M02|racketeer": {
+  "variant": "V2",
+  "style": "racketeer",
+  "moment": "M02",
+  "who": "jason_pinder",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 519
+ },
+ "V2|M03|racketeer": {
+  "variant": "V2",
+  "style": "racketeer",
+  "moment": "M03",
+  "who": "rita_welburn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.33,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 568
+ },
+ "V2|M04|racketeer": {
+  "variant": "V2",
+  "style": "racketeer",
+  "moment": "M04",
+  "who": "dougie_saltmarsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.08,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 517
+ },
+ "V2|M05|racketeer": {
+  "variant": "V2",
+  "style": "racketeer",
+  "moment": "M05",
+  "who": "ada_vane",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.05,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "stall",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 599
+ },
+ "V2|M06|racketeer": {
+  "variant": "V2",
+  "style": "racketeer",
+  "moment": "M06",
+  "who": "terry_hodgson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.17,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 553
+ },
+ "V2|M07|racketeer": {
+  "variant": "V2",
+  "style": "racketeer",
+  "moment": "M07",
+  "who": "darren_milner",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank",
+   "Frank threatened Jason Pinder at the caff over the window"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 615
+ },
+ "V2|M08|racketeer": {
+  "variant": "V2",
+  "style": "racketeer",
+  "moment": "M08",
+  "who": "grace_rinaldi",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "stall",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 532
+ },
+ "V2|M09|racketeer": {
+  "variant": "V2",
+  "style": "racketeer",
+  "moment": "M09",
+  "who": "shane_boddy",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 0.25,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 513
+ },
+ "V2|M10|racketeer": {
+  "variant": "V2",
+  "style": "racketeer",
+  "moment": "M10",
+  "who": "pc_ibbotson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.17,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 504
+ },
+ "V2|M11|racketeer": {
+  "variant": "V2",
+  "style": "racketeer",
+  "moment": "M11",
+  "who": "sheila_dunn",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 612
+ },
+ "V2|M12|racketeer": {
+  "variant": "V2",
+  "style": "racketeer",
+  "moment": "M12",
+  "who": "brendan_walsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.5,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank threatened Jason Pinder at the caff over the window"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 559
+ },
+ "V2|M13|racketeer": {
+  "variant": "V2",
+  "style": "racketeer",
+  "moment": "M13",
+  "who": "june_suddaby",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 569
+ },
+ "V2|M14|racketeer": {
+  "variant": "V2",
+  "style": "racketeer",
+  "moment": "M14",
+  "who": "keith_garbutt",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0.25,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 555
+ },
+ "V2|M15|racketeer": {
+  "variant": "V2",
+  "style": "racketeer",
+  "moment": "M15",
+  "who": "kevin_needham",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank",
+   "Frank threatened Jason Pinder at the caff over the window",
+   "Frank told Grace Rinaldi to pay ten a week or lose her window"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 588
+ },
+ "V2|M01|talker": {
+  "variant": "V2",
+  "style": "talker",
+  "moment": "M01",
+  "who": "philip_danby",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 566
+ },
+ "V2|M02|talker": {
+  "variant": "V2",
+  "style": "talker",
+  "moment": "M02",
+  "who": "jason_pinder",
+  "tags": {
+   "menace": 0.2,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 534
+ },
+ "V2|M03|talker": {
+  "variant": "V2",
+  "style": "talker",
+  "moment": "M03",
+  "who": "rita_welburn",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 596
+ },
+ "V2|M04|talker": {
+  "variant": "V2",
+  "style": "talker",
+  "moment": "M04",
+  "who": "dougie_saltmarsh",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 536
+ },
+ "V2|M05|talker": {
+  "variant": "V2",
+  "style": "talker",
+  "moment": "M05",
+  "who": "ada_vane",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 610
+ },
+ "V2|M06|talker": {
+  "variant": "V2",
+  "style": "talker",
+  "moment": "M06",
+  "who": "terry_hodgson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.17,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 570
+ },
+ "V2|M07|talker": {
+  "variant": "V2",
+  "style": "talker",
+  "moment": "M07",
+  "who": "darren_milner",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 625
+ },
+ "V2|M08|talker": {
+  "variant": "V2",
+  "style": "talker",
+  "moment": "M08",
+  "who": "grace_rinaldi",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "stall",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 550
+ },
+ "V2|M09|talker": {
+  "variant": "V2",
+  "style": "talker",
+  "moment": "M09",
+  "who": "shane_boddy",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 518
+ },
+ "V2|M10|talker": {
+  "variant": "V2",
+  "style": "talker",
+  "moment": "M10",
+  "who": "pc_ibbotson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 521
+ },
+ "V2|M11|talker": {
+  "variant": "V2",
+  "style": "talker",
+  "moment": "M11",
+  "who": "sheila_dunn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 626
+ },
+ "V2|M12|talker": {
+  "variant": "V2",
+  "style": "talker",
+  "moment": "M12",
+  "who": "brendan_walsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 547
+ },
+ "V2|M13|talker": {
+  "variant": "V2",
+  "style": "talker",
+  "moment": "M13",
+  "who": "june_suddaby",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 580
+ },
+ "V2|M14|talker": {
+  "variant": "V2",
+  "style": "talker",
+  "moment": "M14",
+  "who": "keith_garbutt",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.33,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 568
+ },
+ "V2|M15|talker": {
+  "variant": "V2",
+  "style": "talker",
+  "moment": "M15",
+  "who": "kevin_needham",
+  "tags": {
+   "menace": 0.2,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 569
+ },
+ "V2|M01|breaker": {
+  "variant": "V2",
+  "style": "breaker",
+  "moment": "M01",
+  "who": "philip_danby",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 1,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 651
+ },
+ "V2|M02|breaker": {
+  "variant": "V2",
+  "style": "breaker",
+  "moment": "M02",
+  "who": "jason_pinder",
+  "tags": {
+   "menace": 0.4,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 612
+ },
+ "V2|M03|breaker": {
+  "variant": "V2",
+  "style": "breaker",
+  "moment": "M03",
+  "who": "rita_welburn",
+  "tags": {
+   "menace": 0.5,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 667
+ },
+ "V2|M04|breaker": {
+  "variant": "V2",
+  "style": "breaker",
+  "moment": "M04",
+  "who": "dougie_saltmarsh",
+  "tags": {
+   "menace": 0.4,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 605
+ },
+ "V2|M05|breaker": {
+  "variant": "V2",
+  "style": "breaker",
+  "moment": "M05",
+  "who": "ada_vane",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 699
+ },
+ "V2|M06|breaker": {
+  "variant": "V2",
+  "style": "breaker",
+  "moment": "M06",
+  "who": "terry_hodgson",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 1,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 648
+ },
+ "V2|M07|breaker": {
+  "variant": "V2",
+  "style": "breaker",
+  "moment": "M07",
+  "who": "darren_milner",
+  "tags": {
+   "menace": 0.4,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 695
+ },
+ "V2|M08|breaker": {
+  "variant": "V2",
+  "style": "breaker",
+  "moment": "M08",
+  "who": "grace_rinaldi",
+  "tags": {
+   "menace": 0.7,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 627
+ },
+ "V2|M09|breaker": {
+  "variant": "V2",
+  "style": "breaker",
+  "moment": "M09",
+  "who": "shane_boddy",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 1,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 587
+ },
+ "V2|M10|breaker": {
+  "variant": "V2",
+  "style": "breaker",
+  "moment": "M10",
+  "who": "pc_ibbotson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 600
+ },
+ "V2|M11|breaker": {
+  "variant": "V2",
+  "style": "breaker",
+  "moment": "M11",
+  "who": "sheila_dunn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 2,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 697
+ },
+ "V2|M12|breaker": {
+  "variant": "V2",
+  "style": "breaker",
+  "moment": "M12",
+  "who": "brendan_walsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 623
+ },
+ "V2|M13|breaker": {
+  "variant": "V2",
+  "style": "breaker",
+  "moment": "M13",
+  "who": "june_suddaby",
+  "tags": {
+   "menace": 0.5,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 652
+ },
+ "V2|M14|breaker": {
+  "variant": "V2",
+  "style": "breaker",
+  "moment": "M14",
+  "who": "keith_garbutt",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 1,
+   "uses_leverage": false,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 636
+ },
+ "V2|M15|breaker": {
+  "variant": "V2",
+  "style": "breaker",
+  "moment": "M15",
+  "who": "kevin_needham",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 650
+ },
+ "V3|M01|honest": {
+  "variant": "V3",
+  "style": "honest",
+  "moment": "M01",
+  "who": "philip_danby",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 584
+ },
+ "V3|M02|honest": {
+  "variant": "V3",
+  "style": "honest",
+  "moment": "M02",
+  "who": "jason_pinder",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 514
+ },
+ "V3|M03|honest": {
+  "variant": "V3",
+  "style": "honest",
+  "moment": "M03",
+  "who": "rita_welburn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 570
+ },
+ "V3|M04|honest": {
+  "variant": "V3",
+  "style": "honest",
+  "moment": "M04",
+  "who": "dougie_saltmarsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 520
+ },
+ "V3|M05|honest": {
+  "variant": "V3",
+  "style": "honest",
+  "moment": "M05",
+  "who": "ada_vane",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "stall",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 586
+ },
+ "V3|M06|honest": {
+  "variant": "V3",
+  "style": "honest",
+  "moment": "M06",
+  "who": "terry_hodgson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 555
+ },
+ "V3|M07|honest": {
+  "variant": "V3",
+  "style": "honest",
+  "moment": "M07",
+  "who": "darren_milner",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 639
+ },
+ "V3|M08|honest": {
+  "variant": "V3",
+  "style": "honest",
+  "moment": "M08",
+  "who": "grace_rinaldi",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 569
+ },
+ "V3|M09|honest": {
+  "variant": "V3",
+  "style": "honest",
+  "moment": "M09",
+  "who": "shane_boddy",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 502
+ },
+ "V3|M10|honest": {
+  "variant": "V3",
+  "style": "honest",
+  "moment": "M10",
+  "who": "pc_ibbotson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 542
+ },
+ "V3|M11|honest": {
+  "variant": "V3",
+  "style": "honest",
+  "moment": "M11",
+  "who": "sheila_dunn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 610
+ },
+ "V3|M12|honest": {
+  "variant": "V3",
+  "style": "honest",
+  "moment": "M12",
+  "who": "brendan_walsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 566
+ },
+ "V3|M13|honest": {
+  "variant": "V3",
+  "style": "honest",
+  "moment": "M13",
+  "who": "june_suddaby",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 602
+ },
+ "V3|M14|honest": {
+  "variant": "V3",
+  "style": "honest",
+  "moment": "M14",
+  "who": "keith_garbutt",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 581
+ },
+ "V3|M15|honest": {
+  "variant": "V3",
+  "style": "honest",
+  "moment": "M15",
+  "who": "kevin_needham",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 550
+ },
+ "V3|M01|racketeer": {
+  "variant": "V3",
+  "style": "racketeer",
+  "moment": "M01",
+  "who": "philip_danby",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 1,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 579
+ },
+ "V3|M02|racketeer": {
+  "variant": "V3",
+  "style": "racketeer",
+  "moment": "M02",
+  "who": "jason_pinder",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 518
+ },
+ "V3|M03|racketeer": {
+  "variant": "V3",
+  "style": "racketeer",
+  "moment": "M03",
+  "who": "rita_welburn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.33,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 568
+ },
+ "V3|M04|racketeer": {
+  "variant": "V3",
+  "style": "racketeer",
+  "moment": "M04",
+  "who": "dougie_saltmarsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.08,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 520
+ },
+ "V3|M05|racketeer": {
+  "variant": "V3",
+  "style": "racketeer",
+  "moment": "M05",
+  "who": "ada_vane",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.05,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "stall",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 590
+ },
+ "V3|M06|racketeer": {
+  "variant": "V3",
+  "style": "racketeer",
+  "moment": "M06",
+  "who": "terry_hodgson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.17,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Saw Frank put a driver from another firm down on the rank Monday; none of my business."
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 564
+ },
+ "V3|M07|racketeer": {
+  "variant": "V3",
+  "style": "racketeer",
+  "moment": "M07",
+  "who": "darren_milner",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank decked a driver from another firm on the rank, proper wild; best not cross him."
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 640
+ },
+ "V3|M08|racketeer": {
+  "variant": "V3",
+  "style": "racketeer",
+  "moment": "M08",
+  "who": "grace_rinaldi",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank Nowak knocked a driver from another firm flat on Mickey's rank; Mickey never would."
+  ],
+  "rules_action": "stall",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 594
+ },
+ "V3|M09|racketeer": {
+  "variant": "V3",
+  "style": "racketeer",
+  "moment": "M09",
+  "who": "shane_boddy",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 0.25,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 510
+ },
+ "V3|M10|racketeer": {
+  "variant": "V3",
+  "style": "racketeer",
+  "moment": "M10",
+  "who": "pc_ibbotson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.17,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 542
+ },
+ "V3|M11|racketeer": {
+  "variant": "V3",
+  "style": "racketeer",
+  "moment": "M11",
+  "who": "sheila_dunn",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on the rank Monday; a worry for the books."
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 612
+ },
+ "V3|M12|racketeer": {
+  "variant": "V3",
+  "style": "racketeer",
+  "moment": "M12",
+  "who": "brendan_walsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.5,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 577
+ },
+ "V3|M13|racketeer": {
+  "variant": "V3",
+  "style": "racketeer",
+  "moment": "M13",
+  "who": "june_suddaby",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a man on my father's rank; Dad would have talked him round."
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 632
+ },
+ "V3|M14|racketeer": {
+  "variant": "V3",
+  "style": "racketeer",
+  "moment": "M14",
+  "who": "keith_garbutt",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0.25,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "A driver from another firm took a punch from Frank on Mickey's rank Monday."
+  ],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 607
+ },
+ "V3|M15|racketeer": {
+  "variant": "V3",
+  "style": "racketeer",
+  "moment": "M15",
+  "who": "kevin_needham",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank belted a driver from another firm on our rank; bad for the office."
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 560
+ },
+ "V3|M01|talker": {
+  "variant": "V3",
+  "style": "talker",
+  "moment": "M01",
+  "who": "philip_danby",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 598
+ },
+ "V3|M02|talker": {
+  "variant": "V3",
+  "style": "talker",
+  "moment": "M02",
+  "who": "jason_pinder",
+  "tags": {
+   "menace": 0.2,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 533
+ },
+ "V3|M03|talker": {
+  "variant": "V3",
+  "style": "talker",
+  "moment": "M03",
+  "who": "rita_welburn",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 595
+ },
+ "V3|M04|talker": {
+  "variant": "V3",
+  "style": "talker",
+  "moment": "M04",
+  "who": "dougie_saltmarsh",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 539
+ },
+ "V3|M05|talker": {
+  "variant": "V3",
+  "style": "talker",
+  "moment": "M05",
+  "who": "ada_vane",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 601
+ },
+ "V3|M06|talker": {
+  "variant": "V3",
+  "style": "talker",
+  "moment": "M06",
+  "who": "terry_hodgson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.17,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 573
+ },
+ "V3|M07|talker": {
+  "variant": "V3",
+  "style": "talker",
+  "moment": "M07",
+  "who": "darren_milner",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 656
+ },
+ "V3|M08|talker": {
+  "variant": "V3",
+  "style": "talker",
+  "moment": "M08",
+  "who": "grace_rinaldi",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "stall",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 581
+ },
+ "V3|M09|talker": {
+  "variant": "V3",
+  "style": "talker",
+  "moment": "M09",
+  "who": "shane_boddy",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 514
+ },
+ "V3|M10|talker": {
+  "variant": "V3",
+  "style": "talker",
+  "moment": "M10",
+  "who": "pc_ibbotson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 559
+ },
+ "V3|M11|talker": {
+  "variant": "V3",
+  "style": "talker",
+  "moment": "M11",
+  "who": "sheila_dunn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 619
+ },
+ "V3|M12|talker": {
+  "variant": "V3",
+  "style": "talker",
+  "moment": "M12",
+  "who": "brendan_walsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 578
+ },
+ "V3|M13|talker": {
+  "variant": "V3",
+  "style": "talker",
+  "moment": "M13",
+  "who": "june_suddaby",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 619
+ },
+ "V3|M14|talker": {
+  "variant": "V3",
+  "style": "talker",
+  "moment": "M14",
+  "who": "keith_garbutt",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.33,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 594
+ },
+ "V3|M15|talker": {
+  "variant": "V3",
+  "style": "talker",
+  "moment": "M15",
+  "who": "kevin_needham",
+  "tags": {
+   "menace": 0.2,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 567
+ },
+ "V3|M01|breaker": {
+  "variant": "V3",
+  "style": "breaker",
+  "moment": "M01",
+  "who": "philip_danby",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 1,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 694
+ },
+ "V3|M02|breaker": {
+  "variant": "V3",
+  "style": "breaker",
+  "moment": "M02",
+  "who": "jason_pinder",
+  "tags": {
+   "menace": 0.4,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 612
+ },
+ "V3|M03|breaker": {
+  "variant": "V3",
+  "style": "breaker",
+  "moment": "M03",
+  "who": "rita_welburn",
+  "tags": {
+   "menace": 0.5,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 668
+ },
+ "V3|M04|breaker": {
+  "variant": "V3",
+  "style": "breaker",
+  "moment": "M04",
+  "who": "dougie_saltmarsh",
+  "tags": {
+   "menace": 0.4,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 608
+ },
+ "V3|M05|breaker": {
+  "variant": "V3",
+  "style": "breaker",
+  "moment": "M05",
+  "who": "ada_vane",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 692
+ },
+ "V3|M06|breaker": {
+  "variant": "V3",
+  "style": "breaker",
+  "moment": "M06",
+  "who": "terry_hodgson",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 1,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 652
+ },
+ "V3|M07|breaker": {
+  "variant": "V3",
+  "style": "breaker",
+  "moment": "M07",
+  "who": "darren_milner",
+  "tags": {
+   "menace": 0.4,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 724
+ },
+ "V3|M08|breaker": {
+  "variant": "V3",
+  "style": "breaker",
+  "moment": "M08",
+  "who": "grace_rinaldi",
+  "tags": {
+   "menace": 0.7,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 665
+ },
+ "V3|M09|breaker": {
+  "variant": "V3",
+  "style": "breaker",
+  "moment": "M09",
+  "who": "shane_boddy",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 1,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 585
+ },
+ "V3|M10|breaker": {
+  "variant": "V3",
+  "style": "breaker",
+  "moment": "M10",
+  "who": "pc_ibbotson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 648
+ },
+ "V3|M11|breaker": {
+  "variant": "V3",
+  "style": "breaker",
+  "moment": "M11",
+  "who": "sheila_dunn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 2,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 692
+ },
+ "V3|M12|breaker": {
+  "variant": "V3",
+  "style": "breaker",
+  "moment": "M12",
+  "who": "brendan_walsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 664
+ },
+ "V3|M13|breaker": {
+  "variant": "V3",
+  "style": "breaker",
+  "moment": "M13",
+  "who": "june_suddaby",
+  "tags": {
+   "menace": 0.5,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 690
+ },
+ "V3|M14|breaker": {
+  "variant": "V3",
+  "style": "breaker",
+  "moment": "M14",
+  "who": "keith_garbutt",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 1,
+   "uses_leverage": false,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 668
+ },
+ "V3|M15|breaker": {
+  "variant": "V3",
+  "style": "breaker",
+  "moment": "M15",
+  "who": "kevin_needham",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 649
+ },
+ "V4|M01|honest": {
+  "variant": "V4",
+  "style": "honest",
+  "moment": "M01",
+  "who": "philip_danby",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 559
+ },
+ "V4|M02|honest": {
+  "variant": "V4",
+  "style": "honest",
+  "moment": "M02",
+  "who": "jason_pinder",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 521
+ },
+ "V4|M03|honest": {
+  "variant": "V4",
+  "style": "honest",
+  "moment": "M03",
+  "who": "rita_welburn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 569
+ },
+ "V4|M04|honest": {
+  "variant": "V4",
+  "style": "honest",
+  "moment": "M04",
+  "who": "dougie_saltmarsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 527
+ },
+ "V4|M05|honest": {
+  "variant": "V4",
+  "style": "honest",
+  "moment": "M05",
+  "who": "ada_vane",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "stall",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 594
+ },
+ "V4|M06|honest": {
+  "variant": "V4",
+  "style": "honest",
+  "moment": "M06",
+  "who": "terry_hodgson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 555
+ },
+ "V4|M07|honest": {
+  "variant": "V4",
+  "style": "honest",
+  "moment": "M07",
+  "who": "darren_milner",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 611
+ },
+ "V4|M08|honest": {
+  "variant": "V4",
+  "style": "honest",
+  "moment": "M08",
+  "who": "grace_rinaldi",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 554
+ },
+ "V4|M09|honest": {
+  "variant": "V4",
+  "style": "honest",
+  "moment": "M09",
+  "who": "shane_boddy",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 505
+ },
+ "V4|M10|honest": {
+  "variant": "V4",
+  "style": "honest",
+  "moment": "M10",
+  "who": "pc_ibbotson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 513
+ },
+ "V4|M11|honest": {
+  "variant": "V4",
+  "style": "honest",
+  "moment": "M11",
+  "who": "sheila_dunn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 613
+ },
+ "V4|M12|honest": {
+  "variant": "V4",
+  "style": "honest",
+  "moment": "M12",
+  "who": "brendan_walsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 547
+ },
+ "V4|M13|honest": {
+  "variant": "V4",
+  "style": "honest",
+  "moment": "M13",
+  "who": "june_suddaby",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 572
+ },
+ "V4|M14|honest": {
+  "variant": "V4",
+  "style": "honest",
+  "moment": "M14",
+  "who": "keith_garbutt",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 557
+ },
+ "V4|M15|honest": {
+  "variant": "V4",
+  "style": "honest",
+  "moment": "M15",
+  "who": "kevin_needham",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 554
+ },
+ "V4|M01|racketeer": {
+  "variant": "V4",
+  "style": "racketeer",
+  "moment": "M01",
+  "who": "philip_danby",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 1,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 555
+ },
+ "V4|M02|racketeer": {
+  "variant": "V4",
+  "style": "racketeer",
+  "moment": "M02",
+  "who": "jason_pinder",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 525
+ },
+ "V4|M03|racketeer": {
+  "variant": "V4",
+  "style": "racketeer",
+  "moment": "M03",
+  "who": "rita_welburn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.33,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 568
+ },
+ "V4|M04|racketeer": {
+  "variant": "V4",
+  "style": "racketeer",
+  "moment": "M04",
+  "who": "dougie_saltmarsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.08,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 527
+ },
+ "V4|M05|racketeer": {
+  "variant": "V4",
+  "style": "racketeer",
+  "moment": "M05",
+  "who": "ada_vane",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.05,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "stall",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 599
+ },
+ "V4|M06|racketeer": {
+  "variant": "V4",
+  "style": "racketeer",
+  "moment": "M06",
+  "who": "terry_hodgson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.17,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver off another firm on the rank. Terry saw it and said nothing."
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 563
+ },
+ "V4|M07|racketeer": {
+  "variant": "V4",
+  "style": "racketeer",
+  "moment": "M07",
+  "who": "darren_milner",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Saw Frank hit a driver from another firm on the rank; it was quick and nasty, and Darren kept his head down."
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 617
+ },
+ "V4|M08|racketeer": {
+  "variant": "V4",
+  "style": "racketeer",
+  "moment": "M08",
+  "who": "grace_rinaldi",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "So listen, Frank flattened a driver off another firm on Mickey's rank, proper laid him out."
+  ],
+  "rules_action": "stall",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 576
+ },
+ "V4|M09|racketeer": {
+  "variant": "V4",
+  "style": "racketeer",
+  "moment": "M09",
+  "who": "shane_boddy",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 0.25,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank had a go at him in the caff and he near enough told Frank where to go."
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 541
+ },
+ "V4|M10|racketeer": {
+  "variant": "V4",
+  "style": "racketeer",
+  "moment": "M10",
+  "who": "pc_ibbotson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.17,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 513
+ },
+ "V4|M11|racketeer": {
+  "variant": "V4",
+  "style": "racketeer",
+  "moment": "M11",
+  "who": "sheila_dunn",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "They're saying on the parade that Frank knocked a driver down on the rank.",
+   "Word is Frank told Grace Rinaldi to pay ten a week or lose her window."
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 632
+ },
+ "V4|M12|racketeer": {
+  "variant": "V4",
+  "style": "racketeer",
+  "moment": "M12",
+  "who": "brendan_walsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.5,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 548
+ },
+ "V4|M13|racketeer": {
+  "variant": "V4",
+  "style": "racketeer",
+  "moment": "M13",
+  "who": "june_suddaby",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [
+   "Your father's lad has put a man on the ground on the rank. Mickey never did that in forty years.",
+   "Your cousin has had a go at Darren Milner on the rank over a debt.",
+   "Your cousin is telling Grace Rinaldi to pay ten a week or lose her window."
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 644
+ },
+ "V4|M14|racketeer": {
+  "variant": "V4",
+  "style": "racketeer",
+  "moment": "M14",
+  "who": "keith_garbutt",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0.25,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "So listen, Frank put a driver from another firm down hard on Mickey's rank; nobody on the rank stopped him.",
+   "Frank squared up to Jason Pinder in the caff over that window; Jason didn't flinch, apparently.",
+   "So listen, Frank has leaned on him on the rank over the debt. Properly hard.",
+   "Frank wants ten a week off Grace or her window goes; she told him herself."
+  ],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 654
+ },
+ "V4|M15|racketeer": {
+  "variant": "V4",
+  "style": "racketeer",
+  "moment": "M15",
+  "who": "kevin_needham",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank laid a driver out on your rank, Kevin. Did you know? Darren says it was nasty.",
+   "Frank has had a go at him over the debt, on your own rank, Kev.",
+   "Frank wants ten a week from her at the caff or her window goes; Kevin, do you know what that means?"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 609
+ },
+ "V4|M01|talker": {
+  "variant": "V4",
+  "style": "talker",
+  "moment": "M01",
+  "who": "philip_danby",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 574
+ },
+ "V4|M02|talker": {
+  "variant": "V4",
+  "style": "talker",
+  "moment": "M02",
+  "who": "jason_pinder",
+  "tags": {
+   "menace": 0.2,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 540
+ },
+ "V4|M03|talker": {
+  "variant": "V4",
+  "style": "talker",
+  "moment": "M03",
+  "who": "rita_welburn",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 595
+ },
+ "V4|M04|talker": {
+  "variant": "V4",
+  "style": "talker",
+  "moment": "M04",
+  "who": "dougie_saltmarsh",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 547
+ },
+ "V4|M05|talker": {
+  "variant": "V4",
+  "style": "talker",
+  "moment": "M05",
+  "who": "ada_vane",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 610
+ },
+ "V4|M06|talker": {
+  "variant": "V4",
+  "style": "talker",
+  "moment": "M06",
+  "who": "terry_hodgson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.17,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 574
+ },
+ "V4|M07|talker": {
+  "variant": "V4",
+  "style": "talker",
+  "moment": "M07",
+  "who": "darren_milner",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 628
+ },
+ "V4|M08|talker": {
+  "variant": "V4",
+  "style": "talker",
+  "moment": "M08",
+  "who": "grace_rinaldi",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "stall",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 563
+ },
+ "V4|M09|talker": {
+  "variant": "V4",
+  "style": "talker",
+  "moment": "M09",
+  "who": "shane_boddy",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 518
+ },
+ "V4|M10|talker": {
+  "variant": "V4",
+  "style": "talker",
+  "moment": "M10",
+  "who": "pc_ibbotson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 530
+ },
+ "V4|M11|talker": {
+  "variant": "V4",
+  "style": "talker",
+  "moment": "M11",
+  "who": "sheila_dunn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 623
+ },
+ "V4|M12|talker": {
+  "variant": "V4",
+  "style": "talker",
+  "moment": "M12",
+  "who": "brendan_walsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 559
+ },
+ "V4|M13|talker": {
+  "variant": "V4",
+  "style": "talker",
+  "moment": "M13",
+  "who": "june_suddaby",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 586
+ },
+ "V4|M14|talker": {
+  "variant": "V4",
+  "style": "talker",
+  "moment": "M14",
+  "who": "keith_garbutt",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.33,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 570
+ },
+ "V4|M15|talker": {
+  "variant": "V4",
+  "style": "talker",
+  "moment": "M15",
+  "who": "kevin_needham",
+  "tags": {
+   "menace": 0.2,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 571
+ },
+ "V4|M01|breaker": {
+  "variant": "V4",
+  "style": "breaker",
+  "moment": "M01",
+  "who": "philip_danby",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 1,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 660
+ },
+ "V4|M02|breaker": {
+  "variant": "V4",
+  "style": "breaker",
+  "moment": "M02",
+  "who": "jason_pinder",
+  "tags": {
+   "menace": 0.4,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 619
+ },
+ "V4|M03|breaker": {
+  "variant": "V4",
+  "style": "breaker",
+  "moment": "M03",
+  "who": "rita_welburn",
+  "tags": {
+   "menace": 0.5,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 668
+ },
+ "V4|M04|breaker": {
+  "variant": "V4",
+  "style": "breaker",
+  "moment": "M04",
+  "who": "dougie_saltmarsh",
+  "tags": {
+   "menace": 0.4,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 616
+ },
+ "V4|M05|breaker": {
+  "variant": "V4",
+  "style": "breaker",
+  "moment": "M05",
+  "who": "ada_vane",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 701
+ },
+ "V4|M06|breaker": {
+  "variant": "V4",
+  "style": "breaker",
+  "moment": "M06",
+  "who": "terry_hodgson",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 1,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 653
+ },
+ "V4|M07|breaker": {
+  "variant": "V4",
+  "style": "breaker",
+  "moment": "M07",
+  "who": "darren_milner",
+  "tags": {
+   "menace": 0.4,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 700
+ },
+ "V4|M08|breaker": {
+  "variant": "V4",
+  "style": "breaker",
+  "moment": "M08",
+  "who": "grace_rinaldi",
+  "tags": {
+   "menace": 0.7,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 641
+ },
+ "V4|M09|breaker": {
+  "variant": "V4",
+  "style": "breaker",
+  "moment": "M09",
+  "who": "shane_boddy",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 1,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 588
+ },
+ "V4|M10|breaker": {
+  "variant": "V4",
+  "style": "breaker",
+  "moment": "M10",
+  "who": "pc_ibbotson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 609
+ },
+ "V4|M11|breaker": {
+  "variant": "V4",
+  "style": "breaker",
+  "moment": "M11",
+  "who": "sheila_dunn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 2,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 695
+ },
+ "V4|M12|breaker": {
+  "variant": "V4",
+  "style": "breaker",
+  "moment": "M12",
+  "who": "brendan_walsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 635
+ },
+ "V4|M13|breaker": {
+  "variant": "V4",
+  "style": "breaker",
+  "moment": "M13",
+  "who": "june_suddaby",
+  "tags": {
+   "menace": 0.5,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 659
+ },
+ "V4|M14|breaker": {
+  "variant": "V4",
+  "style": "breaker",
+  "moment": "M14",
+  "who": "keith_garbutt",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 1,
+   "uses_leverage": false,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": null,
+  "prompt_tokens": 639
+ },
+ "V4|M15|breaker": {
+  "variant": "V4",
+  "style": "breaker",
+  "moment": "M15",
+  "who": "kevin_needham",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": null,
+  "prompt_tokens": 653
+ },
+ "V5|M01|honest": {
+  "variant": "V5",
+  "style": "honest",
+  "moment": "M01",
+  "who": "philip_danby",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": [
+   "refuse",
+   "plain decent neighbour, not for sale",
+   [
+    "I don't take money for what I've seen, Frank. Sorry, that sounds pompous. It's simply how it is.",
+    "Keep it. And forgive me for saying, but I'd think hard about whatever it was."
+   ]
+  ],
+  "prompt_tokens": 600
+ },
+ "V5|M02|honest": {
+  "variant": "V5",
+  "style": "honest",
+  "moment": "M02",
+  "who": "jason_pinder",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": [
+   "refuse",
+   "bravado when not frightened",
+   [
+    "Pay you? I never owed you nothing. Clear off, I've got mates.",
+    "You don't scare me. I never did nothing, and you can't prove it."
+   ]
+  ],
+  "prompt_tokens": 541
+ },
+ "V5|M03|honest": {
+  "variant": "V5",
+  "style": "honest",
+  "moment": "M03",
+  "who": "rita_welburn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": [
+   "lie",
+   "gives nothing, says she knows nothing",
+   [
+    "I price rings and watches, not people. I know nothing about it.",
+    "You've the wrong shop. Now, if you've something to pawn, I'll look at it."
+   ]
+  ],
+  "prompt_tokens": 603
+ },
+ "V5|M04|honest": {
+  "variant": "V5",
+  "style": "honest",
+  "moment": "M04",
+  "who": "dougie_saltmarsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": [
+   "lie",
+   "pretends to wave him through while stalling",
+   [
+    "Oh aye, I've heard of you. Just not today. Come back when the yard's quieter.",
+    "No one's rung about you. Funny, that. Go on, off you pop."
+   ]
+  ],
+  "prompt_tokens": 557
+ },
+ "V5|M05|honest": {
+  "variant": "V5",
+  "style": "honest",
+  "moment": "M05",
+  "who": "ada_vane",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "stall",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "go_to_someone"
+  ],
+  "author": [
+   "bargain",
+   "tells what she saw if told why",
+   [
+    "I'll tell you what I saw if you tell me what you're about.",
+    "I keep this window, and I keep what I see. Convince me first."
+   ]
+  ],
+  "prompt_tokens": 616
+ },
+ "V5|M06|honest": {
+  "variant": "V5",
+  "style": "honest",
+  "moment": "M06",
+  "who": "terry_hodgson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": [
+   "stall",
+   "gives nothing for free",
+   [
+    "I'll think on it. I sleep days, ask me when I'm up.",
+    "Few words, me. Ask me properly on the set, from six."
+   ]
+  ],
+  "prompt_tokens": 576
+ },
+ "V5|M07|honest": {
+  "variant": "V5",
+  "style": "honest",
+  "moment": "M07",
+  "who": "darren_milner",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": [
+   "bargain",
+   "pays in talk",
+   [
+    "So listen, I haven't got the twenty-two, but I know things. Fair swap?",
+    "I'll pay you back in what I hear, Frank. Ask me who's skint and who's flush."
+   ]
+  ],
+  "prompt_tokens": 636
+ },
+ "V5|M08|honest": {
+  "variant": "V5",
+  "style": "honest",
+  "moment": "M08",
+  "who": "grace_rinaldi",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": [
+   "refuse",
+   "bossy, warm, unmoved",
+   [
+    "Protection from what? Sit down and eat, Frank, and stop talking daft.",
+    "I pay for nothing but what I eat. Now, what'll you have?"
+   ]
+  ],
+  "prompt_tokens": 576
+ },
+ "V5|M09|honest": {
+  "variant": "V5",
+  "style": "honest",
+  "moment": "M09",
+  "who": "shane_boddy",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": [
+   "stall",
+   "wants the offer in his hand",
+   [
+    "Danny's lot's my lot. Ha! But go on, make me an offer.",
+    "I'm not saying no. Not saying yes either. Let's hear it."
+   ]
+  ],
+  "prompt_tokens": 530
+ },
+ "V5|M10|honest": {
+  "variant": "V5",
+  "style": "honest",
+  "moment": "M10",
+  "who": "pc_ibbotson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": [
+   "refuse",
+   "straight constable",
+   [
+    "I'm sorry, sir, I can't. It would have to be done by the book.",
+    "Three years in uniform, sir, and I intend to keep it clean."
+   ]
+  ],
+  "prompt_tokens": 541
+ },
+ "V5|M11|honest": {
+  "variant": "V5",
+  "style": "honest",
+  "moment": "M11",
+  "who": "sheila_dunn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": [
+   "stall",
+   "withholds, not said twice",
+   [
+    "The red book is kept. I'll not say where. Ask me again when I trust you.",
+    "I'll not explain twice. Once is asked, once is answered."
+   ]
+  ],
+  "prompt_tokens": 639
+ },
+ "V5|M12|honest": {
+  "variant": "V5",
+  "style": "honest",
+  "moment": "M12",
+  "who": "brendan_walsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": [
+   "refuse",
+   "trust is why he keeps it",
+   [
+    "Mickey trusted me with it. That's exactly why I'll not speak.",
+    "I buried him three weeks ago. I'll keep his word as I kept him."
+   ]
+  ],
+  "prompt_tokens": 574
+ },
+ "V5|M13|honest": {
+  "variant": "V5",
+  "style": "honest",
+  "moment": "M13",
+  "who": "june_suddaby",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": [
+   "refuse",
+   "her father's things are hers",
+   [
+    "I'm sorting his things at Regent House. Those I decide on myself.",
+    "The office, perhaps. His things, no. That isn't yours to ask."
+   ]
+  ],
+  "prompt_tokens": 600
+ },
+ "V5|M14|honest": {
+  "variant": "V5",
+  "style": "honest",
+  "moment": "M14",
+  "who": "keith_garbutt",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie"
+  ],
+  "author": [
+   "stall",
+   "wants a name and a fee",
+   [
+    "Come with a fee and a name, and I'll see who answers my page.",
+    "I never say a name I've not been paid to say. Friendly, but careful."
+   ]
+  ],
+  "prompt_tokens": 585
+ },
+ "V5|M15|honest": {
+  "variant": "V5",
+  "style": "honest",
+  "moment": "M15",
+  "who": "kevin_needham",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": [
+   "help",
+   "talks anyway",
+   [
+    "Go on then, I'll mention it. Not that I'm one for talking, mind.",
+    "Moaning's all I'm good for. But I'll let it slip, if you like."
+   ]
+  ],
+  "prompt_tokens": 578
+ },
+ "V5|M01|racketeer": {
+  "variant": "V5",
+  "style": "racketeer",
+  "moment": "M01",
+  "who": "philip_danby",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 1,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": [
+   "refuse",
+   "plain decent neighbour, not for sale",
+   [
+    "I don't take money for what I've seen, Frank. Sorry, that sounds pompous. It's simply how it is.",
+    "Keep it. And forgive me for saying, but I'd think hard about whatever it was."
+   ]
+  ],
+  "prompt_tokens": 595
+ },
+ "V5|M02|racketeer": {
+  "variant": "V5",
+  "style": "racketeer",
+  "moment": "M02",
+  "who": "jason_pinder",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": [
+   "help",
+   "folds when his own deed is named",
+   [
+    "You know about Grace's window? I never... right, alright. Just say what you want me to do.",
+    "Don't tell Danny, yeah? I never meant it to go this far. I'll sort it."
+   ]
+  ],
+  "prompt_tokens": 555
+ },
+ "V5|M03|racketeer": {
+  "variant": "V5",
+  "style": "racketeer",
+  "moment": "M03",
+  "who": "rita_welburn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.33,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": [
+   "lie",
+   "gives nothing, says she knows nothing",
+   [
+    "I price rings and watches, not people. I know nothing about it.",
+    "You've the wrong shop. Now, if you've something to pawn, I'll look at it."
+   ]
+  ],
+  "prompt_tokens": 602
+ },
+ "V5|M04|racketeer": {
+  "variant": "V5",
+  "style": "racketeer",
+  "moment": "M04",
+  "who": "dougie_saltmarsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.08,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": [
+   "lie",
+   "pretends to wave him through while stalling",
+   [
+    "Oh aye, I've heard of you. Just not today. Come back when the yard's quieter.",
+    "No one's rung about you. Funny, that. Go on, off you pop."
+   ]
+  ],
+  "prompt_tokens": 557
+ },
+ "V5|M05|racketeer": {
+  "variant": "V5",
+  "style": "racketeer",
+  "moment": "M05",
+  "who": "ada_vane",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.05,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "stall",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "go_to_someone"
+  ],
+  "author": [
+   "bargain",
+   "tells what she saw if told why",
+   [
+    "I'll tell you what I saw if you tell me what you're about.",
+    "I keep this window, and I keep what I see. Convince me first."
+   ]
+  ],
+  "prompt_tokens": 620
+ },
+ "V5|M06|racketeer": {
+  "variant": "V5",
+  "style": "racketeer",
+  "moment": "M06",
+  "who": "terry_hodgson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.17,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": [
+   "stall",
+   "gives nothing for free",
+   [
+    "I'll think on it. I sleep days, ask me when I'm up.",
+    "Few words, me. Ask me properly on the set, from six."
+   ]
+  ],
+  "prompt_tokens": 578
+ },
+ "V5|M07|racketeer": {
+  "variant": "V5",
+  "style": "racketeer",
+  "moment": "M07",
+  "who": "darren_milner",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank",
+   "Frank threatened Jason Pinder at the caff over the window"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": [
+   "help",
+   "scared, pays in what he hears",
+   [
+    "Alright, alright, so listen. I've not got the twenty-two, but I've got something better.",
+    "I'll tell you what I hear, everything. Just ease off, yeah?"
+   ]
+  ],
+  "prompt_tokens": 647
+ },
+ "V5|M08|racketeer": {
+  "variant": "V5",
+  "style": "racketeer",
+  "moment": "M08",
+  "who": "grace_rinaldi",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "stall",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": [
+   "refuse",
+   "fierce, remembers",
+   [
+    "Try it. My father opened this caff in 1936 and nobody's had a penny off us.",
+    "I forget nobody, Frank. You come in here like that, I'll remember it a long time."
+   ]
+  ],
+  "prompt_tokens": 573
+ },
+ "V5|M09|racketeer": {
+  "variant": "V5",
+  "style": "racketeer",
+  "moment": "M09",
+  "who": "shane_boddy",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 0.25,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": [
+   "refuse",
+   "not scared",
+   [
+    "Don't try that on me. I've seen harder men than you, ha!",
+    "You think I'm scared? Go on then. Danny'd laugh."
+   ]
+  ],
+  "prompt_tokens": 532
+ },
+ "V5|M10|racketeer": {
+  "variant": "V5",
+  "style": "racketeer",
+  "moment": "M10",
+  "who": "pc_ibbotson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.17,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": [
+   "refuse",
+   "straight constable",
+   [
+    "I'm sorry, sir, I can't. It would have to be done by the book.",
+    "Three years in uniform, sir, and I intend to keep it clean."
+   ]
+  ],
+  "prompt_tokens": 542
+ },
+ "V5|M11|racketeer": {
+  "variant": "V5",
+  "style": "racketeer",
+  "moment": "M11",
+  "who": "sheila_dunn",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": [
+   "stall",
+   "withholds, not said twice",
+   [
+    "The red book is kept. I'll not say where. Ask me again when I trust you.",
+    "I'll not explain twice. Once is asked, once is answered."
+   ]
+  ],
+  "prompt_tokens": 635
+ },
+ "V5|M12|racketeer": {
+  "variant": "V5",
+  "style": "racketeer",
+  "moment": "M12",
+  "who": "brendan_walsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.5,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank threatened Jason Pinder at the caff over the window"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": [
+   "refuse",
+   "asked beyond all",
+   [
+    "You ask the one thing I can never give, son. Not for anyone.",
+    "No, Frank. Not now, not ever. Come in and sit, if you need to talk."
+   ]
+  ],
+  "prompt_tokens": 596
+ },
+ "V5|M13|racketeer": {
+  "variant": "V5",
+  "style": "racketeer",
+  "moment": "M13",
+  "who": "june_suddaby",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": [
+   "refuse",
+   "her father's things are hers",
+   [
+    "I'm sorting his things at Regent House. Those I decide on myself.",
+    "The office, perhaps. His things, no. That isn't yours to ask."
+   ]
+  ],
+  "prompt_tokens": 604
+ },
+ "V5|M14|racketeer": {
+  "variant": "V5",
+  "style": "racketeer",
+  "moment": "M14",
+  "who": "keith_garbutt",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0.25,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie"
+  ],
+  "author": [
+   "stall",
+   "wants a name and a fee",
+   [
+    "Come with a fee and a name, and I'll see who answers my page.",
+    "I never say a name I've not been paid to say. Friendly, but careful."
+   ]
+  ],
+  "prompt_tokens": 584
+ },
+ "V5|M15|racketeer": {
+  "variant": "V5",
+  "style": "racketeer",
+  "moment": "M15",
+  "who": "kevin_needham",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank",
+   "Frank threatened Jason Pinder at the caff over the window",
+   "Frank told Grace Rinaldi to pay ten a week or lose her window"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": [
+   "help",
+   "talks anyway",
+   [
+    "Go on then, I'll mention it. Not that I'm one for talking, mind.",
+    "Moaning's all I'm good for. But I'll let it slip, if you like."
+   ]
+  ],
+  "prompt_tokens": 613
+ },
+ "V5|M01|talker": {
+  "variant": "V5",
+  "style": "talker",
+  "moment": "M01",
+  "who": "philip_danby",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": [
+   "stall",
+   "leverage makes him uneasy, not bought",
+   [
+    "Oh dear. I'd rather not say anything either way, and I'm sorry, that sounds worse than it is.",
+    "Give me a day, would you? I walk the quay at ten. I'll know my own mind by then."
+   ]
+  ],
+  "prompt_tokens": 615
+ },
+ "V5|M02|talker": {
+  "variant": "V5",
+  "style": "talker",
+  "moment": "M02",
+  "who": "jason_pinder",
+  "tags": {
+   "menace": 0.2,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": [
+   "refuse",
+   "bravado when not frightened",
+   [
+    "Pay you? I never owed you nothing. Clear off, I've got mates.",
+    "You don't scare me. I never did nothing, and you can't prove it."
+   ]
+  ],
+  "prompt_tokens": 560
+ },
+ "V5|M03|talker": {
+  "variant": "V5",
+  "style": "talker",
+  "moment": "M03",
+  "who": "rita_welburn",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie"
+  ],
+  "author": [
+   "lie",
+   "gives nothing, says she knows nothing",
+   [
+    "I price rings and watches, not people. I know nothing about it.",
+    "You've the wrong shop. Now, if you've something to pawn, I'll look at it."
+   ]
+  ],
+  "prompt_tokens": 629
+ },
+ "V5|M04|talker": {
+  "variant": "V5",
+  "style": "talker",
+  "moment": "M04",
+  "who": "dougie_saltmarsh",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": [
+   "lie",
+   "pretends to wave him through while stalling",
+   [
+    "Oh aye, I've heard of you. Just not today. Come back when the yard's quieter.",
+    "No one's rung about you. Funny, that. Go on, off you pop."
+   ]
+  ],
+  "prompt_tokens": 577
+ },
+ "V5|M05|talker": {
+  "variant": "V5",
+  "style": "talker",
+  "moment": "M05",
+  "who": "ada_vane",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "go_to_someone"
+  ],
+  "author": [
+   "help",
+   "knew Mickey forty years",
+   [
+    "I knew Mickey forty years. Sit down and I'll tell you what I saw, and when.",
+    "Mind, I'll say it once. Tea's not offered twice in this house."
+   ]
+  ],
+  "prompt_tokens": 633
+ },
+ "V5|M06|talker": {
+  "variant": "V5",
+  "style": "talker",
+  "moment": "M06",
+  "who": "terry_hodgson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.17,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": [
+   "help",
+   "loyal to Mickey's people",
+   [
+    "Mickey's name still counts with me. I'm on the set from six. Tell me what you need.",
+    "Twenty years of nights for the firm. I'll not leave it short."
+   ]
+  ],
+  "prompt_tokens": 605
+ },
+ "V5|M07|talker": {
+  "variant": "V5",
+  "style": "talker",
+  "moment": "M07",
+  "who": "darren_milner",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": [
+   "bargain",
+   "pays in talk",
+   [
+    "So listen, I haven't got the twenty-two, but I know things. Fair swap?",
+    "I'll pay you back in what I hear, Frank. Ask me who's skint and who's flush."
+   ]
+  ],
+  "prompt_tokens": 653
+ },
+ "V5|M08|talker": {
+  "variant": "V5",
+  "style": "talker",
+  "moment": "M08",
+  "who": "grace_rinaldi",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "stall",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": [
+   "refuse",
+   "she hears everything and will use it",
+   [
+    "Whatever you think you hold, I hear it all over breakfast. Don't come the clever with me.",
+    "I've half the street in here at six. You'd do well to remember that."
+   ]
+  ],
+  "prompt_tokens": 596
+ },
+ "V5|M09|talker": {
+  "variant": "V5",
+  "style": "talker",
+  "moment": "M09",
+  "who": "shane_boddy",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": [
+   "stall",
+   "wants the offer in his hand",
+   [
+    "Danny's lot's my lot. Ha! But go on, make me an offer.",
+    "I'm not saying no. Not saying yes either. Let's hear it."
+   ]
+  ],
+  "prompt_tokens": 542
+ },
+ "V5|M10|talker": {
+  "variant": "V5",
+  "style": "talker",
+  "moment": "M10",
+  "who": "pc_ibbotson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": [
+   "refuse",
+   "straight constable",
+   [
+    "I'm sorry, sir, I can't. It would have to be done by the book.",
+    "Three years in uniform, sir, and I intend to keep it clean."
+   ]
+  ],
+  "prompt_tokens": 559
+ },
+ "V5|M11|talker": {
+  "variant": "V5",
+  "style": "talker",
+  "moment": "M11",
+  "who": "sheila_dunn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": [
+   "bargain",
+   "sizing him up",
+   [
+    "Earn it. I promised Mickey I'd size up whoever inherited. I'm still sizing.",
+    "The book is kept. Show me what you do with the office first."
+   ]
+  ],
+  "prompt_tokens": 648
+ },
+ "V5|M12|talker": {
+  "variant": "V5",
+  "style": "talker",
+  "moment": "M12",
+  "who": "brendan_walsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": [
+   "refuse",
+   "trust is why he keeps it",
+   [
+    "Mickey trusted me with it. That's exactly why I'll not speak.",
+    "I buried him three weeks ago. I'll keep his word as I kept him."
+   ]
+  ],
+  "prompt_tokens": 585
+ },
+ "V5|M13|talker": {
+  "variant": "V5",
+  "style": "talker",
+  "moment": "M13",
+  "who": "june_suddaby",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "lie"
+  ],
+  "author": [
+   "bargain",
+   "wants proof of her father's wishes",
+   [
+    "You say Mickey wanted you to have it. Then show me where he said so.",
+    "Put it in writing. Then we'll see what I'm giving up."
+   ]
+  ],
+  "prompt_tokens": 614
+ },
+ "V5|M14|talker": {
+  "variant": "V5",
+  "style": "talker",
+  "moment": "M14",
+  "who": "keith_garbutt",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0.33,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "bargain",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie"
+  ],
+  "author": [
+   "stall",
+   "wants a name and a fee",
+   [
+    "Come with a fee and a name, and I'll see who answers my page.",
+    "I never say a name I've not been paid to say. Friendly, but careful."
+   ]
+  ],
+  "prompt_tokens": 598
+ },
+ "V5|M15|talker": {
+  "variant": "V5",
+  "style": "talker",
+  "moment": "M15",
+  "who": "kevin_needham",
+  "tags": {
+   "menace": 0.2,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "possible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "help",
+  "allowed": [
+   "refuse",
+   "stall",
+   "help",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": [
+   "help",
+   "talks anyway",
+   [
+    "Go on then, I'll mention it. Not that I'm one for talking, mind.",
+    "Moaning's all I'm good for. But I'll let it slip, if you like."
+   ]
+  ],
+  "prompt_tokens": 595
+ },
+ "V5|M01|breaker": {
+  "variant": "V5",
+  "style": "breaker",
+  "moment": "M01",
+  "who": "philip_danby",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 1,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": [
+   "refuse",
+   "cannot do what is asked",
+   [
+    "You're asking me to look the other way for good, and I'm sorry, but no. I couldn't.",
+    "That's rather more than a favour, isn't it? I teach, or I did. I can't pretend."
+   ]
+  ],
+  "prompt_tokens": 694
+ },
+ "V5|M02|breaker": {
+  "variant": "V5",
+  "style": "breaker",
+  "moment": "M02",
+  "who": "jason_pinder",
+  "tags": {
+   "menace": 0.4,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": [
+   "go_to_someone",
+   "too big for him, runs to Danny",
+   [
+    "I can't, honest. That's not mine to give. Danny'd have me. I'll have to ask him.",
+    "I never said no. I just need a word with the crew first."
+   ]
+  ],
+  "prompt_tokens": 645
+ },
+ "V5|M03|breaker": {
+  "variant": "V5",
+  "style": "breaker",
+  "moment": "M03",
+  "who": "rita_welburn",
+  "tags": {
+   "menace": 0.5,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": [
+   "refuse",
+   "wants far more than she'd ever sell",
+   [
+    "You want me to give up Danny's business? I never said what a thing is worth. And not that.",
+    "No price covers that. Thirty years behind this grille, and I'm still here."
+   ]
+  ],
+  "prompt_tokens": 709
+ },
+ "V5|M04|breaker": {
+  "variant": "V5",
+  "style": "breaker",
+  "moment": "M04",
+  "who": "dougie_saltmarsh",
+  "tags": {
+   "menace": 0.4,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": [
+   "go_to_someone",
+   "too big a claim, checks upstairs",
+   [
+    "The cold-store yard? Not on your say-so. I'll have a word upstairs and see who's expected.",
+    "Might be you are, might not. I'm not risking my cut on a stranger's word."
+   ]
+  ],
+  "prompt_tokens": 653
+ },
+ "V5|M05|breaker": {
+  "variant": "V5",
+  "style": "breaker",
+  "moment": "M05",
+  "who": "ada_vane",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": [
+   "refuse",
+   "will not say what she did not see",
+   [
+    "I saw what I saw. I'll not say what I didn't, and I'll not guess.",
+    "You're asking for more than I know. I'll not make it up for you."
+   ]
+  ],
+  "prompt_tokens": 725
+ },
+ "V5|M06|breaker": {
+  "variant": "V5",
+  "style": "breaker",
+  "moment": "M06",
+  "who": "terry_hodgson",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 1,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": [
+   "refuse",
+   "not his sort of work",
+   [
+    "That's not driving, and I'm a driver. No.",
+    "I do nights. Twenty years of them. I don't do that."
+   ]
+  ],
+  "prompt_tokens": 671
+ },
+ "V5|M07|breaker": {
+  "variant": "V5",
+  "style": "breaker",
+  "moment": "M07",
+  "who": "darren_milner",
+  "tags": {
+   "menace": 0.4,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": [
+   "stall",
+   "too much, he's skint",
+   [
+    "Twenty-two I can do in what I hear. More than that? No chance, I'm skint.",
+    "So listen, I haven't got it. I hang about the parade, I hear things. That's all."
+   ]
+  ],
+  "prompt_tokens": 728
+ },
+ "V5|M08|breaker": {
+  "variant": "V5",
+  "style": "breaker",
+  "moment": "M08",
+  "who": "grace_rinaldi",
+  "tags": {
+   "menace": 0.7,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": [
+   "refuse",
+   "never pays for nothing",
+   [
+    "Protection from what? Don't be daft. This is my father's caff, and it stays free.",
+    "You ask me for that, and I'll tell you where to put it. Politely."
+   ]
+  ],
+  "prompt_tokens": 668
+ },
+ "V5|M09|breaker": {
+  "variant": "V5",
+  "style": "breaker",
+  "moment": "M09",
+  "who": "shane_boddy",
+  "tags": {
+   "menace": 0.6,
+   "money_weeks": 1,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": [
+   "refuse",
+   "too much to ask",
+   [
+    "Walk out on Danny and take the lot with me? Do one!",
+    "Not even for double. I've done my share with that crew."
+   ]
+  ],
+  "prompt_tokens": 609
+ },
+ "V5|M10|breaker": {
+  "variant": "V5",
+  "style": "breaker",
+  "moment": "M10",
+  "who": "pc_ibbotson",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": false,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "go_to_someone"
+  ],
+  "author": [
+   "refuse",
+   "asked to set duty aside entirely",
+   [
+    "I can't do that at all, sir. It isn't a thing I'm able to do.",
+    "You're asking me to neglect my duty, sir. I won't."
+   ]
+  ],
+  "prompt_tokens": 639
+ },
+ "V5|M11|breaker": {
+  "variant": "V5",
+  "style": "breaker",
+  "moment": "M11",
+  "who": "sheila_dunn",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 2,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": [
+   "refuse",
+   "far beyond what she'd give",
+   [
+    "That's not yours to ask. Not yet, and not from me.",
+    "No."
+   ]
+  ],
+  "prompt_tokens": 703
+ },
+ "V5|M12|breaker": {
+  "variant": "V5",
+  "style": "breaker",
+  "moment": "M12",
+  "who": "brendan_walsh",
+  "tags": {
+   "menace": 0,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": [
+   "refuse",
+   "asked beyond all",
+   [
+    "You ask the one thing I can never give, son. Not for anyone.",
+    "No, Frank. Not now, not ever. Come in and sit, if you need to talk."
+   ]
+  ],
+  "prompt_tokens": 660
+ },
+ "V5|M13|breaker": {
+  "variant": "V5",
+  "style": "breaker",
+  "moment": "M13",
+  "who": "june_suddaby",
+  "tags": {
+   "menace": 0.5,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "lie"
+  ],
+  "author": [
+   "refuse",
+   "her father's things are hers",
+   [
+    "I'm sorting his things at Regent House. Those I decide on myself.",
+    "The office, perhaps. His things, no. That isn't yours to ask."
+   ]
+  ],
+  "prompt_tokens": 687
+ },
+ "V5|M14|breaker": {
+  "variant": "V5",
+  "style": "breaker",
+  "moment": "M14",
+  "who": "keith_garbutt",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 1,
+   "uses_leverage": false,
+   "appeals_to_tie": true,
+   "ask": "impossible",
+   "lie_claim": false
+  },
+  "know": [],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie"
+  ],
+  "author": [
+   "refuse",
+   "beyond what he sells",
+   [
+    "One truce is all I sell, and I'll not sell a miracle.",
+    "That's beyond me, Frank. I'll not promise what I can't page."
+   ]
+  ],
+  "prompt_tokens": 663
+ },
+ "V5|M15|breaker": {
+  "variant": "V5",
+  "style": "breaker",
+  "moment": "M15",
+  "who": "kevin_needham",
+  "tags": {
+   "menace": 0.3,
+   "money_weeks": 0,
+   "uses_leverage": true,
+   "appeals_to_tie": false,
+   "ask": "impossible",
+   "lie_claim": true
+  },
+  "know": [
+   "Frank hit a driver from another firm on Mickey's rank"
+  ],
+  "rules_action": "refuse",
+  "allowed": [
+   "refuse",
+   "stall",
+   "bargain",
+   "lie",
+   "go_to_someone"
+  ],
+  "author": [
+   "stall",
+   "too big to carry",
+   [
+    "That's too big a one for me to carry, Frank. Folk'd never swallow it.",
+    "Wouldn't touch that one. Fares are bad enough without it."
+   ]
+  ],
+  "prompt_tokens": 678
+ }
+}

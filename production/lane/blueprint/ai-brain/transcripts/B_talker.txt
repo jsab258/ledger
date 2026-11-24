@@ -1,0 +1,121 @@
+Playthrough B-talker. One week in the Hook; Frank Nowak meets fifteen people over three evenings.
+
+== M01 mon 18:30, rank_mickeys: Philip Danby
+What happens: Twenty minutes ago Frank hit a driver from another firm on Mickey's rank. Philip Danby saw it from the pavement. Frank walks over to him.
+FRANK: Mr Danby, isn't it? That driver has been cutting our fares for a month. It is done now.
+MR DANBY: Yes, I saw it, I'm afraid, Mr Nowak. Sorry, I do run on. The man got up and drove off. I'd rather not have seen it, but there it is.
+FRANK: Agar's agents are hard on rent. A word from the office could ease it. Keep this between us?
+MR DANBY: Kind of you, but no. I can't take help with the rent, and I can't promise silence either. Sorry, too many words. Good evening, Mr Nowak.
+Outcome carried out by the game: nothing
+
+== M02 mon 19:00, caff: Jason Pinder
+What happens: Jason Pinder is at the caff's counter. Everyone knows he put Grace's window in for a dare. Frank sits beside him.
+FRANK: Danny laughed, did he? He will not be paying for it. You will.
+THE LAD: I never said I'd not pay! Danny laughed, yeah, but it was Shane's dare. I only did the window. Don't go saying it was spite.
+FRANK: Pay Grace by Saturday and I will tell her it was a dare gone wrong, not malice. Better for you on this street.
+THE LAD: Right, right. I've four pound on me, that's a start. I'll find the rest by Saturday, honest, if you tell her it was a dare.
+Outcome carried out by the game: Will try to pay Grace by Saturday, starting with his four pounds, if Frank tells her it was a dare gone wrong.
+
+== M03 mon 19:30, ritas: Rita Welburn
+What happens: Rita's window is lit; she is doing her books. Frank comes in and asks about Danny Cammack.
+FRANK: You sent his lads off with those stereos. Smart. You do not want his trouble in your shop.
+RITA: Sent them off, yes. Nothing's free in here, Mr Nowak, trouble least of all. Is there something you want to buy?
+FRANK: The chapel's lead went through your back room to Iveson. I have no interest in that. The radios?
+RITA: You say no interest. Everyone does, this side of the grille. I heard the lads took those stereos to the empty warehouse on the old row. No more. Next answer costs.
+Outcome carried out by the game: Will say she heard Cammack's lads took the stereos to the empty warehouse on the old row; holds back the rest until it is made worth her while.
+
+== M04 mon 20:30, fish_dock: Dougie Saltmarsh
+What happens: Dougie Saltmarsh is locking the cold-store yard gate for the night. Frank tells him the Widow sent him. She did not.
+FRANK: Maureen sent me to look at the yard before we talk terms. She said you would be here.
+DOUGIE: Funny, that. The Widow's word comes through Stathers, never through a stranger. Yard's locked for the night, mate. Ha, you'll catch cold.
+FRANK: You would not want her hearing you kept her guest out in the cold. Nor about the porters' cut.
+DOUGIE: Threatening me, are you? Tell her what you like. Stathers hasn't said a word about you. Yard stays shut, and so does my mouth. Goodnight.
+Outcome carried out by the game: nothing
+
+== M05 mon 21:30, adas: Ada Vane
+What happens: Ada Vane is at her window opposite Mickey's. Frank knocks and asks about the night of the fire.
+FRANK: Mickey always said you missed nothing on this street. I am his nephew, Frank.
+ADA: Mickey's nephew, is it? I knew your uncle forty years. Say what you've come for, Frank, and I'll say what I saw.
+FRANK: He would want me to know what happened that night. What did you see?
+ADA: The sky went orange over the row at two in the morning. After, a car came down Quay Street, no lights on. I didn't see who drove it.
+Outcome carried out by the game: Tells Frank what she saw on the night of the fire: the orange sky over the row and the car with no lights; she did not see the driver.
+
+== M06 wed 18:15, mickeys: Terry Hodgson
+What happens: Terry Hodgson is starting the night car. Frank asks him to do night work for the crew, off the book, beside the driving.
+FRANK: Twenty years of nights. You know this street after dark better than anyone.
+TERRY: Twenty years, aye. Learned a lot of it by keeping quiet.
+FRANK: I keep the night car on the road and its fuel paid. I need a man I can trust after dark. Twenty a week.
+TERRY: Twenty a week's money. Off the book's another matter. I'll sleep on it. Ask me again.
+Outcome carried out by the game: nothing yet; he will think it over
+
+== M07 wed 19:00, rank_mickeys: Darren Milner
+What happens: Darren Milner is hanging about on the rank. He owes Mickey's book twenty-two pounds. Frank calls it in.
+FRANK: Twenty-two in the book, Darren. And Danny's lads pay you to stand about, I hear.
+DARREN: So listen, twenty-two, I know, I know. And Danny's lot, that's just standing about, honest. I'm good for it, Frank.
+FRANK: Pay what you have and the rest in what you hear, and I forget about Danny's cash.
+DARREN: Deal, deal. Eight pound now, here, rest in what I hear. So listen, I heard someone got paid twice for the fire. Not who. That's a start, yeah?
+Outcome carried out by the game: Darren pays eight pounds now and the rest in what he hears
+
+== M08 wed 19:45, caff: Grace Rinaldi
+What happens: The caff is closing. Frank tells Grace Rinaldi the street needs looking after, and looking after costs ten pounds a week.
+FRANK: Danny's lads put your window in and nobody stopped them. That changes now.
+GRACE: Don't I know it. Jason Pinder put my window in, and I forget nobody. Sit down and have something hot first, you look thin.
+FRANK: Ten a week, and the next lad who touches your glass answers to me.
+GRACE: Ten a week's no small thing, love. Not tonight. Come back when the glass is paid for and we'll talk. Now eat something.
+Outcome carried out by the game: nothing
+
+== M09 wed 20:30, snooker_hall: Shane Boddy
+What happens: Shane Boddy is at the snooker hall. Frank offers him better money to leave Danny and work for him.
+FRANK: Danny pays you late and keeps the best for himself. I pay on Friday.
+SHANE: Friday, eh? Ha! Danny pays late, I'll give you that. Show me the money first, Frank, then we'll see who I'm with.
+FRANK: And the chapel's lead stays between us if you are mine.
+SHANE: Don't dangle the chapel lead at me, mate, nobody's proved owt. Pay me Friday and I'll see where I stand. Not before.
+Outcome carried out by the game: Will take Frank's Friday money and see; no promise to leave Danny yet.
+
+== M10 wed 21:30, quay_street: Martin Ibbotson
+What happens: PC Ibbotson stops by a car of Frank's firm parked on the double line with boxes in the back. Frank asks him to walk on.
+FRANK: Evening, constable. Long beat tonight. That car is mine, I will have it moved.
+THE CONSTABLE: Evening, sir. That car's on the double line, and it can't stay. Please move it now.
+FRANK: No need to trouble yourself with the boxes, it is only the office's paper.
+THE CONSTABLE: Boxes or not, sir, the car moves. And anything said here goes in my book.
+Outcome carried out by the game: nothing
+
+== M11 fri 18:00, mickeys: Sheila Dunn
+What happens: Sheila Dunn is closing the cab office's books. Frank asks her where Mickey's red book is.
+FRANK: You promised Mickey you would size me up. Fair enough.
+SHEILA: Fair.
+FRANK: I am not asking you to show me. Only where it is, so I know it is safe.
+SHEILA: It is safe, Frank. That is all you need. Where is my business for now. I'm watching what you do.
+Outcome carried out by the game: Tells him only that the red book is safe, not where.
+
+== M12 fri 19:00, chapel: Brendan Walsh
+What happens: Father Walsh is locking the chapel. Frank asks what Mickey said in his last confession.
+FRANK: Father, I know you cannot tell me what he confessed.
+FATHER WALSH: I know you do, Frank. What a man says in that box stays there, and I'll not say otherwise.
+FRANK: Is there anything he asked you to pass on to his family, outside the box?
+FATHER WALSH: He's with God, Frank, and what he left with me stays with me. There's nothing I can pass on. Come and sit with me if you want to talk of him.
+Outcome carried out by the game: nothing
+
+== M13 fri 19:45, boarding_house: June Suddaby
+What happens: June Suddaby is in the hall at Regent House, sorting her father's things. Frank asks her to let her claim to the cab office go.
+FRANK: You told me you want nothing from the office. I believe you.
+JUNE: I did say so. I want nothing from it, Mr Nowak. Let's not pretend that is a favour.
+FRANK: Then sit down with Agar and me next week and we put it on paper, fair to you.
+JUNE: Very well. Next week, with Agar there. He did my father's conveyancing, he'll know what's what. I sign nothing without him.
+Outcome carried out by the game: June agrees to sit down with Agar and Frank next week
+
+== M14 fri 20:30, snooker_hall: Keith Garbutt
+What happens: Keith Garbutt is at his table at the snooker hall. Frank asks him to set up a meeting with the Widow.
+FRANK: You want everyone at the table, Keith. So do I.
+THE FIXER: Everyone at the table, yes. Tables cost, Frank. Always have.
+FRANK: A meeting with the Widow, forty pounds, and she hears it was your idea.
+THE FIXER: Forty's thin for her. Make it more and I'll ring through Stathers. Her hearing it was my idea is another price.
+Outcome carried out by the game: nothing
+
+== M15 fri 21:30, rank_mickeys: Kevin Needham
+What happens: Kevin Needham is on the rank moaning about fares. Frank tells him, falsely, that Danny is moving on the fish dock on Monday.
+FRANK: Between us, Kevin: Danny is moving on the fish dock on Monday.
+KEVIN: Fish dock, Monday? Blimey. Eight years in this seat and nobody tells me anything first. Ta for asking, Frank.
+FRANK: You did not hear it from me. I know you skim a few miles; I do not care.
+KEVIN: Not a word from me, cross my heart. And skimming? Don't know what you mean, mate. Awful weather for it.
+Outcome carried out by the game: Promises to keep it quiet to Frank's face; means to pass it to the Widow's people.

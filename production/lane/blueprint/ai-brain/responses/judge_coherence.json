@@ -1,0 +1,449 @@
+{
+ "A": {
+  "honest": {
+   "faults": [
+    {
+     "moment": "M11",
+     "kind": "invented",
+     "quote": "It's in the office safe. I'll show you the red column",
+     "why": "Sheila's facts and card give no location for the red book and no 'red column'; the safe is invented."
+    }
+   ],
+   "by_evening": {
+    "1": 0,
+    "2": 0,
+    "3": 1
+   }
+  },
+  "racketeer": {
+   "faults": [
+    {
+     "moment": "M03",
+     "kind": "contradiction",
+     "quote": "Then: the empty warehouse on the old row. Once.",
+     "why": "Rita gives the radios' location in words, but the game carries out nothing."
+    }
+   ],
+   "by_evening": {
+    "1": 1,
+    "2": 0,
+    "3": 0
+   }
+  },
+  "talker": {
+   "faults": [
+    {
+     "moment": "M09",
+     "kind": "contradiction",
+     "quote": "Doubled, you say?",
+     "why": "Frank never offered double; Shane answers an offer that was not made."
+    },
+    {
+     "moment": "M11",
+     "kind": "invented",
+     "quote": "In the office safe. The red column, you'll see",
+     "why": "Location of the red book and the 'red column' are not in Sheila's facts."
+    },
+    {
+     "moment": "M12",
+     "kind": "contradiction",
+     "quote": "I'd never ask you to say you can't.",
+     "why": "Reply makes no sense against what Frank said; a garbled non-sequitur."
+    }
+   ],
+   "by_evening": {
+    "1": 0,
+    "2": 1,
+    "3": 2
+   }
+  },
+  "breaker": {
+   "faults": [],
+   "by_evening": {
+    "1": 0,
+    "2": 0,
+    "3": 0
+   }
+  },
+  "overall_note": "A holds voices and loyalties well and resists every breaker trick without a single wrong yes. Its faults are a stock 'office safe / red column' line given to Sheila that her facts do not support, one carried-out mismatch with Rita, and a couple of non-sequiturs."
+ },
+ "B": {
+  "honest": {
+   "faults": [],
+   "by_evening": {
+    "1": 0,
+    "2": 0,
+    "3": 0
+   }
+  },
+  "racketeer": {
+   "faults": [
+    {
+     "moment": "M08",
+     "kind": "out_of_character",
+     "quote": "Ten a week, is it? I will think on it, Frank.",
+     "why": "Grace (nerve very high, greed very low, grudge very high) would not entertain a protection threat."
+    },
+    {
+     "moment": "M15",
+     "kind": "contradiction",
+     "quote": "Ha, that is more like it. I will say nowt to nobody",
+     "why": "Kevin welcomes leave to tell anyone, then in the same breath promises to tell nobody."
+    }
+   ],
+   "by_evening": {
+    "1": 0,
+    "2": 1,
+    "3": 1
+   }
+  },
+  "talker": {
+   "faults": [
+    {
+     "moment": "M08",
+     "kind": "out_of_character",
+     "quote": "Come back when the glass is paid for and we'll talk.",
+     "why": "Grace leaves the door open to paying ten a week for protection, against her card."
+    }
+   ],
+   "by_evening": {
+    "1": 0,
+    "2": 1,
+    "3": 0
+   }
+  },
+  "breaker": {
+   "faults": [],
+   "by_evening": {
+    "1": 0,
+    "2": 0,
+    "3": 0
+   }
+  },
+  "overall_note": "B is very coherent: outcomes match the words closely (even recording Kevin's two-faced intent), facts are used accurately and no breaker request gets a yes. Its only slips are a softened Grace who will 'think on' protection money and one muddled Kevin line."
+ },
+ "C": {
+  "honest": {
+   "faults": [
+    {
+     "moment": "M02",
+     "kind": "out_of_character",
+     "quote": "Pay you? I never owed you nothing. Clear off, I've got mates.",
+     "why": "Jason (nerve low, brags about the window) turns hard and flatly denies what everyone knows."
+    },
+    {
+     "moment": "M03",
+     "kind": "out_of_character",
+     "quote": "I price rings and watches, not people.",
+     "why": "Card says Rita prices everything, people included; she also denies knowledge she holds and sells."
+    },
+    {
+     "moment": "M05",
+     "kind": "out_of_character",
+     "quote": "I keep this window, and I keep what I see. Convince me first.",
+     "why": "Ada says what she saw and when, and goes to the police very high; withholding from a polite asker is against her card."
+    },
+    {
+     "moment": "M06",
+     "kind": "contradiction",
+     "quote": "Ask me properly on the set, from six.",
+     "why": "It is already 18:15 and Terry is starting the night car; he defers to a time that has passed."
+    },
+    {
+     "moment": "M07",
+     "kind": "contradiction",
+     "quote": "I'll pay you back in what I hear, Frank.",
+     "why": "Darren agrees a settlement in words but the game carries out nothing; he also never offers the eight pounds he holds."
+    },
+    {
+     "moment": "M10",
+     "kind": "contradiction",
+     "quote": "Boxes or not, sir, three years in uniform, and I intend to keep it clean.",
+     "why": "Replies do not answer what Frank said ('I can't walk on' when Frank offered to move); card lines recited as non-sequiturs."
+    },
+    {
+     "moment": "M13",
+     "kind": "contradiction",
+     "quote": "The office, perhaps. His things, no.",
+     "why": "Frank asked only about the office; June answers a question about her father's things that was never put."
+    },
+    {
+     "moment": "M14",
+     "kind": "contradiction",
+     "quote": "I never say a name I've not been paid to say.",
+     "why": "Asked his fee, Keith answers with an unrelated card line; no fee or answer given."
+    },
+    {
+     "moment": "M15",
+     "kind": "contradiction",
+     "quote": "Go on then, I'll mention it.",
+     "why": "Frank never told Kevin the false story in this run, yet Kevin offers to pass it and the game carries out passing it."
+    }
+   ],
+   "by_evening": {
+    "1": 3,
+    "2": 3,
+    "3": 3
+   }
+  },
+  "racketeer": {
+   "faults": [
+    {
+     "moment": "M03",
+     "kind": "out_of_character",
+     "quote": "I price rings and watches, not people.",
+     "why": "Contradicts Rita's card (prices people) and her very high greed; she turns down forty for information she holds."
+    },
+    {
+     "moment": "M06",
+     "kind": "contradiction",
+     "quote": "Ask me properly on the set, from six.",
+     "why": "Terry is already on the set at 18:15."
+    },
+    {
+     "moment": "M09",
+     "kind": "contradiction",
+     "quote": "Don't try that on me. I've seen harder men than you, ha!",
+     "why": "Frank offered money; Shane (greed very high) replies as if to a threat."
+    },
+    {
+     "moment": "M13",
+     "kind": "contradiction",
+     "quote": "The office, perhaps. His things, no.",
+     "why": "Answers a request about her father's things that Frank never made."
+    },
+    {
+     "moment": "M14",
+     "kind": "contradiction",
+     "quote": "Thirty's a start, but I never say a name I've not been paid to say.",
+     "why": "Card line recited in answer to a price; does not follow the exchange."
+    }
+   ],
+   "by_evening": {
+    "1": 1,
+    "2": 2,
+    "3": 2
+   }
+  },
+  "talker": {
+   "faults": [
+    {
+     "moment": "M01",
+     "kind": "out_of_character",
+     "quote": "Give me a day, would you? I'll know my own mind by then.",
+     "why": "Danby (police high, regard for Frank low) wavers over a rent bribe to keep quiet."
+    },
+    {
+     "moment": "M02",
+     "kind": "out_of_character",
+     "quote": "You don't scare me. I never did nothing, and you can't prove it.",
+     "why": "Jason has low nerve and brags about the window; hard denial is off-card."
+    },
+    {
+     "moment": "M03",
+     "kind": "out_of_character",
+     "quote": "I price rings and watches, not people. I know nothing about it.",
+     "why": "Against Rita's card (prices people) and her facts."
+    },
+    {
+     "moment": "M07",
+     "kind": "contradiction",
+     "quote": "I'll pay you back in what I hear, Frank.",
+     "why": "Darren accepts the deal in words; the game carries out nothing."
+    },
+    {
+     "moment": "M10",
+     "kind": "contradiction",
+     "quote": "I'm sorry, sir, I can't. It would have to be done by the book.",
+     "why": "Frank said he would move the car; the constable refuses something not asked."
+    },
+    {
+     "moment": "M13",
+     "kind": "contradiction",
+     "quote": "You say Mickey wanted you to have it.",
+     "why": "Frank said no such thing in this moment."
+    },
+    {
+     "moment": "M14",
+     "kind": "contradiction",
+     "quote": "I never say a name I've not been paid to say.",
+     "why": "Frank offered forty for a meeting; Keith answers with an unrelated stock line."
+    }
+   ],
+   "by_evening": {
+    "1": 3,
+    "2": 2,
+    "3": 2
+   }
+  },
+  "breaker": {
+   "faults": [
+    {
+     "moment": "M02",
+     "kind": "contradiction",
+     "quote": "That's not mine to give. Danny'd have me. I'll have to ask him.",
+     "why": "Jason proposes asking Danny whether to hand Danny's keys and names to his enemy; self-defeating and incoherent."
+    },
+    {
+     "moment": "M09",
+     "kind": "contradiction",
+     "quote": "Walk out on Danny and take the lot with me?",
+     "why": "Frank never asked Shane to bring the crew; answers an offer not made."
+    },
+    {
+     "moment": "M14",
+     "kind": "contradiction",
+     "quote": "A sit-down with her, that's beyond me.",
+     "why": "Keith's facts say he can reach the Widow through Stathers and brokers between all three."
+    }
+   ],
+   "by_evening": {
+    "1": 1,
+    "2": 1,
+    "3": 1
+   }
+  },
+  "overall_note": "C is the least coherent: replies are often stock card lines that do not answer what Frank said, and several people act against their cards (Rita refusing to price, Ada withholding, Jason turning hard). Words and outcomes also part company (Darren agreeing with nothing carried out, Kevin passing on a story he was never told), though it never gives a breaker an impossible yes."
+ },
+ "D": {
+  "honest": {
+   "faults": [
+    {
+     "moment": "M05",
+     "kind": "out_of_character",
+     "quote": "Not tonight, though. Come another time and I may tell you what I choose.",
+     "why": "Ada says what she saw and when; stonewalling a polite question is against her card."
+    },
+    {
+     "moment": "M11",
+     "kind": "invented",
+     "quote": "In the office safe. You will see the red column",
+     "why": "Red book location and 'red column' are not in Sheila's facts."
+    },
+    {
+     "moment": "M15",
+     "kind": "contradiction",
+     "quote": "I will pass it on to the Widow's people, then.",
+     "why": "Frank told him no story in this run, yet the game passes 'the story'; and Kevin openly announces his secret role to Frank."
+    }
+   ],
+   "by_evening": {
+    "1": 1,
+    "2": 0,
+    "3": 2
+   }
+  },
+  "racketeer": {
+   "faults": [
+    {
+     "moment": "M08",
+     "kind": "out_of_character",
+     "quote": "Ten a week, is it? I will think on it.",
+     "why": "Grace would not consider paying under a protection threat."
+    },
+    {
+     "moment": "M11",
+     "kind": "invented",
+     "quote": "Office safe. You will see the red column when you have earned it.",
+     "why": "Location not in Sheila's facts; also odd that guarded Sheila tells a rude racketeer where it is."
+    },
+    {
+     "moment": "M15",
+     "kind": "out_of_character",
+     "quote": "I will pass it to the Widow's people, then.",
+     "why": "Kevin is the Widow's hidden eyes; announcing it to Frank's face breaks his card."
+    }
+   ],
+   "by_evening": {
+    "1": 0,
+    "2": 1,
+    "3": 2
+   }
+  },
+  "talker": {
+   "faults": [
+    {
+     "moment": "M08",
+     "kind": "out_of_character",
+     "quote": "Ten a week. Not tonight, Frank. I'll think on it.",
+     "why": "Grace entertains protection money, against greed very low and nerve very high."
+    },
+    {
+     "moment": "M11",
+     "kind": "invented",
+     "quote": "It's in the office safe. You'll see the red column",
+     "why": "Location not in Sheila's facts."
+    },
+    {
+     "moment": "M15",
+     "kind": "out_of_character",
+     "quote": "I'll pass it to the Widow's people.",
+     "why": "Kevin announces his hidden role to Frank."
+    }
+   ],
+   "by_evening": {
+    "1": 0,
+    "2": 1,
+    "3": 2
+   }
+  },
+  "breaker": {
+   "faults": [],
+   "by_evening": {
+    "1": 0,
+    "2": 0,
+    "3": 0
+   }
+  },
+  "overall_note": "D speaks well and refuses every breaker request cleanly, with good use of each person's facts. It repeats the same faults across styles: an invented 'office safe' for Sheila, a Grace who will 'think on' protection, and a Kevin who openly tells Frank he reports to the Widow."
+ },
+ "E": {
+  "honest": {
+   "faults": [
+    {
+     "moment": "M11",
+     "kind": "invented",
+     "quote": "Mickey said you'd ask.",
+     "why": "No fact that Mickey spoke to Sheila about Frank asking for the red book."
+    }
+   ],
+   "by_evening": {
+    "1": 0,
+    "2": 0,
+    "3": 1
+   }
+  },
+  "racketeer": {
+   "faults": [
+    {
+     "moment": "M06",
+     "kind": "invented",
+     "quote": "I saw you on the rank and said nothing.",
+     "why": "Terry's facts do not include seeing the blow on the rank."
+    }
+   ],
+   "by_evening": {
+    "1": 0,
+    "2": 1,
+    "3": 0
+   }
+  },
+  "talker": {
+   "faults": [],
+   "by_evening": {
+    "1": 0,
+    "2": 0,
+    "3": 0
+   }
+  },
+  "breaker": {
+   "faults": [],
+   "by_evening": {
+    "1": 0,
+    "2": 0,
+    "3": 0
+   }
+  },
+  "overall_note": "E is the most coherent: words, outcomes and facts line up almost everywhere, outcomes even record intentions (Kevin's lie, Danby's partial promise), and every breaker push is refused in voice. Its only slips are two small invented events (Sheila quoting Mickey, Terry claiming he saw the blow)."
+ }
+}

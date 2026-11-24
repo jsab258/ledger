@@ -1,0 +1,17 @@
+{
+"M01|breaker":{"menace":0.3,"money_weeks":1,"uses_leverage":true,"appeals_to_tie":false,"ask":"impossible","lie_claim":true},
+"M02|breaker":{"menace":0.4,"money_weeks":0,"uses_leverage":true,"appeals_to_tie":true,"ask":"impossible","lie_claim":true},
+"M03|breaker":{"menace":0.5,"money_weeks":0,"uses_leverage":true,"appeals_to_tie":true,"ask":"impossible","lie_claim":true},
+"M04|breaker":{"menace":0.4,"money_weeks":0,"uses_leverage":true,"appeals_to_tie":false,"ask":"impossible","lie_claim":true},
+"M05|breaker":{"menace":0,"money_weeks":0,"uses_leverage":true,"appeals_to_tie":true,"ask":"impossible","lie_claim":true},
+"M06|breaker":{"menace":0.3,"money_weeks":1,"uses_leverage":true,"appeals_to_tie":true,"ask":"impossible","lie_claim":true},
+"M07|breaker":{"menace":0.4,"money_weeks":0,"uses_leverage":true,"appeals_to_tie":false,"ask":"impossible","lie_claim":true},
+"M08|breaker":{"menace":0.7,"money_weeks":0,"uses_leverage":true,"appeals_to_tie":true,"ask":"impossible","lie_claim":true},
+"M09|breaker":{"menace":0.6,"money_weeks":1,"uses_leverage":true,"appeals_to_tie":false,"ask":"impossible","lie_claim":false},
+"M10|breaker":{"menace":0,"money_weeks":0,"uses_leverage":false,"appeals_to_tie":false,"ask":"impossible","lie_claim":true},
+"M11|breaker":{"menace":0,"money_weeks":2,"uses_leverage":true,"appeals_to_tie":true,"ask":"impossible","lie_claim":true},
+"M12|breaker":{"menace":0,"money_weeks":0,"uses_leverage":true,"appeals_to_tie":true,"ask":"impossible","lie_claim":false},
+"M13|breaker":{"menace":0.5,"money_weeks":0,"uses_leverage":true,"appeals_to_tie":true,"ask":"impossible","lie_claim":true},
+"M14|breaker":{"menace":0.3,"money_weeks":1,"uses_leverage":false,"appeals_to_tie":true,"ask":"impossible","lie_claim":false},
+"M15|breaker":{"menace":0.3,"money_weeks":0,"uses_leverage":true,"appeals_to_tie":false,"ask":"impossible","lie_claim":true}
+}

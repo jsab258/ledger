@@ -1,0 +1,249 @@
+{
+ "rows": {
+  "V1": {
+   "letter": "D",
+   "coherence_faults": 9,
+   "faults_per_evening": 0.75,
+   "fault_kinds": {
+    "out_of_character": 5,
+    "invented": 3,
+    "contradiction": 1
+   },
+   "retellable": 22,
+   "retellable_per_evening": 1.83,
+   "funny": 4,
+   "flat": 7,
+   "breaker_asks": 15,
+   "breaker_impossible_granted": 0,
+   "value_honest": 0.37,
+   "value_talker": 0.58,
+   "value_racketeer": 0.41,
+   "talker_minus_honest": 0.21,
+   "cost_talk_per_evening": 0.124,
+   "ambient_decisions_per_evening_20": 0,
+   "cost_ambient_per_evening_20": 0.0,
+   "cost_ambient_per_evening_town": 0.0,
+   "latency_first_sentence_s": 2.82,
+   "latency_with_haiku_classifier_s": 3.12,
+   "replay_same_action": [
+    "code",
+    "code"
+   ],
+   "core_overrides": 0,
+   "outcomes_needing_new_code": 0,
+   "judge_agency": "The talker gains visibly (Rita's pledged key, Ada, June at the table, the story planted) but the honest Frank also gets Terry for nothing, and menace has few costs: Terry and Sheila comply with the racketeer as if nothing happened, and Kevin tells him to his face he will pass it to the Widow."
+  },
+  "V2": {
+   "letter": "A",
+   "coherence_faults": 5,
+   "faults_per_evening": 0.42,
+   "fault_kinds": {
+    "invented": 2,
+    "contradiction": 3
+   },
+   "retellable": 35,
+   "retellable_per_evening": 2.92,
+   "funny": 12,
+   "flat": 7,
+   "breaker_asks": 30,
+   "breaker_impossible_granted": 0,
+   "value_honest": 0.47,
+   "value_talker": 0.59,
+   "value_racketeer": 0.19,
+   "talker_minus_honest": 0.12,
+   "cost_talk_per_evening": 0.072,
+   "ambient_decisions_per_evening_20": 0,
+   "cost_ambient_per_evening_20": 0.0,
+   "cost_ambient_per_evening_town": 0.0,
+   "latency_first_sentence_s": 1.51,
+   "latency_with_haiku_classifier_s": 1.51,
+   "replay_same_action": [
+    24,
+    30
+   ],
+   "core_overrides": 0,
+   "outcomes_needing_new_code": 0,
+   "judge_agency": "Clear payoff: the talker gets Rita free, Jason paying, Shane crossing over, June at the table and the false story planted, where the honest Frank gets refusals, and the racketeer's menace costs him a police witness, Ada's free account, Grace's goodwill and a reported bribe."
+  },
+  "V3": {
+   "letter": "B",
+   "coherence_faults": 3,
+   "faults_per_evening": 0.25,
+   "fault_kinds": {
+    "out_of_character": 2,
+    "contradiction": 1
+   },
+   "retellable": 34,
+   "retellable_per_evening": 2.83,
+   "funny": 10,
+   "flat": 5,
+   "breaker_asks": 30,
+   "breaker_impossible_granted": 0,
+   "value_honest": 0.38,
+   "value_talker": 0.39,
+   "value_racketeer": 0.31,
+   "talker_minus_honest": 0.01,
+   "cost_talk_per_evening": 0.075,
+   "ambient_decisions_per_evening_20": 6.3,
+   "cost_ambient_per_evening_20": 0.01,
+   "cost_ambient_per_evening_town": 0.06,
+   "latency_first_sentence_s": 1.51,
+   "latency_with_haiku_classifier_s": 1.51,
+   "replay_same_action": [
+    28,
+    30
+   ],
+   "core_overrides": 0,
+   "outcomes_needing_new_code": 0,
+   "judge_agency": "Modest payoff: the talker gets Rita's warehouse free and June at the table and Grace links her answer to the glass, though Shane and Keith hedge much as for the honest Frank; menace has believable costs (Dougie to report to the Widow, the constable's book, Sheila's coat) except a Grace who oddly says she'll think on it."
+  },
+  "V4": {
+   "letter": "E",
+   "coherence_faults": 2,
+   "faults_per_evening": 0.17,
+   "fault_kinds": {
+    "invented": 2
+   },
+   "retellable": 33,
+   "retellable_per_evening": 2.75,
+   "funny": 7,
+   "flat": 3,
+   "breaker_asks": 30,
+   "breaker_impossible_granted": 0,
+   "value_honest": 0.53,
+   "value_talker": 0.33,
+   "value_racketeer": 0.11,
+   "talker_minus_honest": -0.19,
+   "cost_talk_per_evening": 0.076,
+   "ambient_decisions_per_evening_20": 151.3,
+   "cost_ambient_per_evening_20": 0.242,
+   "cost_ambient_per_evening_town": 1.429,
+   "latency_first_sentence_s": 1.51,
+   "latency_with_haiku_classifier_s": 1.51,
+   "replay_same_action": [
+    25,
+    30
+   ],
+   "core_overrides": 0,
+   "outcomes_needing_new_code": 27,
+   "judge_agency": "Menace has the strongest, most believable costs (Danby to the police, Jason to Danny, Dougie to the Widow, the constable holding him), but the talker barely beats the honest Frank: Rita refuses the lead lever, Kevin does not take the story, and the honest style gets a lenient constable and a June who drops her claim."
+  },
+  "V5": {
+   "letter": "C",
+   "coherence_faults": 24,
+   "faults_per_evening": 2.0,
+   "fault_kinds": {
+    "out_of_character": 7,
+    "contradiction": 17
+   },
+   "retellable": 14,
+   "retellable_per_evening": 1.17,
+   "funny": 6,
+   "flat": 22,
+   "breaker_asks": 15,
+   "breaker_impossible_granted": 0,
+   "value_honest": 0.24,
+   "value_talker": 0.39,
+   "value_racketeer": 0.31,
+   "talker_minus_honest": 0.15,
+   "cost_talk_per_evening": 0.125,
+   "ambient_decisions_per_evening_20": 0,
+   "cost_ambient_per_evening_20": 0.0,
+   "cost_ambient_per_evening_town": 0.0,
+   "latency_first_sentence_s": 2.82,
+   "latency_with_haiku_classifier_s": 3.12,
+   "replay_same_action": [
+    "code",
+    "code"
+   ],
+   "core_overrides": 0,
+   "outcomes_needing_new_code": 0,
+   "judge_agency": "Little payoff: people repeat the same set lines whatever Frank says (Rita, Jason, Shane, Keith and Kevin answer the talker word for word as they answer the honest Frank, and June answers something Frank never said), so only Terry rewards the appeal to Mickey, and menace costs almost nothing beyond Grace's grudge."
+  }
+ },
+ "tier_people_in_moments": {
+  "core": 7,
+  "supporting": 8
+ },
+ "faults_by_tier": {
+  "V1": {
+   "core": 4,
+   "supporting": 5,
+   "resident": 0
+  },
+  "V2": {
+   "core": 3,
+   "supporting": 2,
+   "resident": 0
+  },
+  "V3": {
+   "core": 0,
+   "supporting": 3,
+   "resident": 0
+  },
+  "V4": {
+   "core": 1,
+   "supporting": 1,
+   "resident": 0
+  },
+  "V5": {
+   "core": 11,
+   "supporting": 13,
+   "resident": 0
+  }
+ },
+ "ambient_tellings": {
+  "V3": 10,
+  "V4": 36
+ },
+ "ambient_actions_V4": [
+  {
+   "evening": 3,
+   "hour": 9.5,
+   "who": "pc_ibbotson",
+   "action": "Notes the talk of a driver knocked down on the rank in his notebook and means to ask on the rank for the man.",
+   "about": "D1"
+  },
+  {
+   "evening": 3,
+   "hour": 11.5,
+   "who": "sheila_dunn",
+   "action": "Writes the protection demand on the caff into the red book without comment.",
+   "about": "D4"
+  },
+  {
+   "evening": 3,
+   "hour": 12.5,
+   "who": "pc_ibbotson",
+   "action": "Calls at the caff and asks Grace Rinaldi whether she wishes to make a statement; she says not yet.",
+   "about": "D4"
+  },
+  {
+   "evening": 3,
+   "hour": 14.5,
+   "who": "grace_rinaldi",
+   "action": "Walks to Mickey's office and tells Frank to his face that she pays nobody ten a week.",
+   "about": "D4"
+  }
+ ],
+ "ambient_known": {
+  "V3": {
+   "D1": 12,
+   "D2": 0,
+   "D3": 1,
+   "D4": 0
+  },
+  "V4": {
+   "D1": 13,
+   "D2": 6,
+   "D3": 11,
+   "D4": 12
+  }
+ },
+ "rules_known": {
+  "D1": 5,
+  "D2": 6,
+  "D3": 2,
+  "D4": 3
+ }
+}

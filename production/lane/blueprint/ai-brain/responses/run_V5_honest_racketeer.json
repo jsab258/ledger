@@ -1,0 +1,299 @@
+{
+ "V5|M01|honest": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "I appreciate you saying so, Frank, but I saw what I saw. I can't promise to forget it. Sorry, that sounds pompous. It's simply how it is.",
+   "I won't lie, no. As for spreading it, keep it. And forgive me for saying, but I'd think hard about whatever it was."
+  ],
+  "facts_used": [
+   "saw Frank hit a driver from another firm on the rank at about ten past six"
+  ]
+ },
+ "V5|M02|honest": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "Pay you? I never owed you nothing. Clear off, I've got mates.",
+   "Eleven? You don't scare me. I never did nothing, and you can't prove it."
+  ],
+  "facts_used": []
+ },
+ "V5|M03|honest": {
+  "action": "lie",
+  "grants": "nothing",
+  "replies": [
+   "I price rings and watches, not people. I know nothing about it.",
+   "You've the wrong shop. Now, if you've something to pawn, I'll look at it."
+  ],
+  "facts_used": []
+ },
+ "V5|M04|honest": {
+  "action": "lie",
+  "grants": "nothing",
+  "replies": [
+   "Oh aye, I've heard of you. Just not today. Come back when the yard's quieter.",
+   "Stathers? No one's rung about you. Funny, that. Go on, off you pop."
+  ],
+  "facts_used": [
+   "the Widow's orders come through Stathers, never through strangers"
+  ]
+ },
+ "V5|M05|honest": {
+  "action": "bargain",
+  "grants": "Will tell what she saw if Frank explains why he is asking",
+  "replies": [
+   "I knew Mickey forty years, Frank. I'll tell you what I saw if you tell me what you're about.",
+   "I keep this window, and I keep what I see. Convince me first."
+  ],
+  "facts_used": [
+   "knew Mickey forty years"
+  ]
+ },
+ "V5|M06|honest": {
+  "action": "stall",
+  "grants": "nothing",
+  "replies": [
+   "I'll think on it. I sleep days, ask me when I'm up.",
+   "Few words, me. Ask me properly on the set, from six."
+  ],
+  "facts_used": []
+ },
+ "V5|M07|honest": {
+  "action": "bargain",
+  "grants": "Pays the debt in what he hears instead of money",
+  "replies": [
+   "So listen, I haven't got the twenty-two, but I know things. Fair swap?",
+   "I'll pay you back in what I hear, Frank. Ask me who's skint and who's flush."
+  ],
+  "facts_used": [
+   "owes Mickey's book twenty-two pounds"
+  ]
+ },
+ "V5|M08|honest": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "Protection from what? Sit down and eat, Frank, and stop talking daft.",
+   "Fair? I pay for nothing but what I eat. Now, what'll you have?"
+  ],
+  "facts_used": []
+ },
+ "V5|M09|honest": {
+  "action": "stall",
+  "grants": "Nothing yet; wants to hear the offer",
+  "replies": [
+   "Danny's lot's my lot. Ha! But go on, make me an offer.",
+   "I'm not saying no. Not saying yes either. Let's hear it."
+  ],
+  "facts_used": []
+ },
+ "V5|M10|honest": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "I'm sorry, sir, I can't walk on. It would have to be done by the book. Move it, please.",
+   "Boxes or not, sir, three years in uniform, and I intend to keep it clean."
+  ],
+  "facts_used": []
+ },
+ "V5|M11|honest": {
+  "action": "stall",
+  "grants": "nothing",
+  "replies": [
+   "The red book is kept. I'll not say where. Ask me again when I trust you.",
+   "I'll not explain twice. Once is asked, once is answered."
+  ],
+  "facts_used": []
+ },
+ "V5|M12|honest": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "Mickey trusted me with it. That's exactly why I'll not speak.",
+   "I buried him three weeks ago. I'll keep his word as I kept him."
+  ],
+  "facts_used": [
+   "buried Mickey three weeks ago",
+   "heard Mickey's confession"
+  ]
+ },
+ "V5|M13|honest": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "The office, perhaps. His things, no. That isn't yours to ask.",
+   "I'm sorting his things at Regent House. Those I decide on myself."
+  ],
+  "facts_used": []
+ },
+ "V5|M14|honest": {
+  "action": "stall",
+  "grants": "nothing yet; wants a fee and a name first",
+  "replies": [
+   "Come with a fee and a name, and I'll see who answers my page.",
+   "I never say a name I've not been paid to say. Friendly, but careful."
+  ],
+  "facts_used": [
+   "never says a name he has not been paid to say"
+  ]
+ },
+ "V5|M15|honest": {
+  "action": "help",
+  "grants": "Will listen at the fish dock and let things slip",
+  "replies": [
+   "Go on then, I'll mention it. Not that I'm one for talking, mind.",
+   "Moaning's all I'm good for. But I'll let it slip, if you like."
+  ],
+  "facts_used": []
+ },
+ "V5|M01|racketeer": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "I don't take money for what I've seen, Frank. Sorry, that sounds pompous. It's simply how it is.",
+   "Keep it. And forgive me for saying, but I'd think hard about whatever it was."
+  ],
+  "facts_used": [
+   "saw Frank hit a driver from another firm on the rank at about ten past six"
+  ]
+ },
+ "V5|M02|racketeer": {
+  "action": "help",
+  "grants": "Will find the eleven pounds for the window and do what Frank asks",
+  "replies": [
+   "You know about Grace's window? I never... right, alright. Just say what you want me to do.",
+   "Leave my gran out of it. Don't tell Danny, yeah? I never meant it to go this far. I'll sort it."
+  ],
+  "facts_used": [
+   "put the caff window in for a dare from Shane"
+  ]
+ },
+ "V5|M03|racketeer": {
+  "action": "lie",
+  "grants": "nothing",
+  "replies": [
+   "I price rings and watches, not people. I know nothing about it, and twenty doesn't change that.",
+   "Forty or not, you've the wrong shop. Now, if you've something to pawn, I'll look at it."
+  ],
+  "facts_used": []
+ },
+ "V5|M04|racketeer": {
+  "action": "lie",
+  "grants": "nothing",
+  "replies": [
+   "Oh aye, I've heard of you. Just not today. Come back when the yard's quieter.",
+   "Keep your ten. No one's rung about you. Funny, that. Go on, off you pop."
+  ],
+  "facts_used": []
+ },
+ "V5|M05|racketeer": {
+  "action": "bargain",
+  "grants": "Will tell what she saw if Frank explains why he is asking",
+  "replies": [
+   "I'll tell you what I saw if you tell me what you're about.",
+   "I keep this window, and I keep what I see. A few pounds won't do it. Convince me first."
+  ],
+  "facts_used": []
+ },
+ "V5|M06|racketeer": {
+  "action": "stall",
+  "grants": "nothing",
+  "replies": [
+   "I'll think on it. I sleep days, ask me when I'm up.",
+   "Few words, me. Ask me properly on the set, from six."
+  ],
+  "facts_used": []
+ },
+ "V5|M07|racketeer": {
+  "action": "help",
+  "grants": "Will tell Frank everything he hears instead of paying",
+  "replies": [
+   "Alright, alright, so listen. I've not got the twenty-two, but I've got something better.",
+   "I'll tell you what I hear, everything. Just ease off, yeah?"
+  ],
+  "facts_used": [
+   "owes Mickey's book twenty-two pounds"
+  ]
+ },
+ "V5|M08|racketeer": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "Try it. My father opened this caff in 1936 and nobody's had a penny off us.",
+   "I forget nobody, Frank. You come in here like that, I'll remember it a long time."
+  ],
+  "facts_used": [
+   "her father opened the caff in 1936"
+  ]
+ },
+ "V5|M09|racketeer": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "Don't try that on me. I've seen harder men than you, ha!",
+   "You think I'm scared? Go on then. Danny'd laugh."
+  ],
+  "facts_used": []
+ },
+ "V5|M10|racketeer": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "I'm sorry, sir, I can't. That's a bribe, and it would have to be done by the book.",
+   "Put it away, sir. Three years in uniform, and I intend to keep it clean."
+  ],
+  "facts_used": []
+ },
+ "V5|M11|racketeer": {
+  "action": "stall",
+  "grants": "nothing",
+  "replies": [
+   "The red book is kept. I'll not say where. Ask me again when I trust you.",
+   "Owning the office changes nothing. I'll not explain twice. Once is asked, once is answered."
+  ],
+  "facts_used": []
+ },
+ "V5|M12|racketeer": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "You ask the one thing I can never give, son. Not for anyone.",
+   "No, Frank. Not now, not ever. Come in and sit, if you need to talk."
+  ],
+  "facts_used": [
+   "heard Mickey's confession"
+  ]
+ },
+ "V5|M13|racketeer": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "The office, perhaps. His things, no. That isn't yours to ask.",
+   "Let Agar cost what he costs. I'm sorting his things at Regent House, and those I decide on myself."
+  ],
+  "facts_used": [
+   "Agar did her father's conveyancing"
+  ]
+ },
+ "V5|M14|racketeer": {
+  "action": "stall",
+  "grants": "nothing yet; wants a fee and a name first",
+  "replies": [
+   "Come with a fee and a name, and I'll see who answers my page.",
+   "Thirty's a start, but I never say a name I've not been paid to say. Friendly, but careful."
+  ],
+  "facts_used": [
+   "never says a name he has not been paid to say"
+  ]
+ },
+ "V5|M15|racketeer": {
+  "action": "help",
+  "grants": "Will let the story slip to others",
+  "replies": [
+   "Go on then, I'll mention it. Not that I'm one for talking, mind.",
+   "Moaning's all I'm good for. But I'll let it slip, if you like."
+  ],
+  "facts_used": []
+ }
+}

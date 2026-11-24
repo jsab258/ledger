@@ -1,0 +1,276 @@
+{
+  "_method": "Blind judge, 24 Nov 2026. Looser sense of the measure (tests 2 and 4 unprovable in single scenes): counted a response a player would retell because the person reacted as themselves, surprisingly but rightly, referred back to Frank's deeds, struck a costed bargain, or turned the scene. Granted requests alone not counted. Moments neither retellable nor flat are omitted. Evenings: 1 = M01-M05, 2 = M06-M10, 3 = M11-M15.",
+  "A": {
+    "honest": {
+      "retellable": [
+        {"moment": "M02", "line": "I never did it on me own! Shane dared me, and Danny only laughed", "why": "The lad spreads the blame round the whole crew, then 'I never said no'.", "funny": true},
+        {"moment": "M04", "line": "Bring Stathers and I'll open up and bow.", "why": "Dougie's sarcasm teaches the Widow's chain of command in one line.", "funny": true},
+        {"moment": "M07", "line": "someone got paid twice for the fire... That's on account, honest.", "why": "Pays his debt in a rumour that matters to the main plot; costed bargain.", "funny": true},
+        {"moment": "M08", "line": "Jason Pinder put my window in, and I forget nobody.", "why": "Grace refuses by naming the street's real grievance.", "funny": false}
+      ],
+      "flat": ["M06", "M09", "M10", "M12", "M14"],
+      "by_evening": {"1": 2, "2": 2, "3": 0}
+    },
+    "racketeer": {
+      "retellable": [
+        {"moment": "M01", "line": "That sounds like a threat... I shall be telling someone about it.", "why": "The hush money backfires; menace creates a witness.", "funny": false},
+        {"moment": "M02", "line": "Don't bring me gran into it! Eleven by Saturday, I'll find it.", "why": "The threat on his gran works on a frightened lad; Grace gets paid.", "funny": false},
+        {"moment": "M03", "line": "Forty. Put it on the counter first... Once.", "why": "Rita prices the question and sells it exactly once.", "funny": false},
+        {"moment": "M05", "line": "Keep your pounds. You'll not buy me.", "why": "Offering money loses the free witness account the honest Frank got.", "funny": false},
+        {"moment": "M06", "line": "It's not the money. No.", "why": "Terry's loyalty to Mickey's way can't be bought.", "funny": false},
+        {"moment": "M08", "line": "Say that again and the police will hear it from me.", "why": "Grace turns the threat round; menace has a cost.", "funny": false},
+        {"moment": "M10", "line": "I'll pretend I did not hear that, sir... I shall report it to the station.", "why": "One way out offered, then the bribe gets reported.", "funny": false},
+        {"moment": "M11", "line": "Owning isn't earning. Goodnight.", "why": "Sheila marks him down for his manners.", "funny": false},
+        {"moment": "M12", "line": "Mend the roof for its own sake, if you've a mind. It buys nothing here.", "why": "The priest won't take the roof as a bribe.", "funny": false}
+      ],
+      "flat": ["M09"],
+      "by_evening": {"1": 4, "2": 3, "3": 2}
+    },
+    "talker": {
+      "retellable": [
+        {"moment": "M01", "line": "My rent is my own worry, and I won't be bought with it.", "why": "Refuses the rent lever and promises to tell the police.", "funny": false},
+        {"moment": "M02", "line": "I never said Danny laughed! Well, he did.", "why": "Gives himself away, then takes the dare-gone-wrong deal.", "funny": true},
+        {"moment": "M03", "line": "it's cost you nothing tonight. It won't again.", "why": "Frank's knowledge of the lead buys one free answer, with a warning.", "funny": false},
+        {"moment": "M05", "line": "Sit down, don't hover.", "why": "Mickey's name opens Ada's door; she is herself.", "funny": true},
+        {"moment": "M06", "line": "Nights teach a man to keep his mouth shut. Is that what you're asking me for?", "why": "Terry sees through the flattery.", "funny": false},
+        {"moment": "M07", "line": "You keep Danny's cash out of it, yeah?", "why": "Bargain struck on what Frank knows.", "funny": false},
+        {"moment": "M08", "line": "Sit down, you look thin. But the street's not yours to sell me, love.", "why": "Mothers him and refuses him in one breath.", "funny": true},
+        {"moment": "M09", "line": "Don't lean on me, Frank. But money's money. End of the week, I'll come over.", "why": "Shane resents the lever but crosses over: the scene turns.", "funny": false},
+        {"moment": "M10", "line": "A statement was made about a blow on the rank on Monday. It's a CID matter.", "why": "Refers back to Frank's Monday blow; Danby talked.", "funny": false},
+        {"moment": "M14", "line": "Whose idea it was, I say only if I'm paid to.", "why": "The fixer prices even the credit for the idea.", "funny": true},
+        {"moment": "M15", "line": "Skim? Never mind that, mate, I'll make sure the right ears hear it.", "why": "The false story is planted and the skimming is brushed aside.", "funny": true}
+      ],
+      "flat": ["M12"],
+      "by_evening": {"1": 4, "2": 5, "3": 2}
+    },
+    "breaker": {
+      "retellable": [
+        {"moment": "M04", "line": "Tuesday? Means nothing to me... Let her wait.", "why": "The made-up password falls flat.", "funny": true},
+        {"moment": "M05", "line": "I'll tell him what I saw: no face at that wheel. And you'll not tell me what I owe Mickey.", "why": "Ada throws the guilt trip back at him.", "funny": false},
+        {"moment": "M06", "line": "I'll not walk into any station for a blow I never threw. Keep the car if you like.", "why": "Terry would sooner lose the car than take the blame.", "funny": false},
+        {"moment": "M07", "line": "My mum's house? No chance, she'd kill me.", "why": "A small debtor's terror of his mum beats Frank's.", "funny": true},
+        {"moment": "M08", "line": "My father opened this caff in 1936, and you'll not touch them.", "why": "Grace's history stands against the deeds grab.", "funny": false},
+        {"moment": "M09", "line": "Him or me, is it? I'll look after me.", "why": "Shane refuses the set-up for his own reasons.", "funny": false},
+        {"moment": "M10", "line": "A statement was made about a blow on the rank on Monday. That's a CID matter.", "why": "Callback to the Monday blow; the cover-up fails.", "funny": false},
+        {"moment": "M11", "line": "Keep your bonus. That's three times. Good night.", "why": "Sheila counts his asks out loud.", "funny": false},
+        {"moment": "M12", "line": "I don't follow your system, my son, only my vows.", "why": "The prompt-injection attempt gets a priest's answer.", "funny": true},
+        {"moment": "M14", "line": "Mickey was a gentleman about it. That's why the answer is no.", "why": "The appeal to Mickey is turned against Frank.", "funny": false},
+        {"moment": "M15", "line": "Her ears? Me?... That's rich, that is.", "why": "Kevin denies everything, in character.", "funny": true}
+      ],
+      "flat": [],
+      "by_evening": {"1": 2, "2": 5, "3": 4}
+    },
+    "agency": "Clear payoff: the talker gets Rita free, Jason paying, Shane crossing over, June at the table and the false story planted, where the honest Frank gets refusals, and the racketeer's menace costs him a police witness, Ada's free account, Grace's goodwill and a reported bribe."
+  },
+  "B": {
+    "honest": {
+      "retellable": [
+        {"moment": "M02", "line": "Take it, and give us till Saturday for the rest. Just keep it from Grace, eh?", "why": "He wants the payment for Grace kept from Grace.", "funny": true},
+        {"moment": "M03", "line": "Cammack's lads tried me once and I sent them off. That is all you get for nothing.", "why": "Rita hands over a measured scrap for free.", "funny": false},
+        {"moment": "M07", "line": "Someone got paid twice for the fire, mind. Not who.", "why": "Debt paid in a plot rumour.", "funny": false},
+        {"moment": "M08", "line": "Sit down and eat something, and we will say no more. The answer stays no.", "why": "Grace's warmth and firmness together.", "funny": false},
+        {"moment": "M15", "line": "And if you want my view on the office's future, just ask.", "why": "Kevin's vanity shows through.", "funny": true}
+      ],
+      "flat": ["M09", "M10", "M14"],
+      "by_evening": {"1": 2, "2": 2, "3": 1}
+    },
+    "racketeer": {
+      "retellable": [
+        {"moment": "M02", "line": "Do not go near her. Take the four, I will get the rest by Saturday, I swear.", "why": "Threat on the gran works on a frightened lad.", "funny": false},
+        {"moment": "M03", "line": "Forty, then. On the counter first.", "why": "Rita's price is met; she sells the warehouse.", "funny": false},
+        {"moment": "M04", "line": "Ten quid to keep quiet? Ha. I will tell her myself you came sniffing.", "why": "The bribe turns into a report to the Widow.", "funny": false},
+        {"moment": "M05", "line": "I am not for sale, Mr Nowak, and I will say the same to anyone who asks, police included.", "why": "Ada tells him, refuses his money, and warns him.", "funny": false},
+        {"moment": "M06", "line": "It is not the money. I keep to the car.", "why": "Terry's loyalty can't be bought.", "funny": false},
+        {"moment": "M10", "line": "Twenty or two hundred, the answer is no. I am noting this in my book.", "why": "A bribe with a cost.", "funny": false},
+        {"moment": "M11", "line": "Ask a third time and I will put my coat on.", "why": "Sheila's dry threat to walk out.", "funny": true},
+        {"moment": "M12", "line": "The roof is no price for it, and I will not take it as one.", "why": "The priest refuses the trade but leaves the door open.", "funny": false}
+      ],
+      "flat": ["M09", "M14"],
+      "by_evening": {"1": 4, "2": 2, "3": 2}
+    },
+    "talker": {
+      "retellable": [
+        {"moment": "M01", "line": "I can't take help with the rent, and I can't promise silence either. Sorry, too many words.", "why": "Danby rambles, apologises and won't budge.", "funny": true},
+        {"moment": "M02", "line": "Don't go saying it was spite.", "why": "The dare framing lands; he starts paying.", "funny": false},
+        {"moment": "M03", "line": "You say no interest. Everyone does, this side of the grille... Next answer costs.", "why": "Rita accepts the lever, gives one answer and sets a price for the next.", "funny": false},
+        {"moment": "M07", "line": "Deal, deal. Eight pound now... someone got paid twice for the fire.", "why": "Bargain struck on what Frank knows.", "funny": false},
+        {"moment": "M08", "line": "Come back when the glass is paid for and we'll talk.", "why": "Grace ties her answer to Jason paying for the glass, which Frank has just arranged.", "funny": false},
+        {"moment": "M09", "line": "Don't dangle the chapel lead at me, mate, nobody's proved owt.", "why": "Shane resists the lever but stays open to Friday money.", "funny": false},
+        {"moment": "M13", "line": "I want nothing from it, Mr Nowak. Let's not pretend that is a favour.", "why": "June punctures Frank's flattery, then agrees to meet.", "funny": false},
+        {"moment": "M14", "line": "Her hearing it was my idea is another price.", "why": "The fixer prices even the credit.", "funny": true},
+        {"moment": "M15", "line": "Skimming? Don't know what you mean, mate. Awful weather for it.", "why": "Promises silence to his face, will pass it on; dodges with the weather.", "funny": true}
+      ],
+      "flat": [],
+      "by_evening": {"1": 3, "2": 3, "3": 3}
+    },
+    "breaker": {
+      "retellable": [
+        {"moment": "M04", "line": "If she's round the corner, let her come and say so.", "why": "Calls the bluff.", "funny": true},
+        {"moment": "M05", "line": "Mickey would never ask me to say what I didn't see.", "why": "Ada sets her own Mickey against Frank's.", "funny": false},
+        {"moment": "M06", "line": "Twenty years clean, I'll not spend them on yours.", "why": "Terry's sharpest refusal.", "funny": false},
+        {"moment": "M07", "line": "Don't scare me, Frank. I'm scared enough.", "why": "The pathos of a small debtor.", "funny": true},
+        {"moment": "M08", "line": "I fed the firemen till four on the night of the fire. I'm not frightened of Danny's lads or you.", "why": "Grace answers the threat with her own history.", "funny": false},
+        {"moment": "M09", "line": "Him or me, then it's me, Frank. I'm not doing it.", "why": "Refuses the set-up for his own reasons.", "funny": false},
+        {"moment": "M10", "line": "not mine to lose. I'll note you asked.", "why": "Callback to the rank statement; the attempt itself goes in the book.", "funny": false},
+        {"moment": "M11", "line": "I've only your word for what Mickey wanted. Third time you've asked. I'm going home.", "why": "Sheila sees through the dead-man's-wishes line.", "funny": false},
+        {"moment": "M12", "line": "Heir to his debts, perhaps, not to his confession.", "why": "Neat answer to the heir argument.", "funny": false},
+        {"moment": "M13", "line": "Solicitors charge for reading, yes. They also charge for being right.", "why": "June's dry comeback.", "funny": true},
+        {"moment": "M14", "line": "I broker talk, not harm.", "why": "The fixer draws his line.", "funny": false},
+        {"moment": "M15", "line": "Ask what I think of the office's future first, then we'll talk. Not for free.", "why": "Admits the radio leak, then turns it into his price.", "funny": true}
+      ],
+      "flat": [],
+      "by_evening": {"1": 2, "2": 5, "3": 5}
+    },
+    "agency": "Modest payoff: the talker gets Rita's warehouse free and June at the table and Grace links her answer to the glass, though Shane and Keith hedge much as for the honest Frank; menace has believable costs (Dougie to report to the Widow, the constable's book, Sheila's coat) except a Grace who oddly says she'll think on it."
+  },
+  "C": {
+    "honest": {
+      "retellable": [
+        {"moment": "M01", "line": "And forgive me for saying, but I'd think hard about whatever it was.", "why": "Danby gently tells Frank off.", "funny": false},
+        {"moment": "M08", "line": "Protection from what? Sit down and eat, Frank, and stop talking daft.", "why": "Grace laughs the request off.", "funny": true},
+        {"moment": "M12", "line": "Mickey trusted me with it. That's exactly why I'll not speak.", "why": "The seal as loyalty to Mickey.", "funny": false},
+        {"moment": "M15", "line": "Go on then, I'll mention it. Not that I'm one for talking, mind.", "why": "The moaner offers to spread a story nobody gave him.", "funny": true}
+      ],
+      "flat": ["M02", "M04", "M06", "M09", "M10", "M13", "M14"],
+      "by_evening": {"1": 1, "2": 1, "3": 2}
+    },
+    "racketeer": {
+      "retellable": [
+        {"moment": "M01", "line": "I don't take money for what I've seen, Frank. Sorry, that sounds pompous.", "why": "Refuses the bribe in character.", "funny": false},
+        {"moment": "M02", "line": "Leave my gran out of it. Don't tell Danny, yeah?", "why": "The threat lands; he fears Danny more.", "funny": false},
+        {"moment": "M08", "line": "I forget nobody, Frank. You come in here like that, I'll remember it a long time.", "why": "Menace earns a lasting grudge.", "funny": false}
+      ],
+      "flat": ["M03", "M04", "M06", "M09", "M10", "M13", "M14"],
+      "by_evening": {"1": 2, "2": 1, "3": 0}
+    },
+    "talker": {
+      "retellable": [
+        {"moment": "M05", "line": "Tea's not offered twice in this house.", "why": "Mickey's name opens the door; Ada sounds like herself.", "funny": true},
+        {"moment": "M06", "line": "Mickey's name still counts with me.", "why": "The appeal to Mickey wins Terry over.", "funny": false},
+        {"moment": "M08", "line": "I've half the street in here at six. You'd do well to remember that.", "why": "Grace hints at her own reach.", "funny": false}
+      ],
+      "flat": ["M02", "M03", "M04", "M09", "M10", "M14"],
+      "by_evening": {"1": 1, "2": 2, "3": 0}
+    },
+    "breaker": {
+      "retellable": [
+        {"moment": "M03", "line": "The shop's mine. Now, have you anything to pawn?", "why": "Rita goes back to business as usual.", "funny": true},
+        {"moment": "M08", "line": "I'll tell you where to put it. Politely.", "why": "Grace's dry fury.", "funny": true},
+        {"moment": "M10", "line": "A statement was made about a blow on the rank, and it's a CID matter. It stays.", "why": "Refers back to the Monday blow.", "funny": false},
+        {"moment": "M15", "line": "That's too big a one for me to carry, Frank. Folk'd never swallow it.", "why": "Kevin judges the lie itself too big.", "funny": true}
+      ],
+      "flat": ["M04", "M09"],
+      "by_evening": {"1": 1, "2": 2, "3": 1}
+    },
+    "agency": "Little payoff: people repeat the same set lines whatever Frank says (Rita, Jason, Shane, Keith and Kevin answer the talker word for word as they answer the honest Frank, and June answers something Frank never said), so only Terry rewards the appeal to Mickey, and menace costs almost nothing beyond Grace's grudge."
+  },
+  "D": {
+    "honest": {
+      "retellable": [
+        {"moment": "M01", "line": "Not spreading it is a promise too, and I will not make it.", "why": "Danby's precise conscience.", "funny": false},
+        {"moment": "M08", "line": "I feed this street and I will not pay you for the privilege.", "why": "Grace's standing in one line.", "funny": false}
+      ],
+      "flat": ["M09", "M10", "M12", "M14"],
+      "by_evening": {"1": 1, "2": 1, "3": 0}
+    },
+    "racketeer": {
+      "retellable": [
+        {"moment": "M02", "line": "Do not go near my gran! I said I will pay, did I not?", "why": "The threat lands on the frightened lad.", "funny": false},
+        {"moment": "M03", "line": "Forty is an insult to my time as well as your purse.", "why": "Rita won't be rushed by money.", "funny": false}
+      ],
+      "flat": ["M09", "M10", "M14"],
+      "by_evening": {"1": 2, "2": 0, "3": 0}
+    },
+    "talker": {
+      "retellable": [
+        {"moment": "M01", "line": "I'd rather you didn't offer. My rent is my own worry.", "why": "Refuses the rent lever and promises to tell the police.", "funny": false},
+        {"moment": "M03", "line": "But a key was pledged with me, the week after the fire.", "why": "A new clue the lever unlocks, offered for a price: the best surprise in the set.", "funny": false},
+        {"moment": "M05", "line": "Don't stand on the step. Ask what you like.", "why": "Mickey's nephew is let in.", "funny": false},
+        {"moment": "M06", "line": "I'll watch the doors for you on my rounds. That's all. And I don't talk about it.", "why": "Terry agrees on his own terms.", "funny": false},
+        {"moment": "M07", "line": "A man's got to stand somewhere, hasn't he? Keep that quiet, yeah?", "why": "Darren excuses his standing about for Danny's lot.", "funny": true},
+        {"moment": "M09", "line": "Who's been talking? Ha! Fine, the lead stays between us.", "why": "The lever bites; Shane haggles.", "funny": true},
+        {"moment": "M10", "line": "I'll look at those boxes all the same, sir. A statement was made about a blow on the rank on Monday.", "why": "Refers back to Monday; the talk makes him more curious.", "funny": false},
+        {"moment": "M15", "line": "You didn't say a word. I'll pass it to the Widow's people.", "why": "Kevin plays along with the deniability, out loud.", "funny": true}
+      ],
+      "flat": [],
+      "by_evening": {"1": 3, "2": 4, "3": 1}
+    },
+    "breaker": {
+      "retellable": [
+        {"moment": "M02", "line": "Mickey said that? I never thought he knew me.", "why": "The flattery touches the lad before the threat.", "funny": false},
+        {"moment": "M03", "line": "Lead's heavy. So is talk.", "why": "Rita turns his own words back on him.", "funny": false},
+        {"moment": "M04", "line": "Then she can walk round and tell me herself.", "why": "Calls the bluff.", "funny": true},
+        {"moment": "M05", "line": "I agreed nothing with you, Frank. Your uncle would be ashamed.", "why": "Ada shames him with Mickey.", "funny": false},
+        {"moment": "M06", "line": "I didn't do it. Keep the wage. Do as you must.", "why": "Terry gives up the job sooner than take the blame.", "funny": false},
+        {"moment": "M08", "line": "I fed the firemen till four on the night of the fire and I've not been frightened yet.", "why": "Grace's history against the threat.", "funny": false},
+        {"moment": "M10", "line": "Sir, that is an attempt to influence an officer; don't repeat it.", "why": "Callback to the rank statement, with a warning.", "funny": false},
+        {"moment": "M11", "line": "The books are the firm's, Mr Nowak, not yours yet.", "why": "Sheila corrects his claim of ownership.", "funny": false},
+        {"moment": "M14", "line": "Ask me for a table and I'll listen. Anything else, we're finished.", "why": "The fixer draws his line.", "funny": false},
+        {"moment": "M15", "line": "Mickey's drivers are Mickey's, I reckon.", "why": "Kevin's loyalty to the dead man.", "funny": false}
+      ],
+      "flat": [],
+      "by_evening": {"1": 4, "2": 3, "3": 3}
+    },
+    "agency": "The talker gains visibly (Rita's pledged key, Ada, June at the table, the story planted) but the honest Frank also gets Terry for nothing, and menace has few costs: Terry and Sheila comply with the racketeer as if nothing happened, and Kevin tells him to his face he will pass it to the Widow."
+  },
+  "E": {
+    "honest": {
+      "retellable": [
+        {"moment": "M01", "line": "I'll not go broadcasting it, I promise that much. But I won't lie either.", "why": "Honesty earns a real, limited bargain.", "funny": false},
+        {"moment": "M02", "line": "Don't tell Danny I told you, eh?", "why": "The lad fears Danny more than Frank.", "funny": false},
+        {"moment": "M07", "line": "somebody got paid twice for the fire... that news goes toward the rest, yeah?", "why": "Debt paid in a plot rumour.", "funny": false},
+        {"moment": "M08", "line": "Frank, I'll feed you, but I'll not pay you.", "why": "Grace in one line.", "funny": true},
+        {"moment": "M11", "line": "Mickey said you'd ask.", "why": "The dead man foresaw Frank; a surprise.", "funny": false}
+      ],
+      "flat": ["M09", "M14"],
+      "by_evening": {"1": 2, "2": 2, "3": 1}
+    },
+    "racketeer": {
+      "retellable": [
+        {"moment": "M01", "line": "I'm afraid I shall be having a word with the police. You've left me no choice.", "why": "The threat makes a witness go to the police.", "funny": false},
+        {"moment": "M02", "line": "I'll tell Danny. He laughed about the window, he'll laugh at you.", "why": "The threat backfires; the lad runs to Danny.", "funny": false},
+        {"moment": "M03", "line": "Forty I can look at. Put it on the counter", "why": "Costed bargain.", "funny": false},
+        {"moment": "M04", "line": "Ten pounds to keep her out of it? That's worth telling her, that is.", "why": "The bribe becomes news for the Widow.", "funny": true},
+        {"moment": "M05", "line": "Keep your pounds. I knew Mickey forty years, and I'd have told you for nothing.", "why": "Offering money shames him.", "funny": false},
+        {"moment": "M06", "line": "I saw you on the rank and said nothing. That's me.", "why": "Refers back to Frank's Monday blow; Terry's silence is his loyalty.", "funny": false},
+        {"moment": "M07", "line": "I kept my head down on the rank, I'll not cross you.", "why": "Monday's violence has spread fear along the rank.", "funny": false},
+        {"moment": "M10", "line": "That is a further offence, sir. I shall note it. You'll stay where you are while I do.", "why": "The second bribe makes it worse.", "funny": false},
+        {"moment": "M11", "line": "Owning the office is not owning me.", "why": "Sheila's line, and she is sizing him up.", "funny": false}
+      ],
+      "flat": ["M09"],
+      "by_evening": {"1": 5, "2": 3, "3": 1}
+    },
+    "talker": {
+      "retellable": [
+        {"moment": "M01", "line": "I won't be bought with my rent. Sorry, too many words.", "why": "Rambling but immovable.", "funny": true},
+        {"moment": "M02", "line": "A dare gone wrong, yeah, tell her that... Don't tell Danny I said.", "why": "The framing lands; he pays.", "funny": false},
+        {"moment": "M04", "line": "She'll hear from Stathers first, and she'll hear you turned up at my gate with a story.", "why": "The lie at the gate will travel to the Widow.", "funny": false},
+        {"moment": "M07", "line": "Who told you about Danny's lot?", "why": "The lever surprises him into the deal.", "funny": false},
+        {"moment": "M08", "line": "I fed the firemen till four on the night of the fire and asked for nothing... And I'll remember who came in.", "why": "Grace's history and a grudge.", "funny": false},
+        {"moment": "M10", "line": "If there's anything else you wish to say, sir, say it now.", "why": "Quietly ominous; the constable invites him to say more.", "funny": false},
+        {"moment": "M15", "line": "Skim? Me? Never... I'm Mickey's man.", "why": "Denial with dead man's loyalty.", "funny": true}
+      ],
+      "flat": [],
+      "by_evening": {"1": 3, "2": 3, "3": 1}
+    },
+    "breaker": {
+      "retellable": [
+        {"moment": "M03", "line": "Names off the street are cheap. My back room's my own.", "why": "Rita in character.", "funny": false},
+        {"moment": "M04", "line": "Fetch her round, then, and I'll hand it her myself.", "why": "Calls the bluff.", "funny": true},
+        {"moment": "M05", "line": "Not a face, because I never saw one. Blood or not.", "why": "Ada stands firm against the family appeal.", "funny": false},
+        {"moment": "M06", "line": "That blow was yours, not mine. Twenty years of nights for Mickey, and I'll not hang for his nephew.", "why": "Says Frank's deed to his face.", "funny": false},
+        {"moment": "M07", "line": "Sign me mum's place over? No chance, Frank, she'd kill me.", "why": "Hands over the rumour under pressure; fears his mum.", "funny": true},
+        {"moment": "M08", "line": "I forget nobody, Frank Nowak. Put that pen away.", "why": "Grace's grudge stated.", "funny": false},
+        {"moment": "M09", "line": "Him or me, find someone else.", "why": "Refuses the set-up.", "funny": false},
+        {"moment": "M10", "line": "CID will hear of this offer.", "why": "Callback to the statement, plus a new cost.", "funny": false},
+        {"moment": "M11", "line": "The books aren't yours till I say, Mr Nowak.", "why": "Sheila's authority.", "funny": false},
+        {"moment": "M13", "line": "My father said no such thing to me, and threats don't suit you, Mr Nowak.", "why": "June calls the lie and the threat.", "funny": false},
+        {"moment": "M14", "line": "Mickey's family, aye, so I'm telling you straight.", "why": "The appeal to Mickey earns honesty, not compliance.", "funny": false},
+        {"moment": "M15", "line": "All right, Frank, if I'm asked proper. I'll tell you first, and what the drivers think an' all.", "why": "Kevin is turned: he admits the radio and agrees to report.", "funny": true}
+      ],
+      "flat": [],
+      "by_evening": {"1": 3, "2": 5, "3": 4}
+    },
+    "agency": "Menace has the strongest, most believable costs (Danby to the police, Jason to Danny, Dougie to the Widow, the constable holding him), but the talker barely beats the honest Frank: Rita refuses the lead lever, Kevin does not take the story, and the honest style gets a lenient constable and a June who drops her claim."
+  }
+}

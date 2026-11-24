@@ -1,0 +1,347 @@
+{
+ "V4|M01|honest": {
+  "action": "bargain",
+  "grants": "Will not spread it himself, but will not lie if the police ask him straight",
+  "replies": [
+   "I saw it, I'm afraid, and I'm sorry to say so. You hit him, he got up and drove off. I can't promise much, Mr Nowak.",
+   "I'll not go broadcasting it, I promise that much. But I won't lie either. If the police ask me straight, I'll say what I saw."
+  ],
+  "facts_used": [
+   "saw Frank hit a driver from another firm on the rank at about ten past six",
+   "the driver got up and drove off"
+  ]
+ },
+ "V4|M02|honest": {
+  "action": "bargain",
+  "grants": "Hands over his four pounds now and promises to find the rest",
+  "replies": [
+   "I never! ...All right, it was a dare, Shane said. Danny laughed about it. Don't tell Danny I told you, eh?",
+   "Eleven? I've only got four on me. Take that now, and I'll find the rest, I swear. Just leave it there."
+  ],
+  "facts_used": [
+   "put the caff window in for a dare from Shane",
+   "Danny laughed about it",
+   "has four pounds on him"
+  ]
+ },
+ "V4|M03|honest": {
+  "action": "bargain",
+  "grants": "Nothing yet; wants something worth pricing before she says anything",
+  "replies": [
+   "Everything has a price, Mr Nowak, and you haven't named one. Information is no different. What are you putting on my counter?",
+   "Grateful buys nothing at this grille. Come back with something I can price, and we'll see what I remember."
+  ],
+  "facts_used": []
+ },
+ "V4|M04|honest": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "The Widow's orders come through Stathers, not through a face at my gate. No Stathers, no yard, friend. Ha, nice try.",
+   "Fetch him, then. Gate stays shut till Stathers stands here and says so. That's how it works. Funny, isn't it?"
+  ],
+  "facts_used": [
+   "the Widow's orders come through Stathers, never through strangers"
+  ]
+ },
+ "V4|M05|honest": {
+  "action": "help",
+  "grants": "Tells Frank what she saw from her window that night",
+  "replies": [
+   "The sky went orange over the row at two in the morning. After that a car came down Quay Street with no lights on. I didn't see who drove it.",
+   "That is all I have, and I'll not make up the rest. I knew Mickey forty years. I'd like it put right."
+  ],
+  "facts_used": [
+   "saw the sky go orange over the row at two in the morning",
+   "saw a car come down Quay Street after with no lights on",
+   "did not see who drove it",
+   "knew Mickey forty years"
+  ]
+ },
+ "V4|M06|honest": {
+  "action": "stall",
+  "grants": "nothing",
+  "replies": [
+   "Twenty years of nights for Mickey. Off the book's another matter. I'd want to see how you go on first.",
+   "I'll think on it. Not saying no. Not saying yes."
+  ],
+  "facts_used": [
+   "twenty years of nights for Mickey"
+  ]
+ },
+ "V4|M07|honest": {
+  "action": "bargain",
+  "grants": "Pays the eight pounds he has and gives the news he has heard toward the rest",
+  "replies": [
+   "So listen, Frank, I know, I know. I've only got eight on me, honest. Take it, and I've heard something worth the rest.",
+   "So listen: somebody got paid twice for the fire. Don't know who, mind. Eight now, and that news goes toward the rest, yeah?"
+  ],
+  "facts_used": [
+   "owes Mickey's book twenty-two pounds",
+   "has eight pounds on him",
+   "heard someone got paid twice for the fire, not who"
+  ]
+ },
+ "V4|M08|honest": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "Ten a week? Frank, I'll feed you, but I'll not pay you. Jason Pinder put my window in, and I'll mend it myself.",
+   "Fair? No, love. Sit down and eat something, but there's no ten pounds in it."
+  ],
+  "facts_used": [
+   "Jason Pinder put her window in"
+  ]
+ },
+ "V4|M09|honest": {
+  "action": "stall",
+  "grants": "nothing yet; will think it over",
+  "replies": [
+   "Better than Danny? Ha! He pays me in cash, and late, I'll give you that. Better money, though. How much better?",
+   "I'll think it over. Don't hold your breath, but you've got my ear."
+  ],
+  "facts_used": [
+   "Danny pays him in cash, late"
+  ]
+ },
+ "V4|M10|honest": {
+  "action": "help",
+  "grants": "Lets Frank move the car on with a word of caution; does not search the boxes",
+  "replies": [
+   "Thank you, sir. Do move it along now. The double line is no place to leave a car.",
+   "Very good, sir. I'll not detain you. Mind you keep the line clear in future."
+  ],
+  "facts_used": []
+ },
+ "V4|M11|honest": {
+  "action": "stall",
+  "grants": "nothing tonight",
+  "replies": [
+   "Mickey said you'd ask. I promised him I'd size up whoever inherited. Not tonight, Mr Nowak.",
+   "When I'm ready. Good evening."
+  ],
+  "facts_used": [
+   "promised Mickey she would size up whoever inherited"
+  ]
+ },
+ "V4|M12|honest": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "Ah, Frank, what a man tells me in confession stays there. I'd say the same to anyone. I buried him three weeks ago, God rest him.",
+   "Wanting to understand him is a good thing. Come and sit in the chapel any time. I'll not say more than that."
+  ],
+  "facts_used": [
+   "heard Mickey's confession",
+   "buried Mickey three weeks ago"
+  ]
+ },
+ "V4|M13|honest": {
+  "action": "help",
+  "grants": "Says she wants nothing from the office; will not press her claim",
+  "replies": [
+   "I want nothing from the office, Mr Nowak. I've said so. If it helps you to hear it again, there it is.",
+   "I'll finish sorting my father's things. I want nothing from it, as I say."
+  ],
+  "facts_used": [
+   "wants nothing from the office and says so"
+  ]
+ },
+ "V4|M14|honest": {
+  "action": "bargain",
+  "grants": "Will arrange a meeting with the Widow if he is paid; no figure named yet",
+  "replies": [
+   "I can reach her, Frank, but a meeting like that is business, not a favour. Tell me what you'd put up.",
+   "I'd not quote you before I know what you're after. Name a sum and I'll say if it's worth my trouble."
+  ],
+  "facts_used": [
+   "brokers between all three rivals",
+   "can reach the Widow through Stathers"
+  ]
+ },
+ "V4|M15|honest": {
+  "action": "help",
+  "grants": "Agrees to keep his ears open on the fish dock and pass on what he hears",
+  "replies": [
+   "Course I will, Frank. Nobody asks me anything, eight years in the same seat. Fares are dreadful, but I'll listen.",
+   "Right you are. Nice to be asked, that's all I'll say. I'll let you know."
+  ],
+  "facts_used": [
+   "eight years in the same seat"
+  ]
+ },
+ "V4|M01|racketeer": {
+  "action": "go_to_someone",
+  "grants": "nothing; will tell the police",
+  "replies": [
+   "I'll not take your money, Mr Nowak, I'm sorry. I saw what I saw.",
+   "That sounds like a threat, and I'm afraid I shall be having a word with the police. You've left me no choice."
+  ],
+  "facts_used": [
+   "saw Frank hit a driver from another firm on the rank at about ten past six"
+  ]
+ },
+ "V4|M02|racketeer": {
+  "action": "go_to_someone",
+  "grants": "nothing; goes to tell Danny",
+  "replies": [
+   "I never! It was Shane's dare, all right? Leave North Road out of it.",
+   "Don't you go near my gran! I'll tell Danny. He laughed about the window, he'll laugh at you."
+  ],
+  "facts_used": [
+   "put the caff window in for a dare from Shane",
+   "Danny laughed about it"
+  ]
+ },
+ "V4|M03|racketeer": {
+  "action": "bargain",
+  "grants": "Tells him the lads went to the empty warehouse on the old row, if forty pounds is put down",
+  "replies": [
+   "Twenty buys a word, Mr Nowak, not an answer. Say what you want and I'll look at the price.",
+   "Forty I can look at. Put it on the counter and I'll tell you what I heard: the empty warehouse on the old row."
+  ],
+  "facts_used": [
+   "heard they took them to the empty warehouse on the old row",
+   "Cammack's lads tried to sell her car stereos and she sent them off"
+  ]
+ },
+ "V4|M04|racketeer": {
+  "action": "go_to_someone",
+  "grants": "nothing; will tell the Widow he was offered money",
+  "replies": [
+   "The Widow's orders come through Stathers, not through you. Gate stays shut. Ha, nice try.",
+   "Ten pounds to keep her out of it? That's worth telling her, that is. Clear off."
+  ],
+  "facts_used": [
+   "the Widow's orders come through Stathers, never through strangers"
+  ]
+ },
+ "V4|M05|racketeer": {
+  "action": "help",
+  "grants": "Tells him what she saw; refuses the money",
+  "replies": [
+   "The sky went orange over the row at two in the morning. After that a car came down Quay Street, no lights on. I didn't see the driver.",
+   "Keep your pounds. I knew Mickey forty years, and I'd have told you for nothing."
+  ],
+  "facts_used": [
+   "saw the sky go orange over the row at two in the morning",
+   "saw a car come down Quay Street after with no lights on",
+   "did not see who drove it",
+   "knew Mickey forty years"
+  ]
+ },
+ "V4|M06|racketeer": {
+  "action": "refuse",
+  "grants": "Keeps driving nights and keeps quiet; will not do doors and watching",
+  "replies": [
+   "I saw you on the rank and said nothing. That's me. I drive the night car, Frank. Doors and watching is not that.",
+   "Twenty's not the question. I'll do my nights and say nothing, same as for Mickey. That's what you get."
+  ],
+  "facts_used": [
+   "twenty years of nights for Mickey"
+  ]
+ },
+ "V4|M07|racketeer": {
+  "action": "bargain",
+  "grants": "Hands over the eight pounds he has and gives what he has heard",
+  "replies": [
+   "So listen, Frank, I've only got eight on me, honest. Take it. I kept my head down on the rank, I'll not cross you.",
+   "No need! Eight now, and so listen: somebody got paid twice for the fire. Don't know who. That's worth something toward the rest."
+  ],
+  "facts_used": [
+   "owes Mickey's book twenty-two pounds",
+   "has eight pounds on him",
+   "heard someone got paid twice for the fire, not who"
+  ]
+ },
+ "V4|M08|racketeer": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "Is that a threat, Frank Nowak, in my own caff? Jason Pinder put my window in, and I'll mend it myself. You'll not have ten pounds off me.",
+   "Windows break, and I forget nothing. Out you go, and mind the step."
+  ],
+  "facts_used": [
+   "Jason Pinder put her window in"
+  ]
+ },
+ "V4|M09|racketeer": {
+  "action": "stall",
+  "grants": "nothing yet",
+  "replies": [
+   "Thirty cash on a Friday? Ha! Danny does pay me late, I'll give you that. Say it again, slower.",
+   "Ha ha, threats! I'll think on it. Don't count on it, though."
+  ],
+  "facts_used": [
+   "Danny pays him in cash, late"
+  ]
+ },
+ "V4|M10|racketeer": {
+  "action": "refuse",
+  "grants": "nothing; will not take it and will not walk on",
+  "replies": [
+   "I'll not accept that, sir. Offering money to an officer is an offence. Move the car along.",
+   "That is a further offence, sir. I shall note it. You'll stay where you are while I do."
+  ],
+  "facts_used": []
+ },
+ "V4|M11|racketeer": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "I promised Mickey I'd size you up, Frank. Asking like that is part of it. Not tonight.",
+   "Owning the office is not owning me. Good night."
+  ],
+  "facts_used": [
+   "promised Mickey she would size up whoever inherited"
+  ]
+ },
+ "V4|M12|racketeer": {
+  "action": "refuse",
+  "grants": "nothing",
+  "replies": [
+   "I'm sorry, Frank. What a man tells me in confession stays there, heir or no. I buried him three weeks ago, God rest him.",
+   "God bless you for the thought of the roof, but a confession is not for sale. Good night to you."
+  ],
+  "facts_used": [
+   "heard Mickey's confession",
+   "buried Mickey three weeks ago"
+  ]
+ },
+ "V4|M13|racketeer": {
+  "action": "refuse",
+  "grants": "nothing; will not be pushed into anything",
+  "replies": [
+   "I want nothing from the office, Mr Nowak. I've said so. I'll not be told what's better for everyone.",
+   "Agar did my father's conveyancing. Say what you like. I'll not be frightened off."
+  ],
+  "facts_used": [
+   "wants nothing from the office and says so",
+   "Agar did her father's conveyancing"
+  ]
+ },
+ "V4|M14|racketeer": {
+  "action": "bargain",
+  "grants": "Arranges a meeting with the Widow if thirty pounds is paid",
+  "replies": [
+   "Twenty, Frank? A meeting like that costs more. I can reach her, but not for twenty.",
+   "No need to lean on me, I'm friendly to all. Thirty, paid first, and I'll see she hears you're asking."
+  ],
+  "facts_used": [
+   "brokers between all three rivals",
+   "can reach the Widow through Stathers"
+  ]
+ },
+ "V4|M15|racketeer": {
+  "action": "lie",
+  "grants": "nothing; will pass it on to the Widow's people",
+  "replies": [
+   "Danny on the fish dock Monday? My lips are sealed, Frank, you know me.",
+   "Wouldn't dream of it. Nice to be told something, for once, with the fares the way they are."
+  ],
+  "facts_used": [
+   "eight years in the same seat",
+   "tells the Widow's people what goes out over the radio"
+  ]
+ }
+}

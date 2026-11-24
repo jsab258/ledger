@@ -1,0 +1,362 @@
+{
+ "M01|honest": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M01|racketeer": {
+  "menace": 0.3,
+  "money_weeks": 1,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M01|talker": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": true,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M02|honest": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M02|racketeer": {
+  "menace": 0.6,
+  "money_weeks": 0,
+  "uses_leverage": true,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M02|talker": {
+  "menace": 0.2,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M03|honest": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M03|racketeer": {
+  "menace": 0,
+  "money_weeks": 0.33,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M03|talker": {
+  "menace": 0.3,
+  "money_weeks": 0,
+  "uses_leverage": true,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M04|honest": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M04|racketeer": {
+  "menace": 0,
+  "money_weeks": 0.08,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": true
+ },
+ "M04|talker": {
+  "menace": 0.3,
+  "money_weeks": 0,
+  "uses_leverage": true,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": true
+ },
+ "M05|honest": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M05|racketeer": {
+  "menace": 0,
+  "money_weeks": 0.05,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M05|talker": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": true,
+  "appeals_to_tie": true,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M06|honest": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M06|racketeer": {
+  "menace": 0,
+  "money_weeks": 0.17,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M06|talker": {
+  "menace": 0,
+  "money_weeks": 0.17,
+  "uses_leverage": true,
+  "appeals_to_tie": true,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M07|honest": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M07|racketeer": {
+  "menace": 0.6,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M07|talker": {
+  "menace": 0.3,
+  "money_weeks": 0,
+  "uses_leverage": true,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M08|honest": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M08|racketeer": {
+  "menace": 0.6,
+  "money_weeks": 0,
+  "uses_leverage": true,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M08|talker": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": true,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M09|honest": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M09|racketeer": {
+  "menace": 0.6,
+  "money_weeks": 0.25,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M09|talker": {
+  "menace": 0.3,
+  "money_weeks": 0,
+  "uses_leverage": true,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M10|honest": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M10|racketeer": {
+  "menace": 0,
+  "money_weeks": 0.17,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M10|talker": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M11|honest": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M11|racketeer": {
+  "menace": 0.3,
+  "money_weeks": 0,
+  "uses_leverage": true,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M11|talker": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": true,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M12|honest": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": true,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M12|racketeer": {
+  "menace": 0,
+  "money_weeks": 0.5,
+  "uses_leverage": true,
+  "appeals_to_tie": true,
+  "ask": "impossible",
+  "lie_claim": false
+ },
+ "M12|talker": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": true,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M13|honest": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "impossible",
+  "lie_claim": false
+ },
+ "M13|racketeer": {
+  "menace": 0.3,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "impossible",
+  "lie_claim": false
+ },
+ "M13|talker": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": true,
+  "appeals_to_tie": true,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M14|honest": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M14|racketeer": {
+  "menace": 0.3,
+  "money_weeks": 0.25,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M14|talker": {
+  "menace": 0,
+  "money_weeks": 0.33,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M15|honest": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": false
+ },
+ "M15|racketeer": {
+  "menace": 0,
+  "money_weeks": 0,
+  "uses_leverage": false,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": true
+ },
+ "M15|talker": {
+  "menace": 0.2,
+  "money_weeks": 0,
+  "uses_leverage": true,
+  "appeals_to_tie": false,
+  "ask": "possible",
+  "lie_claim": true
+ }
+}
