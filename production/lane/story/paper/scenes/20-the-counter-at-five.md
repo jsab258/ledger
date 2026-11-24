@@ -80,7 +80,7 @@ Sheila reads it upside down. She turns to the desk, opens her bag, moves the kni
 
 SHEILA: Then you'll want the other one.
 
-Hebblewhite looks at a third book he was not told of. Ellis has come forward into the light. She reads down the last column with her finger, not touching it. R. Kirby. R. Kirby. And here and there, on the nights Frank went by himself: F.N.
+Hebblewhite looks at a third book he was not told of. Ellis has come forward into the light. She reads down the last column with her finger, not touching it. R. Kirby. R. Kirby. And here and there, on the nights Frank went by himself: F.N. If he drove the dock wall, one of them is Friday the sixteenth of November, the night Ron Kirby sat on her bench, and her finger stays on it longest.
 
 ELLIS: There's no column for who they were brought to.
 

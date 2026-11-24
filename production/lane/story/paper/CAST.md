@@ -1,6 +1,6 @@
 # LEDGER: the cast
 
-Written 24 November 2026 by the story lane, from the revised story frame (frame/STORY-FRAME-2026-11-26.md), the spine and side cards (paper/SPINE-CARDS.md, paper/SIDE-CARDS.md), the 23 scenes (paper/scenes/), the casting index (production/casting/CASTING.md) and the street's regulars (production/casting/regulars/REGULARS.md). The first pass was a helper's extraction (working/cast-extract.md, working/cast-diff.md); every doubtful cell in it was checked against those sources, and the quoted lines are copied from the sources as they now stand. The changes against the earlier frame and the people files are in CAST-CHANGES.md.
+Written 24 November 2026 by the story lane, from the revised story frame (frame/STORY-FRAME-2026-11-26.md), the spine and side cards (paper/SPINE-CARDS.md, paper/SIDE-CARDS.md), the 23 scenes (paper/scenes/), the casting index (production/casting/CASTING.md) and the street's regulars (production/casting/regulars/REGULARS.md). The first pass was a helper's extraction (working/cast-extract.md, working/cast-diff.md); every doubtful cell in it was checked against those sources, and the quoted lines are copied from the sources as they now stand. The changes against the earlier frame and the people files are in CAST-CHANGES.md. Brought into line the same day with Frank's seven deeds, now in the story as spine cards F1 to F7 (written below as "deed F1" and so on).
 
 The people data files (blueprint/data/people/) read this file. Three layers:
 
@@ -21,6 +21,7 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
 - Want: to be the Hook's name by Christmas, so that when they say Mickey's they mean him (scene 2; frame section 1).
 - Flaw: pride, and a stranger's need to be seen to win.
 - The one deed: in week one, in his funeral suit, he drives Danny's abandoned car down Quay Street, parks it with the front wheels over the quay's edge, hangs the keys on Mickey's board and chalks CAR 3 (frame section 3; scene 5).
+- A deed a week besides (deeds F1 to F7), each at the wheel, each one he can decline: two real minutes to Julie Kettlewell's step and the tenfoot backwards (scene 1); Danny's van driven off loaded and left on the ferry rank with 4.10 chalked on its windscreen (scene 6); a wheelless shell shoved thirty yards across Danny's shutter (scene 8); the top road in four minutes with a shot man on the load (scene 10); the dock wall astern with no lights, on bail (scene 14); car two corked in his own gateway, and himself in the gap (scene 15); the family's car behind the old man's hearse (scene 17).
 - Ties:
   - Ron: the bond. Ron carries the envelope, the door, the lessons.
   - Sheila: the book. She makes him say what he did, in words she can write.
@@ -29,14 +30,16 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
   - Ellis: the one person who wants to hear everything and would never pass it on as talk.
   - Garbutt: sells him true reads and one truce. Agar: writes to him (Nowek), meets him once at Grace's.
   - Pauline: says his name on the air, rung by rung. Mickey: the uncle he never knew.
-- Voice: short and in order (what it is, then what he will do about it). He counts aloud. His temper is quiet: he does up the middle button of his jacket, goes formal (Mr Cammack, Mrs Jensen) and does it with his hands. He never asks the way. Lines:
+- Voice: short and in order (what it is, then what he will do about it). He counts aloud: seconds, bollards, feet and inches. His temper is quiet: he does up the middle button of his jacket, goes formal (Mr Cammack, Mrs Jensen) and does it with his hands, most often at the wheel, putting a car exactly where nobody thinks one can go. He never asks the way. Lines:
+  - "It's eleven minutes by the top road. I'll do it in four." (scene 10)
+  - "Eight foot four, less five foot six, less me." (scene 15)
   - "Nowak. N, O, W, A, K." (scene 14)
   - "Forty-one doors on this street, Ron. I counted. Not one opened." (scene 2)
   - "That leaves five pound fifty. I'll try not to go mad." (frame section 3)
 - What he is called: the new owner (Pauline, week one), Nowak (the street), Frank (Pauline from week four; Sheila the day she trusts him), Frankie (the town's top rung, for the man who runs the Hook; the Widow says it to own him, Ron once if ever; Danny says "nephew" until he is under Frank). Never Tom, never Tommy. He gives everybody both names.
 - What he calls others: Ron, Sheila, Pauline by first name; Mr Cammack, Mrs Jensen, Mr Agar when he means it.
 - Data id: frank_nowak (the internal cast_id "tom" and home "toms_flat" may stay; the brief allows it).
-- Path notes: he can be hurt, arrested and held for hours; he cannot die. Honest firm: the same want by daylight. His second deed, week five, is his own name signed to keep Ron out (or not).
+- Path notes: he can be hurt, arrested and held for hours; he cannot die. From the yard in week six his left arm, the one he changes gear with, may be in plaster to the end. Honest firm: the same want by daylight. In week five his own name can be signed to keep Ron out (or not).
 
 ### Ron Kirby
 
@@ -92,6 +95,7 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
   - Garbutt: the table. Ellis and Wardell: the trade, and the man who sells him a fact.
   - Sylvia Rennison: his lodger is three weeks behind. Grace: his newest man is at her sink.
   - The Widow: the rival whose gate he prices aloud. Mickey: drove his car.
+  - Seen gaining every week: the hatchback taking the boat's fares, the van on the warehouse row, the lit unit three doors up, his lads under the overhang, Fewson on Mickey's rank, Fewson's roll at the yard gate, a young man of his saying "Cammack's?" at the ticket window.
 - Voice: quick, funny, needling; prices every door aloud. Lines:
   - "Cab for the nephew." (scene 6)
   - "He's moved my motor. Mickey would've asked nicely for a fortnight and then said sorry." (frame section 3)
@@ -118,7 +122,7 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
   - "Leave him. He can ask." (scene 17)
 - What she calls Frank: "Mr Nowak"; "Frankie" is the fourth rung and she says it first, at the chained gate (scene 21).
 - Data id: maureen_jensen.
-- Path notes: ally, her men stand his posts and are gone in one morning at the fourth rung. Rival, the wall he breaks at the Landing. Alone or honest, she taxes, poaches and waits. She cannot die (maureen_jensen.json has can_die false, by the data's own cover rule); a gate with nobody at it is her fear.
+- Path notes: ally, her men stand his posts and are gone in one morning at the fourth rung. Rival, the wall he breaks at the Landing: it is her van driver who fires the one shot there, and she sends him across the water next morning and counts it ("That was never ordered", scene 17). Where she is Frank's ally the load is Danny's and so is the lad who fires. Alone or honest, she taxes, poaches and waits. She cannot die (maureen_jensen.json has can_die false, by the data's own cover rule); a gate with nobody at it is her fear.
 
 ### DS Carol Ellis
 
@@ -146,7 +150,7 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
 - Age: 62 (CASTING.md; scene 17 agrees).
 - Role: solicitor and honorary alderman; head of the old-money machine. Letters, an inspection, a licence hearing, the yard's lease. Seen in person only at the head of his stairs (scene 14) and at Grace's (scene 17).
 - Ties: Simon Ombler (managing clerk, signs his letters); Alan Sowerby (licensing officer who acts on them); Christine Pickering (the lease file); Dawn Pybus (his agents' rent collector, Ada's rent); the laundry's owner (his client); the Widow (the cold-store road); Eric Tharratt (the cold-store contract); Garbutt (host of his table); Frank (writes to him as Mr Nowek).
-- Carries: spine S17 Agar's first look, S29 The cold store before dawn, S38 The night between (through Ombler), S40 The week-six aim (Garbutt says it; Agar's paper is one of the three things the heads want), S42 A paper, S46 The room at Grace's, S52 The third morning; side D06 The name on the board, D09 Twelve weeks' notice, D16 All on the forms, D21 The rent on Ada's window.
+- Carries: spine S17 Agar's first look, S29 The cold store before dawn, S38 The night between (through Ombler), S40 The week-six aim (Garbutt says it; Agar's paper is one of the three things the heads want), S42 A paper, S46 The room at Grace's, S52 The third morning; side D06 The name on the board, D09 Twelve weeks' notice, D16 All on the forms (after deed F3, his bill for a shutter and a footway, to Mr Nowek), D21 The rent on Ada's window. On deed F7 his driver follows a minicab to the quay.
 - Voice: soft, courteous, every sentence a letter. He spells the name wrong in writing and says it right once, to Frank's face. Line: "One is not certain the committee can renew for a proprietor under charge." (scene 17)
 - Data id: geoffrey_agar.
 
@@ -155,7 +159,7 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
 - Age: 48 (CASTING.md).
 - Role: brokers between all three rivals; sells true reads and one truce a game; says the week's aim in weeks four, five and six; hosts the room at Grace's. Neat moustache, car coat he never unbuttons.
 - Ties: all three heads; Grace (her back room is his table); Hal Metcalfe (his Monday go-between); Sheila (takes tea standing up, scene 10); Frank (coat on, coat off); Danny (says the aim if allied).
-- Carries: spine S22 Garbutt's card, S24 The Landing: the night, S27 Garbutt's read, S40 The week-six aim, S46 The room at Grace's; scenes 10 and 17.
+- Carries: spine S22 Garbutt's card, S24 The Landing: the night, S27 Garbutt's read, S40 The week-six aim, deed F7 (he puts the three firms' cars in order behind the hearse: "By age. Nobody can mind age."), S46 The room at Grace's; scenes 10 and 17.
 - Voice: friendly, dry, always going on somewhere else. Line: "Her load comes in on Saturday's last boat. Whoever's stood there Sunday morning has the landing." (scene 10)
 - Data id: keith_garbutt.
 
@@ -173,8 +177,8 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
 - Age: 78 (CASTING.md).
 - Role: the old woman at her window opposite Mickey's; sees everything; the week's first test is her tea.
 - Ties: Mickey (he came Thursdays); Frank (the cup); Sheila (Mickey paid the difference in her rent); Dawn Pybus and Agar's agents (the rent); Julie (Ada rings the night desk when men queue in the yard).
-- Carries: spine S07 Ada's tea, S26 Remembrance Sunday, S31 The collision, S44 The yard; side D21 The rent on Ada's window.
-- Voice: brief, watchful, knocks on the glass. Line: "Mickey came Thursdays. You'll have a cup." (S07)
+- Carries: spine S07 Ada's tea, S26 Remembrance Sunday, S31 The collision, S44 The yard; the tellings of deeds F3 and F6; side D21 The rent on Ada's window.
+- Voice: brief, watchful, knocks on the glass. Lines: "Mickey came Thursdays. You'll have a cup." (S07). "He put Mickey's car in his own gateway like a cork in a bottle and sat on it." (scene 15)
 - Data id: ada_vane.
 
 ### Pauline Kitching
@@ -182,8 +186,8 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
 - Age: 44 (REGULARS).
 - Role: Mickey's dispatcher, the radio and the phone. Brisk and dry on the air, kind off it. She says the name ladder aloud: the new owner, Mr Nowak, Frank, nothing at all in week five ("he wants you at the gate"), his name said carefully in week six, and in week seven what the week has earned (frame section 1 table).
 - Ties: Sheila (the two women of the office); Ron (his mug with R.K. on its base); Kevin and Terry (her cars); Julie (the night desk); Danny (she calls car two on the air); Frank.
-- Carries: spine S04 The line in the book (she starts the half line), S14 Danny's six minutes and the offer, S30b The ferry rank (on the air), S56 Car two not answering, S58 The counter at five, S59 to S61 the closes; side D02 Two real minutes (hers), D01, D07 (giver).
-- Voice: brisk, never stops talking, funny. Lines: "Car two is not answering." (scenes 6 and 19). "Mickey's. (She listens.) He's in." (scene 21)
+- Carries: spine S01 Arrival and deed F1 (she counts his two minutes on the open channel), S04 The line in the book (she starts the half line), S14 Danny's six minutes and the offer, S30b The ferry rank (on the air), S56 Car two not answering, S58 The counter at five, S59 to S61 the closes; side D02 Two real minutes (hers), D01, D07 (giver).
+- Voice: brisk, never stops talking, funny. Lines: "One fifty-two, by mine. (A pause.) Well." (scene 1). "Car two is not answering." (scenes 6 and 19). "Mickey's. (She listens.) He's in." (scene 21)
 - Data id: pauline_kitching.
 
 ### Lee Drewery
@@ -198,10 +202,10 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
 ### Julie Kettlewell
 
 - Age: 29 (REGULARS).
-- Role: laid off from the steam laundry's presses; owes £9; given the night desk she becomes the likeliest successor.
+- Role: laid off from the steam laundry's presses; owes £9, and Mickey stopped her cars in August. Met on the first morning, on her step in the rows, with a week's trial across the water if she is on the 9.20 boat (deed F1). Given the night desk she becomes the likeliest successor.
 - Ties: Pauline (the desk); the laundry's owner and Agar (his solicitor); Doreen Harland (saw the pay packets made up); Ada (rings her); the Widow (on the night desk, Julie may be the one who lets her in, scene 16).
-- Carries: spine S05, S13, S45 The Widow waits up, S49 The successor's offer, S60 The Straight Life; side D09 Twelve weeks' notice.
-- Voice: proud, sharp. Lines: "Mickey's. Two minutes. Real ones." (S60). "I'll keep the cars going. Under Mickey's name, not mine." (S49)
+- Carries: spine S01 and deed F1, S05, S13, S44 The yard (the night desk), S45 The Widow waits up, S49 The successor's offer, S60 The Straight Life; side D09 Twelve weeks' notice.
+- Voice: proud, sharp. Lines: "You're never Mickey's." (scene 1). "Mickey'd have sent Kevin, and I'd have swum." (scene 1). "Mickey's. Two minutes. Real ones." (S60). "I'll keep the cars going. Under Mickey's name, not mine." (S49)
 - Data id: julie_kettlewell.
 
 ### Dennis Iveson
@@ -252,9 +256,9 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
 ### Kevin Needham
 
 - Age: 36 (REGULARS).
-- Role: day driver, car one; the Widow's eyes; skims forty-two miles a week; leads the settle in the yard; his log is what the Customs man asks for.
+- Role: day driver, car one; the Widow's eyes; skims forty-two miles a week, which Mickey knew and let stand ("That were my rise"); calls the settle in the yard over them, and can be kept by an answer about them (deed F6); his log is what the Customs man asks for.
 - Ties: the Widow; Pauline; Terry; Sheila (the mileage); Ron; Frank.
-- Carries: side D01 The long way round; spine S16 The Widow's first look, S30 The gate (on the air), S30b The ferry rank (at the wheel of car four; the Widow's eyes on her own path), S43 A load (fallback, sells the route), S51 The second morning: the cars' records; scene 15.
+- Carries: side D01 The long way round; spine S16 The Widow's first look, S30 The gate (on the air), S30b The ferry rank (at the wheel of car four; the Widow's eyes on her own path), S43 A load (fallback, sells the route), S44 The yard and deed F6, S51 The second morning: the cars' records; scenes 1 (on the air: "What's he like?") and 15.
 - Voice: flat, moaning, talkative. Line: "I'll have my cards Friday. You've never once asked me where her miles went." (scene 15)
 - Data id: kevin_needham.
 
@@ -263,7 +267,7 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
 - Age: 52 (REGULARS; scene 15 agrees).
 - Role: night driver; drives Ellis when her car fails (D07); comes to the yard with a wheel brace; first to say Fridays.
 - Ties: Pauline; Kevin; Ellis (the ride); Frank; Ron.
-- Carries: side D07 A ride for the sergeant, D01, D02; spine S44 The yard, S51; scene 15.
+- Carries: side D07 A ride for the sergeant, D01, D02; spine S44 The yard and deed F6, S51; scene 15.
 - Voice: few words. Lines: "Mine's Fridays." (scene 15). "It's always been Fridays." (scene 15)
 - Data id: terry_hodgson.
 
@@ -272,7 +276,7 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
 - Age: 50 (REGULARS).
 - Role: keeps the fish shop; the town's mouth; buys at dawn on the fish dock; wraps his haddock in the headline.
 - Ties: Eddie Birtwhistle (the Widow's porter takes a cut of her boxes); the Widow; Ada; Frank; Ron (his dinner comes from her shop, data).
-- Carries: side D08 Haddock's dear; spine S12 Lesson one (on her step), the returns at S21 and S54.
+- Carries: side D08 Haddock's dear; spine S12 Lesson one (on her step), the returns at S21 and S54; the town's telling of nearly every deed ("Backwards. Down the tenfoot. With Ron Kirby sat in it holding his hat on."; "He's posted it back through Cammack's door."; "Agar's driver had to follow a minicab. With an L on it.").
 - Voice: loud, generous. Line: "Big lad in a little car. Mind, I've always said it's not the size of the car." (scene 7)
 - Data id: brenda_laverack.
 
@@ -306,9 +310,9 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
 ### Craig Fewson
 
 - Age: thirty (scene 5). The people file says 25: no sheet, so the scene wins for now.
-- Role: Danny's second, who wants Danny's seat. On the wall beside Danny in week one, setting Danny's driving seat to fit himself. Drives Danny's hatchback away in scene 19. If Danny is gone or never turns, he has the brass key and is the man on the quay.
+- Role: Danny's second, who wants Danny's seat. On the wall beside Danny in week one, setting Danny's driving seat to fit himself. He carries the crates off the warehouse row and stands the ferry rank in the van (deed F2), sits on Mickey's rank in the hatchback with a CABS card on the night between (deed F5), and sits outside the yard with Danny's roll, a tenner a car (deed F6). Drives Danny's hatchback away in scene 19. If Danny is gone or never turns, he has the brass key and is the man on the quay.
 - Ties: Danny (the key, the seat); Frank (the board he reads from the doorway); Ron (stands at the bonnet on the quay); the van of Frank's man at the landing.
-- Carries: spine S06 Car three, S14 Danny's six minutes, S28 The landing by night, S30b The ferry rank (on the bollards; carries it if Danny is gone), S34 The pact turning, S41 A turned man, S46 The room at Grace's (sits for Danny), S56, S57 The quay at four.
+- Carries: spine S06 Car three, S14 Danny's six minutes, deeds F2, F5 and F6, S15 The ferry rank, S28 The landing by night, S30b The ferry rank (on the bollards; carries it if Danny is gone), S34 The pact turning, S41 A turned man, S44 The yard, S46 The room at Grace's (sits for Danny), S56, S57 The quay at four.
 - Voice: few words, a stare. Lines: "So whose are we?" (scene 6). "I want to see what you do." (scene 19)
 - Data id: craig_fewson.
 
@@ -342,10 +346,10 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
 ### Norman Dent
 
 - Age: 57 (REGULARS).
-- Role: night watchman on the warehouse row; sees everything; his description goes in Ellis's notebook.
+- Role: night watchman on the warehouse row; sees everything; his description goes in Ellis's notebook. He sees Danny's van driven off loaded with a white car after it (deed F2), and a car going backwards along the dock wall with no lights (deed F5).
 - Ties: Ellis; Danny (the crates of car radios); Ian Megginson (saw the lights in the yard).
-- Carries: side D22 Nothing moves but me; D03 (saw a light in the yard at three); spine S36 The search and the line (his shape in her notebook).
-- Voice: lonely, glad of company. Line: "Nothing moves on that row at night but me and the rats." (REGULARS)
+- Carries: side D22 Nothing moves but me; D03 (saw a light in the yard at three); deeds F2 and F5; spine S36 The search and the line (his shape in her notebook).
+- Voice: lonely, glad of company. Lines: "Nothing moves on that row at night but me and the rats." (REGULARS). "A car went backwards along that wall with no lights. I thought I'd dreamed it." (scene 14)
 - Data id: norman_dent.
 
 ### The Man in Black
@@ -353,8 +357,8 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
 - Age: 71 (data; no sheet).
 - Role: walks behind every old docker's coffin and marks the funeral out of ten, aloud. Speaks in scenes 17, 21 and 22; not in scene 23.
 - Ties: Grace (answers him in the Kingdom close); the old firm's man (it is his funeral at Grace's, scene 17); the gate and the pen.
-- Carries: spine S26 Remembrance Sunday, S59 The Kingdom (and the other closes).
-- Voice: solemn, deadpan. Lines: "Five. No flowers, and done in the dark." (scene 21). "I don't mark those." (scene 21)
+- Carries: spine S26 Remembrance Sunday, deed F7 and S46 (he walks before the hearse and marks the funeral at the caff door), S59 The Kingdom (and the other closes).
+- Voice: solemn, deadpan. Lines: "Seven. The ham was good. Nobody knew the second hymn. Three firms, and one car of family." (scene 17, deed F7; "Six. Three firms and no family." if Frank walked). "Five. No flowers, and done in the dark." (scene 21). "I don't mark those." (scene 21)
 - Data id: cyril_pashby (the story never names him; the name is the file's own).
 
 ### Captain Arvids Ozols
@@ -378,27 +382,27 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
 ### DC Graham Wardell
 
 - Age: 37 (data; no sheet).
-- Role: detective constable; bought for £200 to lose a statement once; sells the fact to Danny; brings the trade if Ellis is gone.
+- Role: detective constable; bought for £200 to lose a statement once; sells the fact to Danny; from the plain car at the head of the brow he sees Frank back along the dock wall with no lights (deed F5), writes nothing down, and sells that to Danny too; brings the trade if Ellis is gone.
 - Ties: Ellis (her DC); Danny (buys the fact); Frank (£200 in an empty cigarette packet); Sheila (he works through the drawers with his property book while she sits with her handbag).
-- Carries: side D07 (fallback); spine S35, S36 The search and the line, S38 The night between (the back step), S53 Ellis's trade (brings it, badly, if she is gone); scenes 13, 14, 21.
+- Carries: side D07 (fallback); spine S35, S36 The search and the line, S38 The night between (the back step), S53 Ellis's trade (brings it, badly, if she is gone), S57 The quay at four (what Danny has from him); scenes 13, 14, 19, 21.
 - Voice: a cigarette on the station's back step on the hour. Line: "There's a statement in that file says which night. Files lose things. Two hundred. You never met me." (scene 14)
 - Data id: graham_wardell.
 
 ### Neil Screeton
 
 - Age: 26 (data; no sheet).
-- Role: Iveson's yard hand; the hardest man in the yard in week six if Frank took the £80 debt off Iveson.
-- Ties: Dennis Iveson (stops the debt from his pay, a fiver a Friday); Frank; Ron (steps across: "Mine.").
-- Carries: side D13 The name board (returns as him); spine S44 The yard; scene 15.
-- Voice: a wheel brace and one line. Line: "Eighty pound, Mr Nowak. I've your change here." (scene 15)
+- Role: Iveson's yard hand. If Frank took the £80 debt off Iveson, it was stopped out of his pay, and he is at the scrap yard's scales when Frank comes about the name board. Since the deeds he does not come to the yard behind Mickey's: the men there are Frank's own drivers, and Fewson with Danny's roll (scene 15).
+- Ties: Dennis Iveson (stops the debt from his pay, a fiver a Friday); Frank.
+- Carries: side D13 The name board (a step in it, and its seller if Dennis is gone).
+- Voice: a wheel brace and one line. Line: "Eighty pound, Mr Nowak. I've your change here." (D13)
 - Data id: neil_screeton.
 
 ### Mark Billany
 
 - Age: 31 (data; no sheet).
-- Role: the Widow's taxman on the ferry rank; goes down in week two (cap handed back or boot); at the Landing with a stitched eyebrow.
+- Role: the Widow's taxman on the ferry rank; handed the keys of Danny's loaded van there at first light, in front of a boat queue (deed F2: "What's in it?"); goes down in week two (cap handed back or boot); at the Landing with a stitched eyebrow, where, if he was handed his cap, he takes his hands off the cage.
 - Ties: the Widow; Frank Stathers (reads the list if Stathers is gone); Ron (stood the ferry rank in front of him, scene 7); Frank (the cap).
-- Carries: spine S15 The ferry rank, S24 The Landing: the night, S30 (fallback); scenes 7, 10, 11.
+- Carries: deed F2, spine S15 The ferry rank, S24 The Landing: the night, S30 (fallback); scenes 6, 7, 10, 11.
 - Voice: mouthy until hit. Lines: "Whose is that?" (scene 7). "That's us straight." (scene 10)
 - Data id: mark_billany.
 
@@ -428,8 +432,8 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
 | Alan Sowerby | 51 | council licensing officer who acts on Agar's letters | D06; S30b (the clipboard at the ferry rank) | Agar | none | alan_sowerby |
 | Wayne Harrison | 27 | Rita's back-room hand; owes £30 in goods; the first front | D24; S19 | Rita Welburn | D24 The back room | wayne_harrison |
 | Ian Megginson | 34 | locksmith and repairman at the yard | D03; S29, S52; scene 16 | Frank's lock; Norman Dent | D03 (the hairpin line) | ian_megginson |
-| Karen Grummitt | 25 | ferry ticket clerk; lodges at the boarding house | scenes 1, 3, 23; S30b (tells it at her hatch) | Gordon Leckenby | none | karen_grummitt |
-| Shaun Hewson | 26 | sign painter; paints MICKEY'S in every close | scenes 1, 5, 19, 21, 22, 23; D06 | Frank's sign; Sowerby reads it | D06 The name on the board | shaun_hewson |
+| Karen Grummitt | 25 | ferry ticket clerk; lodges at the boarding house; tells the van with a price on it ("like fish") | scenes 1, 3, 6, 23; deed F2 (takes the keys if Billany is off); S30b (tells it at her hatch) | Gordon Leckenby | none | karen_grummitt |
+| Shaun Hewson | 26 | sign painter; paints MICKEY'S in every close; loses his kerb's paint to the shell (deed F3) | scenes 1, 5, 17, 19, 21, 22, 23; D06 | Frank's sign; Sowerby reads it | D06 The name on the board | shaun_hewson |
 | Peter Tang | 44 | keeps the takeaway with Lily; fetches Grace's car in scene 15 | D11; scene 15 | Lily Tang (wife) | none | peter_tang |
 | Sylvia Rennison | 64 | keeps the boarding house; Friday means Friday | scenes 2, 3, 23; D20 | Danny (her lodger) | D20 Friday means Friday | sylvia_rennison |
 | Dawn Pybus | 27 | runs for the rent collector; her initials D.P. in the rent book | scene 1; D21 | Ada's rent; Agar's agents | D21 The rent on Ada's window | dawn_pybus |
@@ -437,7 +441,7 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
 | Albert Suggitt | 78 | retired trawlerman mending nets | D13 | Dennis Iveson (his boat's name board) | D13 The name board | albert_suggitt |
 | Christine Pickering | 39 | clerk at the harbour office; the yard's lease file | D16; S42, S52 | Agar and Ombler | D16 All on the forms | christine_pickering |
 | Tracey Scarth | 28 | seamstress with a market stall | D05; D10 | June Suddaby | D05 A coat from the back room | tracey_scarth |
-| Gordon Leckenby | 55 | ferryman; the first face Frank meets; holds Mickey's returned parcel | scenes 1, 10, 23; D15 | Karen Grummitt; June | D15 The ferry parcel | gordon_leckenby |
+| Gordon Leckenby | 55 | ferryman; the first face Frank meets; holds the stern rope for car two (deed F1); rings for the ambulance at the Landing (deed F4); holds Mickey's returned parcel | scenes 1, 10, 23; D15 | Karen Grummitt; June | D15 The ferry parcel | gordon_leckenby |
 | Henry "Hal" Metcalfe | 66 | keeps the coin shop that sells no coins; Garbutt's Monday go-between; knows who pawned the watch | S22, S40 (fallback); D19 | Rita; Garbutt | none | hal_metcalfe |
 | Doreen Harland | 61 | washerwoman who saw the pay packets made up; fallback giver of D09 | D09 | Julie Kettlewell | none | doreen_harland |
 | Gary Mawer | 29 | boat repairer; Mickey's mooring bill, three months unpaid | D14; S23 | the Widow | D14 Mickey's mooring | gary_mawer |
@@ -452,7 +456,8 @@ Each is a role filled in play from the people above or from the generated reside
 
 | Role | What they do | Where | Likely holder |
 |---|---|---|---|
-| The old firm's man at the landing | stands by the ticket window after ten; says "Mickey's?"; "Somebody's started writing you down."; buried on Monday 26 November, game week 7; a later man says "Cammack's?" | scenes 2, 3, 17, 23; S02, S03, S11, S28, S35, S39 | old_firm_man (age 61 after the change; file now 59) |
+| The old firm's man at the landing (the old man from the landing) | stands under the overhang by the ticket window every boat night, thirty years; says "Mickey's?"; "Somebody's started writing you down."; on the night of the display puts his pencil torch in a gunman's eyes and takes his sleeve ("Not on here. Thirty year. Not once."), and is shot through the arm; gives his next of kin as "Mickey's. Quay Street"; back under the overhang on the Wednesday with the arm strapped; it goes to his chest; buried on Monday 26 November, game week 7, from his own tin, with Frank in the family's car if he chose it. His torch is the claim to the landing. | scenes 2, 3, 10, 17; S02, S03, S11, S24, deed F4, S28, S35, S39, deed F7, S46 | old_firm_man (age 61 after the change; file now 59) |
+| The young man under the overhang | Danny's, in a new cap; stands there from the week the old man takes to his bed; says "Cammack's?" to a hearse; unless Danny takes him off the step for it, he is the man at the landing in Burn Both, reading by the old man's torch if Danny carried it out of Grace's room | scenes 17, 23; deed F7, S61 | one of jason_pinder, shane_boddy, wes_akers |
 | The custody sergeant | books Frank as Novak, Nowack, Knowak; writes Nowak right when Ron spells it | scene 14; S37 | sgt_bellwood (Roy Bellwood, 52; first name owed a change, CAST-CHANGES K1) |
 | The duty solicitor | offered at the station: "The duty solicitor is free." | scene 13 | none |
 | The Customs officer of the night between | rung at home by Ellis; comes in with his coat over his pyjama collar; lays Ron's charge, because a duty case is Customs' business | scene 14; S38 | none (Derek Hebblewhite is VAT, a different desk; not him) |
@@ -461,13 +466,15 @@ Each is a role filled in play from the people above or from the generated reside
 | The packers: the youngest, the middle one and the eldest (six, one with a licence) | gossip on the new owner; the eldest threatens Stathers | scenes 8, 11; S21 | none |
 | The men of the pen (fourteen, then nine, then three) | stand the call; turn their backs on Ron; one of the three nods | scenes 7, 8, 11, 12, 17; S20, S26, S30 | none |
 | Stathers's two gate men | walk the leaf shut or open; one goes for Frank's back | scenes 8, 11; S16, S21 | none |
-| The Widow's men on the stage and in the van | take the cage up the brow; the one who shows a wooden grip says "That's for next time." | scene 10; S24 | steve_brannigan |
+| The Widow's men on the stage and in the van | take the cage up the brow; the van driver, who buys two teas at Grace's every morning, comes back up it with a short revolver, tape round its grip ("Them's hers. Open that boot."), fires it once, and is on the morning boat with a bag | scene 10; S24, deed F4, S30 | steve_brannigan (the van driver) |
+| The infirmary sister | comes out with a chair: "Name?" "Next of kin?" She writes Mickey's. | scene 10; deed F4 | none |
+| The hearse driver | looks in his mirror for his orders, as to any family car, and turns down Quay Street on a flash of car two's lamps | scene 17; deed F7 | none |
 | The landlord's man | comes at eleven on Friday | scenes 1, 4; S09 | leonard_askew; dawn_pybus (D.P.) |
 | Tharratt's deputy | carries the terms if Tharratt is gone | S20, S29 | malcolm_ruddock |
 | Agar's hired men from away | shut a man in a cold room and lock the shift out | S29 | barry_coult, kenny_varley, ray_spink |
-| Danny's crew: the two on the wall, the pot-washer, the young men at the Tangs' window, the two who sold the lead, the man with the crates | wall-sitters, the man to turn, the shouting at the window, the lead, the crates | scenes 5, 15, 17; S06, S41; D10, D11, D18, D22 | jason_pinder, shane_boddy, wes_akers |
+| Danny's crew: the two on the wall, the pot-washer, the young men at the Tangs' window, the two who sold the lead, the men with the crates and the van (deed F2), the four in the unit three doors up (deed F3), the lad who fires at the Landing where the Widow is Frank's ally | wall-sitters, the man to turn, the shouting at the window, the lead, the crates | scenes 5, 6, 8, 10, 15, 17; S06, S41, deeds F2 and F3; D10, D11, D18, D22 | jason_pinder, shane_boddy, wes_akers |
 | The fish-dock porter and the Widow's man who takes the cut | sign for Brenda's boxes and take them under her name | D08 | eddie_birtwhistle, dougie_saltmarsh |
-| Frank's own men: the first man, the man on the gate, the most loyal man, the successor, the crewmen | cast from the record; the man on the gate says "I'm stood here while you say different, Mr Nowak." | scenes 14, 15, 17, 21; S13, S28, S31, S49 | none; chosen in play |
+| Frank's own men: the first man, the man on the gate, the man on the landing (who brings the padlock key to the station steps, deed F5), the most loyal man, the successor, the crewmen | cast from the record; the man on the gate says "I'm stood here while you say different, Mr Nowak." | scenes 14, 15, 17, 21; S13, S28, S31, S49 | none; chosen in play |
 | The laundry's owner | held back Julie's money; mentions his solicitor in the Exchange | D09 | victor_tasker |
 | The remand officer | walks the visiting row; says "Time." | scene 18; S50 | none |
 | The test-centre woman on the phone | "Kirby. Fourteenth, ten past two. Cancelled." | scene 18 | none |

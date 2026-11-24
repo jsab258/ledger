@@ -1,8 +1,8 @@
 # 08. The gate at dawn
 
 - Where it sits: Act IIa, week three: the fifth of the five mornings Eric Tharratt asked for.
-- What wakes it: the firm has four cars and has met the packing shift on the minute four mornings this week; the Widow's people have had their first look at the firm; it is twelve minutes to six; Frank is driving the first car of four.
-- Who must be present: Frank Stathers, the Widow's man on the gate. Ron Kirby, who is driving the fourth car on his L-plates because the firm is a driver short; he asked all twelve packers which of them held a licence, one did, and she is sat beside him because the book says somebody must be. The packers. The pen. Fallback for Stathers: Mark Billany, with the list and without the tally; then the offer to Ron is made a day later, at the office door, by the Widow's car.
+- What wakes it: the firm has four cars and has met the packing shift on the minute four mornings this week; the Widow's people have had their first look at the firm; at five a car with no wheels stood across his yard gate; it is twelve minutes to six; Frank is driving the first car of four.
+- Who must be present: Frank Stathers, the Widow's man on the gate. Ron Kirby, who is driving the fourth car on his L-plates because the firm is a driver short; he asked all twelve packers which of them held a licence, one did, and she is sat beside him because the book says somebody must be. The packers. The pen. At five, on the parade: Danny's four in the unit three doors up. Fallback for Stathers: Mark Billany, with the list and without the tally; then the offer to Ron is made a day later, at the office door, by the Widow's car.
 
 Frank is trying to get four cars of packers to a clock by six. He will give up twenty pounds and his pride in front of the docks, or Ron's place among the men he stood with.
 
@@ -24,6 +24,16 @@ The camera is in the car until Frank gets out, then wide, so the gate, the pen a
 
 ## The scene
 
+First, five o'clock, the yard. Four cars are warming, and the gateway is stopped by a car with no wheels, set down across it on bricks. The player watched it stripped at dusk on the warehouse row. Three doors up, the unit that Danny's Yale opens has a light under its shutter.
+
+The Hook's way is six men and a count, and the caff does not open until six.
+
+FRANK: Thirty yards. Four minutes. I've eleven.
+
+If the player takes it, he puts the first car's bumper to the shell, and it goes up the pavement in front of him on its drums in a tail of sparks, with every curtain on the parade opening. He plants it across Danny's shutter, with Danny's four inside. If he is still there when they find the side door, it is a fight, and he is late.
+
+Then the dock road, with three packers in the back.
+
 PACKER (the youngest): Is that him? The nephew?
 
 PACKER (the eldest): There's nowt of him.
@@ -35,6 +45,8 @@ THE ELDEST: You could get hold of Mickey.
 THE YOUNGEST: You did.
 
 THE ELDEST: I never. I said you could.
+
+(If he shoved the shell: THE MIDDLE ONE: Him next door says he shoved a motor up the parade at five. With a motor. He thought it was the dustmen.)
 
 The gate comes into the headlights, open. Two men in the road put their hands to the near leaf and walk it shut. It closes on its stop with a clang. Stathers stands in front of it and looks at his watch.
 
@@ -120,6 +132,7 @@ Ron does not answer it.
 
 ## What the player can do
 
+- Shove the shell, or wait for six men. Waited for, the cars are four minutes behind at the gate, the fifth morning is not on the minute, and Tharratt counts it (S21); Brenda has, "Had to be lifted out of his own yard."
 - Pay. Sign: the price is said aloud, with the day it falls due. What follows: the contract; £20 every Friday; a receipt made out to Mr Nowack (the second, if Kevin's was got in week two), and a day later another in the Widow's own hand, spelt the same. That receipt is the name behind the gate entries on the fourth morning of the last week.
 - Bluff. Sign: the eldest packer's window is already down. What follows: through today, and the twenty still owed on Friday.
 - Push it himself. Sign: two men, squared up, and Ron's hand in his pocket. What follows: the gate, if he wins; the Widow moves against him a step; Ron has laid a hand on a gate man in front of the pen, and it was to keep him off Frank's back.
@@ -128,6 +141,7 @@ Ron does not answer it.
 
 ## What the town remembers
 
+- The shell. Ada: "Sparks. I thought the display had come a week early." Brenda: "He's posted it back through Cammack's door." Agar, whose agents let that unit, sends a bill for a shutter and a footway, to Mr Nowek.
 - The pen saw all of it and tells it by which thing Frank did. Paid: "Counted it onto Stathers's board like a man paying his subs." Pushed: "Went at the gate himself, I'll give him that." Sent Ron: nobody in the pen tells it at all, and that is how the street knows.
 - The packers tell the cold stores before the hooter. "There's nowt of him" has gone round the packing floor by the first break; so has what he did at the gate. Eric Tharratt has it from them before he comes to the door with his clipboard: "Five mornings. On the minute. Now we'll talk." Or: "Four cars, I said."
 - Stathers tells Maureen Jensen that Kirby took the tally and gave no answer. She asks which pocket.
@@ -136,7 +150,9 @@ Ron does not answer it.
 
 ## Variants by path
 
+- It came to a fight at the shell. He is at the gate after six, with three cars; Stathers has the gate open and does not look at his watch; Tharratt counts three cars and waits a week.
+
 - A pact with the Widow. The gate is open and Stathers waves the cars through with his board. He still stops Ron's. "Thirty-nine. It's yours whenever. She says so." Ron pockets it the same.
-- Danny on the board. He drives the third car and gets out to watch, eating. To Stathers: "Morning, Frank. This is Frank. Have you two met?" It does not help.
+- Danny on the board. The shell was Fewson's doing, and Danny came out to laugh at both of them. He drives the third car and gets out to watch, eating. To Stathers: "Morning, Frank. This is Frank. Have you two met?" It does not help.
 - Haddock's dear ended with the Widow's favour asked. Stathers opens with that: "She's done you one turn already this month, Mr Nowack."
 - A firm with no night money. The same morning and the same tax, paid out of fares.

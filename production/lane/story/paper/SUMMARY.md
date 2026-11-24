@@ -1,14 +1,25 @@
 # The story on paper: one page
 
-## Frank's deeds, tested (24 November)
+## A written Frank in the key scenes, tested (24 November, evening)
+
+- Shortfall first: the test did not reach its bar. With Frank fully written in the same five key scenes (his own want, his feelings spoken and shown, one written line at each big moment, the deeds kept), six fresh AI readers, not told which scenes had changed, marked them 7.4 out of 10, up from 7.1 for the deeds version: a rise of 0.3, not the 0.5 asked. Against five unchanged scenes read by the same readers the rise is 0.4.
+- The weight is with Frank in two of the five scenes for five readers, and three for the sixth: the yard (the arm) and the funeral (the family's car behind the hearse). Ron still carries the opening and the night between, and the old man the Landing. So the weight is not yet with Frank in most readers' notes.
+- What moved: every reader marks the five rewritten scenes above the unchanged ones; the funeral rose most (6.2 to 7.0); five of six readers now rank Frank first for what he does (one of six before); the second, rougher check that compares short retellings with well-known game scenes won 16 of 20, up from 13.
+- What readers now say stands most in the way is mostly no longer Frank: four of six name the story's engine, stakes carried by lines in a book that a player has to be taught before he can feel them; one names the climax, a fist fight over a book.
+- But note: the story itself keeps the deeds versions unless you choose A, and their readers still said Ron carries the weight (four of six). The written versions did better with every one of the six readers.
+- Done as you decided: Frank's seven deeds are now in the story's beat cards, one a week, and in the scenes they touch, and the gun at the Landing is fired on every path in the cards, the scenes and the story's outline. Still open: on one path (Danny's men holding the landing) the fifth week's deed cannot happen; two later follow-ups exist on the cards but in no scene yet; the town's people records are not yet updated for the new people.
+
+Your choice: A: adopt a written Frank in the key scenes (this changes your ruling of 1 October on mixed lines, for those scenes only; the other eighteen key scenes then need the same writing pass and one more test). B: keep mixed lines, as your ruling stands, and put the next work into the climax and the stakes, which readers now name first [recommended: the test missed its bar, and written lines cannot reach the climax].
+
+## Frank's deeds, tested (24 November, afternoon; answered)
 
 - Shortfall first: the test did not pass as set. Five key scenes were rewritten with one deed of Frank's own a week: the opening, the Landing with the gun fired, the night Ron goes to the police, the yard, and the funeral tea. Six fresh AI readers, not told which scenes had changed, marked them 7.1 out of 10, up from 6.7: a rise of 0.4, not the 0.7 asked.
 - The same readers marked five unchanged scenes 0.4 lower than the earlier readers did, so beside those the rewritten scenes gained 0.9. The yard rose most (5.7 to 6.8), then the opening (6.3 to 7.0); the night Ron goes to the police did not move.
 - No reader now calls Frank the quietest person in his story: five of six rank him first or second for what he does. But four still say the heaviest moments and feelings are Ron's, and that Frank's deeds are driving feats.
 - A second AI check, comparing short retellings with well-loved scenes from other games, moved the same way.
-- So Frank's seven deeds are written but not yet put into the story. The gun at the Landing stays, as you decided; one later scene and one story card still have to be brought into line with it.
+- You then chose to put the deeds into the story and to test a written Frank (above).
 
-Your choice: A: Frank's lines in the key scenes fully written, one line at each big moment instead of a list to pick from, keeping the deeds, then the same five scenes tested again (this would change your ruling of 1 October on mixed lines, for Frank in the key scenes only; live talk stays everywhere else) [recommended]. B: put the deeds into the story as they are. C: leave Frank as before the test.
+Answered: you chose to put the deeds in and to test a written Frank. Your choice was: A: Frank's lines in the key scenes fully written, one line at each big moment instead of a list to pick from, keeping the deeds, then the same five scenes tested again (this would change your ruling of 1 October on mixed lines, for Frank in the key scenes only; live talk stays everywhere else) [recommended]. B: put the deeds into the story as they are. C: leave Frank as before the test.
 
 ## Shortfalls first
 
@@ -17,7 +28,7 @@ Your choice: A: Frank's lines in the key scenes fully written, one line at each 
 - The middle is small for a crime game: fists in nearly every fight, crime mostly off stage, Danny's gains in the middle weeks mostly heard about, not seen. Four readers find the climax too much like bookkeeping.
 - The weakest scenes, even rebuilt: the yard (the night men queue in his yard to be paid or take a car) and the funeral tea where Frank meets the three gang heads.
 - Checked against the record since (24 November, second run): Ron could be kept on remand in 1990, but it is not certain, and it is a Customs charge, so a Customs officer now lays it; he comes back before the magistrates every eight days, once in the last week. A minicab may not lawfully stand on a public taxi rank: Mickey's own rank at the firm's door is a grey place in law that nobody tested while Mickey was alive, and winning the ferry rank is now plainly a crime that can cost the licence. The one card left over (Danny's go at Ron on the ferry rank when the Widow is your ally) is written, and uses that law.
-- The length does not fit your 15 to 20 hours: seven game weeks at 48 minutes a day is about 39 hours of clock.
+- Length: seven game weeks at 48 minutes a day is about 39 hours of clock; you have since set about 20 hours for the main story, with sleeping and waiting skipping empty hours, measured in the first loops.
 
 ## The story, as you would tell a friend
 

@@ -54,7 +54,7 @@ ONE OF THE THREE (low, to the rail in front of him): Hand it him back, Ron. Let 
 
 Ron does not turn his head.
 
-STATHERS (to the pen, as to a meeting): Kirby's carried a tally of mine a fortnight. Man with a tally stands the call. Or he comes up here and hangs it on that hook, and tells this pen whose he is. (He finds Frank, at the road.) Morning, Mr Nowack. You've a car wants to come through, I think.
+STATHERS (to the pen, as to a meeting): Kirby's carried a tally of mine a fortnight. And this gate's been a man short since the display, on a night that was Mickey's, and she's counted that. Man with a tally stands the call. Or he comes up here and hangs it on that hook, and tells this pen whose he is. (He finds Frank, at the road.) Morning, Mr Nowack. You've a car wants to come through, I think.
 
 Ron has seen Frank. He looks at the far wall.
 

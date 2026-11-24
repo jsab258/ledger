@@ -12,7 +12,7 @@ Quay Street under its lamps. The rank is full and the board is full. Over the do
 
 Three doors up, a shutter that once said CAMMACK in chalk a foot high says MICKEY'S. The only key it ever had is the Yale on the third hook.
 
-On the counter is a spike, and on it a thick pad of pink carbon sheets. Nobody has carried one to the water in weeks. In the drawer beneath is a brown window envelope, soft as cloth, empty.
+On the counter is a spike, and on it a thick pad of pink carbon sheets. Nobody has carried one to the water in weeks. In the drawer beneath is a brown window envelope, soft as cloth, empty. Beside it, if he carried it out of Grace's back room, lies an old man's pencil torch.
 
 Down the dock road a Harbour Board lorry stands at the gate with its lamps on.
 

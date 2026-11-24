@@ -1,7 +1,7 @@
 # 16. The Widow waits up
 
 - Where it sits: Act IIb, week six, the same night as the yard, towards two in the morning. The rest after the heaviest fight, and the deed only Maureen Jensen would do.
-- What wakes it: the yard has played; Frank comes back to Quay Street from casualty, or from Grace Rinaldi's kitchen; the Widow is alive and has not yet sat down at Garbutt's table.
+- What wakes it: the yard has played; Frank comes back to Quay Street from casualty, or from Grace Rinaldi's kitchen, or, if nobody was hurt, from locking his own gate; the Widow is alive and has not yet sat down at Garbutt's table.
 - Who must be present: Maureen Jensen. Outside, in a car with its lights off, Frank Stathers. Whoever let her in: Ron on the door, or Julie on the night desk, or nobody. Fallback: if she cannot come, Stathers has left a covered plate on the counter with her card under it, and one line in her hand: "Twice in the oven. M.J."
 
 Frank is trying to get to his bed without owing anybody for it. He will give up a dinner's worth of pride, because tonight he cannot cut his own meat.
@@ -66,7 +66,7 @@ THE WIDOW: He stood my gate thirty-six years and your door six weeks, and he's n
 
 If he asks about the yard:
 
-THE WIDOW: Not mine. Mine don't queue for it. Mine are paid Fridays.
+THE WIDOW: Not mine. Mine don't queue for it. Mine are paid Fridays. (If he stood in the gap: And nobody of mine would have stood by while you held a motor car off a gatepost.)
 
 If he asks about Mickey:
 
@@ -120,7 +120,7 @@ The pot is still warm. There is a second cup, poured, that nobody drank.
 
 ## Variants by path
 
-- The arm was not lost. Somebody else's was, or a scalp; he has been at casualty with them, and has four stitches of his own. The dinner is cut up all the same. "I was told an arm. I'll have a word with who told me. You'll have to eat it like a man with two." She does not tie his laces; they are tied.
+- The arm was not lost. He stood clear, or the yard settled and nobody lifted anything, or it came to fists and he has four stitches of his own. The dinner is cut up all the same. "I was told an arm. I'll have a word with who told me. You'll have to eat it like a man with two." She does not tie his laces; they are tied.
 - He came from Grace's kitchen floor, not casualty. No plaster yet. "You want that looked at. Stathers'll run you up. No, he will. Finish that first."
 - A pact with the Widow. She is not in Mickey's chair but in the customer's, at the side of the desk. "I'd not sit in his. Not while we've an understanding." The rest is the same, and Monday she will sit on his side of the cloth.
 - A firm with no night money. "You've not a racket to your name and they've still broke your arm for you. Mickey would have laughed. I shan't."

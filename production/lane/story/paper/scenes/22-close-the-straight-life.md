@@ -102,7 +102,7 @@ RON: Where to, Frankie?
 
 ## Variants by path
 
-- Somebody took the firm over first. An offer was made on Tuesday evening by Julie Kettlewell, or whoever had stood by him longest, and he said yes to it before five. The board is not wiped. Pauline does not say "That's your lot"; she says, "Car four, the Tivoli," and Julie, at the night desk, answers the telephone: "Mickey's. Two minutes. Real ones." The paint over the door is fresh. The half line and the envelope are the same.
+- Somebody took the firm over first. An offer was made on Tuesday evening by Julie Kettlewell, or whoever had stood by him longest, and he said yes to it before five. The board is not wiped. Pauline does not say "That's your lot"; she says, "Car four, the Tivoli," and Julie, at the night desk, answers the telephone (if he made her two minutes on the first morning) in the words Pauline once counted out for her on an open channel: "Mickey's. Two minutes. Real ones." (Else, in her own: "Mickey's. Somebody's coming.") The paint over the door is fresh. The half line and the envelope are the same.
 - Nobody took it over. The cars are sold to pay the assessment, and the bay is whitewashed. Shaun has not been told to take the sign down, and will not until he is.
 - Frank signed in week five. Ron has been on the door and silent for a fortnight. The car, the drive and the gate are the same, and the gate is the first thing he has named since the night between.
 - Frank has number 39 from the Widow. He can hold it out in the car. Ron takes it, looks at it, and as they pass the gate hangs it by its hole on the end of Stathers's chain. "It can't be both."

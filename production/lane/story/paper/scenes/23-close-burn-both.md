@@ -75,7 +75,7 @@ If Ron is inside, nobody at the gate ever spoke to Frank, and the chain goes on 
 
 Then the landing.
 
-With the envelope. Under the overhang by the ticket window somebody is waiting, out of the lamp, a cigarette cupped in his hand.
+With the envelope. Under the overhang by the ticket window somebody is waiting, out of the lamp, a cigarette cupped in his hand. If Frank led the hearse and Danny held the landing, it is the young man who said this to a hearse on Monday, unless Danny took him off the step for it; else it is a stranger off the last boat; his cap is not new any more.
 
 THE MAN AT THE LANDING: Cammack's?
 
@@ -88,7 +88,7 @@ To the second:
 
 THE MAN AT THE LANDING: I didn't ask who you were. Cammack's?
 
-He will ask three times. When he has the envelope he opens it under the timetable, reads the pink sheet by a pencil torch, and counts.
+He will ask three times. When he has the envelope he opens it under the timetable, reads the pink sheet by a pencil torch, the old man's if Danny carried it out of Grace's back room, and counts.
 
 THE MAN AT THE LANDING: Eleven. (He puts the sheet inside his coat and drops the envelope in the water.) Right. Monday, same again.
 

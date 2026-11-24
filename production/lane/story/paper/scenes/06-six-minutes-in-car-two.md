@@ -1,8 +1,8 @@
 # 06. Six minutes in car two
 
-- Where it sits: Act IIa, week two. Danny Cammack's visit.
+- Where it sits: Act IIa, week two. Danny Cammack's visit, and, a night or two on, Frank's bill for it.
 - What wakes it: car three has been played (or Danny moved his own car and told it his way); Frank has answered Sheila's Sunday question, or the street has answered it for him; car two is standing on the rank with nobody in it; Frank is on foot on Quay Street as the lamps come on.
-- Who must be present: Danny Cammack. Pauline on the air. Sheila at the board afterwards. Craig Fewson in the office doorway at the end. Fallback: if Danny cannot come (in hospital after week one), Fewson walks in with the offer, no car and no key, and says only, "Danny says half, and his name where it was." The board choice is the same.
+- Who must be present: Danny Cammack. Pauline on the air. Sheila at the board afterwards. Craig Fewson in the office doorway at the end. For the bill: Fewson and two of Danny's on the warehouse row, Norman Dent, Mark Billany on the ferry rank. Fallback: if Danny cannot come (in hospital after week one), Fewson walks in with the offer, no car and no key, and says only, "Danny says half, and his name where it was." The board choice is the same.
 
 Frank is trying to get Danny's men, his car and his nerve under Mickey's name without putting Danny's name over his own. He will give up half the nights, or the top of his board, or a quiet street.
 
@@ -115,6 +115,20 @@ She hangs it on the third hook all the same.
 
 PAULINE: Out seventeen fifty-two, in eighteen-oh-three and a half. That's not six.
 
+Then the bill. On the next two nights, coming home along the warehouse row, the player passes Danny's van backed up to a dark unit with its engine running. Fewson and two more are carrying out crates of car radios, and a watchman's torch is going along the row the other way. The keys are in it.
+
+If he walks up while they are inside, Frank gets in and drives it away loaded. The white hatchback is behind him before the corner (Fewson driving, if Danny is in hospital). He loses it in the rows, through the tenfoot behind the parade.
+
+At first light the van is locked in the first bay of the ferry rank with 4.10 chalked across its windscreen. Mark Billany is on the rank with his cap pushed back, and a boat queue is watching. Frank holds the keys out.
+
+FRANK: Mr Cammack's. He owes four pound ten on it.
+
+BILLANY: What's in it?
+
+FRANK: His. It moved on the Hook, so it's priced.
+
+Billany looks at the keys for some time before he takes them.
+
 ## What the player can do
 
 - Get in, or walk. Sign: the lit sign on Mickey's own car. Walking, he hears less and is seen less.
@@ -123,6 +137,7 @@ PAULINE: Out seventeen fifty-two, in eighteen-oh-three and a half. That's not si
 - The meter. Flip the flag up: "Then it's free. First thing you've give me."
 - The letter: say what is in it, hand it over, or lie.
 - The offer: four answers. The key: he asks, and gets a Yale. The chalk: four ways.
+- Take the van, on either night. Sign: the engine running, the keys in it. Caught on the row, it is a hiding from three men, and Danny's telling is "caught the nephew thieving". Left, the van loads all week, and Darren says so: "Forty radios a night off that row and nobody's said boo."
 
 ## What the town remembers
 
@@ -132,7 +147,7 @@ PAULINE: Out seventeen fifty-two, in eighteen-oh-three and a half. That's not si
 - Fewson read the board from the doorway. With Danny on top of another firm's board he says, on the pavement, where Frank can hear: "So whose are we?" "Mine." "And whose are you?" Danny does not answer that.
 - The Yale hangs on the third hook. In week three it is found to fit the side door of the empty unit three doors up, where Danny's men are by then.
 - The brass key stays on Danny's ring. On the last afternoon it is in car two's ignition, on the quay's edge.
-- Danny owes four pounds ten, and Sheila has written it under what he owed already.
+- Danny owes four pounds ten, and Sheila has written it under what he owed already. If Frank took the van: Karen Grummitt, at her hatch: "There's a van on the cab stand with a price chalked on it like fish." Danny, at the caff: "He's give my van to her lad to mind. I've had it valeted for less." Maureen Jensen, whose man was handed Danny's goods on her own rank, takes her first look at Mickey's the next dawn.
 - Ron comes on the door at six and hears it from Pauline. He goes out and looks at car two for some time, then opens the driver's door and runs the seat back to where it was.
 
 ## Variants by path

@@ -154,6 +154,7 @@ Somebody, across the road, lets the curtain fall.
 
 ## Variants by path
 
+- Frank took Danny's van off the warehouse row in week two. Her notebook holds one line more, from the night watchman there, and she reads it out without looking up: "A van driven off that row, loaded, and a white car after it. He says a shape. I write shapes down."
 - A ride for the sergeant was taken. Before she opens the book she says back to him, word for word, one thing he told her in the back of Terry's cab. "So I know how you put things."
 - The office was not cleared. The cocoa tin of unbanked cash is on the counter in a bag, and Mickey's office stands open: the arrest adds "and handling", and Mickey's real book, which nobody put in a handbag, is on the bench with a label on it.
 - He has been fetching his own. Nothing in this room shows it; the F.N. lines are in the red book. They matter at five o'clock on the last day.

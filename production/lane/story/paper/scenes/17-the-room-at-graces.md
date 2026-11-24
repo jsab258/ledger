@@ -2,35 +2,57 @@
 
 - Where it sits: the close of Act IIb: the Monday that Garbutt named a week ago, in the afternoon. Tomorrow at nine the man from Customs and Excise starts.
 - What wakes it: Garbutt's day has come. It is the day the old man from the landing is buried, and the tea is in Grace's back room. Frank has fetched one, two, three or none of what the three heads want: a man of Danny's, a paper of Agar's, a load of the Widow's.
-- Who must be present: Keith Garbutt. Geoffrey Agar, seen before, if at all, only at the head of his own stairs. Maureen Jensen. Danny Cammack. Grace Rinaldi at the hatch. The Man in Black at the door. Fallback: a head who is dead or gone is sat for by his second (Simon Ombler, Frank Stathers, Craig Fewson), who can take what is handed him and can promise nothing. A head in a pact with Frank sits beside him.
+- Who must be present: Keith Garbutt. Geoffrey Agar, seen before, if at all, only at the head of his own stairs. Maureen Jensen. Danny Cammack. Grace Rinaldi at the hatch. The Man in Black. Ron, if he is free. Fallback: a head who is dead or gone is sat for by his second (Simon Ombler, Frank Stathers, Craig Fewson), who can take what is handed him and can promise nothing. A head in a pact with Frank sits beside him.
 
-Frank is trying to leave a funeral tea still holding his rank, his licence and his way through the dock gate. He has three things to hand round, and he will give up one enemy's goodwill each time he passes a plate.
+Frank is trying to leave a funeral tea still holding his rank, his licence and his way through the dock gate. He has three things to hand round and a dead man's torch, and he will give up one enemy's goodwill each time he puts something on the cloth.
 
 ## Staging
 
-The back room at the caff, three o'clock, rain on the yard window, a gas fire. The good white cloth. On it the big brown pot, cups, a plate of ham sandwiches, a cut fruit loaf. On the sideboard a black-edged card with no name on it, because nobody at the caff ever knew one; Grace has written "Our friend from the landing".
+First, the chapel door, a quarter to two, a thin rain. One hearse. The old man had a tin under his bed with FUNERAL on the lid, and it ran to a coffin and a ham and no following car.
 
-He stood under the overhang by the ticket window for thirty years. He ate his breakfast in this caff every weekday. All three firms have come to see him buried, since each needs the other two to see it done, and Garbutt has got them to stop for the tea.
+He was shot through the arm on the night of the display, signed himself out of the infirmary, and stood three more nights under the overhang with the arm strapped across his chest. Then it went to his chest.
 
-There are five chairs. Garbutt is at the side in his car coat; he is going on somewhere, as always. The Widow has the pot. Agar, sixty-two, silver hair swept back, rimless glasses and a soft voice, has not taken a sandwich. Danny, in a black tie that is not his, has taken several. The chair at the foot of the table is empty. It is where the family sits.
+Three cars wait behind the hearse with their engines running, and Garbutt is on the pavement in his car coat, getting them into an order that none of the three will call second: a long dark saloon with a driver, for Mr Agar; the Widow's, with Stathers at the wheel in a black tie and his white hat on the back shelf; a white hatchback, washed. In front of the hearse, hat in hand, stands a tall man in black who walks behind every old docker's coffin on the Hook.
 
-Wet coats hang on a stand by the door: a camel overcoat, a fur collar, a leather jacket. At a tea, a person who is stopping takes his coat off. A person who keeps it on has paid his respects and is going.
+Then the back room at the caff, three o'clock, a gas fire. The good white cloth; the big brown pot, cups, ham sandwiches, a cut fruit loaf. On the sideboard a black-edged card with no name on it, because nobody at the caff ever knew one; Grace has written "Our friend from the landing". There are five chairs. The one at the foot of the table is where the family sits.
 
-In the doorway, hat in hand, is a tall man in black who walks behind every old docker's coffin on the Hook.
+Wet coats hang on a stand by the door: a camel overcoat, a fur collar, a leather jacket. At a tea, a person who is stopping takes his coat off.
 
-Frank comes in last, with his left arm, if the yard took it, in plaster under the good overcoat, which is buttoned over the sling because that is the only way it will go on.
-
-The camera sits at the foot of the table, level with the cloth.
+Frank's left arm, if the yard took it, is in plaster under the good overcoat, which is buttoned over the sling because that is the only way it will go on.
 
 ## The scene
 
-THE MAN IN BLACK (to the room, as a verdict): Six. The ham was good. Nobody knew the second hymn. Three firms and no family.
+GARBUTT (at the chapel door): Mr Agar, then Mrs Jensen, then Mr Cammack. By age. Nobody can mind age.
 
-He puts his hat on and goes.
+The player can stand on the pavement with the rest. Or he can cross the road.
+
+Frank gets into car two. He brings her round in the width of the street and puts her in behind the hearse, in front of the long dark saloon, close enough that nothing will go between. It is where the family's car goes. Garbutt takes one step off the kerb and stops; there is nothing a man can say to that at a funeral.
+
+With the plaster, Frank cannot reach the gear stick and hold the wheel. If Ron is free he has got in beside him without being asked. He names nothing. But his hand is on the lever.
+
+FRANK: First.
+
+Ron puts her in first. If Ron is inside, Frank reaches across himself with his right hand for each gear, and holds the wheel with his knee while he does it.
+
+The hearse driver looks in his mirror for his orders, as he would to any family car. Garbutt's road is the top road, which is nobody's ground. Frank flashes his lamps once, and the hearse turns down Quay Street.
+
+It is the slowest the player has driven in the game. The Man in Black walks ahead with his hat against his chest. On the parade, people come to their doors, and for once every door is open: Brenda, Shaun down off his ladder, Ada on her step and not at her window. Behind car two, in the order Garbutt gave them, three firms follow Mickey's.
+
+On the quay the hearse stops at the ticket window, because the car behind it has stopped. Under the overhang a young man in a new cap, who has stood there for Danny since the old man took to his bed, does not know where to look. (If Frank holds the landing, it is Frank's own man, and he takes his cap off without being told.) He says what he has been told to say.
+
+THE YOUNG MAN: Cammack's?
+
+Nobody answers him. Two cars back, a window that was down is wound up.
+
+At the caff door the Man in Black gives it to the room, as a verdict.
+
+THE MAN IN BLACK: Seven. The ham was good. Nobody knew the second hymn. Three firms, and one car of family. (If Frank stalled her on the hill: It stalled.)
+
+If Frank walked, it is the old verdict: "Six. Three firms and no family." He puts his hat on and goes.
 
 GRACE (through the hatch): I've had one funeral in here today. If there's to be another I want notice.
 
-GARBUTT (mildly, as a man asking a favour): You'll stop for a cup, Mr Nowak? Then you'll want that off. That's your chair. Somebody has to be family.
+GARBUTT (mildly): You'll stop for a cup, Mr Nowak? Then you'll want that off. That's your chair. Somebody has to be family, and it seems you've seen to it.
 
 With two arms, Frank takes the coat off or does not. With one, he cannot get out of it alone, and three people watch him find that out.
 
@@ -38,30 +60,34 @@ DANNY (up at once): Here, nephew. I'll have that off you. I've had most things.
 
 THE WIDOW (not moving): Leave him. He can ask.
 
-Agar looks at the fire.
-
 FRANK (the player picks one, or speaks his own, or uses his hand):
 
 - "Mrs Jensen. Would you." She gets up, undoes it as she would a parcel, and hangs it by its loop. "That's one."
-- "I'll manage." He works it off, button by button. It takes a full minute and nobody speaks. When it is on the stand Garbutt nods.
+- "I'll manage." He works it off, button by button. It takes a full minute and nobody speaks.
 - He lets Danny. Danny hangs it on top of his own jacket. "There. We're sharing a peg."
 - "I'm not stopping." See Variants.
 
-He sits in the family's chair. The Widow pours for him without asking how he takes it.
+He sits in the family's chair. Grace reaches through the hatch and puts down by his saucer four pound coins and a brown paper parcel with an infirmary label.
 
-DANNY: Who paid for the ham?
+GRACE: Four pound over, from his tin. And the infirmary sent his things to his next of kin. (She turns the label to him.) It says Mickey's.
 
-GRACE: He did. He'd a tin under his bed with FUNERAL on the lid. There's four pound over, and I don't know who to give it to.
+In the parcel: a cap, a scarf, a pencil torch.
 
-Everybody looks at the foot of the table. Grace reaches through the hatch and puts four pound coins by Frank's saucer.
+FRANK: Four pound and a torch. I came with twenty-three fifty and no torch.
 
-FRANK: Four pound. That's the most anybody's left me that I could count.
+He stands the torch on the cloth, on its end. All three of them look at it. It is thirty years of standing under that overhang, and whoever carries it out of this room has a claim to stand there next.
 
-GARBUTT: I believe Mr Nowak has brought one or two things for the table.
+THE WIDOW (to the torch, not to Frank): That was never ordered. I'll say so once, at his own tea, and not again. The man who did it is across the water and he'll not be back. (With the Widow allied to Frank, she turns it on Danny: "The lad who did it was never mine. Ask who sent him inland.")
 
-Nothing is asked for in turn. Whatever Frank has, he puts on the cloth when he chooses, and all three of them reach for it.
+DANNY: She's sent him to the seaside. (To the room.) My lad's been stood there since Sunday week. He says it lovely.
 
-The paper. One sheet: an option to buy the cold-store road, signed at the foot by G. Agar, as agent. When Frank lays it down, Agar looks at it, and then, for the first time, at Frank.
+AGAR (soft, to Garbutt): The Harbour Board lets that landing. One would expect any tenancy to be put in writing.
+
+THE WIDOW: You'd put a tenancy on a wet step, Geoffrey.
+
+What Frank has fetched, he can put down between them when he chooses, and say whose hand it goes to.
+
+The paper. One sheet: an option to buy the cold-store road, signed at the foot by G. Agar, as agent. When Frank lays it by the torch, Agar looks at it, and then, for the first time, at Frank.
 
 AGAR: Mr Nowak.
 
@@ -69,47 +95,39 @@ He has said it right. Before his hand is halfway, the Widow sets the milk jug do
 
 THE WIDOW: Is that the road past my gate, Geoffrey?
 
-DANNY: I know a lass at the paper who'd frame that.
-
-Frank slides it to one of them, or takes it back.
-
-- To Agar. He folds it in three. "The licence will be renewed. The yard may remain as it is." The Widow: "Then I'll know who to thank when there's a fence across my road."
-- To the Widow. She lifts the jug, reads it, and puts it in her bag. "There's no tax on your cars from tonight. Geoffrey and I will have a talk." Agar has gone the colour of the ham.
-- Back in his pocket. Agar, to Garbutt: "Then I must take it that it may one day be read." Neither of them can move against him while he has it, and both will want it on Saturday.
+- To Agar. He folds it in three. "The licence will be renewed. The yard may remain as it is."
+- To the Widow. She puts it in her bag. "There's no tax on your cars from tonight. Geoffrey and I will have a talk." Agar has gone the colour of the ham.
+- Back in his pocket. Neither can move against him while he has it, and both will want it on Saturday.
 
 The man. Grace opens the hatch wider to pass the fruit loaf, and behind her a young man with his sleeves rolled is at the sink doing the big pans.
 
 DANNY: That's mine. What's he doing with his sleeves up?
 
-THE YOUNG MAN (not turning round): She made me do the big pans.
-
 THE WIDOW: Is that the one who drove four cases of mine up the cold-store road?
 
 Danny stops chewing.
 
-FRANK (the player picks one, or speaks his own):
-
-- "Take him home, Mr Cammack." Danny laughs, and means it less than usual. "Third line, then. And I'll leave your board alone."
-- "He's on my board now." "Then he's told you things, and I'll have to change them all. That's a week's work, nephew."
-- "Ask him yourself, Mrs Jensen." The young man turns round with a pan in his hands. The Widow asks him one question, and he answers it. Danny looks at the cloth for the rest of the tea.
+- "Take him home, Mr Cammack." Danny laughs, and means it less than usual. "Third line, then. And my lad comes off your step."
+- "He's on my board now." "Then he's told you things, and I'll have to change them all."
+- "Ask him yourself, Mrs Jensen." She asks him one question, and he answers it. Danny looks at the cloth for the rest of the tea.
 
 The load. If her four cases came home, she brings it up herself.
 
-THE WIDOW: They came to my door on Thursday night, counted, and not one opened. (To Garbutt.) I owe him for that. I don't care to owe at a funeral.
-
-FRANK (the player picks one, or speaks his own):
+THE WIDOW: They came to my door on Thursday night, counted, and not one opened. I owe him for that. I don't care to owe at a funeral.
 
 - "Friday. Your name behind my gate entries." "You'll have it."
-- "You owe me nothing, Mrs Jensen." Her mouth goes thin. "Then I'm left owing, and I shall pay it my own way, and you'll not choose the day."
-- "Then leave my door man be." "I never had a hand on him. I had a hook he could hang on. (A pause.) I'll not ask him again. If he asks me, that's his own."
+- "You owe me nothing, Mrs Jensen." Her mouth goes thin. "Then I'm left owing, and I shall pay it my own way."
+- "Then leave my door man be." "I never had a hand on him. I had a hook he could hang on. I'll not ask him again."
 
-For any of the three he has brought nothing for, there is nothing to pass. That head says a thing to Garbutt over the rim of a cup, as settled, and Frank has only the sandwiches to offer. Agar: "The yard reverts to the freeholder at Lady Day." The Widow: "Five pound a car is five pound a car. And there's the haddock." Danny: "Top line. Half. I'm not greedy, I'm just first."
+For any of the three he has brought nothing for, that head says a thing to Garbutt over the rim of a cup, as settled. Agar: "The yard reverts to the freeholder at Lady Day." The Widow: "Five pound a car is five pound a car. And there's the haddock." Danny: "Top line. Half. I'm not greedy, I'm just first."
 
-When the pot is empty Garbutt stands, and so the tea is over.
+When the pot is empty Garbutt stands, and so the tea is over. The torch is still on the cloth.
 
-GARBUTT: Then everybody's had a cup. Mr Agar first; your car's waiting.
+- Frank puts it in his pocket. "It came to Mickey's." Nobody at the table says no to a parcel with a label on it.
+- He slides it to one of them. That head has the landing, and owes him, and the other two saw.
+- He leaves it. Grace stands it on the sideboard, by the card.
 
-They take their coats in that order. The Widow, passing the foot of the table, looks at Frank's boots.
+They take their coats: Mr Agar first. The Widow, passing the foot of the table, looks at Frank's boots.
 
 Garbutt is last. He puts a pound on the cloth for his tea.
 
@@ -117,26 +135,22 @@ GARBUTT: Nine tomorrow you've a man from Customs and Excise. I'm no help to you 
 
 ## What the player can do
 
-- The coat: who has it off him, or nobody, or it stays on. Sign: three coats on the stand, and Garbutt's word a week ago about going in with his coat on. What follows: it is the thing the town tells.
-- Put a thing on the cloth, and say whose hand it goes to. Hands: lay a paper down and slide it; speak to a hatch; answer a debt. Sign: each time, the other two reach or speak before he has chosen. What follows: one head is held, and one is made an enemy, for the five mornings that come.
-- Keep everything in his pocket and sit over his tea. All three leave wanting what he has, and none can press him until Saturday.
-- Pick up the four pounds, or leave them by the saucer. Left, Grace puts them in the lifeboat box.
-- Ask for Garbutt's truce, if it has not been spent. "One, for one of them, a fortnight. Which?" It is the only way to hold a head he brought nothing for.
+- Put car two behind the hearse, or walk. Sign: three cars being put in order, and nothing in front of them. Hands: the wheel, and a gear called to Ron or reached for across himself.
+- Put a thing on the cloth, and say whose hand it goes to. What follows: one head is held, and one is made an enemy, for the five mornings that come.
+- The torch: keep it, give it, or leave it.
+- Ask for Garbutt's truce, if it has not been spent. "One, for one of them, a fortnight. Which?"
 
 ## What the town remembers
 
-- Grace heard every word through the hatch and repeats none. What she tells the caff at breakfast is the coat. "He'd one arm and three of them sat watching. Guess who had it off him." If it was himself: "A minute and ten. I had it on the wall clock."
-- That he sat in the family's chair, and was left four pounds. Brenda: "I hear you've come into money again."
-- The young man at the sink goes home with whoever won him. If the Widow asked her question, Danny's crew knows by night who drove her cases, and so does she.
-- Agar has been made to say a name correctly, and to somebody's face. Simon Ombler types "Nowak" from Tuesday.
-- Whoever was handed the paper has it on Saturday. Whoever was not remembers whose hand it went to.
+- The street saw Mickey's car go down Quay Street behind a coffin with three firms after it. Brenda: "Agar's driver had to follow a minicab. With an L on it."
+- The young man under the overhang said "Cammack's?" to a hearse. Danny hears it back all week.
+- Grace tells the caff at breakfast only the coat. "He'd one arm and three of them sat watching. Guess who had it off him."
+- Agar has been made to say a name correctly, to somebody's face. Simon Ombler types "Nowak" from Tuesday.
 - The Widow, left owing, pays it on Friday at the gate, unasked, with her signature. "That's us level. I didn't enjoy it."
-- Garbutt holds that everybody was still at the table when the pot ran dry. It is all he wanted.
 
 ## Variants by path
 
-- "I'm not stopping." Frank stands behind the family's chair in his coat. Garbutt: "Then we'll not keep you from your grief." Each head says his one settled thing, and Frank can put nothing on the cloth. All three are against him this week. Going out, Danny: "It's a nice coat. I'd have kept it on."
-- The arm was not lost. The coat is a matter of two seconds. The Widow still looks at his boots.
-- A pact holds with one of them. That head's chair is beside Frank's, and when a thing goes on the cloth that head does not reach.
-- Danny on the top line. He is on Frank's side of the table, and the third cup is Fewson's. Danny, to the cloth: "Since when does he come to funerals?" The young man at the sink is Fewson's to lose.
+- "I'm not stopping." Frank stands behind the family's chair in his coat. Each head says his one settled thing, and Frank can put nothing on the cloth. Going out, Danny: "It's a nice coat. I'd have kept it on."
+- The arm was not lost. He changes his own gears, and the coat is a matter of two seconds. The Widow still looks at his boots.
+- He drove past the old man on the night of the display. The label says Mickey's all the same. The Widow, when the torch goes on the cloth: "You went by him at eleven mile an hour, I'm told. So did my conscience."
 - Frank signed first. Agar, to Garbutt: "One is not certain the committee can renew for a proprietor under charge." The paper is worth more for it.

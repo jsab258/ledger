@@ -2,19 +2,19 @@
 
 - Where it sits: the midpoint, week four: the Saturday of the town's display on the quay. The night before Remembrance Sunday.
 - What wakes it: Frank holds the third rung, or a rival has reached a threat, or Garbutt has said the week's aim; the day of looking has opened at least one way in; Ron has had four lessons; it is dark.
-- Who must be present: Ron Kirby. Two of the Widow's men on the stage, one of them Mark Billany if he was put down on the ferry rank in week two. Gordon Leckenby on the boat. The whole town on the quay wall, and one constable on foot. Danny Cammack if allied. Fallback: with fewer than four lessons Ron cannot bring the car; whoever Frank took on first brings it instead, at forty, on his horn, and half the wall turns to look. Frank drives the getaway, and Ron loads.
+- Who must be present: Ron Kirby. Two of the Widow's men on the stage: Mark Billany, if he was put down on the ferry rank in week two, and the man who drives her van. Gordon Leckenby on the boat. The old man from the landing, under the overhang by the ticket window, where he has stood every boat night for thirty years. The whole town on the quay wall, and one constable on foot. Danny Cammack if allied. Fallback: with fewer than four lessons Ron cannot bring the car; whoever Frank took on first brings it instead, at forty, on his horn, and half the wall turns to look.
 
-Frank is trying to get the Widow's load off the landing stage and a man of his stood there by morning. He will give up the wheel, to a man with four lessons, with the whole town walking home.
+Frank is trying to get the Widow's load off the landing stage and a man of his stood there by morning. He will give up the wheel, to a man with four lessons, with the whole town walking home; and then he has to say what a shot man is worth to him against four cases.
 
 ## Staging
 
-First, the Monday, at the counter. A man in a car coat he never unbuttons has a cup of Sheila's tea, standing up: a moustache, a clean handkerchief. He has been in every firm's office this week. This is Keith Garbutt. He sells each of them the truth about the others, and none of them has caught him in a lie.
+First, the Monday, at the counter. A man in a car coat he never unbuttons has a cup of Sheila's tea, standing up. He has been in every firm's office this week. This is Keith Garbutt.
 
 GARBUTT: Her load comes in on Saturday's last boat. Whoever's stood there Sunday morning has the landing. (He lays a coin by the saucer.) That's a pound for the tea, Mrs Dunn. I'd not want it said anybody here gave me anything.
 
-FRANK: A pound for a cup of tea. I'm in the wrong trade.
+FRANK: Minimum fare's eighty pence, Mr Garbutt, and you've not left the counter.
 
-GARBUTT: You are, Mr Nowak. That's what I came to tell you.
+GARBUTT: No, Mr Nowak. But I've been all round the town.
 
 Then the Saturday afternoon, the same counter. The plan is laid out in tea things: the teapot is the boat, a saucer the stage, two spoons the brow, the sugar bowl the ticket window. Frank reaches for the stapler.
 
@@ -24,7 +24,7 @@ FRANK: It's the van.
 
 SHEILA: It's my stapler. Use the milk.
 
-The milk jug is the van. A sugar lump goes down by the tea caddy, which is the chandler's corner.
+A sugar lump goes down by the tea caddy, which is the chandler's corner.
 
 RON: Is that me?
 
@@ -32,113 +32,140 @@ PAULINE (not turning from the radio): Don't stand him near the pot. He'll dissol
 
 The plan, as the lump has it: when the last rocket goes, if Frank is not back at the car inside five minutes, bring her to the top of the brow.
 
-Then the night. Twenty to eight. The Harbour Board fires its display from a barge moored off the quay, as it does every year on the Saturday after the Fifth. The whole Hook is along the wall in coats, faces up. Grace Rinaldi has a trestle with an urn and trays of parkin; Brenda is selling hot peas in paper cups, with mint sauce. The bangs come off the water and back off the cold stores.
+Then the night. Twenty to eight. The Harbour Board fires its display from a barge moored off the quay, as it does every year on the Saturday after the Fifth. The whole Hook is along the wall in coats, faces up. Grace Rinaldi has a trestle with an urn; Brenda is selling hot peas in paper cups.
 
-The last boat (no late one on a Saturday) should have tied up at twenty past seven. She has not. She is standing off in the basin with her deck lights on and a Harbour Board launch across her bows showing a red lamp. Nothing lands while the barge is firing.
+The last boat is standing off in the basin with a Harbour Board launch across her bows showing a red lamp. The tide board says low water, half past eight; the brow, a gentle ramp this morning, is steep and wet.
 
-The tide board at the head of the brow says low water, half past eight. The stage has dropped. The brow, which was a gentle ramp this morning, is steep and wet.
-
-On the stage two men wait under the lamp. At the kerb above stands the van.
-
-The camera stays with Frank, wide enough to hold the brow, the kerb and the crowd coming.
+On the stage two men wait under the lamp. At the kerb above stands the van. Under the overhang, out of the lamp, a cigarette is cupped in a hand. Nobody has told the old man it is not his landing now, and he has not asked.
 
 ## The scene
 
-The plan was to take it in the dark with every face turned to the sky. The last rocket breaks at eight and comes down gold. Then the red lamp on the launch goes out, the boat comes in to the stage, and the town turns from the wall and starts to walk home along the quay, toward the landing.
+The last rocket breaks at eight and comes down gold. The red lamp goes out, the boat comes in, and the town turns from the wall and starts to walk home along the quay, toward the landing.
 
-Gordon puts the ropes on. The deck hand runs a wire parcels cage down the ramp onto the stage: cartons on top, and under them, sacked, four square cases. The Widow's two take a side each and start it up the brow. It is heavy. They go up bent, a yard at a time.
+The deck hand runs a wire parcels cage down onto the stage: cartons on top, and under them, sacked, four square cases of tobacco that no duty has been paid on. The Widow's two take a side each and start it up the brow, bent, a yard at a time.
 
-Frank meets them halfway, on the slope, by whichever way in he chose (see Variants).
-
-If the nearer man is Billany, and Frank handed him his cap in week two: Billany stops pushing. He looks at Frank over the cartons. He takes his hands off the cage.
+Frank meets them halfway. If the nearer man is Billany, and Frank handed him his cap in week two, Billany takes his hands off the cage.
 
 BILLANY: That's us straight.
 
-He walks up the brow past Frank and away along the quay, into the crowd, with a stitched eyebrow.
+He walks away along the quay with a stitched eyebrow. Otherwise it is fists, on a wet slope, with a rail on one side and the river on the other, and it is short. The van driver goes down it on his back and is a while coming up.
 
-If Frank struck him when he was down: Billany lets go as well, gets to the van, shuts himself in and puts his whole forearm on the horn.
+Then the cage is in Frank's arms, and one man cannot push it up that brow. The player holds.
 
-Otherwise it is fists, on a wet slope, with a rail on one side and the river on the other. It is short. A man who goes down here slides to the foot of the brow and does not come up it quickly.
+At the chandler's corner a pair of headlights comes on, and between them a white square with a red L. He is alone in the car. The book says he may not be. A right arm comes out of the driver's window, straight, palm forward.
 
-However the two are got off it, their hands leave the cage, and Frank's are on it. The thing that goes wrong is in his arms: with the tide down, one man cannot push that cage up that brow, and if he lets it go it runs back across the stage, through the chain, and into the basin.
-
-The player has one thing to do with his hands, which is hold. The camera turns to look along the quay.
-
-A hundred and fifty yards off, at the chandler's corner, a pair of headlights comes on. Between them, lit by the lamp over the chandler's door, is a white square with a red L. He is alone in the car. The book says he may not be.
-
-The crowd is all over the road. The headlights do not move. Then a right arm comes out of the driver's window, straight, palm forward. Nobody hears it. The player knows what is being said.
-
-The car comes along the quay at the pace of the people, among them. They part round it without looking, as people do for a cab in a crowd going home. The constable stands at the head of the landing with his thumbs in his belt, watching the crowd, his back to the brow.
-
-The window is down. In the quiet after the fireworks a voice carries along the wet stones, level, to nobody.
+The car comes along the quay at the pace of the people, among them. The window is down, and in the quiet after the fireworks a voice carries along the wet stones, level, to nobody.
 
 RON: Coming up on the ticket window. (People turn their heads.) That's the ticket window.
 
-He stops at the top of the brow in three goes. Handbrake. He gets out, leaves the engine running, and comes down the slope sideways in his boots. He puts his hands on the wire beside Frank's.
+Under the overhang the old man steps back to give the wing room.
+
+Ron stops at the top of the brow in three goes, comes down the slope sideways in his boots, and puts his hands on the wire beside Frank's.
 
 RON: On mine. (A breath.) Hup.
 
-The two of them take it up the brow. At the top Ron has the boot open. The four cases go in from under the cartons, two in the boot, two on the back seat; the lid will not shut on them, and he ties it down with the string off the back L-plate.
+At the top the four cases go in, two in the boot, two on the back seat; the lid will not shut, and Ron ties it down with the string off the back L-plate.
 
-The second man is on the brow now, coming up it.
+The van driver has got up the brow. He has blood on his teeth, and a short revolver with tape round its grip, held down along his leg where the crowd cannot see it. He is the man who buys two teas at Grace's counter every morning and carries one out to the gate.
 
-Ron gets into the car. He gets in where he got out, which is the driving seat. Frank has the other door.
+THE VAN DRIVER: Them's hers. Open that boot.
+
+Ron stands in front of the string. He does not say anything.
+
+Out of the dark by the shutter comes a pencil torch, lit, straight into the man's eyes, and behind it a raincoat and a scarf.
+
+THE OLD MAN: Not on here. (He has hold of the man's sleeve.) Thirty year. Not once. Not on here.
+
+The gun goes off.
+
+Along the quay two hundred faces go up to the sky to see where it will break. Somebody says "Ooh." Nothing breaks.
+
+The old man sits down against the shutter of the ticket window, slowly, like a man who has been asked to wait. His left sleeve is dark from the elbow and getting darker. The torch is still lit, on the stones, pointing at the water.
+
+The van driver looks at him, and at the crowd, which is walking again. He puts the gun inside his coat, walks to the van, and drives it away with no lights.
+
+Ron has done what the lump was told to do. He is in the driving seat. Frank has the other door.
 
 RON: Door. Mirror. Belt.
 
-The man is at the top of the brow. Ron winds his window the rest of the way down and puts his arm out.
+Car two moves off at eleven miles an hour. Frank has a line, "Faster, Ron," and Ron hears it. It is not a word he was taught.
 
-The player has what he has had since lesson one: the handbrake, and one word. Frank has a line, "Faster, Ron," and the player can say it as often as he likes. Ron hears it. It is not a word he was taught.
+In the mirror the town is walking round a pair of boots.
 
-Car two moves off at eleven miles an hour, into the back of the crowd.
+The player has what he has had since lesson one: the handbrake, and one word.
 
-The man catches it without running. He walks beside the driver's window with one hand flat on the roof. He cannot do more: the whole town is round them, and a constable is twenty yards behind. He bends to the window.
+If he says "Stop", the car stops dead, and Ron's cap goes off the dash.
 
-THE WIDOW'S MAN: She'll know before you're at the wall, Ron.
+Frank gets out and goes back. The sleeve is wet through. He gets the old man up over his shoulder, and it is on his jacket then, and on his neck. Gordon Leckenby has come up the brow at a run.
 
-RON: Coming up on the chandler's.
+GORDON: I've rung. They're at Fairview with the display. Twenty minutes, she says.
 
-The man lets his coat fall open. There is a wooden grip in his belt. He lets Frank see it, across Ron, and closes the coat. He does not take it out.
+FRANK: It's eleven minutes by the top road. I'll do it in four.
 
-THE WIDOW'S MAN: That's for next time. I'm showing you so you can't say you weren't shown.
+He lays him along the back seat, on the cases, because there is nowhere else.
 
-RON: That's the chandler's.
+FRANK: Out, Ron. In the back. Hold that shut with your cap.
 
-Ahead, Grace Rinaldi steps off the kerb backwards with the urn in her arms. Ron has not named her.
+Ron looks at the wheel, and at him. He gets out. He gets in behind, takes the old man's head on his knee, and presses his cap to the arm with both hands.
 
-- "Stop": the car stops dead. Grace walks on, not knowing. In the second it stands, the man has the back door open and one case out onto the stones, and is gone into the crowd with it.
-- The handbrake: it slows, she passes, he gets the door open and nothing out.
-- Neither: Ron brakes for her himself, late and square, a foot off. "Leaving Grace."
+The crowd fills the road. On the river side, between the last of the people and the edge, there is a strip of coping stones the width of a car and no wider, because nobody walks there in the dark.
 
-At the wall the crowd thins. The man takes his hand off the roof and stands in the road and watches the L-plate go up Quay Street.
+The player has the wheel. Along the lip of the quay with the off-side wheels a hand from the drop; left at the chandler's, the back stepping out; up the cold-store road, and over the top road to the infirmary with the needle past sixty. From the back seat a voice goes on, a little behind the car.
 
-In the yard Ron stops in three goes and switches off. Neither of them gets out.
+RON: Coming up on the chandler's. (It has gone.) That were the chandler's.
+
+The old man speaks once, with his eyes shut.
+
+THE OLD MAN: Mickey's?
+
+FRANK (the player picks one, or speaks his own): "Nowak." / "Mickey's." / nothing.
+
+THE OLD MAN: He never got me anywhere this quick. He were never in a hurry to.
+
+On the top road the player can turn off for the yard and put the cases down first; it costs two minutes, and Ron says, "He's gone quiet, boss." Or he can go straight in under the infirmary's porch, with a constable's bicycle against its wall.
+
+A sister comes out with a chair. Frank carries him in.
+
+THE SISTER: Name?
+
+Frank does not know it. Nor does Ron. Nobody on the Hook ever has.
+
+THE SISTER: Next of kin?
+
+THE OLD MAN: Mickey's. Quay Street.
+
+She writes it.
+
+In the yard Frank switches off. Ron has come round to the front seat. His hands are on his knees, at ten to two, and one of them still has the cap in it.
 
 RON: Leaving the landing.
 
-His hands are still at ten to two. The night's worth is said in cases: four, or three.
-
 FRANK (the player picks one, or speaks his own): "That's yours. You did a night's work." / "Friday, same as always."
 
-- A cut, from the tin, like any man who did a night's work. Ron looks at the notes. "Mickey paid me Fridays." He takes them, folds them once, and puts them in the pocket with the tally. "Then I'm on the tin. Same as the lad."
-- Nothing said, or Mickey's wage as it stands. "Aye." He takes the key out and holds it across. "She pulls left. I'd have her looked at."
+- A cut, from the tin. Ron looks at the notes. "Mickey paid me Fridays." He folds them once and puts them in the pocket with the tally. "Then I'm on the tin. Same as the lad."
+- Nothing said, or Mickey's wage as it stands. "Aye." He looks at the driver's seat. "She pulls left. You'll have felt it."
 
 ## What the player can do
 
-- Hold. Hands: one held input, until Ron comes. Sign: the cage's wheels creeping back. Let go and it runs: four cases drift down past the wall in front of the whole town. No load, no landing; the story goes on.
-- "Stop", the handbrake, or neither, for Grace: a case lost, a door opened, or nothing.
+- Hold the cage. Hands: one held input, until Ron comes. Let go and it runs: four cases go into the basin, and the van driver comes up the brow with the gun out all the same.
+- Say "Stop", or not. Sign: the mirror. Not said, Ron drives home at eleven with four cases and says nothing. The old man sits against the shutter until Gordon and Grace get to him, and is twenty-five minutes reaching a bed. At the desk he gives his next of kin as Mickey's all the same. The load is whole.
+- Take the wheel. Hands: the first fast driving since week one, and the narrowest. A wheel over the coping puts her on her sill above the water with a shot man in the back.
+- The yard first, or straight in. Straight in, Ron will sit in the car, on the cases, for as long as he is asked.
 - Say who stands under the overhang at first light. Whoever is stood there on Sunday morning has it.
 
 ## What the town remembers
 
-- Half the Hook walked past it and saw nothing but a cab going home. What they hold is a sound: a man calling out the ticket window. On Sunday, after chapel, Ada: "That was Ron I heard. He was telling the buildings who they were."
-- The constable writes down a cab with its boot tied down with string, because that is a thing he can name. It is the first line on Frank in a police notebook.
-- The gun was shown, and Frank has been told so in those words. From tonight, the other side may bring one.
-- Danny tells it by morning with himself in it. On Monday the caff says Cammack took the landing, and Danny lets it.
+- Half the Hook heard a gun and looked up for a rocket. They learn on Sunday what it was. From tonight, the other side may bring one.
+- The old man is back under the overhang on Wednesday with his arm strapped across his chest, having signed himself out. By the next week the quay says he is not well.
+- Who went back. "Stopped that car dead and carried him. Then drove the edge of the quay like it had a white line on it." Or, from Brenda: "Went by him at eleven mile an hour. You could have got out and walked back."
+- Ada, after chapel: "That was Ron I heard. He was telling the buildings who they were."
+- The constable on foot writes down a cab with its boot tied with string. It is the first line on Frank in a police notebook.
+- The van driver is on the morning boat with a bag. The Widow has sent him across the water, and she counts it. With the Widow allied, it is Danny's lad who fired, and Danny sends him to his sister's inland for a month; the Widow counts that against Danny.
+- If nobody of Frank's is stood under the overhang at first light, Danny's two lads are, having been there since midnight. On Monday the caff says Cammack took the landing, and Danny lets it.
 - Sunday. Remembrance, at the chapel. The men of the pen stand in a row with their caps off, and Ron stands at the end of it, and a space is left.
 
 ## Variants by path
 
-- The way in. By the road: Frank waits at the van, and it is at the kerb that Billany lays the keys on the roof or leans on the horn. By the gate: along the dock wall on the contract cars' pass, onto the stage before the boat. By the water: a boat-hand, or the boat on Mickey's mooring, puts him onto the stage from the river side.
-- Danny allied. He keeps the kerb with Fewson and does not come down. "I don't do lifting, nephew. I do after." With the Widow allied, the load is his.
-- A firm with no night money. There is no cage. Every car on the board carries the crowd home past her taxmen, Ron bringing the last one up on his L-plates.
+- The way in. By the road, from the van at the kerb. By the gate, along the dock wall on the contract cars' pass. By the water, a boat-hand puts him onto the stage from the river side.
+- Danny allied. He keeps the kerb with Fewson and does not come down. "I don't do lifting, nephew. I do after." With the Widow allied, the load is Danny's, and the gun is Danny's lad's.
+- A firm with no night money. There is no cage. Every car on the board carries the crowd home past her taxmen, and the van driver pulls the gun to stop the last of them. The old man has hold of his sleeve the same.

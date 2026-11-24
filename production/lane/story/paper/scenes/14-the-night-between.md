@@ -2,19 +2,19 @@
 
 - Where it sits: week five, from the Friday morning in the cells to nine on the Saturday. The heaviest scene in the game.
 - What wakes it: the search has played and Frank is in custody. Ron has walked into the station by himself, in the coat he wore to Mickey's funeral, asked for DS Ellis by name, and offered a statement nobody asked him for.
-- Who must be present: Ron Kirby. DS Ellis. The custody sergeant. Through the night, where Frank walks: Rita Welburn, Geoffrey Agar and Simon Ombler, DC Wardell. Fallback: none. Ron is never gone; if he was put in hospital this week he has walked in with his arm strapped.
+- Who must be present: Ron Kirby. DS Ellis. The custody sergeant. Through the night, where Frank goes: the man he put on the landing (if Danny's lads hold it, one of Danny's lads stands in his place for this night), DC Wardell, Rita Welburn, Simon Ombler and Geoffrey Agar, Craig Fewson. Fallback: none. Ron is never gone; if he was put in hospital this week he has walked in with his arm strapped.
 
-Frank is trying to get Ron out of a police station by nine without paying for it. He cannot. Whatever he gives, he has to carry it there himself, and hand it over where Ron can see.
+Frank is trying to get Ron out of a police station by nine without paying for it. He cannot. And there is a load on the water tonight with nobody to meet it, and a line to go in a book, and he has to say whose letters stand at the end of that one.
 
 ## Staging
 
-A tiled cell: a bench, a blanket, a hatch in a steel door. The interview room is being painted, so they have sat Ron at a table in the next cell with its door open, and every word comes down the passage and in at Frank's hatch.
+A tiled cell: a bench, a blanket, a hatch in a steel door. The interview room is being painted, so they have sat Ron at a table in the next cell with its door open, and every word comes down the passage.
 
-The front office: a counter with a flap, a bench under a noticeboard, a clock with a loud second hand. Ron sits on that bench all night, by his own choice, cap on his knee, in a black overcoat tight across the back.
+The front office: a counter with a flap, a bench, a clock with a loud second hand. Ron sits on that bench all night, by his own choice, cap on his knee, in a black overcoat tight across the back.
 
-Outside, seven stone steps under a blue lamp. Then the Hook after dark, wet, from six in the evening until nine. Lit: Rita's pawnshop window, with a man's watch in it. One upstairs office in the Exchange. The station's back step, where a detective constable smokes on the hour. A car in the station yard with its inside light on and a woman writing.
+Outside, seven stone steps under a blue lamp, and the Hook after dark, wet, from six until nine. On Mickey's rank a white hatchback stands with its engine running and a card in its windscreen that says CABS. On the landing stage, at ten, a parcels cage with a padlock on it. At the head of the brow, a plain car with two men in it and no lights. Inside the dock gate the wall runs behind the sheds to the river side of the stage: a strip of coping a car wide, nine iron bollards along it, and no room to turn.
 
-The camera in the cell stays on his bench. On the street it walks behind him and looks at what he is carrying.
+Lit, besides: Rita's pawnshop window, one upstairs office in the Exchange, the station's back step.
 
 ## The scene
 
@@ -28,7 +28,7 @@ SERGEANT (writing): Novak. (He crosses it out.) Nowack. No. (A third time, slowl
 
 It says Knowak.
 
-FRANK: It's a start.
+FRANK: It's five letters. You've found six twice.
 
 SERGEANT: Laces. Belt. Tie.
 
@@ -40,19 +40,9 @@ FRANK (the player picks one, or speaks his own): "It's me." / "Go home, Ron." / 
 
 RON: Say nowt.
 
-A second chair. Ellis, level.
-
 ELLIS: Nobody's asked you for this, Mr Kirby. I'm going to read you the entry. Then you tell me what you want to say about it.
 
-She reads the line. If Frank told Ron the truth at the white board in lesson five:
-
-RON: Aye. That's the one.
-
-If he told him nothing:
-
-RON: Read us all of it. The end and all. (She reads the last column. R.K.) Aye.
-
-If he lied to him, there is a silence in the next cell. It is not long.
+She reads the line. If Frank told Ron the truth at the white board in lesson five: "Aye. That's the one." If he told him nothing: "Read us all of it. The end and all." If he lied to him, there is a silence in the next cell, not a long one.
 
 RON: Read that again. (She does.) Aye. That's right. That's how it were.
 
@@ -64,15 +54,15 @@ ELLIS: And Mr Nowak?
 
 RON: New. I've told you nowt that isn't so.
 
-ELLIS: It'll be typed for nine. It opens with a line you write yourself, in your own hand: I make this statement of my own free will. Go home, Mr Kirby.
+ELLIS: It'll be typed for nine. Go home, Mr Kirby.
 
 RON: I'll stop here. If I go home, somebody'll come round and talk to me.
 
 At six the door opens.
 
-SERGEANT: Released on bail without charge, while enquiries continue. (He tips the laces out of the bag.) Sign there. However you spell it.
+SERGEANT: Released on bail without charge, while enquiries continue. Sign there. However you spell it.
 
-Frank comes through the flap with the laces in his fist. Ron is on the bench. He stands.
+Ron is on the bench. He stands.
 
 FRANK (the player picks one, or speaks his own):
 
@@ -80,51 +70,76 @@ FRANK (the player picks one, or speaks his own):
 - "What have you told her?" Ron: "I've told her nowt that isn't so. I've just not told her you."
 - "If I found a way, would you walk?" If Frank came for him at the pen, or Mickey's watch has been redeemed: "If it's you that's found it. I'd hear you." If neither: "Not bought out. I never saw you at that gate."
 
-Ron sits down again. Frank goes down the seven steps, sits on the bottom one in the rain, and threads his boots. Then the night is the player's, and there are three things he can do with it. Each one he does on his own feet.
+Frank sits on the bottom step in the rain and threads his boots. A man is waiting under the blue lamp with his collar up: the man Frank put on the landing after the display.
 
-He can go back up the steps. At any hour. He does up his jacket button on the top step and goes to the counter.
+THE MAN: It's tonight's, Mr Nowak. Two cases, ten o'clock, in the cage, off the tea boat. I'm not going down. There's a car sat at the top of that brow with two in it. (He holds out a padlock key.) Cammack's lad says they'll fetch it if you'll not. For half.
+
+He goes. Up the street, Fewson is at the wheel of the hatchback on Mickey's rank, taking a fare that should have rung Mickey's telephone.
+
+Ron, if he is asked, from the bench:
+
+RON: Leave it lie. One night's all she's got. I've told her you're new. Don't give her two.
+
+The player can leave it lie, or fetch it himself.
+
+He takes car two out of the yard alone. At the dock gate the night man lifts the bar for the contract's pass and does not look in. Past the ice house Frank puts his lights out. Then he reaches under the dash, without looking, and pulls one fuse: the one for the lamps at the back.
+
+The player drives the wall by what the water gives back. The foot brake is dead to him; a red light on that wall can be seen from the brow. He has the handbrake, as he has had it since lesson one.
+
+FRANK (to nobody, as the bollards come out of the dark on the near side): One. Two. Three.
+
+At the ninth he stops her on the handbrake, with the stage's iron ladder under his door. Down it. The key. Two sacked cases. Up the ladder one-handed, twice, with the tide sucking at the piles. Forty yards off, at the head of the brow, a cigarette brightens behind a windscreen. On the second climb the plain car's inside light comes on: a man is reading his watch. It goes off.
+
+There is nowhere to turn. He puts his arm along the back of the empty seat and takes her out astern, the length of the wall, with no lamp showing at either end of her.
+
+FRANK: Nine. Eight. Seven.
+
+- If the player touches the brake, the wall goes red behind him, and a torch comes along the landing. He is in the cell again by eleven, with two cases on the sergeant's counter. Ellis, in the passage: "That's two nights, and two of you."
+- At "one" he is at the gate, and through it.
+
+The cases go under the tarpaulin in the tenfoot. Then he walks back up the seven steps, wet to the knee, with rust from the ladder on both palms. Ron looks at his hands.
+
+RON: You've been down the water.
+
+FRANK: Two cases. Nine bollards. Nobody sat beside me.
+
+RON: I've told her you're new.
+
+FRANK: I was. Till ten o'clock.
+
+RON: Then that one's yours. (He turns his cap round on his knee.) This one's still mine.
+
+What is left of the night is the player's.
+
+He can go back up to the counter, at any hour.
 
 FRANK: Frank Nowak. N, O, W, A, K. I want to make a statement. That line's mine.
 
-Ellis is fetched. It is done in the open cell, under caution, in Frank's own hand: the opening she dictates, I make this statement of my own free will, and then the line from the book, a third time.
-
-ELLIS: Three times the same, Mr Nowak.
-
-She charges him. Ron is brought to the cell door and told his own is not wanted. He looks at the paper under Frank's hand.
+It is done under caution, in his own hand: the line from the book, a third time. Ellis sends for the Customs officer, who charges him. Ron is brought to the door and told his own is not wanted. He looks at the paper under Frank's hand.
 
 RON: You've took the one thing I had to give.
 
-He puts his cap on and goes out through the flap. He is on the door at Mickey's when Frank gets there. He says, "Boss," and that is all he says.
+He puts his cap on and goes out through the flap. He is on the door at Mickey's when Frank gets there, and says "Boss," and nothing else.
 
-He can go and fetch something, and carry it to the bench. There are four lit windows, and each takes something out of his hand.
+He can fetch a way out and carry it to the bench. Rita's first, if the watch is in her window. "Fourteen pound and the fortnight. Looking costs you nothing." Ron winds it and sets it by the station clock, five minutes on. "Mickey liked to be early." Then: "I'd hear you."
 
-Rita's, first, if the watch is in it. He knocks her up. She comes down at two in a wool coat over her nightdress with the ticket book. "Fourteen pound and the fortnight. I'll look at your money. Looking costs you nothing." He carries the watch up the steps and holds it out. Ron takes it, winds it, and sets it by the station clock, five minutes on. "Mickey liked to be early." Then: "I'd hear you."
+Then one of three. The Exchange: Ombler in his waistcoat, and at the head of the stairs a pink old man in a dressing gown who does not come down. "You would sign this, about the yard." The back step: Wardell, on the hour. "There's a statement in that file says which night. Files lose things. Two hundred. You never met me." If Frank drove the wall tonight he adds, pleasantly, "I'd a nice view of the river at ten. Nothing on it." The car in the station yard: Ellis, only if he has eight hundred pounds in cash on him. She counts it twice. "A hundred, Fridays. I write everything down; that's what you're paying for."
 
-Then one of three. The Exchange: Simon Ombler opens the door in his waistcoat, and at the head of the stairs, in a dressing gown, a pink old man stands and looks down and does not come down. "Mr Agar can have a man at the station by half past eight. Mr Kirby would be a messenger, no more. You would sign this, about the yard." Frank signs it, on the hall table, in his own hand. The station's back step: Wardell, on the hour. "There's a statement in that file says which night. Files lose things. Two hundred. You never met me." Frank counts it into an empty cigarette packet. The car in the yard: Ellis. Only if he has eight hundred pounds in cash on him; without it she is a detective in a car and there is nothing he can say to her. She counts it on her knee, twice, and writes the sum in a small notebook that is not the station's. "A hundred, Fridays. I write everything down; that's what you're paying for."
+Then he has to walk back in and say it to the bench. Ron looks at him until he knows what was done. If he said he would hear it, he gets up, and says nothing, then or after. If he said he would not: "Not for me, boss. Not like that." The money is spent, and he stays where he is.
 
-Then he has to walk back in and say it to the bench.
-
-FRANK: It's seen to. You can go home.
-
-Ron looks at him until he knows what was done. If he said he would hear it, he gets up. He says nothing at all, then or after. If he said he would not:
-
-RON: Not for me, boss. Not like that.
-
-The money is spent, and he stays where he is.
-
-Or he can let it stand. He can sit on the bench beside Ron until nine; Ron does not send him away, and near four says, once, "They do a tea at six. It's not Sheila's." He can go home. Either way, at nine, one question is put to his face: by Ellis in the passage, with Ron at the table behind her and a pen in front of him, or by a constable at Mickey's door at ten to.
+Or he can let it stand. At nine, one question is put to his face.
 
 ELLIS: Mr Nowak. Before he signs. Is there anything you want to tell me?
 
 FRANK (the player picks one, or speaks his own): "Yes. It's mine. I'll write it." / "No."
 
-The first is going back up the steps at the last minute, and runs as above. To the second, or to nothing:
+To the second, or to nothing:
 
 ELLIS: Mr Kirby.
 
-Ron draws the paper to him. He holds the pen the way he holds a tally. He writes the first line himself, in a docker's capitals. I MAKE THIS STATEMENT OF MY OWN FREE WILL. He signs each page. A Customs officer Ellis has rung at home comes in with his coat over his pyjama collar, because a duty case is Customs' business before it is hers. Ron is charged with conspiring to evade the duty on that landing's loads, and kept for the magistrates on Monday, because he will not name the men.
+Ron draws the paper to him. He holds the pen the way he holds a tally. He writes the first line himself, in a docker's capitals. I MAKE THIS STATEMENT OF MY OWN FREE WILL. A Customs officer Ellis has rung at home comes in with his coat over his pyjama collar, because a duty case is Customs' business before it is hers. Ron is charged with conspiring to evade the duty on that landing's loads, and kept for the magistrates on Monday, because he will not name the men.
 
-At the counter his pockets go into a bag: laces, a comb, thirty-eight pounds in notes he has not broken, if Frank called him at the pen; a brass tally, if he kept it; the watch, if he has it.
+At the counter his pockets go into a bag: laces, a comb, a brass tally, if he kept it; the watch, if he has it.
 
 RON: That's to go to him. It's five minutes fast.
 
@@ -134,31 +149,30 @@ RON: Nowak. N, O, W, A, K.
 
 Nobody on the Hook has spelt it right before without being told.
 
-Then Ron turns round. He has his cap in his hand. He holds it out across the flap.
+Then Ron turns round. He holds his cap out across the flap.
 
 RON: Hang that on my hook, boss.
 
-The player has to take it, or leave a man standing there with his arm out. Left, it goes in the bag with the laces.
+The player has to take it, or leave a man standing there with his arm out.
 
-At home the question comes to his door instead. A yes puts him in the constable's car, to write it before nine. After a no, the constable is back by half past with a paper bag, and a cap in it. "He said you'd know which hook."
-
-Frank goes down the seven steps carrying another man's cap. He drives home by the dock road with it on the dash, where it sat through five lessons. The chained doors of the ice house come up on the left, and pass, and nobody in the car says so.
+Frank drives home by the dock road with the cap on the dash, where it sat through five lessons. The chained doors of the ice house come up on the left, and pass, and nobody in the car says so.
 
 ## What the player can do
 
-- Go back up the steps and write it. Sign: Ron has said only paper moves him. What follows: Frank is charged to the end. On Saturday the licence is suspended a fortnight: every car off the rank, and the drivers go to Danny's unless paid in full from the tin. Eric Tharratt drops the contract. Ron is free, on the door, and silent.
-- Fetch a way out and carry it in. Sign: ask Ron first; he says truly whether he would walk. Agar: the yard, due in the last week. Wardell: £200, and he sells the fact to Danny. Ellis: £800 in the hand, then £100 every Friday, each written down. Whoever sold it holds it over him to the end.
-- Redeem the watch tonight. It is the one thing that can still change Ron's answer.
-- Let it stand: say "No," and take the cap. Ron goes in, to the end.
+- Fetch tonight's himself, or leave it lie. Sign: the key in his hand, and Ron's "Don't give her two." Fetched, it is the first night of the firm's that Ron's name is nowhere near.
+- Go back up the steps and write it. What follows: Frank is charged to the end. The licence is suspended a fortnight, and Eric Tharratt drops the contract. Ron is free, on the door, and silent.
+- Fetch a way out and carry it in. Sign: ask Ron first; he says truly whether he would walk. Whoever sold it holds it over him to the end. The watch is the one thing that can still change Ron's answer.
 
 ## What the town remembers
 
-- Father Walsh is in the front office at eight for another man, sees Ron's coat, and sits with him ten minutes. He is how Ron's messages come out afterwards.
-- Quay Street sees the owner of Mickey's come home at half past nine and hang a cap on a hook beside a donkey jacket. Pauline will not have either moved, nor the chair by the radio. On the next Friday Lily Tang counts out one of number nine. "One."
-- A way was bought: the town knows only that both men walked. Whoever sold it knows, and Ron knows.
-- From this morning Ron names nothing, on every path. The player hears it the first time he drives the dock road.
+- Left to lie: at half past ten Fewson carries two cases up the brow past the plain car, and Danny is on the kerb with his hands in his pockets. On Monday the caff says Cammack has the water.
+- Fetched: Norman Dent saw a car go backwards along the dock wall with no lights and thought he had dreamed it. Wardell saw it and wrote nothing down. He keeps it, and on the last Saturday Danny has it. On Sunday Sheila reads the week across the counter: "Friday, the landing. You."
+- Father Walsh is in the front office at eight for another man, and sits with Ron ten minutes. He is how Ron's messages come out afterwards.
+- Quay Street sees the owner of Mickey's hang a cap on a hook beside a donkey jacket. On the next Friday Lily Tang counts out one of number nine. "One."
+- From this morning Ron names nothing, on every path.
 
 ## Variants by path
 
 - Ellis was paid before the search. The car in the yard costs nothing more tonight. "I said it was tonight's business."
-- The Widow allied. Stathers is on the bench beside Ron at midnight with a flask of tea, and pours him the lid. He says nothing to Frank.
+- The Widow allied. Stathers is on the bench beside Ron at midnight with a flask of tea, and pours him the lid.
+- A firm with no night money. There is no cage and no key. The hatchback is on the rank all the same.

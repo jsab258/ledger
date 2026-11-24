@@ -42,7 +42,7 @@ RON: Left alone.
 
 Frank does up the middle button of his jacket. It is the second time today, and the player will learn what it means.
 
-FRANK: I had that for nothing, all the way up from the boat. Forty-one doors on this street, Ron. I counted. Not one opened. (He holds the envelope up to the lamp between two fingers.) Thirty years. Two cars, a rent book, and this. Not for me. Every fare after dark goes in my book. Every door on this street rings my telephone. Every quay with a rope on it. By Christmas, Ron. Mickey's runs the Hook. And when they say Mickey's, they'll mean me.
+FRANK: I had that for nothing, all the way up from the boat. Forty-one doors on this street, Ron. I counted. Not one opened, bar the one I own. (He holds the envelope up to the lamp between two fingers.) Thirty years. Two cars, a rent book, and this. Not for me. Every fare after dark goes in my book. Every door on this street rings my telephone. Every quay with a rope on it. By Christmas, Ron. Mickey's runs the Hook. And when they say Mickey's, they'll mean me.
 
 Ron looks at him for the length of it. Then he looks at the envelope in Frank's hand.
 

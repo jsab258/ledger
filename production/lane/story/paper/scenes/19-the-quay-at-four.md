@@ -37,6 +37,8 @@ What he says next is the night between's.
 - Wardell was paid, and has sold it to him: he says it to the wall, loud. "Ask him what got lost at the station, and who lost it. Then ask how long Ron stops out when she's seen this."
 - Agar's man, or a paid detective: "Both of you walked and nobody's charged. I can't see how. She will, when she's read this."
 
+If Frank fetched that Friday's load himself, along the dock wall, Danny has it from DC Wardell, who watched it from a plain car and wrote nothing down. He adds it, to the wall: "And one night that isn't in here at all. Astern down the dock wall with his lamps out, the night Ron was sat on her bench. I paid good money for that. I'd have paid to watch."
+
 He shuts the book and lays his hand on it.
 
 DANNY: Five o'clock her books open as well. So. You walk up there now, with them watching, and chalk my name where it was. Top. And this goes back on your counter, and I stand beside you like a partner while the Customs man reads it. (He nods up the street at the plain car.) Or I walk it forty yard, and hand it her through the window.
@@ -113,6 +115,6 @@ Ron, if he is there, gets Frank up by his good arm. They walk back up past the w
 ## Variants by path
 
 - Fewson has the key. Danny was put on the top line and never turned. He is on the quay beside Frank with one eye shut. "He's had it off me, nephew. Nine year I've carried that." Fewson is in car two with the book shut on his knee. He does not joke. "I don't want your board. I want him off it, and the lads told why. Rub him off, and this is on your counter by five. Else she has it." That is the price: give him Danny, or fight him. Danny fights at Frank's shoulder, badly. If they win, Danny takes the brass key out of the ignition himself, looks at it, and holds it out. "Go on. It's nine year late."
-- Guns have been fired this game. There is a revolver on the dash, on top of the book, and Danny does not get out. It cannot be fists. Frank agrees, or leaves, or has come with Mickey's revolver, in which case he has come alone, because Ron will not ride with it.
+- Frank has carried Mickey's revolver since the drawer (S32). The Hook has buried a man for the gun at the Landing, and it knows what Frank has in his coat. There is a revolver on the dash, on top of the book, and Danny does not get out. It cannot be fists. Frank agrees, or leaves, or has the revolver in his coat and lets Danny see it; nobody fires, and he has come alone, because Ron will not ride with it. If Frank left the revolver in the drawer, Danny brings no gun either: after the old man's funeral nobody on the Hook will be the next to fire one, and it is fists.
 - Ron is inside. Nobody stands at the bonnet. If Frank is knocked toward the edge he goes in, is pulled out at the ladder by Shaun Hewson, and has lost. If somebody has started car two every morning since Ron went, Danny says so: "First turn. He's got you trained."
 - A firm with no night money. There are four lines with R.K., all in week one. "Four's plenty. Or you do days and I do after. You'd be good on days."

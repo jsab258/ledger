@@ -1,7 +1,7 @@
 # 05. Car three
 
 - Where it sits: Act I, week one, the Thursday, late morning. Danny Cammack's first move, and the deed only Frank would do.
-- What wakes it: Danny's people have something on the new owner (the speech on the rank has reached him, or the carbon found his lock-up); it is daylight; the rank is in use. The day before the rent.
+- What wakes it: Danny's people have something on the new owner (the speech on the rank has reached him, or the carbon found his lock-up, or he had a set on when Pauline counted two minutes on Monday); it is daylight; the rank is in use. The day before the rent.
 - Who must be present: Danny Cammack, Craig Fewson, Ron Kirby, Sheila Dunn. Ada at her window and Shaun Hewson on his ladder are the street's eyes. Fallback: if the player leaves the car where it stands for a game day, Danny moves it himself and tells the street the new owner asked him nicely; Fewson is met beside him then, on the wall, the same.
 
 Frank is trying to get his rank back with the street watching, and a name with it. He will give up a quiet first week, and risks a hiding and another man's car in the dock.
@@ -26,7 +26,7 @@ DANNY (not looking up from the book): Twenty to ten, boarding house, cold-store 
 
 He looks up, pleased to see Frank, as if Frank had come into his office.
 
-DANNY: Nephew. Mickey's runs the Hook, I heard. So I've come down to be run. (He nods at the window.) Don't mind the motor. Nobody'll touch it.
+DANNY: Nephew. Mickey's runs the Hook, I heard. So I've come down to be run. (If Frank had Julie Kettlewell at the boat in under two minutes: One fifty-two, I heard and all. I'd a set on.) (He nods at the window.) Don't mind the motor. Nobody'll touch it.
 
 Frank does up the middle button of his jacket.
 

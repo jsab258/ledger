@@ -4,7 +4,7 @@ Written 24 November 2026 by the lead's helper, from the lead's brief (PAPER-BRIE
 
 ## What a card is, and how the director uses it
 
-A card is one authored beat of the spine. The story director holds every card in one pool. It never moves the world: the Core moves the rivals, Ellis, the rungs and the name ladder (the new owner, Nowak, Frank, Frankie), all on Frank's deeds. The director only chooses which card, among those whose Conditions are already true, plays next, and when. It takes the highest Priority first (5 plays as soon as it is true and the pacing allows; 1 waits for a gap), then the card whose sign has stood longest, then checks Weight against the pacing. Weight: light (a rest, a laugh or a small deed, a few real minutes), middle (a job or a scene with a cost), heavy (only four: the Landing's night, the night between, the yard, the quay at four). Cooldown is the game time after a card ends before the director may start another spine card; side stories and the street fill it. Conditions name world state only, never real time. Time: a game day is 48 real minutes, a game hour 2 real minutes, a game week about 5.6 real hours.
+A card is one authored beat of the spine. Seven of them are deed cards, F1 to F7, one a game week: a deed of Frank's own (frank-test/DEEDS.md; the owner's decision of 24 November), decided by him, done at his own risk, seen by the town and retold. Each can be declined, and the town says so. Four play inside another card (F1 in S01, F4 in S24, F5 in S38, F6 in S44) and add no weight of their own. The story director holds every card in one pool. It never moves the world: the Core moves the rivals, Ellis, the rungs and the name ladder (the new owner, Nowak, Frank, Frankie), all on Frank's deeds. The director only chooses which card, among those whose Conditions are already true, plays next, and when. It takes the highest Priority first (5 plays as soon as it is true and the pacing allows; 1 waits for a gap), then the card whose sign has stood longest, then checks Weight against the pacing. Weight: light (a rest, a laugh or a small deed, a few real minutes), middle (a job or a scene with a cost), heavy (only four: the Landing's night, the night between, the yard, the quay at four). Cooldown is the game time after a card ends before the director may start another spine card; side stories and the street fill it. Conditions name world state only, never real time. Time: a game day is 48 real minutes, a game hour 2 real minutes, a game week about 5.6 real hours.
 
 The pacing rules, in both clocks:
 
@@ -30,11 +30,24 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Weight: light
 - Cooldown: 2 game hours (4 real minutes).
 - Shape card: opening a boat docking; turn a sum written down; ending an aim given; action walk; place the ferry landing and the office; company Sheila, Pauline; mood grey, dry.
-- Carriers: Sheila Dunn, who meets him in the doorway and walks him round; Pauline on the air ("The new owner's in"); Ron in car two on the rank, engine running. Gordon Leckenby, Shaun Hewson and Ada on the way up. Fallback: none; nobody can be absent this early. If he wanders a game hour, Sheila calls from the door: "In here when you've done looking lost."
-- The sign before it: none; the game opens on the ferry. Car two's engine and Pauline's radio lead him up the street.
-- The aim it sets or serves: Sheila writes "New management, cash introduced, £23.50", lays the rent book on his money and says the week's aim: "Eighteen pound by Friday, love, or the landlord has the keys. And Sunday you tell me what this firm is." Nobody hands him a key; car two's stays in her.
-- What the town remembers: Shaun: "Gave me his whole name off the pavement. Both halves." The £23.50 line is read back at the counter at five (S58).
+- Carriers: Sheila Dunn, who meets him in the doorway and walks him round; Pauline, with Julie Kettlewell on the telephone and the microphone in her other hand ("New owner's in"); Ron in car two on the rank, engine running. Gordon Leckenby, Shaun Hewson and Ada on the way up. Fallback: none; nobody can be absent this early. If he wanders a game hour, Sheila calls from the door: "In here when you've done looking lost."
+- The sign before it: none; the game opens on the ferry, with 9.20 chalked at the landing and a white hatchback at the kerb taking the boat's fares. Car two's engine and Pauline's radio lead him up the street.
+- The aim it sets or serves: the first deed, F1, plays inside it if Frank says its line. Then Sheila writes "New management, cash introduced, £23.50", lays the rent book on his money and says the week's aim: "Eighteen pound by Friday, love, or the landlord has the keys. And Sunday you tell me what this firm is." Nobody hands him a key: if he drove, Ron takes car two's from his hand and hangs it back on its hook.
+- What the town remembers: Shaun: "Gave me his whole name off the pavement. Both halves." Pauline, to Kevin on the air: "He can spell." The £23.50 line is read back at the counter at five (S58). Feeds F1.
 - Fails into: cannot fail.
+
+### F1 Real ones
+- Act and week: Act I; game week 1, Monday, sixteen minutes past nine; inside S01 (scene 01).
+- Conditions: new game; Frank has reached the office door before a game hour has passed.
+- Priority: 5
+- Weight: light
+- Cooldown: none; S01 runs on to the cash book.
+- Shape card: opening a telephone call; turn a clock started on the air; ending a fare paid in tens; action drive; place the rows, the tenfoot, the landing; company Ron, Julie; mood quick, funny.
+- Carriers: Pauline, who counts; Julie Kettlewell on her step, nine pounds in the debt book, with a week's trial across the water if she is on the 9.20 boat; Ron, pointing with a flat hand; Gordon with the rope. Fallback: none this early.
+- The sign before it: 9.20 chalked at the landing; a white hatchback taking the boat's fares; an engine running on the rank.
+- The aim it sets or serves: none set. "Tell her two minutes." "These are. Start your clock when my door shuts." He takes car two off Ron, reaches Julie's step in under two minutes on an open channel, and backs the whole length of the tenfoot because there is no room to turn. The first line in the day book is a fare he drove: 9.16, the rows to the landing, 80p.
+- What the town remembers: Pauline's count ("One fifty-two, by mine. Well."); Brenda: "Backwards. Down the tenfoot. With Ron Kirby sat in it holding his hat on." A scrape stays on the car to the end. Danny Cammack, who drove that car nine years, heard the count on a set. Feeds S06, S12, S44, S60.
+- Fails into: late, "Same as ever, then"; unsaid, Pauline tells the telephone "Set off walking, love", Julie walks, and Brenda has "New owner, same minutes".
 
 ### S02 The ask and the want
 - Act and week: Act I; game week 1, Monday night, twenty to ten, on the rank (scene 02).
@@ -82,15 +95,15 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Weight: middle
 - Cooldown: 4 game hours between collections (8 real minutes).
 - Shape card: opening a list handed over; turn a man who stands for it; ending money paid; action walk; place Quay Street, the quay, the rows; company Ron; mood grey, hard.
-- Carriers: Lee Drewery (£15, stands for it; Ron fills the doorway), Darren Milner (£22), Julie Kettlewell (£9), Dennis Iveson (£80, has it), Wayne Harrison (£30, in goods). Ron rides. Fallback: an absent debtor is struck for now; if Ron is sent elsewhere, Frank goes alone.
+- Carriers: Lee Drewery (£15, stands for it; Ron fills the doorway), Darren Milner (£22), Julie Kettlewell (£9; met on the first morning, F1), Dennis Iveson (£80, has it), Wayne Harrison (£30, in goods). Ron rides. Fallback: an absent debtor is struck for now; if Ron is sent elsewhere, Frank goes alone.
 - The sign before it: Sheila: "Ron knows the doors."
 - The aim it sets or serves: serves the eighteen pounds. These are people the docks' closing has left short.
-- What the town remembers: each debtor keeps how he was treated. Lee opens D23; Darren D03; Julie D09; Dennis D13 and Neil Screeton in the yard (S44); Wayne D24.
+- What the town remembers: each debtor keeps how he was treated. Lee opens D23; Darren D03; Julie D09; Dennis D13; Wayne D24.
 - Fails into: uncollected, Friday is short; S09 then wants fares or a favour.
 
 ### S06 Car three
 - Act and week: Act I; game week 1, Thursday, about eleven (scene 05).
-- Conditions: Danny's people have something on the new owner (the speech, or the found lock-up); daylight; the day before the rent.
+- Conditions: Danny's people have something on the new owner (the speech, the found lock-up, or Pauline's count on Monday, which Danny heard on a set: F1); daylight; the day before the rent.
 - Priority: 5
 - Weight: middle
 - Cooldown: 6 game hours (12 real minutes).
@@ -98,7 +111,7 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Carriers: Danny Cammack on the counter with a bacon sandwich and the day book; Craig Fewson on the wall (met here); Ron, who walks the white hatchback down with docker's hand signals, the closed fist for stop; Sheila. Fallback: left a game day, Danny moves it and tells the street his way.
 - The sign before it: Kevin double-parked in car one, a hand flat on the horn.
 - The aim it sets or serves: the corner, the edge on Ron's fist, or the water. "It's on my rank, so it's on my board. Car three. Two pound forty to the quay. Sheila, put it in the book." Danny's twenty: take it, change it, or push it back.
-- What the town remembers: "You're never him that put Cammack's motor on the edge"; Lee: "Was it Ron?" Fewson keeps how he was treated. Feeds S14 and the quay (S57).
+- What the town remembers: "You're never him that put Cammack's motor on the edge"; Lee: "Was it Ron?" Fewson keeps how he was treated. Feeds S14, F2 and the quay (S57).
 - Fails into: ignored, Danny has the rank and the first story.
 
 ### S07 Ada's tea
@@ -178,7 +191,7 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Carriers: Ron at the wheel of car two under Mickey's L-plates of 1984; Frank has the handbrake and one word, "Stop". Brenda; Billany on the ferry rank. Fallback: none; this is Ron's. Never taken up, he asks once: "I'd stand that rank for you, boss. I can't get her there."
 - The sign before it: Sheila, with the L-plates: "Mickey bought them. He had hopes."
 - The aim it sets or serves: what Ron names, he has seen ("Coming up on the ice house. That's the ice house. Leaving the ice house."); he does not name the pen. At the ferry rank: "Get a third car on that board and stand on the ferry rank till they stop asking whose it is."
-- What the town remembers: Brenda: "Big lad in a little car." The pen and Stathers saw Ron under an L. Dents stay on car two. Feeds S21, S24, S33, S39.
+- What the town remembers: Brenda: "Big lad in a little car." The pen and Stathers saw Ron under an L. Dents stay on car two, beside any scrape from the tenfoot (F1). Pauline, whenever Ron has her out: "Tell him two real minutes." Feeds S21, S24, S33, S39.
 - Fails into: refused, nothing is lost. Kevin gives a skipped lesson in its week, complaining, so Ron has four by the Landing unless Frank stopped them; then S24's fallback plays.
 
 ### S13 A first man
@@ -202,27 +215,40 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Cooldown: 8 game hours (16 real minutes).
 - Shape card: opening a car taken; turn an equal's offer; ending a name chalked; action drive; place the whole Hook, the quay's edge, the board; company Danny; mood loud, quick.
 - Carriers: Danny, in car two on his brass key, roof sign lit; Pauline: "Car two is not answering." Fewson in the office doorway afterwards, reading the board. Fallback: Danny in hospital, Fewson brings the offer on foot.
-- The sign before it: car two off the rank; its own key still on Pauline's hook.
-- The aim it sets or serves: "That's how you park it." Half the nights. The chalk: the top line (a third; no grievance, and Fewson stops answering Danny), the third line (half; an arrow chalked up beside it every night, rubbed off every morning: the grievance), or nowhere (CAMMACK a foot high on the unit three doors up). Asked for the key, he hands over a Yale: somebody's front door.
-- What the town remembers: the radio heard car two not answering. The board holds where the player put him. Feeds S34, S44, S56, S57.
+- The sign before it: car two off the rank; its own key still on Pauline's hook. On the nights either side of it, Danny's van backed up to a dark unit on the warehouse row (the sign before F2).
+- The aim it sets or serves: "That's how you park it." Four pounds ten on the meter, by Danny's own count, which Frank says he will have off him. Half the nights. The chalk: the top line (a third; no grievance, and Fewson stops answering Danny), the third line (half; an arrow chalked up beside it every night, rubbed off every morning: the grievance), or nowhere (CAMMACK a foot high on the unit three doors up). Asked for the key, he hands over a Yale: somebody's front door.
+- What the town remembers: the radio heard car two not answering. The board holds where the player put him. Danny owes four pounds ten, and Sheila has written it under what he owed already. Feeds F2, S34, S44, S56, S57.
 - Fails into: refused, the loudest rival; kept waiting, he takes the ferry rank on Monday.
+
+### F2 Four pound ten
+- Act and week: Act IIa; game week 2, a night after S14 (scene 06, its end).
+- Conditions: S14 played; Danny's van seen loading on the warehouse row on two nights; the ferry rank not yet Frank's; Danny not on the top line of Frank's board.
+- Priority: 3
+- Weight: middle
+- Cooldown: 6 game hours (12 real minutes).
+- Shape card: opening a van left running; turn a chase; ending keys handed to the wrong man; action drive; place the warehouse row, the rows, the ferry rank; company alone; mood dark, quick.
+- Carriers: Craig Fewson and two of Danny's, carrying crates of car radios out of a dark unit; Norman Dent with his torch; Mark Billany on the ferry rank at first light. Fallback: if Billany is off, Karen Grummitt takes the keys at her hatch and gives them to the Widow's car.
+- The sign before it: Dent's torch on a stack of crates; Danny's "I've the ferry rank from Monday".
+- The aim it sets or serves: serves Ron's week-2 aim: the ferry rank is not Danny's on Monday. Frank drives the van away loaded, loses the hatchback through the rows and the tenfoot, and at first light it is locked in the first bay of the ferry rank with 4.10 chalked across its windscreen. He hands the keys to the Widow's taxman: "Mr Cammack's. He owes four pound ten on it." He does not keep the load.
+- What the town remembers: a price chalked on a windscreen. Karen Grummitt: "There's a van on the cab stand with a price chalked on it like fish." Danny, at the caff: "He's give my van to her lad to mind. I've had it valeted for less." Feeds S15, S16, S28, S36; it closes D22 if that is open.
+- Fails into: caught on the row, a hiding from three men and Danny's telling ("caught the nephew thieving"); declined, the van loads all week, and Darren says so: "Forty radios a night off that row and nobody's said boo."
 
 ### S15 The ferry rank
 - Act and week: Act IIa; game week 2.
-- Conditions: S12 played; the ferry rank held by Billany or Danny's driver; at least two cars running.
+- Conditions: S12 played; the ferry rank held by Billany or Danny's driver (after F2, Fewson himself, in the van that stood there with a price on its windscreen); at least two cars running.
 - Priority: 4
 - Weight: middle
 - Cooldown: 6 game hours (12 real minutes).
 - Shape card: opening a queue forming; turn a fight breaks; ending a man down; action fight; place the ferry rank; company Ron, a crowd; mood loud, tense.
 - Carriers: Mark Billany (or Fewson, if Danny has it); Ron back to back with Frank before the boat queue. Fallback: if Ron is sent elsewhere that day, the first man stands; a car on the rank five days in a fortnight wins it without fists.
-- The sign before it: the boat's horn; Billany's cap pushed back on the rank.
+- The sign before it: the boat's horn; Billany's cap pushed back on the rank; after F2, the ghost of 4.10 on a van's windscreen.
 - The aim it sets or serves: closes Ron's week-2 aim. A car on it, a word, or fists. If Billany goes down: hand him his cap, walk off, or hit him again while he is down. The ferry rank is a hackney stand: a minicab taking the boat queue there is plying for hire without a hackney licence, an offence each time and a reason the council can suspend Mickey's licence, so winning it is a crime done in daylight in front of a queue, and every ferry fare goes in the book as phoned in (Sheila: "Phoned from the ferry. They've a box there, haven't they?") (research/RECORD-CHECKS-2026-11-24.md).
-- What the town remembers: the boat queue saw it, and so can the council: Agar can hand Alan Sowerby, the licensing officer, the ferry fares at any hearing (S17). Billany keeps a stitched eyebrow: spared, he lays his keys down at the Landing ("That's us straight"); struck when down, he leans on the horn (S24).
+- What the town remembers: the boat queue saw it, and so can the council: Agar can hand Alan Sowerby, the licensing officer, the ferry fares at any hearing (S17). Billany keeps a stitched eyebrow: handed his cap, he takes his hands off the cage at the Landing ("That's us straight"); struck when down, or left where he fell, he fights for it on the brow (S24).
 - Fails into: lost, the rank is theirs and Ron says nothing all the way home.
 
 ### S16 The Widow's first look
 - Act and week: Act IIa; game week 2, a dawn shift.
-- Conditions: rung 2 reached or Sunday answered; one of Frank's cars carrying to the dock gate.
+- Conditions: rung 2 reached or Sunday answered, or the dawn after F2, when her man has been handed Danny's goods on her own rank in front of a boat queue; one of Frank's cars carrying to the dock gate.
 - Priority: 4
 - Weight: middle
 - Cooldown: 6 game hours (12 real minutes).
@@ -243,8 +269,8 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Carriers: Agar's letter, signed by Simon Ombler, to Mr Nowek. Fallback: Pauline reads it; if the office is shut, it is pinned to the door.
 - The sign before it: the postman stops at the counter instead of the box.
 - The aim it sets or serves: Sheila: "Nowek. He's spelt you like a cough. Means he's not frightened yet." Answer it in writing, ignore it, or walk it up to the Exchange.
-- What the town remembers: Ombler keeps how he answered. Feeds D16, Agar's door at the night between (S38), the room (S46) and the third morning (S52).
-- Fails into: ignored, Agar's next letter is an inspection.
+- What the town remembers: Ombler keeps how he answered. After F3 his second letter is not about the licence: a bill for a shutter and a footway, to Mr Nowek, and an inspection of the yard (D16). Feeds D16, Agar's door at the night between (S38), the room (S46) and the third morning (S52).
+- Fails into: ignored, Agar's next letter is the inspection without the bill.
 
 ### S18 Sheila opens Mickey's office
 - Act and week: Act IIa; game week 2 or 3, an evening.
@@ -282,21 +308,34 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Carriers: Eric Tharratt, shift manager at the cold stores. Fallback: his deputy carries the terms.
 - The sign before it: the packers on the parade, talking about the new owner as if he were upholstery.
 - The aim it sets or serves: Tharratt: "Five mornings, on the minute, four cars. Then we'll talk." Four mornings the cars run it (in the simulation, Pauline reporting each on the air); Frank finds the fourth car and a fourth driver. On the fifth he drives the first car himself.
-- What the town remembers: the packers count the mornings for him. Feeds S21.
+- What the town remembers: the packers count the mornings for him. On the fourth evening, passing the warehouse row at dusk, the player watches two of Danny's men take the wheels and the radio off a car. Feeds F3 and S21.
 - Fails into: fewer than four cars, Tharratt counts cars and waits a week.
+
+### F3 The shell
+- Act and week: Act IIa; game week 3, the fifth morning, five o'clock; before S21 (scene 08, its opening).
+- Conditions: four mornings met; the unit three doors up lit at night, with Danny's men in it; the stripping watched at dusk.
+- Priority: 4
+- Weight: middle
+- Cooldown: none before S21, the same morning.
+- Shape card: opening a gate blocked; turn a shove; ending a shutter stopped up; action drive; place the yard gate and the parade; company alone; mood loud, cold.
+- Carriers: Danny's four in the unit; Ada, Brenda, Shaun at their windows. Fallback: if Danny is on the top line, the shell is Fewson's doing and Danny comes out to laugh at both.
+- The sign before it: a car on bricks across Mickey's yard gate, under the street lamp, and a clock.
+- The aim it sets or serves: serves Tharratt's aim: four cars at the gate on the minute. The Hook's way is six men and a count. Frank puts the first car's bumper to the shell and shoves it on its drums thirty yards up the pavement, and plants it across Danny's shutter with his men inside. "Thirty yards. Four minutes. I've eleven."
+- What the town remembers: sparks at five in the morning. Ada: "Sparks. I thought the display had come a week early." Brenda: "He's posted it back through Cammack's door." Shaun: "Took the paint off my kerb, the pair of them." Danny tells it as his own joke and keeps the shell where it is for a week. Feeds S17, D16, S21.
+- Fails into: Danny's four come out by the side door and it is a fight: he is late, and Tharratt counts three cars. Declined, six men from the caff lift it clear at six, the cars are four minutes behind, and Brenda has "Had to be lifted out of his own yard".
 
 ### S21 The gate at dawn: the fifth morning
 - Act and week: Act IIa; game week 3, the fifth morning, twelve minutes to six (scene 08).
-- Conditions: four cars; four mornings met on the minute this week; the Widow's people have had their first look; Frank drives the first car of four.
+- Conditions: four cars; four mornings met on the minute this week; the shell shifted from the yard gate at five, by F3 or by six men; the Widow's people have had their first look; Frank drives the first car of four.
 - Priority: 5
 - Weight: middle
 - Cooldown: 8 game hours (16 real minutes).
 - Shape card: opening a gate walked shut; turn an old place offered; ending a gate opened; action drive; place the dock gate and the pen; company the packers, Ron, the pen; mood cold, tense.
 - Carriers: Frank Stathers on the gate; Ron driving the fourth car on his L-plates, a packer with a licence beside him; the packers; the pen. Fallback: Billany holds the gate, and the tally comes a day later.
-- The sign before it: the gate in the headlights, open; two men put their hands to the leaf.
+- The sign before it: the packers, who have the shell before they have the gate ("I thought it was the dustmen"); the gate in the headlights, open; two men put their hands to the leaf.
 - The aim it sets or serves: closes Tharratt's aim. Stathers: "There's one Frank on this gate." Twenty pounds due. He holds tally 39 out to Ron; on every path Ron pockets it and says nothing. Pay, bluff, push, send Ron to walk the leaf open, go round by the cold-store road, or let the packers walk.
 - What the town remembers: the pen tells it by what Frank did; sent Ron, nobody tells it. Tharratt: "Now we'll talk." Feeds S26, S30.
-- Fails into: late, Tharratt counts three cars; the story goes on without the contract.
+- Fails into: late (a fight at the shell, or four minutes lost to the lift), Tharratt counts three cars or a red card; the story goes on without the contract.
 
 ### S22 Garbutt's card
 - Act and week: Act IIa into the midpoint; game week 3 end, the table at the start of week 4.
@@ -333,15 +372,28 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Weight: heavy
 - Cooldown: none before S25, which is the same night; 60 game hours (2.5 game days) before any other heavy card.
 - Shape card: opening a boat held off; turn a cage that will not climb; ending a getaway at eleven; action fight; place the landing's brow and the night quay; company Ron, a crowd; mood loud, frightening.
-- Carriers: Ron; the Widow's two men (Billany, if met); Gordon Leckenby; the town; a constable; Danny at the kerb if allied. Fallback: with fewer than four lessons, the first man brings the car at forty on his horn.
+- Carriers: Ron; the Widow's two men (Billany, if met); the old man from the landing, under the overhang with his pencil torch; Gordon Leckenby; the town; a constable; Danny at the kerb if allied. Fallback: with fewer than four lessons, the first man brings the car at forty on his horn.
 - The sign before it: the boat held off with a red lamp across her bows.
-- The aim it sets or serves: Garbutt's week-4 aim. The load lands late on a falling tide with the crowd walking home; Frank holds the cage on the brow; Ron brings car two through the crowd at eleven miles an hour, naming the ticket window. The Widow's man shows a gun: "That's for next time." Frank names who stands the landing at first light.
-- What the town remembers: a man calling out the ticket window. The constable notes a boot tied with string. Monday, the caff says Cammack took it.
+- The aim it sets or serves: Garbutt's week-4 aim. The load lands late on a falling tide with the crowd walking home; Frank holds the cage on the brow; Ron brings car two through the crowd at eleven miles an hour, naming the ticket window. The Widow's van driver (Danny's lad, with the Widow allied) comes up the brow with a revolver and it is fired, once, on every path: the old man from the landing takes hold of his sleeve and is shot through the arm (he dies later; S46 is his funeral). The town looks up for a rocket and learns on Sunday what it was. Ron drives off at eleven, as the plan told him; if Frank says "Stop", F4 plays. Frank names who stands the landing at first light.
+- What the town remembers: a man calling out the ticket window; who went back for the old man, or went by him at eleven. The constable notes a boot tied with string. On every path the old man gives his next of kin as Mickey's (S46), and the shooter is sent away: the Widow sends her van driver across the water, or Danny sends his lad inland. If nobody of Frank's is under the overhang at first light, Danny's lads are, and on Monday the caff says Cammack took it. Feeds F4, S25, S26, S30, S32, S46.
 - Fails into: let go, the cases go into the basin; the story goes on with him holding less.
+
+### F4 The top road
+- Act and week: midpoint; game week 4, Saturday night; inside S24 (scene 10).
+- Conditions: S24 playing; the gun fired; the old man down; car two moving.
+- Priority: 5
+- Weight: inside S24's heavy beat.
+- Cooldown: none before S25.
+- Shape card: opening a word that stops a car; turn a wheel taken; ending a form filled in; action drive; place the quay's lip and the top road; company Ron, the old man; mood frightening, fast.
+- Carriers: the old man; Ron in the back, holding the wound shut with his cap; Gordon ("Twenty minutes, she says"); the infirmary sister. Fallback: with the first man driving, he rides in the back in Ron's place.
+- The sign before it: a pair of boots in the mirror, and the town walking round them.
+- The aim it sets or serves: Garbutt's week-4 aim, put at risk for a man. "Stop." He goes back, lays the old man on the cases, takes the wheel off Ron and drives the lip of the quay and the top road to the infirmary: "It's eleven minutes by the top road. I'll do it in four." The yard first, or straight in under the porch with a constable's bicycle against the wall.
+- What the town remembers: who went back. "Stopped that car dead and carried him. Then drove the edge of the quay like it had a white line on it." The old man gives his next of kin as "Mickey's. Quay Street", which seats Frank in the family's chair in week seven. The Widow sends the van driver across the water on the morning boat (Danny sends his lad inland, with the Widow allied) and counts it. Feeds S26, S30, S46.
+- Fails into: a wheel over the coping puts her on her sill above the water; declined, Ron drives home at eleven with the load whole, the old man is twenty-five minutes on the stones, and Brenda has "Went by him at eleven mile an hour".
 
 ### S25 The cut in the car
 - Act and week: midpoint; game week 4, Saturday night, in the yard (scene 10, its end).
-- Conditions: S24 played; Ron at the wheel in the yard.
+- Conditions: S24 played; car two in the yard, Ron at the wheel, or beside Frank if F4 was driven.
 - Priority: 4
 - Weight: light
 - Cooldown: 8 game hours, to morning (16 real minutes).
@@ -360,9 +412,9 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Cooldown: 6 game hours (12 real minutes).
 - Shape card: opening a bell; turn a row of caps; ending a silence; action wait; place the chapel; company Ron, the pen; mood still, sad.
 - Carriers: Ron; the men of the pen in a row, caps off; Father Walsh; Ada. Fallback: if Frank skips it, Ada tells him after.
-- The sign before it: poppies on the drivers' coats; the Man in Black outside, marking a docker's coffin from Friday out of ten.
+- The sign before it: poppies on the drivers' coats; the Man in Black outside, marking a docker's coffin from Friday out of ten; nobody under the overhang who has stood there thirty years.
 - The aim it sets or serves: none set; a rest beat. Whoever stood the landing this morning holds it. If Frank sent Ron to walk the gate open in week three, the row keeps its backs to him and a space is left at its end. If not, Ron stands in the row with them.
-- What the town remembers: Ada: "That was Ron I heard. He was telling the buildings who they were." Feeds S30.
+- What the town remembers: this is the morning the Hook learns what it heard: a gun, and the old man from the landing in the infirmary with his arm shot through. It has who went back, or who went by (F4). Ada: "That was Ron I heard. He was telling the buildings who they were." Feeds S30.
 - Fails into: skipped, nothing is lost.
 
 ## Act IIb, The Squeeze (game week 5)
@@ -387,7 +439,7 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Weight: middle
 - Cooldown: 8 game hours (16 real minutes).
 - Shape card: opening a man not answering; turn a van found; ending a man brought back or lost; action chase; place the night quay, by road or water; company the first man; mood tense, dark.
-- Carriers: Craig Fewson, who has Frank's man in a van; the man on the post (Lee Drewery, Colin Mastin, the old hand). Fallback: if Fewson is gone, another of Danny's.
+- Carriers: Craig Fewson, who has Frank's man in a van (after F2, the van that stood on the ferry rank with a price on its windscreen); the man on the post (Lee Drewery, Colin Mastin, or the old hand, back under the overhang with his arm strapped). Fallback: if Fewson is gone, another of Danny's.
 - The sign before it: the landing's lamp unlit; Pauline: "Your man at the water's not picking up. He always picks up."
 - The aim it sets or serves: Garbutt's week-5 aim. A tail and a snatch, by the road or the water. The danger: a gun shown.
 - What the town remembers: the man taken back remembers who came. Feeds the yard (S44) and, if the old hand is lifted with that night's carbon, the turn (S35).
@@ -414,7 +466,7 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Cooldown: 12 game hours (24 real minutes).
 - Shape card: opening a word on the radio; turn a list held open; ending a man called out, stood with or left; action talk; place the pen at the dock gate; company Ron, the pen; mood grim, still.
 - Carriers: Ron at the back rail; Stathers with the list; Kevin on the air; Lee Drewery on the kerb with a split lip. Fallback: Billany reads the list, worse.
-- The sign before it: Pauline: "He's not asked for anybody. (A pause.) He wouldn't."
+- The sign before it: Pauline: "He's not asked for anybody. (A pause.) He wouldn't." The Widow is a man short since the Landing (the van driver, sent across the water) and counts it against Mickey's, so Stathers opens harder.
 - The aim it sets or serves: Garbutt's week-5 aim. Call him ("Kirby" or "Mr Kirby"; £38 into his palm; he hangs the tally up), stand with him, go in swinging, send somebody, or stay away: left alone, Ron stands the call out and is on the door by ten, wet and unhurt.
 - What the town remembers: the pen tells it by its own rules. A cheaper way at the night between needs Frank to have called, stood or fought (S38). Feeds S33.
 - Fails into: staying away is a choice too; Ron turns the tally over on the door all week.
@@ -447,15 +499,15 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 
 ### S32 The first gun
 - Act and week: Act IIb; game week 5.
-- Conditions: a gun shown (S24 or S28); S18 played.
+- Conditions: S24 played (a gun has been fired at the Landing, on every path); S18 played.
 - Priority: 3
 - Weight: light
 - Cooldown: 4 game hours (8 real minutes).
 - Shape card: opening a drawer opened; turn a refusal; ending a choice; action wait; place Mickey's office; company Ron; mood cold, hushed.
 - Carriers: Ron. Fallback: none; Ron's refusal is the card.
-- The sign before it: "That's for next time. I'm showing you so you can't say you weren't shown."
+- The sign before it: the old man's arm, and the town learning on Sunday what it heard on Saturday. "They've fired one now. Next time it's at you, boss."
 - The aim it sets or serves: Mickey's revolver becomes a choice with a price: Ron will not ride with it. "I'll walk, boss. It's not far to anywhere."
-- What the town remembers: Ron knows what Frank carries. A gun fired anywhere this game makes the quay a gun on the dash (S57).
+- What the town remembers: Ron knows what Frank carries. The Landing's shot alone does not arm the quay; Frank taking the revolver out of the drawer does: then the quay is a gun on the dash (S57), and he comes to it alone.
 - Fails into: left in the drawer, nothing.
 
 ### S33 Lesson five
@@ -506,7 +558,7 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Shape card: opening a warrant read; turn an old line read back; ending an arrest; action write; place the office counter; company Ellis, Sheila; mood cold, still.
 - Carriers: DS Carol Ellis with a magistrate's warrant; DC Wardell's property book; Sheila, handbag on her knee, offering a mint; Pauline. Fallback: if Sheila has left, the book lies on the counter with the pen on it.
 - The sign before it: two plain cars at the kerb; Ada's curtain an inch open.
-- The aim it sets or serves: beside the book, what the leak gave her. "I'm not asking you to remember everything." She reads the line aloud: "Write it again. Underneath. Same words." By kind: the same twice, or "That's two"; the truth, and "Who's R.K.?"; Sheila's words, or "Then these are Mrs Dunn's words." Dated, initialled, copied twice and certified. Arrested for false accounting. Pauline: "All cars. Wait."
+- The aim it sets or serves: beside the book, what the leak gave her; in her notebook, the night watchman's shape from the warehouse row (after F2, a van driven off loaded with a white car after it; never "he did it"). "I'm not asking you to remember everything." She reads the line aloud: "Write it again. Underneath. Same words." By kind: the same twice, or "That's two"; the truth, and "Who's R.K.?"; Sheila's words, or "Then these are Mrs Dunn's words." Dated, initialled, copied twice and certified. Arrested for false accounting. Pauline: "All cars. Wait."
 - What the town remembers: on the hook hangs Ron's donkey jacket, and Ron is not on the street. Feeds S37, S55 and the dock at four (S57).
 - Fails into: refusing the pen is noted; the arrest is the same.
 
@@ -532,11 +584,24 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Weight: heavy
 - Cooldown: 12 game hours, and 60 game hours (2.5 game days) before any other heavy card.
 - Shape card: opening a night with no sleep; turn a price paid; ending a question at nine; action walk; place the station, the Exchange, Rita's window; company alone; mood dark, quiet.
-- Carriers: Ron; Ellis; Ombler at Agar's door; Wardell; Rita. Fallback: none.
+- Carriers: Ron; Ellis; the man Frank put on the landing, with a padlock key; Fewson in the hatchback on Mickey's rank, with a card in the windscreen that says CABS; Ombler at Agar's door; Wardell, on the station's back step and in the plain car at the head of the brow; Rita. Fallback: none.
 - The sign before it: "Saying's nowt, boss. You've a firm to stand in. I've a door."
-- The aim it sets or serves: let it stand (Ron signs; a Customs officer charges him with conspiring to evade duty on the landing's loads; on Monday the magistrates refuse bail because he will not name the men, and he is brought back every eight days); sign first (charged; the licence off a fortnight, the drivers to Danny unless paid in full from the tin; Tharratt drops the contract; the Kingdom's better turn closed; "You've took the one thing I had to give."); or a cheaper way, each a hook: Agar's brief (a paper about the yard, signed on Agar's hall table), Wardell (£200 cash, once; sold to Danny), or Ellis, only with £800 cash in his hand that night (£100 every Friday after). Ron allows one only if Frank came for him at the pen (or, on the Widow's path, claimed the car or fought beside him on the ferry rank, S30b) or redeemed Mickey's watch (Rita, tonight). At nine Ellis asks: "Is there anything you want to tell me?"
-- What the town remembers: who slept where. Feeds S39, S50, S52, S57.
+- The aim it sets or serves: tonight's two cases are in the cage on the stage, under a plain car's eyes: fetch them himself (F5), or leave them to Cammack's lad for half. Then: let it stand (Ron signs; a Customs officer charges him with conspiring to evade duty on the landing's loads; on Monday the magistrates refuse bail because he will not name the men, and he is brought back every eight days); sign first (charged; the licence off a fortnight, the drivers to Danny unless paid in full from the tin; Tharratt drops the contract; the Kingdom's better turn closed; "You've took the one thing I had to give."); or a cheaper way, each a hook: Agar's brief (a paper about the yard, signed on Agar's hall table), Wardell (£200 cash, once; sold to Danny), or Ellis, only with £800 cash in his hand that night (£100 every Friday after). Ron allows one only if Frank came for him at the pen (or, on the Widow's path, claimed the car or fought beside him on the ferry rank, S30b) or redeemed Mickey's watch (Rita, tonight). At nine Ellis asks: "Is there anything you want to tell me?"
+- What the town remembers: who slept where. Feeds F5, S39, S50, S52, S57.
 - Fails into: silence at nine is letting it stand.
+
+### F5 Astern, no lights
+- Act and week: the night between; game week 5, Friday, ten at night; inside S38 (scene 14).
+- Conditions: S37 played; Frank bailed; the landing his; a load in the cage.
+- Priority: 4
+- Weight: inside S38's heavy beat.
+- Cooldown: none.
+- Shape card: opening a key handed over; turn lamps put out; ending two men on a bench; action sneak; place the dock wall and the stage; company nobody; mood dark, held.
+- Carriers: the landing man with the key; Wardell in the plain car; Fewson on the rank; Ron on the bench. Fallback: the landing man gone, the key is on the counter with a note in Pauline's hand.
+- The sign before it: Ron, "Leave it lie. One night's all she's got. Don't give her two."
+- The aim it sets or serves: none set. He takes car two through the dock gate alone, puts his lights out at the ice house, pulls the fuse for the lamps at the back, counts nine bollards to the river side of the stage, carries two cases up an iron ladder, and backs the length of the wall on the handbrake, because a brake light would show from the brow. Tonight's line in the red book reads F.N. "I've told her you're new." "I was. Till ten o'clock."
+- What the town remembers: Norman Dent: "A car went backwards along that wall with no lights. I thought I'd dreamed it." Wardell saw it and wrote nothing down; he sells it to Danny, who has it on the quay (S57). On Sunday Sheila reads the week across the counter: "Friday, the landing. You." Feeds S57, S58.
+- Fails into: a touch of the brake, and the cell by eleven with two cases on the sergeant's counter ("That's two nights, and two of you"); declined, Fewson carries the cases up the brow at half past ten, and on Monday the caff says Cammack has the water. Where Danny's lads hold the landing, it does not wake; the night between plays without it.
 
 ### S39 The empty door
 - Act and week: after the night between; game week 5, Saturday, and the two game days after.
@@ -547,7 +612,7 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Shape card: opening a drive alone; turn a silence; ending a quiet; action drive; place the dock road past the ice house; company nobody, or a silent Ron; mood sad, still.
 - Carriers: none must speak. Fallback: if Frank will not drive, Pauline gives him a fare past the ice house.
 - The sign before it: the chained doors of the ice house, and nobody saying so.
-- The aim it sets or serves: on every path the naming stops. Inside: Danny's car on Mickey's rank within two game days, unmoved; car one in the yard with nobody to drive it; the old hand dealing only with Ron; the drivers wanting their half in cash, daily; the chair by the radio left empty; the donkey jacket on its hook. Free, Ron sits beside him and says nothing.
+- The aim it sets or serves: on every path the naming stops. Inside: Danny's white hatchback on Mickey's rank, Fewson at its wheel, there since the night between, unmoved; car one in the yard with nobody to drive it; the old hand dealing only with Ron; the drivers wanting their half in cash, daily; the chair by the radio left empty; the donkey jacket on its hook. Free, Ron sits beside him and says nothing.
 - What the town remembers: if Ron is inside and Fridays were kept, Lily counts out one of number nine on Friday: "One." Feeds S50 and the closes.
 - Fails into: cannot fail.
 
@@ -612,35 +677,62 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Weight: heavy
 - Cooldown: none before S45, which is the same night; 60 game hours before any other heavy card.
 - Shape card: opening a lamp in the yard; turn a settle called; ending settled, stood or down; action fight; place the yard; company the drivers; mood dark, tense.
-- Carriers: Kevin Needham, who called the settle and has the gate key on car one's fob; drivers in running cars; Neil Screeton, if Frank took the £80 off Iveson; Ron if free, Terry, Darren, Julie, Ada. Fallback: Kevin sacked or gone, Fewson calls it with Danny's roll; with nobody on the night desk, Frank finds his gate on the latch himself.
-- The sign before it: the bulb lying whole on the step; Julie on the air: "Ada's rung. She says there's men in your yard. She says they're queueing."
-- The aim it sets or serves: breaks into Garbutt's aim. Settle by name from Sheila's sheet and the tin, refuse, or go straight to it; each man says Fridays or does not. Fists if he refused, the tin ran dry, or Screeton was sent to Iveson. The arm goes only for a choice made here: Screeton himself, or the tin alone.
-- What the town remembers: who said Fridays; Darren's pound in the debt book. Kevin goes with car one's log (S51). Feeds S45, S46, S49.
+- Carriers: Kevin Needham, who called the settle over his forty-two miles and has the gate key on car one's fob; Craig Fewson in the street, twenty yards up, with Danny's roll, paying a tenner for every car of Mickey's that is brought him; drivers in running cars; Ron if free, Terry, Lee or the first man, Darren, Julie on the night desk, Ada. Fallback: Kevin sacked or gone, Fewson calls it himself from inside the yard; with nobody on the night desk, Frank finds his gate on the latch himself.
+- The sign before it: the bulb lying whole on the step; Julie on the air, at the desk she was given after her two real minutes: "Ada's rung. She says there's men in your yard, and you're not one of them. She says they're queueing."
+- The aim it sets or serves: breaks into Garbutt's aim. Settle by name from Sheila's sheet and the tin, refuse (fists in the gateway), or say nothing and cork the gate with car two (F6); each man says Fridays or does not. One thing said tonight can stop the lift: an answer to Kevin about the miles (D01). The arm goes only for a choice made here: stepping into the gap when they bounce her out.
+- What the town remembers: who said Fridays (Terry: "Mine's Fridays"); Darren's pound in the debt book; Fewson's roll, taken back to Danny whole or lighter by a tenner a car. Kevin goes with car one's log, or is in at seven (S51). Feeds F6, S45, S46, S49, S51.
 - Fails into: on the ground, he comes round on Grace's kitchen floor.
+
+### F6 The cork
+- Act and week: Act IIb; game week 6; inside S44 (scene 15).
+- Conditions: S44 playing; Frank in car two at his own gate.
+- Priority: 5
+- Weight: inside S44's heavy beat.
+- Cooldown: none before S45.
+- Shape card: opening a gate on the latch; turn a car laid along a post; ending held, or gone; action drive; place the yard gateway; company the drivers; mood dark, stubborn.
+- Carriers: Kevin Needham; Fewson with the roll; Terry, Lee, Darren, Julie on the air; Ron with the lamp. Fallback: Kevin sacked, Fewson calls the lift.
+- The sign before it: eight foot four between two posts.
+- The aim it sets or serves: breaks into Garbutt's week-6 aim. He backs car two into his own gateway along the left post, so the gap left is too narrow for a car, sits on her boot under the lamp and settles by name: "Eight foot four, less five foot six, less me." When they bounce her out by hand he stands clear, or steps into the gap between her wing and the brick post, and holds.
+- What the town remembers: the cork, and who stood in the hole. Ada: "He put Mickey's car in his own gateway like a cork in a bottle and sat on it. And when they went to lift it he stood in the hole." Frank, on the telephones by Friday: "Mickey's. He'll be two minutes. I don't know, I'm the owner." Feeds S45, S46, S51.
+- Fails into: the arm (the left, which changes gear): plaster to the elbow and a sling for the rest of the game; or the cars, a tenner each, counted onto their bonnets, and Brenda: "Paid who he could and waved the rest off."
+
 ### S45 The Widow waits up
 - Act and week: Act IIb; game week 6, the same night as the yard, towards two (scene 16).
-- Conditions: S44 played; Frank back from casualty or Grace's kitchen.
+- Conditions: S44 played; Frank back from casualty, from Grace's kitchen, or, if nobody was hurt, from locking his own gate.
 - Priority: 5
 - Weight: light
 - Cooldown: 8 game hours, to morning (16 real minutes).
 - Shape card: opening a light where none should be; turn a rival's kindness; ending laces tied; action talk; place Mickey's office; company the Widow; mood tender, wary.
-- Carriers: Maureen Jensen in Mickey's chair, fur collar, a pot made, haddock under a plate, cut to the size of a fork; Stathers in the car outside. Fallback: if she cannot come, Stathers leaves a covered plate and her card: "Twice in the oven. M.J."; if she is dead, Stathers brings the plate himself and says nothing.
+- Carriers: Maureen Jensen in Mickey's chair, fur collar, a pot made, haddock under a plate, cut to the size of a fork, because she was told the left arm (F6); Stathers in the car outside. Fallback: if she cannot come, Stathers leaves a covered plate and her card: "Twice in the oven. M.J."; if she is dead, Stathers brings the plate himself and says nothing.
 - The sign before it: Mickey's door open and his desk lamp lit; Ron, or Julie: "She's in the back."
 - The aim it sets or serves: "Sit down. It's been in the oven twice." A rest beat. She lays tally 39, or its fellow, by his plate, and ties his laces if he puts his foot up. "Monday I shall sit across a cloth from you and I shall be very hard on you."
 - What the town remembers: Ada saw her hat on. She prices the dinner at the gate (S54): "There's the haddock."
 - Fails into: sent away, a receipt for the gate tax under the cold plate: "Haddock, 1. Laces, nil."
 
+### F7 Family car
+- Act and week: Act IIb, its close; game week 7, Monday, a quarter to two; opens S46 (scene 17).
+- Conditions: Garbutt's Monday; the hearse at the chapel door.
+- Priority: 5
+- Weight: light
+- Cooldown: none before the tea.
+- Shape card: opening three cars put in order; turn a fourth put first; ending a verdict out of ten; action drive; place Quay Street and the quay; company Ron, or nobody; mood slow, proud.
+- Carriers: Garbutt ("By age. Nobody can mind age."); the Man in Black; the young man in a new cap whom Danny has put under the overhang; Ron's hand on the lever. Fallback: Ron inside, Frank reaches across himself for each gear.
+- The sign before it: one hearse, and nothing behind it but firms.
+- The aim it sets or serves: Garbutt's week-6 aim, entered on his own terms. He puts car two in behind the hearse, ahead of all three, where the family's car goes; with the arm in plaster he calls the gear and Ron works the lever. He turns the hearse down Quay Street and past the ticket window, at a walk, with every door on the parade open.
+- What the town remembers: three firms following Mickey's. Brenda: "Agar's driver had to follow a minicab. With an L on it." The Man in Black: "Seven. The ham was good. Nobody knew the second hymn. Three firms, and one car of family." The young man says "Cammack's?" to a hearse, and Danny hears it back all week. Feeds S46, S57, S61.
+- Fails into: a stall on the hill, and the Man in Black marks it ("It stalled"); declined, he walks with the rest: "Six. Three firms and no family." Garbutt gives him the family's chair all the same, as a courtesy.
+
 ### S46 The room at Grace's
 - Act and week: Act IIb, its close; game week 7, Monday, three in the afternoon (scene 17).
-- Conditions: Garbutt's Monday, the day the old man from the landing is buried.
+- Conditions: Garbutt's Monday, the day the old man from the landing is buried; F7 played or declined.
 - Priority: 5
 - Weight: middle
 - Cooldown: 12 game hours, to the first morning (24 real minutes).
 - Shape card: opening a funeral tea; turn things laid on a cloth; ending a pot run dry; action talk; place Grace's back room; company Garbutt, Agar, the Widow, Danny; mood tense, funny.
-- Carriers: Garbutt in his car coat; Geoffrey Agar, seen before, if at all, only at the head of his own stairs; Maureen Jensen; Danny in a borrowed black tie; Grace at the hatch; the Man in Black at the door. Fallback: a head dead or gone is sat for by his second (Ombler, Stathers, Fewson); a head in a pact sits beside Frank.
-- The sign before it: wet coats on the stand: a camel overcoat, a fur collar, a leather jacket.
-- The aim it sets or serves: closes Garbutt's aim. A man who stops takes his coat off; if the yard took his arm, he must ask or take a minute. He sits in the family's chair. What he fetched (the paper, the man at the sink, the load) he lays on the cloth and says whose hand it goes to; for the rest, each head's settled thing. Garbutt's truce, if unspent. "Nine tomorrow you've a man from Customs and Excise."
-- What the town remembers: Grace tells only the coat. Feeds S48 to S57.
+- Carriers: Garbutt in his car coat; Geoffrey Agar, seen before, if at all, only at the head of his own stairs; Maureen Jensen; Danny in a borrowed black tie; Grace at the hatch, with four pounds over from the old man's tin and the infirmary's parcel; the Man in Black at the door. Fallback: a head dead or gone is sat for by his second (Ombler, Stathers, Fewson); a head in a pact sits beside Frank.
+- The sign before it: wet coats on the stand: a camel overcoat, a fur collar, a leather jacket. On the sideboard a black-edged card with no name: "Our friend from the landing".
+- The aim it sets or serves: closes Garbutt's aim. A man who stops takes his coat off; if the yard took his arm, he must ask or take a minute. He sits in the family's chair: the infirmary's label gives the old man's next of kin as Mickey's. In the parcel are a cap, a scarf and a pencil torch, and the torch, stood on the cloth, is the claim to the landing: he keeps it, slides it to one of them, or leaves it. What he fetched (the paper, the man at the sink, the load) he lays on the cloth and says whose hand it goes to; for the rest, each head's settled thing. Garbutt's truce, if unspent. "Nine tomorrow you've a man from Customs and Excise."
+- What the town remembers: Grace tells only the coat. Agar has said the name right, and Ombler types Nowak from Tuesday. Whoever carried the torch out has the landing. Feeds S48 to S57, and who is under the overhang on the last night (S61).
 - Fails into: "I'm not stopping": all three are against him in the last week.
 ## Act III, The Ledger Comes Due (game week 7, and its letter in week 6)
 
@@ -697,7 +789,7 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 
 ### S51 The second morning: the cars' records
 - Act and week: Act III; game week 7, Wednesday, fetched on Tuesday night.
-- Conditions: S46 played; Wednesday's morning; car one's log gone with Kevin Needham (at the yard settle, or when he was sacked); Danny's men after it too.
+- Conditions: S46 played; Wednesday's morning; car one's log gone with Kevin Needham (at the yard settle, or when he was sacked); Danny's men after it too. If Kevin hung his key up in the yard and is in at seven, the log is on its hook on Tuesday evening and off it by midnight: Fewson counted Mickey's at the yard gate and knows which book prices it, and the chase is after his men, with Kevin beside Frank.
 - Priority: 5
 - Weight: middle
 - Cooldown: 8 game hours (16 real minutes).
@@ -782,7 +874,7 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Shape card: opening a car on the edge; turn a book over the water; ending a fight, a bargain or a book in the dock; action fight; place the quay's edge; company Danny, Ron or nobody; mood loud, bitter.
 - Carriers: Danny with the day book; Fewson on the wall; Ellis in a plain car at the top of the street, watching; Ron, if free, between the fight and the water. Fallback: Fewson with the key; Danny beside Frank, or the price.
 - The sign before it: car two's yellow sign lit on the quay; the wall filled, as at car three.
-- The aim it sets or serves: the book held over the water by one cover. Agree, and chalk D. CAMMACK on the top line: no fight, Danny carries it in at five. Rush him: the book goes into the dock, and the choice at five survives on Ellis's certified copy. Wait: fists, unless a gun was fired this game (then a revolver on the dash). Win: the book and the brass key; Danny to the boat, the board, or Ellis. Lose: he brings it to the counter.
+- The aim it sets or serves: the book held over the water by one cover. Agree, and chalk D. CAMMACK on the top line: no fight, Danny carries it in at five. Rush him: the book goes into the dock, and the choice at five survives on Ellis's certified copy. Wait: fists, one-armed if the yard took the other, unless Frank has carried Mickey's revolver since S32 (then a revolver on the dash, and Frank alone). If Frank drove the dock wall on the night between (F5), Danny has that too, bought from Wardell, and says it to the wall. Win: the book and the brass key; Danny to the boat, the board, or Ellis. Lose: he brings it to the counter.
 - What the town remembers: the last thing the Hook tells of either of them. Feeds S58 and the closes.
 - Fails into: never removes the choice at five; car two is back on the rank.
 
@@ -795,7 +887,7 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Shape card: opening two clocks that disagree; turn a pen laid down; ending a line written; action write; place the office counter; company Sheila, Hebblewhite, Ellis; mood still, grave.
 - Carriers: Hebblewhite; Sheila, who turns the book round, lays her pen in the gutter and takes her hand away ("You write this one."); Pauline; Ellis; Ron if free; Danny if he holds the book. Fallback: Sheila gone, nobody turns it round; the book in the dock, Ellis lays her certified copy.
 - The sign before it: Pauline: "Books open at five. Real five." With Mickey's watch, five minutes nobody else has.
-- The aim it sets or serves: leave it as it stands; write it true (Sheila lays the red book beside it; Frank rules a fourth column the book never had and puts his name at its head; the F.N. lines want nothing beside them); or put Danny's name to it and sign (one charge goes, Frank's or, if he asks it, Ron's; Terry leaves without his money). With Danny's hand on the book, each way carries his price.
+- The aim it sets or serves: leave it as it stands; write it true (Sheila lays the red book beside it; Frank rules a fourth column the book never had and puts his name at its head; the F.N. lines want nothing beside them, and the Friday of the night between is one of them if he fetched that load himself, F5); or put Danny's name to it and sign (one charge goes, Frank's or, if he asks it, Ron's; Terry leaves without his money). With Danny's hand on the book, each way carries his price.
 - What the town remembers: Pauline tells the cars only "All cars. Books are shut." The close reads the page and the board as they stand.
 - Fails into: anything else written is no alteration.
 
@@ -822,7 +914,7 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Shape card: opening an envelope handed over; turn a voice comes back; ending a drive away; action drive; place Quay Street to the dock gate; company Ron; mood warm, sad.
 - Carriers: Sheila ("First line in thirty-one years I'd let anybody read." "Goodnight, Frank."); Ellis; Pauline, with the soft envelope and a half line (5.40, Office, R.K.); Lily ("Two of number nine. I remember."); Ron at the wheel of car two on its L-plates, who lets the handbrake off himself. Fallback: if Sheila left, the last word in the office is Pauline's; Ron drives in every case.
 - The sign before it: the engine running at the kerb; nobody sounds the horn.
-- The aim it sets or serves: Ron names nothing until the gate: "Coming up on the dock gate. That's the gate. Leaving the gate. Where to, Frankie?" Better turn: Julie answers the night desk: "Mickey's. Two minutes. Real ones."
+- The aim it sets or serves: Ron names nothing until the gate: "Coming up on the dock gate. That's the gate. Leaving the gate. Where to, Frankie?" Better turn: Julie answers the night desk, in the words Pauline counted out for her on the first morning if he made her two minutes then (F1; else in her own words): "Mickey's. Two minutes. Real ones."
 - What the town remembers: Lily counted two. The red book left open on the counter.
 - Fails into: none.
 ### S61 Burn Both
@@ -834,24 +926,26 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Shape card: opening a rank of strangers; turn an errand offered; ending an envelope or a ticket; action walk; place Quay Street to the landing; company whoever has the rank; mood bleak, quiet.
 - Carriers: whoever has the rank (Danny; if not, Fewson; if not, Stathers for the Widow), on the counter with a new envelope: "Ten o'clock, the landing. He'll say Cammack's. Three pound a night."; Pauline, taking her headphones; Sheila: "New management."; Shaun: "Wants doing. What's it to say?"; Lily ("One."); Ron, if free, chaining the gate: "Mr Nowak." Fallback: if none of the three will have him, there is only the boat.
 - The sign before it: another firm's cars on Mickey's rank, car two dark among them; his suitcase at the foot of the stairs.
-- The aim it sets or serves: the envelope, carried to the landing under another firm's name, or the suitcase and the last boat, where Gordon tells him the way.
+- The aim it sets or serves: the envelope, carried to the landing under another firm's name, or the suitcase and the last boat, where Gordon tells him the way. Under the overhang, if Frank led the hearse (F7) and Danny held the landing, is the young man who said "Cammack's?" to it, unless Danny took him off the step (else a stranger off the last boat); he reads the sheet by the old man's torch if Danny carried it out of Grace's room.
 - What the town remembers: "Him that put Cammack's motor on the edge. What happened to him?" Sylvia's "I'm not Mickey," if he said it; the watch in Rita's window, if left.
 - Fails into: none.
 ## The checks
 
-Sixty-two cards, S01 to S61 and S30b, in story order, rechecked after the fresh reviewers' notes against the revised frame and scenes 01 to 23.
+Sixty-nine cards in story order: S01 to S61, S30b, and the seven deed cards F1 to F7, carried in on 24 November from frank-test/DEEDS.md. The sixty-two were rechecked after the fresh reviewers' notes against the revised frame and scenes 01 to 23; the cards the deeds feed were brought into line with them the same day.
+
+The deeds. One a game week: F1 (week 1, inside S01), F2 (week 2, after S14), F3 (week 3, the fifth morning, before S21), F4 (week 4, inside S24), F5 (week 5, inside S38), F6 (week 6, inside S44), F7 (week 7, opening S46). Every one can be declined and names what the town then says, so no card after it needs the deed done: S15, S16, S21, S26, S28, S30, S36, S46, S51, S57, S58 and S61 each read it as "if". The gun at the Landing is fired on every path (S24), whether or not F4 follows it. Each deed shows a gain of Danny's: the hatchback taking the boat's fares (F1), his men loading on the warehouse row (F2), the lit unit three doors up (F3), his lads under the overhang by midnight (F4), Fewson on Mickey's rank (F5), Fewson's roll at the yard gate (F6), a young man saying "Cammack's?" at the ticket window (F7).
 
 Reachability. Every card can wake on every path. Lesson five (S33) wakes after the Landing whatever lessons were taken, and by Thursday of week 5 Ron is waiting in car two. The first morning (S48) needs only the room at Grace's and the Tuesday, because every firm has a driver paid in cash off the book; S49 to S55 need S46 and their own day, not S48. The closes split every result at five three ways: the firm survives (S59), the firm is lost with a friend (S60), or neither (S61, the default). Where a card needs a person, the person is in its carriers, not its conditions, and its fallback covers him absent, hostile or dead.
 
 Where the Widow is Frank's ally, S30 sleeps and S30b (Danny's go at Ron on the ferry rank, with the council man) plays in its place, so week 5 has three goes at Frank's men and the collision on every path. S30b was added by the second run on 24 November; it uses the law on minicabs and ranks checked that day (research/RECORD-CHECKS-2026-11-24.md).
 
-Neighbouring shapes. Every pair of neighbouring cards differs on at least five of the seven shape fields as written, so the rule of three holds everywhere. The opening, turn and ending fields always differ, so the honest test is the four concrete fields (action, place, company, mood). On those, two runs of neighbours share two fields, place and company, and pass on the other five: S05 and S06 (Quay Street with Ron: the debts, then car three; one a walk and grey, the other a drive and loud); and S17 and S19 at the office counter with Sheila, with S18 between them in Mickey's locked office, also with Sheila. The director should put a street card or a side story among those three when it can, since none of them wakes on the same state. S22 now plays at the office counter too (Garbutt with Sheila's tea, scene 10); its neighbours are the dock gate (S21) and the counter with the plan in tea things (S23), which differ from it on company, opening, turn, ending and mood.
+Neighbouring shapes. Every pair of neighbouring cards differs on at least five of the seven shape fields as written, so the rule of three holds everywhere, with one pair at four: F6 plays inside S44, in the same yard with the same people in the same dark, and differs from it on opening, turn, ending and action. All seven deeds are driving, and no two alike: a dash against a clock, a theft with a chase, a shove, a mercy run, a crawl astern, a blockade, a procession; three of them go backwards (F1, F5, F6), which the readers of the test noticed, so no other card adds a reverse. The opening, turn and ending fields always differ, so the honest test is the four concrete fields (action, place, company, mood). On those, two runs of neighbours share two fields, place and company, and pass on the other five: S05 and S06 (Quay Street with Ron: the debts, then car three; one a walk and grey, the other a drive and loud); and S17 and S19 at the office counter with Sheila, with S18 between them in Mickey's locked office, also with Sheila. The director should put a street card or a side story among those three when it can, since none of them wakes on the same state. S22 now plays at the office counter too (Garbutt with Sheila's tea, scene 10); its neighbours are the dock gate (S21) and the counter with the plan in tea things (S23), which differ from it on company, opening, turn, ending and mood.
 
-Heavy beats. One heavy card a game week: the Landing's night (S24, week 4, on the Saturday of the display), the night between (S38, week 5, from Friday 16 November), the yard (S44, week 6, at least 60 game hours after S38), the quay at four (S57, week 7). Each is at least 60 game hours (2 real hours) from the last. Each is followed by a light or quiet card: S25 the cut (the same night, so S24 has no cooldown before it), S39 the empty door, S45 the Widow waits up (the same night), and S58 the counter at five, the one middle-weight rest, as the pacing rule now says. Two choices kept from the first draft:
+Heavy beats. The deeds add none: F4, F5 and F6 play inside the heavy card of their week, F2 and F3 are middle, F1 and F7 light. One heavy card a game week: the Landing's night (S24, week 4, on the Saturday of the display), the night between (S38, week 5, from Friday 16 November), the yard (S44, week 6, at least 60 game hours after S38), the quay at four (S57, week 7). Each is at least 60 game hours (2 real hours) from the last. Each is followed by a light or quiet card: S25 the cut (the same night, so S24 has no cooldown before it), S39 the empty door, S45 the Widow waits up (the same night), and S58 the counter at five, the one middle-weight rest, as the pacing rule now says. Two choices kept from the first draft:
 
 1. The frame names five heaviest scenes, the fifth being the pen when they corner Ron (S30). Its director lists four heavy beats, and scene 11 is one of the week's three goes, so S30 is middle weight; week 5 then holds one heavy card (S38). Played, S30 will feel heavy.
 2. The counter at five (S58) is the last choice of the game, but is middle and still, so week 7 has one heavy card.
 
 Week 7 is the fullest week: the room at Grace's on its Monday afternoon, the five mornings Tuesday to Saturday, the quay and the counter on the Saturday, then the close: about six game days, under 5 real hours. The Customs letter (S47) comes in week 6; it is carded after the room only for reading order, and the director plays it midweek in week 6, among S41 to S44.
 
-Length. With the field labels (about 40 words a card) the cards run from about 150 to 290 words; the longest are the beats with most branches (S12 lesson one, S38 the night between, S44 the yard, S46 the room at Grace's).
+Length. Counted on 24 November with the field labels (about 40 words a card): the cards run from about 160 to 400 words, the deed cards from about 300 to 340; the longest are the beats with most branches (S24 the Landing's night, S38 the night between, S44 the yard, S46 the room at Grace's), and S30b, which carries the law it uses, is about 750.

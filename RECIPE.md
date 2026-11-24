@@ -207,3 +207,12 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 - Cost: about 3 hours wall clock, most of it the writer.
 - Failed and why: deeds made the lead visible but not felt; readers still gave the heaviest moments to a supporting character, and the many-way choices at each peak (mostly route and outcome) thinned the one strong act. A new panel can mark the same unchanged text lower than the old one, so a raw before-and-after threshold should be set against the unchanged scenes. Rewritten scenes ran longer than the unchanged ones, a possible tell; set a length band next time.
 - Evidence: production/lane/story/paper/frank-test/RESULTS.md
+
+## A fully written lead in key scenes, tested blind (24 Nov 2026, story lane)
+- Made: the same five key scenes rewritten once more with the lead fully written (one want across them, his feelings spoken and shown, one authored line at each peak, menus cut), keeping the previous pass's deeds; the deeds themselves carried into the whole card set and the scenes they touch.
+- Method: same reader brief and reference scenes, the exact same unchanged control texts as the previous test, six fresh readers who had seen no earlier version; one added neutral question naming who carries each scene's heaviest moment, so the complaint is counted directly; the pair judge as a screen.
+- Tools: one Fable writer (high effort, two tasks), six Opus readers, one Sonnet reteller, four Opus judges, one Opus reviewer.
+- Target and check: about +0.5 against the previous version and the weight with the lead in most readers' notes. Result: +0.33 raw, +0.43 against the controls; the lead carries two of five scenes; not met.
+- Cost: about an hour and a half of helper time; the share of the weekly meter not measured (other sessions running).
+- Failed and why: a line written for the supporting character to answer the lead's took the scene's weight (the answer carries the feeling, not the ask); once the lead was loud enough, readers' main complaint moved to the story's engine (stakes held in paperwork) and the climax, which line-writing cannot reach. Lesson: when a panel's top complaint changes, stop polishing the old one.
+- Evidence: production/lane/story/paper/frank-written/RESULTS.md.

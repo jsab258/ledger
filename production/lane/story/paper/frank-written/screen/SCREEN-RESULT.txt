@@ -1,0 +1,30 @@
+## 01-the-ferry-and-the-office
+opus controls ['right', 'right', 'right', 'right'] (counted)
+  against admired: ['LEDGER', 'shelf', 'shelf', 'shelf']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  floor (beats all 4 forgettable): met
+  against praised: 1 won, 0 tied, 3 lost
+## 10-the-landing
+opus controls ['right', 'right', 'right', 'right'] (counted)
+  against admired: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  floor (beats all 4 forgettable): met
+  against praised: 4 won, 0 tied, 0 lost
+## 14-the-night-between
+opus controls ['right', 'right', 'right', 'right'] (counted)
+  against admired: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  floor (beats all 4 forgettable): met
+  against praised: 4 won, 0 tied, 0 lost
+## 15-the-yard
+opus controls ['right', 'right', 'right', 'right'] (counted)
+  against admired: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  floor (beats all 4 forgettable): met
+  against praised: 4 won, 0 tied, 0 lost
+## 17-the-room-at-graces
+opus controls ['right', 'right', 'right', 'right'] (counted)
+  against admired: ['LEDGER', 'LEDGER', 'LEDGER', 'tie']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  floor (beats all 4 forgettable): met
+  against praised: 3 won, 1 tied, 0 lost
