@@ -424,9 +424,9 @@ Talk content and its system; the moat, never the main thing.
 ### 3.6.6 Suggested lines
 
 - How it works: Suggested lines are about 4 words, on Tab on a keyboard and shown at once on a controller. They are 'Mixed': written ahead for hellos, goodbyes and decisions, the small model's otherwise. Frank's written lines are approved.
-- Mixed lines stand (24 Nov): a fully written Frank in five key scenes was tested against the deeds version and missed its bar (7.4 against 7.1 out of 10, a rise of 0.3 where 0.5 was asked), so his ruling of 1 Oct stands meanwhile; his choice between a written Frank in the key scenes and keeping mixed lines (recommended) is open on his page.
-- Standard: Ruling 1 Oct Test: S: shown on both devices
-- Source: RULINGS 1 Oct (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.34; COPY-2 s.28; RULINGS 1 Oct
+- Key scenes written, mixed lines elsewhere (his ruling of 24 Nov evening, advisor 362, RULINGS on wip; C-349): Frank speaks fully written lines in the key scenes, and the five tested written versions (scenes 01, 10, 14, 15, 17 in production/lane/story/paper/frank-written/scenes/) are kept as the story's; everywhere else his ruling of 1 Oct stands: suggested lines mixed, written ahead for hellos, goodbyes and decisions, the small model's otherwise. The test behind it missed its own bar (7.4 against 7.1 of 10, a rise of 0.3 where 0.5 was asked); he chose it over the recommended mixed lines. The other eighteen key scenes need the same writing pass (gap).
+- Standard: Frank's lines fully written in the key scenes; mixed elsewhere (rulings of 1 Oct and 24 Nov evening) Test: S: shown on both devices; every key-scene line of Frank's is written text
+- Source: RULINGS 1 Oct, 24 Nov (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.34; COPY-2 s.28; RULINGS 1 Oct, 24 Nov
 - Status: ruled (his ruling or canon). Coverage row: 3.6.6.
 - Studies: aaa-studies/TALK-AS-PLAY.md: TALK-01 every suggested and decision line is the exact text Frank says, stance-tagged; decided. None measured.
 - Data (run 5): exact values in production/lane/blueprint/data/lines/ (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
@@ -442,9 +442,9 @@ Talk content and its system; the moat, never the main thing.
 ### 3.6.8 How the player speaks
 
 - How it works: On a keyboard the player types or picks a suggested line (Tab); on a pad suggested lines show at once and an on-screen keyboard is there. Typing never moves Frank. Frank's lines are text and he is not voiced (a voice only on his yes). A whole talk, decision included, can be done by pad alone (ER-SPEAK-01). Spoken microphone input is not designed.
-- Mixed lines stand (24 Nov): see 3.6.6; his ruling of 1 Oct holds until he chooses otherwise.
+- Key scenes written, mixed lines elsewhere (his ruling of 24 Nov evening; see 3.6.6, C-349).
 - Standard: Suggested lines on Tab, shown at once on a controller (ruling 1 Oct); Frank's written lines approved; no voice for Frank without his yes (24 Sep) Test: S: a whole talk by pad alone; addendum rules ER-SPEAK-01
-- Source: RULINGS 1 Oct, 24 Sep (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.34; COPY-2 s.28; DESIGN-ADDENDUM A25; RULINGS 1 Oct, 24 Sep
+- Source: RULINGS 1 Oct, 24 Sep, 24 Nov (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.34; COPY-2 s.28; DESIGN-ADDENDUM A25; RULINGS 1 Oct, 24 Sep
 - Status: ruled (his ruling or canon). Coverage row: 3.6.8.
 - Studies: aaa-studies/TALK-AS-PLAY.md: TALK-01 every suggested and decision line is the exact text Frank says, stance-tagged; decided; TALK-08 a typed line matching a decision only brings up the written decision line; 90% of 20 phrasings; decided. None measured.
 

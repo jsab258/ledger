@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated": "2026-11-24 (keeper run 5, evening)",
+ "updated": "2026-11-24 (keeper run 6, later evening)",
  "by": "blueprint keeper, claude-opus-5-5",
  "totals": {
   "measured": 1,
@@ -14,8 +14,8 @@
   "machinery": 22,
   "parts": 424
  },
- "conflicts_settled": 323,
- "gaps": 631,
+ "conflicts_settled": 324,
+ "gaps": 632,
  "groups": {
   "What the player does with his hands": {
    "parts": 86,
@@ -306,6 +306,10 @@
   {
    "id": "R13",
    "answer": "200 to 300 residents, shared lines plus ~5 own each, after the first loops (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "written Frank",
+   "answer": "Frank fully written in the key scenes, the five tested versions kept, mixed lines elsewhere (advisor 362, 24 Nov evening; C-349)"
   }
  ],
  "blocking": [

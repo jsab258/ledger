@@ -84,3 +84,9 @@ Next run starts here:
 - Folded in: his decisions page of 24 Nov in RULINGS on wip (Q3 to Q5, Q7 to Q17, Q19, Q20, R1 to R7, R10, R11, R13 answered; the 48-minute day; about 20 hours; PEGI 18; buyback and the in and out lists; economy picks); canon's rename of the lead to Frank Nowak (every chapter); the story frame and the story on paper with Frank's deeds (chapter 03 and the index); data build waves 1 and 2 and the data sweep (168 Data lines); the economy design (33 lines, 15 conflicts); the systems the story needs (55 lines, 12 conflicts, 14 gaps); crowd counts solid as GD-02's floor (still pending on the ceiling). RDR2 being seen set aside at four and the on-foot method stay leads.
 - Four Sonnet helpers on the chapters, two on extraction; fresh Opus review, 9 must-fix points, fixed once by a Sonnet helper.
 - Counts: 424 parts: 1 measured, 87 ruled, 15 sourced, 126 decided, 61 pending, 45 unmeasured, 15 out, 52 outside, 22 machinery; 323 conflicts; 631 gaps; Q6 and Q18 open; no ruling to revisit.
+
+## Run 6, Tuesday 24 November 2026, from 19:52 (claude-opus-5-5), the owner's extra fire
+
+- Start row 2026-11-24-1952-blueprint. Budget: Allowance 73% at 19:38 (measuring row), under the 88% stop.
+- The order's six items were already folded by run 5 (19:29 to 19:51), checked by a fresh Opus reviewer this run. New since then: advisor 362 (RULINGS on wip, 19:43): Frank fully written in the key scenes, the five tested versions kept, mixed lines elsewhere; folded into 3.6.6, 3.6.8, the index and Q18 (C-349, one gap). Review: one must-fix (3.6.6 and 3.6.8 standard and source lines), fixed once.
+- Counts: 424 parts unchanged by status; 324 conflicts; 632 gaps; Q6 and Q18 open.

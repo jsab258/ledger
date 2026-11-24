@@ -57,13 +57,13 @@ The prior research inventory (production/lane/blueprint/PRIOR-RESEARCH-INDEX.md)
 
 All 401 coverage.json rows are in, each once (284 parts-tree leaves and 117 rows added by the reviews, red teams, fit check, clock and rulings, each filed under the parts-tree part it belongs to), plus the 22 machinery parts and one ruled part with no coverage row yet (1.6.15 hold-ups, his ruling of 20 Nov, designed in DESIGN-ADDENDUM A41). Keeper run 2 added sections without coverage rows, not counted in the table: 5.11 craft standards, 8.11 the browser build, 8.12 the live voices hookup, 9.13 the browser build's modules, data and test door. The nine clock rows are ruled, on his ruling of 21 Nov (design pass 4 took clock B on 23 Nov). Design pass 4 of 23 Nov is folded in (no chase timer, the crowd per frame, car entry, three new chase rows DP5-C01 to C03).
 
-BLUEPRINT-11-conflicts-and-gaps.md holds the conflicts (C-000a to C-348, 323 in all, what won and why; run 5 added C-270 to C-276, C-280 to C-314 and C-320 to C-348), the 631 gaps for the design proof and the source traces not found; at the first build it held 194 conflicts and 303 gaps for the design proof and the source traces not found.
+BLUEPRINT-11-conflicts-and-gaps.md holds the conflicts (C-000a to C-349, 324 in all, what won and why; run 5 added C-270 to C-276, C-280 to C-314 and C-320 to C-348; run 6 C-349), the 632 gaps for the design proof and the source traces not found; at the first build it held 194 conflicts and 303 gaps for the design proof and the source traces not found.
 
 ## The story chapter
 
 Chosen and on paper (keeper run 5). His pick of 24 Nov, "A on top of C", is in RULINGS on wip: first a living town in which Frank builds a crime empire (crew, bribes, rival gangs fought or played off, ground held, rivals' men recruited), people with memory, gossip, loyalty and nerve; above it a light written spine, two or three endings, beats triggered by the empire's and the town's state, no fixed missions. Canon of 24 Nov sets the frame: Danny Cammack, who drove Mickey's car two and kept the key, is the opponent; the big loss is Ron going inside unless Frank pays to stop it (harder in phase 2); the ending counts Ron and Sheila as friends too; Mickey's envelope holds a copy of the night's fares.
 
-The story is production/lane/story/frame/STORY-FRAME-2026-11-26.md (with SYSTEMS-THE-STORY-NEEDS.md and EMERGENT-MEASURE.md) carried on paper in production/lane/story/paper/: SPINE-CARDS.md (69 cards, Frank's seven deeds F1 to F7 one a week, the gun fired at the Landing in week 4 on every path), SIDE-CARDS.md, CAST.md and CAST-CHANGES.md (W1 to W12, not yet applied to the people data), and the key scenes in paper/scenes/. His rulings of 24 Nov: seven game weeks, about 20 hours for the main story with empty hours skipped; a fully written Frank was tested in five key scenes and missed its bar (about +0.3 to +0.4 against +0.5 asked), so his ruling of 1 Oct on mixed lines stands; the story lane has put that choice to him on its own page. Six fresh AI readers put the scenes at about 7 of 10; no scene yet reaches the bar (leads, not measurements).
+The story is production/lane/story/frame/STORY-FRAME-2026-11-26.md (with SYSTEMS-THE-STORY-NEEDS.md and EMERGENT-MEASURE.md) carried on paper in production/lane/story/paper/: SPINE-CARDS.md (69 cards, Frank's seven deeds F1 to F7 one a week, the gun fired at the Landing in week 4 on every path), SIDE-CARDS.md, CAST.md and CAST-CHANGES.md (W1 to W12, not yet applied to the people data), and the key scenes in paper/scenes/. His rulings of 24 Nov: seven game weeks, about 20 hours for the main story with empty hours skipped; a fully written Frank was tested in five key scenes and missed its bar (about +0.3 to +0.4 against +0.5 asked), and he then chose (advisor 362, 24 Nov evening) Frank fully written in the key scenes, the five tested versions kept, mixed lines elsewhere (C-349); the other eighteen key scenes need the same writing pass. Six fresh AI readers put the scenes at about 7 of 10; no scene yet reaches the bar (leads, not measurements).
 
 Chapter 03 carries the story's machinery and a "Story (24 Nov)" line per act; the systems the story needs are lines under their parts ("Story needs") or gaps (BLUEPRINT-11, run 5), with twelve clashes as conflicts C-335 to C-346 for the design proof. His yes on the measured story (Q18) is still owed before the one-shot.
 
@@ -84,7 +84,7 @@ All open items were answered on his decisions page of 24 Nov (RULINGS on wip), a
 - R11 fares: few, 2.50 to 3.50 pounds, at least 7 in week one (as recommended (a)).
 - R13 residents: 200 to 300, shared lines plus about 5 own each, after the first loops (as recommended (a)).
 
-New this run: none. The one ruling the evidence now touches, his mixed lines of 1 Oct, is supported by the written-Frank test (it missed its bar), and the story lane has already put the choice to him; the keeper does not repeat it.
+New: none. His mixed lines of 1 Oct now hold outside the key scenes only, by his own choice of 24 Nov evening (C-349).
 
 ## What still blocks the one-shot
 
@@ -95,7 +95,7 @@ His yes on the measured story (Q18); the PC measuring's deciding rows (on foot: 
 Each with the recommendation. Until he answers, each part is built to the recommendation and marked so; his answer replaces it.
 
 - Q6 (2.14): Does every named person get his or her own temper? (scope, open since 29 Sep; not on his decisions page of 24 Nov) Recommended: Yes, measured before it lands. The data build of 24 Nov gives each of the 119 people in data/people/ a temper, so the one-shot builds to the recommendation.
-- Q18 (3.1, the story chapter above): His yes on the measured story, which the one-shot waits on (story, canon). The story is now chosen and on paper (frame of 24 Nov, 69 spine cards, the key scenes). Recommended: give the yes on the measured frame and its first-week slice once the story lane's open choice (written Frank or mixed lines) is settled on its own page.
+- Q18 (3.1, the story chapter above): His yes on the measured story, which the one-shot waits on (story, canon). The story is now chosen and on paper (frame of 24 Nov, 69 spine cards, the key scenes). Recommended: give the yes on the measured frame and its first-week slice now that the written-Frank choice is settled (written in the key scenes, C-349), with the remaining eighteen key scenes written.
 
 Answered on his decisions page of 24 Nov (RULINGS on wip; the parts are built to his answer):
 - Q3 the lead's line on women, over-sixties and the priest: dropped (not the recommended keep; RT-09 out, C-275).

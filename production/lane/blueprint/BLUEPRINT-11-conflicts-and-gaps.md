@@ -355,6 +355,7 @@ The source of each line is in brackets; where a conflict names no winner, the bl
 - C-346 Story against part RT2-04 (run 5). The part's friendship is Alison or Danby called on three times, while the frame's final choice and close ("lost with a friend") may turn on Ron or Sheila as the friend (open choice 4). Settled for now: the part stands until the design proof designs the story's need (listed as a gap); the story lane's cards name it.
 - C-347 The lead's name (run 5). The blueprint said Tom Nowak, ladder the new owner, Nowak, Tom, Tommy; canon and RULINGS of 24 Nov (advisor 348) rename him Frank Nowak, ladder the new owner, Nowak, Frank, Frankie; Tom and Tommy gone wherever players see or hear (an internal id may stay tom). Won: canon (newer). Parts: every chapter (renamed by script; the changelog and keeper log keep the old name as history).
 - C-348 The story (run 5). The index and chapter 03 said the story was pending on the frame (due 26 Nov); the frame (production/lane/story/frame/STORY-FRAME-2026-11-26.md) and the story on paper (production/lane/story/paper/: 69 spine cards with deeds F1 to F7, side cards, cast, key scenes) have landed, with his story rulings of 24 Nov (Danny Cammack the opponent, Ron inside unless Frank pays, the Landing gun on every path, about 20 hours). Won: the landed story, under his rulings; his yes on the measured story stays open (Q18). Parts: 3.1 and its children, the index.
+- C-349 Frank's lines in the key scenes (run 6). Chapter 03 (3.6.6, 3.6.8) and the index said his ruling of 1 Oct on mixed lines stood after the written-Frank test missed its bar; his ruling of 24 Nov evening (advisor 362, RULINGS on wip) makes Frank fully written in the key scenes, the five tested versions kept, mixed lines elsewhere. Won: the ruling (newer). Parts: 3.6.6, 3.6.8, the index's story chapter and Q18.
 
 ## Gaps for the design proof
 - Hold-ups (1.6.15): ruled in on 20 Nov and designed in DESIGN-ADDENDUM A41, but no parts-tree part and no coverage.json row exist; the blueprint carries the part as decided. The design proof to add the row.
@@ -1012,6 +1013,10 @@ Not counted as a gap: the checklist check's note that OUT-08 reads wider than it
 - 7.13: The clock slowed on authored rides is a system from the story on paper (KEEPER-LOG), and no part holds it yet.
 - 3.5.2: The yard as a pay queue from the tin is a system from the story on paper (KEEPER-LOG), and no part holds it yet.
 - 3.2.4: The funeral tea's three heads is a system from the story on paper (KEEPER-LOG), and no part holds it yet.
+
+### Keeper run 6 (24 Nov, later evening)
+
+- 3.6.6: Frank fully written in the key scenes (his ruling of 24 Nov evening): five of twenty-three key scenes are written (paper/frank-written/scenes/); the other eighteen need the same writing pass and the test the story lane names; no part sets that pass's bar yet.
 
 ## Source traces not found
 
