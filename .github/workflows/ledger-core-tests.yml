@@ -6,6 +6,7 @@ on:
       # THE FILES EVERY SESSION READS, 3 October: tools/doc-caps.py fails a push that grows one past its cap.
       - "CLAUDE.md"
       - "RULINGS.md"
+      - "RULINGS-ENFORCED.md"
       - "NOW.md"
       - "TOWN.md"
       - "CLOTHES.md"

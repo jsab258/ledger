@@ -23,3 +23,8 @@ His answer to rulings-room-2026-11-24 (advisor chat, 21:1x): read and clean up t
 ## Looked at and kept
 
 Lines that only look stale were kept because nothing records them done: the NoAI folders (7 Oct), the flat voices' experiment and three router changes (owed), townspeople measured 0/5/10/20 (30 Sep), "this week's lane" (the lane runs). "Others drive traffic and the firm's cars" agrees with the cars rulings (drivers keep half each car's takings). "The priest dropped" is the lead's line on the priest, not Father Walsh, who stays in canon.
+
+## His answers (advisor 367, his "1-3 yes", 22:12 24 Nov), applied 22:5x
+- Q1: "procedural tailoring" dropped from the clothes' stopped list.
+- Q2: the 1 Nov line now says the friends' evening "in the Unreal build"; the 21 Nov browser evening stands.
+- Q3: the 23 Sep sentence (talk as the C# helper, not C++) removed; the 19 Nov port stands.

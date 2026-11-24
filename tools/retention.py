@@ -908,7 +908,8 @@ def selftest():
         check(floors(real) == {"C": 40.0, "F": 20.0}, "the real map's floors are C: 40, F: 20")
         # M4 (third review): the working shelf's days, the map's working expiry and the run-output limit follow RULINGS
         try:
-            rt = open(os.path.join(REPO, "RULINGS.md"), encoding="utf-8").read()
+            rt = "".join(open(os.path.join(REPO, f), encoding="utf-8").read() for f in ("RULINGS.md", "RULINGS-ENFORCED.md")
+                         if os.path.isfile(os.path.join(REPO, f)))
         except OSError:
             rt = ""
         mm = re.search(r"run outputs expire in (\d+) days", rt)

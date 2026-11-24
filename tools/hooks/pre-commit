@@ -17,7 +17,7 @@ if [ -f "$CAPS" ]; then python "$CAPS" --staged || exit 1; fi
 # RULINGS.md or production/rulings-enforcers.json, tools/rulings_check.py must pass.
 RC="$(git rev-parse --git-common-dir)/../tools/rulings_check.py"
 [ -f "$RC" ] || RC="tools/rulings_check.py"
-if git diff --cached --name-only | grep -q -E '^(RULINGS\.md|production/rulings-enforcers\.json)$'; then
+if git diff --cached --name-only | grep -q -E '^(RULINGS(-ENFORCED)?\.md|production/rulings-enforcers\.json)$'; then
   python "$RC" || exit 1
 fi
 exec python "$GUARD"

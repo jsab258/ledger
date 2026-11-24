@@ -59,7 +59,7 @@ def read(path):
 
 
 def run():
-    rulings = read(os.path.join(ROOT, "RULINGS.md"))
+    rulings = read(os.path.join(ROOT, "RULINGS.md")) + read(os.path.join(ROOT, "RULINGS-ENFORCED.md"))
     # The build machine's own probe commit after each nightly packaged build (author "LEDGER probe") is not
     # session work: the nightly build and walk stand (DECISIONS 22 Nov). Only other authors count.
     log = subprocess.run(["git", "log", "--since=" + RULING_SINCE, "--format=%h\t%an", "--", "ue-probe"],

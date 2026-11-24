@@ -8,7 +8,7 @@ Third-person, never first-person. PC only, Windows. Britain, 1990 (canon's windo
 
 ## Read first
 
-At the start: RULINGS.md, the handover, NOW.md, the week's order, his page's open items, the advisor channel (RULINGS 4 Nov); the rest when an item needs it, canon.md (outranks everything) included. The licence allowlist (ledger-v2/research/license-allowlist.md) is law. DECISIONS.md, RECIPE.md: append, never read whole.
+At the start: RULINGS.md, the handover, NOW.md, the week's order, his page's open items, the advisor channel; RULINGS-ENFORCED.md in its areas; the rest when an item needs it, canon.md (outranks everything) included. The licence allowlist (ledger-v2/research/license-allowlist.md) is law. DECISIONS.md, RECIPE.md: append, never read whole.
 
 ## One session, a weekly budget
 

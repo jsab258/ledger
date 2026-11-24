@@ -36,6 +36,17 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RULINGS = os.path.join(ROOT, "RULINGS.md")
+ENFORCED = os.path.join(ROOT, "RULINGS-ENFORCED.md")  # advisor 367, 24 Nov: enforced lines moved word for word
+
+
+def rulings_text():
+    """RULINGS.md and RULINGS-ENFORCED.md together: one set of standing lines across both files."""
+    parts = [open(RULINGS, encoding="utf-8").read()]
+    if os.path.isfile(ENFORCED):
+        parts.append(open(ENFORCED, encoding="utf-8").read())
+    return "\n".join(parts)
+
+
 ENFORCERS = os.path.join(ROOT, "production", "rulings-enforcers.json")
 ADVISOR = ("watchdog", "night-check", "needs-you-check", "daily-backstop")
 MIN_KEY = 24
@@ -124,13 +135,13 @@ def selftest():
 def main(a):
     if "--selftest" in a:
         return selftest()
-    text = open(RULINGS, encoding="utf-8").read()
+    text = rulings_text()
     entries = load()
     if "--added-since" in a:
         # MONDAY'S NUMBERS (advisor 205, point 4): standing lines added or changed since a day, with their enforcers
         import subprocess
         since = a[a.index("--added-since") + 1]
-        diff = subprocess.run(["git", "-C", ROOT, "log", "--since", since, "-p", "--format=", "--", "RULINGS.md"],
+        diff = subprocess.run(["git", "-C", ROOT, "log", "--since", since, "-p", "--format=", "--", "RULINGS.md", "RULINGS-ENFORCED.md"],
                               capture_output=True, text=True, encoding="utf-8", errors="replace").stdout
         now = set(standing_lines(text))
         added = sorted({ln[3:].strip() for ln in diff.splitlines() if ln.startswith("+- ")} & now)
