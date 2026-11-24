@@ -35,8 +35,8 @@ KCD2's views on this route hold 0 to about 9 people, the busiest about 9. Five b
 | 3:20 | park edge, outside the streets | 0 |
 Not a busy view; the busy centre (the trolley streets, the market) is still owed: five views a game.
 
-## Busy views, second pass (24 Nov 2026, 09:45 to 09:56 Swiss)
-Method as above (frame_grab.js, one frame a grab, read by the yellow label; the screenshot shows the grab before the last, so each label was matched by eye). People visible in the whole frame, the player and his horse left out. Both clips play as single uncut walks or rides (no cuts seen in the frames read). Upload dates (read 24 Nov 09:58 from each watch page's uploadDate): 45u45C4weys 14 Feb 2025; JXR-XfhiTyc 13 Feb 2025; 7vzuOl96f5s 26 Oct 2018 (the release day, so a console copy); goywFEHQFWY 17 Jul 2025.
+## Busy views, second pass (24 Nov 2026, about 09:37 to 09:44 Swiss)
+Method as above (frame_grab.js, one frame a grab, read by the yellow label; the screenshot shows the grab before the last, so each label was matched by eye). People visible in the whole frame, the player and his horse left out. Both clips play as single uncut walks or rides (no cuts seen in the frames read). Upload dates (read 24 Nov about 09:46 from each watch page's uploadDate): 45u45C4weys 14 Feb 2025; JXR-XfhiTyc 13 Feb 2025; 7vzuOl96f5s 26 Oct 2018 (the release day, so a console copy); goywFEHQFWY 17 Jul 2025.
 
 ### KCD2: https://www.youtube.com/watch?v=JXR-XfhiTyc ("Exploring medieval Kuttenberg - Relaxing ambient walk", 57 min 21 s, 720p, first person)
 | Video time | Place | Light | People |
