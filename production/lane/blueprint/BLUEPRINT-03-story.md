@@ -9,6 +9,8 @@ Each entry: how it works; its standard and test; the source of the standard; its
 
 Three acts: The Inheritance, The Rise and the Squeeze, The Ledger Comes Due.
 
+Story pick (keeper run 4, 24 Nov): his choice "A on top of C", as reported in the builder's row of 24 Nov 09:46: a living town in which Tom builds a crime empire, with a light written spine on top, never a fixed mission line. RULINGS on wip does not carry it yet. The frame is reported to be written in production/lane/story/frame/ (due Thu 26 Nov; not yet in the repository). The three v3 bibles (The Knowledge, The Burial Club, The Arrested Ship) and STORY-FINAL are not the story; the craft anatomy (story/craft/STORY-ANATOMY-2026-11-24.md: fifteen principles, no tests yet; AI readers' marks, leads not measurements) is proposed as a measure for the frame (the keeper's choice). Until the frame lands, the entries below are machinery, and each act's content is pending against it.
+
 
 ### 3.1.1 Act I, The Inheritance
 
@@ -106,6 +108,7 @@ Named people.
 - Standard: Casting sheets approved as text (25 Sep); faces frozen for Ron, Sheila, Darren, Tom Test: his eye on each whole person; H: talk transcripts
 - Source: RULINGS faces line; canon (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.1, 'Who lives here'; COPY-2 s.5; canon Premise and cast; RULINGS 'Faces, hair and voices'; DESIGN s.16
 - Status: ruled (his ruling or canon). Coverage row: 3.2.1.
+- Landscape lessons (23 Nov): a voice sheet per character before mass voice lines (Age of Dragon's drift); a reviewer reads played transcripts against the casting sheets each loop.
 
 ### 3.2.2 The firm's people
 
@@ -184,6 +187,7 @@ Few and chosen, each a person with something going on, feeding the crime; never 
 - Standard: 1 to 2 real minutes; 80p plus distance; drawn from routines (DESIGN §5) Test: H: fare freshness over a week; ER-CORE-08
 - Source: DESIGN §5 (no reference figure yet). Designed in: ONE-SHOT-PROMPT s.13; COPY-2 s.12; DESIGN s.5; DEFINITIONS G7, G8
 - Status: unmeasured. Coverage row: 3.4.1. Conflicts settled: C-074, C-075.
+- People flag the player's vehicle when it is a taxi (catalogue 23 Nov, rank 17; seen in 1 game): A fare waves Tom's cab down in the street. Not yet: fares come by Pauline's radio; street hails are for the design proof to weigh against fares few and chosen (canon, R11). Feature only; no timing; the part's status is unchanged.
 
 ### 3.4.2 Wrinkles
 
@@ -316,6 +320,7 @@ Talk content and its system; the moat, never the main thing.
 - Studies: aaa-studies/TALK-AS-PLAY.md: TALK-07 live replies median about 12 words, cap 35 (70 for an account), street lines about 7; the 12 is background only. None measured.
 - Studies: aaa-studies/TALK-AS-PLAY.md: TALK-08 a typed line matching a decision only brings up the written decision line; 90% of 20 phrasings; decided. None measured.
 - Prior research: aaa-studies/TALK-AS-PLAY.md: no published figure for choices a minute or exchange length in any reference game; the 12-word median comes from studies/03 (KCD2 files, background only), so live-reply length is unmeasured.
+- Checklist (23 Nov, top twenty no. 5; A31.09, A31.10): missing: a rule for Tom walking off mid-talk (talk ends, the person remembers) and for a fight or shout breaking in on talk (talk drops, the person reacts). Gap for the design proof; status unchanged.
 
 ### 3.6.2 Claim check
 
@@ -346,6 +351,8 @@ Talk content and its system; the moat, never the main thing.
 - Prior research: production/cloud-week/lines (1,626 lines, at least 8 per kind and situation) already exceeds the 6-line count; mark the count met by design and keep the listening test; the 1990 idiom list (research/street-lines-1990, 25 of 350 lines flagged) should be an acceptance check on every written line.
 - Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-07 every witness whose telling reaches Tom or police can be met again, with a face and own line; decided. None measured.
 - Prep: INVENTORY section 2: shared lines about 500 at the floor (6 per situation for about 6 speaker kinds, 14 situations); 1,225 already exist in cloud-week/lines (1,054 in nine shared kinds plus 171 directions, at least 8 per kind and situation) but are not in the prototype (56 shared, 22 barks, 14 shopkeeper barks).
+- Bystander talk reflects what Tom just did (catalogue 23 Nov, rank 3; seen in 3 games): At the counter and the bus stop people talk of what happened, in their own words. Partly: the situation list has a body or a man down but not recent deeds heard at second hand. Feature only; no timing; the part's status is unchanged.
+- Checklist (23 Nov, top twenty no. 15; A30.13, A13.12): missing: a line must stop when its speaker falls, leaves or is killed mid-line, and two people must speak in turn and wait, with a transcript check. Gap for the design proof; status unchanged.
 
 ### 3.6.5 Decision lines
 
@@ -406,6 +413,7 @@ Small authored incidents placed on the clock and the town's state: a row on the 
 - Standard: Authored, each with a spec and a check, never rolled at random (ruling 13 Nov; DESIGN §18 cuts random encounters); no set piece twice in 30 minutes (ER-JOB-06) Test: S: placement by state; H: empty minutes fall; addendum rules ER-HAPPEN-01 to 02
 - Source: ruling 13 Nov; DESIGN §4, §18 (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.14; COPY-2 s.13; DESIGN-ADDENDUM A18; DEFINITIONS G6, RT-19; RULINGS 13 Nov
 - Status: ruled (his ruling or canon). Coverage row: 3.7. Conflicts settled: C-089.
+- Owners and witnesses chase a thief (catalogue 23 Nov, rank 15; seen in 1 game): A bag snatched outside the grocer: Tom chases or not, and the street remembers which. Already covered: the shoplifter running from the grocer is a happening, and every happening leaves something the town knows. Feature only; no timing; the part's status is unchanged.
 
 ### RT-19 Content supply at night and late in Acts II-III
 
