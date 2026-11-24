@@ -51,13 +51,13 @@
   [
    6.0,
    "dock_gate",
-   "the tax hut",
+   "by bike: the tax hut",
    "mon-sat"
   ],
   [
    12.0,
    "caff",
-   "dinner",
+   "by bike: dinner",
    "mon-sat"
   ],
   [
@@ -69,13 +69,13 @@
   [
    17.0,
    "widow_base",
-   "the take",
+   "by bike: the take",
    "mon-sat"
   ],
   [
    21.0,
    "boarding_house",
-   "his room",
+   "by bike: his room",
    "mon-sat"
   ],
   [
@@ -85,9 +85,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "dock_worker",
  "lines": {
   "own": "lines/own-mark_billany.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Mark Billany, 31, collects the Widow's tax off the cabs at the dock gate and the ferry rank.",
@@ -98,5 +99,6 @@
  "can_die": true,
  "invented": "proposed by the story frame",
  "src": "STORY-FRAME 7 worked example 3 (proposed)",
+ "fallback_role": "his head's next man",
  "fight_kind": "brawler"
 }

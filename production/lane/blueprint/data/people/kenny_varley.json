@@ -53,7 +53,7 @@
    "tue,fri"
   ],
   [
-   11.0,
+   11.25,
    "cold_stores",
    "the van in the yard",
    "tue,fri"
@@ -71,9 +71,10 @@
    "mon,wed,thu,sat,sun"
   ]
  ],
+ "speaker_kind": "driver",
  "lines": {
   "own": "lines/own-kenny_varley.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Kenny Varley, 33, drives Coult's van.",
@@ -84,5 +85,6 @@
  "can_die": true,
  "invented": true,
  "src": "invented: 2.10.2",
+ "fallback_role": "his head's next man",
  "fight_kind": "wiry"
 }

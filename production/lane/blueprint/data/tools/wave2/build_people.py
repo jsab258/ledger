@@ -8,24 +8,42 @@ D = os.path.normpath(os.path.join(HERE, '..', '..'))
 sys.path.insert(0, HERE)
 import cast_src as C
 import routines_fix as RF
+import people_fix as PF
 for _p in C.P:
     if _p['id'] in RF.RT:
         _p['rt'] = RF.RT[_p['id']]
     if _p['id'] in RF.HOME:
         _p['home'] = RF.HOME[_p['id']]
+    _f = PF.FIELDS.get(_p['id'], {})
+    for _k in ('a', 'fb', 'k', 't', 'r', 'fight'):
+        if _k in _f:
+            _p[_k] = _f[_k]
+    # Frank's line (RT-09, RT2-05): women, sixty and over, the priest are covered
+    _covered = _p['s'] == 'f' or _p['a'] >= 60 or _p['id'] == 'brendan_walsh'
+    if _p['id'] != 'frank_nowak':
+        _p['die'] = not _covered
+    if _covered:
+        _p.pop('fight', None)
+        if _p.get('fb') and _p['id'] not in ('old_firm_man',):
+            _p['fb_note'] = _p.pop('fb')
+    elif not _p.get('fb') and _p['id'] != 'frank_nowak':
+        _p['fb'] = {'officer': 'another officer from the station', 'rival_man': "his head's next man", 'minor': 'the role passes to another of the same trade, or the thread closes'}.get(_p['k'], 'the role passes to another, or the thread closes')
 
 MAP = json.load(open(os.path.join(D, 'map.json')))
 PLACES = json.load(open(os.path.join(D, 'places.json')))
 CLOCK = {"realSecondsPerGameHour": 120}
 PROTO = json.load(open(os.path.join(HERE, 'protocast.json')))['cast']
 PROTO = {p['id']: p for p in PROTO}
+_BANK = json.load(open(os.path.normpath(os.path.join(D, '..', '..', '..', 'cloud-week', 'lines', 'lines.json'))))
+BANK_MEMBERS = {m: k for k, v in _BANK['speakers'].items() if not v.get('own') for m in v.get('members', [])}
+BANK_MEMBERS.update({'rocco': 'driver', 'sam': 'casual_worker', 'emil': 'office_worker', 'june': 'office_worker'})
 DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
 
 # ---- chosen values (recorded in routines.json and the keeper log)
 WALK_MPS = 1.4          # an ordinary adult's walk (about 1.4 m/s, the usual pedestrian figure); feel.walk_mps 1.6 is Frank's (tune.json)
 WALK_MPS_OLD = 1.1      # 70 and over
 REAL_S_PER_GAME_MIN = 2.0
-REACH_SHARE = 0.75      # the walk to a place must take no more than half the stay there
+REACH_SHARE = 0.5       # the walk to a place must take no more than half the stay there
 PORTALS = {'edge_north', 'edge_west'}   # off the Hook: arrival from off is placed out of sight (rule below)
 PROVISIONAL = {'tangs_takeaway': "the Tangs' takeaway on the parade: not in places.json or map.json (wave 1 gap)"}
 
@@ -149,9 +167,44 @@ def place_open(pid, day, t):
     return False
 
 # acts a non-keeper does as a customer: must be inside public hours
-CUSTOMER = re.compile(r'\b(breakfast|dinner|tea\b|a tea|his tea|her dinner|his dinner|shopping|a bit of fish|his fish|fish for|his table|pension|papers?\b|a frame|the tables|blanks|the bag|his break|her pension|a pot of tea|Sunday dinner|late breakfast|the evening trade|a cup)', re.I)
+CUSTOMER = re.compile(r'\b(breakfast|dinner|tea\b|a tea|his tea|her dinner|his dinner|shopping|a bit of fish|his fish|fish for|his table|pension|papers?\b|a frame|the tables|blanks|the bag|the club|his break|her pension|a pot of tea|Sunday dinner|late breakfast|the evening trade|a cup|holding court|with Danny|leaflets|Mass|the boxes|looking)', re.I)
 
-KEEPER = re.compile(r'(opening|papers in|Sunday papers|the fryers|the urn)', re.I)
+KEEPER = re.compile(r'(opening|papers in|Sunday papers|the fryers|the urn|club night|morning Mass|Masses|evening Mass|Saturday morning)', re.I)
+
+FOOT_CAP_M = 250        # CLK-03: a person's places lie within about 200 m of walking; 250 m tolerance (chosen)
+MODE_MPS = {'by bike': 5.0, 'by car': 9.0, 'by cab': 9.0, 'on foot': None}
+CARS = {'danny_cammack', 'craig_fewson', 'maureen_jensen', 'geoffrey_agar', 'keith_garbutt', 'eric_tharratt', 'harry_holt', 'bernard_gill',
+        'clive_ackroyd', 'wes_akers', 'steve_brannigan', 'barry_coult', 'ray_spink', 'kenny_varley', 'simon_ombler', 'trevor_garton', 'kevin_needham', 'terry_hodgson'}
+NIGHT = {'terry_hodgson', 'norman_dent', 'maggie_firth', 'pc_haigh', 'old_firm_man', 'wes_akers', 'steve_brannigan', 'sandra_newbould', 'janet_lumb',
+         'eddie_birtwhistle', 'tony_marsden', 'brenda_laverack', 'dougie_saltmarsh'}
+EARLIEST = {'default': 5 * 60, 'dock': 4 * 60}   # chosen: nobody leaves home before 05:00, dock and fish-dock men 04:00
+HOME_KINDS = {'flat', 'home', 'boarding_house'}
+def is_home(p, place):
+    return place == p['home'] or place in doors and MAP_PLOT_USE.get(doors[place]['plot']) == 'home'
+MAP_PLOT_USE = {pl['id']: pl.get('use') for pl in MAP['plots']}
+
+def mode_of(p, act, dist):
+    for m in ('by bike', 'by car', 'by cab', 'by bus'):
+        if act.startswith(m):
+            return m
+    if dist is not None and dist > FOOT_CAP_M:
+        return 'by car' if p['id'] in CARS else ('by cab' if p['a'] >= 65 else 'by bike')
+    return 'on foot'
+
+def stamp_modes(p):
+    """Write the travel mode into each long move's act (the rule: car owners by car, 65 and over by cab, others by bike)."""
+    out = []
+    for days, rows in parse_rt(p['rt']):
+        rr = []
+        for i, (t, place, act) in enumerate(rows):
+            if i and not act.startswith('by ') and rows[i - 1][1] not in PORTALS and place not in PORTALS:
+                d = walk_m(rows[i - 1][1], place) if place not in PROVISIONAL and rows[i - 1][1] not in PROVISIONAL else None
+                m = mode_of(p, act, d)
+                if m != 'on foot' and pl_by_id.get(place, {}).get('kind') != 'off_map' and pl_by_id.get(rows[i - 1][1], {}).get('kind') != 'off_map':
+                    act = m + ': ' + act
+            rr.append('%s %s %s' % (t, place, act))
+        out.append(days + '|' + '; '.join(rr))
+    p['rt'] = '/'.join(out)
 
 def check_person(p, fails, warns):
     pid = p['id']
@@ -165,8 +218,34 @@ def check_person(p, fails, warns):
     for d in DAYS:
         if d not in cover:
             fails.append(f'{pid}: {d} not covered')
-    speed = WALK_MPS_OLD if p['a'] >= 70 else WALK_MPS
+    foot = WALK_MPS_OLD if p['a'] >= 70 else (1.1 if 'constable' in p['r'].lower() else WALK_MPS)
     longest = 0
+    def move(prev_row, row, stay, d, label):
+        nonlocal longest
+        prev, place, act = prev_row[1], row[1], row[2]
+        if prev == place or prev in PORTALS or place in PORTALS or prev in PROVISIONAL or place in PROVISIONAL:
+            return
+        if act.startswith('by bus') or pl_by_id.get(place, {}).get('kind') == 'off_map' or pl_by_id.get(prev, {}).get('kind') == 'off_map':
+            return
+        if '(police.json)' in act and '(police.json)' in prev_row[2]:
+            return   # both rows on the beat: police.json walks it
+        dist = walk_m(prev, place)
+        if dist is None:
+            fails.append(f'{pid} {label}: no walking route {prev} -> {place}')
+            return
+        m = mode_of(p, act, dist)
+        if m == 'on foot' and dist > FOOT_CAP_M:
+            fails.append(f'{pid} {label}: {prev} -> {place} is {dist:.0f} m on foot, over the {FOOT_CAP_M} m cap (CLK-03)')
+        speed = MODE_MPS.get(m) or foot
+        travel = dist / speed / REAL_S_PER_GAME_MIN
+        longest = max(longest, dist)
+        if travel > 0.5 * stay:
+            fails.append(f'{pid} {label}: {prev} -> {place} {dist:.0f} m {m} takes {travel:.0f} game min, more than half the {stay} min stay before it')
+        depart = (mins(row[0]) - travel) % 1440
+        if is_home(p, prev) and pid not in NIGHT and mins(row[0]) < 12 * 60:
+            early = EARLIEST['dock'] if place in ('dock_gate', 'fish_dock', 'cold_stores') else EARLIEST['default']
+            if depart < early:
+                fails.append(f'{pid} {label}: leaves home at {int(depart)//60:02d}:{int(depart)%60:02d}, before {early//60:02d}:{early%60:02d}')
     for d, rows in cover.items():
         if not rows or rows[0][0] != '00:00':
             fails.append(f'{pid} {d}: first row is not 00:00')
@@ -180,44 +259,30 @@ def check_person(p, fails, warns):
             if place not in pl_by_id and place not in doors:
                 fails.append(f'{pid} {d} {t}: {place} is neither a places.json id nor a map.json door')
                 continue
-            # opening hours for a customer act
-            if CUSTOMER.search(act) and not KEEPER.search(act) and place_open(place, d, mins(t)) is False:
-                fails.append(f'{pid} {d} {t}: {place} is shut at {t} ({act})')
-            if i == 0:
-                continue
-            prev = rows[i - 1][1]
-            if act.startswith('by cab') or '(police.json)' in act or '(police.json)' in rows[i - 1][2]:
-                continue
-            if prev in PORTALS or place in PORTALS or prev in PROVISIONAL or prev in ('police_station', 'infirmary', 'licensing', 'copper_row_market'):
-                continue
-            if pl_by_id.get(place, {}).get('kind') == 'off_map':
-                continue
-            dist = walk_m(prev, place)
-            if dist is None:
-                fails.append(f'{pid} {d} {t}: no walking route {prev} -> {place}')
-                continue
-            stay = mins(t) - mins(rows[i - 1][0])   # the stay before the move, which the walk comes out of
-            walk_game_min = dist / speed / REAL_S_PER_GAME_MIN
-            longest = max(longest, dist)
-            if walk_game_min > REACH_SHARE * stay:
-                fails.append(f'{pid} {d} {t}: {prev} -> {place} is {dist:.0f} m, {walk_game_min:.0f} game min on foot, more than three quarters of the {stay} min stay before it')
-    # the night between days: the last row of one day to the first of the next is a move too
+            end = mins(rows[i + 1][0]) if i + 1 < len(rows) else 1440
+            if CUSTOMER.search(act) and not KEEPER.search(act):
+                for tt in (mins(t), max(mins(t), end - 1)):
+                    if place_open(place, d, tt) is False:
+                        fails.append(f'{pid} {d} {t}: {place} is shut during the stay ({act})')
+                        break
+            if i:
+                move(rows[i - 1], rows[i], mins(t) - mins(rows[i - 1][0]), d, f'{d} {t}')
     for k, d in enumerate(DAYS):
         a, b = cover.get(d), cover.get(DAYS[(k + 1) % 7])
-        if not a or not b:
-            continue
-        prev, place = a[-1][1], b[0][1]
-        if prev == place or prev in PORTALS or place in PORTALS or prev in PROVISIONAL or place in PROVISIONAL:
-            continue
-        if a[-1][2].startswith('by cab') or b[0][2].startswith('by cab') or '(police.json)' in a[-1][2]:
-            continue
-        if pl_by_id.get(place, {}).get('kind') == 'off_map' or pl_by_id.get(prev, {}).get('kind') == 'off_map':
-            continue
-        dist = walk_m(prev, place)
-        stay = 24 * 60 - mins(a[-1][0])
-        if dist is not None and dist / speed / REAL_S_PER_GAME_MIN > REACH_SHARE * stay:
-            fails.append(f'{pid} {d} to {DAYS[(k + 1) % 7]} at midnight: {prev} -> {place} is {dist:.0f} m')
+        if a and b:
+            move(a[-1], b[0], 1440 - mins(a[-1][0]), d, f'{d} to {DAYS[(k + 1) % 7]} at midnight')
     return longest
+
+def check_finders(fails):
+    rows_of = {p['id']: p for p in C.P}
+    for f in FINDERS:
+        p = rows_of.get(f['person'])
+        if not p:
+            continue
+        places = {pl for _, rr in parse_rt(p['rt']) for _, pl, _ in rr}
+        for x in f['passes']:
+            if x not in places:
+                fails.append(f"finder {f['person']}: never at {x}, which the finders list says he passes")
 
 # ---------------------------------------------------------------- people records
 def person_record(p):
@@ -234,6 +299,15 @@ def person_record(p):
             card[k] = (card[k].replace('Humberside CID', 'CID').replace('with Humberside CID', 'in CID')
                        .replace('Hull vowels', 'northern vowels').replace('Tom Nowak', 'Frank Nowak').replace(' Tom ', ' Frank ')
                        .replace(' Tom.', ' Frank.').replace(' Tom,', ' Frank,').replace('"Tom"', '"Frank"').replace('Calls Tom', 'Calls Frank'))
+    _f = PF.FIELDS.get(p['id'], {})
+    for k, v in _f.get('card', {}).items():
+        card[k] = v
+    for a, b in _f.get('card_replace', []):
+        for k in list(card):
+            if isinstance(card[k], str):
+                card[k] = card[k].replace(a, b)
+    if _f.get('look_h'):
+        look = dict(look, h=_f['look_h'])
     card.setdefault('who', p['r'])
     card.setdefault('speak', 'TO WRITE (story lane)')
     card.setdefault('life', 'TO WRITE (story lane)')
@@ -244,6 +318,11 @@ def person_record(p):
         temper = {"nerve": nerve, "dutiful": loyal, "willingness": will, "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"}
         quiet = saw == 'never' or loyal >= 0.6
         venal = greed
+    elif pr and not p.get('t'):
+        t = (pr['nerve'], max(0.0, round(1 - pr['venal'] * 0.8, 2)), pr['talk'])
+        temper = {"nerve": t[0], "dutiful": t[1], "willingness": t[2], "from": "prototype cast.js (nerve; dutiful from 1 - venal x 0.8; willingness from talk)"}
+        quiet = pr.get('discretion', 0) >= 0.7
+        venal = pr['venal']
     else:
         t = p.get('t') or (0.45, 0.4, 0.5)
         temper = {"nerve": t[0], "dutiful": t[1], "willingness": t[2], "from": "chosen by the data-build wave 2 job from the person's card"}
@@ -258,7 +337,9 @@ def person_record(p):
         "temperament": temper, "keepsQuiet": quiet,
         "home": p['home'],
         "sched": [],
-        "lines": {"own": "lines/own-%s.json" % p['id'], "note": "own lines live in lines/ (a record each); see lines/README.md"},
+        "speaker_kind": PF.speaker_kind(p, BANK_MEMBERS),
+        "lines": ({"own": "lines/own-%s.json" % p['id'], "shared": "lines/shared-street.json (who = speaker_kind)"} if PF.has_own(p)
+                  else {"own": "none: shared lines only", "shared": "lines/shared-street.json (who = speaker_kind)" if PF.speaker_kind(p, BANK_MEMBERS) else "authored scenes and live talk only (a rival head: the bank's no_kind)"}),
         "card": card, "can_die": p['die'],
         "invented": p.get('inv', False) if p.get('inv') != 'frame' else 'proposed by the story frame',
         "src": p['src'],
@@ -294,7 +375,9 @@ def main():
             fails.append(f"{p['id']}: under 18")
         if p['rt'] == 'lead':
             continue
+        stamp_modes(p)
         longest[p['id']] = check_person(p, fails, warns)
+    check_finders(fails)
     if p and not any(p['id'] == 'frank_nowak' and p['die'] is False for p in C.P):
         fails.append('Frank must have can_die false')
     print('people:', len(C.P), ' fails:', len(fails), ' warnings:', len(warns))
@@ -303,6 +386,9 @@ def main():
     if check_only:
         return 1 if fails else 0
     os.makedirs(os.path.join(D, 'people'), exist_ok=True)
+    import glob as _g
+    for _f in _g.glob(os.path.join(D, 'people', '*.json')):
+        os.remove(_f)
     for p in C.P:
         json.dump(person_record(p), open(os.path.join(D, 'people', p['id'] + '.json'), 'w'), indent=1, ensure_ascii=False)
     # routines.json
@@ -325,11 +411,13 @@ def main():
                "rules": {
                    "rows": "A row holds from its game time until the next row of the same day; every day starts at 00:00. days omitted means daily.",
                    "place": "A places.json id, or a map.json door id for a home. edge_north and edge_west mean off the Hook (home across town, the bus, the station).",
-                   "walking_reach": f"Between two rows on the Hook the walk on map.json's walking graph at {WALK_MPS} m/s ({WALK_MPS_OLD} m/s at 70 and over) is taken out of the end of the stay before it (the person sets off early enough to arrive at the row's time) and uses no more than three quarters of that stay, counted in game minutes at 2 real seconds a game minute (120 s a game hour). Checked in code: tools/wave2/build_people.py.",
-                   "from_off_the_hook": "Arriving from off the Hook (edge_north, edge_west, the police station, the Infirmary, licensing, the Copper Row market), the person is placed out of sight at the nearest soft edge, bus stop or door and is not reach-checked: the bus, a bike or a lift in town are not simulated (chosen).",
-                   "hours": "A customer act (breakfast, dinner, shopping, a frame) falls inside the place's public hours; a keeper or worker may be there before opening and after closing.",
+                   "walking_reach": f"CLK-03 restated for the 120 s hour (2 real seconds a game minute): on foot a move is at most {FOOT_CAP_M} m (about 200 m, the blueprint's figure, with a tolerance), at {WALK_MPS} m/s ({WALK_MPS_OLD} m/s at 70 and over, 1.1 m/s for a constable). A longer move is made by bike (5 m/s), by car (9 m/s; car owners listed in build_people.py CARS) or by cab (65 and over, or a fare); the mode is written at the start of the act. The travel comes out of the end of the stay before it and may use at most half that stay, so a person is at each place for at least half its row. Nobody leaves home before 05:00 (dock and fish-dock men 04:00) unless he works nights. Checked in code: tools/wave2/build_people.py.",
+                   "from_off_the_hook": "edge_north and edge_west are the two soft edges: a person whose row is there is off the Hook. Arriving, he appears at that soft edge at the row's time (or at bus_stop_qs when the row before is a 'by bus' row) and walks or rides on; leaving, he goes to it. The police station, the Infirmary, licensing and the Copper Row market are off-map places reached through edge_north. Moves through a soft edge are not reach-checked (the bus and the town are not simulated).",
+                   "hours": "A customer act (breakfast, dinner, shopping, a frame, Mass, leaflets) falls inside the place's public hours for the whole stay; a keeper or worker may be there before opening and after closing.",
+                   "rota": "Police: the day beat 06:00 to 22:00 in two turns (PC Ibbotson early, PC Ackrill late, weekdays) and the night beat 22:00 to 06:00 (PC Haigh, Sunday to Thursday nights); weekend turns and Friday and Saturday nights are walked by a constable from town (police.json beat_constable_second), and the custody desk outside Sgt Bellwood's weekday days by the night sergeant in town (chosen).",
+                   "firm_shifts": "Kevin 06:00 to 18:00 and Terry 18:00 to 06:00 every day, Pauline on the radio 07:00 to 19:00 every day, as timetables.json; Sheila at the counter 08:30 to 17:30 weekdays (17:45 on Friday for the reckoning), 08:30 to 13:00 Saturday and 10:00 to 13:00 Sunday for the week's read-back (STORY-FRAME 1). After her the counter is Pauline's to 19:00 and Ron's on the door to 23:00; timetables.json shift_counter (07:00 to 23:00, Sheila) should say so.",
                    "finders": "2.5.5: whoever's routine next brings them past an unseen deed finds it; the named finders are listed in finders below."},
-               "chosen_values": {"walk_mps": WALK_MPS, "walk_mps_70_and_over": WALK_MPS_OLD, "reach_share_of_stay": REACH_SHARE},
+               "chosen_values": {"walk_mps": WALK_MPS, "walk_mps_70_and_over": WALK_MPS_OLD, "foot_cap_m": FOOT_CAP_M, "bike_mps": 5.0, "car_mps": 9.0, "travel_share_of_stay_before": 0.5, "earliest_from_home": "05:00 (dock 04:00)"},
                "finders": FINDERS,
                "provisional_places": PROVISIONAL,
                "open_points": ["The Tangs' takeaway is in canon and the side stories but not on wave 1's map or places; its rows use the provisional id tangs_takeaway until the keeper adds it (likely Back Parade).",
@@ -342,8 +430,9 @@ def main():
     return 1 if fails else 0
 
 FINDERS = [
-    {"person": "edna_coulson", "from": "05:45", "passes": ["harbour_board", "tea_room", "agar_base"], "finds": "a forced door, glass or anything missing at the Harbour Board, the Copper Kettle or the agents' office (the cleaner at six)"},
-    {"person": "bill_huxtable", "from": "05:15", "passes": ["ferry_landing", "fish_dock", "dock_gate"], "finds": "anything left on the quay overnight between the landing and the pen (the first dock worker)"},
+    {"person": "edna_coulson", "from": "06:00", "passes": ["mickeys", "tea_room", "snooker_hall"], "finds": "a forced door, glass or anything missing at Mickey's front office, the Copper Kettle or the snooker hall (the cleaner at six)"},
+    {"person": "stan_pickles", "from": "07:30", "passes": ["harbour_board"], "finds": "the Harbour Board and its works yard, first in"},
+    {"person": "bill_huxtable", "from": "05:05", "passes": ["fish_dock", "dock_gate"], "finds": "anything left on the east quay and the fish dock overnight (the first dock worker, from 05:05); the landing's first passer is Gordon Leckenby at 06:00"},
     {"person": "eddie_birtwhistle", "from": "04:45", "passes": ["fish_dock"], "finds": "the fish dock and the ice hut"},
     {"person": "brenda_laverack", "from": "05:00", "passes": ["fish_dock", "laveracks"], "finds": "the fish dock, then her own shop's back door"},
     {"person": "gordon_leckenby", "from": "06:00", "passes": ["ferry_landing"], "finds": "the landing and the shelter before the first boat"},
@@ -351,9 +440,9 @@ FINDERS = [
     {"person": "grace_rinaldi", "from": "05:30", "passes": ["caff"], "finds": "the caff's window and the quay road outside"},
     {"person": "peart", "from": "05:45", "passes": ["newsagent"], "finds": "Quay Street's shop fronts as the papers come in"},
     {"person": "norman_dent", "from": "19:30", "passes": ["dents_warehouses", "net_loft", "burned_warehouse"], "finds": "the warehouse row, all night"},
-    {"person": "pc_haigh", "from": "22:00", "passes": ["mickeys", "mickeys_yard", "ferry_landing"], "finds": "Mickey's door, the yards' lane and the landing on the night beat"},
+    {"person": "pc_haigh", "from": "22:00", "passes": ["mickeys"], "finds": "Mickey's door, the yards' lane and the landing on the night beat (police.json walks the beat; his row names its start)"},
     {"person": "maggie_firth", "from": "21:30", "passes": ["tea_stall"], "finds": "the quay by the tea stall, all night"},
-    {"person": "neil_screeton", "from": "07:30", "passes": ["iveson_yard", "iveson_hut"], "finds": "Iveson's yard and hut (the owner's man on his return)"},
+    {"person": "neil_screeton", "from": "07:30", "passes": ["iveson_yard"], "finds": "Iveson's yard (the owner's man on his return); Dennis Iveson finds the hut at 12:00"},
     {"person": "nora_cronin", "from": "07:15", "passes": ["priests_house", "chapel"], "finds": "the priest's house and the chapel"},
     {"person": "winifred_duggleby", "from": "08:00", "passes": ["chapel"], "finds": "the chapel, its roof and its flowers"},
     {"person": "owners", "from": "the opening time", "passes": ["their own place"], "finds": "every shop's keeper finds his own shop on his return (2.5.5: the owner on his return); see each keeper's first row"},

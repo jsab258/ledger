@@ -57,19 +57,19 @@
   [
    10.5,
    "rank_mickeys",
-   "a word with whoever is on it",
+   "waiting for a car",
    "tue,thu"
   ],
   [
    11.5,
-   "caff",
-   "her dinner",
+   "burned_warehouse",
+   "by cab: the fire (her fare to the warehouse row)",
    "tue,thu"
   ],
   [
-   12.5,
+   13.0,
    "edge_north",
-   "back to the paper (the warehouse row is her fare)",
+   "back to the paper",
    "tue,thu"
   ],
   [
@@ -79,12 +79,13 @@
    "mon,wed,fri-sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
-  "own": "lines/own-alison_sedman.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "A reporter on the local paper, the Meridian Evening Mail. She will not drop the warehouse fire, though her editor has told her to.",
+  "who": "A reporter on the local paper, the Meridian Pilot. She will not drop the warehouse fire, though her editor has told her to.",
   "speak": "Quick, warm, direct. Asks one question more than is polite. Laughs easily and means it.",
   "life": "Meridian born. Takes her tea at Rinaldi's and stands looking at the ruin of No. 4 most mornings.",
   "fire": "She wrote the first report. The insurance on No. 4 was raised a month before it burned. A cab was seen on the row that night. Her editor wants it left.",

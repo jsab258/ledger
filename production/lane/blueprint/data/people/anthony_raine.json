@@ -48,9 +48,10 @@
    "up in town"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
-  "own": "lines/own-anthony_raine.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Anthony Raine, 45, a criminal solicitor who takes Agar's referrals. Can make a messenger of a man, at his fee.",
@@ -60,5 +61,6 @@
  },
  "can_die": true,
  "invented": true,
- "src": "invented: STORY-FRAME 5 (the brief is Agar's man)"
+ "src": "invented: STORY-FRAME 5 (the brief is Agar's man)",
+ "fallback_role": "the role passes to another of the same trade, or the thread closes"
 }

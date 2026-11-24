@@ -51,13 +51,13 @@
   [
    9.0,
    "second_hand",
-   "the shop",
+   "by cab: the shop",
    "mon-sat"
   ],
   [
    17.5,
    "d_cl_13",
-   "home",
+   "by cab: home",
    "mon-sat"
   ],
   [
@@ -67,9 +67,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "pensioner",
  "lines": {
-  "own": "lines/own-joe_cairns.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Joe Cairns, 70, keeps the second-hand shop. Buys house clearances; knows whose mother died.",

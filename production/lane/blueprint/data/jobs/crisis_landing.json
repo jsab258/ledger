@@ -2,13 +2,13 @@
  "id": "crisis_landing",
  "kind": "tail",
  "name": "The landing, by night",
- "giver": "maureen_jensen",
+ "giver": "pauline_kitching",
  "act_min": 2,
  "rung_min": 3,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "after the Landing, when the landing post's man is leaned on (his silence on Pauline's radio)",
  "window": null,
  "offer": [
-  "TO WRITE (story lane)"
+  "Pauline, on the radio: the landing's not answering."
  ],
  "steps": [
   {
@@ -18,15 +18,15 @@
    "keys": [
     {
      "way": "choice",
-     "how": "the tea stall"
+     "how": "the tea stall (Maggie Firth saw the van)"
     },
     {
-     "way": "back_way",
-     "how": "Karen at the window"
+     "way": "watch",
+     "how": "Karen at the ticket window"
     },
     {
-     "way": "choice",
-     "how": "the snooker hall"
+     "way": "watch",
+     "how": "the snooker hall's window"
     }
    ],
    "fail": null,

@@ -79,9 +79,10 @@
    "mon-thu,sat,sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
-  "own": "lines/own-eileen_crabtree.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Eileen Crabtree, 39, does home perms. Carries the Hook's gossip into town and back.",
@@ -89,7 +90,7 @@
   "life": "A hairdresser from town who does Sylvia's and Ada's hair at home on Fridays",
   "rivals": "None of the three."
  },
- "can_die": true,
+ "can_die": false,
  "invented": true,
  "src": "invented: 3.4.1 (40 fare people)"
 }

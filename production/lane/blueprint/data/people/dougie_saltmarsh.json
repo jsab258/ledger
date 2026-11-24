@@ -49,25 +49,25 @@
   [
    5.0,
    "fish_dock",
-   "the porters' cut",
+   "by bike: the porters' cut",
    "mon-sat"
   ],
   [
    9.5,
    "cold_stores",
-   "the yard gate",
+   "by bike: the yard gate",
    "mon-sat"
   ],
   [
    14.5,
    "snooker_hall",
-   "the tables",
+   "by bike: the tables",
    "mon-sat"
   ],
   [
    20.0,
    "d_nr_43",
-   "home",
+   "by bike: home",
    "mon-sat"
   ],
   [
@@ -77,9 +77,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "dock_worker",
  "lines": {
   "own": "lines/own-dougie_saltmarsh.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Dougie Saltmarsh, 29, takes the porters' cut on the fish dock for the Widow and watches the cold-store yard.",
@@ -90,5 +91,6 @@
  "can_die": true,
  "invented": true,
  "src": "invented: 2.10.2; side story 8 (the syndicate's man who takes the porters' cut)",
+ "fallback_role": "his head's next man",
  "fight_kind": "wiry"
 }

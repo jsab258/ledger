@@ -46,11 +46,11 @@
      "id": "brendan_walsh.1",
      "n": 1,
      "from": "infirmary",
-     "to": "chapel",
+     "to": "priests_house",
      "wrinkle": null,
      "when": {
-      "hours": "15:00-23:00",
-      "days": "daily",
+      "hours": "22:00-22:30",
+      "days": "mon,wed-sat",
       "offered_when": "first ride"
      },
      "lines": [
@@ -86,19 +86,25 @@
     {
      "id": "brenda_laverack.1",
      "n": 1,
-     "from": "laveracks",
+     "from": "d_nr_5",
      "to": "fish_dock",
      "wrinkle": "talker",
      "when": {
-      "hours": "05:00-08:00",
-      "days": "mon-sat",
+      "hours": "04:30-05:00",
+      "days": "mon,tue,wed,thu,fri,sat",
       "offered_when": "first ride"
      },
      "lines": [
       "Iveson's lad chains the crane gap at five sharp, every night since the fire. Before that anybody could walk in.",
       "Not that I'd know what anybody wanted in a scrap yard."
      ],
-     "src": "tools/lane/prototype/project/src/game/tune/fares.js brenda_dawn"
+     "src": "tools/lane/prototype/project/src/game/tune/fares.js brenda_dawn",
+     "fitted_from": {
+      "from": "laveracks",
+      "to": "fish_dock",
+      "hours": "05:00-08:00",
+      "days": "mon-sat"
+     }
     },
     {
      "id": "brenda_laverack.2",
@@ -128,18 +134,24 @@
      "id": "malcolm_ruddock.1",
      "n": 1,
      "from": "cold_stores",
-     "to": "boarding_house",
+     "to": "d_cs_5",
      "wrinkle": "talker",
      "when": {
-      "hours": "17:30-18:30",
-      "days": "mon-fri",
+      "hours": "13:30-14:00",
+      "days": "mon,tue,wed,thu,fri",
       "offered_when": "first ride"
      },
      "lines": [
       "The cold store wants a firm that turns up. The one they have is late every other morning.",
       "Ask at the Harbour Office. It is their contract to give."
      ],
-     "src": "tools/lane/prototype/project/src/game/tune/fares.js shift (three off the packing shift, spoken for by the deputy)"
+     "src": "tools/lane/prototype/project/src/game/tune/fares.js shift (three off the packing shift, spoken for by the deputy)",
+     "fitted_from": {
+      "from": "cold_stores",
+      "to": "boarding_house",
+      "hours": "17:30-18:30",
+      "days": "mon-fri"
+     }
     },
     {
      "id": "malcolm_ruddock.2",
@@ -172,8 +184,8 @@
      "to": "ferry_landing",
      "wrinkle": "hurry",
      "when": {
-      "hours": "20:30-22:15",
-      "days": "mon-sat",
+      "hours": "21:30-22:30",
+      "days": "sat",
       "offered_when": "first ride"
      },
      "lines": [
@@ -196,7 +208,8 @@
      "lines": [
       "TO WRITE (story lane)"
      ],
-     "src": "3.4.1 (a lodger for the last ferry)"
+     "src": "3.4.1 (a lodger for the last ferry)",
+     "scene_ride": "the rider's routine is set aside for this ride: a scene, offered only when its condition holds"
     }
    ],
    "src": "3.4.1; FIT-G7; tools/lane/prototype/project/src/game/tune/fares.js lodger_ferry"
@@ -209,11 +222,11 @@
     {
      "id": "alison_sedman.1",
      "n": 1,
-     "from": "bus_stop_qs",
+     "from": "rank_mickeys",
      "to": "burned_warehouse",
      "wrinkle": "face",
      "when": {
-      "hours": "09:00-17:00",
+      "hours": "10:30-11:30",
       "days": "tue,thu",
       "offered_when": "first ride"
      },
@@ -243,12 +256,12 @@
    "src": "3.4.1; FIT-G7; tools/lane/prototype/project/src/game/tune/fares.js alison_fire; STORY-FRAME 5 Act I (Alison's fare to the warehouse row)"
   },
   {
-   "id": "raymond_kaye",
-   "person": "raymond_kaye",
-   "name": "Raymond Kaye",
+   "id": "neville_kaye",
+   "person": "neville_kaye",
+   "name": "Neville Kaye",
    "rides": [
     {
-     "id": "raymond_kaye.1",
+     "id": "neville_kaye.1",
      "n": 1,
      "from": "edge_north",
      "to": "boarding_house",
@@ -264,7 +277,7 @@
      "src": "tools/lane/prototype/project/src/game/tune/fares.js parcel (a gentleman at the station)"
     },
     {
-     "id": "raymond_kaye.2",
+     "id": "neville_kaye.2",
      "n": 2,
      "from": "boarding_house",
      "to": "edge_north",
@@ -290,11 +303,11 @@
     {
      "id": "shane_boddy.1",
      "n": 1,
-     "from": "market_stalls_quay",
-     "to": "chapel",
+     "from": "snooker_hall",
+     "to": "d_nr_34",
      "wrinkle": "runner",
      "when": {
-      "hours": "21:00-24:00",
+      "hours": "22:00-22:30",
       "days": "fri,sat",
       "offered_when": "first ride"
      },
@@ -317,7 +330,8 @@
      "lines": [
       "TO WRITE (story lane)"
      ],
-     "src": "7.14 (the runner)"
+     "src": "7.14 (the runner)",
+     "scene_ride": "the rider's routine is set aside for this ride: a scene, offered only when its condition holds"
     }
    ],
    "src": "3.4.1; FIT-G7; tools/lane/prototype/project/src/game/tune/fares.js runner"
@@ -330,11 +344,11 @@
     {
      "id": "rodney_usher.1",
      "n": 1,
-     "from": "ritas",
-     "to": "harbour_board",
+     "from": "snooker_hall",
+     "to": "d_nr_10",
      "wrinkle": "wait",
      "when": {
-      "hours": "19:00-23:00",
+      "hours": "19:30-20:00",
       "days": "mon-fri",
       "offered_when": "first ride"
      },
@@ -376,13 +390,14 @@
      "when": {
       "hours": "18:00-22:00",
       "days": "tue",
-      "offered_when": "first ride"
+      "offered_when": "a Tuesday after dark, Wayne at Rita's side door (a scene: his routine is set aside for the ride)"
      },
      "lines": [
       "See Metcalfe's van? Stay behind it. Not close. I want to know where he goes of a night.",
       "There. The smoke house door. Every Tuesday, I knew it."
      ],
-     "src": "tools/lane/prototype/project/src/game/tune/fares.js tail_hal"
+     "src": "tools/lane/prototype/project/src/game/tune/fares.js tail_hal",
+     "scene_ride": "the rider's routine is set aside for this ride: a scene, offered only when its condition holds"
     },
     {
      "id": "wayne_harrison.2",
@@ -439,7 +454,8 @@
      "lines": [
       "TO WRITE (story lane)"
      ],
-     "src": "side story 31"
+     "src": "side story 31",
+     "scene_ride": "the rider's routine is set aside for this ride: a scene, offered only when its condition holds"
     }
    ],
    "src": "3.4.1; FIT-G7; tools/lane/prototype/project/src/game/tune/fares.js norman_night"
@@ -458,12 +474,13 @@
      "when": {
       "hours": "22:00-02:00",
       "days": "daily",
-      "offered_when": "first ride"
+      "offered_when": "a night call to casualty (a scene: his routine is set aside for the ride)"
      },
      "lines": [
       "I stitch what comes to my door and I ask nothing. Fifteen pounds, and I remember every face."
      ],
-     "src": "tools/lane/prototype/project/src/game/tune/fares.js doctor_night"
+     "src": "tools/lane/prototype/project/src/game/tune/fares.js doctor_night",
+     "scene_ride": "the rider's routine is set aside for this ride: a scene, offered only when its condition holds"
     },
     {
      "id": "aidan_keogh.2",
@@ -492,11 +509,11 @@
     {
      "id": "julie_kettlewell.1",
      "n": 1,
-     "from": "home_cl_9",
+     "from": "newsagent",
      "to": "market_stalls_quay",
      "wrinkle": "talker",
      "when": {
-      "hours": "08:00-12:00",
+      "hours": "09:00-09:30",
       "days": "thu",
       "offered_when": "first ride"
      },
@@ -510,7 +527,7 @@
      "id": "julie_kettlewell.2",
      "n": 2,
      "from": "edge_north",
-     "to": "home_cl_9",
+     "to": "d_cl_9",
      "wrinkle": "talker",
      "when": {
       "hours": "14:30-15:00",
@@ -534,11 +551,11 @@
      "id": "susan_coverdale.1",
      "n": 1,
      "from": "customs",
-     "to": "solicitor_office",
+     "to": "bus_stop_qs",
      "wrinkle": "face",
      "when": {
-      "hours": "12:00-17:00",
-      "days": "mon-fri",
+      "hours": "17:00-17:15",
+      "days": "tue,thu",
       "offered_when": "first ride"
      },
      "lines": [
@@ -561,7 +578,8 @@
      "lines": [
       "TO WRITE (story lane)"
      ],
-     "src": "side story 19"
+     "src": "side story 19",
+     "scene_ride": "the rider's routine is set aside for this ride: a scene, offered only when its condition holds"
     }
    ],
    "src": "3.4.1; FIT-G7; tools/lane/prototype/project/src/game/tune/fares.js susan_face (rung 2)"
@@ -574,19 +592,25 @@
     {
      "id": "bill_huxtable.1",
      "n": 1,
-     "from": "bus_stop_qs",
-     "to": "dock_gate",
+     "from": "d_nr_1",
+     "to": "fish_dock",
      "wrinkle": "talker",
      "when": {
-      "hours": "05:00-05:45",
-      "days": "mon-sat",
+      "hours": "04:35-05:05",
+      "days": "mon,tue,wed,thu,fri,sat",
       "offered_when": "first ride"
      },
      "lines": [
       "Your day driver pays at the gate now, same as the rest. Mrs Jensen's man takes it off them in the hut.",
       "You did not hear that from me."
      ],
-     "src": "tools/lane/prototype/project/src/game/tune/fares.js kevin_gate (rung 2)"
+     "src": "tools/lane/prototype/project/src/game/tune/fares.js kevin_gate (rung 2)",
+     "fitted_from": {
+      "from": "bus_stop_qs",
+      "to": "dock_gate",
+      "hours": "05:00-05:45",
+      "days": "mon-sat"
+     }
     },
     {
      "id": "bill_huxtable.2",
@@ -648,12 +672,12 @@
    "src": "3.4.1; FIT-G7; invented fare person"
   },
   {
-   "id": "dorothy_garbett",
-   "person": "dorothy_garbett",
-   "name": "Dorothy Garbett",
+   "id": "dorothy_kirkup",
+   "person": "dorothy_kirkup",
+   "name": "Dorothy Kirkup",
    "rides": [
     {
-     "id": "dorothy_garbett.1",
+     "id": "dorothy_kirkup.1",
      "n": 1,
      "from": "d_cl_17",
      "to": "edge_north",
@@ -669,7 +693,7 @@
      "src": "invented"
     },
     {
-     "id": "dorothy_garbett.2",
+     "id": "dorothy_kirkup.2",
      "n": 2,
      "from": "edge_north",
      "to": "d_cl_17",
@@ -762,18 +786,19 @@
      "lines": [
       "TO WRITE (story lane)"
      ],
-     "src": "invented"
+     "src": "invented",
+     "scene_ride": "the rider's routine is set aside for this ride: a scene, offered only when its condition holds"
     }
    ],
    "src": "3.4.1; FIT-G7; invented"
   },
   {
-   "id": "janet_ruddle",
-   "person": "janet_ruddle",
-   "name": "Janet Ruddle",
+   "id": "janet_lumb",
+   "person": "janet_lumb",
+   "name": "Janet Lumb",
    "rides": [
     {
-     "id": "janet_ruddle.1",
+     "id": "janet_lumb.1",
      "n": 1,
      "from": "d_cl_21",
      "to": "edge_north",
@@ -789,7 +814,7 @@
      "src": "invented"
     },
     {
-     "id": "janet_ruddle.2",
+     "id": "janet_lumb.2",
      "n": 2,
      "from": "edge_north",
      "to": "d_cl_21",
@@ -808,12 +833,12 @@
    "src": "3.4.1; FIT-G7; invented"
   },
   {
-   "id": "gerald_pashley",
-   "person": "gerald_pashley",
-   "name": "Gerald Pashley",
+   "id": "gerald_thwaite",
+   "person": "gerald_thwaite",
+   "name": "Gerald Thwaite",
    "rides": [
     {
-     "id": "gerald_pashley.1",
+     "id": "gerald_thwaite.1",
      "n": 1,
      "from": "d_cl_22",
      "to": "edge_north",
@@ -829,7 +854,7 @@
      "src": "invented (did Mickey's books before Sheila)"
     },
     {
-     "id": "gerald_pashley.2",
+     "id": "gerald_thwaite.2",
      "n": 2,
      "from": "edge_north",
      "to": "d_cl_22",
@@ -896,17 +921,23 @@
      "id": "ahmed_rashid.1",
      "n": 1,
      "from": "market_stalls_quay",
-     "to": "edge_north",
+     "to": "rank_mickeys",
      "wrinkle": "parcel",
      "when": {
-      "hours": "09:00-09:30",
+      "hours": "08:30-09:00",
       "days": "thu",
       "offered_when": "first ride"
      },
      "lines": [
       "TO WRITE (story lane)"
      ],
-     "src": "invented"
+     "src": "invented",
+     "fitted_from": {
+      "from": "market_stalls_quay",
+      "to": "edge_north",
+      "hours": "09:00-09:30",
+      "days": "thu"
+     }
     },
     {
      "id": "ahmed_rashid.2",
@@ -922,18 +953,19 @@
      "lines": [
       "TO WRITE (story lane)"
      ],
-     "src": "invented"
+     "src": "invented",
+     "scene_ride": "the rider's routine is set aside for this ride: a scene, offered only when its condition holds"
     }
    ],
    "src": "3.4.1; FIT-G7; invented"
   },
   {
-   "id": "brian_tindall",
-   "person": "brian_tindall",
-   "name": "Brian Tindall",
+   "id": "ted_tindall",
+   "person": "ted_tindall",
+   "name": "Ted Tindall",
    "rides": [
     {
-     "id": "brian_tindall.1",
+     "id": "ted_tindall.1",
      "n": 1,
      "from": "rank_north",
      "to": "ferry_landing",
@@ -949,7 +981,7 @@
      "src": "invented"
     },
     {
-     "id": "brian_tindall.2",
+     "id": "ted_tindall.2",
      "n": 2,
      "from": "ferry_landing",
      "to": "edge_north",
@@ -1002,7 +1034,8 @@
      "lines": [
       "TO WRITE (story lane)"
      ],
-     "src": "invented"
+     "src": "invented",
+     "scene_ride": "the rider's routine is set aside for this ride: a scene, offered only when its condition holds"
     }
    ],
    "src": "3.4.1; FIT-G7; invented"
@@ -1066,7 +1099,8 @@
      "lines": [
       "TO WRITE (story lane)"
      ],
-     "src": "side story 7 (A ride for the sergeant)"
+     "src": "side story 7 (A ride for the sergeant)",
+     "scene_ride": "the rider's routine is set aside for this ride: a scene, offered only when its condition holds"
     },
     {
      "id": "carol_ellis.2",
@@ -1082,7 +1116,8 @@
      "lines": [
       "TO WRITE (story lane)"
      ],
-     "src": "STORY-FRAME 3 Ellis"
+     "src": "STORY-FRAME 3 Ellis",
+     "scene_ride": "the rider's routine is set aside for this ride: a scene, offered only when its condition holds"
     }
    ],
    "src": "3.4.1; FIT-G7; side story 7 (A ride for the sergeant)"
@@ -1106,7 +1141,8 @@
      "lines": [
       "The same bollard?"
      ],
-     "src": "STORY-FRAME 4 item 19"
+     "src": "STORY-FRAME 4 item 19",
+     "scene_ride": "the rider's routine is set aside for this ride: a scene, offered only when its condition holds"
     },
     {
      "id": "derek_hebblewhite.2",
@@ -1122,7 +1158,8 @@
      "lines": [
       "TO WRITE (story lane)"
      ],
-     "src": "STORY-FRAME 5 Act III"
+     "src": "STORY-FRAME 5 Act III",
+     "scene_ride": "the rider's routine is set aside for this ride: a scene, offered only when its condition holds"
     }
    ],
    "src": "3.4.1; FIT-G7; STORY-FRAME 4 item 19"
@@ -1135,19 +1172,25 @@
     {
      "id": "june_suddaby.1",
      "n": 1,
-     "from": "mickeys",
-     "to": "ferry_landing",
+     "from": "boarding_house",
+     "to": "mickeys",
      "wrinkle": "talker",
      "when": {
-      "hours": "10:00-12:00",
-      "days": "mon-sat",
+      "hours": "09:30-10:00",
+      "days": "mon,tue,wed,thu,fri",
       "offered_when": "first ride"
      },
      "lines": [
       "Thank you for the lift. I meant what I said. I want nothing from it.",
       "But whatever you turn that office into, do it with your eyes open. He never did."
      ],
-     "src": "prototype fares.js (June's lift)"
+     "src": "prototype fares.js (June's lift)",
+     "fitted_from": {
+      "from": "mickeys",
+      "to": "ferry_landing",
+      "hours": "10:00-12:00",
+      "days": "mon-sat"
+     }
     },
     {
      "id": "june_suddaby.2",
@@ -1187,7 +1230,8 @@
      "lines": [
       "TO WRITE (story lane)"
      ],
-     "src": "side story 28 (One way)"
+     "src": "side story 28 (One way)",
+     "scene_ride": "the rider's routine is set aside for this ride: a scene, offered only when its condition holds"
     },
     {
      "id": "karen_grummitt.2",
@@ -1217,17 +1261,23 @@
      "id": "edith_stockill.1",
      "n": 1,
      "from": "d_cl_12",
-     "to": "newsagent",
+     "to": "adas",
      "wrinkle": "talker",
      "when": {
-      "hours": "09:00-10:00",
-      "days": "mon-sat",
+      "hours": "08:45-09:15",
+      "days": "mon,tue,wed,thu,fri,sat",
       "offered_when": "first ride"
      },
      "lines": [
       "TO WRITE (story lane)"
      ],
-     "src": "side story 24"
+     "src": "side story 24",
+     "fitted_from": {
+      "from": "d_cl_12",
+      "to": "newsagent",
+      "hours": "09:00-10:00",
+      "days": "mon-sat"
+     }
     },
     {
      "id": "edith_stockill.2",
@@ -1267,7 +1317,8 @@
      "lines": [
       "TO WRITE (story lane)"
      ],
-     "src": "side story 21 (Lilies)"
+     "src": "side story 21 (Lilies)",
+     "scene_ride": "the rider's routine is set aside for this ride: a scene, offered only when its condition holds"
     },
     {
      "id": "winifred_duggleby.2",
@@ -1283,7 +1334,8 @@
      "lines": [
       "TO WRITE (story lane)"
      ],
-     "src": "side story 21"
+     "src": "side story 21",
+     "scene_ride": "the rider's routine is set aside for this ride: a scene, offered only when its condition holds"
     }
    ],
    "src": "3.4.1; FIT-G7; side story 21 (Lilies)"
@@ -1323,7 +1375,8 @@
      "lines": [
       "TO WRITE (story lane)"
      ],
-     "src": "side story 27"
+     "src": "side story 27",
+     "scene_ride": "the rider's routine is set aside for this ride: a scene, offered only when its condition holds"
     }
    ],
    "src": "3.4.1; FIT-G7; side story 27"
@@ -1420,14 +1473,20 @@
      "to": "d_cl_29",
      "wrinkle": "runner",
      "when": {
-      "hours": "17:30-18:00",
-      "days": "mon-sat",
+      "hours": "18:00-18:30",
+      "days": "mon,tue,wed,thu,fri,sat",
       "offered_when": "first ride"
      },
      "lines": [
       "TO WRITE (story lane)"
      ],
-     "src": "STORY-FRAME 4 item 10"
+     "src": "STORY-FRAME 4 item 10",
+     "fitted_from": {
+      "from": "allotments",
+      "to": "d_cl_29",
+      "hours": "17:30-18:00",
+      "days": "mon-sat"
+     }
     },
     {
      "id": "philip_danby.2",
@@ -1547,7 +1606,8 @@
      "lines": [
       "TO WRITE (story lane)"
      ],
-     "src": "STORY-FRAME 5 Act III"
+     "src": "STORY-FRAME 5 Act III",
+     "scene_ride": "the rider's routine is set aside for this ride: a scene, offered only when its condition holds"
     },
     {
      "id": "maureen_jensen.2",
@@ -1563,7 +1623,8 @@
      "lines": [
       "TO WRITE (story lane)"
      ],
-     "src": "STORY-FRAME 3 the Widow"
+     "src": "STORY-FRAME 3 the Widow",
+     "scene_ride": "the rider's routine is set aside for this ride: a scene, offered only when its condition holds"
     }
    ],
    "src": "3.4.1; FIT-G7; STORY-FRAME 5 Act III"
@@ -1627,7 +1688,8 @@
      "lines": [
       "TO WRITE (story lane)"
      ],
-     "src": "side story 14"
+     "src": "side story 14",
+     "scene_ride": "the rider's routine is set aside for this ride: a scene, offered only when its condition holds"
     },
     {
      "id": "margaret_lofthouse.2",
@@ -1643,7 +1705,8 @@
      "lines": [
       "TO WRITE (story lane)"
      ],
-     "src": "side story 14"
+     "src": "side story 14",
+     "scene_ride": "the rider's routine is set aside for this ride: a scene, offered only when its condition holds"
     }
    ],
    "src": "3.4.1; FIT-G7; side story 14"

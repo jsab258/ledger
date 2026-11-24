@@ -53,7 +53,7 @@
    "tue,fri"
   ],
   [
-   11.0,
+   11.25,
    "cold_stores",
    "the yard",
    "tue,fri"
@@ -71,9 +71,10 @@
    "mon,wed,thu,sat,sun"
   ]
  ],
+ "speaker_kind": "tradesman",
  "lines": {
   "own": "lines/own-barry_coult.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Barry Coult, 42, a certificated bailiff from away who does what Agar's paper says. Leads the men who shut the cold store's door man in.",
@@ -84,5 +85,6 @@
  "can_die": true,
  "invented": true,
  "src": "invented: 2.10.2; STORY-FRAME 5 (men from away, hired on Agar's paper)",
+ "fallback_role": "his head's next man",
  "fight_kind": "big_man"
 }

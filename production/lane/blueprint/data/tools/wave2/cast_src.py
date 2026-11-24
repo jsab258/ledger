@@ -28,7 +28,7 @@ TRAITS = {
     "doreen_harland": (0.35, 0.3, 0.4, "no"), "pat_stainton": (0.3, 0.3, 0.4, "no"), "irene_lowther": (0.35, 0.3, 0.4, "no"),
     "julie_kettlewell": (0.3, 0.3, 0.4, "no"), "tracey_scarth": (0.45, 0.3, 0.5, "yes"), "stanley_hirst": (0.35, 0.3, 0.6, "no"),
     "mandy_calvert": (0.3, 0.3, 0.5, "no"), "leslie_cotterill": (0.35, 0.3, 0.5, "no"), "colin_mastin": (0.5, 0.3, 0.4, "yes"),
-    "albert_suggitt": (0.3, 0.3, 0.4, "no"), "paddy_rourke": (0.45, 0.3, 0.4, "yes"), "gary_mawer": (0.35, 0.3, 0.4, "no"),
+    "albert_suggitt": (0.3, 0.3, 0.4, "no"), "kieran_rourke": (0.45, 0.3, 0.4, "yes"), "gary_mawer": (0.35, 0.3, 0.4, "no"),
     "ian_megginson": (0.3, 0.3, 0.5, "no"), "christine_pickering": (0.35, 0.3, 0.3, "no"), "karen_grummitt": (0.3, 0.3, 0.3, "no"),
     "gordon_leckenby": (0.4, 0.3, 0.4, "yes"), "sylvia_rennison": (0.5, 0.3, 0.6, "yes"), "edith_stockill": (0.3, 0.3, 0.3, "no"),
     "shaun_hewson": (0.35, 0.3, 0.4, "no"), "dawn_pybus": (0.3, 0.3, 0.6, "no"), "dennis_iveson": (0.3, 0.3, 0.8, "never"),
@@ -288,10 +288,10 @@ add(id="albert_suggitt", n="Albert Suggitt", a=78, s="m", k="regular", cid="fabj
     r="A retired trawlerman who mends nets on the docks some mornings", home="d_cs_13", die=False, src="canon; side story 16",
     rt="mon-fri|00:00 d_cs_13 asleep; 06:30 fish_dock the nets; 12:00 caff his dinner; 13:00 d_cs_13 home"
        "/sat-sun|00:00 d_cs_13 asleep; 11:00 fishing_quay_east watching the water; 13:00 d_cs_13 home")
-add(id="paddy_rourke", n="Paddy Rourke", a=44, s="m", k="regular", cid="goran", called="Paddy", proto=None, v=None, inv=True,
+add(id="kieran_rourke", n="Kieran Rourke", a=44, s="m", k="regular", cid="goran", called="Kieran", proto=None, v=None, inv=True,
     r="A customs assistant on the docks; knows the bonded store", home="d_nr_41", die=True,
     look=L(1.76, 0.6, 0, "short", "#5a3a28", "tunic", "#1c2540", "#c9b04a", "trousers", "#1c2540"),
-    card=dict(who="Paddy Rourke, 44, born in Wexford, a customs assistant on the docks for twenty years. Counts the bonded store's tobacco.",
+    card=dict(who="Kieran Rourke, 44, born in Wexford, a customs assistant on the docks for twenty years. Counts the bonded store's tobacco.",
               speak="Easy, Irish, a story for every question and an answer for none.", life="41 North Road; the caff two evenings.", rivals="Has watched the Widow's loads come through for years."),
     src="hook-cast.json goran (unnamed; named here)",
     rt="mon,wed,fri|00:00 d_nr_41 asleep; 07:45 customs the docks; 17:00 d_nr_41 home"
@@ -457,10 +457,10 @@ add(id="mark_billany", n="Mark Billany", a=31, s="m", k="rival_man", cid=None, c
     src="STORY-FRAME 7 worked example 3 (proposed)",
     rt="mon-sat|00:00 d_cs_15 asleep; 06:00 dock_gate the tax hut; 12:00 caff dinner; 13:00 rank_ferry the tax on the ferry rank; 17:00 widow_base the take; 18:00 d_cs_15 home"
        "/sun|00:00 d_cs_15 asleep")
-add(id="pat_brannigan", n="Pat Brannigan", a=38, s="m", k="rival_man", cid=None, called="Brannigan", inv=True, proto=None, v=None,
+add(id="steve_brannigan", n="Steve Brannigan", a=38, s="m", k="rival_man", cid=None, called="Brannigan", inv=True, proto=None, v=None,
     r="The Widow's man at the net store and the van", home="d_cs_11", die=True, t=(0.6, 0.65, 0.2), quiet=True, fight="boxer",
     look=L(1.78, 0.65, 0, "short", "#2a2a2a", "car_coat", "#3a3028", "#2a2a2a", "trousers", "#2a2a2a"),
-    card=dict(who="Pat Brannigan, 38, Irish-born, boxed for the club once. Minds the net store and drives the Widow's van to the last boat.",
+    card=dict(who="Steve Brannigan, 38, Irish-born, boxed for the club once. Minds the net store and drives the Widow's van to the last boat.",
               speak="Soft-spoken, Irish, polite to a fault before a fight.", life="11 Cold Store Road.", rivals="The Widow's man."),
     src="invented: 2.10.2 (three named men each)",
     rt="mon-sat|00:00 d_cs_11 asleep; 08:00 widow_base the net store; 16:00 boxing_club the club; 18:00 d_cs_11 home; 21:30 widow_base the van; 23:30 d_cs_11 home"
@@ -574,7 +574,7 @@ add(id="neil_screeton", n="Neil Screeton", a=26, s="m", k="minor", cid=None, cal
        "/sun|00:00 d_nr_26 asleep")
 
 # =========================== the law, unnamed in the frame (named here or from wave 1)
-add(id="pc_ibbotson", n="Ian Ibbotson", a=29, s="m", k="officer", cid=None, called="the constable", inv=True, proto="pc", v=None,
+add(id="pc_ibbotson", n="Martin Ibbotson", a=29, s="m", k="officer", cid=None, called="the constable", inv=True, proto="pc", v=None,
     r="The beat constable: Quay Street and the north road by day, the night beat 22:00 to 06:00 on his night weeks", home="edge_north", die=True,
     fb="the second constable takes his beat from the next night (RT2-05)", src="prototype cast.js pc (PC Ibbotson, kept by wave 1 ledger-texts); 2.6.1; FIT-L01; first name invented",
     rt="mon-fri|00:00 edge_north off duty; 08:00 police_station parade; 08:30 mickeys the day beat, Quay Street (police.json); 12:30 caff his break; 13:00 cold_stores the day beat, the north road to the cold-store road (police.json); 16:00 police_station off duty; 16:30 edge_north off duty"
@@ -587,19 +587,19 @@ add(id="pc_haigh", n="Brian Haigh", a=45, s="m", k="officer", cid=None, called="
               speak="Slow, heavy, 'now then', a cough before he turns a corner.", life="The station; the night beat.", rivals="Honest, and tired of the Hook."),
     src="invented: 2.6.1 (the beat constable's night round); RT2-05 (the second constable); timetables beat",
     rt="daily|00:00 mickeys the night beat (police.json); 06:00 police_station off duty; 06:30 edge_north asleep; 21:30 police_station parade; 22:00 mickeys the night beat (police.json)")
-add(id="sgt_kitson", n="Ray Kitson", a=52, s="m", k="officer", cid=None, called="the custody sergeant", inv=True, proto=None, v=None,
+add(id="sgt_bellwood", n="Roy Bellwood", a=52, s="m", k="officer", cid=None, called="the custody sergeant", inv=True, proto=None, v=None,
     r="The custody sergeant: three goes at 'Nowak'", home="edge_north", die=False, t=(0.6, 0.8, 0.6), quiet=False,
     look=L(1.78, 0.75, 0, "short", "#a09a90", "shirt", "#e8e8f0", "#14161c", "trousers", "#14161c", "stripes"),
-    card=dict(who="Sergeant Ray Kitson, 52, the custody desk. Cannot say Nowak; tries three times.", speak="Weary, comic, by the book.",
+    card=dict(who="Sergeant Roy Bellwood, 52, the custody desk. Cannot say Nowak; tries three times.", speak="Weary, comic, by the book.",
               life="The station's custody desk.", rivals="Has seen every face on the Hook through the hatch."),
     src="invented: STORY-FRAME 5 (the sergeant's three goes at Nowak)", rt="daily|00:00 police_station the custody desk")
 
 # =========================== the empire's minor roles (2.15, RT2-05, RT-03 and the jobs)
-add(id="len_ackroyd", n="Len Ackroyd", a=48, s="m", k="minor", cid=None, called="Len", inv=True, proto=None, v=None,
+add(id="clive_ackroyd", n="Clive Ackroyd", a=48, s="m", k="minor", cid=None, called="Clive", inv=True, proto=None, v=None,
     r="Owner of Portside Cars, the other minicab firm on the north rank (two cars); a business, never a rival", home="edge_north", die=True,
     t=(0.4, 0.5, 0.5), quiet=False,
     look=L(1.74, 0.65, 0, "balding", "#6a6058", "car_coat", "#5a4a36", "#2a2a2a", "trousers", "#30302e"),
-    card=dict(who="Len Ackroyd, 48, runs Portside Cars from the north rank with two cars. Takes the fares Mickey's loses and gives them back as the talk fades.",
+    card=dict(who="Clive Ackroyd, 48, runs Portside Cars from the north rank with two cars. Takes the fares Mickey's loses and gives them back as the talk fades.",
               speak="Grumbling, businesslike.", life="Up in town; the north rank by day.", rivals="None: a business (2.15.3)."),
     src="invented: 2.15.3; vehicles.json portside_cars (the prototype's hint Len Wardle: surname changed so it is not mistaken for DC Wardell)",
     rt="mon-sat|00:00 edge_north home; 07:00 rank_north his cars; 19:00 edge_north home"
@@ -613,11 +613,11 @@ add(id="malcolm_ruddock", n="Malcolm Ruddock", a=39, s="m", k="minor", cid=None,
     rt="mon-fri|00:00 d_cs_5 asleep; 05:30 cold_stores the yard; 14:00 d_cs_5 home; 19:00 snooker_hall a frame; 21:30 d_cs_5 home"
        "/sat|00:00 d_cs_5 asleep; 05:30 cold_stores Saturday shift; 13:15 d_cs_5 home"
        "/sun|00:00 d_cs_5 asleep")
-add(id="len_garside", n="Len Garside", a=61, s="m", k="minor", cid=None, called="the ship's cook", inv=True, proto=None, v=None,
+add(id="alf_garside", n="Alf Garside", a=61, s="m", k="minor", cid=None, called="the ship's cook", inv=True, proto=None, v=None,
     r="The dock gun seller: an old ship's cook ashore who has things from abroad", home="chandlery", die=True,
     fb="guns come the other three ways (RT2-05)", t=(0.5, 0.2, 0.8), quiet=True,
     look=L(1.70, 0.7, 0, "flatcap", "#5a5048", "jersey", "#3a3a3a", "#3a3a3a", "trousers", "#2a2a2a", "tattoos"),
-    card=dict(who="Len Garside, 61, a ship's cook ashore. Has had things from abroad in a biscuit tin under the stove for thirty years.",
+    card=dict(who="Alf Garside, 61, a ship's cook ashore. Has had things from abroad in a biscuit tin under the stove for thirty years.",
               speak="Gruff, coded, 'I might know a man'.", life="Lives over the chandler's store; the fish dock at dawn for scraps.", rivals="Sells to anybody, tells nobody."),
     src="invented: RT2-05 (the dock gun seller)",
     rt="daily|00:00 chandlery asleep upstairs; 06:00 fish_dock scraps off the boats; 08:00 chandlery the back room; 20:00 tea_stall a mug at the stall; 21:00 chandlery asleep upstairs")
@@ -697,10 +697,10 @@ add(id="jimmy_raw", n="Jimmy Raw", a=35, s="m", k="minor", cid=None, called="a d
     src="invented: RT2-13 (the dockers by car two); 1.3.12",
     rt="mon-sat|00:00 d_nr_2 asleep; 05:45 dock_gate the pen; 14:00 rank_mickeys by car two; 15:30 caff tea; 17:00 d_nr_2 home"
        "/sun|00:00 d_nr_2 asleep")
-add(id="ken_dobbin", n="Ken Dobbin", a=40, s="m", k="minor", cid=None, called="a docker", inv=True, proto=None, v=None,
+add(id="ken_swales", n="Ken Swales", a=40, s="m", k="minor", cid=None, called="a docker", inv=True, proto=None, v=None,
     r="A docker from the pen; Jimmy Raw's mate by car two (RT2-13)", home="d_nr_3", die=True, t=(0.5, 0.4, 0.4), quiet=True, fight="big_man",
     look=L(1.86, 0.85, 0, "shaved", "#3a3a3a", "donkey", "#1c1f26", "#e07a1a", "trousers", "#2a2a2a"),
-    card=dict(who="Ken Dobbin, 40, a big docker who follows Jimmy Raw.", speak="Says nothing; laughs when Jimmy does.", life="3 North Road.", rivals="Same as Jimmy."),
+    card=dict(who="Ken Swales, 40, a big docker who follows Jimmy Raw.", speak="Says nothing; laughs when Jimmy does.", life="3 North Road.", rivals="Same as Jimmy."),
     src="invented: RT2-13; 1.3.12",
     rt="mon-sat|00:00 d_nr_3 asleep; 05:45 dock_gate the pen; 14:00 rank_mickeys by car two with Jimmy; 15:30 caff tea; 17:00 d_nr_3 home"
        "/sun|00:00 d_nr_3 asleep")
@@ -712,10 +712,10 @@ add(id="eddie_birtwhistle", n="Eddie Birtwhistle", a=46, s="m", k="minor", cid=N
     src="invented: side story 8 (the porter)",
     rt="mon-sat|00:00 d_nr_4 asleep; 04:45 fish_dock the boxes; 11:00 caff his dinner; 12:00 d_nr_4 home"
        "/sun|00:00 d_nr_4 asleep")
-add(id="leonard_tasker", n="Leonard Tasker", a=60, s="m", k="minor", cid=None, called="the laundry's owner", inv=True, proto=None, v=None,
+add(id="victor_tasker", n="Victor Tasker", a=60, s="m", k="minor", cid=None, called="the laundry's owner", inv=True, proto=None, v=None,
     r="Owns the laundry; held back Julie's last weeks' money", home="edge_north", die=True, t=(0.3, 0.3, 0.8), quiet=False,
     look=L(1.70, 0.7, 0, "comb_over", "#8a8078", "suit", "#4a4038", "#e0d8c8", "trousers", "#4a4038"),
-    card=dict(who="Leonard Tasker, 60, owns the laundry (the Washeteria and its back rooms). Held back the laid-off girls' last weeks.", speak="Pompous, aggrieved.",
+    card=dict(who="Victor Tasker, 60, owns the laundry (the Washeteria and its back rooms). Held back the laid-off girls' last weeks.", speak="Pompous, aggrieved.",
               life="Up in town; the laundry office mornings.", rivals="Complains to the Harbour Board clerk."),
     src="invented: side story 9 (the laundry's owner); the steam laundry and the Washeteria are one place on wave 1's map",
     rt="mon-fri|00:00 edge_north home in town; 09:30 launderette the office; 12:30 edge_north home in town"
@@ -766,10 +766,10 @@ add(id="dobson", n="Walter Dobson", a=53, s="m", k="minor", cid=None, called="Mr
     src="wave 1 places.json and timetables (Mr Dobson); first name invented",
     rt="mon-sat|00:00 chip_shop asleep upstairs; 10:30 chip_shop the fryers; 23:45 chip_shop asleep upstairs"
        "/sun|00:00 chip_shop asleep upstairs")
-add(id="peart", n="Ronald Peart", a=62, s="m", k="minor", cid=None, called="Mr Peart", inv=True, proto=None, v=None,
+add(id="peart", n="Herbert Peart", a=62, s="m", k="minor", cid=None, called="Mr Peart", inv=True, proto=None, v=None,
     r="Keeps Peart's, the newsagent and tobacconist, with the pension counter", home="newsagent", die=False, t=(0.4, 0.4, 0.6), quiet=False,
     look=L(1.70, 0.55, 0, "balding", "#a09a90", "cardigan", "#6a5a40", "#d8d0c0", "trousers", "#3a3630", "glasses"),
-    card=dict(who="Ronald Peart, 62, the newsagent. Witness to half the street's wills. The Pilot on the counter at six.", speak="Gossip by headline.", life="Over the shop.", rivals="Sells papers to all three."),
+    card=dict(who="Herbert Peart, 62, the newsagent. Witness to half the street's wills. The Pilot on the counter at six.", speak="Gossip by headline.", life="Over the shop.", rivals="Sells papers to all three."),
     src="wave 1 places.json and rooms (Peart); first name invented",
     rt="mon-sat|00:00 newsagent asleep upstairs; 05:45 newsagent the papers in; 18:15 newsagent upstairs"
        "/sun|00:00 newsagent asleep upstairs; 06:45 newsagent Sunday papers; 12:15 newsagent upstairs")
@@ -780,10 +780,10 @@ add(id="arthur_brigham", n="Arthur Brigham", a=58, s="m", k="minor", cid=None, c
     src="invented: places.json grocer (unnamed keeper)",
     rt="mon-sat|00:00 d_nr_6 asleep; 08:30 grocer opening up; 17:45 d_nr_6 home"
        "/sun|00:00 d_nr_6 asleep")
-add(id="tadeusz_nowicki", n="Tadeusz Nowicki", a=64, s="m", k="minor", cid=None, called="Mr Nowicki", inv=True, proto=None, v=None,
+add(id="tadeusz_wrona", n="Tadeusz Wrona", a=64, s="m", k="minor", cid=None, called="Mr Wrona", inv=True, proto=None, v=None,
     r="Keeps the ironmonger's on Quay Street; came from Gdynia in 1947", home="d_nr_7", die=False, t=(0.55, 0.5, 0.4), quiet=True,
     look=L(1.70, 0.5, 0, "white", "#e0dcd4", "brown_coat", "#6a5038", "#e0d8c8", "trousers", "#3a3630", "glasses"),
-    card=dict(who="Tadeusz Nowicki, 64, keeps the ironmonger's. Came over after the war. The only man on the Hook who says Frank's surname right first time, and corrects the others.",
+    card=dict(who="Tadeusz Wrona, 64, keeps the ironmonger's. Came over after the war. The only man on the Hook who says Frank's surname right first time, and corrects the others.",
               speak="Courteous, Polish cadence, exact about screws.", life="7 North Road.", rivals="Keeps out of it."),
     src="invented: places.json ironmonger (unnamed keeper); casting mix (Polish) for a 1990 northern port",
     rt="mon-sat|00:00 d_nr_7 asleep; 08:30 ironmonger opening up; 17:45 d_nr_7 home"
@@ -824,10 +824,10 @@ add(id="maggie_firth", n="Maggie Firth", a=50, s="f", k="minor", cid=None, calle
               life="17 North Road; sleeps by day.", rivals="Serves the Widow's men and the beat constable alike."),
     src="invented: places.json tea_stall",
     rt="daily|00:00 tea_stall the stall; 06:15 d_nr_17 asleep; 21:30 tea_stall the stall")
-add(id="norman_shillito", n="Norman Shillito", a=63, s="m", k="minor", cid=None, called="the barber", inv=True, proto=None, v=None,
+add(id="ernest_shillito", n="Ernest Shillito", a=63, s="m", k="minor", cid=None, called="the barber", inv=True, proto=None, v=None,
     r="The barber on Chapel Lane", home="d_cl_10", die=True, t=(0.35, 0.4, 0.6), quiet=False,
     look=L(1.70, 0.5, 0, "brylcreem", "#c0bab0", "white_coat", "#f0f0ec", "#f0f0ec", "trousers", "#2a2a2a"),
-    card=dict(who="Norman Shillito, 63, cuts hair on Chapel Lane. Hears more than Hal and tells more.", speak="Chatty, 'something for the weekend'.", life="10 Chapel Lane.", rivals="Cuts all three."),
+    card=dict(who="Ernest Shillito, 63, cuts hair on Chapel Lane. Hears more than Hal and tells more.", speak="Chatty, 'something for the weekend'.", life="10 Chapel Lane.", rivals="Cuts all three."),
     src="invented: places.json barber (unnamed keeper)",
     rt="mon-sat|00:00 d_cl_10 asleep; 08:45 barber the chair; 17:15 d_cl_10 home"
        "/sun|00:00 d_cl_10 asleep")
@@ -854,13 +854,13 @@ fare_person("harold_stead", "Harold Stead", 74, "m", "A retired pilot-boat man w
     "tue,fri|00:00 d_cl_15 asleep; 09:30 d_cl_15 waiting for a car; 10:00 infirmary his chest; 12:00 d_cl_15 home/mon,wed,thu,sat,sun|00:00 d_cl_15 asleep",
     "Harold Stead, 74, steered pilot boats for forty years. Takes a cab to the Infirmary twice a week and tells the driver the tide.", "Wheezy, nautical, endless.",
     L(1.72, 0.45, 0, "flatcap", "#9a958a", "overcoat", "#3a3a40", "#2a2a2a", "trousers", "#2a2a2a", "stick"))
-fare_person("dorothy_garbett", "Dorothy Garbett", 69, "f", "A widow on Chapel Lane who goes to her sister's in town on Wednesdays", "d_cl_17",
+fare_person("dorothy_kirkup", "Dorothy Kirkup", 69, "f", "A widow on Chapel Lane who goes to her sister's in town on Wednesdays", "d_cl_17",
     "wed|00:00 d_cl_17 asleep; 13:30 d_cl_17 waiting for a car; 14:00 edge_north her sister's; 18:00 d_cl_17 home/mon,tue,thu-sun|00:00 d_cl_17 asleep",
-    "Dorothy Garbett, 69, goes to her sister's every Wednesday and has opinions about the sister's husband.", "Confiding, 'between you and me'.",
+    "Dorothy Kirkup, 69, goes to her sister's every Wednesday and has opinions about the sister's husband.", "Confiding, 'between you and me'.",
     L(1.56, 0.5, 0, "set", "#c0b0a0", "coat", "#5a4a6a", "#d8d0c0", "skirt", "#3a3640", "handbag"))
-fare_person("raymond_kaye", "Raymond Kaye", 41, "m", "A commercial traveller in paint who stops at Regent House on Mondays and needs the station on Wednesdays", "edge_north",
+fare_person("neville_kaye", "Neville Kaye", 41, "m", "A commercial traveller in paint who stops at Regent House on Mondays and needs the station on Wednesdays", "edge_north",
     "mon|00:00 edge_north on the road; 18:00 boarding_house his room for two nights/tue|00:00 boarding_house his room; 09:00 ironmonger his order book; 11:00 harbour_board the Board's painters; 13:00 boarding_house his room/wed|00:00 boarding_house his room; 08:30 boarding_house waiting for a car; 09:00 edge_north the station/thu-sun|00:00 edge_north on the road",
-    "Raymond Kaye, 41, sells marine paint up and down the coast. Thinks every town is the same except this one.", "Salesman's bonhomie, a joke per mile.",
+    "Neville Kaye, 41, sells marine paint up and down the coast. Thinks every town is the same except this one.", "Salesman's bonhomie, a joke per mile.",
     L(1.78, 0.6, 0, "parted", "#4a3a2a", "suit", "#4a4a50", "#e0d8c8", "trousers", "#4a4a50", "case"))
 fare_person("sandra_newbould", "Sandra Newbould", 34, "f", "A night nurse at the Infirmary from Chapel Lane", "d_cl_19",
     "mon-fri|00:00 infirmary the night shift; 07:30 d_cl_19 asleep; 20:30 d_cl_19 waiting for a car; 21:00 infirmary the night shift/sat-sun|00:00 d_cl_19 asleep",
@@ -870,13 +870,13 @@ fare_person("tony_marsden", "Tony Marsden", 38, "m", "A fishing-boat skipper who
     "mon,wed,fri|00:00 d_nr_20 asleep; 04:00 d_nr_20 waiting for a car; 04:30 fish_dock his boat; 12:00 caff dinner; 13:00 d_nr_20 home/tue,thu,sat,sun|00:00 d_nr_20 asleep",
     "Tony Marsden, 38, skippers one of the last three boats landing at the fish dock. Pays in cash and haddock.", "Few words, all of them about quotas.",
     L(1.80, 0.65, 0, "woolly", "#2a2a30", "smock", "#c06a2a", "#2a2a2a", "waders", "#2a2a2a"))
-fare_person("janet_ruddle", "Janet Ruddle", 43, "f", "A school secretary with the school shut, cleaning offices in town at night", "d_cl_21",
+fare_person("janet_lumb", "Janet Lumb", 43, "f", "A school secretary with the school shut, cleaning offices in town at night", "d_cl_21",
     "mon-fri|00:00 edge_north the offices in town; 01:30 d_cl_21 asleep; 17:30 d_cl_21 waiting for a car; 18:00 edge_north the offices in town/sat-sun|00:00 d_cl_21 asleep",
-    "Janet Ruddle, 43, the comprehensive's secretary, cleaning offices in town until it reopens. Knows Mr Danby.", "Prim, then funny.",
+    "Janet Lumb, 43, the comprehensive's secretary, cleaning offices in town until it reopens. Knows Mr Danby.", "Prim, then funny.",
     L(1.62, 0.4, 0, "bob", "#7a5a3a", "mac", "#8a7a5a", "#2a2a2a", "skirt", "#3a3a40"))
-fare_person("gerald_pashley", "Gerald Pashley", 66, "m", "A retired accountant who goes to the bowls club in town on Saturday afternoons and comes home late", "d_cl_22",
+fare_person("gerald_thwaite", "Gerald Thwaite", 66, "m", "A retired accountant who goes to the bowls club in town on Saturday afternoons and comes home late", "d_cl_22",
     "sat|00:00 d_cl_22 asleep; 13:30 d_cl_22 waiting for a car; 14:00 edge_north the bowls club; 21:30 d_cl_22 home/sun-fri|00:00 d_cl_22 asleep",
-    "Gerald Pashley, 66, did Mickey's books before Sheila took over the figures and never forgave him. Says so.", "Precise, bitter, comic.",
+    "Gerald Thwaite, 66, did Mickey's books before Sheila took over the figures and never forgave him. Says so.", "Precise, bitter, comic.",
     L(1.74, 0.45, 0, "balding", "#c0bab0", "blazer", "#2a2a4a", "#c0a040", "trousers", "#5a5a5a", "glasses"))
 fare_person("kathleen_moran", "Kathleen Moran", 58, "f", "An Irish cook at the priests' house in town who comes to the Hook's chapel on Sundays", "edge_north",
     "sun|00:00 edge_north home in town; 09:00 chapel Mass; 11:00 chapel_hall tea after; 12:00 rank_mickeys waiting for a car; 12:30 edge_north home in town/mon-sat|00:00 edge_north home in town",
@@ -886,9 +886,9 @@ fare_person("ahmed_rashid", "Ahmed Rashid", 46, "m", "Keeps a corner shop in tow
     "thu|00:00 edge_north home in town; 07:30 market_stalls_quay the barrows; 09:00 rank_mickeys waiting for a car with boxes; 09:30 edge_north back to his shop/mon-wed,fri-sun|00:00 edge_north home in town",
     "Ahmed Rashid, 46, came from Mirpur in 1966, keeps a corner shop in town. Buys at the barrows on Thursdays and takes a cab back with the boxes.", "Dry, businesslike, haggles the fare for fun.",
     L(1.74, 0.6, 4, "short", "#1a1a1a", "anorak", "#3a4a3a", "#2a2a2a", "trousers", "#3a3630"))
-fare_person("brian_tindall", "Brian Tindall", 52, "m", "A Harbour Board pilot who needs the landing at all hours", "edge_north",
+fare_person("ted_tindall", "Ted Tindall", 52, "m", "A Harbour Board pilot who needs the landing at all hours", "edge_north",
     "mon,wed,fri|00:00 edge_north home in town; 05:30 rank_north waiting for a car; 06:00 ferry_landing the pilot launch; 14:00 edge_north home in town/tue,thu,sat,sun|00:00 edge_north home in town",
-    "Brian Tindall, 52, Harbour Board pilot. Brings ships in and wants to be at the launch ten minutes ago.", "Clipped, urgent.",
+    "Ted Tindall, 52, Harbour Board pilot. Brings ships in and wants to be at the launch ten minutes ago.", "Clipped, urgent.",
     L(1.80, 0.55, 0, "short", "#7a7068", "pea_coat", "#1c2230", "#c0a040", "trousers", "#1c2230"))
 fare_person("eileen_crabtree", "Eileen Crabtree", 39, "f", "A hairdresser from town who does Sylvia's and Ada's hair at home on Fridays", "edge_north",
     "fri|00:00 edge_north home in town; 09:30 boarding_house Sylvia's set; 11:00 adas Ada's set; 12:30 rank_mickeys waiting for a car; 13:00 edge_north home in town/mon-thu,sat,sun|00:00 edge_north home in town",
@@ -900,3 +900,10 @@ fare_person("terence_bould", "Terence Bould", 29, "m", "A merchant seaman betwee
     L(1.78, 0.5, 0, "short", "#5a3a20", "pea_coat", "#1c2230", "#1c2230", "jeans", "#30384a", "kitbag"))
 
 # ---- people needed by the jobs and happenings beyond the above are listed in jobs/ and happenings.json by role ('a passer')
+
+add(id="pc_ackrill", n="Stuart Ackrill", a=33, s="m", k="officer", cid=None, called="the late-turn constable", inv=True, proto=None, v=None,
+    r="The day beat's late turn constable, 14:00 to 22:00 weekdays (the rota in routines.json)", home="edge_north", die=True, t=(0.55, 0.7, 0.7), quiet=False,
+    look=L(1.83, 0.55, 0, "helmet", "#14161c", "tunic", "#14161c", "#c9c9c9", "trousers", "#14161c"),
+    card=dict(who="PC Stuart Ackrill, 33, walks the day beat's late turn. Keen, new to the Hook, writes everything down.", speak="Eager, formal, 'right then, sir'.",
+              life="The station; the late turn.", rivals="Honest, and tells Ellis what he writes down."),
+    src="invented: the day beat 06:00 to 22:00 needs a late turn (police.json; timetables shift_beat_day); the fresh review of routines", rt="sat-sun|00:00 edge_north")

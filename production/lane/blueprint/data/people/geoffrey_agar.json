@@ -67,9 +67,10 @@
    "mon,wed,thu,sat,sun"
   ]
  ],
+ "speaker_kind": null,
  "lines": {
-  "own": "lines/own-geoffrey_agar.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "authored scenes and live talk only (a rival head: the bank's no_kind)"
  },
  "card": {
   "who": "Geoffrey Agar, 62, solicitor and honorary alderman. Agar & Co let half the Hook. Wants the cold-store road quiet and bought before the docks are redeveloped.",
@@ -77,8 +78,7 @@
   "life": "Lives up in town. Calls at the agents' office on Cold Store Road on Tuesdays and Fridays.",
   "rivals": "Fears his name in print."
  },
- "can_die": true,
+ "can_die": false,
  "invented": false,
- "src": "canon; STORY-FRAME 2 and 4; casting geoffrey-agar",
- "fallback_role": "Simon Ombler takes his ladder at the same rung"
+ "src": "canon; STORY-FRAME 2 and 4; casting geoffrey-agar"
 }

@@ -51,7 +51,7 @@
   [
    9.0,
    "ritas",
-   "the tickets",
+   "by bike: the tickets",
    "mon-sat"
   ],
   [
@@ -69,7 +69,7 @@
   [
    17.25,
    "d_nr_37",
-   "home",
+   "by bike: home",
    "mon-sat"
   ],
   [
@@ -79,9 +79,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "shopkeeper",
  "lines": {
   "own": "lines/own-mandy_calvert.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Mandy Calvert, 24, writes the pawn tickets at Rita's. Knows whose watch came in when.",
@@ -89,7 +90,7 @@
   "life": "37 North Road, with her nan.",
   "rivals": "Fancies one of Danny's lads and will not say which."
  },
- "can_die": true,
+ "can_die": false,
  "invented": true,
  "src": "hook-cast.json marta (unnamed; named here)"
 }

@@ -86,13 +86,14 @@
    "sun"
   ]
  ],
+ "speaker_kind": "pensioner",
  "lines": {
-  "own": "lines/own-aidan_keogh.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "Dr Aidan Keogh, 69, Dublin-trained, retired from a practice in town. Stitches what comes to his door at 23 Chapel Lane and asks nothing. Fifteen pounds.",
-  "speak": "Dry, Irish, clinical, 'hold still'.",
+  "who": "Dr Aidan Keogh, 69, retired from a practice in town. Stitches what comes to his door at 23 Chapel Lane and asks nothing. Fifteen pounds.",
+  "speak": "Dry, clinical, 'hold still'.",
   "life": "23 Chapel Lane; the Infirmary's porch some nights.",
   "rivals": "Remembers every face."
  },

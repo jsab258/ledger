@@ -77,9 +77,10 @@
    "sat-sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
-  "own": "lines/own-graham_wardell.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "DC Graham Wardell, 37, works under Ellis. Will lose a statement once, for two hundred pounds. Ellis notices.",
@@ -89,5 +90,6 @@
  },
  "can_die": true,
  "invented": "proposed by the story frame",
- "src": "STORY-FRAME 2 (proposed); 2.6.8; police.json bought_lose_statement (whose prototype hint was DC Pollitt)"
+ "src": "STORY-FRAME 2 (proposed); 2.6.8; police.json bought_lose_statement (whose prototype hint was DC Pollitt)",
+ "fallback_role": "another officer from the station"
 }

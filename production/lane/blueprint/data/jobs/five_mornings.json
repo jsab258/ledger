@@ -5,9 +5,9 @@
  "giver": "eric_tharratt",
  "act_min": 2,
  "rung_min": 2,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "four cars on the board; a packing-shift fare has said the cold store wants a firm that turns up",
  "window": [
-  "05:00",
+  "04:00",
   "06:00"
  ],
  "offer": [
@@ -17,43 +17,19 @@
   {
    "id": "convoy",
    "at": "cold_stores",
-   "verb": "four cars meet the packing shift on time, before six",
+   "verb": "four cars meet the packing shift on time (by 06:00), five mornings in one game week",
    "keys": [
     {
+     "way": "route",
+     "how": "through the dock gate, paying the Widow's tax"
+    },
+    {
      "way": "force",
-     "how": "through the dock gate (pay, bluff or push the Widow's men)"
+     "how": "through the gate on a bluff or a push"
     },
     {
      "way": "back_way",
      "how": "round by Agar's cold-store road and the fish dock in the dark"
-    },
-    {
-     "way": "choice",
-     "how": "the fifth car is Frank's own"
-    }
-   ],
-   "fail": "late",
-   "words": "TO WRITE (story lane)",
-   "lines": [
-    "TO WRITE (story lane)"
-   ]
-  },
-  {
-   "id": "late",
-   "at": "dock_gate",
-   "verb": "the gate swinging shut on every car he has",
-   "keys": [
-    {
-     "way": "pay",
-     "how": "pay the tax"
-    },
-    {
-     "way": "talk",
-     "how": "bluff"
-    },
-    {
-     "way": "force",
-     "how": "push"
     }
    ],
    "fail": null,
@@ -65,8 +41,9 @@
  ],
  "pay": {
   "to": "book",
-  "pence_per_week": 4000,
-  "note": "the contract: 40 pounds more a car a week (economy); won on five on-time mornings in one game week; lost after three missed in a week; won again once (places.json accounts)"
+  "pence": 0,
+  "pence_per_car_per_week": 4000,
+  "note": "the contract: 40 pounds more a car a week (economy)"
  },
  "ledger": "Eric Tharratt, cold stores. The packing shift met on time, five mornings running. Then he'll talk.",
  "returns": "the fifth morning, the gate swinging shut",
@@ -79,5 +56,6 @@
  "clock": {
   "realSecondsPerGameHour": 120
  },
- "src": "STORY-FRAME 5 Act IIa (the contract); 2.15.2; places.json accounts"
+ "src": "STORY-FRAME 5 Act IIa (the contract); 2.15.2; places.json accounts",
+ "fail_rule": "no lateness fail inside the window (3.5.6); a morning missed counts; three missed in a week loses the contract; won again once"
 }

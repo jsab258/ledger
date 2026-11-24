@@ -71,9 +71,10 @@
    "sat-sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
-  "own": "lines/own-alan_sowerby.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Alan Sowerby, 51, licensing officer. Would rather nobody wrote to him.",
@@ -83,5 +84,6 @@
  },
  "can_die": true,
  "invented": "proposed by the story frame",
- "src": "STORY-FRAME 4 (proposed)"
+ "src": "STORY-FRAME 4 (proposed)",
+ "fallback_role": "the role passes to another of the same trade, or the thread closes"
 }

@@ -46,12 +46,32 @@
   [
    0.0,
    "edge_north",
-   "up in town"
+   "up in town",
+   "mon-fri"
+  ],
+  [
+   9.0,
+   "mickeys",
+   "the inspection, week seven only (calendar: 26 to 30 Nov)",
+   "mon-fri"
+  ],
+  [
+   10.0,
+   "edge_north",
+   "up in town",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "up in town",
+   "sat-sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
-  "own": "lines/own-derek_hebblewhite.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Derek Hebblewhite, 49, VAT officer. Reads dents and receipts. Spells Nowak right.",
@@ -59,7 +79,8 @@
   "life": "Up in town; at the counter on the inspection mornings.",
   "rivals": "Customs and Excise wants books that match."
  },
- "can_die": false,
+ "can_die": true,
  "invented": "proposed by the story frame",
- "src": "STORY-FRAME 4 item 19, 5 Act III (proposed)"
+ "src": "STORY-FRAME 4 item 19, 5 Act III (proposed)",
+ "fallback_role": "another VAT officer sent from town; the inspection runs on (STORY-FRAME 5 Act III never depends on one killable person)"
 }

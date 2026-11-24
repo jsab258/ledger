@@ -1,14 +1,14 @@
 {
  "id": "crisis_dock_gate",
- "kind": "minding",
+ "kind": "fight",
  "name": "The dock gate, by day",
- "giver": "ron_kirby",
+ "giver": "pauline_kitching",
  "act_min": 2,
  "rung_min": 3,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "after the Landing, when Ron is leaned on at the gate (Pauline's radio)",
  "window": null,
  "offer": [
-  "TO WRITE (story lane)"
+  "Pauline, on the radio: Ron's at the gate, and they've got him in front of the pen."
  ],
  "steps": [
   {
@@ -18,15 +18,15 @@
    "keys": [
     {
      "way": "force",
-     "how": "go and fight beside him"
-    },
-    {
-     "way": "watch",
-     "how": "hold, send somebody"
+     "how": "go and fight beside him (one of the five heaviest scenes)"
     },
     {
      "way": "choice",
-     "how": "hear about it"
+     "how": "send somebody with nerve and stay at the office"
+    },
+    {
+     "way": "choice",
+     "how": "stay away and hear it told"
     }
    ],
    "fail": null,

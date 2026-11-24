@@ -49,25 +49,25 @@
   [
    5.5,
    "dock_gate",
-   "the pen",
+   "by bike: the pen",
    "mon-sat"
   ],
   [
    9.0,
    "widow_base",
-   "the office below hers",
+   "by bike: the office below hers",
    "mon-sat"
   ],
   [
    13.0,
    "dock_gate",
-   "the hut and the tax",
+   "by bike: the hut and the tax",
    "mon-sat"
   ],
   [
    18.0,
    "d_cs_17",
-   "home",
+   "by bike: home",
    "mon-sat"
   ],
   [
@@ -79,25 +79,26 @@
   [
    10.0,
    "chapel",
-   "Mass, behind her",
+   "by bike: Mass, behind her",
    "sun"
   ],
   [
    13.25,
    "d_cs_17",
-   "home",
+   "by bike: home",
    "sun"
   ]
  ],
+ "speaker_kind": "dock_worker",
  "lines": {
   "own": "lines/own-stathers.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Stathers, 46, the Widow's man at the dock gate. Picks the pen at six. Offers Ron his old place in front of Frank.",
   "speak": "Flat, slow, 'Mrs Jensen says'.",
   "life": "17 Cold Store Road; the gate from half past five.",
-  "rivals": "The Widow's lieutenant: takes her ladder at the same rung if she falls (RT2-05)."
+  "rivals": "The Widow's lieutenant: takes her ladder at the same rung if she is gone (by Frank's line she is never his to hurt) (RT2-05)."
  },
  "can_die": true,
  "invented": "proposed by the story frame",

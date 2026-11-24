@@ -14,21 +14,22 @@
   "tools/lane/prototype/project/src/game/tune/fightx.js (fighter kinds)"
  ],
  "counts": {
-  "people": 118,
+  "people": 119,
   "by_kind": {
-   "principal": 13,
+   "principal": 14,
    "firm": 3,
-   "officer": 8,
    "regular": 33,
    "minor": 49,
-   "rival_man": 12
+   "rival_man": 12,
+   "officer": 8
   },
   "by_origin": {
    "canon or earlier cast files": 45,
-   "invented here": 62,
+   "invented here": 63,
    "proposed by the frame": 11
   }
  },
+ "cover_rule": "Frank's line (RT-09, RT2-05) covers every woman, anyone of sixty or over and the priest: can_die false for them; everyone else can be killed or hospitalised and names a fallback_role.",
  "name_ladder": [
   "the new owner",
   "Nowak",
@@ -165,7 +166,7 @@
    "id": "carol_ellis",
    "name": "Carol Ellis",
    "called": "DS Ellis",
-   "kind": "officer",
+   "kind": "principal",
    "age": 40,
    "invented": false
   },
@@ -370,9 +371,9 @@
    "invented": false
   },
   {
-   "id": "paddy_rourke",
-   "name": "Paddy Rourke",
-   "called": "Paddy",
+   "id": "kieran_rourke",
+   "name": "Kieran Rourke",
+   "called": "Kieran",
    "kind": "regular",
    "age": 44,
    "invented": true
@@ -494,7 +495,7 @@
    "name": "(never named: canon)",
    "called": "the old firm's man",
    "kind": "minor",
-   "age": 60,
+   "age": 59,
    "invented": false
   },
   {
@@ -546,8 +547,8 @@
    "invented": "proposed by the story frame"
   },
   {
-   "id": "pat_brannigan",
-   "name": "Pat Brannigan",
+   "id": "steve_brannigan",
+   "name": "Steve Brannigan",
    "called": "Brannigan",
    "kind": "rival_man",
    "age": 38,
@@ -659,7 +660,7 @@
   },
   {
    "id": "pc_ibbotson",
-   "name": "Ian Ibbotson",
+   "name": "Martin Ibbotson",
    "called": "the constable",
    "kind": "officer",
    "age": 29,
@@ -674,17 +675,17 @@
    "invented": true
   },
   {
-   "id": "sgt_kitson",
-   "name": "Ray Kitson",
+   "id": "sgt_bellwood",
+   "name": "Roy Bellwood",
    "called": "the custody sergeant",
    "kind": "officer",
    "age": 52,
    "invented": true
   },
   {
-   "id": "len_ackroyd",
-   "name": "Len Ackroyd",
-   "called": "Len",
+   "id": "clive_ackroyd",
+   "name": "Clive Ackroyd",
+   "called": "Clive",
    "kind": "minor",
    "age": 48,
    "invented": true
@@ -698,11 +699,11 @@
    "invented": true
   },
   {
-   "id": "len_garside",
-   "name": "Len Garside",
+   "id": "alf_garside",
+   "name": "Alf Garside",
    "called": "the ship's cook",
    "kind": "minor",
-   "age": 61,
+   "age": 57,
    "invented": true
   },
   {
@@ -778,8 +779,8 @@
    "invented": true
   },
   {
-   "id": "ken_dobbin",
-   "name": "Ken Dobbin",
+   "id": "ken_swales",
+   "name": "Ken Swales",
    "called": "a docker",
    "kind": "minor",
    "age": 40,
@@ -794,8 +795,8 @@
    "invented": true
   },
   {
-   "id": "leonard_tasker",
-   "name": "Leonard Tasker",
+   "id": "victor_tasker",
+   "name": "Victor Tasker",
    "called": "the laundry's owner",
    "kind": "minor",
    "age": 60,
@@ -851,7 +852,7 @@
   },
   {
    "id": "peart",
-   "name": "Ronald Peart",
+   "name": "Herbert Peart",
    "called": "Mr Peart",
    "kind": "minor",
    "age": 62,
@@ -866,9 +867,9 @@
    "invented": true
   },
   {
-   "id": "tadeusz_nowicki",
-   "name": "Tadeusz Nowicki",
-   "called": "Mr Nowicki",
+   "id": "tadeusz_wrona",
+   "name": "Tadeusz Wrona",
+   "called": "Mr Wrona",
    "kind": "minor",
    "age": 64,
    "invented": true
@@ -914,8 +915,8 @@
    "invented": true
   },
   {
-   "id": "norman_shillito",
-   "name": "Norman Shillito",
+   "id": "ernest_shillito",
+   "name": "Ernest Shillito",
    "called": "the barber",
    "kind": "minor",
    "age": 63,
@@ -946,17 +947,17 @@
    "invented": true
   },
   {
-   "id": "dorothy_garbett",
-   "name": "Dorothy Garbett",
+   "id": "dorothy_kirkup",
+   "name": "Dorothy Kirkup",
    "called": "Dorothy",
    "kind": "minor",
    "age": 69,
    "invented": true
   },
   {
-   "id": "raymond_kaye",
-   "name": "Raymond Kaye",
-   "called": "Raymond",
+   "id": "neville_kaye",
+   "name": "Neville Kaye",
+   "called": "Neville",
    "kind": "minor",
    "age": 41,
    "invented": true
@@ -978,16 +979,16 @@
    "invented": true
   },
   {
-   "id": "janet_ruddle",
-   "name": "Janet Ruddle",
+   "id": "janet_lumb",
+   "name": "Janet Lumb",
    "called": "Janet",
    "kind": "minor",
    "age": 43,
    "invented": true
   },
   {
-   "id": "gerald_pashley",
-   "name": "Gerald Pashley",
+   "id": "gerald_thwaite",
+   "name": "Gerald Thwaite",
    "called": "Gerald",
    "kind": "minor",
    "age": 66,
@@ -1010,9 +1011,9 @@
    "invented": true
   },
   {
-   "id": "brian_tindall",
-   "name": "Brian Tindall",
-   "called": "Brian",
+   "id": "ted_tindall",
+   "name": "Ted Tindall",
+   "called": "Ted",
    "kind": "minor",
    "age": 52,
    "invented": true
@@ -1032,12 +1033,24 @@
    "kind": "minor",
    "age": 29,
    "invented": true
+  },
+  {
+   "id": "pc_ackrill",
+   "name": "Stuart Ackrill",
+   "called": "the late-turn constable",
+   "kind": "officer",
+   "age": 33,
+   "invented": true
   }
  ],
  "open_points": [
   "The story lane's CAST.md and CAST-CHANGES.md had not landed when this file was made; every name marked proposed by the frame, and every invented one, is open to them.",
   "Frank Stathers (frame, proposed) is renamed Vic Stathers here so that the lead is the only Frank; the story lane should confirm or choose another.",
-  "Wave 1 placeholders replaced here: the cold-store manager 'Norman' becomes Eric Tharratt (frame); the Harbour Board 'clerk Susan' is Christine Pickering (canon regular, side story 20; Susan Coverdale is the customs officer); the bought officers' prototype hints PC Harker and DC Pollitt become the frame's PC Trevor Garton and DC Graham Wardell; Portside Cars' owner Len Wardle becomes Len Ackroyd so he is not mistaken for DC Wardell.",
-  "Prototype card texts that named a real police force or city (Humberside CID, Hull vowels) are scrubbed to CID and northern vowels."
+  "Wave 1 placeholders replaced here: the cold-store manager 'Norman' becomes Eric Tharratt (frame); the Harbour Board 'clerk Susan' is Christine Pickering (canon regular, side story 20; Susan Coverdale is the customs officer); the bought officers' prototype hints PC Harker and DC Pollitt become the frame's PC Trevor Garton and DC Graham Wardell; Portside Cars' owner Len Wardle becomes Clive Ackroyd so he is not mistaken for DC Wardell.",
+  "Prototype card texts that named a real police force or city (Humberside CID, Hull vowels) are scrubbed to CID and northern vowels.",
+  "After the fresh review: can_die follows Frank's line (RT-09, RT2-05): false for every woman, anyone of sixty or over and the priest, true for everyone else, each with a fallback_role. Agar and Iveson (62, approved sheets) are therefore covered: RT2-05's 'rival head' and Iveson fallbacks cannot fire by Frank's hand; the keeper should note it in the blueprint.",
+  "Renamed after the fresh review to end name clashes (all invented here): Dorothy Garbett to Dorothy Kirkup, Gerald Pashley to Gerald Thwaite, Leonard Tasker to Victor Tasker, Len Ackroyd to Clive Ackroyd, Len Garside to Alf Garside, Ronald Peart to Herbert Peart, Tadeusz Nowicki to Tadeusz Wrona, Ken Dobbin to Ken Swales, Janet Ruddle to Janet Lumb, Ray Kitson to Roy Bellwood, Raymond Kaye to Neville Kaye, Brian Tindall to Ted Tindall, Norman Shillito to Ernest Shillito, Ian Ibbotson to Martin Ibbotson; Paddy Rourke to Kieran Rourke and Pat Brannigan to Steve Brannigan (also rewritten so no Irish person is a type).",
+  "Rival heads (Danny, the Widow, Agar, Garbutt) keep no own street lines: they speak in authored scenes and live talk (the old bank's no_kind). Every other person names a speaker_kind for the shared lines.",
+  "Wave 1 files still to fix (outside this job): places.json shows the player 'Tom's flat above the office' (should be 'the flat above the office'); places.json keeps a second pawnbroker, Harrison's (waynes_pawn), though Wayne is Rita's back-room hand; the Tangs' takeaway is in neither map.json nor places.json."
  ]
 }

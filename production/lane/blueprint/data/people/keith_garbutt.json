@@ -79,9 +79,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": null,
  "lines": {
-  "own": "lines/own-keith_garbutt.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "authored scenes and live talk only (a rival head: the bank's no_kind)"
  },
  "card": {
   "who": "Keith Garbutt, 48, the Fixer. Sells true reads of a rival, a meeting that then happens, and one truce a game. Paged from a box, rings that box back within half a game hour.",

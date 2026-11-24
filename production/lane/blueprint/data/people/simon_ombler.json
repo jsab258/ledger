@@ -67,9 +67,10 @@
    "sat-sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
   "own": "lines/own-simon_ombler.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Simon Ombler, 44, Mr Agar's managing clerk. Signs the letters. Keeps the cold-store book in the back room.",

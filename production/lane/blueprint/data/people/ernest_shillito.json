@@ -1,8 +1,8 @@
 {
- "id": "norman_shillito",
+ "id": "ernest_shillito",
  "cast_id": null,
  "called": "the barber",
- "name": "Norman Shillito",
+ "name": "Ernest Shillito",
  "age": 63,
  "sex": "m",
  "role": "The barber on Chapel Lane",
@@ -65,17 +65,18 @@
    "sun"
   ]
  ],
+ "speaker_kind": "shopkeeper",
  "lines": {
-  "own": "lines/own-norman_shillito.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "Norman Shillito, 63, cuts hair on Chapel Lane. Hears more than Hal and tells more.",
+  "who": "Ernest Shillito, 63, cuts hair on Chapel Lane. Hears more than Hal and tells more.",
   "speak": "Chatty, 'something for the weekend'.",
   "life": "10 Chapel Lane.",
   "rivals": "Cuts all three."
  },
- "can_die": true,
+ "can_die": false,
  "invented": true,
  "src": "invented: places.json barber (unnamed keeper)"
 }

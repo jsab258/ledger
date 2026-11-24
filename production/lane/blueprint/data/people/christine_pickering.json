@@ -49,13 +49,13 @@
   [
    8.75,
    "harbour_board",
-   "the counter, sandwiches at her desk",
+   "by bike: the counter, sandwiches at her desk",
    "mon-fri"
   ],
   [
    16.75,
    "d_nr_9",
-   "home",
+   "by bike: home",
    "mon-fri"
   ],
   [
@@ -83,9 +83,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
   "own": "lines/own-christine_pickering.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Christine Pickering, 39, clerk at the Harbour Board's counter. Noticed a stranger asking who holds the yard's lease.",
@@ -93,7 +94,7 @@
   "life": "9 North Road; the newsagent's at dinner.",
   "rivals": "Types the Board's letters, some of them to Mr Agar."
  },
- "can_die": true,
+ "can_die": false,
  "invented": false,
  "src": "canon regular; side story 20"
 }

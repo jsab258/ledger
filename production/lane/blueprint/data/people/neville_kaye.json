@@ -1,8 +1,8 @@
 {
- "id": "raymond_kaye",
+ "id": "neville_kaye",
  "cast_id": null,
- "called": "Raymond",
- "name": "Raymond Kaye",
+ "called": "Neville",
+ "name": "Neville Kaye",
  "age": 41,
  "sex": "m",
  "role": "A commercial traveller in paint who stops at Regent House on Mondays and needs the station on Wednesdays",
@@ -103,17 +103,19 @@
    "thu-sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
-  "own": "lines/own-raymond_kaye.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "Raymond Kaye, 41, sells marine paint up and down the coast. Thinks every town is the same except this one.",
+  "who": "Neville Kaye, 41, sells marine paint up and down the coast. Thinks every town is the same except this one.",
   "speak": "Salesman's bonhomie, a joke per mile.",
   "life": "A commercial traveller in paint who stops at Regent House on Mondays and needs the station on Wednesdays",
   "rivals": "None of the three."
  },
  "can_die": true,
  "invented": true,
- "src": "invented: 3.4.1 (40 fare people)"
+ "src": "invented: 3.4.1 (40 fare people)",
+ "fallback_role": "the role passes to another of the same trade, or the thread closes"
 }

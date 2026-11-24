@@ -5,7 +5,7 @@
  "giver": "lee_drewery",
  "act_min": 2,
  "rung_min": 3,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "rung 3 and Lee or Kieran Rourke on side",
  "window": null,
  "offer": [
   "TO WRITE (story lane)"
@@ -26,7 +26,7 @@
     },
     {
      "way": "choice",
-     "how": "Paddy Rourke's count"
+     "how": "Kieran Rourke's count"
     }
    ],
    "fail": null,
@@ -45,7 +45,7 @@
  "returns": "TO WRITE (story lane)",
  "people": [
   "lee_drewery",
-  "paddy_rourke"
+  "kieran_rourke"
  ],
  "clock": {
   "realSecondsPerGameHour": 120

@@ -57,13 +57,13 @@
   [
    12.25,
    "d_cl_9",
-   "the rent round, Chapel Lane",
+   "by bike: the rent round, Chapel Lane",
    "mon-thu"
   ],
   [
    15.0,
    "agar_base",
-   "the agents' book",
+   "by bike: the agents' book",
    "mon-thu"
   ],
   [
@@ -93,7 +93,7 @@
   [
    15.0,
    "agar_base",
-   "the agents' book",
+   "by bike: the agents' book",
    "fri"
   ],
   [
@@ -109,9 +109,10 @@
    "sat-sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
   "own": "lines/own-dawn_pybus.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Dawn Pybus, 27, runs the rent book round for Mr Askew. Apologetic on every step.",
@@ -119,7 +120,7 @@
   "life": "Lives up in town.",
   "rivals": "Works for Agar's agents and knows whose rent went up."
  },
- "can_die": true,
+ "can_die": false,
  "invented": false,
  "src": "canon regular; side story 29; timetables weekly rent (Mr Leonard Askew)"
 }

@@ -1,0 +1,54 @@
+{
+ "id": "item_the_line",
+ "kind": "sit_down",
+ "name": "Week one: the line",
+ "giver": "derek_hebblewhite",
+ "act_min": 3,
+ "rung_min": 1,
+ "when": "Act III, the last morning; at five, the counter",
+ "window": null,
+ "offer": [
+  "TO WRITE (story lane)"
+ ],
+ "steps": [
+  {
+   "id": "line",
+   "at": "mickeys_office",
+   "verb": "the inspector asks for week one on the last morning; at five Sheila turns the book round and lays her pen on it",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "leave it as it stands"
+    },
+    {
+     "way": "choice",
+     "how": "write it true, in his own hand"
+    },
+    {
+     "way": "talk",
+     "how": "put Danny's name to it (Ellis's trade)"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "book",
+  "pence": 0
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "the ending",
+ "people": [
+  "sheila_dunn",
+  "carol_ellis"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "STORY-FRAME 5 The early deed (the last line) and Act III item 5",
+ "order": 5
+}

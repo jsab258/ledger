@@ -73,9 +73,10 @@
    "mon,wed,thu,sat,sun"
   ]
  ],
+ "speaker_kind": "pensioner",
  "lines": {
-  "own": "lines/own-harold_stead.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Harold Stead, 74, steered pilot boats for forty years. Takes a cab to the Infirmary twice a week and tells the driver the tide.",
@@ -83,7 +84,7 @@
   "life": "A retired pilot-boat man who goes to the Infirmary for his chest on Tuesdays and Fridays",
   "rivals": "None of the three."
  },
- "can_die": true,
+ "can_die": false,
  "invented": true,
  "src": "invented: 3.4.1 (40 fare people)"
 }

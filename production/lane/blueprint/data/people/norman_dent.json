@@ -46,19 +46,30 @@
    "his round of the row"
   ],
   [
+   2.0,
+   "net_loft",
+   "by bike: his round: the net loft"
+  ],
+  [
+   4.0,
+   "burned_warehouse",
+   "his round: the burned warehouse"
+  ],
+  [
    7.0,
    "d_cl_20",
-   "home to bed"
+   "by bike: home to bed"
   ],
   [
    19.5,
    "dents_warehouses",
-   "his round of the row"
+   "by bike: his round of the row"
   ]
  ],
+ "speaker_kind": "night_shift",
  "lines": {
   "own": "lines/own-norman_dent.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "The night watchman on the warehouse row. He has a hut and a brazier on the quay and walks the row on the hour.",
@@ -71,5 +82,6 @@
  "can_die": true,
  "invented": false,
  "src": "canon; 2.11.1; side story 31",
+ "fallback_role": "the role passes to another, or the thread closes",
  "fight_kind": "big_man"
 }

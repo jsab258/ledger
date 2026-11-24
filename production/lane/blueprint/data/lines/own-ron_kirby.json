@@ -9,7 +9,7 @@
   "production/cloud-week/lines/lines.json (the bank's own lines for this person)"
  ],
  "open_points": [],
- "note": "Ron Kirby's own street lines: once a day each (3.6.3). 60 needed, 94 written.",
+ "note": "Ron Kirby's own street lines: once a day each (3.6.3). 60 needed, 86 written.",
  "lines": [
   {
    "who": "ron_kirby",
@@ -25,11 +25,16 @@
    "conditions": {
     "standing": [
      "nowak"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/nowak@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -49,11 +54,16 @@
     ],
     "time": [
      "morning"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/nowak@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -70,11 +80,16 @@
    "conditions": {
     "standing": [
      "nowak"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/nowak@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -94,11 +109,16 @@
     ],
     "time": [
      "afternoon"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/nowak@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -118,11 +138,16 @@
     ],
     "time": [
      "evening"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/nowak@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -139,11 +164,16 @@
    "conditions": {
     "standing": [
      "nowak"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/nowak@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 10
   },
   {
@@ -164,11 +194,16 @@
     "weather": [
      "drizzle",
      "rain"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/nowak@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 9
   },
   {
@@ -185,11 +220,16 @@
    "conditions": {
     "standing": [
      "nowak"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/nowak@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -206,11 +246,16 @@
    "conditions": {
     "standing": [
      "nowak"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/nowak@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -227,11 +272,16 @@
    "conditions": {
     "standing": [
      "nowak"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/nowak@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -247,12 +297,18 @@
    "rung": "frank",
    "conditions": {
     "standing": [
-     "frank"
+     "frank",
+     "portsman"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/tom@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -268,15 +324,21 @@
    "rung": "frank",
    "conditions": {
     "standing": [
-     "frank"
+     "frank",
+     "portsman"
     ],
     "time": [
      "morning"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/tom@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -292,12 +354,18 @@
    "rung": "frank",
    "conditions": {
     "standing": [
-     "frank"
+     "frank",
+     "portsman"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/tom@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -313,15 +381,21 @@
    "rung": "frank",
    "conditions": {
     "standing": [
-     "frank"
+     "frank",
+     "portsman"
     ],
     "time": [
      "evening"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/tom@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -337,12 +411,18 @@
    "rung": "frank",
    "conditions": {
     "standing": [
-     "frank"
+     "frank",
+     "portsman"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/tom@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -358,12 +438,18 @@
    "rung": "frank",
    "conditions": {
     "standing": [
-     "frank"
+     "frank",
+     "portsman"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/tom@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 11
   },
   {
@@ -379,15 +465,21 @@
    "rung": "frank",
    "conditions": {
     "standing": [
-     "frank"
+     "frank",
+     "portsman"
     ],
     "time": [
      "afternoon"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/tom@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -403,16 +495,22 @@
    "rung": "frank",
    "conditions": {
     "standing": [
-     "frank"
+     "frank",
+     "portsman"
     ],
     "weather": [
      "drizzle",
      "rain"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/tom@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -428,12 +526,18 @@
    "rung": "frank",
    "conditions": {
     "standing": [
-     "frank"
+     "frank",
+     "portsman"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/tom@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -449,12 +553,18 @@
    "rung": "frank",
    "conditions": {
     "standing": [
-     "frank"
+     "frank",
+     "portsman"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/tom@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -472,6 +582,8 @@
    "weight": 2,
    "group": "bumped@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 2
   },
   {
@@ -489,6 +601,8 @@
    "weight": 2,
    "group": "bumped@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 3
   },
   {
@@ -506,6 +620,8 @@
    "weight": 2,
    "group": "bumped@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 4
   },
   {
@@ -523,6 +639,8 @@
    "weight": 2,
    "group": "bumped@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -540,6 +658,8 @@
    "weight": 2,
    "group": "bumped@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -557,6 +677,8 @@
    "weight": 2,
    "group": "bumped@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -574,6 +696,8 @@
    "weight": 2,
    "group": "bumped@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -591,6 +715,8 @@
    "weight": 2,
    "group": "bumped@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -614,6 +740,8 @@
    "weight": 2,
    "group": "rain/starts@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 3
   },
   {
@@ -637,6 +765,8 @@
    "weight": 2,
    "group": "rain/starts@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -660,6 +790,8 @@
    "weight": 2,
    "group": "rain/starts@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -683,6 +815,8 @@
    "weight": 2,
    "group": "rain/starts@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -706,6 +840,8 @@
    "weight": 2,
    "group": "rain/starts@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -728,6 +864,8 @@
    "weight": 2,
    "group": "rain/starts@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -750,6 +888,8 @@
    "weight": 2,
    "group": "rain/starts@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -772,6 +912,8 @@
    "weight": 2,
    "group": "rain/starts@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -794,6 +936,8 @@
    "weight": 2,
    "group": "rain/starts@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -816,6 +960,8 @@
    "weight": 2,
    "group": "rain/in@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -838,6 +984,8 @@
    "weight": 2,
    "group": "rain/in@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -860,6 +1008,8 @@
    "weight": 2,
    "group": "rain/in@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -882,6 +1032,8 @@
    "weight": 2,
    "group": "rain/in@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -904,6 +1056,8 @@
    "weight": 2,
    "group": "rain/in@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 10
   },
   {
@@ -925,6 +1079,8 @@
    "weight": 2,
    "group": "rain/in@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -946,6 +1102,8 @@
    "weight": 2,
    "group": "rain/in@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -967,6 +1125,8 @@
    "weight": 2,
    "group": "rain/in@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -988,6 +1148,8 @@
    "weight": 2,
    "group": "rain/in@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 4
   },
   {
@@ -1007,6 +1169,8 @@
    "weight": 2,
    "group": "crime/noise@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -1026,6 +1190,8 @@
    "weight": 2,
    "group": "crime/noise@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1045,6 +1211,8 @@
    "weight": 2,
    "group": "crime/noise@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1064,6 +1232,8 @@
    "weight": 2,
    "group": "crime/noise@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -1083,6 +1253,8 @@
    "weight": 2,
    "group": "crime/noise@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1102,6 +1274,8 @@
    "weight": 2,
    "group": "crime/noise@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -1121,6 +1295,8 @@
    "weight": 2,
    "group": "crime/noise@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -1140,6 +1316,8 @@
    "weight": 2,
    "group": "crime/noise@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 4
   },
   {
@@ -1159,6 +1337,8 @@
    "weight": 2,
    "group": "crime/shape@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1178,6 +1358,8 @@
    "weight": 2,
    "group": "crime/shape@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -1197,6 +1379,8 @@
    "weight": 2,
    "group": "crime/shape@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1216,6 +1400,8 @@
    "weight": 2,
    "group": "crime/shape@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 9
   },
   {
@@ -1235,6 +1421,8 @@
    "weight": 2,
    "group": "crime/shape@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 9
   },
   {
@@ -1254,6 +1442,8 @@
    "weight": 2,
    "group": "crime/shape@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -1273,6 +1463,8 @@
    "weight": 2,
    "group": "crime/shape@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -1292,6 +1484,8 @@
    "weight": 2,
    "group": "crime/shape@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1311,6 +1505,8 @@
    "weight": 2,
    "group": "crime/face@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -1330,6 +1526,8 @@
    "weight": 2,
    "group": "crime/face@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 10
   },
   {
@@ -1349,6 +1547,8 @@
    "weight": 2,
    "group": "crime/face@ron",
    "delivery": "raised",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 3
   },
   {
@@ -1368,6 +1568,8 @@
    "weight": 2,
    "group": "crime/face@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -1387,6 +1589,8 @@
    "weight": 2,
    "group": "crime/face@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -1406,6 +1610,8 @@
    "weight": 2,
    "group": "crime/face@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 9
   },
   {
@@ -1425,6 +1631,8 @@
    "weight": 2,
    "group": "crime/face@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1444,6 +1652,8 @@
    "weight": 2,
    "group": "crime/face@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "local",
    "words": 9
   },
   {
@@ -1466,6 +1676,8 @@
    "weight": 2,
    "group": "deed/after@ron",
    "delivery": "hushed",
+   "calls_police": false,
+   "dialect": "local",
    "words": 4
   },
   {
@@ -1488,6 +1700,8 @@
    "weight": 2,
    "group": "deed/after@ron",
    "delivery": "hushed",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1510,6 +1724,8 @@
    "weight": 2,
    "group": "deed/after@ron",
    "delivery": "hushed",
+   "calls_police": false,
+   "dialect": "local",
    "words": 4
   },
   {
@@ -1532,6 +1748,8 @@
    "weight": 2,
    "group": "deed/after@ron",
    "delivery": "hushed",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1554,6 +1772,8 @@
    "weight": 2,
    "group": "deed/after@ron",
    "delivery": "hushed",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1576,6 +1796,8 @@
    "weight": 2,
    "group": "deed/after@ron",
    "delivery": "hushed",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1598,6 +1820,8 @@
    "weight": 2,
    "group": "deed/after@ron",
    "delivery": "hushed",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -1620,143 +1844,9 @@
    "weight": 2,
    "group": "deed/after@ron",
    "delivery": "hushed",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 4
-  },
-  {
-   "who": "ron_kirby",
-   "once": "day",
-   "id": "ron.way.01",
-   "situation": "asked_way",
-   "text": "Don't know it, friend. Never had the need.",
-   "src": "production/cloud-week/lines/lines.json ron.way.01",
-   "tokens": [],
-   "bank": "way/ask",
-   "context": "way",
-   "rung": "any",
-   "conditions": {},
-   "weight": 2,
-   "group": "way/ask@ron",
-   "delivery": "normal",
-   "words": 8
-  },
-  {
-   "who": "ron_kirby",
-   "once": "day",
-   "id": "ron.way.02",
-   "situation": "asked_way",
-   "text": "That way, I think. I've bad knees.",
-   "src": "production/cloud-week/lines/lines.json ron.way.02",
-   "tokens": [],
-   "bank": "way/ask",
-   "context": "way",
-   "rung": "any",
-   "conditions": {},
-   "weight": 2,
-   "group": "way/ask@ron",
-   "delivery": "normal",
-   "words": 7
-  },
-  {
-   "who": "ron_kirby",
-   "once": "day",
-   "id": "ron.way.03",
-   "situation": "asked_way",
-   "text": "Ask the dispatcher. She knows every road.",
-   "src": "production/cloud-week/lines/lines.json ron.way.03",
-   "tokens": [],
-   "bank": "way/ask",
-   "context": "way",
-   "rung": "any",
-   "conditions": {},
-   "weight": 2,
-   "group": "way/ask@ron",
-   "delivery": "normal",
-   "words": 7
-  },
-  {
-   "who": "ron_kirby",
-   "once": "day",
-   "id": "ron.way.04",
-   "situation": "asked_way",
-   "text": "Never been. I stay on the rank.",
-   "src": "production/cloud-week/lines/lines.json ron.way.04",
-   "tokens": [],
-   "bank": "way/ask",
-   "context": "way",
-   "rung": "any",
-   "conditions": {},
-   "weight": 2,
-   "group": "way/ask@ron",
-   "delivery": "normal",
-   "words": 7
-  },
-  {
-   "who": "ron_kirby",
-   "once": "day",
-   "id": "ron.way.05",
-   "situation": "asked_way",
-   "text": "Haven't left the quay in years, friend.",
-   "src": "production/cloud-week/lines/lines.json ron.way.05",
-   "tokens": [],
-   "bank": "way/ask",
-   "context": "way",
-   "rung": "any",
-   "conditions": {},
-   "weight": 2,
-   "group": "way/ask@ron",
-   "delivery": "normal",
-   "words": 7
-  },
-  {
-   "who": "ron_kirby",
-   "once": "day",
-   "id": "ron.way.06",
-   "situation": "asked_way",
-   "text": "Ask Sheila in the office, friend. She knows.",
-   "src": "production/cloud-week/lines/lines.json ron.way.06",
-   "tokens": [],
-   "bank": "way/ask",
-   "context": "way",
-   "rung": "any",
-   "conditions": {},
-   "weight": 2,
-   "group": "way/ask@ron",
-   "delivery": "normal",
-   "words": 8
-  },
-  {
-   "who": "ron_kirby",
-   "once": "day",
-   "id": "ron.way.07",
-   "situation": "asked_way",
-   "text": "It's that way, up or down. I forget.",
-   "src": "production/cloud-week/lines/lines.json ron.way.07",
-   "tokens": [],
-   "bank": "way/ask",
-   "context": "way",
-   "rung": "any",
-   "conditions": {},
-   "weight": 2,
-   "group": "way/ask@ron",
-   "delivery": "normal",
-   "words": 8
-  },
-  {
-   "who": "ron_kirby",
-   "once": "day",
-   "id": "ron.way.08",
-   "situation": "asked_way",
-   "text": "Ask a driver. They're paid to know.",
-   "src": "production/cloud-week/lines/lines.json ron.way.08",
-   "tokens": [],
-   "bank": "way/ask",
-   "context": "way",
-   "rung": "any",
-   "conditions": {},
-   "weight": 2,
-   "group": "way/ask@ron",
-   "delivery": "normal",
-   "words": 7
   },
   {
    "who": "ron_kirby",
@@ -1773,6 +1863,8 @@
    "weight": 2,
    "group": "farewell@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 3
   },
   {
@@ -1790,6 +1882,8 @@
    "weight": 2,
    "group": "farewell@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "local",
    "words": 4
   },
   {
@@ -1807,6 +1901,8 @@
    "weight": 2,
    "group": "farewell@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 4
   },
   {
@@ -1824,6 +1920,8 @@
    "weight": 2,
    "group": "farewell@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -1841,6 +1939,8 @@
    "weight": 2,
    "group": "farewell@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -1858,6 +1958,8 @@
    "weight": 2,
    "group": "farewell@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1880,6 +1982,8 @@
    "weight": 2,
    "group": "farewell@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -1901,7 +2005,18 @@
    "weight": 2,
    "group": "farewell@ron",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
+  },
+  {
+   "id": "ron_kirby.own.to_write",
+   "who": "ron_kirby",
+   "situation": "own",
+   "once": "day",
+   "text": "TO WRITE (story lane): 0 own street lines, about 7 words each, in the voice of the card (people/ron_kirby.json). Situations from line-situations.json (greetings by rung and by regard, everyday remarks, the knowing ladder, farewells); at least three closing lines. Everyday remarks of his own are owed even where situational lines exist. Names him: the new owner (rung 1), Mr Nowak or Nowak (2), Frank (3), Frank or Mr Nowak (4, the port's man); Sheila withholds his name until she trusts him; Ron says boss; only the Widow, Danny and Ron once say Frankie; nobody says Tom.",
+   "src": "BLUEPRINT-03 3.2.3, 3.6.3; FIT-L01 (60 for the twelve most seen)",
+   "words": 95
   }
  ]
 }

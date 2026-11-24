@@ -5,28 +5,29 @@
  "giver": "sheila_dunn",
  "act_min": 1,
  "rung_min": 1,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "day two: the debt book; Darren's tip about the tin box when he owes the office",
  "window": null,
  "offer": [
-  "Mickey's debt book, the page for Dennis."
+  "Mickey's debt book, the page for Dennis.",
+  "Darren's tip (prototype jobsx.js hut): 'Iveson keeps it in a tin box in the hut. The lad chains the gap at five. Not that I'm telling you anything.'"
  ],
  "steps": [
   {
    "id": "find",
-   "at": "iveson_hut",
-   "verb": "find the debtor where his routine has him",
+   "at": "iveson_yard",
+   "verb": "find the debtor where the routine has him: 07:30 to 17:15 in the yard; the hut at 12:00",
    "keys": [
     {
+     "way": "talk",
+     "how": "the routine (ask Ron where he'll be)"
+    },
+    {
      "way": "watch",
-     "how": "the routine (routines.json)"
+     "how": "wait for him there"
     },
     {
-     "way": "talk",
-     "how": "ask Ron"
-    },
-    {
-     "way": "talk",
-     "how": "ask the caff"
+     "way": "choice",
+     "how": "send Darren to fetch him"
     }
    ],
    "fail": null,
@@ -42,21 +43,45 @@
    "keys": [
     {
      "way": "threat",
-     "how": "front up the yard hand, Neil Screeton"
+     "how": "front up the yard hand, Neil Screeton (words with Dennis himself: Frank's line covers a man of 62)"
     },
     {
-     "way": "back_way",
-     "how": "the hut at night (break in for the tin box)"
+     "way": "force",
+     "how": "the hut at night for the tin box (the back way before five, or force)"
     },
     {
      "way": "threat",
-     "how": "lean on what he bought out of the burned warehouse"
+     "how": "lean on what he bought out of the burned warehouse (words)"
     }
    ],
    "fail": null,
    "words": "TO WRITE (story lane)",
    "lines": [
     "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "box",
+   "at": "iveson_hut",
+   "verb": "the tin box under the bench: eighty pounds, the debt closed",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "open it"
+    },
+    {
+     "way": "choice",
+     "how": "take it whole"
+    },
+    {
+     "way": "watch",
+     "how": "leave it and look"
+    }
+   ],
+   "fail": null,
+   "words": "The tin box: eighty pounds.",
+   "lines": [
+    "The tin box: eighty pounds."
    ]
   }
  ],

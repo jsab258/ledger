@@ -45,32 +45,80 @@
   [
    0.0,
    "mickeys",
-   "the night beat (police.json)"
+   "the night beat (police.json)",
+   "mon-thu"
   ],
   [
    6.0,
    "police_station",
-   "off duty"
+   "off duty",
+   "mon-thu"
   ],
   [
    6.5,
    "edge_north",
-   "asleep"
+   "asleep",
+   "mon-thu"
   ],
   [
    21.5,
    "police_station",
-   "parade"
+   "parade",
+   "mon-thu"
   ],
   [
    22.0,
    "mickeys",
-   "the night beat (police.json)"
+   "the night beat (police.json)",
+   "mon-thu"
+  ],
+  [
+   0.0,
+   "mickeys",
+   "the night beat (police.json)",
+   "fri"
+  ],
+  [
+   6.0,
+   "police_station",
+   "off duty",
+   "fri"
+  ],
+  [
+   6.5,
+   "edge_north",
+   "rest days",
+   "fri"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "rest days",
+   "sat"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "rest day",
+   "sun"
+  ],
+  [
+   21.5,
+   "police_station",
+   "parade",
+   "sun"
+  ],
+  [
+   22.0,
+   "mickeys",
+   "the night beat (police.json)",
+   "sun"
   ]
  ],
+ "speaker_kind": "night_shift",
  "lines": {
-  "own": "lines/own-pc_haigh.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "PC Brian Haigh, 45, walks the Hook's night beat: the short round past Mickey's door, then the landing leg.",

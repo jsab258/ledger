@@ -5,7 +5,7 @@
  "giver": "ron_kirby",
  "act_min": 2,
  "rung_min": 3,
- "when": "Frank at the third rung, or any rival at threat, or end of game week four; never before the end of week three",
+ "when": "Frank at the third rung, or any rival at threat, or the end of game week four; never before the end of week three",
  "window": null,
  "offer": [
   "TO WRITE (story lane)"
@@ -37,16 +37,16 @@
   },
   {
    "id": "in",
-   "at": "widow_net_store",
-   "verb": "the Widow's weekly load off the last boat (boxed goods and tobacco)",
+   "at": "ferry_landing",
+   "verb": "the load off the last boat (boxed goods and tobacco, two to four cases)",
    "keys": [
     {
      "way": "route",
-     "how": "the road: the van, driven by a man he has met"
+     "how": "the road: the van, driven by a man he has met (Mark Billany, if spared)"
     },
     {
      "way": "back_way",
-     "how": "the gate: in with the contract cars at shift change, to the net store under her office"
+     "how": "the gate: in with the contract cars at shift change, to the net store under her office (widow_net_store)"
     },
     {
      "way": "route",
@@ -62,19 +62,19 @@
   {
    "id": "wrong",
    "at": "ferry_landing",
-   "verb": "one thing always goes wrong; the car brought round by a man with four lessons",
+   "verb": "one thing always goes wrong: Frank is needed at the load, and the car has to be brought round",
    "keys": [
     {
-     "way": "route",
-     "how": "Ron at the wheel"
+     "way": "choice",
+     "how": "Ron brings it round at eleven miles an hour (four lessons)"
     },
     {
-     "way": "route",
-     "how": "Frank at the wheel"
+     "way": "choice",
+     "how": "a crewman with nerve brings it"
     },
     {
      "way": "back_way",
-     "how": "on foot by the yards' lane"
+     "how": "on foot by the yards' lane with what they can carry"
     }
    ],
    "fail": null,
@@ -98,7 +98,7 @@
     },
     {
      "way": "choice",
-     "how": "Danny's man (if allied)"
+     "how": "Danny's man, if allied"
     }
    ],
    "fail": null,
@@ -110,19 +110,29 @@
  ],
  "pay": {
   "to": "tin",
-  "band_note": "the load: tobacco 100 pounds a case off the boat (economy EC-07); the landing's nights after"
+  "pence": 0,
+  "band": [
+   20000,
+   40000
+  ],
+  "note": "two to four cases at 100 pounds off the boat (EC-07); the take never over MP-02's cap (the greater of 150 pounds or 1.5 weeks' income): the excess is unsellable that week"
  },
  "ledger": "TO WRITE (story lane)",
  "returns": "Danny's name on the town's telling (STORY-FRAME 3)",
  "people": [
   "ron_kirby",
   "maureen_jensen",
-  "pat_brannigan",
-  "mark_billany",
-  "danny_cammack"
+  "steve_brannigan",
+  "mark_billany"
  ],
  "clock": {
   "realSecondsPerGameHour": 120
  },
- "src": "STORY-FRAME 5 The midpoint; timetables bonfire_night_display (5 Nov, the display on the quay)"
+ "src": "STORY-FRAME 5 The midpoint; timetables bonfire_night_display (5 Nov, the display on the quay)",
+ "by_path": {
+  "widow_ally": "the load is Danny's, at his lock-ups' van",
+  "alone": "the load of whichever rival reached threat",
+  "wound_down": "done in the open, every car on the quay for the display, carrying the town home past her taxmen"
+ },
+ "people_note": "Danny only if allied (STORY-FRAME 5)"
 }

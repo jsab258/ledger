@@ -27,15 +27,15 @@
   ],
   "x": []
  },
- "nerve": 0.45,
- "venal": 0.58,
+ "nerve": 0.8,
+ "venal": 0,
  "talk": 0.85,
  "discretion": 0.25,
  "temperament": {
-  "nerve": 0.45,
-  "dutiful": 0.4,
-  "willingness": 0.5,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+  "nerve": 0.8,
+  "dutiful": 1.0,
+  "willingness": 0.85,
+  "from": "prototype cast.js (nerve; dutiful from 1 - venal x 0.8; willingness from talk)"
  },
  "keepsQuiet": false,
  "home": "d_bp_3",
@@ -47,7 +47,7 @@
    "mon-thu"
   ],
   [
-   5.5,
+   6.0,
    "caff",
    "opening up",
    "mon-thu"
@@ -65,7 +65,7 @@
    "fri-sat"
   ],
   [
-   5.5,
+   6.0,
    "caff",
    "opening up",
    "fri-sat"
@@ -85,19 +85,20 @@
   [
    10.0,
    "chapel",
-   "Mass",
+   "by bike: Mass",
    "sun"
   ],
   [
    13.25,
    "d_bp_3",
-   "home",
+   "by bike: home",
    "sun"
   ]
  ],
+ "speaker_kind": "shopkeeper",
  "lines": {
   "own": "lines/own-grace_rinaldi.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "She keeps Rinaldi's, the caff on the corner of Chapel Lane. Half the street has breakfast there and she hears all of it.",

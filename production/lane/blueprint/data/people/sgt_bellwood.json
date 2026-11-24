@@ -1,8 +1,8 @@
 {
- "id": "sgt_kitson",
+ "id": "sgt_bellwood",
  "cast_id": null,
  "called": "the custody sergeant",
- "name": "Ray Kitson",
+ "name": "Roy Bellwood",
  "age": 52,
  "sex": "m",
  "role": "The custody sergeant: three goes at 'Nowak'",
@@ -44,21 +44,42 @@
  "sched": [
   [
    0.0,
+   "edge_north",
+   "off duty",
+   "mon-fri"
+  ],
+  [
+   6.0,
    "police_station",
-   "the custody desk"
+   "the custody desk",
+   "mon-fri"
+  ],
+  [
+   18.0,
+   "edge_north",
+   "off duty",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "rest days",
+   "sat-sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
-  "own": "lines/own-sgt_kitson.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "Sergeant Ray Kitson, 52, the custody desk. Cannot say Nowak; tries three times.",
+  "who": "Sergeant Roy Bellwood, 52, the custody desk. Cannot say Nowak; tries three times.",
   "speak": "Weary, comic, by the book.",
   "life": "The station's custody desk.",
   "rivals": "Has seen every face on the Hook through the hatch."
  },
- "can_die": false,
+ "can_die": true,
  "invented": true,
- "src": "invented: STORY-FRAME 5 (the sergeant's three goes at Nowak)"
+ "src": "invented: STORY-FRAME 5 (the sergeant's three goes at Nowak)",
+ "fallback_role": "another custody sergeant from town"
 }

@@ -51,19 +51,19 @@
   [
    5.92,
    "dock_gate",
-   "the pen at six",
+   "by bike: the pen at six",
    "mon-sat"
   ],
   [
    8.0,
    "fish_dock",
-   "what work there is",
+   "by bike: what work there is",
    "mon-sat"
   ],
   [
    12.0,
    "rank_mickeys",
-   "sat on the bollard",
+   "by bike: sat on the bollard",
    "mon-sat"
   ],
   [
@@ -79,7 +79,7 @@
    "mon-sat"
   ],
   [
-   19.25,
+   19.75,
    "d_nr_12",
    "home",
    "mon-sat"
@@ -103,9 +103,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "casual_worker",
  "lines": {
   "own": "lines/own-lee_drewery.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "A casual on the quay: fish boxes, ice, whatever the Widow's foreman calls for that morning. He owes Mickey's book fifteen pounds for fares.",
@@ -117,5 +118,6 @@
  "can_die": true,
  "invented": false,
  "src": "canon; 2.8.1; 2.10.2; STORY-FRAME 4",
+ "fallback_role": "the role passes to another, or the thread closes",
  "fight_kind": "brawler"
 }

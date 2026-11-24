@@ -51,7 +51,7 @@
   [
    8.5,
    "newsagent",
-   "the cards in the window",
+   "by bike: the cards in the window",
    "mon,wed,fri"
   ],
   [
@@ -69,7 +69,7 @@
   [
    14.5,
    "d_cl_9",
-   "home",
+   "by bike: home",
    "mon,wed,fri"
   ],
   [
@@ -87,7 +87,7 @@
   [
    8.5,
    "newsagent",
-   "the cards in the window",
+   "by bike: the cards in the window",
    "thu"
   ],
   [
@@ -99,7 +99,7 @@
   [
    13.0,
    "d_cl_9",
-   "home",
+   "by bike: home",
    "thu"
   ],
   [
@@ -111,7 +111,7 @@
   [
    8.5,
    "newsagent",
-   "the cards in the window",
+   "by bike: the cards in the window",
    "tue,sat"
   ],
   [
@@ -133,18 +133,19 @@
    "sun"
   ]
  ],
+ "speaker_kind": "casual_worker",
  "lines": {
   "own": "lines/own-julie_kettlewell.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "Laid off when the Meridian Steam Laundry shut in the summer. She lives on Quay Street and has nine pounds of cab fares on Mickey's slate from getting to interviews.",
+  "who": "Julie Kettlewell, 29, laid off from the laundry's presses in the summer; the laundry runs on with fewer hands. Owes Mickey's nine pounds she cannot pay. Can drive anything.",
   "speak": "Friendly, tired, proud about money. Makes a joke of being skint.",
-  "life": "Eight years on the presses at the laundry. Stands at the bus stop for the job centre most days.",
+  "life": "Rents 9 Chapel Lane, the house with the blue step. The cards in the newsagent's window every morning.",
   "fire": "The laundry shut the same month. She says the Hook is being emptied one building at a time.",
   "rivals": "Agar's firm handled the laundry's closing. Nobody got what they were owed."
  },
- "can_die": true,
+ "can_die": false,
  "invented": false,
  "src": "canon; 2.8.1; 2.11.1; STORY-FRAME 4"
 }

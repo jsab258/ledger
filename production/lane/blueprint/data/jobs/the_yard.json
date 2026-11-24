@@ -1,0 +1,79 @@
+{
+ "id": "the_yard",
+ "kind": "fight",
+ "name": "The yard",
+ "giver": "frank_nowak",
+ "act_min": 2,
+ "rung_min": 3,
+ "when": "week six, after the night between",
+ "window": null,
+ "offer": [
+  "TO WRITE (story lane)"
+ ],
+ "steps": [
+  {
+   "id": "fight",
+   "at": "mickeys_yard",
+   "verb": "men he made, cast from everybody he beat, shamed or let down, in by a gate somebody had a key to; the hardest fight costs him the arm either way",
+   "keys": [
+    {
+     "way": "route",
+     "how": "stand at the yard gate"
+    },
+    {
+     "way": "back_way",
+     "how": "hold the back fence"
+    },
+    {
+     "way": "back_way",
+     "how": "go out into the yards' lane to meet them"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "who_comes",
+   "at": "mickeys_yard",
+   "verb": "who comes decides the rest: Ron (if free), Darren (if he slept in the spare car), Ada's call (if Frank came to her tea), the night desk (if Julie has it)",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "walks out on his feet with the tin and the board"
+    },
+    {
+     "way": "choice",
+     "how": "is carried out"
+    },
+    {
+     "way": "choice",
+     "how": "comes round in Grace Rinaldi's kitchen (nobody came)"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "pence": 0
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "the arm, for days; who he has to ask",
+ "people": [
+  "neil_screeton",
+  "ron_kirby",
+  "darren_milner",
+  "grace_rinaldi"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "STORY-FRAME 5 Act IIb (the yard), worked example 2 (Neil Screeton the hardest fight if fronted up)"
+}

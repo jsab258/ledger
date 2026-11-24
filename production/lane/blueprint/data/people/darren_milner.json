@@ -51,11 +51,11 @@
   [
    10.0,
    "caff",
-   "a tea he does not pay for",
+   "by bike: a tea he does not pay for",
    "mon,wed,fri"
   ],
   [
-   11.0,
+   11.25,
    "ritas",
    "selling",
    "mon,wed,fri"
@@ -87,7 +87,7 @@
   [
    19.0,
    "cammack_base",
-   "near the lock-ups",
+   "by bike: near the lock-ups",
    "mon,wed,fri"
   ],
   [
@@ -105,7 +105,7 @@
   [
    10.0,
    "caff",
-   "a tea he does not pay for",
+   "by bike: a tea he does not pay for",
    "tue,thu,sat"
   ],
   [
@@ -133,7 +133,7 @@
    "tue,thu,sat"
   ],
   [
-   21.0,
+   21.5,
    "d_nr_23",
    "his mother's",
    "tue,thu,sat"
@@ -157,12 +157,13 @@
    "sun"
   ]
  ],
+ "speaker_kind": "casual_worker",
  "lines": {
   "own": "lines/own-darren_milner.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "The street hustler. Out of work, lives at his mother's on Chapel Lane, carries a pager. Loyal to whoever helped him last, easily bought and easily scared. He owes Mickey's book twenty-two pounds.",
+  "who": "The street hustler. Out of work, lives at his mother's on North Road, carries a pager. Loyal to whoever helped him last, easily bought and easily scared. He owes Mickey's book twenty-two pounds.",
   "speak": "Fast, conspiratorial, friendly. Opens with \"so listen\" when he has something to sell.",
   "life": "Did bits for Mickey: messages, watching a door. Hangs about outside the parade, the market and the video shop. Knows who is skint and who is flush.",
   "fire": "Heard the row went up at two in the morning and that someone got paid twice for it. He does not know who.",

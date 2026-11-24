@@ -5,7 +5,7 @@
  "giver": "danny_cammack",
  "act_min": 2,
  "rung_min": 2,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "Danny's ladder at sit-down, or the fail-safe",
  "window": null,
  "offer": [
   "TO WRITE (story lane)"

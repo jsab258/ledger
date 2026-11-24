@@ -97,9 +97,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "shopkeeper",
  "lines": {
   "own": "lines/own-hal_metcalfe.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "He keeps Metcalfe's, a coin shop on Quay Street that sells no coins. Things are left at his back door in the alley at night.",

@@ -56,8 +56,8 @@
   ],
   [
    8.0,
-   "market_stalls_quay",
-   "leaflets",
+   "bus_stop_qs",
+   "leaflets at the bus stop",
    "mon,wed,fri"
   ],
   [
@@ -73,9 +73,10 @@
    "tue,thu,sat,sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
-  "own": "lines/own-margaret_lofthouse.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Margaret Lofthouse, 47, from Fairview, organises the town's campaign against the poll tax. Paste bucket and a roll of posters.",
@@ -83,7 +84,7 @@
   "life": "Comes down on the bus mornings.",
   "rivals": "None of the three; the council."
  },
- "can_die": true,
+ "can_die": false,
  "invented": true,
  "src": "invented: side story 14; letters-and-print.json (Meridian Against the Poll Tax)"
 }

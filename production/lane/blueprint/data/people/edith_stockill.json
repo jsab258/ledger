@@ -52,7 +52,7 @@
   [
    9.25,
    "adas",
-   "a word at Ada's window",
+   "by cab: a word at Ada's window",
    "mon-sat"
   ],
   [
@@ -64,7 +64,7 @@
   [
    14.0,
    "d_cl_12",
-   "home",
+   "by cab: home",
    "mon-sat"
   ],
   [
@@ -74,9 +74,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "pensioner",
  "lines": {
   "own": "lines/own-edith_stockill.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Edith Stockill, 79, forty years a shipping clerk. Writes the street's letters at the pension counter for nothing.",

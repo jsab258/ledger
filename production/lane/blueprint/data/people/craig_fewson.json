@@ -55,7 +55,7 @@
   [
    15.0,
    "rank_ferry",
-   "watching the ferry rank",
+   "by car: watching the ferry rank",
    "mon-sat"
   ],
   [
@@ -65,9 +65,9 @@
    "mon-sat"
   ],
   [
-   23.0,
+   22.5,
    "d_nr_39",
-   "home",
+   "by car: home",
    "mon-sat"
   ],
   [
@@ -89,9 +89,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "casual_worker",
  "lines": {
   "own": "lines/own-craig_fewson.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Craig Fewson, 25, Danny's lieutenant. Wants Danny's seat and his key.",

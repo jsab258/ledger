@@ -55,7 +55,7 @@
   [
    17.0,
    "phone_parade",
-   "the corner by the phone box",
+   "by bike: the corner by the phone box",
    "mon-sat"
   ],
   [
@@ -65,9 +65,9 @@
    "mon-sat"
   ],
   [
-   23.0,
+   22.5,
    "d_nr_34",
-   "home",
+   "by bike: home",
    "mon-sat"
   ],
   [
@@ -77,9 +77,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "casual_worker",
  "lines": {
   "own": "lines/own-shane_boddy.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Shane Boddy, 23, Danny's crew. Did the chapel roof's lead with Wes and sold it to Dennis Iveson.",
@@ -90,5 +91,6 @@
  "can_die": true,
  "invented": true,
  "src": "invented: 2.10.2; side story 23 (two of Danny's men)",
+ "fallback_role": "his head's next man",
  "fight_kind": "brawler"
 }

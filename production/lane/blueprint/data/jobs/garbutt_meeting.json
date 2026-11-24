@@ -5,7 +5,7 @@
  "giver": "keith_garbutt",
  "act_min": 2,
  "rung_min": 2,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "Garbutt's card given (Act IIa); page him from a box",
  "window": null,
  "offer": [
   "TO WRITE (story lane)"

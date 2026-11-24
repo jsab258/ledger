@@ -71,17 +71,19 @@
    "mon-wed,fri-sun"
   ]
  ],
+ "speaker_kind": "shopkeeper",
  "lines": {
-  "own": "lines/own-ahmed_rashid.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Ahmed Rashid, 46, came from Mirpur in 1966, keeps a corner shop in town. Buys at the barrows on Thursdays and takes a cab back with the boxes.",
-  "speak": "Dry, businesslike, haggles the fare for fun.",
+  "speak": "Dry, in a hurry, counts his boxes twice.",
   "life": "Keeps a corner shop in town; buys stock at the Thursday market",
   "rivals": "None of the three."
  },
  "can_die": true,
  "invented": true,
- "src": "invented: 3.4.1 (40 fare people)"
+ "src": "invented: 3.4.1 (40 fare people)",
+ "fallback_role": "the role passes to another of the same trade, or the thread closes"
 }

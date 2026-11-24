@@ -1,0 +1,81 @@
+{
+ "id": "protection_round",
+ "kind": "collection",
+ "name": "The first round",
+ "giver": "ron_kirby",
+ "act_min": 2,
+ "rung_min": 2,
+ "when": "rung 2 and a man of nerve on the board (week three)",
+ "window": null,
+ "offer": [
+  "TO WRITE (story lane)"
+ ],
+ "steps": [
+  {
+   "id": "sign",
+   "at": "laveracks",
+   "verb": "sign the parade's shops to a weekly round (Laverack's, the grocer, the newsagent, the launderette, the ironmonger, the Copper Kettle)",
+   "keys": [
+    {
+     "way": "pay",
+     "how": "a fair price, 10 pounds a shop, and a man who turns up"
+    },
+    {
+     "way": "talk",
+     "how": "a squeeze, 25 to 40 pounds a shop (shops refuse and tell after three weeks)"
+    },
+    {
+     "way": "watch",
+     "how": "a favour done first (a window mended, a thief caught)"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "collect",
+   "at": "grocer",
+   "verb": "a crewman of nerve collects on Fridays",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "Ron"
+    },
+    {
+     "way": "choice",
+     "how": "a need recruit"
+    },
+    {
+     "way": "choice",
+     "how": "a hook recruit"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "pence": 0,
+  "band": [
+   500,
+   1500
+  ],
+  "note": "per shop per week; the man's cut a quarter (ECONOMY 5.1, EC-06); rung 3 needs a front and a round"
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "the shops' boards and talk",
+ "people": [
+  "ron_kirby"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "ECONOMY 5.1, EC-06; STORY-FRAME 5 table week 3; BLUEPRINT-03 3.5.2 (later a crewman does rounds)"
+}

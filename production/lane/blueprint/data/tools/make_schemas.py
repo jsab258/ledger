@@ -100,6 +100,8 @@ TO_COME = {
         'required': ['file', 'version', 'clock', 'people', 'fighter_kinds', 'residents_rule'],
         'properties': dict(HEAD, people={'type': 'array', 'items': {'type': 'object', 'required': ['id', 'name', 'kind'], 'properties': {'id': ID, 'name': {'type': 'string'}, 'kind': {'type': 'string'}}}},
                            fighter_kinds={'type': 'object'}, residents_rule={'type': 'object'}, name_ladder={'type': 'array'})},
+    'line-situations.json': {'x-made': 'wave 2 (24 Nov 2026): the fixed line table (FIT F19)', 'type': 'object', 'required': ['file', 'version', 'clock', 'speaker_kinds', 'situations'],
+        'properties': dict(HEAD, speaker_kinds={'type': 'object'}, situations={'type': 'array', 'items': {'type': 'object', 'required': ['situation', 'live_when']}})},
     'ties.json': {
         'x-made': 'by hand from TECH-PLAN section 3 (ties, the real town\'s form)', 'type': 'object', 'required': ['file', 'version', 'ties'],
         'properties': dict(HEAD, ties={'type': 'array', 'items': {'type': 'array', 'minItems': 4, 'maxItems': 4,
@@ -113,13 +115,13 @@ TO_COME = {
     'lines/<file>.json': {
         'x-made': 'by hand from TECH-PLAN section 3 (lines)', 'type': 'object', 'required': ['file', 'version', 'lines'],
         'properties': dict(HEAD, lines={'type': 'array', 'items': {'type': 'object', 'required': ['id', 'who', 'situation', 'text', 'once', 'src'],
-            'properties': {'id': ID, 'who': {'type': 'string', 'pattern': '^([a-z0-9_]+|kind:(man|woman|older_man|older_woman|docker|shopkeeper|constable|driver))$', 'x-note': 'a people/ id, or kind:<speaker kind> for shared street lines'},
-                           'situation': {'type': 'string', 'x-note': 'from the fixed line table (FIT F19); the table is listed in lines/situations.json when made'}, 'text': {'type': 'string', 'minLength': 1}, 'words': {'type': 'integer'},
+            'properties': {'id': ID, 'who': {'type': 'string', 'pattern': '^([a-z0-9_]+|kind:(man|woman|older_man|older_woman|docker|shopkeeper|constable|driver|dock_worker|pensioner|office_worker|laundry_worker|tradesman|night_shift|casual_worker|anyone|passenger|rival_head|fare_person|giver))$', 'x-note': 'a people/ id, or kind:<speaker kind> for shared street lines'},
+                           'situation': {'type': 'string', 'x-note': 'from the fixed line table (FIT F19); the table is line-situations.json (wave 2; outside lines/ so the line schema does not test it)'}, 'text': {'type': 'string', 'minLength': 1}, 'words': {'type': 'integer'},
                            'once': {'type': 'string', 'enum': ['day', 'week', 'game', 'never']}, 'tokens': {'type': 'array'}, 'src': SRC}}}),
         'x-rules': ['every text passes content-words.json', 'no line names a real brand, person or anything after 1992']},
     'jobs/<id>.json': {
         'x-made': 'by hand from TECH-PLAN section 3 (jobs)', 'type': 'object', 'required': ['id', 'kind', 'giver', 'steps', 'pay', 'src'],
-        'properties': {'id': ID, 'kind': {'type': 'string', 'enum': ['carry', 'collection', 'break_in', 'lift', 'tail', 'minding', 'fare', 'sit_down', 'send']},
+        'properties': {'id': ID, 'kind': {'type': 'string', 'enum': ['carry', 'collection', 'break_in', 'lift', 'tail', 'minding', 'fare', 'sit_down', 'send', 'fight'], 'x-note-wave2': 'fight added by wave 2 (the quay, the yard, the gate crisis)'},
                        'giver': {'type': 'string'}, 'act_min': {'type': 'integer'}, 'rung_min': {'type': 'integer'}, 'offer': {'type': 'array'},
                        'steps': {'type': 'array', 'items': {'type': 'object', 'required': ['id', 'at', 'verb', 'keys'],
                            'properties': {'id': ID, 'at': ID, 'verb': {'type': 'string'}, 'keys': {'type': 'array', 'items': {'type': 'object', 'required': ['way'], 'properties': {'way': {'type': 'string', 'enum': ['key', 'back_way', 'force', 'talk', 'pay', 'threat', 'watch', 'route', 'choice'], 'x-note-wave2': 'route (a way through: road, water, foot, cab) and choice (a decision, not a lock) added by wave 2; how holds the words'}}}, 'x-note': 'three ways to every lock'}, 'fail': {'type': ['string', 'null']}}}},

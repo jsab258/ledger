@@ -1,8 +1,8 @@
 {
- "id": "len_ackroyd",
+ "id": "clive_ackroyd",
  "cast_id": null,
- "called": "Len",
- "name": "Len Ackroyd",
+ "called": "Clive",
+ "name": "Clive Ackroyd",
  "age": 48,
  "sex": "m",
  "role": "Owner of Portside Cars, the other minicab firm on the north rank (two cars); a business, never a rival",
@@ -65,17 +65,19 @@
    "sun"
   ]
  ],
+ "speaker_kind": "driver",
  "lines": {
-  "own": "lines/own-len_ackroyd.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "Len Ackroyd, 48, runs Portside Cars from the north rank with two cars. Takes the fares Mickey's loses and gives them back as the talk fades.",
+  "who": "Clive Ackroyd, 48, runs Portside Cars from the north rank with two cars. Takes the fares Mickey's loses and gives them back as the talk fades.",
   "speak": "Grumbling, businesslike.",
   "life": "Up in town; the north rank by day.",
   "rivals": "None: a business (2.15.3)."
  },
  "can_die": true,
  "invented": true,
- "src": "invented: 2.15.3; vehicles.json portside_cars (the prototype's hint Len Wardle: surname changed so it is not mistaken for DC Wardell)"
+ "src": "invented: 2.15.3; vehicles.json portside_cars (the prototype's hint Len Wardle: surname changed so it is not mistaken for DC Wardell)",
+ "fallback_role": "the role passes to another of the same trade, or the thread closes"
 }

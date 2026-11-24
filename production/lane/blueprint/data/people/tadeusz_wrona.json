@@ -1,8 +1,8 @@
 {
- "id": "tadeusz_nowicki",
+ "id": "tadeusz_wrona",
  "cast_id": null,
- "called": "Mr Nowicki",
- "name": "Tadeusz Nowicki",
+ "called": "Mr Wrona",
+ "name": "Tadeusz Wrona",
  "age": 64,
  "sex": "m",
  "role": "Keeps the ironmonger's on Quay Street; came from Gdynia in 1947",
@@ -69,22 +69,23 @@
   [
    9.5,
    "chapel",
-   "Mass",
+   "by bike: Mass",
    "sun"
   ],
   [
    13.0,
    "d_nr_7",
-   "home",
+   "by bike: home",
    "sun"
   ]
  ],
+ "speaker_kind": "shopkeeper",
  "lines": {
-  "own": "lines/own-tadeusz_nowicki.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "Tadeusz Nowicki, 64, keeps the ironmonger's. Came over after the war. The only man on the Hook who says Frank's surname right first time, and corrects the others.",
+  "who": "Tadeusz Wrona, 64, keeps the ironmonger's. Came over after the war. The only man on the Hook who says Frank's surname right first time, and corrects the others.",
   "speak": "Courteous, Polish cadence, exact about screws.",
   "life": "7 North Road.",
   "rivals": "Keeps out of it."

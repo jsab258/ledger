@@ -5,7 +5,7 @@
  "giver": "kevin_needham",
  "act_min": 2,
  "rung_min": 2,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "five cars on the board: the Widow's men tax Kevin at the gate (Act IIa)",
  "window": null,
  "offer": [
   "TO WRITE (story lane)"
@@ -37,10 +37,10 @@
   }
  ],
  "pay": {
-  "to": "tin",
+  "to": "book",
   "pence": 0,
-  "paid_to": "widow",
-  "band_note": "the gate tax (economy)"
+  "cost_pence_per_car_per_week": 500,
+  "note": "the Widow's tax from five cars (economy section 1)"
  },
  "ledger": "TO WRITE (story lane)",
  "returns": "the fourth morning of Act III (M. Jensen on the receipt)",

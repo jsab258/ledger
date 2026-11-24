@@ -25,11 +25,16 @@
    "conditions": {
     "standing": [
      "owner"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/owner@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -46,11 +51,16 @@
    "conditions": {
     "standing": [
      "owner"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/owner@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -67,11 +77,16 @@
    "conditions": {
     "standing": [
      "owner"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/owner@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -91,11 +106,16 @@
     ],
     "time": [
      "morning"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/owner@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -112,11 +132,16 @@
    "conditions": {
     "standing": [
      "owner"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/owner@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -133,11 +158,16 @@
    "conditions": {
     "standing": [
      "owner"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/owner@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -157,11 +187,16 @@
     ],
     "time": [
      "evening"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/owner@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 9
   },
   {
@@ -182,11 +217,16 @@
     "weather": [
      "drizzle",
      "rain"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/owner@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -203,11 +243,16 @@
    "conditions": {
     "standing": [
      "owner"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/owner@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 9
   },
   {
@@ -224,11 +269,16 @@
    "conditions": {
     "standing": [
      "nowak"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/nowak@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -245,11 +295,16 @@
    "conditions": {
     "standing": [
      "nowak"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/nowak@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -269,11 +324,16 @@
     ],
     "time": [
      "morning"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/nowak@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 9
   },
   {
@@ -290,11 +350,16 @@
    "conditions": {
     "standing": [
      "nowak"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/nowak@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -314,11 +379,16 @@
     ],
     "time": [
      "afternoon"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/nowak@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 4
   },
   {
@@ -335,11 +405,16 @@
    "conditions": {
     "standing": [
      "nowak"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/nowak@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 9
   },
   {
@@ -356,11 +431,16 @@
    "conditions": {
     "standing": [
      "nowak"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/nowak@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -380,11 +460,16 @@
     ],
     "time": [
      "evening"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/nowak@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -401,11 +486,16 @@
    "conditions": {
     "standing": [
      "nowak"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/nowak@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 9
   },
   {
@@ -421,12 +511,18 @@
    "rung": "frank",
    "conditions": {
     "standing": [
-     "frank"
+     "frank",
+     "portsman"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/tom@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -442,15 +538,21 @@
    "rung": "frank",
    "conditions": {
     "standing": [
-     "frank"
+     "frank",
+     "portsman"
     ],
     "time": [
      "morning"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/tom@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 9
   },
   {
@@ -466,12 +568,18 @@
    "rung": "frank",
    "conditions": {
     "standing": [
-     "frank"
+     "frank",
+     "portsman"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/tom@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 9
   },
   {
@@ -487,12 +595,18 @@
    "rung": "frank",
    "conditions": {
     "standing": [
-     "frank"
+     "frank",
+     "portsman"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/tom@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 9
   },
   {
@@ -508,12 +622,18 @@
    "rung": "frank",
    "conditions": {
     "standing": [
-     "frank"
+     "frank",
+     "portsman"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/tom@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -529,15 +649,21 @@
    "rung": "frank",
    "conditions": {
     "standing": [
-     "frank"
+     "frank",
+     "portsman"
     ],
     "time": [
      "evening"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/tom@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 10
   },
   {
@@ -553,12 +679,18 @@
    "rung": "frank",
    "conditions": {
     "standing": [
-     "frank"
+     "frank",
+     "portsman"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/tom@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -574,16 +706,22 @@
    "rung": "frank",
    "conditions": {
     "standing": [
-     "frank"
+     "frank",
+     "portsman"
     ],
     "weather": [
      "drizzle",
      "rain"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/tom@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -599,12 +737,18 @@
    "rung": "frank",
    "conditions": {
     "standing": [
-     "frank"
+     "frank",
+     "portsman"
+    ],
+    "regard": [
+     "likes"
     ]
    },
    "weight": 2,
    "group": "greeting/tom@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -622,6 +766,8 @@
    "weight": 2,
    "group": "bumped@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 4
   },
   {
@@ -639,6 +785,8 @@
    "weight": 2,
    "group": "bumped@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -656,6 +804,8 @@
    "weight": 2,
    "group": "bumped@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 3
   },
   {
@@ -673,6 +823,8 @@
    "weight": 2,
    "group": "bumped@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -690,6 +842,8 @@
    "weight": 2,
    "group": "bumped@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 4
   },
   {
@@ -707,6 +861,8 @@
    "weight": 2,
    "group": "bumped@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 3
   },
   {
@@ -724,6 +880,8 @@
    "weight": 2,
    "group": "bumped@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -739,15 +897,18 @@
    "rung": "any",
    "conditions": {
     "standing": [
-     "owner",
-     "nowak",
      "frank",
-     "frankie"
+     "nowak",
+     "owner",
+     "portsman",
+     "tommy"
     ]
    },
    "weight": 2,
    "group": "bumped@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 4
   },
   {
@@ -763,15 +924,18 @@
    "rung": "any",
    "conditions": {
     "standing": [
-     "owner",
-     "nowak",
      "frank",
-     "frankie"
+     "nowak",
+     "owner",
+     "portsman",
+     "tommy"
     ]
    },
    "weight": 2,
    "group": "bumped@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 3
   },
   {
@@ -795,6 +959,8 @@
    "weight": 2,
    "group": "rain/starts@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -818,6 +984,8 @@
    "weight": 2,
    "group": "rain/starts@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -841,6 +1009,8 @@
    "weight": 2,
    "group": "rain/starts@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -864,6 +1034,8 @@
    "weight": 2,
    "group": "rain/starts@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 3
   },
   {
@@ -887,6 +1059,8 @@
    "weight": 2,
    "group": "rain/starts@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 4
   },
   {
@@ -909,6 +1083,8 @@
    "weight": 2,
    "group": "rain/starts@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -931,6 +1107,8 @@
    "weight": 2,
    "group": "rain/starts@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -953,6 +1131,8 @@
    "weight": 2,
    "group": "rain/starts@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 4
   },
   {
@@ -975,6 +1155,8 @@
    "weight": 2,
    "group": "rain/starts@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -997,6 +1179,8 @@
    "weight": 2,
    "group": "rain/in@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -1019,6 +1203,8 @@
    "weight": 2,
    "group": "rain/in@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -1041,6 +1227,8 @@
    "weight": 2,
    "group": "rain/in@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -1063,6 +1251,8 @@
    "weight": 2,
    "group": "rain/in@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1085,6 +1275,8 @@
    "weight": 2,
    "group": "rain/in@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -1106,6 +1298,8 @@
    "weight": 2,
    "group": "rain/in@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1127,6 +1321,8 @@
    "weight": 2,
    "group": "rain/in@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -1148,6 +1344,8 @@
    "weight": 2,
    "group": "rain/in@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1169,6 +1367,8 @@
    "weight": 2,
    "group": "rain/in@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -1188,6 +1388,8 @@
    "weight": 2,
    "group": "crime/noise@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -1207,6 +1409,8 @@
    "weight": 2,
    "group": "crime/noise@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -1226,6 +1430,8 @@
    "weight": 2,
    "group": "crime/noise@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 4
   },
   {
@@ -1245,6 +1451,8 @@
    "weight": 2,
    "group": "crime/noise@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1264,6 +1472,8 @@
    "weight": 2,
    "group": "crime/noise@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -1283,6 +1493,8 @@
    "weight": 2,
    "group": "crime/noise@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1302,6 +1514,8 @@
    "weight": 2,
    "group": "crime/noise@june",
    "delivery": "normal",
+   "calls_police": true,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1321,6 +1535,8 @@
    "weight": 2,
    "group": "crime/noise@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -1340,6 +1556,8 @@
    "weight": 2,
    "group": "crime/shape@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1359,6 +1577,8 @@
    "weight": 2,
    "group": "crime/shape@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -1378,6 +1598,8 @@
    "weight": 2,
    "group": "crime/shape@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1397,6 +1619,8 @@
    "weight": 2,
    "group": "crime/shape@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -1416,6 +1640,8 @@
    "weight": 2,
    "group": "crime/shape@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1435,6 +1661,8 @@
    "weight": 2,
    "group": "crime/shape@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -1454,6 +1682,8 @@
    "weight": 2,
    "group": "crime/shape@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 9
   },
   {
@@ -1473,6 +1703,8 @@
    "weight": 2,
    "group": "crime/shape@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1492,6 +1724,8 @@
    "weight": 2,
    "group": "crime/face@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 9
   },
   {
@@ -1511,6 +1745,8 @@
    "weight": 2,
    "group": "crime/face@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 9
   },
   {
@@ -1530,6 +1766,8 @@
    "weight": 2,
    "group": "crime/face@june",
    "delivery": "raised",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -1549,6 +1787,8 @@
    "weight": 2,
    "group": "crime/face@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -1568,6 +1808,8 @@
    "weight": 2,
    "group": "crime/face@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -1587,6 +1829,8 @@
    "weight": 2,
    "group": "crime/face@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -1606,6 +1850,8 @@
    "weight": 2,
    "group": "crime/face@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -1625,6 +1871,8 @@
    "weight": 2,
    "group": "crime/face@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -1647,6 +1895,8 @@
    "weight": 2,
    "group": "deed/after@june",
    "delivery": "hushed",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 4
   },
   {
@@ -1669,6 +1919,8 @@
    "weight": 2,
    "group": "deed/after@june",
    "delivery": "hushed",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1691,6 +1943,8 @@
    "weight": 2,
    "group": "deed/after@june",
    "delivery": "hushed",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 7
   },
   {
@@ -1713,6 +1967,8 @@
    "weight": 2,
    "group": "deed/after@june",
    "delivery": "hushed",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 4
   },
   {
@@ -1735,6 +1991,8 @@
    "weight": 2,
    "group": "deed/after@june",
    "delivery": "hushed",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 4
   },
   {
@@ -1757,6 +2015,8 @@
    "weight": 2,
    "group": "deed/after@june",
    "delivery": "hushed",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1779,6 +2039,8 @@
    "weight": 2,
    "group": "deed/after@june",
    "delivery": "hushed",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -1801,6 +2063,8 @@
    "weight": 2,
    "group": "deed/after@june",
    "delivery": "hushed",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 8
   },
   {
@@ -1818,6 +2082,9 @@
    "weight": 2,
    "group": "way/ask@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
+   "destination": null,
    "words": 6
   },
   {
@@ -1835,6 +2102,9 @@
    "weight": 2,
    "group": "way/ask@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
+   "destination": null,
    "words": 6
   },
   {
@@ -1852,6 +2122,9 @@
    "weight": 2,
    "group": "way/ask@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
+   "destination": null,
    "words": 7
   },
   {
@@ -1869,6 +2142,9 @@
    "weight": 2,
    "group": "way/ask@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
+   "destination": null,
    "words": 8
   },
   {
@@ -1886,6 +2162,9 @@
    "weight": 2,
    "group": "way/ask@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
+   "destination": null,
    "words": 6
   },
   {
@@ -1903,6 +2182,9 @@
    "weight": 2,
    "group": "way/ask@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
+   "destination": null,
    "words": 7
   },
   {
@@ -1920,6 +2202,9 @@
    "weight": 2,
    "group": "way/ask@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
+   "destination": null,
    "words": 9
   },
   {
@@ -1937,6 +2222,9 @@
    "weight": 2,
    "group": "way/ask@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
+   "destination": null,
    "words": 5
   },
   {
@@ -1954,6 +2242,8 @@
    "weight": 2,
    "group": "farewell@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 3
   },
   {
@@ -1971,6 +2261,8 @@
    "weight": 2,
    "group": "farewell@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -1988,6 +2280,8 @@
    "weight": 2,
    "group": "farewell@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 2
   },
   {
@@ -2005,6 +2299,8 @@
    "weight": 2,
    "group": "farewell@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 6
   },
   {
@@ -2022,6 +2318,8 @@
    "weight": 2,
    "group": "farewell@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 3
   },
   {
@@ -2039,6 +2337,8 @@
    "weight": 2,
    "group": "farewell@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 1
   },
   {
@@ -2061,6 +2361,8 @@
    "weight": 2,
    "group": "farewell@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 5
   },
   {
@@ -2082,7 +2384,18 @@
    "weight": 2,
    "group": "farewell@june",
    "delivery": "normal",
+   "calls_police": false,
+   "dialect": "plain",
    "words": 4
+  },
+  {
+   "id": "june_suddaby.own.to_write",
+   "who": "june_suddaby",
+   "situation": "own",
+   "once": "day",
+   "text": "TO WRITE (story lane): 0 own street lines, about 7 words each, in the voice of the card (people/june_suddaby.json). Situations from line-situations.json (greetings by rung and by regard, everyday remarks, the knowing ladder, farewells); at least three closing lines. Everyday remarks of his own are owed even where situational lines exist. Names him: the new owner (rung 1), Mr Nowak or Nowak (2), Frank (3), Frank or Mr Nowak (4, the port's man); Sheila withholds his name until she trusts him; Ron says boss; only the Widow, Danny and Ron once say Frankie; nobody says Tom.",
+   "src": "BLUEPRINT-03 3.2.3, 3.6.3; FIT-L01 (30 for a regular)",
+   "words": 95
   }
  ]
 }

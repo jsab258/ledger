@@ -3,7 +3,7 @@
  "cast_id": "outfit_man",
  "called": "the old firm's man",
  "name": "(never named: canon)",
- "age": 60,
+ "age": 59,
  "sex": "m",
  "role": "One of the old firm Mickey's arrangement was with; at the ferry landing after ten; the one old hand who stays on",
  "kind": "minor",
@@ -89,9 +89,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "dock_worker",
  "lines": {
-  "own": "lines/own-old_firm_man.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "A man of the old firm that worked the landing before the three rivals were anybody. Says 'Mickey's?' and nothing more.",
@@ -102,5 +103,5 @@
  "can_die": true,
  "invented": false,
  "src": "canon (never named); STORY-FRAME 2; hook-cast.json outfit_man",
- "fallback_role": "Ron's asks come by the outfit's man at the office door (this is that man)"
+ "fallback_role": "the landing stands empty until the highest rival fills it (STORY-FRAME 5 Act IIa)"
 }

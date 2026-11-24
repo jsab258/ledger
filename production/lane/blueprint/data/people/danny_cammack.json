@@ -59,7 +59,7 @@
    "mon-sat"
   ],
   [
-   16.0,
+   16.5,
    "cammack_base",
    "the lock-ups",
    "mon-sat"
@@ -67,13 +67,13 @@
   [
    20.0,
    "snooker_hall",
-   "holding court",
+   "by car: holding court",
    "mon-sat"
   ],
   [
-   23.5,
+   22.5,
    "d_nr_40",
-   "his flat",
+   "by car: his flat",
    "mon-sat"
   ],
   [
@@ -95,12 +95,13 @@
    "sun"
   ]
  ],
+ "speaker_kind": null,
  "lines": {
-  "own": "lines/own-danny_cammack.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "authored scenes and live talk only (a rival head: the bank's no_kind)"
  },
  "card": {
-  "who": "Danny Cammack, 27. Drove car two for Mickey and never gave the key back. Thinks the office should have been his. Runs the new crew from the lock-ups behind North Road.",
+  "who": "Danny Cammack, 27. Drove car two, Mickey's own car, and never gave the key back. Thinks the office should have been his. Runs the new crew from the lock-ups behind North Road.",
   "speak": "Quick, funny, needling. Calls Frank 'nephew'. Prices every door out loud.",
   "life": "A flat on North Road; the lock-ups by day; Quay Street by night when he wants noise.",
   "rivals": "Wants the Hook's name and to hear the old firms say it. Fears being somebody's driver again.",

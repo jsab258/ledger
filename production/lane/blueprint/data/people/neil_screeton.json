@@ -59,7 +59,7 @@
    "mon-sat"
   ],
   [
-   18.75,
+   19.5,
    "d_nr_26",
    "home",
    "mon-sat"
@@ -71,9 +71,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "dock_worker",
  "lines": {
-  "own": "lines/own-neil_screeton.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Neil Screeton, 26, Dennis Iveson's yard hand. Chains the crane gap at five every evening since the fire.",
@@ -84,5 +85,6 @@
  "can_die": true,
  "invented": "proposed by the story frame",
  "src": "STORY-FRAME 7 worked example 2 (proposed); 2.8.1 (a yard hand in his twenties)",
+ "fallback_role": "the role passes to another of the same trade, or the thread closes",
  "fight_kind": "big_man"
 }

@@ -257,6 +257,12 @@ ok(lic == ['CC0'], 'sounds: every file CC0 (D56) (%s)' % lic)
 badf = [x.get('id') for x in S.get('sound_list', []) for fid in (x.get('file_ids') or []) if fid not in fids and not str(fid).startswith('see ')]
 ok(not badf, 'sounds: every sound names files that exist (%s)' % badf[:4])
 ok(not re.search(r'thinking', json.dumps([x.get('id', '') + ' ' + x.get('name', '') for x in S.get('sound_list', [])]), re.I), 'sounds: no thinking cue (ruling 24 Nov)')
+# wave 2's cross-file checks (people, routines, lines, jobs, fares, happenings): tools/wave2/check_wave2.py
+if os.path.exists(os.path.join(HERE, 'wave2', 'check_wave2.py')):
+    sys.path.insert(0, os.path.join(HERE, 'wave2'))
+    import check_wave2
+    for _ok, _m in check_wave2.run():
+        ok(_ok, _m)
 print('data files: %d checks passed, %d failed' % (len(OK), len(FAIL)))
 for m in FAIL:
     print('FAIL', m)

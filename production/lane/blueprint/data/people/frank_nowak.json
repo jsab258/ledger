@@ -9,7 +9,7 @@
  "kind": "principal",
  "voice": null,
  "look": {
-  "h": 1.8,
+  "h": 1.75,
   "b": 0.55,
   "skin": 0,
   "hair": [
@@ -40,6 +40,7 @@
  "keepsQuiet": true,
  "home": "toms_flat",
  "sched": [],
+ "speaker_kind": null,
  "lines": {
   "own": "the player's; fixed lines at authored beats only (lines/frank.json)"
  },

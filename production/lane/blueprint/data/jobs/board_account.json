@@ -3,9 +3,9 @@
  "kind": "carry",
  "name": "An account at the Harbour Board",
  "giver": "christine_pickering",
- "act_min": 3,
+ "act_min": 2,
  "rung_min": 3,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "rung 3 and the decent jacket",
  "window": null,
  "offer": [
   "TO WRITE (story lane)"

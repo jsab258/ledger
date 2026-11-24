@@ -1,11 +1,11 @@
 {
  "id": "the_quay",
- "kind": "sit_down",
+ "kind": "fight",
  "name": "The quay at four: the day book",
  "giver": "danny_cammack",
  "act_min": 3,
  "rung_min": 1,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "the last day, after Pauline says car two is not answering",
  "window": [
   "16:00",
   "17:00"
@@ -21,15 +21,63 @@
    "keys": [
     {
      "way": "force",
-     "how": "fists (unless the dial stands at Fired or War)"
+     "how": "fists (Frank may have one good arm)"
     },
     {
      "way": "talk",
-     "how": "talk"
+     "how": "talk him off the edge with what Frank knows"
     },
     {
      "way": "choice",
-     "how": "the car itself"
+     "how": "block Mickey's car in with car three"
+    }
+   ],
+   "fail": "lost",
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "won",
+   "at": "fishing_quay_east",
+   "verb": "the book back and Danny at the edge",
+   "keys": [
+    {
+     "way": "route",
+     "how": "let him go on the morning boat"
+    },
+    {
+     "way": "choice",
+     "how": "put him back on the board under Frank"
+    },
+    {
+     "way": "choice",
+     "how": "keep him for Ellis"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "lost",
+   "at": "rank_mickeys",
+   "verb": "the book goes where Danny takes it; the choice is made for him; car two back on the rank by morning, its keys on Mickey's board (RT2-06)",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "take it"
+    },
+    {
+     "way": "talk",
+     "how": "go to the counter at five with nothing"
+    },
+    {
+     "way": "choice",
+     "how": "send for Ellis"
     }
    ],
    "fail": null,
@@ -52,5 +100,6 @@
  "clock": {
   "realSecondsPerGameHour": 120
  },
- "src": "STORY-FRAME 5 Act III (the last day)"
+ "src": "STORY-FRAME 5 Act III (the last day)",
+ "dial_rule": "if the dial stands at Fired or War, Danny shows a gun and the quay is talk only: no gunfight is built (for the story lane to confirm)"
 }

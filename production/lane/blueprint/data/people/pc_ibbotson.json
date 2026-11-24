@@ -2,7 +2,7 @@
  "id": "pc_ibbotson",
  "cast_id": null,
  "called": "the constable",
- "name": "Ian Ibbotson",
+ "name": "Martin Ibbotson",
  "age": 29,
  "sex": "m",
  "role": "The beat constable: Quay Street and the north road by day, the night beat 22:00 to 06:00 on his night weeks",
@@ -27,17 +27,17 @@
   ],
   "x": []
  },
- "nerve": 0.45,
- "venal": 0.58,
+ "nerve": 0.8,
+ "venal": 0,
  "talk": 0.2,
  "discretion": 0.9,
  "temperament": {
-  "nerve": 0.45,
-  "dutiful": 0.4,
-  "willingness": 0.5,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+  "nerve": 0.8,
+  "dutiful": 1.0,
+  "willingness": 0.2,
+  "from": "prototype cast.js (nerve; dutiful from 1 - venal x 0.8; willingness from talk)"
  },
- "keepsQuiet": false,
+ "keepsQuiet": true,
  "home": "edge_north",
  "sched": [
   [
@@ -47,37 +47,25 @@
    "mon-fri"
   ],
   [
-   8.0,
+   6.0,
    "police_station",
    "parade",
    "mon-fri"
   ],
   [
-   8.5,
+   6.5,
    "mickeys",
-   "the day beat, Quay Street (police.json)",
+   "the day beat, early turn (police.json)",
    "mon-fri"
   ],
   [
-   12.5,
-   "caff",
-   "his break",
-   "mon-fri"
-  ],
-  [
-   13.0,
-   "cold_stores",
-   "the day beat, the north road to the cold-store road (police.json)",
-   "mon-fri"
-  ],
-  [
-   16.0,
+   14.0,
    "police_station",
    "off duty",
    "mon-fri"
   ],
   [
-   16.5,
+   14.5,
    "edge_north",
    "off duty",
    "mon-fri"
@@ -89,9 +77,10 @@
    "sat-sun"
   ]
  ],
+ "speaker_kind": "night_shift",
  "lines": {
   "own": "lines/own-pc_ibbotson.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "A police constable from the town station, sent down Quay Street when someone has made a statement.",

@@ -49,19 +49,20 @@
   [
    7.75,
    "launderette",
-   "the front",
+   "by bike: the front",
    "mon-sun"
   ],
   [
    23.25,
    "d_cl_11",
-   "home",
+   "by bike: home",
    "mon-sun"
   ]
  ],
+ "speaker_kind": "anyone",
  "lines": {
-  "own": "lines/own-beryl_wood.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Beryl Wood, 48, minds the Washeteria's front for Mr Tasker. Change for the machines and the street's news.",
@@ -69,7 +70,7 @@
   "life": "11 Chapel Lane.",
   "rivals": "None."
  },
- "can_die": true,
+ "can_die": false,
  "invented": true,
  "src": "invented: places.json launderette ('the Washeteria's keeper')"
 }

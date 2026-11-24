@@ -5,7 +5,7 @@
  "giver": "derek_hebblewhite",
  "act_min": 3,
  "rung_min": 1,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "Act III, morning two",
  "window": null,
  "offer": [
   "TO WRITE (story lane)"
@@ -48,5 +48,6 @@
  "clock": {
   "realSecondsPerGameHour": 120
  },
- "src": "STORY-FRAME 5 Act III item 2; side story 1 (The long way round)"
+ "src": "STORY-FRAME 5 Act III item 2; side story 1 (The long way round)",
+ "order": 2
 }

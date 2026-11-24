@@ -49,21 +49,21 @@
    "mon-sat"
   ],
   [
-   5.75,
+   5.08,
+   "fish_dock",
+   "by bike: along the quay past the boxes, first of the dock men",
+   "mon-sat"
+  ],
+  [
+   6.0,
    "dock_gate",
-   "the pen, first in by the quay road",
+   "by bike: the pen",
    "mon-sat"
   ],
   [
-   14.0,
-   "caff",
-   "his tea",
-   "mon-sat"
-  ],
-  [
-   15.5,
+   14.5,
    "d_nr_1",
-   "home",
+   "by bike: home",
    "mon-sat"
   ],
   [
@@ -73,9 +73,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "dock_worker",
  "lines": {
-  "own": "lines/own-bill_huxtable.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Bill Huxtable, 48, docker since he was fifteen. First along the quay every morning; at the pen before anybody.",
@@ -86,5 +87,6 @@
  "can_die": true,
  "invented": true,
  "src": "invented: 2.5.5 (the first dock worker)",
+ "fallback_role": "the role passes to another of the same trade, or the thread closes",
  "fight_kind": "big_man"
 }

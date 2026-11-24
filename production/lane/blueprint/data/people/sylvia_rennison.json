@@ -61,7 +61,7 @@
    "mon-fri"
   ],
   [
-   11.5,
+   11.75,
    "boarding_house",
    "the house",
    "mon-fri"
@@ -85,12 +85,13 @@
    "sat-sun"
   ]
  ],
+ "speaker_kind": "shopkeeper",
  "lines": {
   "own": "lines/own-sylvia_rennison.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "She keeps Regent House, the boarding house on Quay Street where Frank has a room. Mickey paid his first week.",
+  "who": "Sylvia Rennison, 64, a widow who keeps Regent House, the boarding house on the quay. House rules first. One of Danny Cammack's lot is three weeks behind with his rent.",
   "speak": "Starched, sharp, house rules first. Thaws for a lodger who pays and wipes his feet.",
   "life": "Twenty-six years of lodgers: ferry crews, reps, men between ships. Knows what time every lodger comes in.",
   "fire": "Two of her lodgers were firemen that week. They would not talk at breakfast.",

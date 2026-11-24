@@ -27,15 +27,15 @@
   ],
   "x": []
  },
- "nerve": 0.45,
- "venal": 0.58,
+ "nerve": 0.65,
+ "venal": 0.1,
  "talk": 0.6,
  "discretion": 0.4,
  "temperament": {
-  "nerve": 0.45,
-  "dutiful": 0.4,
-  "willingness": 0.5,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+  "nerve": 0.65,
+  "dutiful": 0.92,
+  "willingness": 0.6,
+  "from": "prototype cast.js (nerve; dutiful from 1 - venal x 0.8; willingness from talk)"
  },
  "keepsQuiet": false,
  "home": "d_bp_5",
@@ -71,9 +71,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "shopkeeper",
  "lines": {
   "own": "lines/own-lily_tang.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "She and her husband Peter keep the Golden River takeaway and live over it. She takes the orders at the hatch.",

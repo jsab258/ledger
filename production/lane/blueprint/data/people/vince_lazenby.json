@@ -49,13 +49,13 @@
   [
    10.75,
    "snooker_hall",
-   "opening up",
+   "by bike: opening up",
    "mon-sat"
   ],
   [
    22.75,
    "d_nr_13",
-   "home",
+   "by bike: home",
    "mon-sat"
   ],
   [
@@ -65,9 +65,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "shopkeeper",
  "lines": {
-  "own": "lines/own-vince_lazenby.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Vince Lazenby, 49, keeps the snooker hall. Danny holds court at his back table; he lets him.",
@@ -77,5 +78,6 @@
  },
  "can_die": true,
  "invented": true,
- "src": "invented: places.json snooker_hall (unnamed keeper)"
+ "src": "invented: places.json snooker_hall (unnamed keeper)",
+ "fallback_role": "the role passes to another of the same trade, or the thread closes"
 }

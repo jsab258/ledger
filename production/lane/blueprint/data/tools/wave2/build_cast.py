@@ -18,6 +18,7 @@ out = {
                 "production/specs/hook-cast.json (41)", "tools/lane/prototype/project/src/cast.js (28 looks and cards)",
                 "game-design/town-traits-draft-2026-09-29.md (temper figures)", "tools/lane/prototype/project/src/game/tune/fightx.js (fighter kinds)"],
     "counts": {"people": len(C.P), "by_kind": dict(counts), "by_origin": dict(inv)},
+    "cover_rule": "Frank's line (RT-09, RT2-05) covers every woman, anyone of sixty or over and the priest: can_die false for them; everyone else can be killed or hospitalised and names a fallback_role.",
     "name_ladder": ["the new owner", "Nowak", "Frank", "Frankie"],
     "name_ladder_note": "Decision of 24 Nov: the lead is Frank Nowak (Polish father, British mother, Mickey Suddaby's nephew). Nobody says Tom or Tommy. The frame's 'three people say Tommy at the fourth rung' becomes Frankie: the Widow to own him, Danny to needle him, Ron once, if ever. Danny's own needle is 'nephew', outside the ladder.",
     "fighter_kinds": {
@@ -43,7 +44,11 @@ out = {
     "open_points": [
         "The story lane's CAST.md and CAST-CHANGES.md had not landed when this file was made; every name marked proposed by the frame, and every invented one, is open to them.",
         "Frank Stathers (frame, proposed) is renamed Vic Stathers here so that the lead is the only Frank; the story lane should confirm or choose another.",
-        "Wave 1 placeholders replaced here: the cold-store manager 'Norman' becomes Eric Tharratt (frame); the Harbour Board 'clerk Susan' is Christine Pickering (canon regular, side story 20; Susan Coverdale is the customs officer); the bought officers' prototype hints PC Harker and DC Pollitt become the frame's PC Trevor Garton and DC Graham Wardell; Portside Cars' owner Len Wardle becomes Len Ackroyd so he is not mistaken for DC Wardell.",
-        "Prototype card texts that named a real police force or city (Humberside CID, Hull vowels) are scrubbed to CID and northern vowels."]}
+        "Wave 1 placeholders replaced here: the cold-store manager 'Norman' becomes Eric Tharratt (frame); the Harbour Board 'clerk Susan' is Christine Pickering (canon regular, side story 20; Susan Coverdale is the customs officer); the bought officers' prototype hints PC Harker and DC Pollitt become the frame's PC Trevor Garton and DC Graham Wardell; Portside Cars' owner Len Wardle becomes Clive Ackroyd so he is not mistaken for DC Wardell.",
+        "Prototype card texts that named a real police force or city (Humberside CID, Hull vowels) are scrubbed to CID and northern vowels.",
+        "After the fresh review: can_die follows Frank's line (RT-09, RT2-05): false for every woman, anyone of sixty or over and the priest, true for everyone else, each with a fallback_role. Agar and Iveson (62, approved sheets) are therefore covered: RT2-05's 'rival head' and Iveson fallbacks cannot fire by Frank's hand; the keeper should note it in the blueprint.",
+        "Renamed after the fresh review to end name clashes (all invented here): Dorothy Garbett to Dorothy Kirkup, Gerald Pashley to Gerald Thwaite, Leonard Tasker to Victor Tasker, Len Ackroyd to Clive Ackroyd, Len Garside to Alf Garside, Ronald Peart to Herbert Peart, Tadeusz Nowicki to Tadeusz Wrona, Ken Dobbin to Ken Swales, Janet Ruddle to Janet Lumb, Ray Kitson to Roy Bellwood, Raymond Kaye to Neville Kaye, Brian Tindall to Ted Tindall, Norman Shillito to Ernest Shillito, Ian Ibbotson to Martin Ibbotson; Paddy Rourke to Kieran Rourke and Pat Brannigan to Steve Brannigan (also rewritten so no Irish person is a type).",
+        "Rival heads (Danny, the Widow, Agar, Garbutt) keep no own street lines: they speak in authored scenes and live talk (the old bank's no_kind). Every other person names a speaker_kind for the shared lines.",
+        "Wave 1 files still to fix (outside this job): places.json shows the player 'Tom's flat above the office' (should be 'the flat above the office'); places.json keeps a second pawnbroker, Harrison's (waynes_pawn), though Wayne is Rita's back-room hand; the Tangs' takeaway is in neither map.json nor places.json."]}
 json.dump(out, open(os.path.join(D, 'cast.json'), 'w'), indent=1, ensure_ascii=False)
 print('cast.json', len(people), dict(counts), dict(inv))

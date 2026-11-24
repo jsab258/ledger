@@ -18,6 +18,7 @@
    "text": "Hello. Have you got a minute?",
    "once": "never",
    "src": "production/specs/suggested-lines.json greet (approved 1 Oct)",
+   "not_twice_in_one_talk": true,
    "words": 6
   },
   {
@@ -27,6 +28,7 @@
    "text": "Sorry to bother you.",
    "once": "never",
    "src": "production/specs/suggested-lines.json greet (approved 1 Oct)",
+   "not_twice_in_one_talk": true,
    "words": 4
   },
   {
@@ -36,6 +38,7 @@
    "text": "All right? Can I have a word?",
    "once": "never",
    "src": "production/specs/suggested-lines.json greet (approved 1 Oct)",
+   "not_twice_in_one_talk": true,
    "words": 7
   },
   {
@@ -45,6 +48,7 @@
    "text": "Hello there.",
    "once": "never",
    "src": "production/specs/suggested-lines.json greet (approved 1 Oct)",
+   "not_twice_in_one_talk": true,
    "words": 2
   },
   {
@@ -54,6 +58,7 @@
    "text": "Mind if I stop a minute?",
    "once": "never",
    "src": "production/specs/suggested-lines.json greet (approved 1 Oct)",
+   "not_twice_in_one_talk": true,
    "words": 6
   },
   {
@@ -63,6 +68,7 @@
    "text": "Hello. Is now a good time?",
    "once": "never",
    "src": "production/specs/suggested-lines.json greet (approved 1 Oct)",
+   "not_twice_in_one_talk": true,
    "words": 6
   },
   {
@@ -72,6 +78,7 @@
    "text": "I'll let you get on.",
    "once": "never",
    "src": "production/specs/suggested-lines.json leave (approved 1 Oct)",
+   "not_twice_in_one_talk": true,
    "words": 5
   },
   {
@@ -81,6 +88,7 @@
    "text": "I won't keep you.",
    "once": "never",
    "src": "production/specs/suggested-lines.json leave (approved 1 Oct)",
+   "not_twice_in_one_talk": true,
    "words": 4
   },
   {
@@ -90,6 +98,7 @@
    "text": "Right. I'd best be off.",
    "once": "never",
    "src": "production/specs/suggested-lines.json leave (approved 1 Oct)",
+   "not_twice_in_one_talk": true,
    "words": 5
   },
   {
@@ -99,6 +108,7 @@
    "text": "I'll leave you to it.",
    "once": "never",
    "src": "production/specs/suggested-lines.json leave (approved 1 Oct)",
+   "not_twice_in_one_talk": true,
    "words": 5
   },
   {
@@ -108,6 +118,7 @@
    "text": "Another time, then.",
    "once": "never",
    "src": "production/specs/suggested-lines.json leave (approved 1 Oct)",
+   "not_twice_in_one_talk": true,
    "words": 3
   },
   {
@@ -117,6 +128,7 @@
    "text": "I won't stop, then.",
    "once": "never",
    "src": "production/specs/suggested-lines.json leave (approved 1 Oct)",
+   "not_twice_in_one_talk": true,
    "words": 4
   },
   {
@@ -126,6 +138,7 @@
    "text": "I'll not hold you up.",
    "once": "never",
    "src": "production/specs/suggested-lines.json leave (approved 1 Oct)",
+   "not_twice_in_one_talk": true,
    "words": 5
   },
   {
@@ -135,6 +148,7 @@
    "text": "Have you always lived round here?",
    "once": "never",
    "src": "production/specs/suggested-lines.json personal (approved 1 Oct)",
+   "not_twice_in_one_talk": true,
    "words": 6
   },
   {
@@ -144,6 +158,7 @@
    "text": "What was Mickey like?",
    "once": "never",
    "src": "production/specs/suggested-lines.json personal (approved 1 Oct)",
+   "not_twice_in_one_talk": true,
    "words": 4
   },
   {
@@ -153,6 +168,7 @@
    "text": "Where's good for a cup of tea round here?",
    "once": "never",
    "src": "production/specs/suggested-lines.json personal (approved 1 Oct)",
+   "not_twice_in_one_talk": true,
    "words": 9
   },
   {
@@ -162,6 +178,7 @@
    "text": "What do you make of the street these days?",
    "once": "never",
    "src": "production/specs/suggested-lines.json personal (approved 1 Oct)",
+   "not_twice_in_one_talk": true,
    "words": 9
   },
   {
@@ -171,7 +188,11 @@
    "text": "I'm still finding my feet here.",
    "once": "never",
    "src": "production/specs/suggested-lines.json personal (approved 1 Oct)",
-   "words": 6
+   "not_twice_in_one_talk": true,
+   "words": 6,
+   "conditions": {
+    "rung_at_most": 2
+   }
   },
   {
    "id": "frank.suggest.personal.06",
@@ -180,7 +201,11 @@
    "text": "It's all new to me, this.",
    "once": "never",
    "src": "production/specs/suggested-lines.json personal (approved 1 Oct)",
-   "words": 6
+   "not_twice_in_one_talk": true,
+   "words": 6,
+   "conditions": {
+    "rung_at_most": 2
+   }
   },
   {
    "id": "frank.suggest.personal.07",
@@ -189,6 +214,7 @@
    "text": "What do people do round here of a Sunday?",
    "once": "never",
    "src": "production/specs/suggested-lines.json personal (approved 1 Oct)",
+   "not_twice_in_one_talk": true,
    "words": 9
   },
   {
@@ -198,6 +224,7 @@
    "text": "Who should I get to know round here?",
    "once": "never",
    "src": "production/specs/suggested-lines.json personal (approved 1 Oct)",
+   "not_twice_in_one_talk": true,
    "words": 8
   },
   {
@@ -207,7 +234,11 @@
    "text": "Do you get many strangers down here?",
    "once": "never",
    "src": "production/specs/suggested-lines.json personal (approved 1 Oct)",
-   "words": 7
+   "not_twice_in_one_talk": true,
+   "words": 7,
+   "conditions": {
+    "rung_at_most": 2
+   }
   },
   {
    "id": "frank.suggest.personal.10",
@@ -216,6 +247,7 @@
    "text": "What's the best thing about this street?",
    "once": "never",
    "src": "production/specs/suggested-lines.json personal (approved 1 Oct)",
+   "not_twice_in_one_talk": true,
    "words": 7
   },
   {
@@ -224,6 +256,8 @@
    "situation": "decision.ron-ask",
    "text": "Tell them no. I'm not doing it.",
    "once": "never",
+   "stance": "refuse",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.ron-ask.refuse (approved 1 Oct)",
    "words": 7
   },
@@ -233,6 +267,8 @@
    "situation": "decision.ron-ask",
    "text": "I'm not carrying it. Count me out.",
    "once": "never",
+   "stance": "refuse",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.ron-ask.refuse (approved 1 Oct)",
    "words": 7
   },
@@ -242,6 +278,8 @@
    "situation": "decision.ron-tell-them-no",
    "text": "Yes. Tell them no.",
    "once": "never",
+   "stance": "yes",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.ron-tell-them-no.yes (approved 1 Oct)",
    "words": 4
   },
@@ -251,6 +289,8 @@
    "situation": "decision.ron-tell-them-no",
    "text": "Yes, I'm sure.",
    "once": "never",
+   "stance": "yes",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.ron-tell-them-no.yes (approved 1 Oct)",
    "words": 3
   },
@@ -260,6 +300,8 @@
    "situation": "decision.ron-tell-them-no",
    "text": "No, hold off for now.",
    "once": "never",
+   "stance": "no",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.ron-tell-them-no.no (approved 1 Oct)",
    "words": 5
   },
@@ -269,6 +311,8 @@
    "situation": "decision.ron-tell-them-no",
    "text": "No. I'll think on it.",
    "once": "never",
+   "stance": "no",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.ron-tell-them-no.no (approved 1 Oct)",
    "words": 5
   },
@@ -278,6 +322,8 @@
    "situation": "decision.ron-tell-them-no",
    "text": "What happens if I don't?",
    "once": "never",
+   "stance": "keep",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.ron-tell-them-no.keep (approved 1 Oct)",
    "words": 5
   },
@@ -287,6 +333,8 @@
    "situation": "decision.ron-tell-them-no",
    "text": "What would Mickey have done?",
    "once": "never",
+   "stance": "keep",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.ron-tell-them-no.keep (approved 1 Oct)",
    "words": 5
   },
@@ -296,6 +344,8 @@
    "situation": "decision.sheila-week",
    "text": "Wind it down. Just the cabs.",
    "once": "never",
+   "stance": "winddown",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week.winddown (approved 1 Oct)",
    "words": 6
   },
@@ -305,6 +355,8 @@
    "situation": "decision.sheila-week",
    "text": "I'm getting out of Mickey's business.",
    "once": "never",
+   "stance": "winddown",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week.winddown (approved 1 Oct)",
    "words": 6
   },
@@ -314,6 +366,8 @@
    "situation": "decision.sheila-week",
    "text": "I'm taking it on. All of it.",
    "once": "never",
+   "stance": "takeover",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week.takeover (approved 1 Oct)",
    "words": 7
   },
@@ -323,6 +377,8 @@
    "situation": "decision.sheila-week",
    "text": "I'll keep it going. All of it.",
    "once": "never",
+   "stance": "takeover",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week.takeover (approved 1 Oct)",
    "words": 7
   },
@@ -332,6 +388,8 @@
    "situation": "decision.sheila-week",
    "text": "I'm not saying. That's my answer.",
    "once": "never",
+   "stance": "wontsay",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week.wontsay (approved 1 Oct)",
    "words": 6
   },
@@ -341,6 +399,8 @@
    "situation": "decision.sheila-week",
    "text": "That's my business, Sheila.",
    "once": "never",
+   "stance": "wontsay",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week.wontsay (approved 1 Oct)",
    "words": 4
   },
@@ -350,6 +410,8 @@
    "situation": "decision.sheila-week-winddown",
    "text": "Yes. Wind it down.",
    "once": "never",
+   "stance": "yes",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week-winddown.yes (approved 1 Oct)",
    "words": 4
   },
@@ -359,6 +421,8 @@
    "situation": "decision.sheila-week-winddown",
    "text": "Yes. Just the cabs.",
    "once": "never",
+   "stance": "yes",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week-winddown.yes (approved 1 Oct)",
    "words": 4
   },
@@ -368,6 +432,8 @@
    "situation": "decision.sheila-week-winddown",
    "text": "No. Give me a bit longer.",
    "once": "never",
+   "stance": "no",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week-winddown.no (approved 1 Oct)",
    "words": 6
   },
@@ -377,6 +443,8 @@
    "situation": "decision.sheila-week-winddown",
    "text": "No. Let me think.",
    "once": "never",
+   "stance": "no",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week-winddown.no (approved 1 Oct)",
    "words": 4
   },
@@ -386,6 +454,8 @@
    "situation": "decision.sheila-week-winddown",
    "text": "What would that mean for you?",
    "once": "never",
+   "stance": "keep",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week-winddown.keep (approved 1 Oct)",
    "words": 6
   },
@@ -395,6 +465,8 @@
    "situation": "decision.sheila-week-winddown",
    "text": "What happens to Ron, then?",
    "once": "never",
+   "stance": "keep",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week-winddown.keep (approved 1 Oct)",
    "words": 5
   },
@@ -404,6 +476,8 @@
    "situation": "decision.sheila-week-takeover",
    "text": "Yes. It's mine now.",
    "once": "never",
+   "stance": "yes",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week-takeover.yes (approved 1 Oct)",
    "words": 4
   },
@@ -413,6 +487,8 @@
    "situation": "decision.sheila-week-takeover",
    "text": "Yes. I'm keeping it going.",
    "once": "never",
+   "stance": "yes",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week-takeover.yes (approved 1 Oct)",
    "words": 5
   },
@@ -422,6 +498,8 @@
    "situation": "decision.sheila-week-takeover",
    "text": "No. Not yet.",
    "once": "never",
+   "stance": "no",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week-takeover.no (approved 1 Oct)",
    "words": 3
   },
@@ -431,6 +509,8 @@
    "situation": "decision.sheila-week-takeover",
    "text": "No. I need longer.",
    "once": "never",
+   "stance": "no",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week-takeover.no (approved 1 Oct)",
    "words": 4
   },
@@ -440,6 +520,8 @@
    "situation": "decision.sheila-week-takeover",
    "text": "What comes with it, exactly?",
    "once": "never",
+   "stance": "keep",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week-takeover.keep (approved 1 Oct)",
    "words": 5
   },
@@ -449,6 +531,8 @@
    "situation": "decision.sheila-week-takeover",
    "text": "Who else knows about it?",
    "once": "never",
+   "stance": "keep",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week-takeover.keep (approved 1 Oct)",
    "words": 5
   },
@@ -458,6 +542,8 @@
    "situation": "decision.sheila-week-wontsay",
    "text": "Yes. I'm saying nothing.",
    "once": "never",
+   "stance": "yes",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week-wontsay.yes (approved 1 Oct)",
    "words": 4
   },
@@ -467,6 +553,8 @@
    "situation": "decision.sheila-week-wontsay",
    "text": "Yes. That's for me to know.",
    "once": "never",
+   "stance": "yes",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week-wontsay.yes (approved 1 Oct)",
    "words": 6
   },
@@ -476,6 +564,8 @@
    "situation": "decision.sheila-week-wontsay",
    "text": "No. Give me a minute.",
    "once": "never",
+   "stance": "no",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week-wontsay.no (approved 1 Oct)",
    "words": 5
   },
@@ -485,6 +575,8 @@
    "situation": "decision.sheila-week-wontsay",
    "text": "No. Ask me again later.",
    "once": "never",
+   "stance": "no",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week-wontsay.no (approved 1 Oct)",
    "words": 5
   },
@@ -494,6 +586,8 @@
    "situation": "decision.sheila-week-wontsay",
    "text": "Why does it matter so much?",
    "once": "never",
+   "stance": "keep",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week-wontsay.keep (approved 1 Oct)",
    "words": 6
   },
@@ -503,6 +597,8 @@
    "situation": "decision.sheila-week-wontsay",
    "text": "What would you do?",
    "once": "never",
+   "stance": "keep",
+   "not_twice_in_one_talk": true,
    "src": "production/specs/suggested-lines.json deals.sheila-week-wontsay.keep (approved 1 Oct)",
    "words": 4
   },

@@ -79,9 +79,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "dock_worker",
  "lines": {
   "own": "lines/own-dennis_iveson.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "A scrap dealer with a yard at the west end of the quay. He owes Mickey's book eighty pounds and laughs about it.",
@@ -90,9 +91,7 @@
   "fire": "He bought ironwork out of the ruin of No. 4, cheap, from Agar's clerk, the same week.",
   "rivals": "Sells to anyone. Thinks Cammack is a boy playing at it."
  },
- "can_die": true,
+ "can_die": false,
  "invented": false,
- "src": "canon; 2.8.1; RT2-05",
- "fallback_role": "the fire thread runs on through Alison and Ellis, his debt closed",
- "fight_kind": "big_man"
+ "src": "canon; 2.8.1; RT2-05"
 }

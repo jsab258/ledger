@@ -51,13 +51,13 @@
   [
    9.0,
    "ritas",
-   "the appraising",
+   "by bike: the appraising",
    "mon-sat"
   ],
   [
    17.25,
    "d_nr_35",
-   "home",
+   "by bike: home",
    "mon-sat"
   ],
   [
@@ -67,9 +67,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "shopkeeper",
  "lines": {
   "own": "lines/own-stanley_hirst.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Stanley Hirst, 63, appraises for Rita. Thirty years a jeweller's man in town before that.",

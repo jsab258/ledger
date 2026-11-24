@@ -5,7 +5,7 @@
  "giver": "frank_nowak",
  "act_min": 2,
  "rung_min": 2,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "from Act II, at the board or in talk with one of his men",
  "window": null,
  "offer": [
   "TO WRITE (story lane)"
@@ -13,20 +13,20 @@
  "steps": [
   {
    "id": "send",
-   "at": "net_loft",
-   "verb": "frame (through a named man; the man's nerve against the target's)",
+   "at": "rank_mickeys",
+   "verb": "frame: given at the board or in talk; the named man does it on the next night his routine allows",
    "keys": [
     {
-     "way": "choice",
-     "how": "the board's line"
+     "way": "route",
+     "how": "at night, unseen, at the target's door or his road home"
     },
     {
      "way": "talk",
-     "how": "a word in talk"
+     "how": "in the open, as a message the street can read"
     },
     {
      "way": "watch",
-     "how": "the night his routine allows"
+     "how": "at the quietest hour of the target's routine (routines.json)"
     }
    ],
    "fail": null,
@@ -44,11 +44,11 @@
  },
  "ledger": "TO WRITE (story lane)",
  "returns": "Frank learns the morning after from the man's own line; the town can trace the chain",
- "people": [
-  "wes_akers"
- ],
+ "people": [],
  "clock": {
   "realSecondsPerGameHour": 120
  },
- "src": "BLUEPRINT-01 1.7.2 and RT-08 (the eight verbs); an example target, not a script"
+ "src": "BLUEPRINT-01 1.7.2 and RT-08 (the eight verbs); an example target, not a script",
+ "target": "chosen from the Ledger (a person or place Frank knows); never Sheila, Pauline, Ada, June, Alison, Ellis, the Widow, Father Walsh or anyone 60 or over (RT2-05, RT-09): Frank refuses in his own words",
+ "man": "chosen: one of his men; resolved by the man's nerve against the target's, the watchers, the light and the noise, within two game nights (1.7.2)"
 }

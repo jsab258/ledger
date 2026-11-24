@@ -44,25 +44,55 @@
    0.0,
    "d_nr_14",
    "asleep",
-   "mon-fri"
+   "mon,wed,fri"
   ],
   [
    8.5,
    "customs",
-   "the customs house",
-   "mon-fri"
+   "by bike: the customs house",
+   "mon,wed,fri"
   ],
   [
    17.25,
    "ritas",
-   "past the window",
-   "mon-fri"
+   "by bike: past the window",
+   "mon,wed,fri"
   ],
   [
-   18.5,
+   19.0,
    "d_nr_14",
    "home",
-   "mon-fri"
+   "mon,wed,fri"
+  ],
+  [
+   0.0,
+   "d_nr_14",
+   "asleep",
+   "tue,thu"
+  ],
+  [
+   8.5,
+   "customs",
+   "by bike: the customs house",
+   "tue,thu"
+  ],
+  [
+   17.25,
+   "bus_stop_qs",
+   "by bike: letters for the solicitor's in town",
+   "tue,thu"
+  ],
+  [
+   17.5,
+   "edge_north",
+   "by bus: Agar's office in town",
+   "tue,thu"
+  ],
+  [
+   19.5,
+   "d_nr_14",
+   "home",
+   "tue,thu"
   ],
   [
    0.0,
@@ -71,9 +101,10 @@
    "sat-sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
   "own": "lines/own-susan_coverdale.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "A customs officer at the Harbour Office. She meets every ferry, the last one at half past ten at night, and goes off duty at eleven.",
@@ -82,7 +113,7 @@
   "fire": "There were goods under bond in No. 4. The paperwork does not match what burned. She has told Ellis so.",
   "rivals": "She has stopped the Widow's lorries twice and found nothing either time."
  },
- "can_die": true,
+ "can_die": false,
  "invented": false,
  "src": "canon; 2.10.2; side story 19"
 }

@@ -12,36 +12,49 @@
  "rules": {
   "rows": "A row holds from its game time until the next row of the same day; every day starts at 00:00. days omitted means daily.",
   "place": "A places.json id, or a map.json door id for a home. edge_north and edge_west mean off the Hook (home across town, the bus, the station).",
-  "walking_reach": "Between two rows on the Hook the walk on map.json's walking graph at 1.4 m/s (1.1 m/s at 70 and over) is taken out of the end of the stay before it (the person sets off early enough to arrive at the row's time) and uses no more than three quarters of that stay, counted in game minutes at 2 real seconds a game minute (120 s a game hour). Checked in code: tools/wave2/build_people.py.",
-  "from_off_the_hook": "Arriving from off the Hook (edge_north, edge_west, the police station, the Infirmary, licensing, the Copper Row market), the person is placed out of sight at the nearest soft edge, bus stop or door and is not reach-checked: the bus, a bike or a lift in town are not simulated (chosen).",
-  "hours": "A customer act (breakfast, dinner, shopping, a frame) falls inside the place's public hours; a keeper or worker may be there before opening and after closing.",
+  "walking_reach": "CLK-03 restated for the 120 s hour (2 real seconds a game minute): on foot a move is at most 250 m (about 200 m, the blueprint's figure, with a tolerance), at 1.4 m/s (1.1 m/s at 70 and over, 1.1 m/s for a constable). A longer move is made by bike (5 m/s), by car (9 m/s; car owners listed in build_people.py CARS) or by cab (65 and over, or a fare); the mode is written at the start of the act. The travel comes out of the end of the stay before it and may use at most half that stay, so a person is at each place for at least half its row. Nobody leaves home before 05:00 (dock and fish-dock men 04:00) unless he works nights. Checked in code: tools/wave2/build_people.py.",
+  "from_off_the_hook": "edge_north and edge_west are the two soft edges: a person whose row is there is off the Hook. Arriving, he appears at that soft edge at the row's time (or at bus_stop_qs when the row before is a 'by bus' row) and walks or rides on; leaving, he goes to it. The police station, the Infirmary, licensing and the Copper Row market are off-map places reached through edge_north. Moves through a soft edge are not reach-checked (the bus and the town are not simulated).",
+  "hours": "A customer act (breakfast, dinner, shopping, a frame, Mass, leaflets) falls inside the place's public hours for the whole stay; a keeper or worker may be there before opening and after closing.",
+  "rota": "Police: the day beat 06:00 to 22:00 in two turns (PC Ibbotson early, PC Ackrill late, weekdays) and the night beat 22:00 to 06:00 (PC Haigh, Sunday to Thursday nights); weekend turns and Friday and Saturday nights are walked by a constable from town (police.json beat_constable_second), and the custody desk outside Sgt Bellwood's weekday days by the night sergeant in town (chosen).",
+  "firm_shifts": "Kevin 06:00 to 18:00 and Terry 18:00 to 06:00 every day, Pauline on the radio 07:00 to 19:00 every day, as timetables.json; Sheila at the counter 08:30 to 17:30 weekdays (17:45 on Friday for the reckoning), 08:30 to 13:00 Saturday and 10:00 to 13:00 Sunday for the week's read-back (STORY-FRAME 1). After her the counter is Pauline's to 19:00 and Ron's on the door to 23:00; timetables.json shift_counter (07:00 to 23:00, Sheila) should say so.",
   "finders": "2.5.5: whoever's routine next brings them past an unseen deed finds it; the named finders are listed in finders below."
  },
  "chosen_values": {
   "walk_mps": 1.4,
   "walk_mps_70_and_over": 1.1,
-  "reach_share_of_stay": 0.75
+  "foot_cap_m": 250,
+  "bike_mps": 5.0,
+  "car_mps": 9.0,
+  "travel_share_of_stay_before": 0.5,
+  "earliest_from_home": "05:00 (dock 04:00)"
  },
  "finders": [
   {
    "person": "edna_coulson",
-   "from": "05:45",
+   "from": "06:00",
    "passes": [
-    "harbour_board",
+    "mickeys",
     "tea_room",
-    "agar_base"
+    "snooker_hall"
    ],
-   "finds": "a forced door, glass or anything missing at the Harbour Board, the Copper Kettle or the agents' office (the cleaner at six)"
+   "finds": "a forced door, glass or anything missing at Mickey's front office, the Copper Kettle or the snooker hall (the cleaner at six)"
+  },
+  {
+   "person": "stan_pickles",
+   "from": "07:30",
+   "passes": [
+    "harbour_board"
+   ],
+   "finds": "the Harbour Board and its works yard, first in"
   },
   {
    "person": "bill_huxtable",
-   "from": "05:15",
+   "from": "05:05",
    "passes": [
-    "ferry_landing",
     "fish_dock",
     "dock_gate"
    ],
-   "finds": "anything left on the quay overnight between the landing and the pen (the first dock worker)"
+   "finds": "anything left on the east quay and the fish dock overnight (the first dock worker, from 05:05); the landing's first passer is Gordon Leckenby at 06:00"
   },
   {
    "person": "eddie_birtwhistle",
@@ -106,11 +119,9 @@
    "person": "pc_haigh",
    "from": "22:00",
    "passes": [
-    "mickeys",
-    "mickeys_yard",
-    "ferry_landing"
+    "mickeys"
    ],
-   "finds": "Mickey's door, the yards' lane and the landing on the night beat"
+   "finds": "Mickey's door, the yards' lane and the landing on the night beat (police.json walks the beat; his row names its start)"
   },
   {
    "person": "maggie_firth",
@@ -124,10 +135,9 @@
    "person": "neil_screeton",
    "from": "07:30",
    "passes": [
-    "iveson_yard",
-    "iveson_hut"
+    "iveson_yard"
    ],
-   "finds": "Iveson's yard and hut (the owner's man on his return)"
+   "finds": "Iveson's yard (the owner's man on his return); Dennis Iveson finds the hut at 12:00"
   },
   {
    "person": "nora_cronin",
@@ -178,11 +188,11 @@
     {
      "from": "06:30",
      "place": "caff",
-     "act": "breakfast",
+     "act": "by bike: breakfast",
      "days": "mon-sat"
     },
     {
-     "from": "07:30",
+     "from": "07:45",
      "place": "rank_mickeys",
      "act": "on the rank",
      "days": "mon-sat"
@@ -206,7 +216,7 @@
      "days": "mon-sat"
     },
     {
-     "from": "18:00",
+     "from": "18:30",
      "place": "mickeys",
      "act": "the door",
      "days": "mon-sat"
@@ -214,7 +224,7 @@
     {
      "from": "23:00",
      "place": "d_cl_14",
-     "act": "home",
+     "act": "by bike: home",
      "days": "mon-sat"
     },
     {
@@ -238,13 +248,13 @@
     {
      "from": "18:00",
      "place": "mickeys",
-     "act": "the door",
+     "act": "by bike: the door",
      "days": "sun"
     },
     {
      "from": "23:00",
      "place": "d_cl_14",
-     "act": "home",
+     "act": "by bike: home",
      "days": "sun"
     }
    ],
@@ -258,37 +268,37 @@
      "from": "00:00",
      "place": "edge_north",
      "act": "home across the river",
-     "days": "mon-wed,fri"
+     "days": "mon-wed"
     },
     {
      "from": "08:30",
      "place": "mickeys",
      "act": "the counter and the book",
-     "days": "mon-wed,fri"
+     "days": "mon-wed"
     },
     {
      "from": "12:30",
      "place": "caff",
      "act": "her dinner",
-     "days": "mon-wed,fri"
+     "days": "mon-wed"
     },
     {
-     "from": "13:15",
+     "from": "13:45",
      "place": "mickeys",
      "act": "the counter and the book",
-     "days": "mon-wed,fri"
+     "days": "mon-wed"
     },
     {
      "from": "17:30",
      "place": "bus_stop_qs",
      "act": "the bus home",
-     "days": "mon-wed,fri"
+     "days": "mon-wed"
     },
     {
      "from": "18:00",
      "place": "edge_north",
      "act": "home",
-     "days": "mon-wed,fri"
+     "days": "mon-wed"
     },
     {
      "from": "00:00",
@@ -315,7 +325,7 @@
      "days": "thu"
     },
     {
-     "from": "13:15",
+     "from": "13:45",
      "place": "mickeys",
      "act": "the counter and the book",
      "days": "thu"
@@ -331,6 +341,42 @@
      "place": "edge_north",
      "act": "home",
      "days": "thu"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home across the river",
+     "days": "fri"
+    },
+    {
+     "from": "08:30",
+     "place": "mickeys",
+     "act": "the counter and the book",
+     "days": "fri"
+    },
+    {
+     "from": "12:30",
+     "place": "caff",
+     "act": "her dinner",
+     "days": "fri"
+    },
+    {
+     "from": "13:45",
+     "place": "mickeys",
+     "act": "the counter, the book and Friday's reckoning",
+     "days": "fri"
+    },
+    {
+     "from": "17:45",
+     "place": "bus_stop_qs",
+     "act": "the bus home",
+     "days": "fri"
+    },
+    {
+     "from": "18:15",
+     "place": "edge_north",
+     "act": "home",
+     "days": "fri"
     },
     {
      "from": "00:00",
@@ -361,6 +407,24 @@
      "place": "edge_north",
      "act": "home across the river",
      "days": "sun"
+    },
+    {
+     "from": "10:00",
+     "place": "mickeys",
+     "act": "Sunday: the week's nights read back",
+     "days": "sun"
+    },
+    {
+     "from": "13:00",
+     "place": "bus_stop_qs",
+     "act": "the bus home",
+     "days": "sun"
+    },
+    {
+     "from": "13:30",
+     "place": "edge_north",
+     "act": "home",
+     "days": "sun"
     }
    ],
    "longest_walk_m": 89,
@@ -372,56 +436,32 @@
     {
      "from": "00:00",
      "place": "edge_north",
-     "act": "home",
-     "days": "mon-sat"
+     "act": "home"
     },
     {
-     "from": "06:45",
+     "from": "07:00",
      "place": "mickeys",
-     "act": "the radio",
-     "days": "mon-sat"
+     "act": "the radio"
     },
     {
      "from": "12:00",
      "place": "rank_mickeys",
-     "act": "a cigarette by the rank",
-     "days": "mon-sat"
+     "act": "a cigarette by the rank"
     },
     {
      "from": "12:20",
      "place": "mickeys",
-     "act": "the radio",
-     "days": "mon-sat"
+     "act": "the radio"
     },
     {
      "from": "19:00",
      "place": "bus_stop_qs",
-     "act": "the bus home",
-     "days": "mon-sat"
+     "act": "the bus home"
     },
     {
      "from": "19:30",
      "place": "edge_north",
-     "act": "home",
-     "days": "mon-sat"
-    },
-    {
-     "from": "00:00",
-     "place": "edge_north",
-     "act": "home",
-     "days": "sun"
-    },
-    {
-     "from": "09:00",
-     "place": "mickeys",
-     "act": "the radio, Sunday hours",
-     "days": "sun"
-    },
-    {
-     "from": "16:00",
-     "place": "edge_north",
-     "act": "home",
-     "days": "sun"
+     "act": "home"
     }
    ],
    "longest_walk_m": 42,
@@ -437,13 +477,7 @@
      "days": "mon-sat"
     },
     {
-     "from": "06:15",
-     "place": "caff",
-     "act": "breakfast",
-     "days": "mon-sat"
-    },
-    {
-     "from": "07:00",
+     "from": "06:00",
      "place": "rank_mickeys",
      "act": "car one",
      "days": "mon-sat"
@@ -455,13 +489,13 @@
      "days": "mon-sat"
     },
     {
-     "from": "13:15",
+     "from": "13:45",
      "place": "rank_mickeys",
      "act": "car one",
      "days": "mon-sat"
     },
     {
-     "from": "19:00",
+     "from": "18:00",
      "place": "edge_north",
      "act": "home",
      "days": "mon-sat"
@@ -473,9 +507,9 @@
      "days": "sun"
     },
     {
-     "from": "12:00",
+     "from": "06:00",
      "place": "rank_mickeys",
-     "act": "car one, Sunday",
+     "act": "car one",
      "days": "sun"
     },
     {
@@ -494,38 +528,17 @@
     {
      "from": "00:00",
      "place": "rank_mickeys",
-     "act": "the night car",
-     "days": "mon-sat"
+     "act": "the night car, on the set"
     },
     {
-     "from": "03:00",
+     "from": "06:00",
      "place": "d_cl_24",
-     "act": "home to bed",
-     "days": "mon-sat"
+     "act": "by car: home to bed"
     },
     {
      "from": "18:00",
      "place": "rank_mickeys",
-     "act": "the night car",
-     "days": "mon-sat"
-    },
-    {
-     "from": "00:00",
-     "place": "rank_mickeys",
-     "act": "the night car",
-     "days": "sun"
-    },
-    {
-     "from": "03:00",
-     "place": "d_cl_24",
-     "act": "home to bed",
-     "days": "sun"
-    },
-    {
-     "from": "19:00",
-     "place": "rank_mickeys",
-     "act": "the night car",
-     "days": "sun"
+     "act": "by car: the night car, on the set"
     }
    ],
    "longest_walk_m": 315,
@@ -543,11 +556,11 @@
     {
      "from": "10:00",
      "place": "caff",
-     "act": "a tea he does not pay for",
+     "act": "by bike: a tea he does not pay for",
      "days": "mon,wed,fri"
     },
     {
-     "from": "11:00",
+     "from": "11:15",
      "place": "ritas",
      "act": "selling",
      "days": "mon,wed,fri"
@@ -579,7 +592,7 @@
     {
      "from": "19:00",
      "place": "cammack_base",
-     "act": "near the lock-ups",
+     "act": "by bike: near the lock-ups",
      "days": "mon,wed,fri"
     },
     {
@@ -597,7 +610,7 @@
     {
      "from": "10:00",
      "place": "caff",
-     "act": "a tea he does not pay for",
+     "act": "by bike: a tea he does not pay for",
      "days": "tue,thu,sat"
     },
     {
@@ -625,7 +638,7 @@
      "days": "tue,thu,sat"
     },
     {
-     "from": "21:00",
+     "from": "21:30",
      "place": "d_nr_23",
      "act": "his mother's",
      "days": "tue,thu,sat"
@@ -674,7 +687,7 @@
      "days": "mon-sat"
     },
     {
-     "from": "16:00",
+     "from": "16:30",
      "place": "cammack_base",
      "act": "the lock-ups",
      "days": "mon-sat"
@@ -682,13 +695,13 @@
     {
      "from": "20:00",
      "place": "snooker_hall",
-     "act": "holding court",
+     "act": "by car: holding court",
      "days": "mon-sat"
     },
     {
-     "from": "23:30",
+     "from": "22:30",
      "place": "d_nr_40",
-     "act": "his flat",
+     "act": "by car: his flat",
      "days": "mon-sat"
     },
     {
@@ -725,13 +738,13 @@
     {
      "from": "08:00",
      "place": "widow_base",
-     "act": "the office over the net store",
+     "act": "by car: the office over the net store",
      "days": "mon-sat"
     },
     {
      "from": "18:00",
      "place": "d_cs_19",
-     "act": "home",
+     "act": "by car: home",
      "days": "mon-sat"
     },
     {
@@ -743,13 +756,13 @@
     {
      "from": "10:00",
      "place": "chapel",
-     "act": "Mass",
+     "act": "by car: Mass",
      "days": "sun"
     },
     {
      "from": "13:15",
      "place": "d_cs_19",
-     "act": "home",
+     "act": "by car: home",
      "days": "sun"
     }
    ],
@@ -994,13 +1007,13 @@
     {
      "from": "09:30",
      "place": "chapel",
-     "act": "Mass and a candle",
+     "act": "by bike: Mass and a candle",
      "days": "sun"
     },
     {
      "from": "13:30",
      "place": "boarding_house",
-     "act": "her room",
+     "act": "by bike: her room",
      "days": "sun"
     }
    ],
@@ -1031,13 +1044,13 @@
     {
      "from": "13:00",
      "place": "adas",
-     "act": "a call on Ada",
+     "act": "by bike: a call on Ada",
      "days": "mon,wed-sat"
     },
     {
      "from": "17:00",
      "place": "chapel",
-     "act": "the church open",
+     "act": "by bike: the church open",
      "days": "mon,wed-sat"
     },
     {
@@ -1048,14 +1061,14 @@
     },
     {
      "from": "20:30",
-     "place": "edge_north",
-     "act": "sick calls on foot",
+     "place": "infirmary",
+     "act": "sick calls at the Infirmary",
      "days": "mon,wed-sat"
     },
     {
      "from": "22:30",
      "place": "priests_house",
-     "act": "asleep",
+     "act": "by cab: asleep",
      "days": "mon,wed-sat"
     },
     {
@@ -1079,13 +1092,13 @@
     {
      "from": "13:00",
      "place": "adas",
-     "act": "a call on Ada",
+     "act": "by bike: a call on Ada",
      "days": "tue"
     },
     {
      "from": "17:00",
      "place": "chapel",
-     "act": "the church open",
+     "act": "by bike: the church open",
      "days": "tue"
     },
     {
@@ -1158,19 +1171,19 @@
     {
      "from": "10:30",
      "place": "rank_mickeys",
-     "act": "a word with whoever is on it",
+     "act": "waiting for a car",
      "days": "tue,thu"
     },
     {
      "from": "11:30",
-     "place": "caff",
-     "act": "her dinner",
+     "place": "burned_warehouse",
+     "act": "by cab: the fire (her fare to the warehouse row)",
      "days": "tue,thu"
     },
     {
-     "from": "12:30",
+     "from": "13:00",
      "place": "edge_north",
-     "act": "back to the paper (the warehouse row is her fare)",
+     "act": "back to the paper",
      "days": "tue,thu"
     },
     {
@@ -1180,7 +1193,7 @@
      "days": "mon,wed,fri-sun"
     }
    ],
-   "longest_walk_m": 94,
+   "longest_walk_m": 463,
    "src": "canon; STORY-FRAME 4"
   },
   {
@@ -1195,7 +1208,7 @@
     {
      "from": "10:00",
      "place": "fishing_quay_west",
-     "act": "his walk on the quay",
+     "act": "by bike: his walk on the quay",
      "days": "mon-sat"
     },
     {
@@ -1207,17 +1220,17 @@
     {
      "from": "14:00",
      "place": "d_cl_29",
-     "act": "home",
+     "act": "by bike: home",
      "days": "mon-sat"
     },
     {
-     "from": "16:00",
+     "from": "16:15",
      "place": "allotments",
      "act": "the allotments",
      "days": "mon-sat"
     },
     {
-     "from": "18:00",
+     "from": "18:30",
      "place": "d_cl_29",
      "act": "home",
      "days": "mon-sat"
@@ -1231,13 +1244,13 @@
     {
      "from": "11:00",
      "place": "ferry_landing",
-     "act": "watching the boats",
+     "act": "by bike: watching the boats",
      "days": "sun"
     },
     {
      "from": "14:00",
      "place": "d_cl_29",
-     "act": "home",
+     "act": "by bike: home",
      "days": "sun"
     }
    ],
@@ -1256,13 +1269,13 @@
     {
      "from": "05:00",
      "place": "fish_dock",
-     "act": "buying at the boxes",
+     "act": "by bike: buying at the boxes",
      "days": "mon-sat"
     },
     {
      "from": "08:15",
      "place": "laveracks",
-     "act": "gutting and the counter",
+     "act": "by bike: gutting and the counter",
      "days": "mon-sat"
     },
     {
@@ -1293,19 +1306,19 @@
     {
      "from": "05:55",
      "place": "dock_gate",
-     "act": "the pen at six",
+     "act": "by bike: the pen at six",
      "days": "mon-sat"
     },
     {
      "from": "08:00",
      "place": "fish_dock",
-     "act": "what work there is",
+     "act": "by bike: what work there is",
      "days": "mon-sat"
     },
     {
      "from": "12:00",
      "place": "rank_mickeys",
-     "act": "sat on the bollard",
+     "act": "by bike: sat on the bollard",
      "days": "mon-sat"
     },
     {
@@ -1321,7 +1334,7 @@
      "days": "mon-sat"
     },
     {
-     "from": "19:15",
+     "from": "19:45",
      "place": "d_nr_12",
      "act": "home",
      "days": "mon-sat"
@@ -1421,7 +1434,7 @@
     {
      "from": "22:00",
      "place": "d_nr_27",
-     "act": "home",
+     "act": "by bike: home",
      "days": "mon-sat"
     },
     {
@@ -1502,25 +1515,55 @@
      "from": "00:00",
      "place": "d_nr_14",
      "act": "asleep",
-     "days": "mon-fri"
+     "days": "mon,wed,fri"
     },
     {
      "from": "08:30",
      "place": "customs",
-     "act": "the customs house",
-     "days": "mon-fri"
+     "act": "by bike: the customs house",
+     "days": "mon,wed,fri"
     },
     {
      "from": "17:15",
      "place": "ritas",
-     "act": "past the window",
-     "days": "mon-fri"
+     "act": "by bike: past the window",
+     "days": "mon,wed,fri"
     },
     {
-     "from": "18:30",
+     "from": "19:00",
      "place": "d_nr_14",
      "act": "home",
-     "days": "mon-fri"
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_14",
+     "act": "asleep",
+     "days": "tue,thu"
+    },
+    {
+     "from": "08:30",
+     "place": "customs",
+     "act": "by bike: the customs house",
+     "days": "tue,thu"
+    },
+    {
+     "from": "17:15",
+     "place": "bus_stop_qs",
+     "act": "by bike: letters for the solicitor's in town",
+     "days": "tue,thu"
+    },
+    {
+     "from": "17:30",
+     "place": "edge_north",
+     "act": "by bus: Agar's office in town",
+     "days": "tue,thu"
+    },
+    {
+     "from": "19:30",
+     "place": "d_nr_14",
+     "act": "home",
+     "days": "tue,thu"
     },
     {
      "from": "00:00",
@@ -1550,7 +1593,7 @@
     {
      "from": "13:00",
      "place": "grocer",
-     "act": "his table",
+     "act": "by cab: his table",
      "days": "mon-sat"
     },
     {
@@ -1562,7 +1605,7 @@
     {
      "from": "17:30",
      "place": "priests_house",
-     "act": "his supper",
+     "act": "by cab: his supper",
      "days": "mon-sat"
     },
     {
@@ -1617,13 +1660,13 @@
     {
      "from": "15:00",
      "place": "adas",
-     "act": "a cup with Ada",
+     "act": "by cab: a cup with Ada",
      "days": "mon-fri"
     },
     {
      "from": "18:30",
      "place": "d_cl_16",
-     "act": "home",
+     "act": "by cab: home",
      "days": "mon-fri"
     },
     {
@@ -1666,13 +1709,13 @@
     {
      "from": "05:45",
      "place": "launderette",
-     "act": "the boiler, the early shift",
+     "act": "by bike: the boiler, the early shift",
      "days": "mon-sat"
     },
     {
      "from": "14:00",
      "place": "d_cl_25",
-     "act": "home",
+     "act": "by bike: home",
      "days": "mon-sat"
     },
     {
@@ -1759,7 +1802,7 @@
     {
      "from": "08:30",
      "place": "newsagent",
-     "act": "the cards in the window",
+     "act": "by bike: the cards in the window",
      "days": "mon,wed,fri"
     },
     {
@@ -1777,7 +1820,7 @@
     {
      "from": "14:30",
      "place": "d_cl_9",
-     "act": "home",
+     "act": "by bike: home",
      "days": "mon,wed,fri"
     },
     {
@@ -1795,7 +1838,7 @@
     {
      "from": "08:30",
      "place": "newsagent",
-     "act": "the cards in the window",
+     "act": "by bike: the cards in the window",
      "days": "thu"
     },
     {
@@ -1807,7 +1850,7 @@
     {
      "from": "13:00",
      "place": "d_cl_9",
-     "act": "home",
+     "act": "by bike: home",
      "days": "thu"
     },
     {
@@ -1819,7 +1862,7 @@
     {
      "from": "08:30",
      "place": "newsagent",
-     "act": "the cards in the window",
+     "act": "by bike: the cards in the window",
      "days": "tue,sat"
     },
     {
@@ -1923,13 +1966,13 @@
     {
      "from": "09:00",
      "place": "ritas",
-     "act": "the appraising",
+     "act": "by bike: the appraising",
      "days": "mon-sat"
     },
     {
      "from": "17:15",
      "place": "d_nr_35",
-     "act": "home",
+     "act": "by bike: home",
      "days": "mon-sat"
     },
     {
@@ -1954,7 +1997,7 @@
     {
      "from": "09:00",
      "place": "ritas",
-     "act": "the tickets",
+     "act": "by bike: the tickets",
      "days": "mon-sat"
     },
     {
@@ -1972,7 +2015,7 @@
     {
      "from": "17:15",
      "place": "d_nr_37",
-     "act": "home",
+     "act": "by bike: home",
      "days": "mon-sat"
     },
     {
@@ -2003,7 +2046,7 @@
     {
      "from": "13:00",
      "place": "iveson_yard",
-     "act": "odd jobs at the yard",
+     "act": "by bike: odd jobs at the yard",
      "days": "mon-fri"
     },
     {
@@ -2052,13 +2095,13 @@
     {
      "from": "05:45",
      "place": "dock_gate",
-     "act": "in at six, the cranes inside",
+     "act": "by bike: in at six, the cranes inside",
      "days": "mon-fri"
     },
     {
      "from": "17:30",
      "place": "d_cs_7",
-     "act": "home",
+     "act": "by bike: home",
      "days": "mon-fri"
     },
     {
@@ -2070,13 +2113,13 @@
     {
      "from": "05:45",
      "place": "dock_gate",
-     "act": "Saturday morning",
+     "act": "by bike: Saturday morning",
      "days": "sat"
     },
     {
      "from": "12:30",
      "place": "d_cs_7",
-     "act": "home",
+     "act": "by bike: home",
      "days": "sat"
     },
     {
@@ -2101,13 +2144,13 @@
     {
      "from": "06:30",
      "place": "fish_dock",
-     "act": "the nets",
+     "act": "by cab: the nets",
      "days": "mon-fri"
     },
     {
      "from": "12:00",
      "place": "caff",
-     "act": "his dinner",
+     "act": "by cab: his dinner",
      "days": "mon-fri"
     },
     {
@@ -2129,7 +2172,7 @@
      "days": "sat-sun"
     },
     {
-     "from": "13:00",
+     "from": "14:00",
      "place": "boarding_house",
      "act": "his room",
      "days": "sat-sun"
@@ -2139,7 +2182,7 @@
    "src": "canon; side story 16"
   },
   {
-   "person": "paddy_rourke",
+   "person": "kieran_rourke",
    "rows": [
     {
      "from": "00:00",
@@ -2150,13 +2193,13 @@
     {
      "from": "07:45",
      "place": "customs",
-     "act": "the docks",
+     "act": "by bike: the docks",
      "days": "mon-fri"
     },
     {
      "from": "17:00",
      "place": "d_nr_41",
-     "act": "home",
+     "act": "by bike: home",
      "days": "mon-fri"
     },
     {
@@ -2248,13 +2291,13 @@
     {
      "from": "07:30",
      "place": "iveson_yard",
-     "act": "the workshop",
+     "act": "by bike: the workshop",
      "days": "mon-fri"
     },
     {
      "from": "17:00",
      "place": "d_nr_8",
-     "act": "home",
+     "act": "by bike: home",
      "days": "mon-fri"
     },
     {
@@ -2284,13 +2327,13 @@
     {
      "from": "10:00",
      "place": "allotments",
-     "act": "his plot",
+     "act": "by bike: his plot",
      "days": "sun"
     },
     {
      "from": "13:30",
      "place": "d_nr_8",
-     "act": "home",
+     "act": "by bike: home",
      "days": "sun"
     }
    ],
@@ -2309,13 +2352,13 @@
     {
      "from": "08:45",
      "place": "harbour_board",
-     "act": "the counter, sandwiches at her desk",
+     "act": "by bike: the counter, sandwiches at her desk",
      "days": "mon-fri"
     },
     {
      "from": "16:45",
      "place": "d_nr_9",
-     "act": "home",
+     "act": "by bike: home",
      "days": "mon-fri"
     },
     {
@@ -2401,13 +2444,13 @@
     {
      "from": "06:00",
      "place": "ferry_landing",
-     "act": "the first boat",
+     "act": "by bike: the first boat",
      "days": "mon-sat"
     },
     {
      "from": "17:15",
      "place": "d_nr_42",
-     "act": "home",
+     "act": "by bike: home",
      "days": "mon-sat"
     },
     {
@@ -2442,7 +2485,7 @@
      "days": "mon-fri"
     },
     {
-     "from": "11:30",
+     "from": "11:45",
      "place": "boarding_house",
      "act": "the house",
      "days": "mon-fri"
@@ -2481,7 +2524,7 @@
     {
      "from": "09:15",
      "place": "adas",
-     "act": "a word at Ada's window",
+     "act": "by cab: a word at Ada's window",
      "days": "mon-sat"
     },
     {
@@ -2493,7 +2536,7 @@
     {
      "from": "14:00",
      "place": "d_cl_12",
-     "act": "home",
+     "act": "by cab: home",
      "days": "mon-sat"
     },
     {
@@ -2522,7 +2565,7 @@
      "days": "mon-thu"
     },
     {
-     "from": "08:00",
+     "from": "08:15",
      "place": "empty_unit",
      "act": "his ladder on the parade's boards",
      "days": "mon-thu"
@@ -2534,7 +2577,7 @@
      "days": "mon-thu"
     },
     {
-     "from": "13:00",
+     "from": "13:15",
      "place": "launderette",
      "act": "the next board",
      "days": "mon-thu"
@@ -2558,7 +2601,7 @@
      "days": "fri"
     },
     {
-     "from": "08:00",
+     "from": "08:15",
      "place": "mickeys",
      "act": "his ladder at Mickey's bay",
      "days": "fri"
@@ -2570,7 +2613,7 @@
      "days": "fri"
     },
     {
-     "from": "13:00",
+     "from": "13:15",
      "place": "launderette",
      "act": "the next board",
      "days": "fri"
@@ -2639,13 +2682,13 @@
     {
      "from": "12:15",
      "place": "d_cl_9",
-     "act": "the rent round, Chapel Lane",
+     "act": "by bike: the rent round, Chapel Lane",
      "days": "mon-thu"
     },
     {
      "from": "15:00",
      "place": "agar_base",
-     "act": "the agents' book",
+     "act": "by bike: the agents' book",
      "days": "mon-thu"
     },
     {
@@ -2675,7 +2718,7 @@
     {
      "from": "15:00",
      "place": "agar_base",
-     "act": "the agents' book",
+     "act": "by bike: the agents' book",
      "days": "fri"
     },
     {
@@ -2746,14 +2789,24 @@
      "act": "his round of the row"
     },
     {
+     "from": "02:00",
+     "place": "net_loft",
+     "act": "by bike: his round: the net loft"
+    },
+    {
+     "from": "04:00",
+     "place": "burned_warehouse",
+     "act": "his round: the burned warehouse"
+    },
+    {
      "from": "07:00",
      "place": "d_cl_20",
-     "act": "home to bed"
+     "act": "by bike: home to bed"
     },
     {
      "from": "19:30",
      "place": "dents_warehouses",
-     "act": "his round of the row"
+     "act": "by bike: his round of the row"
     }
    ],
    "longest_walk_m": 591,
@@ -2769,7 +2822,7 @@
      "days": "mon-thu"
     },
     {
-     "from": "05:30",
+     "from": "06:00",
      "place": "caff",
      "act": "opening up",
      "days": "mon-thu"
@@ -2787,7 +2840,7 @@
      "days": "fri-sat"
     },
     {
-     "from": "05:30",
+     "from": "06:00",
      "place": "caff",
      "act": "opening up",
      "days": "fri-sat"
@@ -2807,13 +2860,13 @@
     {
      "from": "10:00",
      "place": "chapel",
-     "act": "Mass",
+     "act": "by bike: Mass",
      "days": "sun"
     },
     {
      "from": "13:15",
      "place": "d_bp_3",
-     "act": "home",
+     "act": "by bike: home",
      "days": "sun"
     }
    ],
@@ -3039,7 +3092,7 @@
      "days": "mon-sat"
     },
     {
-     "from": "13:00",
+     "from": "12:30",
      "place": "d_cl_33",
      "act": "home",
      "days": "mon-sat"
@@ -3057,7 +3110,7 @@
      "days": "sun"
     },
     {
-     "from": "11:00",
+     "from": "12:00",
      "place": "d_cl_33",
      "act": "home",
      "days": "sun"
@@ -3077,7 +3130,7 @@
     {
      "from": "21:00",
      "place": "rank_mickeys",
-     "act": "his cab to nowhere"
+     "act": "by bike: his cab to nowhere"
     },
     {
      "from": "22:00",
@@ -3100,25 +3153,25 @@
     {
      "from": "05:30",
      "place": "dock_gate",
-     "act": "the pen",
+     "act": "by bike: the pen",
      "days": "mon-sat"
     },
     {
      "from": "09:00",
      "place": "widow_base",
-     "act": "the office below hers",
+     "act": "by bike: the office below hers",
      "days": "mon-sat"
     },
     {
      "from": "13:00",
      "place": "dock_gate",
-     "act": "the hut and the tax",
+     "act": "by bike: the hut and the tax",
      "days": "mon-sat"
     },
     {
      "from": "18:00",
      "place": "d_cs_17",
-     "act": "home",
+     "act": "by bike: home",
      "days": "mon-sat"
     },
     {
@@ -3130,13 +3183,13 @@
     {
      "from": "10:00",
      "place": "chapel",
-     "act": "Mass, behind her",
+     "act": "by bike: Mass, behind her",
      "days": "sun"
     },
     {
      "from": "13:15",
      "place": "d_cs_17",
-     "act": "home",
+     "act": "by bike: home",
      "days": "sun"
     }
    ],
@@ -3155,13 +3208,13 @@
     {
      "from": "06:00",
      "place": "dock_gate",
-     "act": "the tax hut",
+     "act": "by bike: the tax hut",
      "days": "mon-sat"
     },
     {
      "from": "12:00",
      "place": "caff",
-     "act": "dinner",
+     "act": "by bike: dinner",
      "days": "mon-sat"
     },
     {
@@ -3173,13 +3226,13 @@
     {
      "from": "17:00",
      "place": "widow_base",
-     "act": "the take",
+     "act": "by bike: the take",
      "days": "mon-sat"
     },
     {
      "from": "21:00",
      "place": "boarding_house",
-     "act": "his room",
+     "act": "by bike: his room",
      "days": "mon-sat"
     },
     {
@@ -3193,7 +3246,7 @@
    "src": "STORY-FRAME 7 worked example 3 (proposed)"
   },
   {
-   "person": "pat_brannigan",
+   "person": "steve_brannigan",
    "rows": [
     {
      "from": "00:00",
@@ -3204,77 +3257,77 @@
     {
      "from": "11:00",
      "place": "widow_base",
-     "act": "the net store",
-     "days": "mon"
-    },
-    {
-     "from": "16:00",
-     "place": "boxing_club",
-     "act": "the club",
+     "act": "by car: the net store",
      "days": "mon"
     },
     {
      "from": "18:00",
      "place": "boarding_house",
-     "act": "his room",
+     "act": "by car: his room",
      "days": "mon"
     },
     {
-     "from": "22:00",
+     "from": "22:30",
+     "place": "ferry_landing",
+     "act": "the van at the last boat",
+     "days": "mon"
+    },
+    {
+     "from": "23:30",
      "place": "widow_base",
-     "act": "the van to the last boat",
+     "act": "by car: unloading",
      "days": "mon"
     },
     {
      "from": "00:00",
      "place": "widow_base",
-     "act": "the van back from the last boat",
+     "act": "unloading the last boat's van",
      "days": "tue-sat"
     },
     {
      "from": "04:00",
      "place": "boarding_house",
-     "act": "asleep",
+     "act": "by car: asleep",
      "days": "tue-sat"
     },
     {
      "from": "11:00",
      "place": "widow_base",
-     "act": "the net store",
-     "days": "tue-sat"
-    },
-    {
-     "from": "16:00",
-     "place": "boxing_club",
-     "act": "the club",
+     "act": "by car: the net store",
      "days": "tue-sat"
     },
     {
      "from": "18:00",
      "place": "boarding_house",
-     "act": "his room",
+     "act": "by car: his room",
      "days": "tue-sat"
     },
     {
-     "from": "22:00",
+     "from": "22:30",
+     "place": "ferry_landing",
+     "act": "the van at the last boat",
+     "days": "tue-sat"
+    },
+    {
+     "from": "23:30",
      "place": "widow_base",
-     "act": "the van to the last boat",
+     "act": "by car: unloading",
      "days": "tue-sat"
     },
     {
      "from": "00:00",
      "place": "widow_base",
-     "act": "the van back from the last boat",
+     "act": "unloading the last boat's van",
      "days": "sun"
     },
     {
      "from": "04:00",
      "place": "boarding_house",
-     "act": "asleep",
+     "act": "by car: asleep",
      "days": "sun"
     }
    ],
-   "longest_walk_m": 474,
+   "longest_walk_m": 499,
    "src": "invented: 2.10.2 (three named men each)"
   },
   {
@@ -3289,25 +3342,25 @@
     {
      "from": "05:00",
      "place": "fish_dock",
-     "act": "the porters' cut",
+     "act": "by bike: the porters' cut",
      "days": "mon-sat"
     },
     {
      "from": "09:30",
      "place": "cold_stores",
-     "act": "the yard gate",
+     "act": "by bike: the yard gate",
      "days": "mon-sat"
     },
     {
      "from": "14:30",
      "place": "snooker_hall",
-     "act": "the tables",
+     "act": "by bike: the tables",
      "days": "mon-sat"
     },
     {
      "from": "20:00",
      "place": "d_nr_43",
-     "act": "home",
+     "act": "by bike: home",
      "days": "mon-sat"
     },
     {
@@ -3338,7 +3391,7 @@
     {
      "from": "15:00",
      "place": "rank_ferry",
-     "act": "watching the ferry rank",
+     "act": "by car: watching the ferry rank",
      "days": "mon-sat"
     },
     {
@@ -3348,9 +3401,9 @@
      "days": "mon-sat"
     },
     {
-     "from": "23:00",
+     "from": "22:30",
      "place": "d_nr_39",
-     "act": "home",
+     "act": "by car: home",
      "days": "mon-sat"
     },
     {
@@ -3393,7 +3446,7 @@
     {
      "from": "17:00",
      "place": "phone_parade",
-     "act": "the corner by the phone box",
+     "act": "by bike: the corner by the phone box",
      "days": "mon-sat"
     },
     {
@@ -3403,9 +3456,9 @@
      "days": "mon-sat"
     },
     {
-     "from": "23:00",
+     "from": "22:30",
      "place": "d_nr_34",
-     "act": "home",
+     "act": "by bike: home",
      "days": "mon-sat"
     },
     {
@@ -3430,7 +3483,7 @@
     {
      "from": "02:30",
      "place": "d_nr_32",
-     "act": "asleep",
+     "act": "by car: asleep",
      "days": "mon-sat"
     },
     {
@@ -3454,7 +3507,7 @@
     {
      "from": "02:30",
      "place": "d_nr_32",
-     "act": "asleep",
+     "act": "by car: asleep",
      "days": "sun"
     },
     {
@@ -3491,7 +3544,7 @@
     {
      "from": "17:00",
      "place": "phone_parade",
-     "act": "the corner",
+     "act": "by bike: the corner",
      "days": "mon-sat"
     },
     {
@@ -3532,7 +3585,7 @@
      "days": "tue,fri"
     },
     {
-     "from": "11:00",
+     "from": "11:15",
      "place": "cold_stores",
      "act": "the yard",
      "days": "tue,fri"
@@ -3569,7 +3622,7 @@
      "days": "tue,fri"
     },
     {
-     "from": "11:00",
+     "from": "11:15",
      "place": "cold_stores",
      "act": "the yard",
      "days": "tue,fri"
@@ -3606,7 +3659,7 @@
      "days": "tue,fri"
     },
     {
-     "from": "11:00",
+     "from": "11:15",
      "place": "cold_stores",
      "act": "the van in the yard",
      "days": "tue,fri"
@@ -3682,7 +3735,26 @@
     {
      "from": "00:00",
      "place": "edge_north",
-     "act": "up in town"
+     "act": "up in town",
+     "days": "mon-fri"
+    },
+    {
+     "from": "09:00",
+     "place": "mickeys",
+     "act": "the inspection, week seven only (calendar: 26 to 30 Nov)",
+     "days": "mon-fri"
+    },
+    {
+     "from": "10:00",
+     "place": "edge_north",
+     "act": "up in town",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "up in town",
+     "days": "sat-sun"
     }
    ],
    "longest_walk_m": 0,
@@ -3796,7 +3868,7 @@
      "days": "mon-sat"
     },
     {
-     "from": "18:45",
+     "from": "19:30",
      "place": "d_nr_26",
      "act": "home",
      "days": "mon-sat"
@@ -3821,37 +3893,25 @@
      "days": "mon-fri"
     },
     {
-     "from": "08:00",
+     "from": "06:00",
      "place": "police_station",
      "act": "parade",
      "days": "mon-fri"
     },
     {
-     "from": "08:30",
+     "from": "06:30",
      "place": "mickeys",
-     "act": "the day beat, Quay Street (police.json)",
+     "act": "the day beat, early turn (police.json)",
      "days": "mon-fri"
     },
     {
-     "from": "12:30",
-     "place": "caff",
-     "act": "his break",
-     "days": "mon-fri"
-    },
-    {
-     "from": "13:00",
-     "place": "cold_stores",
-     "act": "the day beat, the north road to the cold-store road (police.json)",
-     "days": "mon-fri"
-    },
-    {
-     "from": "16:00",
+     "from": "14:00",
      "place": "police_station",
      "act": "off duty",
      "days": "mon-fri"
     },
     {
-     "from": "16:30",
+     "from": "14:30",
      "place": "edge_north",
      "act": "off duty",
      "days": "mon-fri"
@@ -3872,46 +3932,112 @@
     {
      "from": "00:00",
      "place": "mickeys",
-     "act": "the night beat (police.json)"
+     "act": "the night beat (police.json)",
+     "days": "mon-thu"
     },
     {
      "from": "06:00",
      "place": "police_station",
-     "act": "off duty"
+     "act": "off duty",
+     "days": "mon-thu"
     },
     {
      "from": "06:30",
      "place": "edge_north",
-     "act": "asleep"
+     "act": "asleep",
+     "days": "mon-thu"
     },
     {
      "from": "21:30",
      "place": "police_station",
-     "act": "parade"
+     "act": "parade",
+     "days": "mon-thu"
     },
     {
      "from": "22:00",
      "place": "mickeys",
-     "act": "the night beat (police.json)"
+     "act": "the night beat (police.json)",
+     "days": "mon-thu"
+    },
+    {
+     "from": "00:00",
+     "place": "mickeys",
+     "act": "the night beat (police.json)",
+     "days": "fri"
+    },
+    {
+     "from": "06:00",
+     "place": "police_station",
+     "act": "off duty",
+     "days": "fri"
+    },
+    {
+     "from": "06:30",
+     "place": "edge_north",
+     "act": "rest days",
+     "days": "fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "rest days",
+     "days": "sat"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "rest day",
+     "days": "sun"
+    },
+    {
+     "from": "21:30",
+     "place": "police_station",
+     "act": "parade",
+     "days": "sun"
+    },
+    {
+     "from": "22:00",
+     "place": "mickeys",
+     "act": "the night beat (police.json)",
+     "days": "sun"
     }
    ],
    "longest_walk_m": 0,
    "src": "invented: 2.6.1 (the beat constable's night round); RT2-05 (the second constable); timetables beat"
   },
   {
-   "person": "sgt_kitson",
+   "person": "sgt_bellwood",
    "rows": [
     {
      "from": "00:00",
+     "place": "edge_north",
+     "act": "off duty",
+     "days": "mon-fri"
+    },
+    {
+     "from": "06:00",
      "place": "police_station",
-     "act": "the custody desk"
+     "act": "the custody desk",
+     "days": "mon-fri"
+    },
+    {
+     "from": "18:00",
+     "place": "edge_north",
+     "act": "off duty",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "rest days",
+     "days": "sat-sun"
     }
    ],
    "longest_walk_m": 0,
    "src": "invented: STORY-FRAME 5 (the sergeant's three goes at Nowak)"
   },
   {
-   "person": "len_ackroyd",
+   "person": "clive_ackroyd",
    "rows": [
     {
      "from": "00:00",
@@ -3991,7 +4117,7 @@
    "src": "invented: RT2-05 (the cold-store manager's deputy); STORY-FRAME 5"
   },
   {
-   "person": "len_garside",
+   "person": "alf_garside",
    "rows": [
     {
      "from": "00:00",
@@ -4153,13 +4279,13 @@
     {
      "from": "07:45",
      "place": "garage",
-     "act": "the workshop",
+     "act": "by car: the workshop",
      "days": "mon-fri"
     },
     {
      "from": "17:45",
      "place": "d_nr_18",
-     "act": "home",
+     "act": "by car: home",
      "days": "mon-fri"
     },
     {
@@ -4171,13 +4297,13 @@
     {
      "from": "07:45",
      "place": "garage",
-     "act": "Saturday mornings",
+     "act": "by car: Saturday mornings",
      "days": "sat"
     },
     {
      "from": "12:15",
      "place": "d_nr_18",
-     "act": "home",
+     "act": "by car: home",
      "days": "sat"
     },
     {
@@ -4221,12 +4347,12 @@
      "act": "his dinner"
     },
     {
-     "from": "14:30",
+     "from": "15:30",
      "place": "pigeon_loft",
      "act": "the birds"
     },
     {
-     "from": "18:30",
+     "from": "19:00",
      "place": "d_cl_31",
      "act": "home"
     }
@@ -4246,7 +4372,7 @@
     {
      "from": "06:00",
      "place": "mickeys",
-     "act": "cleaning the front office, from six",
+     "act": "by bike: cleaning the front office, from six",
      "days": "mon-fri"
     },
     {
@@ -4256,7 +4382,7 @@
      "days": "mon-fri"
     },
     {
-     "from": "08:15",
+     "from": "08:45",
      "place": "snooker_hall",
      "act": "cleaning",
      "days": "mon-fri"
@@ -4264,7 +4390,7 @@
     {
      "from": "11:45",
      "place": "d_cl_7",
-     "act": "home",
+     "act": "by bike: home",
      "days": "mon-fri"
     },
     {
@@ -4276,13 +4402,13 @@
     {
      "from": "06:00",
      "place": "mickeys",
-     "act": "Saturday clean",
+     "act": "by bike: Saturday clean",
      "days": "sat"
     },
     {
      "from": "09:30",
      "place": "d_cl_7",
-     "act": "home",
+     "act": "by bike: home",
      "days": "sat"
     },
     {
@@ -4298,7 +4424,7 @@
      "days": "sun"
     },
     {
-     "from": "11:00",
+     "from": "11:30",
      "place": "d_cl_7",
      "act": "home",
      "days": "sun"
@@ -4317,21 +4443,21 @@
      "days": "mon-sat"
     },
     {
-     "from": "05:45",
+     "from": "05:05",
+     "place": "fish_dock",
+     "act": "by bike: along the quay past the boxes, first of the dock men",
+     "days": "mon-sat"
+    },
+    {
+     "from": "06:00",
      "place": "dock_gate",
-     "act": "the pen, first in by the quay road",
+     "act": "by bike: the pen",
      "days": "mon-sat"
     },
     {
-     "from": "14:00",
-     "place": "caff",
-     "act": "his tea",
-     "days": "mon-sat"
-    },
-    {
-     "from": "15:30",
+     "from": "14:30",
      "place": "d_nr_1",
-     "act": "home",
+     "act": "by bike: home",
      "days": "mon-sat"
     },
     {
@@ -4341,7 +4467,7 @@
      "days": "sun"
     }
    ],
-   "longest_walk_m": 712,
+   "longest_walk_m": 694,
    "src": "invented: 2.5.5 (the first dock worker)"
   },
   {
@@ -4356,7 +4482,7 @@
     {
      "from": "05:45",
      "place": "dock_gate",
-     "act": "the pen",
+     "act": "by bike: the pen",
      "days": "mon-sat"
     },
     {
@@ -4388,7 +4514,7 @@
    "src": "invented: RT2-13 (the dockers by car two); 1.3.12"
   },
   {
-   "person": "ken_dobbin",
+   "person": "ken_swales",
    "rows": [
     {
      "from": "00:00",
@@ -4399,7 +4525,7 @@
     {
      "from": "05:45",
      "place": "dock_gate",
-     "act": "the pen",
+     "act": "by bike: the pen",
      "days": "mon-sat"
     },
     {
@@ -4442,17 +4568,17 @@
     {
      "from": "04:45",
      "place": "fish_dock",
-     "act": "the boxes",
+     "act": "by bike: the boxes",
      "days": "mon-sat"
     },
     {
      "from": "11:00",
      "place": "caff",
-     "act": "his dinner",
+     "act": "by bike: his dinner",
      "days": "mon-sat"
     },
     {
-     "from": "12:45",
+     "from": "13:30",
      "place": "d_nr_4",
      "act": "home",
      "days": "mon-sat"
@@ -4468,7 +4594,7 @@
    "src": "invented: side story 8 (the porter)"
   },
   {
-   "person": "leonard_tasker",
+   "person": "victor_tasker",
    "rows": [
     {
      "from": "00:00",
@@ -4515,8 +4641,8 @@
     },
     {
      "from": "08:00",
-     "place": "market_stalls_quay",
-     "act": "leaflets",
+     "place": "bus_stop_qs",
+     "act": "leaflets at the bus stop",
      "days": "mon,wed,fri"
     },
     {
@@ -4532,7 +4658,7 @@
      "days": "tue,thu,sat,sun"
     }
    ],
-   "longest_walk_m": 37,
+   "longest_walk_m": 42,
    "src": "invented: side story 14; letters-and-print.json (Meridian Against the Poll Tax)"
   },
   {
@@ -4578,13 +4704,13 @@
     {
      "from": "08:45",
      "place": "harbour_board",
-     "act": "the back office",
+     "act": "by bike: the back office",
      "days": "mon-fri"
     },
     {
      "from": "17:00",
      "place": "snooker_hall",
-     "act": "the tables",
+     "act": "by bike: the tables",
      "days": "mon-fri"
     },
     {
@@ -4770,7 +4896,7 @@
    "src": "invented: places.json grocer (unnamed keeper)"
   },
   {
-   "person": "tadeusz_nowicki",
+   "person": "tadeusz_wrona",
    "rows": [
     {
      "from": "00:00",
@@ -4799,13 +4925,13 @@
     {
      "from": "09:30",
      "place": "chapel",
-     "act": "Mass",
+     "act": "by bike: Mass",
      "days": "sun"
     },
     {
      "from": "13:00",
      "place": "d_nr_7",
-     "act": "home",
+     "act": "by bike: home",
      "days": "sun"
     }
    ],
@@ -4824,13 +4950,13 @@
     {
      "from": "08:30",
      "place": "tea_room",
-     "act": "the urn",
+     "act": "by bike: the urn",
      "days": "mon-sat"
     },
     {
      "from": "17:45",
      "place": "d_cl_4",
-     "act": "home",
+     "act": "by bike: home",
      "days": "mon-sat"
     },
     {
@@ -4855,13 +4981,13 @@
     {
      "from": "08:45",
      "place": "chandlery",
-     "act": "the shop",
+     "act": "by cab: the shop",
      "days": "mon-sat"
     },
     {
      "from": "17:45",
      "place": "d_cl_8",
-     "act": "home",
+     "act": "by cab: home",
      "days": "mon-sat"
     },
     {
@@ -4886,13 +5012,13 @@
     {
      "from": "10:45",
      "place": "snooker_hall",
-     "act": "opening up",
+     "act": "by bike: opening up",
      "days": "mon-sat"
     },
     {
      "from": "22:45",
      "place": "d_nr_13",
-     "act": "home",
+     "act": "by bike: home",
      "days": "mon-sat"
     },
     {
@@ -4917,13 +5043,13 @@
     {
      "from": "17:30",
      "place": "boxing_club",
-     "act": "the club night",
+     "act": "by bike: the club night",
      "days": "mon,wed,fri"
     },
     {
      "from": "22:00",
      "place": "d_nr_15",
-     "act": "home",
+     "act": "by bike: home",
      "days": "mon,wed,fri"
     },
     {
@@ -4935,13 +5061,13 @@
     {
      "from": "09:30",
      "place": "boxing_club",
-     "act": "Saturday morning",
+     "act": "by bike: Saturday morning",
      "days": "sat"
     },
     {
      "from": "13:15",
      "place": "d_nr_15",
-     "act": "home",
+     "act": "by bike: home",
      "days": "sat"
     },
     {
@@ -4965,19 +5091,19 @@
     {
      "from": "06:15",
      "place": "d_nr_17",
-     "act": "asleep"
+     "act": "by bike: asleep"
     },
     {
      "from": "21:30",
      "place": "tea_stall",
-     "act": "the stall"
+     "act": "by bike: the stall"
     }
    ],
    "longest_walk_m": 729,
    "src": "invented: places.json tea_stall"
   },
   {
-   "person": "norman_shillito",
+   "person": "ernest_shillito",
    "rows": [
     {
      "from": "00:00",
@@ -5019,13 +5145,13 @@
     {
      "from": "07:45",
      "place": "launderette",
-     "act": "the front",
+     "act": "by bike: the front",
      "days": "mon-sun"
     },
     {
      "from": "23:15",
      "place": "d_cl_11",
-     "act": "home",
+     "act": "by bike: home",
      "days": "mon-sun"
     }
    ],
@@ -5044,13 +5170,13 @@
     {
      "from": "09:00",
      "place": "second_hand",
-     "act": "the shop",
+     "act": "by cab: the shop",
      "days": "mon-sat"
     },
     {
      "from": "17:30",
      "place": "d_cl_13",
-     "act": "home",
+     "act": "by cab: home",
      "days": "mon-sat"
     },
     {
@@ -5101,7 +5227,7 @@
    "src": "invented: 3.4.1 (40 fare people)"
   },
   {
-   "person": "dorothy_garbett",
+   "person": "dorothy_kirkup",
    "rows": [
     {
      "from": "00:00",
@@ -5138,7 +5264,7 @@
    "src": "invented: 3.4.1 (40 fare people)"
   },
   {
-   "person": "raymond_kaye",
+   "person": "neville_kaye",
    "rows": [
     {
      "from": "00:00",
@@ -5251,7 +5377,7 @@
      "days": "mon,wed,fri"
     },
     {
-     "from": "04:00",
+     "from": "03:30",
      "place": "d_nr_20",
      "act": "waiting for a car",
      "days": "mon,wed,fri"
@@ -5265,11 +5391,11 @@
     {
      "from": "12:00",
      "place": "caff",
-     "act": "dinner",
+     "act": "by bike: dinner",
      "days": "mon,wed,fri"
     },
     {
-     "from": "14:00",
+     "from": "15:00",
      "place": "d_nr_20",
      "act": "home",
      "days": "mon,wed,fri"
@@ -5281,11 +5407,11 @@
      "days": "tue,thu,sat,sun"
     }
    ],
-   "longest_walk_m": 463,
+   "longest_walk_m": 489,
    "src": "invented: 3.4.1 (40 fare people)"
   },
   {
-   "person": "janet_ruddle",
+   "person": "janet_lumb",
    "rows": [
     {
      "from": "00:00",
@@ -5322,7 +5448,7 @@
    "src": "invented: 3.4.1 (40 fare people)"
   },
   {
-   "person": "gerald_pashley",
+   "person": "gerald_thwaite",
    "rows": [
     {
      "from": "00:00",
@@ -5433,7 +5559,7 @@
    "src": "invented: 3.4.1 (40 fare people)"
   },
   {
-   "person": "brian_tindall",
+   "person": "ted_tindall",
    "rows": [
     {
      "from": "00:00",
@@ -5442,7 +5568,7 @@
      "days": "mon,wed,fri"
     },
     {
-     "from": "05:30",
+     "from": "05:00",
      "place": "rank_north",
      "act": "waiting for a car",
      "days": "mon,wed,fri"
@@ -5466,7 +5592,7 @@
      "days": "tue,thu,sat,sun"
     }
    ],
-   "longest_walk_m": 0,
+   "longest_walk_m": 457,
    "src": "invented: 3.4.1 (40 fare people)"
   },
   {
@@ -5519,35 +5645,120 @@
      "from": "00:00",
      "place": "boarding_house",
      "act": "his room",
-     "days": "mon-sat"
+     "days": "mon-fri"
     },
     {
      "from": "11:00",
      "place": "harbour_board",
-     "act": "the shipping office",
-     "days": "mon-sat"
+     "act": "by bike: the shipping office",
+     "days": "mon-fri"
     },
     {
      "from": "16:00",
      "place": "snooker_hall",
-     "act": "the tables",
-     "days": "mon-sat"
+     "act": "by bike: the tables",
+     "days": "mon-fri"
     },
     {
      "from": "19:00",
      "place": "boarding_house",
      "act": "his room",
-     "days": "mon-sat"
+     "days": "mon-fri"
     },
     {
      "from": "00:00",
      "place": "boarding_house",
      "act": "his room",
+     "days": "sat"
+    },
+    {
+     "from": "11:00",
+     "place": "harbour_board",
+     "act": "by bike: the shipping office",
+     "days": "sat"
+    },
+    {
+     "from": "16:00",
+     "place": "snooker_hall",
+     "act": "by bike: the tables",
+     "days": "sat"
+    },
+    {
+     "from": "19:00",
+     "place": "boarding_house",
+     "act": "his room",
+     "days": "sat"
+    },
+    {
+     "from": "22:30",
+     "place": "ferry_landing",
+     "act": "by cab: the last boat over",
+     "days": "sat"
+    },
+    {
+     "from": "23:00",
+     "place": "edge_west",
+     "act": "over the water",
+     "days": "sat"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_west",
+     "act": "over the water",
+     "days": "sun"
+    },
+    {
+     "from": "20:00",
+     "place": "boarding_house",
+     "act": "back on the evening boat",
      "days": "sun"
     }
    ],
    "longest_walk_m": 597,
    "src": "invented: 3.4.1 (40 fare people)"
+  },
+  {
+   "person": "pc_ackrill",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "off duty",
+     "days": "mon-fri"
+    },
+    {
+     "from": "13:30",
+     "place": "police_station",
+     "act": "parade",
+     "days": "mon-fri"
+    },
+    {
+     "from": "14:00",
+     "place": "mickeys",
+     "act": "the day beat, late turn (police.json)",
+     "days": "mon-fri"
+    },
+    {
+     "from": "22:00",
+     "place": "police_station",
+     "act": "off duty",
+     "days": "mon-fri"
+    },
+    {
+     "from": "22:30",
+     "place": "edge_north",
+     "act": "off duty",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "rest days",
+     "days": "sat-sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "invented: the day beat 06:00 to 22:00 needs a late turn (police.json; timetables shift_beat_day); the fresh review of routines"
   }
  ]
 }

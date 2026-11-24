@@ -1,9 +1,9 @@
 {
- "id": "len_garside",
+ "id": "alf_garside",
  "cast_id": null,
  "called": "the ship's cook",
- "name": "Len Garside",
- "age": 61,
+ "name": "Alf Garside",
+ "age": 57,
  "sex": "m",
  "role": "The dock gun seller: an old ship's cook ashore who has things from abroad",
  "kind": "minor",
@@ -58,12 +58,13 @@
    "asleep upstairs"
   ]
  ],
+ "speaker_kind": "dock_worker",
  "lines": {
-  "own": "lines/own-len_garside.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "Len Garside, 61, a ship's cook ashore. Has had things from abroad in a biscuit tin under the stove for thirty years.",
+  "who": "Alf Garside, 61, a ship's cook ashore. Has had things from abroad in a biscuit tin under the stove for thirty years.",
   "speak": "Gruff, coded, 'I might know a man'.",
   "life": "Lives over the chandler's store; the fish dock at dawn for scraps.",
   "rivals": "Sells to anybody, tells nobody."

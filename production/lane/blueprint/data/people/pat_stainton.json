@@ -65,9 +65,10 @@
    "sat-sun"
   ]
  ],
+ "speaker_kind": "laundry_worker",
  "lines": {
   "own": "lines/own-pat_stainton.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Pat Stainton, 45, works the presses at the laundry. Julie's friend until the summer lay-offs.",
@@ -75,7 +76,7 @@
   "life": "31 North Road. The presses eight to five.",
   "rivals": "Keeps out of it."
  },
- "can_die": true,
+ "can_die": false,
  "invented": true,
  "src": "hook-cast.json iva (unnamed; named here)"
 }

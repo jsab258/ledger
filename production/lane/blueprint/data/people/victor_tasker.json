@@ -1,8 +1,8 @@
 {
- "id": "leonard_tasker",
+ "id": "victor_tasker",
  "cast_id": null,
  "called": "the laundry's owner",
- "name": "Leonard Tasker",
+ "name": "Victor Tasker",
  "age": 60,
  "sex": "m",
  "role": "Owns the laundry; held back Julie's last weeks' money",
@@ -65,17 +65,18 @@
    "sat-sun"
   ]
  ],
+ "speaker_kind": "laundry_worker",
  "lines": {
-  "own": "lines/own-leonard_tasker.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "Leonard Tasker, 60, owns the laundry (the Washeteria and its back rooms). Held back the laid-off girls' last weeks.",
+  "who": "Victor Tasker, 60, owns the laundry (the Washeteria and its back rooms). Held back the laid-off girls' last weeks.",
   "speak": "Pompous, aggrieved.",
   "life": "Up in town; the laundry office mornings.",
   "rivals": "Complains to the Harbour Board clerk."
  },
- "can_die": true,
+ "can_die": false,
  "invented": true,
  "src": "invented: side story 9 (the laundry's owner); the steam laundry and the Washeteria are one place on wave 1's map"
 }

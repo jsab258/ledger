@@ -5,7 +5,7 @@
  "giver": "danny_cammack",
  "act_min": 1,
  "rung_min": 1,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "week one, the first day Danny's car stands across Mickey's rank (Danny's noticed rung)",
  "window": null,
  "offer": [
   "TO WRITE (story lane)"

@@ -1,0 +1,95 @@
+{
+ "id": "pc_ackrill",
+ "cast_id": null,
+ "called": "the late-turn constable",
+ "name": "Stuart Ackrill",
+ "age": 33,
+ "sex": "m",
+ "role": "The day beat's late turn constable, 14:00 to 22:00 weekdays (the rota in routines.json)",
+ "kind": "officer",
+ "voice": null,
+ "look": {
+  "h": 1.83,
+  "b": 0.55,
+  "skin": 0,
+  "hair": [
+   "helmet",
+   "#14161c"
+  ],
+  "top": [
+   "tunic",
+   "#14161c",
+   "#c9c9c9"
+  ],
+  "bot": [
+   "trousers",
+   "#14161c"
+  ],
+  "x": []
+ },
+ "nerve": 0.55,
+ "venal": 0.34,
+ "talk": 0.7,
+ "discretion": 0.44,
+ "temperament": {
+  "nerve": 0.55,
+  "dutiful": 0.7,
+  "willingness": 0.7,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "off duty",
+   "mon-fri"
+  ],
+  [
+   13.5,
+   "police_station",
+   "parade",
+   "mon-fri"
+  ],
+  [
+   14.0,
+   "mickeys",
+   "the day beat, late turn (police.json)",
+   "mon-fri"
+  ],
+  [
+   22.0,
+   "police_station",
+   "off duty",
+   "mon-fri"
+  ],
+  [
+   22.5,
+   "edge_north",
+   "off duty",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "rest days",
+   "sat-sun"
+  ]
+ ],
+ "speaker_kind": "office_worker",
+ "lines": {
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
+ },
+ "card": {
+  "who": "PC Stuart Ackrill, 33, walks the day beat's late turn. Keen, new to the Hook, writes everything down.",
+  "speak": "Eager, formal, 'right then, sir'.",
+  "life": "The station; the late turn.",
+  "rivals": "Honest, and tells Ellis what he writes down."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: the day beat 06:00 to 22:00 needs a late turn (police.json; timetables shift_beat_day); the fresh review of routines",
+ "fallback_role": "another officer from the station"
+}

@@ -65,9 +65,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "shopkeeper",
  "lines": {
-  "own": "lines/own-arthur_brigham.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Arthur Brigham, 58, keeps Hook Stores. Knows every shoplifter by sight.",
@@ -77,5 +78,6 @@
  },
  "can_die": true,
  "invented": true,
- "src": "invented: places.json grocer (unnamed keeper)"
+ "src": "invented: places.json grocer (unnamed keeper)",
+ "fallback_role": "the role passes to another of the same trade, or the thread closes"
 }

@@ -49,13 +49,13 @@
   [
    7.75,
    "garage",
-   "the workshop",
+   "by car: the workshop",
    "mon-fri"
   ],
   [
    17.75,
    "d_nr_18",
-   "home",
+   "by car: home",
    "mon-fri"
   ],
   [
@@ -67,13 +67,13 @@
   [
    7.75,
    "garage",
-   "Saturday mornings",
+   "by car: Saturday mornings",
    "sat"
   ],
   [
    12.25,
    "d_nr_18",
-   "home",
+   "by car: home",
    "sat"
   ],
   [
@@ -83,9 +83,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "shopkeeper",
  "lines": {
-  "own": "lines/own-harry_holt.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Harry Holt, 50, keeps the garage on Cold Store Road. Mends what the rivals break, for money and a day.",
@@ -95,5 +96,6 @@
  },
  "can_die": true,
  "invented": true,
- "src": "wave 1 places.json Holt (surname kept); first name invented; RT-06 (the tyre man)"
+ "src": "wave 1 places.json Holt (surname kept); first name invented; RT-06 (the tyre man)",
+ "fallback_role": "the role passes to another of the same trade, or the thread closes"
 }

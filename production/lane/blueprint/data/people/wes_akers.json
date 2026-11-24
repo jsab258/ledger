@@ -49,7 +49,7 @@
   [
    2.5,
    "d_nr_32",
-   "asleep",
+   "by car: asleep",
    "mon-sat"
   ],
   [
@@ -73,7 +73,7 @@
   [
    2.5,
    "d_nr_32",
-   "asleep",
+   "by car: asleep",
    "sun"
   ],
   [
@@ -89,9 +89,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "casual_worker",
  "lines": {
   "own": "lines/own-wes_akers.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Wes Akers, 26, Danny's crew. Keeps the car radios in the empty warehouse on the row.",
@@ -102,5 +103,6 @@
  "can_die": true,
  "invented": true,
  "src": "invented: 2.10.2; side stories 23, 31",
+ "fallback_role": "his head's next man",
  "fight_kind": "knife_man"
 }

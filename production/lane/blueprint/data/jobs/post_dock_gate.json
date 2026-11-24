@@ -2,10 +2,10 @@
  "id": "post_dock_gate",
  "kind": "minding",
  "name": "A man at the dock gate",
- "giver": "stathers",
- "act_min": 3,
- "rung_min": 4,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "giver": "ron_kirby",
+ "act_min": 2,
+ "rung_min": 3,
+ "when": "after the Landing, a man of his with nerve free",
  "window": null,
  "offer": [
   "TO WRITE (story lane)"

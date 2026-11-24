@@ -49,17 +49,17 @@
   [
    4.75,
    "fish_dock",
-   "the boxes",
+   "by bike: the boxes",
    "mon-sat"
   ],
   [
    11.0,
    "caff",
-   "his dinner",
+   "by bike: his dinner",
    "mon-sat"
   ],
   [
-   12.75,
+   13.5,
    "d_nr_4",
    "home",
    "mon-sat"
@@ -71,9 +71,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "dock_worker",
  "lines": {
-  "own": "lines/own-eddie_birtwhistle.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Eddie Birtwhistle, 46, porter on the fish dock. Signs for boxes, and lately signs for some twice.",
@@ -84,5 +85,6 @@
  "can_die": true,
  "invented": true,
  "src": "invented: side story 8 (the porter)",
+ "fallback_role": "the role passes to another of the same trade, or the thread closes",
  "fight_kind": "wiry"
 }

@@ -49,13 +49,7 @@
    "mon-sat"
   ],
   [
-   6.25,
-   "caff",
-   "breakfast",
-   "mon-sat"
-  ],
-  [
-   7.0,
+   6.0,
    "rank_mickeys",
    "car one",
    "mon-sat"
@@ -67,13 +61,13 @@
    "mon-sat"
   ],
   [
-   13.25,
+   13.75,
    "rank_mickeys",
    "car one",
    "mon-sat"
   ],
   [
-   19.0,
+   18.0,
    "edge_north",
    "home",
    "mon-sat"
@@ -85,9 +79,9 @@
    "sun"
   ],
   [
-   12.0,
+   6.0,
    "rank_mickeys",
-   "car one, Sunday",
+   "car one",
    "sun"
   ],
   [
@@ -97,16 +91,18 @@
    "sun"
   ]
  ],
+ "speaker_kind": "driver",
  "lines": {
   "own": "lines/own-kevin_needham.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Mickey's day driver, eight years in the same seat.",
   "speak": "Easy, matey, a moaner about the weather and the fares.",
   "life": "Lives out past the station. Worries the office will shut.",
   "fire": "He was in bed. Terry had the night car.",
-  "rivals": "He has driven Agar's clerk and never had a tip."
+  "rivals": "He has driven Agar's clerk and never had a tip.",
+  "secret": "Tells the Widow's people what goes out over Mickey's radio; she is his landlord at the gate (2.10.2)."
  },
  "can_die": true,
  "invented": false,

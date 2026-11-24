@@ -46,9 +46,10 @@
    "up in town"
   ]
  ],
+ "speaker_kind": "tradesman",
  "lines": {
-  "own": "lines/own-phil_rawling.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Phil Rawling, 44, glazier from town with a van and a rack. Comes the next day.",
@@ -58,5 +59,6 @@
  },
  "can_die": true,
  "invented": true,
- "src": "invented: RT-06 (the glazier)"
+ "src": "invented: RT-06 (the glazier)",
+ "fallback_role": "the role passes to another of the same trade, or the thread closes"
 }

@@ -49,11 +49,11 @@
   [
    6.5,
    "caff",
-   "breakfast",
+   "by bike: breakfast",
    "mon-sat"
   ],
   [
-   7.5,
+   7.75,
    "rank_mickeys",
    "on the rank",
    "mon-sat"
@@ -77,7 +77,7 @@
    "mon-sat"
   ],
   [
-   18.0,
+   18.5,
    "mickeys",
    "the door",
    "mon-sat"
@@ -85,7 +85,7 @@
   [
    23.0,
    "d_cl_14",
-   "home",
+   "by bike: home",
    "mon-sat"
   ],
   [
@@ -109,19 +109,20 @@
   [
    18.0,
    "mickeys",
-   "the door",
+   "by bike: the door",
    "sun"
   ],
   [
    23.0,
    "d_cl_14",
-   "home",
+   "by bike: home",
    "sun"
   ]
  ],
+ "speaker_kind": "driver",
  "lines": {
   "own": "lines/own-ron_kirby.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "A docker for thirty years until the scheme went in 1989. Mickey kept him on for the door and the rank. Big, slow, sees everything on the street and forgets none of it.",
@@ -134,6 +135,6 @@
  "can_die": true,
  "invented": false,
  "src": "canon; casting ron-kirby SHEET; STORY-FRAME 3",
- "fallback_role": "the most loyal man",
+ "fallback_role": "Ron's asks come by the old firm's man at the office door (RT2-05)",
  "fight_kind": "boxer"
 }

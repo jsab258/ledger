@@ -47,7 +47,7 @@
    "mon,wed,fri"
   ],
   [
-   4.0,
+   3.5,
    "d_nr_20",
    "waiting for a car",
    "mon,wed,fri"
@@ -61,11 +61,11 @@
   [
    12.0,
    "caff",
-   "dinner",
+   "by bike: dinner",
    "mon,wed,fri"
   ],
   [
-   14.0,
+   15.0,
    "d_nr_20",
    "home",
    "mon,wed,fri"
@@ -77,9 +77,10 @@
    "tue,thu,sat,sun"
   ]
  ],
+ "speaker_kind": "dock_worker",
  "lines": {
-  "own": "lines/own-tony_marsden.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Tony Marsden, 38, skippers one of the last three boats landing at the fish dock. Pays in cash and haddock.",
@@ -89,5 +90,6 @@
  },
  "can_die": true,
  "invented": true,
- "src": "invented: 3.4.1 (40 fare people)"
+ "src": "invented: 3.4.1 (40 fare people)",
+ "fallback_role": "the role passes to another of the same trade, or the thread closes"
 }

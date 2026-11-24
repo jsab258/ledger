@@ -71,9 +71,10 @@
    "sat-sun"
   ]
  ],
+ "speaker_kind": "night_shift",
  "lines": {
-  "own": "lines/own-sandra_newbould.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Sandra Newbould, 34, nights on casualty. Has stitched half the Hook and recognises the other half.",
@@ -81,7 +82,7 @@
   "life": "A night nurse at the Infirmary from Chapel Lane",
   "rivals": "None of the three."
  },
- "can_die": true,
+ "can_die": false,
  "invented": true,
  "src": "invented: 3.4.1 (40 fare people)"
 }

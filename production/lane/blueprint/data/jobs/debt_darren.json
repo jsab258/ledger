@@ -5,7 +5,7 @@
  "giver": "sheila_dunn",
  "act_min": 1,
  "rung_min": 1,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "day two: Sheila opens Mickey's debt book on the counter",
  "window": null,
  "offer": [
   "Mickey's debt book, the page for Darren."
@@ -14,19 +14,19 @@
   {
    "id": "find",
    "at": "rank_mickeys",
-   "verb": "find the debtor where his routine has him",
+   "verb": "find the debtor where the routine has him: 12:30 to 13:30 and 16:00 to 19:00 at the rank (routines.json)",
    "keys": [
     {
+     "way": "talk",
+     "how": "the routine (ask Ron where he'll be)"
+    },
+    {
      "way": "watch",
-     "how": "the routine (routines.json)"
+     "how": "wait for him there"
     },
     {
-     "way": "talk",
-     "how": "ask Ron"
-    },
-    {
-     "way": "talk",
-     "how": "ask the caff"
+     "way": "choice",
+     "how": "send Darren to fetch him"
     }
    ],
    "fail": null,
@@ -62,8 +62,8 @@
  ],
  "pay": {
   "to": "tin",
-  "pence": 2200,
-  "note": "a debtor pays only what his purse holds; the rest stays on the book (3.5.2)"
+  "pence": 0,
+  "pays_in": "what he hears (a hook or a tip), never cash (ECONOMY 5.3)"
  },
  "ledger": "TO WRITE (story lane)",
  "returns": "squeezing or letting a debt go is told on the street within a game day",

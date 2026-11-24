@@ -5,7 +5,7 @@
  "giver": "ron_kirby",
  "act_min": 2,
  "rung_min": 2,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "rung 2; Ron says the ferry rank is Danny's now",
  "window": null,
  "offer": [
   "TO WRITE (story lane)"

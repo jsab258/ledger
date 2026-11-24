@@ -49,13 +49,13 @@
   [
    8.5,
    "tea_room",
-   "the urn",
+   "by bike: the urn",
    "mon-sat"
   ],
   [
    17.75,
    "d_cl_4",
-   "home",
+   "by bike: home",
    "mon-sat"
   ],
   [
@@ -65,9 +65,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "shopkeeper",
  "lines": {
-  "own": "lines/own-joyce_ellerby.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Joyce Ellerby, 55, keeps the Copper Kettle. Doilies and opinions.",
@@ -75,7 +76,7 @@
   "life": "4 Chapel Lane.",
   "rivals": "None."
  },
- "can_die": true,
+ "can_die": false,
  "invented": true,
  "src": "invented: places.json tea_room (unnamed keeper)"
 }

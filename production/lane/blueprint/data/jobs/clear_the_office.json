@@ -5,7 +5,7 @@
  "giver": "sheila_dunn",
  "act_min": 2,
  "rung_min": 3,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "the evening before the search: a constable's word or Sheila's warning",
  "window": null,
  "offer": [
   "TO WRITE (story lane)"

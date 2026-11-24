@@ -15,9 +15,9 @@
    "who": "karen_grummitt",
    "situation": "own",
    "once": "day",
-   "text": "TO WRITE (story lane): 30 own street lines, about 7 words each, in the voice of the card (people/karen_grummitt.json), spread over greet, comment, weather, work, about_frank, about_the_street, close; at least three closing lines.",
+   "text": "TO WRITE (story lane): 30 own street lines, about 7 words each, in the voice of the card (people/karen_grummitt.json). Situations from line-situations.json (greetings by rung and by regard, everyday remarks, the knowing ladder, farewells); at least three closing lines. Everyday remarks of his own are owed even where situational lines exist. Names him: the new owner (rung 1), Mr Nowak or Nowak (2), Frank (3), Frank or Mr Nowak (4, the port's man); Sheila withholds his name until she trusts him; Ron says boss; only the Widow, Danny and Ron once say Frankie; nobody says Tom.",
    "src": "BLUEPRINT-03 3.2.3, 3.6.3; FIT-L01 (30 for a regular)",
-   "words": 37
+   "words": 95
   }
  ]
 }

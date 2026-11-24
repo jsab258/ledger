@@ -51,7 +51,7 @@
   [
    21.0,
    "rank_mickeys",
-   "his cab to nowhere"
+   "by bike: his cab to nowhere"
   ],
   [
    22.0,
@@ -59,9 +59,10 @@
    "by cab: back aboard"
   ]
  ],
+ "speaker_kind": "dock_worker",
  "lines": {
-  "own": "lines/own-arvids_ozols.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Captain Arvids Ozols, 58, Latvian master of the timber ship held at the basin wall over a debt not his own. Every night a cab 'to nowhere, please, one hour'.",
@@ -71,5 +72,6 @@
  },
  "can_die": true,
  "invented": "proposed by the story frame",
- "src": "STORY-FRAME 4 item 17 (proposed); ship's berth provisional (the map has no ship berth: fishing_basin_north stands in)"
+ "src": "STORY-FRAME 4 item 17 (proposed); ship's berth provisional (the map has no ship berth: fishing_basin_north stands in)",
+ "fallback_role": "the role passes to another of the same trade, or the thread closes"
 }

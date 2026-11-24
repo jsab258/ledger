@@ -115,9 +115,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "pensioner",
  "lines": {
-  "own": "lines/own-ada_vane.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "An old widow who keeps a window on Quay Street, opposite Mickey's, and sees everything. She knew Mickey Suddaby forty years. Her invitation to tea is not given twice.",

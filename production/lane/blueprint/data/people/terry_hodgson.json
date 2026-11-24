@@ -43,43 +43,23 @@
   [
    0.0,
    "rank_mickeys",
-   "the night car",
-   "mon-sat"
+   "the night car, on the set"
   ],
   [
-   3.0,
+   6.0,
    "d_cl_24",
-   "home to bed",
-   "mon-sat"
+   "by car: home to bed"
   ],
   [
    18.0,
    "rank_mickeys",
-   "the night car",
-   "mon-sat"
-  ],
-  [
-   0.0,
-   "rank_mickeys",
-   "the night car",
-   "sun"
-  ],
-  [
-   3.0,
-   "d_cl_24",
-   "home to bed",
-   "sun"
-  ],
-  [
-   19.0,
-   "rank_mickeys",
-   "the night car",
-   "sun"
+   "by car: the night car, on the set"
   ]
  ],
+ "speaker_kind": "driver",
  "lines": {
   "own": "lines/own-terry_hodgson.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Mickey's night driver. Twenty years of nights.",

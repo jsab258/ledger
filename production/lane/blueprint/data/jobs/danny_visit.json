@@ -1,0 +1,76 @@
+{
+ "id": "danny_visit",
+ "kind": "sit_down",
+ "name": "Danny's visit: car two, six minutes, the offer",
+ "giver": "danny_cammack",
+ "act_min": 2,
+ "rung_min": 2,
+ "when": "a week after car three (Act IIa)",
+ "window": null,
+ "offer": [
+  "That's how you park it."
+ ],
+ "steps": [
+  {
+   "id": "ride",
+   "at": "rank_mickeys",
+   "verb": "Danny takes Mickey's own car off the rank on his old key, roof sign lit, and drives Frank the whole Hook in six minutes, pricing every door",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "ride with him"
+    },
+    {
+     "way": "watch",
+     "how": "follow in car three"
+    },
+    {
+     "way": "choice",
+     "how": "refuse to get in"
+    }
+   ],
+   "fail": null,
+   "words": "That's how you park it.",
+   "lines": [
+    "That's how you park it."
+   ]
+  },
+  {
+   "id": "offer",
+   "at": "fishing_quay_east",
+   "verb": "his men, his car on the board and his nerve, for a share of the nights; he opens at half",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "take it, and say where his name is chalked"
+    },
+    {
+     "way": "choice",
+     "how": "refuse it"
+    },
+    {
+     "way": "choice",
+     "how": "keep him waiting"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "book",
+  "pence": 0
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "the pact or the wall",
+ "people": [
+  "danny_cammack"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "STORY-FRAME 3 (Danny's deed) and 5 Act IIa (Danny's visit)"
+}

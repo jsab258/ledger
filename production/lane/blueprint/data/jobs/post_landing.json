@@ -1,0 +1,51 @@
+{
+ "id": "post_landing",
+ "kind": "minding",
+ "name": "A man at the landing",
+ "giver": "ron_kirby",
+ "act_min": 2,
+ "rung_min": 3,
+ "when": "after the Landing, the landing held",
+ "window": null,
+ "offer": [
+  "TO WRITE (story lane)"
+ ],
+ "steps": [
+  {
+   "id": "post",
+   "at": "post_landing",
+   "verb": "a man of his posted, by his own nerve and loyalty; Frank never stands it himself",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "a need recruit"
+    },
+    {
+     "way": "choice",
+     "how": "a hook recruit"
+    },
+    {
+     "way": "watch",
+     "how": "a man won from the pen at six"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "pence": 0,
+  "pence_per_week_paid": 4000
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "TO WRITE (story lane)",
+ "people": [],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "RT2-09; STORY-FRAME 5 midpoint (posts after the Landing); economy 5.6 (40 pounds a week)"
+}

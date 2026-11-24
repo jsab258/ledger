@@ -103,9 +103,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "laundry_worker",
  "lines": {
   "own": "lines/own-tracey_scarth.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Tracey Scarth, 28, does alterations in the laundry's back room and has a stall on the Thursday market. Sees every coat on the Hook.",
@@ -113,7 +114,7 @@
   "life": "19 North Road.",
   "rivals": "Has seen Danny's lads run past her window."
  },
- "can_die": true,
+ "can_die": false,
  "invented": false,
  "src": "canon regular; side stories 5, 11"
 }

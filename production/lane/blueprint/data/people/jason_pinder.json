@@ -55,7 +55,7 @@
   [
    17.0,
    "phone_parade",
-   "the corner",
+   "by bike: the corner",
    "mon-sat"
   ],
   [
@@ -77,9 +77,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "shopkeeper",
  "lines": {
   "own": "lines/own-jason_pinder.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Jason Pinder, 20, the newest of Danny's crew. Put Grace's window in for a dare. The one Frank can turn.",
@@ -90,5 +91,6 @@
  "can_die": true,
  "invented": true,
  "src": "invented: side story 11 (a young man of about twenty); STORY-FRAME 4 item 15",
+ "fallback_role": "his head's next man",
  "fight_kind": "wiry"
 }

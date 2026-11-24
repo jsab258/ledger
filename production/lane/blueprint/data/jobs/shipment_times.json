@@ -3,9 +3,9 @@
  "kind": "collection",
  "name": "The times of shipments",
  "giver": "rodney_usher",
- "act_min": 3,
+ "act_min": 2,
  "rung_min": 3,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "rung 3; Rodney Usher at the counter",
  "window": null,
  "offer": [
   "TO WRITE (story lane)"
@@ -13,7 +13,7 @@
  "steps": [
   {
    "id": "buy",
-   "at": "snooker_hall",
+   "at": "harbour_board_counter",
    "verb": "a clerk who sells the times of shipments",
    "keys": [
     {

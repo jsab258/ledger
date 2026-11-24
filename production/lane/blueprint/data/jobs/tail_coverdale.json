@@ -5,7 +5,7 @@
  "giver": "sheila_dunn",
  "act_min": 2,
  "rung_min": 2,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "rung 2 and Agar's licence letter has come; Sheila at the counter",
  "window": null,
  "offer": [
   "Somebody at the Harbour Office is writing letters about our licence. I would like to know who she takes them to."
@@ -13,16 +13,16 @@
  "steps": [
   {
    "id": "follow",
-   "at": "customs",
-   "verb": "follow her from the customs house at half past four",
+   "at": "bus_stop_qs",
+   "verb": "follow her from the customs house at 17:15 on a Tuesday or Thursday to the bus and the solicitor's in town",
    "keys": [
     {
      "way": "route",
-     "how": "on foot"
+     "how": "on foot to the bus stop"
     },
     {
      "way": "route",
-     "how": "by cab"
+     "how": "by cab behind the bus"
     },
     {
      "way": "choice",
@@ -30,9 +30,9 @@
     }
    ],
    "fail": null,
-   "words": "Followed Susan Coverdale to the solicitor's door: Agar's.",
+   "words": "Followed Susan Coverdale to the bus for town, with letters for the solicitor's: Agar's.",
    "lines": [
-    "Followed Susan Coverdale to the solicitor's door: Agar's."
+    "Followed Susan Coverdale to the bus for town, with letters for the solicitor's: Agar's."
    ]
   }
  ],

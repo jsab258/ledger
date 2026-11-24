@@ -17,7 +17,7 @@
   "dog_loose": "a dog loose on the quay",
   "locked_out": "a woman locked out",
   "fallen_man": "a man fallen on the cobbles (help him up, rob him or walk on)",
-  "crate": "a crate off a lorry at the dock gate (help, take or walk on)"
+  "crate_spill": "a crate off a lorry at the dock gate (help, take or walk on)"
  },
  "counts": {
   "happenings": 63,
@@ -29,7 +29,7 @@
    "dog_loose": 8,
    "locked_out": 7,
    "fallen_man": 8,
-   "crate": 8
+   "crate_spill": 8
   },
   "rival_moves": 9
  },
@@ -93,9 +93,9 @@
    },
    "who": [
     "julie_kettlewell",
-    "leonard_askew"
+    "a passer (in place of leonard_askew, who is never at d_cl_9)"
    ],
-   "where": "home_cl_9",
+   "where": "d_cl_9",
    "beats": [
     {
      "say": "TO WRITE (story lane): the opening, under two minutes in all"
@@ -201,7 +201,7 @@
    "kind": "row",
    "what": "a row on a doorstep",
    "when": {
-    "hours": "20:00-22:00",
+    "hours": "15:30-17:30",
     "state": "a frame argued",
     "note": "placed by the town's state and the hour, never by dice (3.7)"
    },
@@ -282,8 +282,8 @@
     "note": "placed by the town's state and the hour, never by dice (3.7)"
    },
    "who": [
-    "dorothy_garbett",
-    "eileen_crabtree"
+    "dorothy_kirkup",
+    "a passer (in place of eileen_crabtree, who is never at d_cl_17)"
    ],
    "where": "d_cl_17",
    "beats": [
@@ -358,7 +358,7 @@
     "note": "placed by the town's state and the hour, never by dice (3.7)"
    },
    "who": [
-    "harry_holt",
+    "a passer (in place of harry_holt, who is never at mickeys_yard)",
     "a van driver"
    ],
    "where": "mickeys_yard",
@@ -579,7 +579,7 @@
    "kind": "breakdown",
    "what": "a van broken down across the lane",
    "when": {
-    "hours": "22:00-23:00",
+    "hours": "06:00-08:00",
     "state": "the last boat in",
     "note": "placed by the town's state and the hour, never by dice (3.7)"
    },
@@ -774,7 +774,7 @@
     "note": "placed by the town's state and the hour, never by dice (3.7)"
    },
    "who": [
-    "tadeusz_nowicki",
+    "tadeusz_wrona",
     "a casual from the pen"
    ],
    "where": "ironmonger",
@@ -795,9 +795,9 @@
    ],
    "sets": [
     "happening.shoplifter.04.done",
-    "town_keeps:Mr Nowicki's opinion"
+    "town_keeps:Mr Wrona's opinion"
    ],
-   "town_keeps": "Mr Nowicki's opinion",
+   "town_keeps": "Mr Wrona's opinion",
    "once": true,
    "cool_real_minutes": 180,
    "src": "BLUEPRINT-03 3.7; FIT-G6; DEFINITIONS G6 (no scene twice within 3 real hours; none twice in the game unless its people have changed; none twice in 30 minutes or twice in a week on one street)"
@@ -996,12 +996,12 @@
    "kind": "lost_man",
    "what": "a lost man with a suitcase",
    "when": {
-    "hours": "18:00-19:00",
+    "hours": "09:00-11:00",
     "state": "Monday, first visit",
     "note": "placed by the town's state and the hour, never by dice (3.7)"
    },
    "who": [
-    "raymond_kaye"
+    "neville_kaye"
    ],
    "where": "bus_stop_qs",
    "beats": [
@@ -1261,7 +1261,7 @@
    },
    "who": [
     "norman_dent's dog",
-    "norman_dent"
+    "a passer (in place of norman_dent, who is never at fishing_quay_east)"
    ],
    "where": "fishing_quay_east",
    "beats": [
@@ -1929,7 +1929,7 @@
     "note": "placed by the town's state and the hour, never by dice (3.7)"
    },
    "who": [
-    "harold_stead"
+    "a passer (in place of harold_stead, who is never at newsagent)"
    ],
    "where": "newsagent",
    "beats": [
@@ -1961,7 +1961,7 @@
    "kind": "fallen_man",
    "what": "a man fallen on the cobbles (help him up, rob him or walk on)",
    "when": {
-    "hours": "22:30-23:30",
+    "hours": "15:30-17:30",
     "state": "after a fight",
     "note": "placed by the town's state and the hour, never by dice (3.7)"
    },
@@ -2147,7 +2147,7 @@
    "kind": "crate_spill",
    "what": "a crate off a lorry at the dock gate (help, take or walk on)",
    "when": {
-    "hours": "13:00-15:00",
+    "hours": "06:00-08:00",
     "state": "the afternoon shift change",
     "note": "placed by the town's state and the hour, never by dice (3.7)"
    },
@@ -2191,7 +2191,7 @@
    },
    "who": [
     "a lorry driver",
-    "paddy_rourke"
+    "a passer (in place of kieran_rourke, who is never at dock_gate)"
    ],
    "where": "dock_gate",
    "beats": [
@@ -2261,7 +2261,7 @@
    "kind": "crate_spill",
    "what": "a crate off a lorry at the dock gate (help, take or walk on)",
    "when": {
-    "hours": "10:00-12:00",
+    "hours": "05:55-07:55",
     "state": "Lee on the gate (if Frank's man)",
     "note": "placed by the town's state and the hour, never by dice (3.7)"
    },
@@ -2380,7 +2380,7 @@
    },
    "who": [
     "a lorry driver",
-    "stan_pickles"
+    "a passer (in place of stan_pickles, who is never at dock_gate)"
    ],
    "where": "dock_gate",
    "beats": [

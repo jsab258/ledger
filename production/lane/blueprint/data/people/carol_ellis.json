@@ -6,7 +6,7 @@
  "age": 40,
  "sex": "f",
  "role": "Detective Sergeant, CID; cannot be bought",
- "kind": "officer",
+ "kind": "principal",
  "voice": null,
  "look": {
   "h": 1.7,
@@ -27,17 +27,17 @@
   ],
   "x": []
  },
- "nerve": 0.45,
- "venal": 0.58,
+ "nerve": 1,
+ "venal": 0,
  "talk": 0.2,
  "discretion": 0.9,
  "temperament": {
-  "nerve": 0.45,
-  "dutiful": 0.4,
-  "willingness": 0.5,
-  "from": "chosen by the data-build wave 2 job from the person's card"
+  "nerve": 1,
+  "dutiful": 1.0,
+  "willingness": 0.2,
+  "from": "prototype cast.js (nerve; dutiful from 1 - venal x 0.8; willingness from talk)"
  },
- "keepsQuiet": false,
+ "keepsQuiet": true,
  "home": "police_station",
  "sched": [
   [
@@ -65,9 +65,10 @@
    "sat-sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
   "own": "lines/own-carol_ellis.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "A detective sergeant with CID. She will not close the warehouse fire case. She comes down Quay Street when the street gets loud about the new owner of Mickey's.",

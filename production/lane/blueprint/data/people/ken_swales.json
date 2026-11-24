@@ -1,8 +1,8 @@
 {
- "id": "ken_dobbin",
+ "id": "ken_swales",
  "cast_id": null,
  "called": "a docker",
- "name": "Ken Dobbin",
+ "name": "Ken Swales",
  "age": 40,
  "sex": "m",
  "role": "A docker from the pen; Jimmy Raw's mate by car two (RT2-13)",
@@ -49,7 +49,7 @@
   [
    5.75,
    "dock_gate",
-   "the pen",
+   "by bike: the pen",
    "mon-sat"
   ],
   [
@@ -77,12 +77,13 @@
    "sun"
   ]
  ],
+ "speaker_kind": "dock_worker",
  "lines": {
-  "own": "lines/own-ken_dobbin.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "Ken Dobbin, 40, a big docker who follows Jimmy Raw.",
+  "who": "Ken Swales, 40, a big docker who follows Jimmy Raw.",
   "speak": "Says nothing; laughs when Jimmy does.",
   "life": "3 North Road.",
   "rivals": "Same as Jimmy."
@@ -90,5 +91,6 @@
  "can_die": true,
  "invented": true,
  "src": "invented: RT2-13; 1.3.12",
+ "fallback_role": "the role passes to another of the same trade, or the thread closes",
  "fight_kind": "big_man"
 }

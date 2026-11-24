@@ -1,0 +1,426 @@
+{
+ "file": "line-situations.json",
+ "version": "wave2-2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "lines/*.json",
+  "BLUEPRINT FIT-F19, 3.6.3, 3.6.4, 2.4.3, 2.12.4"
+ ],
+ "speaker_kinds": {
+  "shopkeeper": {
+   "what": "somebody behind a counter or in a doorway: the fish shop, the pawn, the coin shop, the caff, the takeaway, the boarding house",
+   "members": [
+    "brenda_laverack",
+    "rita_welburn",
+    "wayne_harrison",
+    "hal_metcalfe",
+    "grace_rinaldi",
+    "peter_tang",
+    "lily_tang",
+    "sylvia_rennison",
+    "stanley_hirst",
+    "mandy_calvert"
+   ]
+  },
+  "dock_worker": {
+   "what": "dockside and quayside hands: the crane, the yard, the fish dock, the scrap, the ferry",
+   "members": [
+    "colin_mastin",
+    "dennis_iveson",
+    "gordon_leckenby"
+   ]
+  },
+  "pensioner": {
+   "what": "the old of the street: retired, on the pension, the chapel's women, the net-mender",
+   "members": [
+    "ada_vane",
+    "edith_stockill",
+    "albert_suggitt",
+    "winifred_duggleby",
+    "nora_cronin"
+   ]
+  },
+  "office_worker": {
+   "what": "desks and counters of paper: the books, the radio and phone, the harbour office, customs, the paper, the ferry's ticket desk, the rent collector's round",
+   "members": [
+    "sheila_dunn",
+    "alison_sedman",
+    "pauline_kitching",
+    "christine_pickering",
+    "susan_coverdale",
+    "philip_danby",
+    "kieran_rourke",
+    "karen_grummitt",
+    "dawn_pybus"
+   ]
+  },
+  "driver": {
+   "what": "wheels for hire or for the firm: the cab on Mickey's rank, the bus, the lorry",
+   "members": [
+    "kevin_needham",
+    "terry_hodgson"
+   ]
+  },
+  "laundry_worker": {
+   "what": "the steam laundry's floor and the seamstress's bench: presses, folding, pins and thread",
+   "members": [
+    "doreen_harland",
+    "tracey_scarth",
+    "pat_stainton",
+    "irene_lowther"
+   ]
+  },
+  "tradesman": {
+   "what": "somebody who mends, makes or paints for a living: locks, engines, signs, wiring, welding, print",
+   "members": [
+    "ian_megginson",
+    "shaun_hewson",
+    "leslie_cotterill",
+    "gary_mawer"
+   ]
+  },
+  "night_shift": {
+   "what": "those who work while the street sleeps: the watchman, the janitor, the guard, the nurse coming off a shift",
+   "members": [
+    "norman_dent"
+   ]
+  },
+  "casual_worker": {
+   "what": "no steady work in 1990: casual days on the quay, laid off, looking for anything",
+   "members": [
+    "lee_drewery",
+    "julie_kettlewell"
+   ]
+  },
+  "anyone": {
+   "what": "any resident who knows the place: the shared directions, one set of words per place (a place's facts are the place's, not a kind's)",
+   "members": []
+  }
+ },
+ "extra_kinds": {
+  "passenger": "whoever rides with Frank (Ron, a crewman, a fare who knows the town)",
+  "rival_head": "Danny, the Widow, Agar (authored scenes)",
+  "fare_person": "fares.json people",
+  "giver": "a side story's giver",
+  "anyone": "any speaker"
+ },
+ "regards": [
+  "afraid",
+  "angry",
+  "likes",
+  "appearance",
+  "neutral"
+ ],
+ "standings": [
+  "stranger",
+  "owner",
+  "nowak",
+  "frank",
+  "portsman"
+ ],
+ "standing_note": "stranger: knows nothing of him (shows nothing, 2.4.3); owner, nowak, frank, portsman: the four rungs (7.7). portsman is the fourth rung, where people still say Frank or Mr Nowak; Frankie is for three people only.",
+ "situations": [
+  {
+   "situation": "after_deed",
+   "lines": 104,
+   "live_when": "within a game day of a deed the speaker holds"
+  },
+  {
+   "situation": "asked_way",
+   "lines": 262,
+   "live_when": "Frank asks the way"
+  },
+  {
+   "situation": "at_work",
+   "lines": 10,
+   "live_when": "the speaker at a work row of his routine"
+  },
+  {
+   "situation": "bumped",
+   "lines": 114,
+   "live_when": "Frank walks into the speaker"
+  },
+  {
+   "situation": "crime_face",
+   "lines": 104,
+   "live_when": "a deed seen with a face known"
+  },
+  {
+   "situation": "crime_noise",
+   "lines": 104,
+   "live_when": "a deed heard, not seen"
+  },
+  {
+   "situation": "crime_shape",
+   "lines": 104,
+   "live_when": "a deed seen as a shape"
+  },
+  {
+   "situation": "decision.ron-ask",
+   "lines": 2,
+   "live_when": "the talk screen, a decision (3.6.5)"
+  },
+  {
+   "situation": "decision.ron-tell-them-no",
+   "lines": 6,
+   "live_when": "the talk screen, a decision (3.6.5)"
+  },
+  {
+   "situation": "decision.sheila-week",
+   "lines": 6,
+   "live_when": "the talk screen, a decision (3.6.5)"
+  },
+  {
+   "situation": "decision.sheila-week-takeover",
+   "lines": 6,
+   "live_when": "the talk screen, a decision (3.6.5)"
+  },
+  {
+   "situation": "decision.sheila-week-winddown",
+   "lines": 6,
+   "live_when": "the talk screen, a decision (3.6.5)"
+  },
+  {
+   "situation": "decision.sheila-week-wontsay",
+   "lines": 6,
+   "live_when": "the talk screen, a decision (3.6.5)"
+  },
+  {
+   "situation": "direction",
+   "lines": 147,
+   "live_when": "a passenger in Frank's car or at his side in a chase or a fare"
+  },
+  {
+   "situation": "everyday",
+   "lines": 10,
+   "live_when": "any hour, no event (the floor that keeps 14 situations live)"
+  },
+  {
+   "situation": "farewell",
+   "lines": 107,
+   "live_when": "a talk ends"
+  },
+  {
+   "situation": "fixed",
+   "lines": 3,
+   "live_when": "authored beats"
+  },
+  {
+   "situation": "greeting.frank",
+   "lines": 124,
+   "live_when": "Frank comes within 7 m of the speaker; rung by standing, regard by what the speaker holds of him"
+  },
+  {
+   "situation": "greeting.nowak",
+   "lines": 122,
+   "live_when": "Frank comes within 7 m of the speaker; rung by standing, regard by what the speaker holds of him"
+  },
+  {
+   "situation": "greeting.owner",
+   "lines": 103,
+   "live_when": "Frank comes within 7 m of the speaker; rung by standing, regard by what the speaker holds of him"
+  },
+  {
+   "situation": "greeting.regard.afraid",
+   "lines": 10,
+   "live_when": "Frank comes within 7 m of the speaker; rung by standing, regard by what the speaker holds of him"
+  },
+  {
+   "situation": "greeting.regard.angry",
+   "lines": 10,
+   "live_when": "Frank comes within 7 m of the speaker; rung by standing, regard by what the speaker holds of him"
+  },
+  {
+   "situation": "greeting.regard.appearance",
+   "lines": 10,
+   "live_when": "Frank comes within 7 m of the speaker; rung by standing, regard by what the speaker holds of him"
+  },
+  {
+   "situation": "greeting.regard.neutral",
+   "lines": 10,
+   "live_when": "Frank comes within 7 m of the speaker; rung by standing, regard by what the speaker holds of him"
+  },
+  {
+   "situation": "greeting.stranger",
+   "lines": 104,
+   "live_when": "Frank comes within 7 m of the speaker; rung by standing, regard by what the speaker holds of him"
+  },
+  {
+   "situation": "in_rain",
+   "lines": 117,
+   "live_when": "raining"
+  },
+  {
+   "situation": "know.comment",
+   "lines": 10,
+   "live_when": "the knowing ladder (2.4.3): the step matches what the speaker holds"
+  },
+  {
+   "situation": "know.confront",
+   "lines": 10,
+   "live_when": "the knowing ladder (2.4.3): the step matches what the speaker holds"
+  },
+  {
+   "situation": "know.refuse",
+   "lines": 10,
+   "live_when": "the knowing ladder (2.4.3): the step matches what the speaker holds"
+  },
+  {
+   "situation": "man_down",
+   "lines": 10,
+   "live_when": "a body or a man down within sight"
+  },
+  {
+   "situation": "neighbours",
+   "lines": 10,
+   "live_when": "two speakers within 7 m who know each other"
+  },
+  {
+   "situation": "rain_starts",
+   "lines": 117,
+   "live_when": "the weather turns to rain"
+  },
+  {
+   "situation": "story.car_two",
+   "lines": 1,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.decisions",
+   "lines": 1,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.endings",
+   "lines": 1,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.fares",
+   "lines": 1,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.frankie",
+   "lines": 1,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.happenings",
+   "lines": 1,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.name_said",
+   "lines": 1,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.next_want",
+   "lines": 1,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.night_one",
+   "lines": 1,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.pauline_air",
+   "lines": 1,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.rival_rungs",
+   "lines": 1,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.ron_way",
+   "lines": 1,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.said_to_face",
+   "lines": 1,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.side_stories",
+   "lines": 1,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.the_habit",
+   "lines": 1,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.the_landing",
+   "lines": 1,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.the_line",
+   "lines": 1,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.the_night_between",
+   "lines": 2,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.the_turn",
+   "lines": 1,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.the_visit",
+   "lines": 1,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.the_watch",
+   "lines": 1,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.the_yard",
+   "lines": 1,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "story.voice",
+   "lines": 10,
+   "live_when": "authored scenes (the story lane)"
+  },
+  {
+   "situation": "suggest.greet",
+   "lines": 6,
+   "live_when": "the talk screen (3.6.6)"
+  },
+  {
+   "situation": "suggest.leave",
+   "lines": 7,
+   "live_when": "the talk screen (3.6.6)"
+  },
+  {
+   "situation": "suggest.personal",
+   "lines": 10,
+   "live_when": "the talk screen (3.6.6)"
+  },
+  {
+   "situation": "talk_of_deeds",
+   "lines": 10,
+   "live_when": "bystanders within 7 m of each other, a deed of his in their memory"
+  },
+  {
+   "situation": "voice.ron",
+   "lines": 16,
+   "live_when": "authored moments only"
+  }
+ ]
+}

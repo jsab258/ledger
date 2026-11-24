@@ -77,9 +77,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
   "own": "lines/own-karen_grummitt.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Karen Grummitt, 25, sells tickets at the ferry window and sees who goes over and who comes back.",
@@ -87,7 +88,7 @@
   "life": "Lodges at Regent House.",
   "rivals": "Has seen the Widow's men meet the last boat."
  },
- "can_die": true,
+ "can_die": false,
  "invented": false,
  "src": "canon regular; 2.11.1; side story 28"
 }

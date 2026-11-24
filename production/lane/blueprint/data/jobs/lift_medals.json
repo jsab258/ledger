@@ -5,7 +5,7 @@
  "giver": "wayne_harrison",
  "act_min": 2,
  "rung_min": 2,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "Rita's back room open (rung 2) and Frank has fenced once; Wayne in the back room",
  "window": null,
  "offer": [
   "Metcalfe leaves a tray of medals in the window overnight. Rita would take them, if she did not know whose they were."

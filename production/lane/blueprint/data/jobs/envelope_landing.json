@@ -5,7 +5,7 @@
  "giver": "ron_kirby",
  "act_min": 1,
  "rung_min": 1,
- "when": "night one after 22:00; asks on nights 1, 3, 5, 7",
+ "when": "night one after 22:00, Ron at the office door; then nights 1, 3, 5 and 7 of Act I",
  "window": [
   "22:00",
   "01:00"

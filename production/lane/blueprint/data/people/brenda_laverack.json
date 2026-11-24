@@ -49,13 +49,13 @@
   [
    5.0,
    "fish_dock",
-   "buying at the boxes",
+   "by bike: buying at the boxes",
    "mon-sat"
   ],
   [
    8.25,
    "laveracks",
-   "gutting and the counter",
+   "by bike: gutting and the counter",
    "mon-sat"
   ],
   [
@@ -71,9 +71,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "shopkeeper",
  "lines": {
   "own": "lines/own-brenda_laverack.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "She serves at Laverack's, the wet fish shop next door to Mickey's, and lives over it. The queue at her counter is where the street trades news.",
@@ -82,7 +83,7 @@
   "fire": "The smoke was in the shop for a week. She lost a day's fish to it.",
   "rivals": "She buys from Jensen's shed like everyone and pays what the Widow says."
  },
- "can_die": true,
+ "can_die": false,
  "invented": false,
  "src": "canon; 3.4.1; side story 8"
 }

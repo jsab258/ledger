@@ -5,7 +5,7 @@
  "giver": "julie_kettlewell",
  "act_min": 1,
  "rung_min": 1,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "Julie knows Frank by name and a Friday rent day is due; she asks at Chapel Lane",
  "window": [
   "17:30",
   "20:00"

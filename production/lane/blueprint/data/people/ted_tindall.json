@@ -1,8 +1,8 @@
 {
- "id": "brian_tindall",
+ "id": "ted_tindall",
  "cast_id": null,
- "called": "Brian",
- "name": "Brian Tindall",
+ "called": "Ted",
+ "name": "Ted Tindall",
  "age": 52,
  "sex": "m",
  "role": "A Harbour Board pilot who needs the landing at all hours",
@@ -47,7 +47,7 @@
    "mon,wed,fri"
   ],
   [
-   5.5,
+   5.0,
    "rank_north",
    "waiting for a car",
    "mon,wed,fri"
@@ -71,17 +71,19 @@
    "tue,thu,sat,sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
-  "own": "lines/own-brian_tindall.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "Brian Tindall, 52, Harbour Board pilot. Brings ships in and wants to be at the launch ten minutes ago.",
+  "who": "Ted Tindall, 52, Harbour Board pilot. Brings ships in and wants to be at the launch ten minutes ago.",
   "speak": "Clipped, urgent.",
   "life": "A Harbour Board pilot who needs the landing at all hours",
   "rivals": "None of the three."
  },
  "can_die": true,
  "invented": true,
- "src": "invented: 3.4.1 (40 fare people)"
+ "src": "invented: 3.4.1 (40 fare people)",
+ "fallback_role": "the role passes to another of the same trade, or the thread closes"
 }

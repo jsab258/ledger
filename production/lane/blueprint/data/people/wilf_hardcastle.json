@@ -56,19 +56,20 @@
    "his dinner"
   ],
   [
-   14.5,
+   15.5,
    "pigeon_loft",
    "the birds"
   ],
   [
-   18.5,
+   19.0,
    "d_cl_31",
    "home"
   ]
  ],
+ "speaker_kind": "pensioner",
  "lines": {
-  "own": "lines/own-wilf_hardcastle.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Wilf Hardcastle, 72, keeps the pigeons at the back of the allotments. Tells the time by when the birds come home.",

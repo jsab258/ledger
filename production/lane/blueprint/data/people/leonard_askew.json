@@ -85,9 +85,10 @@
    "sat-sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
-  "own": "lines/own-leonard_askew.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Leonard Askew, 58, Agar & Co's agent. Calls at Mickey's counter every Friday at eleven for the flat's eighteen pounds.",

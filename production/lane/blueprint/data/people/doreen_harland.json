@@ -49,13 +49,13 @@
   [
    5.75,
    "launderette",
-   "the boiler, the early shift",
+   "by bike: the boiler, the early shift",
    "mon-sat"
   ],
   [
    14.0,
    "d_cl_25",
-   "home",
+   "by bike: home",
    "mon-sat"
   ],
   [
@@ -65,9 +65,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "laundry_worker",
  "lines": {
   "own": "lines/own-doreen_harland.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Doreen Harland, 61, a washerwoman at the laundry, on the early shift for forty years. Saw the pay packets made up.",
@@ -75,7 +76,7 @@
   "life": "25 Chapel Lane. At the laundry by six.",
   "rivals": "Keeps out of it."
  },
- "can_die": true,
+ "can_die": false,
  "invented": false,
  "src": "canon regular; side stories 9, 10"
 }

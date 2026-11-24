@@ -5,7 +5,7 @@
  "giver": "sheila_dunn",
  "act_min": 1,
  "rung_min": 1,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "day two: the debt book",
  "window": null,
  "offer": [
   "Mickey's debt book, the page for Lee."
@@ -14,19 +14,19 @@
   {
    "id": "find",
    "at": "fish_dock",
-   "verb": "find the debtor where his routine has him",
+   "verb": "find the debtor where the routine has him: 08:00 to 12:00 at the fish dock, 12:00 to 15:00 on the rank's bollard",
    "keys": [
     {
+     "way": "talk",
+     "how": "the routine (ask Ron where he'll be)"
+    },
+    {
      "way": "watch",
-     "how": "the routine (routines.json)"
+     "how": "wait for him there"
     },
     {
-     "way": "talk",
-     "how": "ask Ron"
-    },
-    {
-     "way": "talk",
-     "how": "ask the caff"
+     "way": "choice",
+     "how": "send Darren to fetch him"
     }
    ],
    "fail": null,
@@ -46,7 +46,7 @@
     },
     {
      "way": "talk",
-     "how": "claim car three and win him (STORY-FRAME 7)"
+     "how": "claim car three to his face, and win him: the first man at a post later (STORY-FRAME 4 item 5)"
     },
     {
      "way": "choice",

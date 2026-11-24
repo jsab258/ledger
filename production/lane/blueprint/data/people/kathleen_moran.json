@@ -73,17 +73,18 @@
    "mon-sat"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
-  "own": "lines/own-kathleen_moran.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "Kathleen Moran, 58, from Mayo, cooks for the priests in town and comes back to the Hook's chapel where she was married.",
-  "speak": "Warm, quick, a blessing for a tip.",
+  "who": "Kathleen Moran, 58, a cook at a works canteen in town who comes back to the Hook's chapel, where she was married.",
+  "speak": "Brisk, warm, talks about the canteen.",
   "life": "An Irish cook at the priests' house in town who comes to the Hook's chapel on Sundays",
   "rivals": "None of the three."
  },
- "can_die": true,
+ "can_die": false,
  "invented": true,
  "src": "invented: 3.4.1 (40 fare people)"
 }

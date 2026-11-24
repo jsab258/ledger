@@ -61,13 +61,13 @@
   [
    13.0,
    "adas",
-   "a call on Ada",
+   "by bike: a call on Ada",
    "mon,wed-sat"
   ],
   [
    17.0,
    "chapel",
-   "the church open",
+   "by bike: the church open",
    "mon,wed-sat"
   ],
   [
@@ -78,14 +78,14 @@
   ],
   [
    20.5,
-   "edge_north",
-   "sick calls on foot",
+   "infirmary",
+   "sick calls at the Infirmary",
    "mon,wed-sat"
   ],
   [
    22.5,
    "priests_house",
-   "asleep",
+   "by cab: asleep",
    "mon,wed-sat"
   ],
   [
@@ -109,13 +109,13 @@
   [
    13.0,
    "adas",
-   "a call on Ada",
+   "by bike: a call on Ada",
    "tue"
   ],
   [
    17.0,
    "chapel",
-   "the church open",
+   "by bike: the church open",
    "tue"
   ],
   [
@@ -167,9 +167,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
   "own": "lines/own-brendan_walsh.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Father Brendan Walsh, the Irish-born parish priest of the chapel on Quay Street. He buried Mickey Suddaby three weeks ago.",

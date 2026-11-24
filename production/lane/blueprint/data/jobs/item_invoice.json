@@ -5,7 +5,7 @@
  "giver": "derek_hebblewhite",
  "act_min": 3,
  "rung_min": 1,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "Act III, morning three",
  "window": [
   "21:00",
   "05:00"
@@ -51,5 +51,6 @@
  "clock": {
   "realSecondsPerGameHour": 120
  },
- "src": "STORY-FRAME 5 Act III item 3"
+ "src": "STORY-FRAME 5 Act III item 3",
+ "order": 3
 }

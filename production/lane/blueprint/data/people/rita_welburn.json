@@ -80,9 +80,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "shopkeeper",
  "lines": {
   "own": "lines/own-rita_welburn.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "She keeps Rita's, the pawnshop on the corner of Chapel Lane. Its window is lit late; she does her books at night.",
@@ -91,7 +92,7 @@
   "fire": "Somebody pledged a warehouse padlock key with her the week after. She did not ask.",
   "rivals": "She will lend to anyone and owes nobody, which is how she likes it. Cammack's lads tried to sell her car stereos and she sent them off."
  },
- "can_die": true,
+ "can_die": false,
  "invented": false,
  "src": "canon; 2.10.2; side story 25"
 }

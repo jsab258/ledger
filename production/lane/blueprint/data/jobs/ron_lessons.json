@@ -1,0 +1,148 @@
+{
+ "id": "ron_lessons",
+ "kind": "carry",
+ "name": "Ron's lessons: one to five",
+ "giver": "ron_kirby",
+ "act_min": 2,
+ "rung_min": 2,
+ "when": "week two onward: one lesson a week offered by Ron on the rank; lesson five in week five",
+ "window": null,
+ "offer": [
+  "TO WRITE (story lane)"
+ ],
+ "steps": [
+  {
+   "id": "lesson_1",
+   "at": "rank_mickeys",
+   "verb": "lesson one, the dock road: Ron drives; Frank has the handbrake and one word, 'Stop'",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "say stop"
+    },
+    {
+     "way": "choice",
+     "how": "pull the handbrake"
+    },
+    {
+     "way": "choice",
+     "how": "let him go"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "lesson_2",
+   "at": "dock_gate",
+   "verb": "lesson two: the gate road",
+   "keys": [
+    {
+     "way": "route",
+     "how": "the quay road"
+    },
+    {
+     "way": "route",
+     "how": "Cold Store Road"
+    },
+    {
+     "way": "choice",
+     "how": "the cut"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "lesson_3",
+   "at": "fishing_quay_west",
+   "verb": "lesson three: reversing on the quay ('Going astern')",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "coach him"
+    },
+    {
+     "way": "route",
+     "how": "take the wheel"
+    },
+    {
+     "way": "choice",
+     "how": "let him hit the bollard"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "lesson_4",
+   "at": "cold_stores",
+   "verb": "lesson four: the convoy pace, so a man with four lessons can bring a car round",
+   "keys": [
+    {
+     "way": "route",
+     "how": "the dawn convoy"
+    },
+    {
+     "way": "route",
+     "how": "the empty road at night"
+    },
+    {
+     "way": "choice",
+     "how": "the yard"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  },
+  {
+   "id": "lesson_5",
+   "at": "rank_mickeys",
+   "verb": "lesson five: he stops the car properly for once and asks what is in the book (the breach: Frank answers, true or false)",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "the truth"
+    },
+    {
+     "way": "choice",
+     "how": "a lie"
+    },
+    {
+     "way": "choice",
+     "how": "say nothing"
+    }
+   ],
+   "fail": null,
+   "words": "TO WRITE (story lane)",
+   "lines": [
+    "TO WRITE (story lane)"
+   ]
+  }
+ ],
+ "pay": {
+  "to": "book",
+  "pence": 0
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "Ron's loyalty and the breach",
+ "people": [
+  "ron_kirby"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "STORY-FRAME 3 (the bond, weeks 2 to 5); lesson five gates the turn; the Landing's getaway needs four"
+}

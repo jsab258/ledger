@@ -91,24 +91,25 @@
   [
    9.5,
    "chapel",
-   "Mass and a candle",
+   "by bike: Mass and a candle",
    "sun"
   ],
   [
    13.5,
    "boarding_house",
-   "her room",
+   "by bike: her room",
    "sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
   "own": "lines/own-june_suddaby.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "Mickey Suddaby's estranged daughter, back from the south for the funeral and staying at Regent House until Friday. She wants nothing from the office and says so.",
+  "who": "Mickey Suddaby's estranged daughter, back from the south for the funeral and staying at Regent House for now. She wants nothing from the office and says so.",
   "speak": "Cool, clipped, tired. Polite the way you are to a stranger. Does not ask Frank about himself.",
-  "life": "Left Meridian at nineteen. A teacher of adults at a college down south. She is collecting a box of photographs and going home on Friday.",
+  "life": "Stayed on at Regent House past the funeral, sorting her father's things, with no date to leave.",
   "fire": "She was not here. She says her father always had a reason to be out at night.",
   "rivals": "Knows the names from growing up. Agar did her father's conveyancing. She wants none of it."
  },

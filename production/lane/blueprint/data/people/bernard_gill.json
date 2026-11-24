@@ -65,9 +65,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "driver",
  "lines": {
-  "own": "lines/own-bernard_gill.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Bernard Gill, 55, sells used cars off the lot by the north road. Every car one careful owner.",

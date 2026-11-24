@@ -94,7 +94,7 @@
    ]
   }
  ],
- "selection": "one of the 32 drafts of 8 Nov or the frame's three new stories; the story lane picks about 25 (3.3) and writes the step lines",
+ "selection": "must keep: the frame ties it to a return (STORY-FRAME 4, 5, 7)",
  "clock": {
   "realSecondsPerGameHour": 120
  },

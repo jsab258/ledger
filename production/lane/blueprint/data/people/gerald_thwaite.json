@@ -1,8 +1,8 @@
 {
- "id": "gerald_pashley",
+ "id": "gerald_thwaite",
  "cast_id": null,
  "called": "Gerald",
- "name": "Gerald Pashley",
+ "name": "Gerald Thwaite",
  "age": 66,
  "sex": "m",
  "role": "A retired accountant who goes to the bowls club in town on Saturday afternoons and comes home late",
@@ -73,17 +73,18 @@
    "mon-fri,sun"
   ]
  ],
+ "speaker_kind": "pensioner",
  "lines": {
-  "own": "lines/own-gerald_pashley.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "Gerald Pashley, 66, did Mickey's books before Sheila took over the figures and never forgave him. Says so.",
+  "who": "Gerald Thwaite, 66, did Mickey's books before Sheila took over the figures and never forgave him. Says so.",
   "speak": "Precise, bitter, comic.",
   "life": "A retired accountant who goes to the bowls club in town on Saturday afternoons and comes home late",
   "rivals": "None of the three."
  },
- "can_die": true,
+ "can_die": false,
  "invented": true,
  "src": "invented: 3.4.1 (40 fare people)"
 }

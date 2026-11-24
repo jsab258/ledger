@@ -1,8 +1,8 @@
 {
- "id": "dorothy_garbett",
+ "id": "dorothy_kirkup",
  "cast_id": null,
  "called": "Dorothy",
- "name": "Dorothy Garbett",
+ "name": "Dorothy Kirkup",
  "age": 69,
  "sex": "f",
  "role": "A widow on Chapel Lane who goes to her sister's in town on Wednesdays",
@@ -73,17 +73,18 @@
    "mon,tue,thu-sun"
   ]
  ],
+ "speaker_kind": "pensioner",
  "lines": {
-  "own": "lines/own-dorothy_garbett.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "Dorothy Garbett, 69, goes to her sister's every Wednesday and has opinions about the sister's husband.",
+  "who": "Dorothy Kirkup, 69, goes to her sister's every Wednesday and has opinions about the sister's husband.",
   "speak": "Confiding, 'between you and me'.",
   "life": "A widow on Chapel Lane who goes to her sister's in town on Wednesdays",
   "rivals": "None of the three."
  },
- "can_die": true,
+ "can_die": false,
  "invented": true,
  "src": "invented: 3.4.1 (40 fare people)"
 }

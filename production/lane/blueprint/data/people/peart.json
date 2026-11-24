@@ -2,7 +2,7 @@
  "id": "peart",
  "cast_id": null,
  "called": "Mr Peart",
- "name": "Ronald Peart",
+ "name": "Herbert Peart",
  "age": 62,
  "sex": "m",
  "role": "Keeps Peart's, the newsagent and tobacconist, with the pension counter",
@@ -79,12 +79,13 @@
    "sun"
   ]
  ],
+ "speaker_kind": "shopkeeper",
  "lines": {
-  "own": "lines/own-peart.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "Ronald Peart, 62, the newsagent. Witness to half the street's wills. The Pilot on the counter at six.",
+  "who": "Herbert Peart, 62, the newsagent. Witness to half the street's wills. The Pilot on the counter at six.",
   "speak": "Gossip by headline.",
   "life": "Over the shop.",
   "rivals": "Sells papers to all three."

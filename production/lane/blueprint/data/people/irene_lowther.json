@@ -65,9 +65,10 @@
    "sat-sun"
   ]
  ],
+ "speaker_kind": "laundry_worker",
  "lines": {
   "own": "lines/own-irene_lowther.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Irene Lowther, 52, a laundress. Knows whose sheets come in with what on them, and says nothing.",
@@ -75,7 +76,7 @@
   "life": "33 North Road.",
   "rivals": "Keeps out of it."
  },
- "can_die": true,
+ "can_die": false,
  "invented": true,
  "src": "hook-cast.json selma (unnamed; named here)"
 }

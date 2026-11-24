@@ -5,7 +5,7 @@
  "giver": "derek_hebblewhite",
  "act_min": 3,
  "rung_min": 1,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "Act III, morning one: the inspector at the counter",
  "window": null,
  "offer": [
   "TO WRITE (story lane)"
@@ -42,9 +42,13 @@
  },
  "ledger": "TO WRITE (story lane)",
  "returns": "TO WRITE (story lane)",
- "people": [],
+ "people": [
+  "lee_drewery"
+ ],
  "clock": {
   "realSecondsPerGameHour": 120
  },
- "src": "STORY-FRAME 5 Act III item 1"
+ "src": "STORY-FRAME 5 Act III item 1",
+ "order": 1,
+ "people_note": "the man paid off the book: whoever Frank paid from the tin; Lee Drewery by default (home_nr_12 is his house)"
 }

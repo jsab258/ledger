@@ -1,8 +1,8 @@
 {
- "id": "paddy_rourke",
+ "id": "kieran_rourke",
  "cast_id": "goran",
- "called": "Paddy",
- "name": "Paddy Rourke",
+ "called": "Kieran",
+ "name": "Kieran Rourke",
  "age": 44,
  "sex": "m",
  "role": "A customs assistant on the docks; knows the bonded store",
@@ -49,13 +49,13 @@
   [
    7.75,
    "customs",
-   "the docks",
+   "by bike: the docks",
    "mon-fri"
   ],
   [
    17.0,
    "d_nr_41",
-   "home",
+   "by bike: home",
    "mon-fri"
   ],
   [
@@ -83,17 +83,19 @@
    "sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
-  "own": "lines/own-paddy_rourke.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "lines/own-kieran_rourke.json",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "Paddy Rourke, 44, born in Wexford, a customs assistant on the docks for twenty years. Counts the bonded store's tobacco.",
-  "speak": "Easy, Irish, a story for every question and an answer for none.",
+  "who": "Kieran Rourke, 44, a customs assistant on the docks for twenty years. Counts the bonded store's tobacco.",
+  "speak": "Plain, careful, a counter of things: 'that's eleven, not twelve'.",
   "life": "41 North Road; the caff two evenings.",
   "rivals": "Has watched the Widow's loads come through for years."
  },
  "can_die": true,
  "invented": true,
- "src": "hook-cast.json goran (unnamed; named here)"
+ "src": "hook-cast.json goran (unnamed; named here)",
+ "fallback_role": "the role passes to another, or the thread closes"
 }

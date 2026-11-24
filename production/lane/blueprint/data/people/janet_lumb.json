@@ -1,11 +1,11 @@
 {
- "id": "janet_ruddle",
+ "id": "janet_lumb",
  "cast_id": null,
  "called": "Janet",
- "name": "Janet Ruddle",
+ "name": "Janet Lumb",
  "age": 43,
  "sex": "f",
- "role": "A school secretary with the school shut, cleaning offices in town at night",
+ "role": "Cleans offices in town at night; walks from Chapel Lane",
  "kind": "minor",
  "voice": null,
  "look": {
@@ -71,17 +71,18 @@
    "sat-sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
-  "own": "lines/own-janet_ruddle.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "Janet Ruddle, 43, the comprehensive's secretary, cleaning offices in town until it reopens. Knows Mr Danby.",
+  "who": "Janet Lumb, 43, cleans offices in town at night. Knows Mr Danby from the chapel.",
   "speak": "Prim, then funny.",
   "life": "A school secretary with the school shut, cleaning offices in town at night",
   "rivals": "None of the three."
  },
- "can_die": true,
+ "can_die": false,
  "invented": true,
  "src": "invented: 3.4.1 (40 fare people)"
 }

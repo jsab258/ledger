@@ -63,13 +63,13 @@
   [
    15.0,
    "adas",
-   "a cup with Ada",
+   "by cab: a cup with Ada",
    "mon-fri"
   ],
   [
    18.5,
    "d_cl_16",
-   "home",
+   "by cab: home",
    "mon-fri"
   ],
   [
@@ -97,9 +97,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "pensioner",
  "lines": {
   "own": "lines/own-winifred_duggleby.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Winifred Duggleby, 76, a widow who cleans the chapel and does its flowers. Her husband's anniversary falls this month.",

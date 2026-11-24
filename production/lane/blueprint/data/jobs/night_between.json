@@ -1,0 +1,85 @@
+{
+ "id": "night_between",
+ "kind": "sit_down",
+ "name": "The night between",
+ "giver": "carol_ellis",
+ "act_min": 2,
+ "rung_min": 3,
+ "when": "the turn: after the Landing and lesson five, the tip with Ellis (by the end of week five at the latest)",
+ "window": null,
+ "offer": [
+  "That you, boss? Say nowt."
+ ],
+ "steps": [
+  {
+   "id": "arrest",
+   "at": "police_station",
+   "verb": "arrested on the entry; custody in hours; through the wall, Ron has offered a statement, to be signed at nine; bailed that evening",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "say nothing"
+    },
+    {
+     "way": "choice",
+     "how": "say what the line said"
+    },
+    {
+     "way": "talk",
+     "how": "ask for a brief"
+    }
+   ],
+   "fail": null,
+   "words": "That you, boss? Say nowt.",
+   "lines": [
+    "That you, boss? Say nowt."
+   ]
+  },
+  {
+   "id": "before_nine",
+   "at": "police_station",
+   "verb": "before nine the next morning",
+   "keys": [
+    {
+     "way": "choice",
+     "how": "sign first: walk back in and put the line on paper under his own name (Ron walks; Frank charged, on bail to the end, the licence suspended a fortnight, a post lost)"
+    },
+    {
+     "way": "pay",
+     "how": "a cheaper way, only if his record earned it: the brief (Agar's man, at the brief's fee) argues Ron out as a messenger, or DC Wardell loses the statement (200 pounds, once; Ellis notices); Ron allows either only if Frank came for him at the gate or redeemed Mickey's watch"
+    },
+    {
+     "way": "watch",
+     "how": "let it stand: at nine Ron signs, and goes in on remand to the end"
+    }
+   ],
+   "fail": null,
+   "words": "Saying's nowt, boss. You've a firm to stand in. I've a door.",
+   "lines": [
+    "Saying's nowt, boss. You've a firm to stand in. I've a door."
+   ]
+  }
+ ],
+ "pay": {
+  "to": "tin",
+  "pence": 0,
+  "cost_band": [
+   20000,
+   20000
+  ],
+  "note": "Wardell's price 200 pounds once (economy); the brief's fee (economy)"
+ },
+ "ledger": "TO WRITE (story lane)",
+ "returns": "Act III's charge or Ron's absence",
+ "people": [
+  "ron_kirby",
+  "carol_ellis",
+  "graham_wardell",
+  "anthony_raine",
+  "sgt_bellwood"
+ ],
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "src": "STORY-FRAME 5 The night between (decision of 24 Nov: Ron goes inside unless Frank pays to stop it); RT2-05 (if Ron is gone, the most loyal man stands in)"
+}

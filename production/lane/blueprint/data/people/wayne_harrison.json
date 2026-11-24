@@ -67,7 +67,7 @@
   [
    22.0,
    "d_nr_27",
-   "home",
+   "by bike: home",
    "mon-sat"
   ],
   [
@@ -77,9 +77,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "shopkeeper",
  "lines": {
   "own": "lines/own-wayne_harrison.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Rita's back-room hand. He lifts, carries, fixes radios and sells what does not go in the window. He owes Mickey's book thirty pounds.",
@@ -91,5 +92,6 @@
  "can_die": true,
  "invented": false,
  "src": "canon; 2.8.1",
+ "fallback_role": "the role passes to another, or the thread closes",
  "fight_kind": "knife_man"
 }

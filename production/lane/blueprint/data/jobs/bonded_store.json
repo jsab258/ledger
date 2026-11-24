@@ -2,10 +2,10 @@
  "id": "bonded_store",
  "kind": "break_in",
  "name": "The bonded store",
- "giver": "paddy_rourke",
- "act_min": 3,
+ "giver": "kieran_rourke",
+ "act_min": 2,
  "rung_min": 3,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "rung 3; Kieran Rourke's count told",
  "window": null,
  "offer": [
   "TO WRITE (story lane)"
@@ -18,7 +18,7 @@
    "keys": [
     {
      "way": "choice",
-     "how": "Paddy's count and a night"
+     "how": "Kieran's count and a night"
     },
     {
      "way": "choice",
@@ -43,7 +43,7 @@
  "ledger": "TO WRITE (story lane)",
  "returns": "TO WRITE (story lane)",
  "people": [
-  "paddy_rourke",
+  "kieran_rourke",
   "douglas_fenwick"
  ],
  "clock": {

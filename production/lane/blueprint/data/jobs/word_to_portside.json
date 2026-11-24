@@ -5,7 +5,7 @@
  "giver": "ron_kirby",
  "act_min": 2,
  "rung_min": 2,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "Portside Cars taking fares after a hit-and-run; Ron on the rank",
  "window": null,
  "offer": [
   "Portside are sat on the north rank taking our fares. One windscreen, at night, and they will read it right."
@@ -26,13 +26,13 @@
     },
     {
      "way": "talk",
-     "how": "a word with Len Ackroyd instead"
+     "how": "a word with Clive Ackroyd instead"
     }
    ],
    "fail": null,
-   "words": "Put a Portside windscreen in on the north rank. Len Ackroyd will know who by morning.",
+   "words": "Put a Portside windscreen in on the north rank. Clive Ackroyd will know who by morning.",
    "lines": [
-    "Put a Portside windscreen in on the north rank. Len Ackroyd will know who by morning."
+    "Put a Portside windscreen in on the north rank. Clive Ackroyd will know who by morning."
    ]
   }
  ],
@@ -41,10 +41,10 @@
   "pence": 0
  },
  "ledger": "Ron: one Portside windscreen, at night, as a message.",
- "returns": "Len Ackroyd knows who by morning",
+ "returns": "Clive Ackroyd knows who by morning",
  "people": [
   "ron_kirby",
-  "len_ackroyd"
+  "clive_ackroyd"
  ],
  "clock": {
   "realSecondsPerGameHour": 120

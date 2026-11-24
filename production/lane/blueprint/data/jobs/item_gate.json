@@ -5,7 +5,7 @@
  "giver": "derek_hebblewhite",
  "act_min": 3,
  "rung_min": 1,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "Act III, morning four",
  "window": null,
  "offer": [
   "TO WRITE (story lane)"
@@ -21,12 +21,12 @@
      "how": "pay her price"
     },
     {
-     "way": "pay",
-     "how": "the landing (her price if allied)"
+     "way": "choice",
+     "how": "the receipt she wrote in week one, made out to Mr Nowack (if he asked for it)"
     },
     {
-     "way": "choice",
-     "how": "the receipt she wrote"
+     "way": "pay",
+     "how": "trade the landing (her price if allied)"
     }
    ],
    "fail": null,
@@ -48,5 +48,6 @@
  "clock": {
   "realSecondsPerGameHour": 120
  },
- "src": "STORY-FRAME 5 Act III item 4"
+ "src": "STORY-FRAME 5 Act III item 4",
+ "order": 4
 }

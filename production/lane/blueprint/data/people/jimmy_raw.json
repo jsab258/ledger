@@ -49,7 +49,7 @@
   [
    5.75,
    "dock_gate",
-   "the pen",
+   "by bike: the pen",
    "mon-sat"
   ],
   [
@@ -77,12 +77,13 @@
    "sun"
   ]
  ],
+ "speaker_kind": "dock_worker",
  "lines": {
-  "own": "lines/own-jimmy_raw.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
-  "who": "Jimmy Raw, 35, picked at the pen three days in five. Drinks tea at the caff and fights for money.",
+  "who": "Jimmy Raw, 35, picked at the pen three days in five. Fights when the Widow's men tell him to.",
   "speak": "Loud, jeering.",
   "life": "2 North Road.",
   "rivals": "Picks a fight for the Widow's men when told."
@@ -90,5 +91,6 @@
  "can_die": true,
  "invented": true,
  "src": "invented: RT2-13 (the dockers by car two); 1.3.12",
- "fight_kind": "brawler"
+ "fallback_role": "the role passes to another of the same trade, or the thread closes",
+ "fight_kind": "boxer"
 }

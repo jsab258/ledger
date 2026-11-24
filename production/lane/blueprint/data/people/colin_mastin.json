@@ -51,13 +51,13 @@
   [
    5.75,
    "dock_gate",
-   "in at six, the cranes inside",
+   "by bike: in at six, the cranes inside",
    "mon-fri"
   ],
   [
    17.5,
    "d_cs_7",
-   "home",
+   "by bike: home",
    "mon-fri"
   ],
   [
@@ -69,13 +69,13 @@
   [
    5.75,
    "dock_gate",
-   "Saturday morning",
+   "by bike: Saturday morning",
    "sat"
   ],
   [
    12.5,
    "d_cs_7",
-   "home",
+   "by bike: home",
    "sat"
   ],
   [
@@ -85,9 +85,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "dock_worker",
  "lines": {
   "own": "lines/own-colin_mastin.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Colin Mastin, 41, drives a crane inside the gate. The Widow's people have offered dockers night work off the books.",
@@ -97,5 +98,6 @@
  },
  "can_die": true,
  "invented": false,
- "src": "canon regular; side story 15"
+ "src": "canon regular; side story 15",
+ "fallback_role": "the role passes to another, or the thread closes"
 }

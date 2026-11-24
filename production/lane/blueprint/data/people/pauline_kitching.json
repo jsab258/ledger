@@ -45,61 +45,38 @@
   [
    0.0,
    "edge_north",
-   "home",
-   "mon-sat"
+   "home"
   ],
   [
-   6.75,
+   7.0,
    "mickeys",
-   "the radio",
-   "mon-sat"
+   "the radio"
   ],
   [
    12.0,
    "rank_mickeys",
-   "a cigarette by the rank",
-   "mon-sat"
+   "a cigarette by the rank"
   ],
   [
    12.33,
    "mickeys",
-   "the radio",
-   "mon-sat"
+   "the radio"
   ],
   [
    19.0,
    "bus_stop_qs",
-   "the bus home",
-   "mon-sat"
+   "the bus home"
   ],
   [
    19.5,
    "edge_north",
-   "home",
-   "mon-sat"
-  ],
-  [
-   0.0,
-   "edge_north",
-   "home",
-   "sun"
-  ],
-  [
-   9.0,
-   "mickeys",
-   "the radio, Sunday hours",
-   "sun"
-  ],
-  [
-   16.0,
-   "edge_north",
-   "home",
-   "sun"
+   "home"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
   "own": "lines/own-pauline_kitching.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Mickey's dispatcher. She runs the radio and the phone in the front office and every fare goes through her.",

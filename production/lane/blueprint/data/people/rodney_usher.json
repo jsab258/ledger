@@ -51,13 +51,13 @@
   [
    8.75,
    "harbour_board",
-   "the back office",
+   "by bike: the back office",
    "mon-fri"
   ],
   [
    17.0,
    "snooker_hall",
-   "the tables",
+   "by bike: the tables",
    "mon-fri"
   ],
   [
@@ -91,9 +91,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "dock_worker",
  "lines": {
-  "own": "lines/own-rodney_usher.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Rodney Usher, 33, a clerk in the Harbour Board's back office. Knows every ship's time and sells them at the snooker hall.",
@@ -103,5 +104,6 @@
  },
  "can_die": true,
  "invented": true,
- "src": "invented: RT-03 (a clerk who sells times of shipments)"
+ "src": "invented: RT-03 (a clerk who sells times of shipments)",
+ "fallback_role": "the role passes to another of the same trade, or the thread closes"
 }

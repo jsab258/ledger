@@ -51,13 +51,13 @@
   [
    6.0,
    "ferry_landing",
-   "the first boat",
+   "by bike: the first boat",
    "mon-sat"
   ],
   [
    17.25,
    "d_nr_42",
-   "home",
+   "by bike: home",
    "mon-sat"
   ],
   [
@@ -67,9 +67,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "dock_worker",
  "lines": {
   "own": "lines/own-gordon_leckenby.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Gordon Leckenby, 55, crews the Meridian Ferry. Talks only about the weather.",
@@ -79,5 +80,6 @@
  },
  "can_die": true,
  "invented": false,
- "src": "canon regular; side story 18"
+ "src": "canon regular; side story 18",
+ "fallback_role": "the role passes to another, or the thread closes"
 }

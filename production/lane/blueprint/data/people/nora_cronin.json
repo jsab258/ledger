@@ -57,7 +57,7 @@
   [
    13.0,
    "grocer",
-   "his table",
+   "by cab: his table",
    "mon-sat"
   ],
   [
@@ -69,7 +69,7 @@
   [
    17.5,
    "priests_house",
-   "his supper",
+   "by cab: his supper",
    "mon-sat"
   ],
   [
@@ -97,9 +97,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "pensioner",
  "lines": {
   "own": "lines/own-nora_cronin.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Father Walsh's housekeeper. She shops the market, queues at Laverack's and takes tea at the Copper Kettle, and brings home every word.",

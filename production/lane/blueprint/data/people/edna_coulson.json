@@ -51,7 +51,7 @@
   [
    6.0,
    "mickeys",
-   "cleaning the front office, from six",
+   "by bike: cleaning the front office, from six",
    "mon-fri"
   ],
   [
@@ -61,7 +61,7 @@
    "mon-fri"
   ],
   [
-   8.25,
+   8.75,
    "snooker_hall",
    "cleaning",
    "mon-fri"
@@ -69,7 +69,7 @@
   [
    11.75,
    "d_cl_7",
-   "home",
+   "by bike: home",
    "mon-fri"
   ],
   [
@@ -81,13 +81,13 @@
   [
    6.0,
    "mickeys",
-   "Saturday clean",
+   "by bike: Saturday clean",
    "sat"
   ],
   [
    9.5,
    "d_cl_7",
-   "home",
+   "by bike: home",
    "sat"
   ],
   [
@@ -103,15 +103,16 @@
    "sun"
   ],
   [
-   11.0,
+   11.5,
    "d_cl_7",
    "home",
    "sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
-  "own": "lines/own-edna_coulson.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Edna Coulson, 59, cleans the Harbour Board from six, then the tea room and the agents' office. Finds what the night left.",
@@ -119,7 +120,7 @@
   "life": "7 Chapel Lane.",
   "rivals": "Tells Nora Cronin everything."
  },
- "can_die": true,
+ "can_die": false,
  "invented": true,
  "src": "invented: 2.5.5 (the cleaner at six)"
 }

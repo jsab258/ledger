@@ -53,7 +53,7 @@
    "mon-thu"
   ],
   [
-   8.0,
+   8.25,
    "empty_unit",
    "his ladder on the parade's boards",
    "mon-thu"
@@ -65,7 +65,7 @@
    "mon-thu"
   ],
   [
-   13.0,
+   13.25,
    "launderette",
    "the next board",
    "mon-thu"
@@ -89,7 +89,7 @@
    "fri"
   ],
   [
-   8.0,
+   8.25,
    "mickeys",
    "his ladder at Mickey's bay",
    "fri"
@@ -101,7 +101,7 @@
    "fri"
   ],
   [
-   13.0,
+   13.25,
    "launderette",
    "the next board",
    "fri"
@@ -149,9 +149,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "tradesman",
  "lines": {
   "own": "lines/own-shaun_hewson.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "A sign painter, the last on the Hook. This week he is painting out the name over the empty unit on the parade for the landlord.",
@@ -163,5 +164,6 @@
  "can_die": true,
  "invented": false,
  "src": "canon; 2.11.1; side story 6",
+ "fallback_role": "the role passes to another, or the thread closes",
  "fight_kind": "brawler"
 }

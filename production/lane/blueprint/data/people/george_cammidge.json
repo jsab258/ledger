@@ -49,13 +49,13 @@
   [
    8.75,
    "chandlery",
-   "the shop",
+   "by cab: the shop",
    "mon-sat"
   ],
   [
    17.75,
    "d_cl_8",
-   "home",
+   "by cab: home",
    "mon-sat"
   ],
   [
@@ -65,9 +65,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "pensioner",
  "lines": {
-  "own": "lines/own-george_cammidge.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "George Cammidge, 67, the chandler. Rope, paraffin and tinned goods for boats that rarely come.",
@@ -75,7 +76,7 @@
   "life": "8 Chapel Lane.",
   "rivals": "None."
  },
- "can_die": true,
+ "can_die": false,
  "invented": true,
  "src": "invented: places.json chandlery (unnamed keeper); side story 13"
 }

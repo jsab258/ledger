@@ -65,9 +65,10 @@
    "sat-sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
-  "own": "lines/own-douglas_fenwick.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Douglas Fenwick, 56, customs officer at the bonded store. Has not written a report worth reading in ten years. Trades.",
@@ -77,5 +78,6 @@
  },
  "can_die": true,
  "invented": true,
- "src": "invented: RT-03 (an officer who never reports, by trade); places.json customs owner"
+ "src": "invented: RT-03 (an officer who never reports, by trade); places.json customs owner",
+ "fallback_role": "another officer from the station"
 }

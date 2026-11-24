@@ -55,7 +55,7 @@
   [
    13.0,
    "iveson_yard",
-   "odd jobs at the yard",
+   "by bike: odd jobs at the yard",
    "mon-fri"
   ],
   [
@@ -89,9 +89,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "tradesman",
  "lines": {
   "own": "lines/own-leslie_cotterill.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Les Cotterill, 50, cuts keys at Rita's counter mornings and works with Ian at the yard afternoons. Older and slower than Ian, and more careful whose keys he cuts.",
@@ -101,5 +102,6 @@
  },
  "can_die": true,
  "invented": true,
- "src": "hook-cast.json jelena (unnamed; named here)"
+ "src": "hook-cast.json jelena (unnamed; named here)",
+ "fallback_role": "the role passes to another, or the thread closes"
 }

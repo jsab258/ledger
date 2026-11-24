@@ -85,9 +85,10 @@
    "sun"
   ]
  ],
+ "speaker_kind": "anyone",
  "lines": {
-  "own": "lines/own-eric_tharratt.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Eric Tharratt, 54, shift manager at the cold stores. Will talk once a firm with four cars meets the packing shift on time five mornings in one week.",

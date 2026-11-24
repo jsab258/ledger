@@ -19775,6 +19775,60 @@
     }
    }
   },
+  "line-situations.json": {
+   "x-made": "wave 2 (24 Nov 2026): the fixed line table (FIT F19)",
+   "type": "object",
+   "required": [
+    "file",
+    "version",
+    "clock",
+    "speaker_kinds",
+    "situations"
+   ],
+   "properties": {
+    "file": {
+     "type": "string"
+    },
+    "version": {
+     "type": "string"
+    },
+    "clock": {
+     "type": "object",
+     "required": [
+      "realSecondsPerGameHour"
+     ],
+     "properties": {
+      "realSecondsPerGameHour": {
+       "type": "integer",
+       "minimum": 120,
+       "maximum": 120
+      }
+     }
+    },
+    "sources": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "open_points": {
+     "type": "array"
+    },
+    "speaker_kinds": {
+     "type": "object"
+    },
+    "situations": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "required": [
+       "situation",
+       "live_when"
+      ]
+     }
+    }
+   }
+  },
   "ties.json": {
    "x-made": "by hand from TECH-PLAN section 3 (ties, the real town's form)",
    "type": "object",
@@ -19990,12 +20044,12 @@
        },
        "who": {
         "type": "string",
-        "pattern": "^([a-z0-9_]+|kind:(man|woman|older_man|older_woman|docker|shopkeeper|constable|driver))$",
+        "pattern": "^([a-z0-9_]+|kind:(man|woman|older_man|older_woman|docker|shopkeeper|constable|driver|dock_worker|pensioner|office_worker|laundry_worker|tradesman|night_shift|casual_worker|anyone|passenger|rival_head|fare_person|giver))$",
         "x-note": "a people/ id, or kind:<speaker kind> for shared street lines"
        },
        "situation": {
         "type": "string",
-        "x-note": "from the fixed line table (FIT F19); the table is listed in lines/situations.json when made"
+        "x-note": "from the fixed line table (FIT F19); the table is line-situations.json (wave 2; outside lines/ so the line schema does not test it)"
        },
        "text": {
         "type": "string",
@@ -20055,8 +20109,10 @@
       "minding",
       "fare",
       "sit_down",
-      "send"
-     ]
+      "send",
+      "fight"
+     ],
+     "x-note-wave2": "fight added by wave 2 (the quay, the yard, the gate crisis)"
     },
     "giver": {
      "type": "string"

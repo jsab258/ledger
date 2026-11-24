@@ -203,8 +203,26 @@
    "words": 3
   },
   {
+   "id": "story.frankie.to_write",
+   "who": "maureen_jensen",
+   "situation": "story.frankie",
+   "text": "TO WRITE (story lane): Frankie at the fourth rung: the Widow to own him, Danny to needle him, Ron once if ever (STORY-FRAME 1, renamed); one line each, in the scene that earns it.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26; BLUEPRINT-03",
+   "words": 34
+  },
+  {
+   "id": "story.ron_way.to_write",
+   "who": "ron_kirby",
+   "situation": "story.ron_way",
+   "text": "TO WRITE (story lane): Ron giving the way by landmark when asked: he knows every road (GV-03); about 10 lines.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26; BLUEPRINT-03",
+   "words": 19
+  },
+  {
    "id": "story.name_said.to_write",
-   "who": "any",
+   "who": "kind:anyone",
    "situation": "story.name_said",
    "text": "TO WRITE (story lane): Each named person's first saying of the next rung's name (the new owner, Nowak, Frank, Frankie), said to his face (7.7); the three who say Frankie: the Widow, Danny, Ron once.",
    "once": "game",
@@ -213,7 +231,7 @@
   },
   {
    "id": "story.next_want.to_write",
-   "who": "any",
+   "who": "kind:anyone",
    "situation": "story.next_want",
    "text": "TO WRITE (story lane): The Ledger's next named want in a person's own words, one per beat (STORY-FRAME 6, the next want).",
    "once": "game",
@@ -231,7 +249,7 @@
   },
   {
    "id": "story.said_to_face.to_write",
-   "who": "any",
+   "who": "kind:anyone",
    "situation": "story.said_to_face",
    "text": "TO WRITE (story lane): A named witness's remark returning each deed of weight within a game day (STORY-FRAME 7): one per kind of deed per witness kind.",
    "once": "game",
@@ -240,7 +258,7 @@
   },
   {
    "id": "story.rival_rungs.to_write",
-   "who": "rivals",
+   "who": "kind:rival_head",
    "situation": "story.rival_rungs",
    "text": "TO WRITE (story lane): Each rival's noticed, visit, pressure, threat and sit-down lines (2.10.1 to 2.10.3, RT-06).",
    "once": "game",
@@ -249,7 +267,7 @@
   },
   {
    "id": "story.fares.to_write",
-   "who": "fare_people",
+   "who": "kind:fare_person",
    "situation": "story.fares",
    "text": "TO WRITE (story lane): Two rides' lines for each of the 40 fare people (fares.json TO WRITE fields).",
    "once": "game",
@@ -258,7 +276,7 @@
   },
   {
    "id": "story.side_stories.to_write",
-   "who": "givers",
+   "who": "kind:giver",
    "situation": "story.side_stories",
    "text": "TO WRITE (story lane): Step lines for every side story (about 30 a story; side-stories/ TO WRITE fields).",
    "once": "game",
@@ -267,7 +285,7 @@
   },
   {
    "id": "story.happenings.to_write",
-   "who": "any",
+   "who": "kind:anyone",
    "situation": "story.happenings",
    "text": "TO WRITE (story lane): Lines for the happenings (happenings.json TO WRITE fields).",
    "once": "game",
@@ -276,7 +294,7 @@
   },
   {
    "id": "story.endings.to_write",
-   "who": "any",
+   "who": "kind:anyone",
    "situation": "story.endings",
    "text": "TO WRITE (story lane): The close's voices per ending, up to about five lines (STORY-FRAME 8).",
    "once": "game",
@@ -285,7 +303,7 @@
   },
   {
    "id": "story.decisions.to_write",
-   "who": "any",
+   "who": "kind:anyone",
    "situation": "story.decisions",
    "text": "TO WRITE (story lane): Decision lines: a yes, a no and a line that keeps talking for every decision (3.6.5); the 170 not-a-plain-yes test lines.",
    "once": "game",

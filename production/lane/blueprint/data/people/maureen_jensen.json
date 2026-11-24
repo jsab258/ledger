@@ -51,13 +51,13 @@
   [
    8.0,
    "widow_base",
-   "the office over the net store",
+   "by car: the office over the net store",
    "mon-sat"
   ],
   [
    18.0,
    "d_cs_19",
-   "home",
+   "by car: home",
    "mon-sat"
   ],
   [
@@ -69,19 +69,20 @@
   [
    10.0,
    "chapel",
-   "Mass",
+   "by car: Mass",
    "sun"
   ],
   [
    13.25,
    "d_cs_19",
-   "home",
+   "by car: home",
    "sun"
   ]
  ],
+ "speaker_kind": null,
  "lines": {
-  "own": "lines/own-maureen_jensen.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "authored scenes and live talk only (a rival head: the bank's no_kind)"
  },
  "card": {
   "who": "Maureen Jensen, 57, the Widow: runs the dockside syndicate from the office over the net store. Taxes the cabs at the dock gate. Has not walked up Quay Street in years.",

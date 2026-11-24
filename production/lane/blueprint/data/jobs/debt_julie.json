@@ -5,7 +5,7 @@
  "giver": "sheila_dunn",
  "act_min": 1,
  "rung_min": 1,
- "when": "the giver's routine puts them where Frank is, and the job's state holds (the story director's card)",
+ "when": "day two: the debt book",
  "window": null,
  "offer": [
   "Mickey's debt book, the page for Julie."
@@ -14,19 +14,19 @@
   {
    "id": "find",
    "at": "home_cl_9",
-   "verb": "find the debtor where his routine has him",
+   "verb": "find the debtor where the routine has him: at home, 9 Chapel Lane, mornings and after 14:30",
    "keys": [
     {
+     "way": "talk",
+     "how": "the routine (ask Ron where he'll be)"
+    },
+    {
      "way": "watch",
-     "how": "the routine (routines.json)"
+     "how": "wait for him there"
     },
     {
-     "way": "talk",
-     "how": "ask Ron"
-    },
-    {
-     "way": "talk",
-     "how": "ask the caff"
+     "way": "choice",
+     "how": "send Darren to fetch him"
     }
    ],
    "fail": null,
@@ -62,8 +62,8 @@
  ],
  "pay": {
   "to": "tin",
-  "pence": 900,
-  "note": "a debtor pays only what his purse holds; the rest stays on the book (3.5.2)"
+  "pence": 0,
+  "pays_in": "nothing: she cannot pay; 'take what she has' is a few shillings and the street's shame"
  },
  "ledger": "TO WRITE (story lane)",
  "returns": "squeezing or letting a debt go is told on the street within a game day",

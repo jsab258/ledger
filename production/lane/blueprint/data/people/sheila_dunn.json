@@ -46,37 +46,37 @@
    0.0,
    "edge_north",
    "home across the river",
-   "mon-wed,fri"
+   "mon-wed"
   ],
   [
    8.5,
    "mickeys",
    "the counter and the book",
-   "mon-wed,fri"
+   "mon-wed"
   ],
   [
    12.5,
    "caff",
    "her dinner",
-   "mon-wed,fri"
+   "mon-wed"
   ],
   [
-   13.25,
+   13.75,
    "mickeys",
    "the counter and the book",
-   "mon-wed,fri"
+   "mon-wed"
   ],
   [
    17.5,
    "bus_stop_qs",
    "the bus home",
-   "mon-wed,fri"
+   "mon-wed"
   ],
   [
    18.0,
    "edge_north",
    "home",
-   "mon-wed,fri"
+   "mon-wed"
   ],
   [
    0.0,
@@ -103,7 +103,7 @@
    "thu"
   ],
   [
-   13.25,
+   13.75,
    "mickeys",
    "the counter and the book",
    "thu"
@@ -119,6 +119,42 @@
    "edge_north",
    "home",
    "thu"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home across the river",
+   "fri"
+  ],
+  [
+   8.5,
+   "mickeys",
+   "the counter and the book",
+   "fri"
+  ],
+  [
+   12.5,
+   "caff",
+   "her dinner",
+   "fri"
+  ],
+  [
+   13.75,
+   "mickeys",
+   "the counter, the book and Friday's reckoning",
+   "fri"
+  ],
+  [
+   17.75,
+   "bus_stop_qs",
+   "the bus home",
+   "fri"
+  ],
+  [
+   18.25,
+   "edge_north",
+   "home",
+   "fri"
   ],
   [
    0.0,
@@ -149,11 +185,30 @@
    "edge_north",
    "home across the river",
    "sun"
+  ],
+  [
+   10.0,
+   "mickeys",
+   "Sunday: the week's nights read back",
+   "sun"
+  ],
+  [
+   13.0,
+   "bus_stop_qs",
+   "the bus home",
+   "sun"
+  ],
+  [
+   13.5,
+   "edge_north",
+   "home",
+   "sun"
   ]
  ],
+ "speaker_kind": "office_worker",
  "lines": {
-  "own": "lines/own-sheila_dunn.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Mickey Suddaby's bookkeeper for 31 years, a widow. She kept his boat's settling sheets, then the cab office books. She promised Mickey she would size up whoever inherited.",
@@ -161,7 +216,7 @@
   "life": "Lives over the river, comes in on the bus. Widowed nine years. Has her dinner at Rinaldi's caff at half twelve. Trusts Pauline on the radio and nobody else much.",
   "fire": "Says only that the fare book shows nothing for that night.",
   "rivals": "Agar holds the freehold on the parade and sends a clerk for the rent. The Widow Jensen runs the fish dock. Cammack's lot are new and loud. Keith Garbutt carries messages between them; Mickey's arrangement was with Garbutt.",
-  "secret": "Mickey's real book is behind the back room door she will not open yet. One of Mickey's cars was on the warehouse row the night No. 4 burned; it is in the real book. She will not speak of either until she decides he has earned it."
+  "secret": "Mickey's arrangement was with the old firm at the landing, from before the three rivals were anybody; Garbutt only carries messages. She has kept the true count of every night in her own hand."
  },
  "can_die": false,
  "invented": false,

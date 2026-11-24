@@ -46,36 +46,79 @@
    0.0,
    "boarding_house",
    "his room",
-   "mon-sat"
+   "mon-fri"
   ],
   [
    11.0,
    "harbour_board",
-   "the shipping office",
-   "mon-sat"
+   "by bike: the shipping office",
+   "mon-fri"
   ],
   [
    16.0,
    "snooker_hall",
-   "the tables",
-   "mon-sat"
+   "by bike: the tables",
+   "mon-fri"
   ],
   [
    19.0,
    "boarding_house",
    "his room",
-   "mon-sat"
+   "mon-fri"
   ],
   [
    0.0,
    "boarding_house",
    "his room",
+   "sat"
+  ],
+  [
+   11.0,
+   "harbour_board",
+   "by bike: the shipping office",
+   "sat"
+  ],
+  [
+   16.0,
+   "snooker_hall",
+   "by bike: the tables",
+   "sat"
+  ],
+  [
+   19.0,
+   "boarding_house",
+   "his room",
+   "sat"
+  ],
+  [
+   22.5,
+   "ferry_landing",
+   "by cab: the last boat over",
+   "sat"
+  ],
+  [
+   23.0,
+   "edge_west",
+   "over the water",
+   "sat"
+  ],
+  [
+   0.0,
+   "edge_west",
+   "over the water",
+   "sun"
+  ],
+  [
+   20.0,
+   "boarding_house",
+   "back on the evening boat",
    "sun"
   ]
  ],
+ "speaker_kind": "dock_worker",
  "lines": {
-  "own": "lines/own-terence_bould.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Terence Bould, 29, between ships. Waits for a berth and spends what he has on cabs to the shipping office.",
@@ -85,5 +128,6 @@
  },
  "can_die": true,
  "invented": true,
- "src": "invented: 3.4.1 (40 fare people)"
+ "src": "invented: 3.4.1 (40 fare people)",
+ "fallback_role": "the role passes to another of the same trade, or the thread closes"
 }

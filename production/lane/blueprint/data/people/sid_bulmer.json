@@ -49,13 +49,13 @@
   [
    17.5,
    "boxing_club",
-   "the club night",
+   "by bike: the club night",
    "mon,wed,fri"
   ],
   [
    22.0,
    "d_nr_15",
-   "home",
+   "by bike: home",
    "mon,wed,fri"
   ],
   [
@@ -67,13 +67,13 @@
   [
    9.5,
    "boxing_club",
-   "Saturday morning",
+   "by bike: Saturday morning",
    "sat"
   ],
   [
    13.25,
    "d_nr_15",
-   "home",
+   "by bike: home",
    "sat"
   ],
   [
@@ -83,9 +83,10 @@
    "tue,thu,sun"
   ]
  ],
+ "speaker_kind": "anyone",
  "lines": {
-  "own": "lines/own-sid_bulmer.json",
-  "note": "own lines live in lines/ (a record each); see lines/README.md"
+  "own": "none: shared lines only",
+  "shared": "lines/shared-street.json (who = speaker_kind)"
  },
  "card": {
   "who": "Sid Bulmer, 61, head trainer at the boxing club. Fought for the area title in 1952.",
@@ -93,8 +94,7 @@
   "life": "15 North Road.",
   "rivals": "Keeps the club neutral ground."
  },
- "can_die": true,
+ "can_die": false,
  "invented": true,
- "src": "invented: places.json boxing_club (head trainer); 2.11.1",
- "fight_kind": "boxer"
+ "src": "invented: places.json boxing_club (head trainer); 2.11.1"
 }
