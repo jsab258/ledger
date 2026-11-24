@@ -67,3 +67,9 @@ No guide needed for a foot chase list: the chase is free-roam police pursuit. No
 - oEmbed for BKUw-gRy0zU (404): channel not reached.
 - Pages refused or empty: Prima Games (403), TrueAchievements (403, two pages), L.A. Noire fandom (402), Sleeping Dogs fandom (402), GiantBomb (403), StrategyWiki Golden Butterfly (403), GamesRadar L.A. Noire page 7, GamesRadar achievement guide and Sleeping Dogs mission guide (truncated: only the title came back). No workaround tried.
 - No L.A. Noire per-case timestamps verified against video pages; no GTA V uncut on-foot clip confirmed.
+
+## GTA V wanted-star scan on asdZoAycD1o, calibration (25 Nov about 00:15 to 00:22 Swiss; the session in the browser pane)
+- The clip: 71,588 s (about 19.9 h), uploaded 11 Oct 2026 (the page's uploadDate), PS4 by title, first person, no chapters or timestamps in the description; a full-story walkthrough, so likely stitched between missions (not checked).
+- Stars seen: five white stars at 185-200 s (the prologue's escape), top right at about x 87-95%, y 6.6-9.5% of the frame, with the ammo count below them (about y 11-13%).
+- Try 1 (white and dark pixel counts in a box at y 3-7.5%): the box sat above the stars; no separation. Try 2 (box at y 6.6-9.6%, white pixel count, white column runs, then blob widths): with no stars the ammo count moves up into the same slot, so white count (about 120-160) and blob pattern (stars 7,7,9,7,13,7; digits 8,9,9,8) do not tell them apart reliably; overcast sky fills the box white (2,486 of 2,486).
+- Set aside after two tries. A shape test (five equal stars at equal spacing, or template matching on one saved star) would be the different method; not tried. A story walkthrough also holds few on-foot police escapes, so this clip is a poor source for the row: the Sleeping Dogs clips (sleeping-dogs-foot-chase-clips-2026-11-24.md) and L.A. Noire's scripted chases go next.
