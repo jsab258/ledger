@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated": "2026-11-23 (keeper run 3)",
+ "updated": "2026-11-24 (keeper run 4)",
  "by": "blueprint keeper, claude-opus-5-5",
  "totals": {
   "measured": 1,
@@ -14,8 +14,8 @@
   "machinery": 22,
   "parts": 424
  },
- "conflicts_settled": 245,
- "gaps": 371,
+ "conflicts_settled": 252,
+ "gaps": 551,
  "groups": {
   "What the player does with his hands": {
    "parts": 86,
@@ -34,8 +34,7 @@
    "ruled": 11,
    "sourced": 0,
    "rulings_to_revisit": [
-    "R1",
-    "R9"
+    "R1"
    ]
   },
   "The town under the hood": {
@@ -132,11 +131,12 @@
    "out": 0,
    "outside": 0,
    "machinery": 0,
-   "open_questions": [],
+   "open_questions": [
+    "Q20"
+   ],
    "ruled": 4,
    "sourced": 1,
    "rulings_to_revisit": [
-    "R8",
     "R10"
    ]
   },
@@ -151,7 +151,8 @@
    "machinery": 0,
    "open_questions": [
     "Q12",
-    "Q13"
+    "Q13",
+    "Q19"
    ],
    "ruled": 14,
    "sourced": 0,
@@ -307,11 +308,23 @@
   {
    "id": "Q18",
    "parts": "3.1, BLUEPRINT.md story section",
-   "question": "His yes on the measured story, which the one-shot waits on (story, canon). Story v3 is mid-way (phase 1 ranked twenty premises; phase 2 writes three bibles from 23 Nov); STORY-FINAL (The Passenger, 20 Nov) was never approved.",
-   "recommended": "Wait for v3's measured pick (its phase 2 and measure this week) and give the yes on that; not on STORY-FINAL."
+   "question": "His yes on the measured story, which the one-shot waits on. Direction picked 24 Nov (A on top of C, as reported; not yet in RULINGS on wip); frame due Thu 26 Nov.",
+   "recommended": "Give the yes on the measured frame and its first-week slice, not on the v3 bibles or STORY-FINAL."
+  },
+  {
+   "id": "Q19",
+   "parts": "OUT-08; checklist A27.01 to A27.06",
+   "question": "OUT-08 reads wider than his no-jump ruling: crouch, swimming, climbing and mounts are unruled (scope).",
+   "recommended": "One ruling line: no crouch, no swimming, no climbing beyond the set vault places, no mounts; all out."
+  },
+  {
+   "id": "Q20",
+   "parts": "6.3; checklist A35.02, A35.03",
+   "question": "Is Tom's own position shown on the paper map (scope)?",
+   "recommended": "No; landmarks, street name plates and door numbers, in line with OUT-09."
   }
  ],
- "story": "pending: story v3 not picked",
+ "story": "his pick reported 24 Nov (builder's row 09:46): A on top of C (living town, light written spine); not yet in RULINGS on wip; frame due Thu 26 Nov; Q18 open",
  "measured_rule": "measured only where production/research/lane/measurements/STATUS.md marks the number solid (five uncut, dated samples at a finer step; advisor 302)",
  "added_sections": [
   "5.11 craft standards",
@@ -356,16 +369,6 @@
    "recommended": "b) photographs win on shape and material, measured reflectances and the Hook sheet on colour"
   },
   {
-   "id": "R8",
-   "ruling": "Jobs without waypoints",
-   "recommended": "a) keep, with landmarks, people who give the way and the Ledger's Open page"
-  },
-  {
-   "id": "R9",
-   "ruling": "Growth in position only, no stats",
-   "recommended": "a) keep"
-  },
-  {
    "id": "R10",
    "ruling": "No prepared openings",
    "recommended": "a) a written line replaces a reply later than 2 s"
@@ -389,11 +392,26 @@
   {
    "id": "Q2",
    "answer": "yes, parked cars only, about 6 s by force; never a driver pulled out (his words of 20 Nov 07:39, advisor 263)"
+  },
+  {
+   "id": "R8",
+   "answer": "keep; directions from people, each kept in the Ledger or Tom's notes to reread (his ruling 23 Nov)"
+  },
+  {
+   "id": "R9",
+   "answer": "mainly position, never levels; streets and people known by practice; taught skills kept if lost; hand skills at most a quarter better (his ruling 23 Nov)"
   }
  ],
  "blocking": [
-  "his yes on the measured story (Q18)",
-  "PC measuring five-sample numbers",
+  "his yes on the measured story (Q18), on the frame due Thu 26 Nov",
+  "PC measuring five-sample numbers on the deciding rows (DECIDES-CHECK 24 Nov, about 18 h estimate)",
   "feasibility: content cannot be made inside the one-shot week (INVENTORY)"
+ ],
+ "deciding_measuring_rows": [
+  "on foot (1.1.1, FIT-G4: run 5.5 m/s solid in Sleeping Dogs, walk pending)",
+  "being seen KCD2 and RDR2 (1.4.1, 1.4.2)",
+  "chases on foot (1.5.1, 1.5.2)",
+  "crowd reactions (2.3.2)",
+  "crowd counts by street and hour (FIT-G9, GD-02)"
  ]
 }

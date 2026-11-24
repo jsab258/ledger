@@ -272,6 +272,16 @@ The source of each line is in brackets; where a conflict names no winner, the bl
 
 - C-262 (5.11.4 parked car; keeper run 3): one parked-car cap of 40,000 triangles (4-BUDGETS 4.5, asset-budgets) against the bands of a public studio blog (background 5,000 to 25,000, hero 40,000 to 80,000; prior research index section 6 item 11). The blog's bands win as the newer, finer split: background cars up to 25,000, Tom's car up to 40,000, judgement until the first profile.
 
+### Settled in keeper run 4 (24 Nov): new rulings, the measuring check, the checkers, the landscape, the details catalogue and the checklist check
+
+- C-263 (OUT-06, 7.7): OUT-06 said Tom never gets better at fighting or driving, the player does (his ruling of 30 Oct, D33, D34); his ruling of 23 Nov (RULINGS on wip, genre line) says growth is mainly position, never levels, with streets and people known by practice, skills taught by those who trust him (kept if lost) and hand skills quietly at most a quarter better. The newer ruling wins; OUT-06 reworded; R9 closed as answered; the design of the taught skills and the cap is a gap.
+- C-264 (R8, OUT-09, 6.2.3, 6.9): R8 asked whether to keep jobs without waypoints; his ruling of 23 Nov keeps them and adds that every direction from people is kept in the Ledger or Tom's notes to reread. The ruling wins; R8 closed as answered.
+- C-265 (dates; landscape LESSONS, 23 Nov, questions 1 and 2): the landscape job recommends starting the one-shot by 30 Nov and testing the Unreal move early on one street; his ruling of 20 and 21 Nov, confirmed 23 Nov ("a week late accepted; no early Unreal test"), keeps the complete blueprint first, plan 7 Dec, and no early Unreal test. His ruling wins. Not listed as a ruling to revisit: his confirmation is dated the same day as the landscape's recommendation; if the advisor did not put it to him, it may be relayed once.
+- C-266 (deciding measuring rows; DECIDES-CHECK 24 Nov against the builder's six): the independent check keeps four (on foot, being seen in KCD2 and RDR2, chases on foot, crowd reactions), drops fists and driving to leads and adds crowd counts by street and hour. The check wins as the newer, reasoned reading; the blueprint marks deciding rows in 1.1.1, FIT-G4 (GD-01 rests on them), 1.4.1, 1.4.2, 2.2.2, 2.2.3, 1.5.1, 1.5.2, DP5-C01, 2.3.2, 2.4.1, FIT-G9, 2.1.2 and GD-02, leads in 1.2.1, 1.2.2, 1.3.1, 1.3.2, 1.3.8 and DP5-C03.
+- C-267 (1.1.1, FIT-G4; STATUS.md 24 Nov, SLEEPING-DOGS-DRILL 23 Nov): three figures for Tom's run: the design's 5.5 m/s (DEFINITIONS pass 3), the built prototype's 4.2 m/s (the drill's comparison against Tom's built 160 and 420 cm/s), and Sleeping Dogs' solid sprint 5.5 and jog 4.5 m/s. The design stands until a second game is solid (DECIDES-CHECK names KCD2 or GTA V); the prototype is brought to the design, not the other way, since the design is the newer, measured-against figure. One game is not yet a bar.
+- C-268 (crowd counts, FIT-G9): the builder's row of 24 Nov 09:46 reports crowd counts at five busy views a game in KCD2 and RDR2 while STATUS.md on wip still has them unsampled. STATUS.md on wip wins for status (pending); the row's figures are carried as leads.
+- C-269 (details catalogue rank 13 against the bar): the catalogue's one-player KCD2 report that a man killed unseen was never missed is not a measured fault of the bar; it is carried as LEDGER's aim (2.16) and never as a claim about KCD2.
+
 ## Gaps for the design proof
 - Hold-ups (1.6.15): ruled in on 20 Nov and designed in DESIGN-ADDENDUM A41, but no parts-tree part and no coverage.json row exist; the blueprint carries the part as decided. The design proof to add the row.
 - Guns rare and late: Mickey's revolver can be found at rung 2 (RT2-14, 2.12.2), about the start of Act II, which sits uneasily with his rulings (guns rare, late, after melee). The design proof to gate the find on a later state or put it to him.
@@ -654,6 +664,197 @@ Live voices (8.12):
 - FIT-P34 (preparation files): Count: FIT-P34 says at least 24 and does not count the rival bases; INVENTORY counts 27 or more. Which count the checker uses is not stated.
 - 4.4 (preparation files): INVENTORY has no row for props or street furniture: 4.1.5 and 4.4 set at least 5 props per 10 m of street from a fixed list (Quay Street's scene file places about 9 per 10 m), so Quay Street's 48 m needs at least 24 and the 620 by 400 m map several hundred more; neither the count nor the hours are in the one-shot's budget.
 - INDEX (preparation files): Prep: INVENTORY sections 1 and 3: about 6,200 lines to write (about 5,300 not yet written after 1,225 shared and 401 own exist) and about 115 named people; at 44 minutes a story the week needs about 48 hours of 45, at the measured 75 minutes about 69; content must be written ahead (about 13 hours if made inside); the week fits only near 40 minutes a story.
+
+### Gaps found in keeper run 4 (24 Nov)
+
+Not counted as a gap: the checklist check's note that OUT-08 reads wider than its ruling and that Tom's position on the paper map wants an answer; both are questions for him (Q19, Q20).
+
+- 7.7 and OUT-06 (his ruling of 23 Nov on growth): no part yet designs the taught skills (which skills, who teaches them, what trust opens each, how a lost skill is kept), streets and people known by practice, or the hand-skill gain capped at a quarter better (which hand skills, how quietly, the test that the cap holds). The design proof to write these as parts with tests; none is a stat on screen.
+- 6.2.3 and 6.9 (his ruling of 23 Nov on directions): the Ledger's Open page and Tom's notes must keep every direction a person gives, to reread; the entry's wording, where a direction from a passer-by lands, and the test (every job reachable from directions kept, no marker) are not written.
+- Story (BLUEPRINT.md story chapter, 3.1): his story pick of 24 Nov (A on top of C, as reported in the builder's row of 24 Nov 09:46; not yet in RULINGS on wip) has no frame yet; the story frame lane reports writing it (production/lane/story/frame/, due Thu 26 Nov). Chapter 03's acts, beats and endings are to be checked against the frame when it lands: a living town with a light written spine, never a fixed mission line.
+- Measuring (DECIDES-CHECK 24 Nov): one-game leads with their second game named: GTA VI being seen (S3, S7, G6) with RDR2; GTA VI car camera with a Sleeping Dogs drill (about 0.3 h); GTA VI split hour with GTA V's hour; GTA VI headlamps with GTA V night footage (about 0.5 h) or marked outside; on foot with KCD2 or GTA V footage (about 2 h).
+- Measuring (STATUS.md on wip): its headline counts three solid numbers (G5 heat length, Sleeping Dogs sprint and jog) while its rows also call the GTA VI parked-car entry (1.2.3) and the return-resumes-pursuit rule solid; the measuring session to reconcile the headline. The blueprint follows the rows, which carry the samples.
+
+#### From the checklist check (23 Nov): the top twenty a player would notice (16 new; nos. with A13.25, A19.04, A19.09 and A29.15 already gaps G270, G38 and others)
+- Checklist top twenty no. 1 (A28.01, A28.02, A28.15; part 5.5.3): a sound must come from its source's side and follow Tom's facing, with a smooth pan as a car passes and a drive-past listening test; today only reach in metres is set.
+- Checklist top twenty no. 2 (A28.06, A28.07; part 5.5.4): walls and shut doors must dull sound, and open doors and windows must let it through, so a shout through an open door carries; a listening test for each.
+- Checklist top twenty no. 4 (A13.18; part 2.5.3): bystanders who saw a weapon must run away from the danger and toward doors, not past it, with a test.
+- Checklist top twenty no. 5 (A31.09, A31.10; part 3.6.1): a rule for Tom walking off mid-talk (talk ends, the person remembers) and for a fight or shout breaking in on talk (talk drops, the person reacts).
+- Checklist top twenty no. 6 (A39.01, A39.03; part 7.8): the player must be told in plain words when the game saves, and a visible saving sign must show while a save is written.
+- Checklist top twenty no. 7 (A39.08, A39.09; part AX-07): a confirm before overwriting or deleting a save, and a rule that New game never overwrites existing slots or autosaves.
+- Checklist top twenty no. 8 (A36.02; part 1.6.2): taking something must say what was taken, on screen or in Tom's words; today taking is one press with no feedback.
+- Checklist top twenty no. 9 (A11.10, A11.11, A03.10; part 6.1.1): a hold or timed search (pocket lift, gun draw, searches of 2, 4 and 5 s) must show progress, and stepping away must cancel it predictably, with a check.
+- Checklist top twenty no. 10 (A05.09, A05.11; part 1.1.2): a rule for the camera when it is close in rooms (fade or hide Tom, or hold back) and for a usable view going up and down stairs, with a tight-room and stairs check.
+- Checklist top twenty no. 11 (A28.12, A28.13; part 5.5.3): a rule for sound above and below (the flat over the office, stairs) and for where the ears sit when the camera is 3.1 m back, Tom or the camera.
+- Checklist top twenty no. 13 (A18.05; part 1.3.2): recovery times after a jab, heavy blow and swing, set and tested as readable.
+- Checklist top twenty no. 14 (A12.05, A12.06, A12.07, A12.08; part 8.10): small loose props must not block him, heavy props (crates, barrels) must have weight, one gravity must govern drops and throws, and objects must settle and sleep instead of vibrating; each with a test.
+- Checklist top twenty no. 15 (A30.13, A13.12; part 3.6.4): a line must stop when its speaker falls, leaves or is killed mid-line, and two people must speak in turn and wait, with a transcript check.
+- Checklist top twenty no. 17 (A03.15, A03.16, A40.04; part 6.6): the click or press that closes a menu, input held through loading or the ferry shot, and input queued during a pause must all do nothing on return to play, with a test.
+- Checklist top twenty no. 18 (A32.08, A32.10, A05.21; part 5.8.2): a confirm or hold-to-skip so one stray key cannot skip a scene, and a rule that control and the camera return at a usable place and facing after a scene.
+- Checklist top twenty no. 19 (A14.10, A14.14; part 1.5.4): pursuers and people must replan when a door shuts or a car blocks a lane, and armed men must not fire without a clear line, with a wall-between test.
+- Checklist top twenty no. 20 (A05.13; part 1.1.2): the camera must never override Tom's own mouse or stick input, with a test.
+
+#### From the checklist check (23 Nov): 100 further missing items and 26 Unreal-phase items with no part, one gap each; plus the details catalogue's rank 8
+- Details catalogue rank 8 (dropped and spilled things): no part carries a shopper's bag spilled in a bump, gathered, and the bumper remembered, or a dropped coin picked up by the right person; the design proof to place it (nearest part 3.6.4).
+- Checklist A02.10 (6.4): save list, settings and Ledger need wheel scrolling, with a menu-walk check.
+- Checklist A02.15 (AX-06): a pop-up dialogue must take all input so nothing behind it fires; menu-walk check.
+- Checklist A02.16 (AX-06): a menu must return to the same item after a detail screen; only settings are remembered now.
+- Checklist A02.20 (6.4): a double click or press must not start load, save or new game twice; needs a rule and test.
+- Checklist A03.12 (6.6): no rule or test for clashing inputs (both strafe keys, keys plus stick).
+- Checklist A03.18 (6.6): no line or test that diagonal speed equals straight speed on keys and stick.
+- Checklist A03.19 (AX-05): no pad dead-zone defaults; AX-05 has sensitivity and invert only.
+- Checklist A03.20 (AX-05): no line that mouse look is raw with no acceleration.
+- Checklist A03.21 (6.6): no rule or test for a pad unplugged mid-play (pause, prompt change).
+- Checklist A03.22 (6.6): no rule or test that a pad reconnects without restarting the game.
+- Checklist A03.24 (6.6): no rule for which pad drives when two are connected.
+- Checklist A05.24 (1.1.2): no rule that move keys keep a sensible heading after a camera cut or blend.
+- Checklist A06.07 (5.2.1): no line on backing-up gait, though he backs out of rooms and off fights; Unreal gate.
+- Checklist A06.08 (5.2.1): no line on sideways gait, or that movement always faces travel; Unreal gate.
+- Checklist A06.10 (1.1.1): no stated rule that movement is camera-relative on keys and stick, and no test.
+- Checklist A06.13 (1.1.1): no slope rule, though Quay Street climbs 48 m from the quay; needs a walk test.
+- Checklist A06.14 (1.1.1): no slope limit or what stops him on ground too steep; the town is mostly flat but this is unsaid.
+- Checklist A08.06 (5.2.4): no mouth-interior check (teeth, tongue) for talk close-ups; Unreal gate.
+- Checklist A08.14 (5.8.2): no line that the ferry shot, talk and play use the same character assets and outfit state; Unreal gate.
+- Checklist A09.04 (5.2.3): no foot placement on stairs and uneven ground, and no Unreal gate check.
+- Checklist A09.05 (5.2.3): no knee and hip bend check on steps and kerbs; Unreal gate.
+- Checklist A09.12 (5.2.3): no finger poses for held things (holdall, cigarette, gun); Unreal gate.
+- Checklist A09.13 (5.2.3): two-handed holds (a box, a gun) not named or ruled out.
+- Checklist A09.18 (5.2.7): no rule that cut-off animations blend to a valid pose; gate check.
+- Checklist A09.23 (8.1.2): no check that nobody shows a default pose while streaming in; Unreal gate.
+- Checklist A10.04 (5.2.6): no neck and head rotation limits for the head turns; Unreal gate.
+- Checklist A10.07 (5.2.4): no blink check on the MetaHuman faces; Unreal gate.
+- Checklist A10.13 (1.4.7): no reaction rule for Tom standing too close to a stranger or staring.
+- Checklist A11.04 (6.1.1): no use range in metres or check that reach matches the visible object.
+- Checklist A11.14 (1.1.3): no rule for a door blocked by a body or prop (stop, push or refuse), and no test.
+- Checklist A11.20 (6.10): no line that closing a letter or inspect view returns him to the same spot and camera.
+- Checklist A11.24 (1.6.14): no rule for an interaction ending cleanly when its object is broken or taken.
+- Checklist A12.12 (1.7.4): no rule for being blocked by a friend or crewman (swap, nudge or wait).
+- Checklist A12.17 (1.6.14): no rule that a broken window or door changes collision and what he can pass through.
+- Checklist A13.06 (2.1.5): no rule for people reacting to Tom blocking their way (a remark, then a step round).
+- Checklist A13.23 (3.6.4): no rule for how a person answers when spoken to mid-task (stops, answers short, glances).
+- Checklist A14.16 (1.3.8): no rule for a man flanked by Tom or a mate (turn, call out or break).
+- Checklist A16.09 (1.7.4): no rule for Tom hitting a man at his side, or a mate hit by a swing (reaction, memory, loyalty cost).
+- Checklist A16.12 (1.2.7): no said-once flag on follower and passenger lines about events; needs a long ride-along test.
+- Checklist A19.02 (1.3.10): no rule or test for the aim camera and muzzle at cover or a wall (aim blocked, no shot through geometry).
+- Checklist A19.14 (1.3.10): no rule for a reload broken off by a hit, a draw change or running.
+- Checklist A19.20 (1.3.6): no aim or arc cue for thrown stones and goods, nor a decision that none is shown.
+- Checklist A19.24 (1.3.10): no rule that the drawn gun is lowered or blocked at close walls, with an aim-row camera test.
+- Checklist A21.03 (4.1.5): no check that outside footprints and inside room sizes agree, with door and window positions.
+- Checklist A21.08 (1.1.8): no look rule telling vault places and breakable things to hand from inaccessible ones.
+- Checklist A22.06 (5.11.4): no edge-bevel and edge-wear standard for hard edges, judged against the Hook sheet.
+- Checklist A22.09 (5.11.4): no check for flicker between overlapping surfaces in the packaged walk.
+- Checklist A22.15 (5.10): no day, night and wet screenshot check that landmark props stay recognisable.
+- Checklist A23.04 (5.4.2): no night walk check for light leaking through walls and window frames.
+- Checklist A23.11 (5.3.4): no usable mirror in the design; Unreal would need Tom shown in shop-glass reflections, or a decision that he is not.
+- Checklist A24.01 (5.9): no wind motion for trees and grass on the hill; the vegetation ratio is set, motion is not.
+- Checklist A24.15 (5.9): no tracks system for wet or muddy ground; a choice for Unreal.
+- Checklist A24.16 (5.9): no check that smoke, fire, spray and flashes end with their source.
+- Checklist A24.17 (5.9): no check that effects follow moving cars and people (exhaust, breath, smoke).
+- Checklist A26.07 (1.2.1): no reverse control or prompt named, and no test that reversing out of a wedge works on keys and pad.
+- Checklist A26.08 (4.6.1): no wheel spin rate tied to speed on the car asset.
+- Checklist A26.09 (4.6.1): no front wheel turn with steering on the car asset.
+- Checklist A28.05 (5.5.3): no rule that far sources lose high detail (a distance filter), and no listening test.
+- Checklist A28.11 (5.5.3): no rule that wide sources (rain, a crowd, the quay) play as beds, not point sounds.
+- Checklist A29.05 (5.5.1): foley sets only footsteps; coat rustle and holdall sounds are missing.
+- Checklist A29.08 (5.5.1): no small sound standard for taking, searching and putting things down.
+- Checklist A29.14 (4.2.4): no splash sound for things thrown in and men put in the water.
+- Checklist A30.04 (5.6.1): no standard that delivery fits the speaker's mood, live or prepared; only voice choice is set.
+- Checklist A30.06 (5.5.3): no seamless-loop click check for beds and music.
+- Checklist A30.14 (AX-10): no rule that game sound pauses or ducks with the pause menu and when the window loses focus.
+- Checklist A30.15 (AX-04): no headphone and speaker-layout check; AX-04 has only a mono switch.
+- Checklist A32.03 (5.8.3): no check that people and props start a staged scene in place and end on the right marks.
+- Checklist A32.04 (5.8.2): no rule that scenes show Tom's current coat and carried items.
+- Checklist A32.09 (6.1.2): subtitles not tested inside cinematic framing; 6.1.2 tests four window sizes only.
+- Checklist A32.11 (RT2-20): no rule on danger during staged and moving talk, beyond the world running on.
+- Checklist A33.03 (6.2.3): Open does not show which jobs the story needs and which are optional.
+- Checklist A34.10 (6.1.3): no minimum on-screen time for the belief line and toasts.
+- Checklist A34.13 (5.8.3): no rule hiding prompts and the belief line in staged scenes; only photo mode hides the interface.
+- Checklist A34.14 (RT-18): no visible sign that the town goes on behind Ledger and the map.
+- Checklist A35.07 (6.3): no key to the map's marks.
+- Checklist A35.08 (6.3): no rule for picking among overlapping map marks.
+- Checklist A35.12 (6.3): no floor rule for the flat above the office and multi-storey rooms on the map.
+- Checklist A36.04 (1.6.9): Open does not tell usable, valuable, hot and quest items apart; only the hot mark exists.
+- Checklist A36.06 (1.6.9): no stacking rule for like items (cigarettes, notes, keys).
+- Checklist A36.07 (1.6.9): no rule for how many of a stack to drop or hand over.
+- Checklist A36.10 (1.6.9): no way to tell why an item cannot be carried or worn.
+- Checklist A36.13 (1.6.9): no single-use rule (torch battery, cigarettes, envelope handed over).
+- Checklist A36.15 (1.6.9): no feedback when Tom's hands and coat are full.
+- Checklist A36.17 (1.6.7): no confirm before throwing away or handing over something valuable.
+- Checklist A36.21 (6.2.3): no check that Ledger pages stay usable while the town changes them.
+- Checklist A37.04 (2.7.5): no spoken total for more than one item; shop list is one item at a time.
+- Checklist A37.06 (2.7.5): no test that one confirmed purchase charges once.
+- Checklist A37.16 (2.7.5): no test that a cancelled haggle or sale costs nothing.
+- Checklist A38.12 (7.10): no short confirmation when an assist is switched.
+- Checklist A38.13 (1.6.10): no way to learn what a coat or outfit changes (who notices, what it hides).
+- Checklist A39.19 (AX-07): no message or safe behaviour when a save cannot be written (disk full, read-only).
+- Checklist A39.25 (10.7): synced settings could carry graphics settings to a weaker PC; graphics must stay per machine.
+- Checklist A39.27 (8.1.2): no rule that control waits until the loaded world is ready; only a first-launch hold is set.
+- Checklist A39.28 (7.8): no path back to title or another save when a load fails.
+- Checklist A40.06 (AX-10): no sleep and wake test; AX-10 covers alt-tab and resizing only.
+- Checklist A40.11 (8.12.1): no test that the process and the local voice helper close within seconds of quit.
+- Checklist A40.12 (8.12.1): no test that no sound plays after exit, voice helper included.
+- Checklist A41.03 (8.3.1): no monitor choice and no two-monitor test; Unreal build.
+- Checklist A41.20 (8.3.1): no revert-if-not-confirmed timer for display changes, and no test; Unreal build.
+- Checklist A41.21 (8.3.1): no rule that a setting needing a restart says so before applying; menu-walk check.
+- Checklist A42.02 (AX-04): a slider does not play a sample while moved.
+- Checklist A42.03 (AX-04): nothing on following the output device, default-device change or unplugging; needs a rule and test.
+- Checklist A42.04 (AX-04): no speaker or headphone mix choice; only a mono switch.
+- Checklist A42.12 (AX-05): one sensitivity per device; no separate aiming sensitivity once guns exist.
+- Checklist A42.14 (AX-05): no dead-zone setting for sticks, and no pad drift test.
+- Checklist A42.15 (AX-05): no stick or trigger response options.
+- Checklist A42.17 (AX-05): no vibration rule or intensity slider.
+- Checklist A45.04 (6.6): no rule that no verb needs two buttons at once.
+- Checklist A45.08 (AX-05): nothing on menu or cursor speed, if a pad cursor is ever used.
+- Checklist A45.11 (AX-05): only keyboard, mouse and pad named; no line or test for adaptive controllers through the platform input layer.
+- Checklist A46.04 (AX-06): no rule that a menu action shows what changed (setting applied, game saved).
+- Checklist A46.09 (AX-03): no recentring control or setting for the on-foot camera.
+- Checklist A46.11 (AX-03): no menu animation switch, nor a statement that menus are still.
+- Checklist A46.12 (AX-03): no no-pulse line on repeated UI pulsing and notification frequency beyond hint spacing.
+- Checklist A47.03 (8.9): no glyph test for pound sign, dashes and curly quotes in the chosen faces.
+- Checklist A47.06 (9.7): no names-and-terms check across dialogue, map and Ledger; 4.9 brand bible owes six names.
+- Checklist A48.13 (AX-10): no test for plugging or changing audio or input devices in play.
+- Checklist A48.18 (8.2.1): no rule for plain-words error messages (save failed, disk full).
+- Checklist A49.02 (10.7): no rule or test for signing out of Steam in play or an offline start.
+- Checklist A49.03 (6.6): no rule for pad ownership or unplugging a pad in play.
+- Checklist A49.05 (6.8): nothing tests Steam screenshot keys in the packaged build.
+- Checklist A49.09 (10.6): no rule for a save made with content the install lacks; needed once districts are added.
+- Checklist A49.12 (AX-10): no sleep and resume test; talk service connection after resume is unplanned.
+- Checklist A51.05 (5.7.1): no stated streamer-safe position or check on music; unlikely to be an issue as music is made for the game.
+- Checklist A1 (8.5): no splash, logo or legal notice screen at launch; 10.4 and 8.12.3 give the notices and 8.5 the first screen.
+- Checklist A4 (6.4): no build version shown to the player; add to the title or settings page.
+
+#### From the checklist check: decide in or out first (31; the design proof settles each by canon and his rulings where they reach, else it goes on the round-4 scope list under G-C)
+- Checklist A01.18: Skippable repeated introductory logos where permitted: decide in or out (8.5).
+- Checklist A03.07: Simultaneous input where useful, such as controller movement with gyro aiming: decide in or out (RT-10).
+- Checklist A05.14: Predictable recentering, if provided: decide in or out (1.1.2).
+- Checklist A05.18: Shoulder switching where the aiming design requires it: decide in or out (1.3.10).
+- Checklist A12.13: Moving machinery carrying or blocking objects consistently: decide in or out (4.2.2).
+- Checklist A17.05: A distinction between damaging armour, a shield and an exposed target: decide in or out (1.3.2).
+- Checklist A18.10: Combos that accept inputs predictably, if present: decide in or out (1.3.1).
+- Checklist A19.17: Clear distinctions between ammunition types or firing modes, if supported: decide in or out (RT2-14).
+- Checklist A19.19: Scope transitions that preserve orientation: decide in or out (RT2-14).
+- Checklist A19.22: Explosion effects with understandable range and cover interaction: decide in or out (5.9).
+- Checklist A20.04: Healing controls that give immediate acknowledgement: decide in or out (1.3.7).
+- Checklist A20.05: Healing resource consumption that matches the action: decide in or out (1.3.7).
+- Checklist A27.01: Mounting and dismounting from plausible positions: decide in or out (OUT-08).
+- Checklist A27.02: Mount movement whose gait matches its speed: decide in or out (OUT-08).
+- Checklist A27.03: Mount turning and stopping that fit its body: decide in or out (OUT-08).
+- Checklist A27.04: Mount avoidance of ordinary obstacles: decide in or out (OUT-08).
+- Checklist A27.05: A usable way to call, locate or recover an owned mount: decide in or out (OUT-08).
+- Checklist A27.06: Clear mount health, stamina or distress where those affect play: decide in or out (OUT-08).
+- Checklist A34.02: Ammunition or resource information readable before an action fails: decide in or out (1.3.10).
+- Checklist A35.02: A visible player position: decide in or out (6.3).
+- Checklist A35.03: A clear indication of facing or travel direction: decide in or out (6.3).
+- Checklist A35.18: Fast-travel eligibility, cost and restrictions explained where fast travel exists: decide in or out (OUT-05).
+- Checklist A35.19: Fast travel arriving at a safe, usable position: decide in or out (OUT-05).
+- Checklist A35.20: Travel preserving relevant equipment, followers and mission state: decide in or out (OUT-05).
+- Checklist A37.08: Recovery from accidental sale where a buyback system is provided: decide in or out (2.7.6).
+- Checklist A38.08: Customisation previews before commitment: decide in or out (1.6.10).
+- Checklist A47.08: User-entered names preserving supported accents and characters: decide in or out (8.9).
+- Checklist A49.06: Supported achievements or trophies unlocking at the intended time: decide in or out (10.7).
+- Checklist A49.08: Owned downloadable content correctly recognised: decide in or out (10.6).
+- Checklist T6: Anti-cheat or DRM decision: decide in or out (10.1).
+- Checklist T7: Platform terminology and button naming: decide in or out (6.6).
 
 ## Source traces not found
 
