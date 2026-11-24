@@ -31,10 +31,11 @@
   "Synthesis recipes are specifications for the one-shot's Web Audio code (noise, oscillators, filters, envelopes), not tested sounds; every level target marked chosen is a guess to be set by ear. Voices (shouts, pain cries) are voice-tool lines; recipes are test stand-ins only.",
   "The kiosk payphone ring: no recording was found; the GPO house phone stands in (cloud-week NOTES).",
   "Milk float, paper round and the curtain answer (catalogue 23 Nov, rank 10) are not in the blueprint; two are listed so the one-shot may build them; they may be cut.",
-  "The pirate station name 'Slack Tide FM', its presenters and programme grid are chosen here (the brand bible owes the station). All names are fictional; they have not been run through tools/brand-verify.py.",
+  "The pirate station name 'Cutter FM', its presenters and programme grid are chosen here (the brand bible owes the station). All names are fictional; they have not been run through tools/brand-verify.py.",
   "The tune melodies are generated from fixed seeds and never compared with any real tune; a resemblance by chance is unlikely but nobody has listened. A rendering pass with the allowlist's item 5 tool is optional and waits for the radio production start.",
   "RULINGS 24 Nov: no thinking sound before a talk answer. The 28 Sep line asking for a short thinking sound is dropped: no such cue is in this file. The cab radio squelch plays only on a radio call.",
-  "Prototype gull and ship's horn intervals (every 55 to 140 s real) were set on the 45 s hour; on the 120 s hour the horn interval is 27 to 70 game minutes (about 54 to 140 real seconds, so the same real-time rate); old 55 to 140 s, new 54 to 140 s real."
+  "Prototype gull and ship's horn intervals (every 55 to 140 s real) were set on the 45 s hour; on the 120 s hour the horn interval is 27 to 70 game minutes (about 54 to 140 real seconds, so the same real-time rate); old 55 to 140 s, new 54 to 140 s real.",
+  "The pirate station was minted twice in parallel (Slack Tide FM here, Cutter FM in letters-and-print.json); letters-and-print.json is the brand list, so Cutter FM is used here too."
  ],
  "files": [
   {
@@ -9656,7 +9657,7 @@
   "station": {
    "id": "station_slack_tide",
    "src": "5.7.1; canon.md brand owes",
-   "name": "Slack Tide FM",
+   "name": "Cutter FM",
    "said_as": "the Tide",
    "dial": "94.6 on the FM dial",
    "kind": "radio (pirate)",
@@ -20587,7 +20588,7 @@
     "id": "rl_ident_1",
     "presenter": "any",
     "programme": "any",
-    "text": "Slack Tide FM, on the air when the aerial's up.",
+    "text": "Cutter FM, on the air when the aerial's up.",
     "when": "ident",
     "chosen": true
    },
@@ -20595,7 +20596,7 @@
     "id": "rl_ident_2",
     "presenter": "any",
     "programme": "any",
-    "text": "You're listening to Slack Tide, the station that moves when the tide does.",
+    "text": "You're listening to Cutter FM, the station that moves when the tide does.",
     "when": "ident",
     "chosen": true
    },
@@ -20603,7 +20604,7 @@
     "id": "rl_ident_3",
     "presenter": "any",
     "programme": "any",
-    "text": "This is Slack Tide FM. If it's crackling, that's the weather, not us.",
+    "text": "This is Cutter FM. If it's crackling, that's the weather, not us.",
     "when": "ident",
     "chosen": true
    },
@@ -20715,7 +20716,7 @@
     "id": "rl_sw_caller",
     "presenter": "pres_mal_rudge",
     "programme": "slack_water",
-    "text": "Caller, you're on Slack Tide. Go ahead, and mind your language.",
+    "text": "Caller, you're on Cutter FM. Go ahead, and mind your language.",
     "when": "phone_in",
     "chosen": true
    },
@@ -20747,7 +20748,7 @@
     "id": "rl_sw_off",
     "presenter": "pres_mal_rudge",
     "programme": "slack_water",
-    "text": "That's Slack Tide away till morning. Keep the aerial straight.",
+    "text": "That's Cutter FM away till morning. Keep the aerial straight.",
     "when": "off_air",
     "chosen": true
    },
@@ -20790,7 +20791,7 @@
   "jingle": {
    "id": "jingle_tide_theme",
    "src": "5.7.1",
-   "name": "Slack Tide ident",
+   "name": "Cutter FM ident",
    "length_s": 6,
    "bpm": 120,
    "notes_midi_c4_60": [
@@ -20854,7 +20855,7 @@
      }
     ]
    },
-   "plays_when": "a radio is tuned to Slack Tide and it is off air (01:00 to 05:30) or lost to signal",
+   "plays_when": "a radio is tuned to Cutter FM and it is off air (01:00 to 05:30) or lost to signal",
    "chosen": true
   },
   "speech_rule": "radio_speech lines are played through the source's filter as voice-tool speech by fictional presenters (made like any other voice, SND-22); a link plays between tunes by the programme's link_every_n_tunes; weather lines match the current profile; a live programme may drop a line for 'rl_lost' for 20 s at random 1 time in 6 hours (chosen)",

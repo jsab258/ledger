@@ -1,0 +1,2893 @@
+{
+ "file": "places.json",
+ "version": "2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "map.json (frozen; every plot, door, road and spot id)",
+  "production/lane/design-proof/DEFINITIONS-2026-11-21.md G10, G3, G5, RT2-09",
+  "BLUEPRINT-02 2.2.6, 2.15.2, 2.17, RT2-09; BLUEPRINT-04 4.1.4, 4.3.3; BLUEPRINT-07 7.16; BLUEPRINT-01 RT2-14, 1.6.15",
+  "production/research/shop-hours-1990/NOTE-2026-09-29.md",
+  "production/specs/shop-interiors.json; production/specs/hook-cast.json (areas)",
+  "tools/lane/prototype/project/src/game/tune/way.js (PLACE_LIST)",
+  "letters-and-print.json (paper, brands)",
+  "economy/PRICES-WAGES-1990.md; economy/ECONOMY-DESIGN-2026-11-26.md"
+ ],
+ "format": {
+  "days": "mon-sat, mon-thu, mon,wed,fri, fri,sat, sun, mon-sun, tue, thu: lower case, comma lists of days or ranges",
+  "hours": "[days, from, to] or [days, from, to, 'by knock'], game time on a 24-hour clock; a window whose to is before or equal to from ends the next morning; [] means no public hours",
+  "access": "public (free always), hours (free in its hours, private out of them), private (owner or neighbour warns, warns again, then acts), forbidden (skips the first warning), 2.2.6",
+  "address": "label_text is the address as people say it, from the map's street names and door numbers; landmark is the saying for people who do not know the number"
+ },
+ "open_points": [
+  "Hours: G10 and BLUEPRINT-04 4.3.3 won every time. Older hook-cast.json hours lost: Mickey's 07:00 to 27:00 (now round the clock with the counter 07:00 to 22:00), the fish market 07:30 to 14:00 (Laverack's follows the shops), Rita's Wednesday to 13:00 and Hal's Wednesday to 13:00 (no early closing day: G10 gives Monday to Saturday 09:00 to 17:30), the launderette 08:00 to 17:30 (now 08:00 to 23:00), the caff 06:30 to 22:00 every day (now 06:00 to 15:00, Friday and Saturday to 22:00), the newsagent 06:00 to 17:30 (now 18:00), the market on Tuesday, Friday and Saturday (now Thursday). The prototype's boxing 17:00 to 22:00, launderette 08:00 to 20:00, tea room 09:00 to 17:00 and coin shop 10:00 to 16:00 lost the same way.",
+  "Early closing: shop-hours-1990 finds the Shops Act 1950 required one early-closing afternoon a week (Thursday in Hull and Grimsby, but no 1990 day found) and says the day is the shopkeeper's choice since 1965. G10 and 4.3.3 give Monday to Saturday 09:00 to 17:30 with no early closing, so none is built; Thursday is market day and empties the shops by a third instead. Recommend the keeper confirms.",
+  "Two pawns are kept (map open_points): Rita's at 5 Quay Street keeps the Quay Street shops' hours with a back room by knock 17:30 to 22:00 (chosen), Wayne Harrison's at 16 North Road has G10's pawn hours 10:00 to 17:00 and back room to 22:00.",
+  "Sunday: the launderette is open every day 08:00 to 23:00 as G10 gives no day split (chosen reading: not a shop under the Act). The caff is open Sunday 08:00 to 12:00 (hook-cast.json, chosen; meals are legal on Sunday). The chip shop is shut Sunday until the paper's issue_10 (9 Nov) says Mr Dobson opens Sundays from that week: from Sun 11 Nov it opens 17:00 to 22:00 (chosen), which the Act (shop-hours-1990) forbids for fried fish and chips; the street can know it is a breach.",
+  "The paper's issue_11 (16 Nov) says the Washeteria keeps its last wash at 16:30 after a machine was put out of order; G10 says 08:00 to 23:00. Both kept: the hours stand, the last wash is 16:30 from Fri 16 Nov (an event in timetables.json). Decide whether the premises close earlier.",
+  "Hours chosen (not in any source): snooker hall Mon to Sat 11:00 to 22:30 (shut Sunday); pigeon loft 07:00 to 19:00 daily (birds flown Sat and Sun 14:00 to 16:00); fishing spots 05:00 to 23:00 (best bites 05:30 to 09:00 and 16:00 to 20:00); allotments 07:00 to 19:00; cold stores 06:00 to 17:30 Mon to Fri, 06:00 to 13:00 Sat; customs and Harbour Board 09:00 to 16:30 Mon to Fri; Holt's garage; Agar's agents; Iveson's yard (prototype 07:30 to 17:00, kept); the net store; the barber (09:00 to 17:00); the chapel (08:00 to 18:00, Sunday to 19:00); the retired doctor by knock 08:00 to 21:00; the gun seller 00:30 to 02:30 after Tuesday's and Friday's evening.",
+  "Mickey's office hours: the blueprint says the firm runs day and night and the radio is manned. Built as an open door and rank round the clock, counter 07:00 to 22:00, radio manned always (Pauline by day, the night driver on the set and the rung-3 night desk by night, chosen). The older 07:00 to 27:00 is lost.",
+  "Market: the ruled Thursday market is in Copper Row (off the map; 2.1.6); the paper's issue_02 says Copper Row runs Tuesday, Friday and Saturday 08:00 to 16:00 and loses (fix that line). For the Hook the brief's on-map option is chosen: four trestles and a barrow on the quay road's north pavement between Rinaldi's and Quay Street's foot, Thursday 08:00 to 16:00 (market_stalls_quay).",
+  "RT2-14: 'on Tuesdays and Fridays, after midnight' is read as the small hours after those evenings (00:30 to 02:30 on the clock of Wednesday and Saturday); the seller is an unnamed deckhand (person_ref). Mickey's desk drawer has no coordinates (the interior is in rooms.json): the bottom right-hand drawer, chosen.",
+  "Cold stores: the brief's 17:30 packing shift and the blueprint's 'half past five' mornings are both kept: a day shift leaving 17:30 and a night shift leaving 05:30 (chosen split).",
+  "At 23:00 on every night of the week at least three places are open with people in them (open_hours_check_2300): Monday to Saturday Mickey's, Regent House, the chip shop (to 23:30; to 00:30 Friday and Saturday), the landing's window (22:00 to 01:00) and the tea stall (22:00 to 06:00); Sunday (the chip shop shut until 22:00 from 11 Nov, before that shut all day) Mickey's, Regent House, the landing's window and the tea stall. The launderette closes at 23:00 and is not counted; the snooker hall closes at 22:30.",
+  "Ids: places with no plot (spots, off-map places, the soft edges) use the map's ids; places invented here (toms_flat, mickeys_inner_office, mickeys_desk_drawer, mickeys_yard, harbour_board_back_office, market_stalls_quay, bonfire_ground, fireworks_quay, copper_row_market, ropewalk_park, drill_hall, the_exchange_march, solicitor_office, pillar boxes) hang on an existing plot or use the map's coordinates and add no geometry. Bonfire ground (440, 312) is free ground in the map (no plot) but has no road of its own: access by the warehouse row. The soft edge's constable hour is 22:00 to 06:00 (G5), delay 30 game minutes (60 real seconds at 120 s an hour, was 30 s).",
+  "Old and new real-time figures from this file: the edge's 30 game minutes out and back is 60 real seconds (was 30 s at 60 s an hour); the landing window 22:00 to 01:00 is 6 real minutes (was 3); the chapel hall's evening 2.5 game hours is 5 real minutes (was 2.5)."
+ ],
+ "open_hours_check_2300": {
+  "mon": [
+   "mickeys",
+   "boarding_house",
+   "chip_shop",
+   "ferry_landing",
+   "tea_stall"
+  ],
+  "tue": [
+   "mickeys",
+   "boarding_house",
+   "chip_shop",
+   "ferry_landing",
+   "tea_stall"
+  ],
+  "wed": [
+   "mickeys",
+   "boarding_house",
+   "chip_shop",
+   "ferry_landing",
+   "tea_stall"
+  ],
+  "thu": [
+   "mickeys",
+   "boarding_house",
+   "chip_shop",
+   "ferry_landing",
+   "tea_stall"
+  ],
+  "fri": [
+   "mickeys",
+   "boarding_house",
+   "chip_shop",
+   "ferry_landing",
+   "tea_stall"
+  ],
+  "sat": [
+   "mickeys",
+   "boarding_house",
+   "chip_shop",
+   "ferry_landing",
+   "tea_stall"
+  ],
+  "sun": [
+   "mickeys",
+   "boarding_house",
+   "ferry_landing",
+   "tea_stall"
+  ]
+ },
+ "places": [
+  {
+   "id": "mickeys",
+   "name": "Mickey's",
+   "kind": "cab_office",
+   "plot": "qs_mickeys",
+   "doors": [
+    "d_qs_1",
+    "d_qs_1_back"
+   ],
+   "owner": {
+    "name": "Sheila (keeps the office since Mickey died)",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sun",
+     "00:00",
+     "24:00"
+    ]
+   ],
+   "label_text": "1 Quay Street",
+   "landmark": "the cab office at the bottom of Quay Street",
+   "who_works": [
+    "office keeper (Sheila)",
+    "radio controller (Pauline, days)",
+    "night driver on the set (Terry, nights)",
+    "night desk man (from rung 3)",
+    "rent collector's call at the counter (Fri)"
+   ],
+   "tom_can": [
+    "take a fare",
+    "ask for work",
+    "read the fare book",
+    "pay rent",
+    "take the key",
+    "sleep upstairs (toms_flat)",
+    "use the radio",
+    "collect the tin",
+    "ask about debts"
+   ],
+   "access": "hours",
+   "hours_note": "Office door and the rank outside are open round the clock; the counter is staffed 07:00 to 22:00 (Sheila by day, Pauline on the radio 07:00 to 19:00); the night bell and the radio are manned all night (the firm runs day and night). The inner office stays locked until Sheila's trust (rung 2).",
+   "counter_hours": [
+    [
+     "mon-sun",
+     "07:00",
+     "22:00"
+    ]
+   ],
+   "radio_manned": [
+    [
+     "mon-sun",
+     "00:00",
+     "24:00"
+    ]
+   ],
+   "hours_chosen": true,
+   "people_when_open": true,
+   "watchers": [
+    "adas"
+   ],
+   "src": "2.2.6; 4.3.1; G10; mickeys-office.json; hook-cast.json (older hours 07:00 to 27:00 lost)"
+  },
+  {
+   "id": "toms_flat",
+   "name": "Tom's flat above the office",
+   "kind": "flat",
+   "plot": "qs_mickeys",
+   "doors": [
+    "d_qs_1"
+   ],
+   "owner": {
+    "name": "Mickey's estate (the flat above, let to Tom at £18 a week)",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sun",
+     "00:00",
+     "24:00"
+    ]
+   ],
+   "label_text": "1 Quay Street (flat above)",
+   "landmark": "the flat up the inner stair from the office",
+   "who_works": [],
+   "tom_can": [
+    "sleep (skips the night)",
+    "save the game",
+    "change clothes",
+    "hide things (the tin is at the office)"
+   ],
+   "access": "private",
+   "src": "4.1.x flat; 2.7.4 (rent £18 Friday); sleeping is a skip never a need",
+   "chosen": true
+  },
+  {
+   "id": "mickeys_inner_office",
+   "name": "Mickey's inner office",
+   "kind": "room",
+   "plot": "qs_mickeys",
+   "doors": [
+    "d_qs_1"
+   ],
+   "owner": {
+    "name": "Sheila",
+    "person_ref": true
+   },
+   "hours": [],
+   "label_text": "1 Quay Street (inner office)",
+   "landmark": "the locked door behind the counter",
+   "who_works": [],
+   "tom_can": [
+    "open once Sheila trusts him (rung 2)",
+    "find the real book",
+    "find the revolver (RT2-14)"
+   ],
+   "access": "forbidden",
+   "src": "RT2-14; 1.3.10; 4.3.1 (inner office locked)",
+   "chosen": true
+  },
+  {
+   "id": "mickeys_desk_drawer",
+   "name": "Mickey's desk drawer",
+   "kind": "interior_spot",
+   "plot": "qs_mickeys",
+   "doors": [
+    "d_qs_1"
+   ],
+   "owner": {
+    "name": "Sheila",
+    "person_ref": true
+   },
+   "hours": [],
+   "label_text": "1 Quay Street (inner office desk)",
+   "landmark": "the bottom right-hand drawer of the desk, under the real book",
+   "who_works": [],
+   "tom_can": [
+    "search once: the service revolver (six rounds) lies here"
+   ],
+   "access": "forbidden",
+   "position_note": "inside the inner office, no coordinates (the interior is in rooms.json); the drawer is the desk's bottom right drawer, chosen",
+   "src": "RT2-14 (found once when the locked office opens on Sheila's trust); mickeys-office.json has no drawer",
+   "chosen": true
+  },
+  {
+   "id": "mickeys_yard",
+   "name": "Mickey's yard",
+   "kind": "yard",
+   "plot": "qs_mickeys_yard",
+   "doors": [
+    "d_mickeys_yard_quay_gate",
+    "d_qs_1_back"
+   ],
+   "owner": {
+    "name": "Mickey's",
+    "person_ref": true
+   },
+   "hours": [],
+   "label_text": "behind 1 Quay Street",
+   "landmark": "through the office and out the back, the shed and the two gates",
+   "who_works": [],
+   "tom_can": [
+    "go through",
+    "hide a car",
+    "vault the back fence (vault_mickeys_fence)"
+   ],
+   "access": "private",
+   "src": "prototype way.js yard; map vault_mickeys_fence",
+   "chosen": true
+  },
+  {
+   "id": "laveracks",
+   "name": "Laverack's",
+   "kind": "fishmonger",
+   "plot": "qs_laveracks",
+   "doors": [
+    "d_qs_3",
+    "d_qs_3_back"
+   ],
+   "owner": {
+    "name": "Brenda Laverack",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sat",
+     "09:00",
+     "17:30"
+    ]
+   ],
+   "label_text": "3 Quay Street",
+   "landmark": "the wet fish shop with the blue awning",
+   "who_works": [
+    "fishmonger (Brenda)",
+    "a counter hand"
+   ],
+   "tom_can": [
+    "buy fish",
+    "talk",
+    "hear gossip",
+    "hold up the till (1.6.15)"
+   ],
+   "access": "hours",
+   "hours_note": "Brenda buys at the fish dock at dawn (05:30 to 07:00, a fare) and opens at 09:00 under G10; the older plan's 07:30 to 14:00 loses.",
+   "src": "G10; 4.3.3; ruling 3 Oct (bay 1)"
+  },
+  {
+   "id": "ritas",
+   "name": "Rita's",
+   "kind": "pawnbroker",
+   "plot": "qs_ritas",
+   "doors": [
+    "d_qs_5",
+    "d_qs_5_back"
+   ],
+   "owner": {
+    "name": "Rita Welburn",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sat",
+     "09:00",
+     "17:30"
+    ]
+   ],
+   "label_text": "5 Quay Street",
+   "landmark": "the pawn shop with three brass balls, the window lit at night",
+   "who_works": [
+    "pawnbroker (Rita)",
+    "a counter hand"
+   ],
+   "tom_can": [
+    "pawn or sell goods",
+    "buy back within 7 game days at the price paid plus a quarter",
+    "knock at the back room (fence, rung 2, about a third of retail)",
+    "ask for a hook",
+    "hold up the till (1.6.15)"
+   ],
+   "access": "hours",
+   "back_room_hours": [
+    [
+     "mon-sat",
+     "17:30",
+     "22:00",
+     "by knock"
+    ]
+   ],
+   "back_room_chosen": true,
+   "hours_note": "Rita's front keeps the Quay Street shops' hours. The back room by knock mirrors Wayne's pawn rule (to 22:00): chosen.",
+   "src": "G10 (Quay Street shops); hook-cast.json (9 to 17:30, Wednesday to 13:00: lost); 4.3.3; 2.7"
+  },
+  {
+   "id": "empty_unit",
+   "name": "the empty unit",
+   "kind": "empty_shop",
+   "plot": "qs_empty_unit",
+   "doors": [
+    "d_qs_7",
+    "d_qs_7_back"
+   ],
+   "owner": {
+    "name": "Agar & Co (the letting agents)",
+    "person_ref": true
+   },
+   "hours": [],
+   "label_text": "7 Quay Street",
+   "landmark": "the whitewashed window with the TO LET board",
+   "who_works": [],
+   "tom_can": [
+    "peer through the glass",
+    "take a front on it once let (2.17)",
+    "read the planning notice (from Mon 22 Oct to Fri 9 Nov)"
+   ],
+   "access": "private",
+   "hours_note": "Shut: to let. A front once let (2.17).",
+   "src": "ruling 3 Oct (bay 3); 2.17; paper issue_04 (planning notice for an estate agent's office)"
+  },
+  {
+   "id": "launderette",
+   "name": "the Washeteria",
+   "kind": "launderette",
+   "plot": "qs_launderette",
+   "doors": [
+    "d_qs_9",
+    "d_qs_9_back"
+   ],
+   "owner": {
+    "name": "the Washeteria's keeper",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sun",
+     "08:00",
+     "23:00"
+    ]
+   ],
+   "label_text": "9 Quay Street",
+   "landmark": "the launderette with the steamed window",
+   "who_works": [
+    "attendant"
+   ],
+   "tom_can": [
+    "wash and dry clothes",
+    "wait out of the rain",
+    "talk",
+    "take a share as a front (2.17)",
+    "hide a parcel in the machines (chosen)"
+   ],
+   "access": "hours",
+   "people_when_open": true,
+   "hours_note": "G10 gives 08:00 to 23:00 with no day split: every day, Sunday included (launderettes were not shops under the Act: chosen reading). From Fri 16 Nov the last wash is 16:30 (paper issue_11).",
+   "src": "G10; 4.3.3; ruling 3 Oct (bay 4); hook-cast.json 8 to 17:30 (older; lost)"
+  },
+  {
+   "id": "grocer",
+   "name": "Hook Stores",
+   "kind": "grocer",
+   "plot": "qs_grocer",
+   "doors": [
+    "d_qs_11",
+    "d_qs_11_back"
+   ],
+   "owner": {
+    "name": "the grocer",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sat",
+     "09:00",
+     "17:30"
+    ]
+   ],
+   "label_text": "11 Quay Street",
+   "landmark": "the grocer with the crates outside",
+   "who_works": [
+    "grocer",
+    "a shop assistant"
+   ],
+   "tom_can": [
+    "buy food",
+    "talk",
+    "hold up the till (1.6.15)"
+   ],
+   "access": "hours",
+   "src": "G10; 4.3.3; ruling 3 Oct (bay 5)"
+  },
+  {
+   "id": "chandlery",
+   "name": "the chandlery",
+   "kind": "ship_chandler",
+   "plot": "qs_chandler",
+   "doors": [
+    "d_qs_13"
+   ],
+   "owner": {
+    "name": "the chandler",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sat",
+     "09:00",
+     "17:30"
+    ]
+   ],
+   "label_text": "13 Quay Street",
+   "landmark": "the chandler with the coiled rope in the window",
+   "who_works": [
+    "chandler"
+   ],
+   "tom_can": [
+    "buy rope and lamps",
+    "ask about the boxing club behind"
+   ],
+   "access": "hours",
+   "src": "G10; 4.3.3; map note (plot lists door d_qs_13 only)"
+  },
+  {
+   "id": "adas",
+   "name": "Ada's",
+   "kind": "home",
+   "plot": "qs_ada",
+   "doors": [
+    "d_qs_2",
+    "d_qs_2_back"
+   ],
+   "owner": {
+    "name": "Ada",
+    "person_ref": true
+   },
+   "hours": [],
+   "label_text": "2 Quay Street",
+   "landmark": "the window opposite Mickey's with the net curtain",
+   "who_works": [],
+   "tom_can": [
+    "take tea at nine",
+    "talk",
+    "be watched from the window (she is the watcher who is a window)"
+   ],
+   "access": "private",
+   "by_invitation": [
+    [
+     "mon-sun",
+     "09:00",
+     "10:00"
+    ]
+   ],
+   "by_invitation_note": "Ada's pot is on at nine; Tom is asked in then (4.3.4)",
+   "watchers": [
+    "ada"
+   ],
+   "hours_note": "No shop hours. A front room open to Tom by her invitation at nine, otherwise private.",
+   "src": "4.3.4; 2.2.6; prototype way.js"
+  },
+  {
+   "id": "newsagent",
+   "name": "Peart's",
+   "kind": "newsagent",
+   "plot": "qs_pearts",
+   "doors": [
+    "d_qs_8",
+    "d_qs_8_back"
+   ],
+   "owner": {
+    "name": "the newsagent (Peart)",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sat",
+     "06:00",
+     "18:00"
+    ],
+    [
+     "sun",
+     "07:00",
+     "12:00"
+    ]
+   ],
+   "label_text": "8 Quay Street",
+   "landmark": "the newsagent with the paper boards, the Pilot's stand outside",
+   "who_works": [
+    "newsagent",
+    "pension counter clerk (Mrs Edith Stockill)"
+   ],
+   "tom_can": [
+    "buy the paper (the Pilot, 25p, Tuesday and Friday)",
+    "buy cigarettes (20 for £1.70)",
+    "read the card board",
+    "talk"
+   ],
+   "access": "hours",
+   "sub_hours": {
+    "pension_counter": [
+     [
+      "mon-fri",
+      "09:00",
+      "17:30"
+     ]
+    ]
+   },
+   "sub_hours_note": "Pension counter (Mrs Edith Stockill) from hook-cast.json: kept, G10 is silent",
+   "src": "G10; 4.3.3; letters-and-print.json (paper); shop-hours-1990 (papers, tobacco, sweets legal on Sunday)"
+  },
+  {
+   "id": "ironmonger",
+   "name": "the ironmonger's",
+   "kind": "ironmonger",
+   "plot": "qs_ironmonger",
+   "doors": [
+    "d_qs_10",
+    "d_qs_10_back"
+   ],
+   "owner": {
+    "name": "the ironmonger",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sat",
+     "09:00",
+     "17:30"
+    ]
+   ],
+   "label_text": "10 Quay Street",
+   "landmark": "the shop with the galvanised buckets hung by the door",
+   "who_works": [
+    "ironmonger"
+   ],
+   "tom_can": [
+    "buy a crowbar (£6)",
+    "buy a torch (£4)",
+    "have a key cut (£1.50)"
+   ],
+   "access": "hours",
+   "src": "G10; 4.3.3 (prices); prototype 8:30 to 17:30 (older; lost)"
+  },
+  {
+   "id": "tea_room",
+   "name": "the Copper Kettle",
+   "kind": "tea_room",
+   "plot": "qs_copper_kettle",
+   "doors": [
+    "d_qs_12",
+    "d_qs_12_back"
+   ],
+   "owner": {
+    "name": "the tea room's keeper",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sat",
+     "09:00",
+     "17:30"
+    ]
+   ],
+   "label_text": "12 Quay Street",
+   "landmark": "the tea room with the lace half-curtain",
+   "who_works": [
+    "tea room keeper",
+    "a waitress"
+   ],
+   "tom_can": [
+    "take tea (30p)",
+    "wait",
+    "listen to talk"
+   ],
+   "access": "hours",
+   "src": "G10; ruling 3 Oct; prototype 9 to 17 (older; lost)"
+  },
+  {
+   "id": "snooker_hall",
+   "name": "the snooker hall",
+   "kind": "snooker_hall",
+   "plot": "quay_snooker",
+   "doors": [
+    "d_quay_2"
+   ],
+   "owner": {
+    "name": "the hall's keeper (people file)",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sat",
+     "11:00",
+     "22:30"
+    ]
+   ],
+   "label_text": "2 The Quay",
+   "landmark": "upstairs on the quay, by the landing",
+   "who_works": [
+    "hall keeper",
+    "a marker",
+    "regulars"
+   ],
+   "tom_can": [
+    "play a frame (no money, no stakes)",
+    "watch",
+    "talk to the regulars",
+    "be seen"
+   ],
+   "access": "hours",
+   "hours_chosen": true,
+   "hours_note": "Hours chosen: Monday to Saturday 11:00 to 22:30, shut Sunday. It closes before 23:00, so it does not count toward the 23:00 standard.",
+   "src": "24 Nov pastimes ruling; map plot quay_snooker (upstairs over a shuttered ship's stores)",
+   "chosen": true
+  },
+  {
+   "id": "boarding_house",
+   "name": "Regent House",
+   "kind": "boarding_house",
+   "plot": "quay_regent",
+   "doors": [
+    "d_quay_3"
+   ],
+   "owner": {
+    "name": "Sylvia",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sun",
+     "00:00",
+     "24:00"
+    ]
+   ],
+   "label_text": "3 The Quay",
+   "landmark": "the boarding house with the VACANCIES card",
+   "who_works": [
+    "landlady (Sylvia)",
+    "lodgers"
+   ],
+   "tom_can": [
+    "take a room",
+    "ask for a lodger",
+    "wait in the hall"
+   ],
+   "access": "hours",
+   "people_when_open": true,
+   "hours_note": "Night bell; rooms £25 a week (economy files). The ferry clerk lodges here.",
+   "src": "prototype way.js (open 0 to 24); map quay_regent; 4.3.3"
+  },
+  {
+   "id": "caff",
+   "name": "Rinaldi's",
+   "kind": "caff",
+   "plot": "quay_caff",
+   "doors": [
+    "d_quay_4"
+   ],
+   "owner": {
+    "name": "Grace Rinaldi",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-thu",
+     "06:00",
+     "15:00"
+    ],
+    [
+     "fri,sat",
+     "06:00",
+     "22:00"
+    ],
+    [
+     "sun",
+     "08:00",
+     "12:00"
+    ]
+   ],
+   "label_text": "4 The Quay",
+   "landmark": "the caff on the quay by the ginnel, steam on the glass",
+   "who_works": [
+    "caff owner (Grace)",
+    "a cook",
+    "a waitress"
+   ],
+   "tom_can": [
+    "eat (breakfast £1.80, dinner £2.50, tea 30p)",
+    "hear the dock shift talk",
+    "read the result chalked on the board",
+    "wake in Grace's kitchen after a beating (4.3.8)"
+   ],
+   "access": "hours",
+   "sunday_chosen": true,
+   "hours_note": "G10: 06:00 to 15:00 Monday to Saturday, to 22:00 Friday and Saturday (the dock shift's breakfast). Sunday 08:00 to 12:00 kept from hook-cast.json (G10 silent; meals are legal on Sunday): chosen. From Fri 2 Nov the back room opens Friday dinner times for the Harbour Board's staff (paper issue_05).",
+   "src": "G10; 4.3.3; hook-cast.json (06:30 to 22:00 daily: lost)"
+  },
+  {
+   "id": "metcalfes",
+   "name": "Metcalfe's",
+   "kind": "coin_shop",
+   "plot": "quay_metcalfes",
+   "doors": [
+    "d_quay_5"
+   ],
+   "owner": {
+    "name": "Hal",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sat",
+     "09:00",
+     "17:30"
+    ]
+   ],
+   "label_text": "5 The Quay",
+   "landmark": "the coin shop that sells no coins",
+   "who_works": [
+    "Hal"
+   ],
+   "tom_can": [
+    "sell small goods",
+    "ask Hal's hands for a job"
+   ],
+   "access": "hours",
+   "src": "G10; 4.3.3 (Hal has a shop); hook-cast.json 10 to 18, Wednesday to 13:00 (lost)"
+  },
+  {
+   "id": "second_hand",
+   "name": "the second-hand shop",
+   "kind": "second_hand_shop",
+   "plot": "quay_secondhand",
+   "doors": [
+    "d_quay_6"
+   ],
+   "owner": {
+    "name": "the dealer",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sat",
+     "09:00",
+     "17:30"
+    ]
+   ],
+   "label_text": "6 The Quay",
+   "landmark": "the second-hand shop with an Estuary set in the window",
+   "who_works": [
+    "dealer"
+   ],
+   "tom_can": [
+    "sell radios and video recorders (a buyer and a listener)",
+    "buy coats £15, jackets £45, overcoats £90",
+    "buy back within 7 game days at the price paid plus a quarter"
+   ],
+   "access": "hours",
+   "src": "G10; 1.6; 2.7; letters-and-print.json brands (tv)"
+  },
+  {
+   "id": "widow_base",
+   "name": "the net store",
+   "kind": "net_store",
+   "plot": "quay_net_store",
+   "doors": [
+    "d_quay_9",
+    "d_widow_office"
+   ],
+   "owner": {
+    "name": "the Widow",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sat",
+     "07:00",
+     "17:00"
+    ]
+   ],
+   "label_text": "9 The Quay",
+   "landmark": "the fish dock's net store, the Widow's dock office over it",
+   "who_works": [
+    "storeman",
+    "the Widow's dock men"
+   ],
+   "tom_can": [
+    "go in (store only)",
+    "watch the office stair (d_widow_office)"
+   ],
+   "access": "private",
+   "hours_chosen": true,
+   "hours_note": "Store hours chosen; the office over it is private and never opens to Tom.",
+   "src": "RT2-08; map rival_bases; hours chosen",
+   "chosen": true
+  },
+  {
+   "id": "boxing_club",
+   "name": "the boxing club",
+   "kind": "boxing_club",
+   "plot": "quay_boxing",
+   "doors": [
+    "d_quay_11"
+   ],
+   "owner": {
+    "name": "the trainer",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon,wed,fri",
+     "18:00",
+     "21:30"
+    ],
+    [
+     "sat",
+     "10:00",
+     "13:00"
+    ]
+   ],
+   "label_text": "11 The Quay",
+   "landmark": "the old hall behind the chandler's store, a bare bulb over the door",
+   "who_works": [
+    "trainer",
+    "boxers (about 3 trainers)"
+   ],
+   "tom_can": [
+    "spar (gloves, no blood, no stakes)",
+    "recruit a man",
+    "be seen",
+    "train"
+   ],
+   "access": "hours",
+   "src": "G10; 7.16; prototype way.js 17 to 22 (older; lost); map quay_boxing"
+  },
+  {
+   "id": "customs",
+   "name": "the customs house",
+   "kind": "customs_house",
+   "plot": "dock_customs",
+   "doors": [
+    "d_dock_1"
+   ],
+   "owner": {
+    "name": "Customs and Excise (the officer who never reports)",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-fri",
+     "09:00",
+     "16:30"
+    ]
+   ],
+   "label_text": "1 Dock Road",
+   "landmark": "the long shed with the lamp that goes out at eleven",
+   "who_works": [
+    "customs officers"
+   ],
+   "tom_can": [
+    "a risk place: the bonded store (tobacco and boxed goods, never drink)"
+   ],
+   "access": "forbidden",
+   "hours_chosen": true,
+   "hours_note": "Hours chosen. The bonded store behind is part of this place.",
+   "src": "2.2.6 (forbidden example); 4.2.3; prototype way.js customs (forbidden)",
+   "chosen": true
+  },
+  {
+   "id": "harbour_board",
+   "name": "the Harbour Board",
+   "kind": "harbour_office",
+   "plot": "dock_harbour_board",
+   "doors": [
+    "d_dock_3"
+   ],
+   "owner": {
+    "name": "the Harbour Board (clerk Susan)",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-fri",
+     "09:00",
+     "16:30"
+    ]
+   ],
+   "label_text": "3 Dock Road",
+   "landmark": "the stone office with the clock over the door",
+   "who_works": [
+    "clerk (Susan)",
+    "harbour master"
+   ],
+   "tom_can": [
+    "buy a shipment time from the clerk",
+    "use the account",
+    "read the door notices (berths, tide table)"
+   ],
+   "access": "hours",
+   "hours_chosen": true,
+   "src": "4.2.3; prototype way.js (9 to 16:30); posters H03",
+   "chosen": true
+  },
+  {
+   "id": "harbour_board_back_office",
+   "name": "the Harbour Board's back office",
+   "kind": "room",
+   "plot": "dock_harbour_board",
+   "doors": [
+    "d_dock_3"
+   ],
+   "owner": {
+    "name": "the Harbour Board",
+    "person_ref": true
+   },
+   "hours": [],
+   "label_text": "3 Dock Road",
+   "landmark": "the door behind the counter marked PRIVATE",
+   "who_works": [],
+   "tom_can": [
+    "trespass: skips the first warning (2.2.6)"
+   ],
+   "access": "forbidden",
+   "src": "2.2.6 (forbidden example); prototype harbourback",
+   "chosen": true
+  },
+  {
+   "id": "dock_gate",
+   "name": "the dock gate",
+   "kind": "gate",
+   "plot": "dock_gate",
+   "doors": [
+    "d_dock_gate"
+   ],
+   "owner": {
+    "name": "the Harbour Board (gatekeeper)",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sun",
+     "00:00",
+     "24:00"
+    ]
+   ],
+   "label_text": null,
+   "landmark": "the gate with the hut and the striped pole",
+   "who_works": [
+    "gatekeeper",
+    "the turf post's crewman 06:00 to 22:00"
+   ],
+   "tom_can": [
+    "stand at the post (RT2-09)",
+    "buy tea at night",
+    "watch the shift"
+   ],
+   "access": "forbidden",
+   "hours_note": "The hut is manned day and night; past the pole is forbidden. The tea stall stands at the gate 22:00 to 06:00. Chained to vehicles from early Sat 1 Dec (the paper, print_if).",
+   "src": "4.2.3; RT2-09; prototype way.js dockgate (forbidden)"
+  },
+  {
+   "id": "dents_warehouses",
+   "name": "Dent's warehouse 1",
+   "kind": "warehouse",
+   "plot": "dent_1",
+   "doors": [
+    "d_wr_1"
+   ],
+   "owner": {
+    "name": "Norman Dent",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-fri",
+     "07:00",
+     "17:00"
+    ]
+   ],
+   "label_text": "1 Warehouse Row",
+   "landmark": "the brick warehouses, numbers painted on the doors",
+   "who_works": [
+    "warehousemen"
+   ],
+   "tom_can": [
+    "look",
+    "fares to the warehouse row (Alison)"
+   ],
+   "access": "private",
+   "hours_chosen": true,
+   "hours_note": "Loading hours chosen; the doors are private.",
+   "src": "map dent_1; prototype way.js row (public lane)",
+   "chosen": true
+  },
+  {
+   "id": "cold_stores",
+   "name": "the Old Basin Cold Stores",
+   "kind": "cold_store",
+   "plot": "cold_stores",
+   "doors": [
+    "d_cold_yard",
+    "d_cold_office"
+   ],
+   "owner": {
+    "name": "Norman (the cold-store manager) (people file)",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-fri",
+     "06:00",
+     "17:30"
+    ],
+    [
+     "sat",
+     "06:00",
+     "13:00"
+    ]
+   ],
+   "label_text": "1 Cold Store Road",
+   "landmark": "the big grey shed on Cold Store Road",
+   "who_works": [
+    "cold-store hands (packing shifts)",
+    "shift manager (a named minor man)",
+    "wages clerk (Friday)",
+    "the turf post's crewman 06:00 to 22:00"
+   ],
+   "tom_can": [
+    "meet the packing shift on time (contract, 2.15.2)",
+    "hold up the Friday wages window (1.6.15)",
+    "pick up fares"
+   ],
+   "access": "hours",
+   "hours_chosen": true,
+   "hours_note": "Day packing shift 06:00 to 17:30, leaves 17:30 (the brief). Night packing shift 18:00 to 05:30 Monday to Friday mornings, leaves 05:30 (blueprint 3.x/4.2.2 'the packing shift at half past five'; 2.15.2 'five mornings'). The prototype's 'shift change at half past five' is the same time on both ends. See timetables.json shifts.",
+   "src": "4.2.2; 2.15.2; RT2-09; prototype way.js coldstore (5 to 18)",
+   "chosen": true
+  },
+  {
+   "id": "car_lot",
+   "name": "the used-car lot",
+   "kind": "car_lot",
+   "plot": "lot",
+   "doors": [
+    "d_lot_gate"
+   ],
+   "owner": {
+    "name": "the lot's owner",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sat",
+     "09:00",
+     "17:00"
+    ]
+   ],
+   "label_text": null,
+   "landmark": "the bunting at the top of North Road",
+   "who_works": [
+    "car dealer"
+   ],
+   "tom_can": [
+    "buy a car (£600 to £1,200)",
+    "sell a car",
+    "look at the stock"
+   ],
+   "access": "hours",
+   "hours_note": "Sunday shut: chosen (not a listed Sunday trade).",
+   "src": "2.15; prototype way.js lot (9 to 17); map lot"
+  },
+  {
+   "id": "garage",
+   "name": "Holt's garage",
+   "kind": "garage",
+   "plot": "cs_garage",
+   "doors": [
+    "d_cs_3"
+   ],
+   "owner": {
+    "name": "Holt",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-fri",
+     "08:00",
+     "17:30"
+    ],
+    [
+     "sat",
+     "08:00",
+     "12:00"
+    ]
+   ],
+   "label_text": "3 Cold Store Road",
+   "landmark": "repairs and resprays; a pit and a compressor",
+   "who_works": [
+    "mechanic (Holt)"
+   ],
+   "tom_can": [
+    "repair a car",
+    "respray (a plate change takes the car out of sight)",
+    "call the recovery truck"
+   ],
+   "access": "hours",
+   "hours_chosen": true,
+   "hours_note": "Workshop hours chosen; the recovery truck goes out day or night (paper issue_07).",
+   "src": "4.3.x; paper issue_07; map cs_garage",
+   "chosen": true
+  },
+  {
+   "id": "agar_base",
+   "name": "Agar's agents",
+   "kind": "estate_agent",
+   "plot": "cs_agar",
+   "doors": [
+    "d_cs_2"
+   ],
+   "owner": {
+    "name": "Agar & Co (Agar)",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-fri",
+     "09:30",
+     "17:00"
+    ]
+   ],
+   "label_text": "2 Cold Store Road",
+   "landmark": "plate glass, a brass plate; his papers in the back room",
+   "who_works": [
+    "Agar",
+    "clerk (Ombler, proposed)",
+    "the rent collector (Mr Leonard Askew)"
+   ],
+   "tom_can": [
+    "pay or argue about rent (the collector calls at Mickey's counter on Friday)",
+    "be called in for the licence letter"
+   ],
+   "access": "hours",
+   "hours_chosen": true,
+   "src": "RT2-08; letters-and-print.json (Agar & Co, Askew); map rival_bases",
+   "chosen": true
+  },
+  {
+   "id": "iveson_yard",
+   "name": "Iveson's yard",
+   "kind": "scrap_yard",
+   "plot": "iveson_yard",
+   "doors": [
+    "d_br_2"
+   ],
+   "owner": {
+    "name": "Dennis Iveson",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sat",
+     "07:30",
+     "17:00"
+    ]
+   ],
+   "label_text": "2 Basin Road",
+   "landmark": "the scrap yard with the crane and the dog",
+   "who_works": [
+    "Dennis Iveson",
+    "the yard hand (twenties)"
+   ],
+   "tom_can": [
+    "front him up for the £80 debt",
+    "go in by day",
+    "come back at night"
+   ],
+   "access": "hours",
+   "hours_note": "The yard dog is on a chain by day; after hours the yard is private (2.2.6).",
+   "src": "4.3.5; prototype way.js scrap (7:30 to 17); the dog loose at night"
+  },
+  {
+   "id": "iveson_hut",
+   "name": "Iveson's hut",
+   "kind": "hut",
+   "plot": "iveson_hut",
+   "doors": [
+    "d_iveson_hut"
+   ],
+   "owner": {
+    "name": "Dennis Iveson",
+    "person_ref": true
+   },
+   "hours": [],
+   "label_text": null,
+   "landmark": "the tarred hut by the weighbridge",
+   "who_works": [],
+   "tom_can": [
+    "break in at night (Darren's tip)",
+    "search"
+   ],
+   "access": "private",
+   "src": "4.3.5; prototype way.js hut"
+  },
+  {
+   "id": "burned_warehouse",
+   "name": "the burned warehouse",
+   "kind": "ruin",
+   "plot": "burned_warehouse",
+   "doors": [
+    "d_bt_5"
+   ],
+   "owner": {
+    "name": "the Harbour Board (the shell)",
+    "person_ref": true
+   },
+   "hours": [],
+   "label_text": "5 Basin Top",
+   "landmark": "the black shell on Basin Top",
+   "who_works": [],
+   "tom_can": [
+    "look",
+    "search the ashes (the fire's thread)"
+   ],
+   "access": "private",
+   "src": "4.2.2; prototype way.js fire (private)"
+  },
+  {
+   "id": "net_loft",
+   "name": "the net loft",
+   "kind": "warehouse",
+   "plot": "bt_wh_3",
+   "doors": [
+    "d_bt_3"
+   ],
+   "owner": {
+    "name": "the net loft's keeper (people file)",
+    "person_ref": true
+   },
+   "hours": [],
+   "label_text": "3 Basin Top",
+   "landmark": "the net loft",
+   "who_works": [],
+   "tom_can": [
+    "look"
+   ],
+   "access": "private",
+   "src": "map bt_wh_3",
+   "chosen": true
+  },
+  {
+   "id": "waynes_pawn",
+   "name": "Harrison's",
+   "kind": "pawnbroker",
+   "plot": "nr_wayne",
+   "doors": [
+    "d_nr_16",
+    "d_nr_wayne_back"
+   ],
+   "owner": {
+    "name": "Wayne Harrison",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sat",
+     "10:00",
+     "17:00"
+    ]
+   ],
+   "label_text": "16 North Road",
+   "landmark": "the pawn with three brass balls on North Road, the window lit at night",
+   "who_works": [
+    "pawnbroker (Wayne Harrison)"
+   ],
+   "tom_can": [
+    "pawn or sell goods",
+    "knock at the back room",
+    "buy back within 7 game days at the price paid plus a quarter",
+    "collect Wayne's debt in goods"
+   ],
+   "access": "hours",
+   "back_room_hours": [
+    [
+     "mon-sat",
+     "17:00",
+     "22:00",
+     "by knock"
+    ]
+   ],
+   "hours_note": "G10: 10:00 to 17:00, the back room by knock to 22:00; window lit at night (4.3.3). Wayne owes Mickey's book £30 in goods from the back room. Two pawns (Rita's, Wayne's) are kept: see map open_points.",
+   "src": "G10; 4.3.3; 1.x debt book; map nr_wayne"
+  },
+  {
+   "id": "cammack_base",
+   "name": "Cammack's lock-ups",
+   "kind": "lock_ups",
+   "plot": "cammack_lockups",
+   "doors": [
+    "d_lockup_3",
+    "d_lockup_4",
+    "d_lockup_5"
+   ],
+   "owner": {
+    "name": "Danny Cammack",
+    "person_ref": true
+   },
+   "hours": [],
+   "label_text": null,
+   "landmark": "the north court of lock-ups on the cut",
+   "who_works": [
+    "Cammack's men"
+   ],
+   "tom_can": [
+    "raid for a stolen gun (RT2-14)",
+    "watch",
+    "be warned off"
+   ],
+   "access": "private",
+   "src": "RT2-08; map cammack_lockups; paper issue_13 (a stolen van recovered)"
+  },
+  {
+   "id": "chip_shop",
+   "name": "Dobson's",
+   "kind": "chip_shop",
+   "plot": "bp_chippy",
+   "doors": [
+    "d_bp_1"
+   ],
+   "owner": {
+    "name": "Mr Dobson",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sat",
+     "11:30",
+     "14:00"
+    ],
+    [
+     "mon-thu",
+     "17:00",
+     "23:30"
+    ],
+    [
+     "fri,sat",
+     "17:00",
+     "00:30"
+    ]
+   ],
+   "label_text": "1 Back Parade",
+   "landmark": "the chip shop at the top of the parade",
+   "who_works": [
+    "Mr Dobson",
+    "a fryer"
+   ],
+   "tom_can": [
+    "buy fish and chips (£1.60, £1.65 from Tue 27 Nov)",
+    "wait out the street",
+    "hear the ferry trade"
+   ],
+   "access": "hours",
+   "hours_changes": [
+    {
+     "from_date": "1990-11-11",
+     "add": [
+      [
+       "sun",
+       "17:00",
+       "22:00"
+      ]
+     ],
+     "src": "paper issue_10 (9 Nov: open on Sundays from this week)",
+     "chosen": true,
+     "note": "Sunday evening hours chosen; the Shops Act 1950 (shop-hours-1990) bars fish and chips on Sunday, so the opening is a breach the street can talk about"
+    }
+   ],
+   "people_when_open": true,
+   "hours_note": "G10. Crossing midnight: a window whose close is before its open ends the next morning (Friday 17:00 to 00:30 Saturday).",
+   "src": "G10; 4.3.3; paper issues 10 and 14; map open_points (top of the parade)"
+  },
+  {
+   "id": "chapel",
+   "name": "the chapel",
+   "kind": "chapel",
+   "plot": "chapel",
+   "doors": [
+    "d_cl_1"
+   ],
+   "owner": {
+    "name": "Father Brendan Walsh",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sat",
+     "08:00",
+     "18:00"
+    ],
+    [
+     "sun",
+     "08:00",
+     "19:00"
+    ]
+   ],
+   "label_text": "1 Chapel Lane",
+   "landmark": "the chapel on Chapel Lane, the green door",
+   "who_works": [
+    "Father Walsh",
+    "a cleaner (Mrs Winifred Duggleby)"
+   ],
+   "tom_can": [
+    "sit",
+    "talk to Father Walsh",
+    "light a candle"
+   ],
+   "access": "hours",
+   "hours_chosen": true,
+   "hours_note": "Open for prayer; Sunday services 09:30 and 18:00 busy (chosen). Remembrance Sunday on 11 Nov: service 10:30, the silence at 11:00. Religion is never a mechanic.",
+   "src": "4.3.6; prototype way.js (7 to 20); canon",
+   "chosen": true
+  },
+  {
+   "id": "chapel_hall",
+   "name": "the chapel hall",
+   "kind": "hall",
+   "plot": "chapel_hall",
+   "doors": [
+    "d_chapel_hall"
+   ],
+   "owner": {
+    "name": "Father Brendan Walsh",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "tue",
+     "19:00",
+     "21:30"
+    ]
+   ],
+   "label_text": "behind 1 Chapel Lane",
+   "landmark": "behind the chapel, reached by the path at its west side",
+   "who_works": [
+    "Father Walsh",
+    "volunteers",
+    "a cleaner"
+   ],
+   "tom_can": [
+    "take tea",
+    "listen",
+    "go to the meeting"
+   ],
+   "access": "hours",
+   "hours_note": "Tuesday's evening of tea and talk (G10). Dated evenings from the paper: Sat 20 Oct jumble sale from 14:00; Thu 25 Oct 19:30 meeting; Tue 30 Oct 19:00 advice evening; Sat 17 Nov old-time dance 19:30 to 23:00; Thu 29 Nov meeting. Adults only; no drink, no raffle, no stakes (the jumble sale takes admission only).",
+   "src": "G10; 4.3.6; letters-and-print.json paper"
+  },
+  {
+   "id": "priests_house",
+   "name": "the priest's house",
+   "kind": "home",
+   "plot": "priests_house",
+   "doors": [
+    "d_cl_3"
+   ],
+   "owner": {
+    "name": "Father Brendan Walsh",
+    "person_ref": true
+   },
+   "hours": [],
+   "label_text": "3 Chapel Lane",
+   "landmark": "the house by the chapel gate with the slippers on the step",
+   "who_works": [],
+   "tom_can": [
+    "the first fare goes here",
+    "knock"
+   ],
+   "access": "private",
+   "src": "4.3.6; prototype way.js priest"
+  },
+  {
+   "id": "barber",
+   "name": "the barber",
+   "kind": "barber",
+   "plot": "cl_barber",
+   "doors": [
+    "d_cl_5"
+   ],
+   "owner": {
+    "name": "the barber",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sat",
+     "09:00",
+     "17:00"
+    ]
+   ],
+   "label_text": "5 Chapel Lane",
+   "landmark": "the striped pole on Chapel Lane",
+   "who_works": [
+    "barber"
+   ],
+   "tom_can": [
+    "have a haircut (£4)",
+    "hear talk"
+   ],
+   "access": "hours",
+   "hours_chosen": true,
+   "src": "prototype way.js (9 to 17); price in letters-and-print.json",
+   "chosen": true
+  },
+  {
+   "id": "doctors",
+   "name": "the retired doctor's",
+   "kind": "home",
+   "plot": "cl_23",
+   "doors": [
+    "d_cl_23"
+   ],
+   "owner": {
+    "name": "the retired doctor",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sun",
+     "08:00",
+     "21:00",
+     "by knock"
+    ]
+   ],
+   "label_text": "23 Chapel Lane",
+   "landmark": "the end of the terrace, the brass plate taken down",
+   "who_works": [
+    "the retired doctor"
+   ],
+   "tom_can": [
+    "be stitched (£20, asks nothing)",
+    "knock at any hour of the day"
+   ],
+   "access": "private",
+   "hours_chosen": true,
+   "src": "4.3.4; 4.3.8",
+   "chosen": true
+  },
+  {
+   "id": "school",
+   "name": "the school (closed)",
+   "kind": "school_closed",
+   "plot": "school",
+   "doors": [
+    "d_school"
+   ],
+   "owner": {
+    "name": "the council",
+    "person_ref": true
+   },
+   "hours": [],
+   "label_text": "2 Chapel Lane",
+   "landmark": "the closed school on Chapel Lane, boarded",
+   "who_works": [],
+   "tom_can": [
+    "look at the boards (nobody inside, ever; no children anywhere)"
+   ],
+   "access": "forbidden",
+   "src": "canon (no children); 4.3.6; map plot school"
+  },
+  {
+   "id": "allotments",
+   "name": "the allotments",
+   "kind": "allotments",
+   "plot": "allotments",
+   "doors": [
+    "d_allot_gate"
+   ],
+   "owner": {
+    "name": "the allotment holders",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sun",
+     "07:00",
+     "19:00"
+    ]
+   ],
+   "label_text": null,
+   "landmark": "plots, sheds, water butts; the pigeon loft at the back",
+   "who_works": [
+    "allotment holders (adults)"
+   ],
+   "tom_can": [
+    "walk through",
+    "talk",
+    "hide a thing in a shed (chosen)"
+   ],
+   "access": "hours",
+   "hours_chosen": true,
+   "src": "canon; map plot allotments; prototype pastimes",
+   "chosen": true
+  },
+  {
+   "id": "pigeon_loft",
+   "name": "the pigeon loft",
+   "kind": "pigeon_loft",
+   "plot": "pigeon_loft",
+   "doors": [
+    "d_pigeon_loft"
+   ],
+   "owner": {
+    "name": "the bird man of the allotments (people file)",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sun",
+     "07:00",
+     "19:00"
+    ]
+   ],
+   "label_text": null,
+   "landmark": "the loft at the back of the allotments",
+   "who_works": [
+    "the bird man"
+   ],
+   "tom_can": [
+    "tend and feed the birds",
+    "help fly them",
+    "watch them come home",
+    "talk"
+   ],
+   "access": "hours",
+   "hours_chosen": true,
+   "flying_hours": [
+    [
+     "sat,sun",
+     "14:00",
+     "16:00"
+    ]
+   ],
+   "hours_note": "Hours chosen: daylight, every day. The birds are flown Saturday and Sunday 14:00 to 16:00 (chosen). Racing is for the club cup, no stakes, no money (canon).",
+   "src": "24 Nov pastimes ruling; map plot pigeon_loft",
+   "chosen": true
+  },
+  {
+   "id": "ferry_landing",
+   "name": "the ferry landing",
+   "kind": "landing",
+   "plot": "ferry_landing",
+   "doors": [
+    "d_landing_gangway"
+   ],
+   "owner": {
+    "name": "the Meridian Ferry company (landing master)",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sun",
+     "00:00",
+     "24:00"
+    ]
+   ],
+   "label_text": null,
+   "landmark": "the landing at the west end of the quay",
+   "who_works": [
+    "landing hand",
+    "the ferry clerk (lodges at Regent House)",
+    "the turf post's crewman 22:00 to 02:00"
+   ],
+   "tom_can": [
+    "wait for a ferry",
+    "pick up a fare at the rank",
+    "carry the envelope (the window)",
+    "stand 4 s for the hint"
+   ],
+   "access": "public",
+   "window": [
+    [
+     "mon-sun",
+     "22:00",
+     "01:00"
+    ]
+   ],
+   "window_note": "The landing's window: the outfit's envelope goes here and a man says 'Mickey's?' (4.2.1, G10).",
+   "people_when_open": true,
+   "src": "G10; 4.2.1; prototype way.js landing (public)"
+  },
+  {
+   "id": "fish_dock",
+   "name": "the fish dock",
+   "kind": "dock",
+   "plot": "ice_hut",
+   "doors": [
+    "d_ice_hut"
+   ],
+   "owner": {
+    "name": "the fish merchants (people file)",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sun",
+     "00:00",
+     "24:00"
+    ]
+   ],
+   "label_text": "the fish dock, the Quay (east end)",
+   "landmark": "the fish boxes and the ice hut at the east end of the quay",
+   "who_works": [
+    "fish merchants",
+    "porters"
+   ],
+   "tom_can": [
+    "buy and sell fish (Brenda's fare)",
+    "meet the gun seller",
+    "fish off the edge (the quay spots)",
+    "watch"
+   ],
+   "access": "public",
+   "sale_hours": [
+    [
+     "mon-sat",
+     "06:00",
+     "08:00"
+    ]
+   ],
+   "sale_chosen": true,
+   "gun_seller": {
+    "who": "a deckhand off a coaster (unnamed, person_ref)",
+    "person_ref": true,
+    "nights": "tue,fri",
+    "clock": [
+     "00:30",
+     "02:30"
+    ],
+    "note": "the small hours after Tuesday's and Friday's evening (Wednesday and Saturday mornings on the clock); chosen window; sells to a man introduced by Rita (rung 3) or Darren's tip",
+    "prices": {
+     "revolver": 150,
+     "shotgun": 90,
+     "box_of_rounds": 10
+    },
+    "chosen": true,
+    "src": "RT2-14"
+   },
+   "hours_note": "Public at all hours. Dockside sale 06:00 to 08:00 Monday to Saturday (chosen from the older plan's auction at 07:00 to 07:30). Brenda Laverack goes at dawn; 10 to 18 people 05:30 to 07:00.",
+   "src": "RT2-14; 4.2.2; G9; prototype way.js fishdock (public)"
+  },
+  {
+   "id": "tea_stall",
+   "name": "the tea stall",
+   "kind": "stall",
+   "plot": "tea_stall",
+   "doors": [
+    "d_tea_stall"
+   ],
+   "owner": {
+    "name": "the stall holder",
+    "person_ref": true
+   },
+   "hours": [
+    [
+     "mon-sun",
+     "22:00",
+     "06:00"
+    ]
+   ],
+   "label_text": "at the dock gate, Dock Road",
+   "landmark": "the tea stall at the gate",
+   "who_works": [
+    "the stall holder"
+   ],
+   "tom_can": [
+    "buy tea (30p)",
+    "hear the night shift",
+    "wait"
+   ],
+   "access": "hours",
+   "people_when_open": true,
+   "src": "G10; 4.2.3"
+  },
+  {
+   "id": "bus_stop_qs",
+   "name": "the bus stop",
+   "kind": "bus_stop",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "mon-sun",
+     "00:00",
+     "24:00"
+    ]
+   ],
+   "label_text": "Quay Street, west side",
+   "landmark": "the shelter by the lamp, opposite the launderette",
+   "who_works": [],
+   "tom_can": [
+    "wait for a bus (timetables.json)",
+    "wait out the rain"
+   ],
+   "access": "public",
+   "x": 116.4,
+   "y": 18.5,
+   "src": "map street_furniture; prototype way.js busstop",
+   "chosen": true
+  },
+  {
+   "id": "phone_landing",
+   "name": "the phone box by the landing",
+   "kind": "phone_box",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "mon-sun",
+     "00:00",
+     "24:00"
+    ]
+   ],
+   "label_text": "the Quay, by the landing",
+   "landmark": "the red box by the landing shelter",
+   "who_works": [],
+   "tom_can": [
+    "make a call (Tidewire kiosk)",
+    "answer a ringing box"
+   ],
+   "access": "public",
+   "x": 32.0,
+   "y": -5.6,
+   "src": "map phone_boxes; RT2-19"
+  },
+  {
+   "id": "phone_parade",
+   "name": "the phone box by Rita's",
+   "kind": "phone_box",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "mon-sun",
+     "00:00",
+     "24:00"
+    ]
+   ],
+   "label_text": "Quay Street, by Rita's",
+   "landmark": "the red box by the pawn on Quay Street",
+   "who_works": [],
+   "tom_can": [
+    "make a call (Tidewire kiosk)",
+    "answer a ringing box"
+   ],
+   "access": "public",
+   "x": 124.132,
+   "y": 21.0,
+   "src": "map phone_boxes; RT2-19"
+  },
+  {
+   "id": "phone_dock_gate",
+   "name": "the phone box at the dock gate",
+   "kind": "phone_box",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "mon-sun",
+     "00:00",
+     "24:00"
+    ]
+   ],
+   "label_text": "Dock Road, at the dock gate",
+   "landmark": "the red box by the gate hut",
+   "who_works": [],
+   "tom_can": [
+    "make a call (Tidewire kiosk)",
+    "answer a ringing box"
+   ],
+   "access": "public",
+   "x": 548.6,
+   "y": 224.0,
+   "src": "map phone_boxes; RT2-19"
+  },
+  {
+   "id": "rank_mickeys",
+   "name": "Mickey's rank",
+   "kind": "cab_rank",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "mon-sun",
+     "00:00",
+     "24:00"
+    ]
+   ],
+   "label_text": "outside 1 Quay Street",
+   "landmark": "the rank outside the office",
+   "who_works": [
+    "drivers"
+   ],
+   "tom_can": [
+    "park a car",
+    "take a fare from the rank",
+    "win the rank by being there"
+   ],
+   "access": "public",
+   "x": 122.8,
+   "y": 12.0,
+   "pts": [
+    [
+     122.8,
+     9.5
+    ],
+    [
+     122.8,
+     14.5
+    ]
+   ],
+   "cars": 2,
+   "holder": "firm",
+   "win_rule": "his from the start (the firm's)",
+   "src": "map cab_ranks; 2.15.2",
+   "chosen": false
+  },
+  {
+   "id": "rank_ferry",
+   "name": "the ferry rank",
+   "kind": "cab_rank",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "mon-sun",
+     "00:00",
+     "24:00"
+    ]
+   ],
+   "label_text": "the Quay, by the landing",
+   "landmark": "the painted bay by the landing shelter",
+   "who_works": [
+    "drivers"
+   ],
+   "tom_can": [
+    "park a car",
+    "take a fare from the rank",
+    "win the rank by being there"
+   ],
+   "access": "public",
+   "x": 14.0,
+   "y": -3.4,
+   "pts": [
+    [
+     4,
+     -3.4
+    ],
+    [
+     24,
+     -3.4
+    ]
+   ],
+   "cars": 4,
+   "holder": null,
+   "win_rule": "won by being there with a car on the board five days in a fortnight, or by a word with whoever holds it (2.15.2)",
+   "src": "map cab_ranks; 2.15.2",
+   "chosen": false
+  },
+  {
+   "id": "rank_north",
+   "name": "the north road rank",
+   "kind": "cab_rank",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "mon-sun",
+     "00:00",
+     "24:00"
+    ]
+   ],
+   "label_text": "North Road, near the soft edge",
+   "landmark": "the lay-by at the top of North Road",
+   "who_works": [
+    "drivers"
+   ],
+   "tom_can": [
+    "park a car",
+    "take a fare from the rank",
+    "win the rank by being there"
+   ],
+   "access": "public",
+   "x": 157.2,
+   "y": 385.0,
+   "pts": [
+    [
+     157.2,
+     378
+    ],
+    [
+     157.2,
+     392
+    ]
+   ],
+   "cars": 3,
+   "holder": null,
+   "win_rule": "won by being there with a car on the board five days in a fortnight, or by a word with whoever holds it (2.15.2)",
+   "src": "map cab_ranks; 2.15.2",
+   "chosen": true
+  },
+  {
+   "id": "fishing_quay_east",
+   "name": "the east fishing spot on the quay",
+   "kind": "fishing_spot",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "mon-sun",
+     "05:00",
+     "23:00"
+    ]
+   ],
+   "label_text": "the Quay, by the boxing club's hall",
+   "landmark": "an iron ladder and a bollard at the edge",
+   "who_works": [],
+   "tom_can": [
+    "fish (no stakes, no money; the catch is food)",
+    "wait",
+    "talk to whoever is fishing"
+   ],
+   "access": "public",
+   "x": 200.0,
+   "y": -6.9,
+   "hours_chosen": true,
+   "best_hours": [
+    [
+     "mon-sun",
+     "05:30",
+     "09:00"
+    ],
+    [
+     "mon-sun",
+     "16:00",
+     "20:00"
+    ]
+   ],
+   "chosen": true,
+   "src": "24 Nov pastimes ruling; map fishing_spots; hours chosen",
+   "hours_note": "Hours chosen: dawn to 23:00; the best bites at 05:30 to 09:00 and 16:00 to 20:00."
+  },
+  {
+   "id": "fishing_quay_west",
+   "name": "the west fishing spot on the quay",
+   "kind": "fishing_spot",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "mon-sun",
+     "05:00",
+     "23:00"
+    ]
+   ],
+   "label_text": "the Quay, west of Quay Street's foot",
+   "landmark": "an iron ladder and a bollard at the edge",
+   "who_works": [],
+   "tom_can": [
+    "fish (no stakes, no money; the catch is food)",
+    "wait",
+    "talk to whoever is fishing"
+   ],
+   "access": "public",
+   "x": 160.0,
+   "y": -6.9,
+   "hours_chosen": true,
+   "best_hours": [
+    [
+     "mon-sun",
+     "05:30",
+     "09:00"
+    ],
+    [
+     "mon-sun",
+     "16:00",
+     "20:00"
+    ]
+   ],
+   "chosen": true,
+   "src": "24 Nov pastimes ruling; map fishing_spots; hours chosen",
+   "hours_note": "Hours chosen: dawn to 23:00; the best bites at 05:30 to 09:00 and 16:00 to 20:00."
+  },
+  {
+   "id": "fishing_basin_north",
+   "name": "the fishing spot on the basin's north quay",
+   "kind": "fishing_spot",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "mon-sun",
+     "05:00",
+     "23:00"
+    ]
+   ],
+   "label_text": "the Old Basin's north quay",
+   "landmark": "an iron ladder and a bollard at the edge",
+   "who_works": [],
+   "tom_can": [
+    "fish (no stakes, no money; the catch is food)",
+    "wait",
+    "talk to whoever is fishing"
+   ],
+   "access": "public",
+   "x": 300.0,
+   "y": 249.9,
+   "hours_chosen": true,
+   "best_hours": [
+    [
+     "mon-sun",
+     "05:30",
+     "09:00"
+    ],
+    [
+     "mon-sun",
+     "16:00",
+     "20:00"
+    ]
+   ],
+   "chosen": true,
+   "src": "24 Nov pastimes ruling; map fishing_spots; hours chosen",
+   "hours_note": "Hours chosen: dawn to 23:00; the best bites at 05:30 to 09:00 and 16:00 to 20:00."
+  },
+  {
+   "id": "post_dock_gate",
+   "name": "the dock gate turf post",
+   "kind": "turf_post",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "mon-sun",
+     "06:00",
+     "22:00"
+    ]
+   ],
+   "label_text": "at the dock gate",
+   "landmark": "inside the gate by the hut",
+   "who_works": [
+    "one crewman each by routine (RT2-09)"
+   ],
+   "tom_can": [
+    "stand there",
+    "win the stare",
+    "retake with a man or a fight"
+   ],
+   "access": "public",
+   "x": 547.6,
+   "y": 204.0,
+   "src": "RT2-09; map turf_posts",
+   "chosen": false
+  },
+  {
+   "id": "post_cold_store",
+   "name": "the cold store turf post",
+   "kind": "turf_post",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "mon-sun",
+     "06:00",
+     "22:00"
+    ]
+   ],
+   "label_text": "Cold Store Road, the loading yard mouth",
+   "landmark": "the loading yard mouth",
+   "who_works": [
+    "one crewman each by routine (RT2-09)"
+   ],
+   "tom_can": [
+    "stand there",
+    "win the stare",
+    "retake with a man or a fight"
+   ],
+   "access": "public",
+   "x": 340.0,
+   "y": 355.6,
+   "src": "RT2-09; map turf_posts",
+   "chosen": true
+  },
+  {
+   "id": "post_landing",
+   "name": "the landing turf post",
+   "kind": "turf_post",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "mon-sun",
+     "22:00",
+     "02:00"
+    ]
+   ],
+   "label_text": "the ferry landing",
+   "landmark": "the landing's shelter",
+   "who_works": [
+    "one crewman each by routine (RT2-09)"
+   ],
+   "tom_can": [
+    "stand there",
+    "win the stare",
+    "retake with a man or a fight"
+   ],
+   "access": "public",
+   "x": 14.0,
+   "y": -6.2,
+   "src": "RT2-09; map turf_posts",
+   "chosen": true
+  },
+  {
+   "id": "pillar_box_qs",
+   "name": "the pillar box on Quay Street",
+   "kind": "pillar_box",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "mon-sun",
+     "00:00",
+     "24:00"
+    ]
+   ],
+   "label_text": "Quay Street, east side",
+   "landmark": "the red pillar box",
+   "who_works": [],
+   "tom_can": [
+    "post a letter (Realm Post)"
+   ],
+   "access": "public",
+   "x": 124.025,
+   "y": 31.5,
+   "src": "map street_furniture; timetables.json post"
+  },
+  {
+   "id": "pillar_box_north",
+   "name": "the pillar box on North Road",
+   "kind": "pillar_box",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "mon-sun",
+     "00:00",
+     "24:00"
+    ]
+   ],
+   "label_text": "North Road",
+   "landmark": "the red pillar box",
+   "who_works": [],
+   "tom_can": [
+    "post a letter"
+   ],
+   "access": "public",
+   "x": 165.725,
+   "y": 205.0,
+   "src": "map street_furniture",
+   "chosen": true
+  },
+  {
+   "id": "market_stalls_quay",
+   "name": "the Thursday market pitches on the Quay",
+   "kind": "market_pitches",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "thu",
+     "08:00",
+     "16:00"
+    ]
+   ],
+   "label_text": "the Quay, north pavement between Rinaldi's and Quay Street's foot",
+   "landmark": "the stalls on the quay's north pavement by the ginnel's mouth",
+   "who_works": [
+    "stallholders (adults)"
+   ],
+   "tom_can": [
+    "buy small goods",
+    "hear gossip",
+    "pick pockets (risk)"
+   ],
+   "access": "public",
+   "pts": [
+    [
+     66.0,
+     5.5
+    ],
+    [
+     114.0,
+     5.5
+    ]
+   ],
+   "hours_chosen": true,
+   "chosen": true,
+   "src": "2.1.6 (Thursday market); brief; map road quay_road (north pavement y 4.5 to 6.5, no doors between x 58.5 and 162)",
+   "hours_note": "The map has no market square and the ruled market is in Copper Row (off the map). A small row of pitches (4 trestles and a barrow) on the quay's open north pavement is chosen so the market is seen on the Hook; its hours follow the paper (08:00 to 16:00)."
+  },
+  {
+   "id": "bonfire_ground",
+   "name": "the waste ground behind Basin Top",
+   "kind": "waste_ground",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [],
+   "label_text": "behind the warehouses on Basin Top",
+   "landmark": "the waste ground behind the Basin Top warehouses, reached from the warehouse row",
+   "who_works": [],
+   "tom_can": [
+    "stand with the street at the bonfire (Mon 5 Nov, 18:30 to 22:00; adults only)"
+   ],
+   "access": "public",
+   "x": 440.0,
+   "y": 312.0,
+   "chosen": true,
+   "src": "2.1.6 (Bonfire Night); brief; map free ground x 290 to 480, y 302 to 320",
+   "hours_note": "No hours except the dated evening of Monday 5 November."
+  },
+  {
+   "id": "fireworks_quay",
+   "name": "the fireworks site on the quay",
+   "kind": "display_site",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [],
+   "label_text": "the Quay, by the boxing club",
+   "landmark": "the quay's edge east of Quay Street's foot",
+   "who_works": [],
+   "tom_can": [
+    "watch the display (Mon 5 Nov, 19:30 to 20:00; adults only)"
+   ],
+   "access": "public",
+   "x": 190.0,
+   "y": -6.9,
+   "chosen": true,
+   "src": "2.1.6 ('a display on the quay, adults only'); map quay edge",
+   "hours_note": "The display itself is on the quay (the blueprint); the bonfire is on the waste ground (brief): both on the evening of Monday 5 November."
+  },
+  {
+   "id": "edge_north",
+   "name": "the soft edge (north road)",
+   "kind": "soft_edge",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "mon-sun",
+     "00:00",
+     "24:00"
+    ]
+   ],
+   "label_text": "North Road at the edge of the map",
+   "landmark": "the road runs on out of the Hook",
+   "who_works": [],
+   "tom_can": [
+    "drive or walk out: the chase ends as lost at the edge (G3)",
+    "be offered the districts as fares",
+    "come back as time passed (30 game minutes out and back)"
+   ],
+   "access": "public",
+   "x": 160,
+   "y": 400,
+   "districts": [
+    {
+     "id": "copper_row",
+     "landmark": "the market hall"
+    },
+    {
+     "id": "the_exchange",
+     "landmark": "the police station and the council offices"
+    },
+    {
+     "id": "the_parade",
+     "landmark": "the Tivoli"
+    },
+    {
+     "id": "gullwing",
+     "landmark": "the Winter Rooms on the front"
+    }
+   ],
+   "road": "north_road",
+   "return_delay_game_minutes": 30,
+   "constable_hours": [
+    [
+     "mon-sun",
+     "22:00",
+     "06:00"
+    ]
+   ],
+   "src": "4.1.4; G3; map soft_edges",
+   "chosen": true,
+   "hours_note": "Delay 30 game minutes out and back = 60 real seconds at 120 s a game hour (was 30 s at 60 s). Plate range 18 m, light threshold 0.7 (RT2-16, G3)."
+  },
+  {
+   "id": "edge_west",
+   "name": "the soft edge (chapel lane)",
+   "kind": "soft_edge",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "mon-sun",
+     "00:00",
+     "24:00"
+    ]
+   ],
+   "label_text": "Chapel Lane at the edge of the map",
+   "landmark": "the road runs on out of the Hook",
+   "who_works": [],
+   "tom_can": [
+    "drive or walk out: the chase ends as lost at the edge (G3)",
+    "be offered the districts as fares",
+    "come back as time passed (30 game minutes out and back)"
+   ],
+   "access": "public",
+   "x": -80,
+   "y": 260,
+   "districts": [
+    {
+     "id": "ironside",
+     "landmark": "the retort works"
+    },
+    {
+     "id": "fairview",
+     "landmark": "Fairview chapel up the hill"
+    }
+   ],
+   "road": "chapel_lane",
+   "return_delay_game_minutes": 30,
+   "constable_hours": [
+    [
+     "mon-sun",
+     "22:00",
+     "06:00"
+    ]
+   ],
+   "src": "4.1.4; G3; map soft_edges",
+   "chosen": true,
+   "hours_note": "Delay 30 game minutes out and back = 60 real seconds at 120 s a game hour (was 30 s at 60 s). Plate range 18 m, light threshold 0.7 (RT2-16, G3)."
+  },
+  {
+   "id": "police_station",
+   "name": "the police station",
+   "kind": "off_map",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "mon-sun",
+     "00:00",
+     "24:00"
+    ]
+   ],
+   "label_text": "off the map, in the Exchange",
+   "landmark": "the police station and the council offices",
+   "who_works": [],
+   "tom_can": [
+    "reached only by custody, an ambulance or a fare out of the edge (4.3.7, 4.3.8)"
+   ],
+   "access": "hours",
+   "district": "the_exchange",
+   "via": "edge_north",
+   "chosen": false,
+   "src": "atlas-01 E2 (the Exchange); 4.3.7 (custody is under 2 real minutes of play, not walked)",
+   "hours_note": "Custody is not walked; under 2 real minutes of play (4.3.7)."
+  },
+  {
+   "id": "infirmary",
+   "name": "the Infirmary",
+   "kind": "off_map",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "mon-sun",
+     "00:00",
+     "24:00"
+    ]
+   ],
+   "label_text": "off the map, out along the west road",
+   "landmark": "the lit porch out along the west road",
+   "who_works": [],
+   "tom_can": [
+    "reached only by custody, an ambulance or a fare out of the edge (4.3.7, 4.3.8)"
+   ],
+   "access": "hours",
+   "district": "the_exchange",
+   "via": "edge_north",
+   "chosen": true,
+   "src": "prototype (out along the west road); 4.3.8",
+   "hours_note": "Hospital costs days, never money (4.3.8)."
+  },
+  {
+   "id": "licensing",
+   "name": "the council's licensing committee",
+   "kind": "off_map",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "thu",
+     "10:00",
+     "16:00"
+    ]
+   ],
+   "label_text": "off the map, the council offices",
+   "landmark": "the council's licensing committee",
+   "who_works": [],
+   "tom_can": [
+    "a letter's hearing; not visited"
+   ],
+   "access": "hours",
+   "district": "the_exchange",
+   "via": "edge_north",
+   "chosen": true,
+   "src": "RT2-18",
+   "hours_note": "Meets Thursday 15 Nov (paper issue_10); hours chosen."
+  },
+  {
+   "id": "copper_row_market",
+   "name": "the Copper Row market",
+   "kind": "off_map",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [
+    [
+     "thu",
+     "08:00",
+     "16:00"
+    ]
+   ],
+   "label_text": "Copper Row, off the map",
+   "landmark": "over the bridge, the stalls under the clock; the market hall",
+   "who_works": [],
+   "tom_can": [
+    "a fare out of the edge on Thursdays"
+   ],
+   "access": "public",
+   "district": "copper_row",
+   "via": "edge_north",
+   "src": "2.1.6 (Thursday market in Copper Row); letters-and-print.json issue_02 (says Tuesday, Friday, Saturday: lost)",
+   "hours_note": "Thursday 08:00 to 16:00. Its trade empties the Hook's shops: a third off the shops' daytime crowd bands (G9)."
+  },
+  {
+   "id": "ropewalk_park",
+   "name": "Ropewalk Park",
+   "kind": "off_map",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [],
+   "label_text": "off the map",
+   "landmark": "Hookside Rovers' ground",
+   "who_works": [],
+   "tom_can": [
+    "a fare to the match on a home Saturday"
+   ],
+   "access": "public",
+   "district": null,
+   "via": "edge_north",
+   "src": "letters-and-print.json brands (ground off the map)",
+   "chosen": true,
+   "hours_note": "Home matches Saturday, kick-off 15:00 (timetables.json)."
+  },
+  {
+   "id": "drill_hall",
+   "name": "the Drill Hall",
+   "kind": "off_map",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [],
+   "label_text": "off the map",
+   "landmark": "the hall where the wrestling and the boxing nights are held",
+   "who_works": [],
+   "tom_can": [
+    "a fare out for a night's bill"
+   ],
+   "access": "public",
+   "district": null,
+   "via": "edge_north",
+   "src": "letters-and-print.json (venue only)",
+   "chosen": true
+  },
+  {
+   "id": "the_exchange_march",
+   "name": "the Exchange (march assembly)",
+   "kind": "off_map",
+   "plot": null,
+   "doors": [],
+   "owner": null,
+   "hours": [],
+   "label_text": "off the map, the Exchange",
+   "landmark": "where the poll-tax march assembles at 11:00 on Sat 10 Nov",
+   "who_works": [],
+   "tom_can": [],
+   "access": "public",
+   "district": "the_exchange",
+   "via": "edge_north",
+   "src": "letters-and-print.json issue_09 (the Exchange)",
+   "chosen": true
+  }
+ ],
+ "fronts": [
+  {
+   "front_id": "front_launderette",
+   "place": "launderette",
+   "owner": "the Washeteria's keeper",
+   "man": "a crewman of Tom's chosen at rung 3 (person_ref)",
+   "person_ref": true,
+   "round_day": "fri",
+   "payments": "wash of night money through the till: £60 a week a front (ECONOMY-DESIGN 2.7.3 line)",
+   "src": "2.17; economy"
+  },
+  {
+   "front_id": "front_caff",
+   "place": "caff",
+   "owner": "Grace Rinaldi",
+   "man": "a crewman of Tom's (person_ref)",
+   "person_ref": true,
+   "round_day": "fri",
+   "payments": "as the launderette: £60 a week a front",
+   "src": "2.17; economy"
+  },
+  {
+   "front_id": "front_empty_unit",
+   "place": "empty_unit",
+   "owner": "Agar & Co until let",
+   "man": "a crewman of Tom's (person_ref)",
+   "person_ref": true,
+   "round_day": "fri",
+   "payments": "as above, once let",
+   "src": "2.17"
+  }
+ ],
+ "ranks": [
+  {
+   "rank_id": "rank_mickeys",
+   "x": 122.8,
+   "y": 12.0,
+   "holder": "firm",
+   "win_rule": "his from the start",
+   "account_order": null
+  },
+  {
+   "rank_id": "rank_ferry",
+   "x": 14.0,
+   "y": -3.4,
+   "holder": null,
+   "win_rule": "a car on the board five days in a fortnight, or a word with the holder",
+   "account_order": null
+  },
+  {
+   "rank_id": "rank_north",
+   "x": 157.2,
+   "y": 385.0,
+   "holder": null,
+   "win_rule": "as the ferry rank",
+   "account_order": null
+  }
+ ],
+ "accounts": [
+  {
+   "order": 1,
+   "account": "the cold-store contract",
+   "place": "cold_stores",
+   "opens": "packing shift met on time on five mornings in one game week with at least four cars (rung 3); lost after three missed mornings in a week; won again once",
+   "src": "2.15.2"
+  },
+  {
+   "order": 2,
+   "account": "the Harbour Board's late men",
+   "place": "harbour_board",
+   "opens": "after the contract",
+   "src": "2.15.2"
+  },
+  {
+   "order": 3,
+   "account": "a solicitor's office",
+   "place": "solicitor_office",
+   "opens": "after the Harbour Board's late men; the office is off the map (Copper Row)",
+   "src": "2.15.2"
+  }
+ ],
+ "holdups": [
+  {
+   "place": "laveracks",
+   "till": true,
+   "temper": "chosen: quick",
+   "src": "1.6.15; shop-interiors.json; economy PRICES-WAGES-1990 section 5 (weekly takings)",
+   "weekly_takings_gbp": 1100,
+   "hour_shape": "till_hour_shape"
+  },
+  {
+   "place": "ritas",
+   "till": true,
+   "temper": "chosen: wary",
+   "src": "1.6.15; shop-interiors.json; economy PRICES-WAGES-1990 section 5 (weekly takings)",
+   "weekly_takings_gbp": 700,
+   "hour_shape": "till_hour_shape"
+  },
+  {
+   "place": "grocer",
+   "till": true,
+   "temper": "chosen: steady",
+   "src": "1.6.15; shop-interiors.json; economy PRICES-WAGES-1990 section 5 (weekly takings)",
+   "weekly_takings_gbp": 1500,
+   "hour_shape": "till_hour_shape"
+  },
+  {
+   "place": "newsagent",
+   "till": true,
+   "temper": "chosen: steady",
+   "src": "1.6.15; shop-interiors.json; economy PRICES-WAGES-1990 section 5 (weekly takings)",
+   "weekly_takings_gbp": 1900,
+   "hour_shape": "till_hour_shape"
+  },
+  {
+   "place": "ironmonger",
+   "till": true,
+   "temper": "chosen: slow to anger",
+   "src": "1.6.15; shop-interiors.json; economy PRICES-WAGES-1990 section 5 (weekly takings)",
+   "weekly_takings_gbp": 650,
+   "hour_shape": "till_hour_shape"
+  },
+  {
+   "place": "tea_room",
+   "till": true,
+   "temper": "chosen: timid",
+   "src": "1.6.15; shop-interiors.json; economy PRICES-WAGES-1990 section 5 (weekly takings)",
+   "weekly_takings_gbp": 380,
+   "hour_shape": "till_hour_shape"
+  },
+  {
+   "place": "launderette",
+   "till": true,
+   "temper": "chosen: steady",
+   "src": "1.6.15; shop-interiors.json; economy PRICES-WAGES-1990 section 5 (weekly takings)",
+   "weekly_takings_gbp": 420,
+   "hour_shape": "till_hour_shape"
+  },
+  {
+   "place": "caff",
+   "till": true,
+   "temper": "chosen: stubborn",
+   "src": "1.6.15; shop-interiors.json; economy PRICES-WAGES-1990 section 5 (weekly takings)",
+   "weekly_takings_gbp": 750,
+   "hour_shape": "till_hour_shape"
+  },
+  {
+   "place": "chip_shop",
+   "till": true,
+   "temper": "chosen: quick",
+   "src": "1.6.15; shop-interiors.json; economy PRICES-WAGES-1990 section 5 (weekly takings)",
+   "weekly_takings_gbp": 900,
+   "hour_shape": "till_hour_shape"
+  },
+  {
+   "place": "waynes_pawn",
+   "till": true,
+   "temper": "chosen: wary",
+   "src": "1.6.15; shop-interiors.json; economy PRICES-WAGES-1990 section 5 (weekly takings)",
+   "weekly_takings_gbp": 700,
+   "hour_shape": "till_hour_shape"
+  }
+ ],
+ "till_hour_shape": {
+  "note": "Share of a day's takings by hour band, chosen to follow the busy bands of DEFINITIONS (08:00 to 09:30, 12:00 to 14:00, 16:30 to 18:00): the till at the moment of a hold-up holds a day's takings times the share so far, less banked amounts. Weekly figures are the economy file's (INFERRED there).",
+  "bands": [
+   [
+    "06:00",
+    "09:00",
+    0.2
+   ],
+   [
+    "09:00",
+    "12:00",
+    0.2
+   ],
+   [
+    "12:00",
+    "14:00",
+    0.25
+   ],
+   [
+    "14:00",
+    "16:30",
+    0.15
+   ],
+   [
+    "16:30",
+    "18:00",
+    0.2
+   ]
+  ],
+  "chosen": true,
+  "sum": 1.0,
+  "banking": "the keeper banks at 17:30 (chosen), so after closing there is only the float (about £20, chosen)"
+ },
+ "holdup_pay_window": {
+  "day": "fri",
+  "what": "the cold stores' wages are paid out in cash from the office",
+  "clock": [
+   "12:00",
+   "13:00"
+  ],
+  "courier": {
+   "name": "the wages courier from the bank, a named man in the people file",
+   "person_ref": true
+  },
+  "courier_arrives": "10:30 by the dock road",
+  "chosen": true,
+  "src": "1.6.15; PRICES-WAGES-1990 (dockers and cold-store hands paid Friday)"
+ }
+}

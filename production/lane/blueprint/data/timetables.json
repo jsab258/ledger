@@ -1,0 +1,2104 @@
+{
+ "file": "timetables.json",
+ "version": "2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "places.json (shop hours live there; this file refers by id)",
+  "DEFINITIONS-2026-11-21.md G10, G9, G5, G3, RT2-09, CLK-06",
+  "BLUEPRINT-02 2.1.6, 2.7, 2.15.2, 2.17, RT2-09; BLUEPRINT-04 4.2.1, 4.2.3, 4.3.3, 4.3.6; BLUEPRINT-07 7.16",
+  "letters-and-print.json (calendar, brands, paper)",
+  "production/research/shop-hours-1990/NOTE-2026-09-29.md",
+  "economy/ECONOMY-DESIGN-2026-11-26.md; economy/PRICES-WAGES-1990.md",
+  "sounds.json (milk float)",
+  "map.json (police_points, turf_posts, street_furniture)"
+ ],
+ "open_points": [
+  "Market: the paper (letters-and-print.json issue_02) prints the Copper Row market on Tuesday, Friday and Saturday; the ruled calendar (2.1.6) and G9 say Thursday. Thursday wins; fix the paper line. The map has no market square: the ruled market stays in Copper Row (off the map) and a small row of pitches is chosen for the quay road's north pavement (places.json market_stalls_quay).",
+  "Bonfire Night: the blueprint says a display on the quay, adults only; the brief wants a bonfire on waste ground. Both are built on Monday 5 Nov: bonfire 18:30 to 22:00 on the waste ground behind Basin Top (chosen, free ground), display 19:30 to 20:00 on the quay.",
+  "Remembrance Sunday: 11 Nov 1990 is a Sunday (checked). Kept at the chapel, service 10:30, silence 11:00 (times chosen).",
+  "Christmas lies outside the seven-week calendar (it ends Sun 2 Dec); Christmas Day, Tuesday 25 Dec 1990, applies only once the clock has run on after the ending. Its rules are chosen.",
+  "Match Saturdays follow the paper's results: home 27 Oct, 10 Nov, 1 Dec; away 20 Oct, 3 Nov, 17 Nov and (chosen) 24 Nov. The paper has Northwold Rangers at Ropewalk Park on both 10 Nov and 1 Dec, and Easterby United at home on 13 Oct; the 24 Nov ground is not stated. G9's doubling 'at 15:00 and 17:00 for half an hour' is read as the half hours before kick-off and after the final whistle (chosen). The paper should state 24 Nov's ground.",
+  "Cold-store shift: the brief's 17:30 and the blueprint's half past five mornings are both kept (day shift leaves 17:30; night shift leaves 05:30). Which one is the 'packing shift' fare of 3.x needs the keeper's word; the contract test (2.15.2) uses the morning shift.",
+  "Drivers: BLUEPRINT-02 2.7 says a £90 weekly wage per driver; the 24 Nov economy choice is half of each car's takings (about £65 to £125 a week). The economy wins; the wages_dock_cold row is for dockers and cold-store hands only. The Friday reckoning at the counter is chosen.",
+  "Rent: £18 every Friday to Mr Leonard Askew of Agar & Co's agents at Mickey's counter, time 11:00 to 12:00 chosen. The story frame's Dawn Pybus (running for the rent collector) is not used (letters-and-print.json open point).",
+  "Early closing: none built (see shop_hours.early_closing_note); shop-hours-1990 found Thursday as Hull's early-closing day but no 1990 source.",
+  "Beat: G5's cycle of about 7 real minutes is real time, so at 2 s a game minute a 22:00 to 06:00 night holds about 2.4 cycles (about 200 game minutes each). The doors-in-sight standards of G5 still hold (4 and 7.5 real minutes).",
+  "Ferry: half-hourly until 17:30 and the last crossing from the Hook at 23:00 Monday to Saturday are the paper's; the minutes (:10 and :40 arrivals, away five minutes later) and the Sunday service are chosen. Tom's 15:40 arrival on Monday 15 Oct is a regular :40 arrival.",
+  "Bin day (Wednesday), post, paper-delivery and bus times, milk float's route, the second post: chosen (no source). Milk float 05:30 to 07:30 is sounds.json's.",
+  "Dated paper events are fixed in print (the paper's dates do not move with story state): the jumble sale, meetings, gas main, berths, the dance. Items marked story_check (customs seizure 31 Oct, licensing 15 Nov, dock gate chaining 1 Dec) print only if their state holds.",
+  "Clock recomputations are in real_time (old figures at 60 s a game hour, new at 120 s)."
+ ],
+ "calendar_span": {
+  "from": "1990-10-15",
+  "to": "1990-12-02",
+  "days": 49,
+  "weeks": 7,
+  "acts": {
+   "I": "week 1, 15 to 21 Oct",
+   "II": "weeks 2 to 6, 22 Oct to 25 Nov",
+   "III": "week 7, 26 Nov to 2 Dec"
+  },
+  "src": "CLK-06; letters-and-print.json calendar"
+ },
+ "shop_hours": {
+  "rule": "Hours are in places.json only (place id, days, from, to, back room). This block lists, by id, which places open on which weekday and which are shut all day: no times are repeated here.",
+  "early_closing_day": null,
+  "early_closing_note": "None: G10 and 4.3.3 give Monday to Saturday 09:00 to 17:30. Thursday is market day instead (see market).",
+  "open_on": {
+   "mon": [
+    "laveracks",
+    "ritas",
+    "launderette",
+    "grocer",
+    "chandlery",
+    "newsagent",
+    "ironmonger",
+    "tea_room",
+    "snooker_hall",
+    "caff",
+    "metcalfes",
+    "second_hand",
+    "widow_base",
+    "boxing_club",
+    "customs",
+    "harbour_board",
+    "dents_warehouses",
+    "cold_stores",
+    "car_lot",
+    "garage",
+    "agar_base",
+    "iveson_yard",
+    "waynes_pawn",
+    "chip_shop",
+    "chapel",
+    "barber",
+    "doctors",
+    "allotments",
+    "pigeon_loft",
+    "tea_stall"
+   ],
+   "tue": [
+    "laveracks",
+    "ritas",
+    "launderette",
+    "grocer",
+    "chandlery",
+    "newsagent",
+    "ironmonger",
+    "tea_room",
+    "snooker_hall",
+    "caff",
+    "metcalfes",
+    "second_hand",
+    "widow_base",
+    "customs",
+    "harbour_board",
+    "dents_warehouses",
+    "cold_stores",
+    "car_lot",
+    "garage",
+    "agar_base",
+    "iveson_yard",
+    "waynes_pawn",
+    "chip_shop",
+    "chapel",
+    "chapel_hall",
+    "barber",
+    "doctors",
+    "allotments",
+    "pigeon_loft",
+    "tea_stall"
+   ],
+   "wed": [
+    "laveracks",
+    "ritas",
+    "launderette",
+    "grocer",
+    "chandlery",
+    "newsagent",
+    "ironmonger",
+    "tea_room",
+    "snooker_hall",
+    "caff",
+    "metcalfes",
+    "second_hand",
+    "widow_base",
+    "boxing_club",
+    "customs",
+    "harbour_board",
+    "dents_warehouses",
+    "cold_stores",
+    "car_lot",
+    "garage",
+    "agar_base",
+    "iveson_yard",
+    "waynes_pawn",
+    "chip_shop",
+    "chapel",
+    "barber",
+    "doctors",
+    "allotments",
+    "pigeon_loft",
+    "tea_stall"
+   ],
+   "thu": [
+    "laveracks",
+    "ritas",
+    "launderette",
+    "grocer",
+    "chandlery",
+    "newsagent",
+    "ironmonger",
+    "tea_room",
+    "snooker_hall",
+    "caff",
+    "metcalfes",
+    "second_hand",
+    "widow_base",
+    "customs",
+    "harbour_board",
+    "dents_warehouses",
+    "cold_stores",
+    "car_lot",
+    "garage",
+    "agar_base",
+    "iveson_yard",
+    "waynes_pawn",
+    "chip_shop",
+    "chapel",
+    "barber",
+    "doctors",
+    "allotments",
+    "pigeon_loft",
+    "tea_stall"
+   ],
+   "fri": [
+    "laveracks",
+    "ritas",
+    "launderette",
+    "grocer",
+    "chandlery",
+    "newsagent",
+    "ironmonger",
+    "tea_room",
+    "snooker_hall",
+    "caff",
+    "metcalfes",
+    "second_hand",
+    "widow_base",
+    "boxing_club",
+    "customs",
+    "harbour_board",
+    "dents_warehouses",
+    "cold_stores",
+    "car_lot",
+    "garage",
+    "agar_base",
+    "iveson_yard",
+    "waynes_pawn",
+    "chip_shop",
+    "chapel",
+    "barber",
+    "doctors",
+    "allotments",
+    "pigeon_loft",
+    "tea_stall"
+   ],
+   "sat": [
+    "laveracks",
+    "ritas",
+    "launderette",
+    "grocer",
+    "chandlery",
+    "newsagent",
+    "ironmonger",
+    "tea_room",
+    "snooker_hall",
+    "caff",
+    "metcalfes",
+    "second_hand",
+    "widow_base",
+    "boxing_club",
+    "cold_stores",
+    "car_lot",
+    "garage",
+    "iveson_yard",
+    "waynes_pawn",
+    "chip_shop",
+    "chapel",
+    "barber",
+    "doctors",
+    "allotments",
+    "pigeon_loft",
+    "tea_stall"
+   ],
+   "sun": [
+    "launderette",
+    "newsagent",
+    "caff",
+    "chapel",
+    "doctors",
+    "allotments",
+    "pigeon_loft",
+    "tea_stall"
+   ]
+  },
+  "shut_all_day": {
+   "mon": [
+    "chapel_hall"
+   ],
+   "tue": [
+    "boxing_club"
+   ],
+   "wed": [
+    "chapel_hall"
+   ],
+   "thu": [
+    "boxing_club",
+    "chapel_hall"
+   ],
+   "fri": [
+    "chapel_hall"
+   ],
+   "sat": [
+    "customs",
+    "harbour_board",
+    "dents_warehouses",
+    "agar_base",
+    "chapel_hall"
+   ],
+   "sun": [
+    "laveracks",
+    "ritas",
+    "grocer",
+    "chandlery",
+    "ironmonger",
+    "tea_room",
+    "snooker_hall",
+    "metcalfes",
+    "second_hand",
+    "widow_base",
+    "boxing_club",
+    "customs",
+    "harbour_board",
+    "dents_warehouses",
+    "cold_stores",
+    "car_lot",
+    "garage",
+    "agar_base",
+    "iveson_yard",
+    "waynes_pawn",
+    "chip_shop",
+    "chapel_hall",
+    "barber"
+   ]
+  },
+  "sunday_trading": "only the newsagent, caff (chosen), launderette, boarding house, tea stall and the places that run all night; from Sun 11 Nov the chip shop in the evening (paper issue_09)",
+  "check_open_with_people_at_2300": {
+   "mon": [
+    "mickeys",
+    "boarding_house",
+    "chip_shop",
+    "ferry_landing",
+    "tea_stall"
+   ],
+   "tue": [
+    "mickeys",
+    "boarding_house",
+    "chip_shop",
+    "ferry_landing",
+    "tea_stall"
+   ],
+   "wed": [
+    "mickeys",
+    "boarding_house",
+    "chip_shop",
+    "ferry_landing",
+    "tea_stall"
+   ],
+   "thu": [
+    "mickeys",
+    "boarding_house",
+    "chip_shop",
+    "ferry_landing",
+    "tea_stall"
+   ],
+   "fri": [
+    "mickeys",
+    "boarding_house",
+    "chip_shop",
+    "ferry_landing",
+    "tea_stall"
+   ],
+   "sat": [
+    "mickeys",
+    "boarding_house",
+    "chip_shop",
+    "ferry_landing",
+    "tea_stall"
+   ],
+   "sun": [
+    "mickeys",
+    "boarding_house",
+    "ferry_landing",
+    "tea_stall"
+   ]
+  },
+  "src": "G10; places.json"
+ },
+ "shifts": [
+  {
+   "id": "shift_dock_passing",
+   "who": "dock workers (adults, unnamed crowd)",
+   "days": "mon-sat",
+   "start": "05:30",
+   "end": "07:00",
+   "place": "dock_gate",
+   "route": "along the Quay and Quay Street to the dock gate; the breakfast trade at the caff from 06:00",
+   "crowd": "5 to 8 people on the parade front, 10 to 18 on the quay road by the fish dock",
+   "real_time": "1.5 game hours = 3 real minutes (was 1.5)",
+   "src": "G9; 2.1.x; BLUEPRINT-02 2.1.4",
+   "note": "Sunday: none (chosen)"
+  },
+  {
+   "id": "shift_cold_day",
+   "who": "cold-store hands, day packing shift",
+   "days": "mon-fri",
+   "start": "06:00",
+   "end": "17:30",
+   "place": "cold_stores",
+   "leaves": "17:30",
+   "fare": "the packing shift leaves at 17:30 (the brief)",
+   "chosen": true,
+   "src": "brief; 4.2.2; prototype way.js (shift change 05:30)"
+  },
+  {
+   "id": "shift_cold_night",
+   "who": "cold-store hands, night packing shift",
+   "days": "sun-thu nights",
+   "start": "18:00",
+   "end": "05:30",
+   "place": "cold_stores",
+   "leaves": "05:30 the next morning (Monday to Friday mornings)",
+   "fare": "the packing shift at half past five (3.x fare); met on time on five mornings in one game week for the contract (2.15.2)",
+   "chosen": true,
+   "src": "3.x fare; 2.15.2; 4.2.2"
+  },
+  {
+   "id": "shift_cold_saturday",
+   "who": "cold-store hands, Saturday morning",
+   "days": "sat",
+   "start": "06:00",
+   "end": "13:00",
+   "place": "cold_stores",
+   "chosen": true,
+   "src": "places.json cold_stores hours"
+  },
+  {
+   "id": "shift_driver_day",
+   "who": "day driver (Kevin Needham)",
+   "days": "mon-sun",
+   "start": "06:00",
+   "end": "18:00",
+   "place": "mickeys",
+   "person_ref": true,
+   "takings": "settle at shift end: the driver keeps half, the firm half to the book (the 24 Nov economy choice, replacing the £90 weekly wage of 2.7)",
+   "chosen": true,
+   "src": "BLUEPRINT-02 2.15 (Kevin days, Terry nights); ECONOMY-DESIGN choice 1"
+  },
+  {
+   "id": "shift_driver_night",
+   "who": "night driver (Terry Hodgson)",
+   "days": "mon-sun",
+   "start": "18:00",
+   "end": "06:00",
+   "place": "mickeys",
+   "person_ref": true,
+   "chosen": true,
+   "src": "BLUEPRINT-02 2.15; hours chosen",
+   "note": "also the man on the radio set in the car between fares"
+  },
+  {
+   "id": "shift_radio_day",
+   "who": "radio controller (Pauline)",
+   "days": "mon-sun",
+   "start": "07:00",
+   "end": "19:00",
+   "place": "mickeys",
+   "person_ref": true,
+   "chosen": true,
+   "src": "3.4.3; hook-cast.json (older)",
+   "note": "19:00 to 07:00 the radio is manned by the night driver on the set and, from rung 3, the night desk man"
+  },
+  {
+   "id": "shift_counter",
+   "who": "counter and fare book (Sheila)",
+   "days": "mon-sun",
+   "start": "07:00",
+   "end": "22:00",
+   "place": "mickeys",
+   "person_ref": true,
+   "chosen": true,
+   "src": "places.json mickeys counter_hours"
+  },
+  {
+   "id": "shift_beat_night",
+   "who": "the beat constable",
+   "days": "mon-sun",
+   "start": "22:00",
+   "end": "06:00",
+   "place": "quay_road",
+   "beat": "beat",
+   "src": "G5",
+   "note": "a second constable half a cycle behind when the street is on edge (section 19)"
+  },
+  {
+   "id": "shift_beat_day",
+   "who": "the beat constable (day)",
+   "days": "mon-sun",
+   "start": "06:00",
+   "end": "22:00",
+   "place": "quay_street",
+   "route": "walks Quay Street and the north road to the cold-store road and back (G5)",
+   "src": "G5"
+  },
+  {
+   "id": "shift_shopkeepers",
+   "who": "shopkeepers and staff",
+   "days": "by places.json hours",
+   "place": "(each shop)",
+   "note": "each keeper opens 15 minutes before and closes 15 minutes after the places.json hours (chosen); not repeated here",
+   "chosen": true,
+   "src": "FIT-G10"
+  }
+ ],
+ "beat": {
+  "id": "beat",
+  "hours": "22:00 to 06:00",
+  "pace_m_per_s": 1.1,
+  "points": [
+   "beat_mickeys_door",
+   "beat_yards_lane",
+   "beat_landing"
+  ],
+  "short_round": {
+   "length_m": 200,
+   "route": [
+    "quay_street foot",
+    "up Quay Street past Mickey's (beat_mickeys_door tried)",
+    "round the bend behind the parade to the yards' lane (beat_yards_lane)",
+    "down the yards' lane to the quay road",
+    "back to Quay Street's foot"
+   ],
+   "real_seconds": 180
+  },
+  "landing_leg": {
+   "length_m": 240,
+   "route": [
+    "along the quay road to the landing (beat_landing looked over for 15 s)",
+    "back"
+   ],
+   "real_seconds": 216
+  },
+  "cycle": [
+   "short_round",
+   "landing_leg"
+  ],
+  "cycle_real_minutes": 6.6,
+  "cycle_game_minutes": 198,
+  "note": "G5 gives the cycle in real minutes (his pace is in real time), so it does not move with the clock: about 7 real minutes, which at 2 real seconds a game minute is about 200 game minutes, so a night (480 game minutes) holds about 2.4 cycles. Mickey's door is in his sight at least every 4 real minutes, the yards' lane and the landing at least every 7.5; with the street on edge 2 and 4.",
+  "src": "G5; map police_points",
+  "unchanged_by_clock": true
+ },
+ "ferry": {
+  "name": "the Meridian Ferry",
+  "winter_service": true,
+  "landing": "ferry_landing",
+  "rank": "rank_ferry",
+  "mon_sat": {
+   "arrivals_at_hook": [
+    "06:40",
+    "07:10",
+    "07:40",
+    "08:10",
+    "08:40",
+    "09:10",
+    "09:40",
+    "10:10",
+    "10:40",
+    "11:10",
+    "11:40",
+    "12:10",
+    "12:40",
+    "13:10",
+    "13:40",
+    "14:10",
+    "14:40",
+    "15:10",
+    "15:40",
+    "16:10",
+    "16:40",
+    "17:10",
+    "17:40",
+    "18:40",
+    "19:40",
+    "20:40",
+    "21:40",
+    "22:40"
+   ],
+   "departures_from_hook": [
+    "06:45",
+    "07:15",
+    "07:45",
+    "08:15",
+    "08:45",
+    "09:15",
+    "09:45",
+    "10:15",
+    "10:45",
+    "11:15",
+    "11:45",
+    "12:15",
+    "12:45",
+    "13:15",
+    "13:45",
+    "14:15",
+    "14:45",
+    "15:15",
+    "15:45",
+    "16:15",
+    "16:45",
+    "17:15",
+    "18:00",
+    "19:00",
+    "20:00",
+    "21:00",
+    "22:00",
+    "23:00"
+   ],
+   "half_hourly_until": "17:30",
+   "then": "hourly",
+   "last_crossing_from_hook": "23:00",
+   "note": "The paper (issue_04 and issue_12): winter service half-hourly until 5.30 pm, the last crossing from the Hook at 11.00 pm Monday to Saturday. Exact minutes chosen: arrivals at :10 and :40, away five minutes later; after 17:30 arrivals at :40 and away at the next hour."
+  },
+  "sun": {
+   "arrivals_at_hook": [
+    "10:40",
+    "13:40",
+    "16:40",
+    "19:40"
+   ],
+   "departures_from_hook": [
+    "11:00",
+    "14:00",
+    "17:00",
+    "20:00"
+   ],
+   "chosen": true,
+   "note": "Sunday service chosen (the paper gives Monday to Saturday only); last Sunday crossing 20:00."
+  },
+  "crossing_game_minutes": 20,
+  "turnaround_game_minutes": 5,
+  "real_time": "a crossing's 20 game minutes is 40 real seconds at 120 s a game hour (was 20 s at 60 s); the 5-minute turnaround is 10 real seconds",
+  "tom_arrival": {
+   "date": "1990-10-15",
+   "weekday": "mon",
+   "time": "15:40",
+   "place": "ferry_landing",
+   "src": "4.2.1 (about twenty to four on Monday 15 October)",
+   "note": "the 15:40 is the half-hourly :40 arrival; the 20 s skippable shot, control at 0:20"
+  },
+  "night": {
+   "landing_window": [
+    [
+     "mon-sun",
+     "22:00",
+     "01:00"
+    ]
+   ],
+   "last_ferry_lodger": "a lodger takes the 23:00 (3.x fare 'a lodger for the last ferry')",
+   "turf_post": "post_landing 22:00 to 02:00"
+  },
+  "src": "4.2.1; G10; paper issues 04 and 12; chosen minutes",
+  "chosen": true
+ },
+ "market": {
+  "days": "thu",
+  "place": "copper_row_market",
+  "on_map": "market_stalls_quay",
+  "start": "08:00",
+  "end": "16:00",
+  "effect": {
+   "shops_daytime_multiplier": 0.67,
+   "note": "G9: Thursday's market takes a third off the shops' daytime bands; Quay Street's traders are away at Copper Row"
+  },
+  "stalls_on_the_hook": {
+   "pitches": "4 trestles and a barrow (a fish stall, a vegetable barrow, a crockery trestle, a hardware barrow)",
+   "where": "the quay road's north pavement between Rinaldi's and Quay Street's foot (x 66 to 114, y 5.5)",
+   "chosen": true
+  },
+  "src": "2.1.6; G9; brief; the paper (issue_02: Tuesday, Friday, Saturday) loses",
+  "real_time": "8 game hours = 16 real minutes",
+  "chosen": true
+ },
+ "match": {
+  "club": "Hookside Rovers",
+  "full_name": "Hookside Rovers Football Club",
+  "league": "the Eastern Coast League",
+  "colours": "red and white hoops",
+  "ground": "ropewalk_park",
+  "day": "sat",
+  "kick_off": "15:00",
+  "src": "letters-and-print.json brands (club); G9; 2.1.6",
+  "home": {
+   "crowd": "adult supporters walk out from the quay by the ginnel and the north road from 14:15 and are on the street again 17:00 to 17:30",
+   "going": [
+    "14:30",
+    "15:00"
+   ],
+   "returning": [
+    "17:00",
+    "17:30"
+   ],
+   "street_multiplier": 2.0,
+   "src_note": "G9: Saturday's match doubles the street at 15:00 and 17:00 for half an hour; read as the half hours before kick-off and after the final whistle (chosen reading)",
+   "chosen": true,
+   "real_time": "each half hour is 1 real minute at 120 s a game hour (was 30 s)"
+  },
+  "away": {
+   "street_multiplier": 1.0,
+   "note": "a few supporters leave on the 12:30 coach from the ferry rank (chosen); the result is chalked on the caff's board by 17:30 (open to 22:00 on Saturdays)",
+   "coach_leaves": "12:30",
+   "chosen": true
+  },
+  "fixtures": [
+   {
+    "date": "1990-10-20",
+    "weekday": "sat",
+    "home_away": "away",
+    "opponent": "Thornwick Town",
+    "result_in_print": "lost 0-2 (paper 26 Oct)",
+    "ground": null,
+    "kick_off": "15:00",
+    "chosen": false
+   },
+   {
+    "date": "1990-10-27",
+    "weekday": "sat",
+    "home_away": "home",
+    "opponent": "Fenby Albion",
+    "result_in_print": "won 2-0 (paper 30 Oct)",
+    "ground": "Ropewalk Park (off the map)",
+    "kick_off": "15:00",
+    "chosen": false
+   },
+   {
+    "date": "1990-11-03",
+    "weekday": "sat",
+    "home_away": "away",
+    "opponent": "Saltmarsh Athletic",
+    "result_in_print": "lost 1-3 (paper 6 Nov)",
+    "ground": null,
+    "kick_off": "15:00",
+    "chosen": false
+   },
+   {
+    "date": "1990-11-10",
+    "weekday": "sat",
+    "home_away": "home",
+    "opponent": "Northwold Rangers",
+    "result_in_print": "won 3-1, first home win since September (paper 13 Nov)",
+    "ground": "Ropewalk Park (off the map)",
+    "kick_off": "15:00",
+    "chosen": false
+   },
+   {
+    "date": "1990-11-17",
+    "weekday": "sat",
+    "home_away": "away",
+    "opponent": "Fenby Albion",
+    "result_in_print": "lost 0-1 (paper 20 Nov)",
+    "ground": null,
+    "kick_off": "15:00",
+    "chosen": false
+   },
+   {
+    "date": "1990-11-24",
+    "weekday": "sat",
+    "home_away": "away",
+    "opponent": "Easterby United",
+    "result_in_print": "won 2-0 (paper 27 Nov says 'on Saturday', ground not stated: away chosen as the return of the home game of 13 Oct)",
+    "ground": null,
+    "kick_off": "15:00",
+    "chosen": true
+   },
+   {
+    "date": "1990-12-01",
+    "weekday": "sat",
+    "home_away": "home",
+    "opponent": "Northwold Rangers",
+    "result_in_print": "kick-off 3 pm (paper 30 Nov)",
+    "ground": "Ropewalk Park (off the map)",
+    "kick_off": "15:00",
+    "chosen": false
+   }
+  ]
+ },
+ "special_days": [
+  {
+   "id": "bonfire_night",
+   "date": "1990-11-05",
+   "weekday": "mon",
+   "week": 4,
+   "events": [
+    "bonfire_night_bonfire",
+    "bonfire_night_display"
+   ],
+   "adults_only": true,
+   "chosen": "bonfire on the waste ground behind Basin Top; the blueprint's display on the quay stays; both Monday evening"
+  },
+  {
+   "id": "remembrance_sunday",
+   "date": "1990-11-11",
+   "weekday": "sun",
+   "week": 4,
+   "events": [
+    "remembrance_sunday"
+   ],
+   "check": "11 Nov 1990 is a Sunday (checked with Python's datetime)"
+  },
+  {
+   "id": "christmas_day",
+   "date": "1990-12-25",
+   "weekday": "tue",
+   "outside_seven_week_calendar": true,
+   "note": "The seven-week calendar runs Mon 15 Oct to Sun 2 Dec 1990 (49 days) and ends before Christmas. After the ending the clock runs on and the town repeats its ordinary weeks with no special days beyond Christmas Day (2.1.6; 7.x). Christmas Day (Tuesday 25 Dec 1990): all shops shut (places.json hours do not apply), the caff, the chip shop and the launderette shut (chosen), the chapel service 10:30, Mickey's office, the radio, Regent House, the tea stall and the landing window as ordinary, no ferry after 11:00 (chosen), no post, no milk float after 08:00 (chosen), no bin lorry, no paper; the street quiet (G9 band halved, chosen). No gifts mechanic, no children.",
+   "chosen": true,
+   "src": "2.1.6"
+  }
+ ],
+ "turf_posts": [
+  {
+   "post": "post_dock_gate",
+   "place": "dock_gate",
+   "x": 547.6,
+   "y": 204.0,
+   "hours": [
+    [
+     "mon-sun",
+     "06:00",
+     "22:00"
+    ]
+   ],
+   "holder_at_start": null,
+   "src": "RT2-09; map turf_posts"
+  },
+  {
+   "post": "post_cold_store",
+   "place": "cold_stores",
+   "x": 340.0,
+   "y": 355.6,
+   "hours": [
+    [
+     "mon-sun",
+     "06:00",
+     "22:00"
+    ]
+   ],
+   "holder_at_start": null,
+   "src": "RT2-09; map turf_posts"
+  },
+  {
+   "post": "post_landing",
+   "place": "ferry_landing",
+   "x": 14.0,
+   "y": -6.2,
+   "hours": [
+    [
+     "mon-sun",
+     "22:00",
+     "02:00"
+    ]
+   ],
+   "holder_at_start": null,
+   "src": "RT2-09; map turf_posts"
+  }
+ ],
+ "turf_rules": {
+  "holder": "one crewman each by routine",
+  "lost": "the post's man poached, frightened off, arrested or killed, the post empty three game days, or a sit-down defied and lost on it",
+  "contested": "a rival's men stand there too: a stare each time Tom or his man arrives",
+  "costs": {
+   "post_landing": "the night runs lost",
+   "post_cold_store": "the contract at risk",
+   "post_dock_gate": "the Widow's tax back"
+  },
+  "holder_at_start_chosen": "none of the three is Tom's at the start (rung 4 holds all three)",
+  "chosen": true
+ },
+ "weekly": [
+  {
+   "id": "rent",
+   "days": "fri",
+   "what": "rent £18 owed to the landlord's agent, who calls at Mickey's counter",
+   "who": "Mr Leonard Askew of Agar & Co's agents (person_ref, chosen name from letters-and-print.json)",
+   "place": "mickeys",
+   "start": "11:00",
+   "end": "12:00",
+   "amount_gbp": 18,
+   "missed": "arrears said in the Ledger and by the agent on Monday; two missed: a letter and notice to quit the flat in a fortnight; three: the flat is let (2.7.4, 2.8)",
+   "src": "2.7.4; economy; letters-and-print.json",
+   "time_chosen": true
+  },
+  {
+   "id": "wages_dock_cold",
+   "days": "fri",
+   "what": "dockers' and cold-store hands' wages paid in cash (about £190 to £230 a week)",
+   "place": "cold_stores",
+   "start": "12:00",
+   "end": "13:00",
+   "courier_arrives": "10:30",
+   "src": "PRICES-WAGES-1990 section 4; 1.6.15",
+   "chosen": true
+  },
+  {
+   "id": "wages_shops",
+   "days": "sat",
+   "what": "shop staff paid",
+   "place": "(each shop)",
+   "start": "13:00",
+   "end": "17:30",
+   "src": "ECONOMY-DESIGN (shop staff paid Saturday)"
+  },
+  {
+   "id": "drivers_takings",
+   "days": "mon-sun",
+   "what": "each car's takings settle at shift end: the driver keeps half, the firm half to the book; the fuel and cover are the firm's",
+   "at": "06:00 and 18:00 (shift ends)",
+   "reckoning": {
+    "day": "fri",
+    "start": "17:00",
+    "end": "17:30",
+    "place": "mickeys",
+    "what": "Sheila reads the week's fare book; Friday's line is the rent"
+   },
+   "src": "ECONOMY-DESIGN choice 1; supersedes BLUEPRINT-02 2.7's £90 weekly wage per driver"
+  },
+  {
+   "id": "protection_round",
+   "days": "fri",
+   "what": "the round: a crewman collects £5 to £15 a shop a week and keeps a quarter",
+   "place_ids": [
+    "laveracks",
+    "ritas",
+    "grocer",
+    "newsagent",
+    "ironmonger",
+    "tea_room",
+    "launderette",
+    "caff",
+    "chip_shop"
+   ],
+   "start": "13:00",
+   "end": "17:00",
+   "prerequisite": "a first round exists at rung 3 (2.17)",
+   "payments": "economy 5.1: £5 to £15 a shop, set by what the shop can bear",
+   "chosen": true,
+   "src": "2.17; ECONOMY-DESIGN 5.1"
+  },
+  {
+   "id": "front_wash",
+   "days": "fri",
+   "what": "a front washes night money through its till, about £60 a week a front, counted into the book",
+   "places": [
+    "front_launderette",
+    "front_caff",
+    "front_empty_unit"
+   ],
+   "src": "ECONOMY-DESIGN 2.7.3; places.json fronts"
+  }
+ ],
+ "services": {
+  "bin_day": {
+   "day": "wed",
+   "bins_out": "tue 20:00",
+   "lorry": "07:00 to 09:00, a dustcart from the quay road up Quay Street, round Back Parade to North Road (a drivable road blocked for a minute at each stop)",
+   "places": [
+    "dustbin_qs_21",
+    "vault_ginnel_bins"
+   ],
+   "chosen": true,
+   "src": "sounds.json (dustbin lids); map street_furniture; day chosen (no source)"
+  },
+  "post": {
+   "operator": "Realm Post",
+   "first_post": {
+    "days": "mon-sat",
+    "start": "07:30",
+    "end": "09:00",
+    "note": "a postman (adult) walks Quay Street; letters reach Mickey's door from about 08:00"
+   },
+   "second_post": {
+    "days": "mon-sat",
+    "start": "12:00",
+    "end": "13:30"
+   },
+   "collections": [
+    {
+     "box": "pillar_box_qs",
+     "days": "mon-fri",
+     "at": "17:00"
+    },
+    {
+     "box": "pillar_box_qs",
+     "days": "sat",
+     "at": "11:30"
+    },
+    {
+     "box": "pillar_box_north",
+     "days": "mon-fri",
+     "at": "17:15"
+    },
+    {
+     "box": "pillar_box_north",
+     "days": "sat",
+     "at": "11:45"
+    }
+   ],
+   "sunday": "no delivery or collection",
+   "chosen": true,
+   "src": "letters-and-print.json (Realm Post); times chosen"
+  },
+  "milk": {
+   "what": "the milk float's round, milk 30p a pint",
+   "days": "mon-sun",
+   "start": "05:30",
+   "end": "07:30",
+   "route": "Quay Street (both sides), Back Parade, North Road, Chapel Lane",
+   "src": "sounds.json (milk float 05:30 to 07:30); PRICES-WAGES-1990",
+   "chosen": false
+  },
+  "paper": {
+   "title": "The Meridian Pilot",
+   "days": "tue,fri",
+   "van_at_newsagent": "06:00",
+   "on_sale": "06:30",
+   "stand_outside": "newsagent",
+   "delivery_round": {
+    "start": "06:30",
+    "end": "08:30",
+    "who": "an adult, the Pilot's deliverer since Mr Walter Pybus retired (paper issue_04)"
+   },
+   "price_p": 25,
+   "first_issue": "1990-10-16",
+   "last_issue_in_calendar": "1990-11-30",
+   "issues": 14,
+   "morning_papers": {
+    "days": "mon-sat",
+    "at": "05:45",
+    "sunday": "06:45",
+    "note": "the morning papers (no titles named) are delivered to the newsagent daily"
+   },
+   "src": "letters-and-print.json paper; times chosen",
+   "chosen": true
+  },
+  "bus": {
+   "stop": "bus_stop_qs",
+   "mon_sat": {
+    "first": "06:30",
+    "last": "22:30",
+    "every_minutes": 30
+   },
+   "sun": {
+    "first": "09:00",
+    "last": "20:00",
+    "every_minutes": 60
+   },
+   "chosen": true,
+   "src": "map street_furniture bus_stop_qs; the route's other end is off the map"
+  },
+  "pilot_reporter": {
+   "who": "Alison Sedman",
+   "note": "on the Hook, Tuesday and Friday mornings to collect items (chosen)"
+  }
+ },
+ "events": [
+  {
+   "date": "1990-10-15",
+   "id": "tom_arrives",
+   "kind": "arrival",
+   "place": "ferry_landing",
+   "start": "15:40",
+   "end": "15:50",
+   "crowd_effect": null,
+   "src": "4.2.1"
+  },
+  {
+   "date": "1990-10-20",
+   "id": "jumble_sale",
+   "kind": "dated_evening",
+   "place": "chapel_hall",
+   "start": "14:00",
+   "end": "17:00",
+   "crowd_effect": {
+    "hook_extra_adults": "a few dozen adults on Chapel Lane"
+   },
+   "src": "paper issue_01 (doors 2 pm); end chosen",
+   "chosen": true
+  },
+  {
+   "date": "1990-10-22",
+   "id": "planning_notice_up",
+   "kind": "notice",
+   "place": "empty_unit",
+   "start": "00:00",
+   "end": "24:00",
+   "crowd_effect": null,
+   "src": "paper issue_04 (up since Monday); comments close Fri 9 Nov"
+  },
+  {
+   "date": "1990-10-25",
+   "id": "poll_tax_meeting",
+   "kind": "dated_evening",
+   "place": "chapel_hall",
+   "start": "19:30",
+   "end": "21:30",
+   "crowd_effect": {
+    "crowd": "about ninety adults reach the chapel hall"
+   },
+   "src": "paper issue_03, issue_05 (about ninety)",
+   "chosen": true
+  },
+  {
+   "date": "1990-10-30",
+   "id": "poll_tax_advice_evening",
+   "kind": "dated_evening",
+   "place": "chapel_hall",
+   "start": "19:00",
+   "end": "21:00",
+   "crowd_effect": {
+    "note": "the Tuesday evening of tea and talk, 19:00 to 21:30, is that night's hall"
+   },
+   "src": "paper issue_04"
+  },
+  {
+   "date": "1990-10-31",
+   "id": "customs_seizure",
+   "kind": "story_check",
+   "place": "dock_gate",
+   "start": "09:00",
+   "end": "12:00",
+   "crowd_effect": null,
+   "src": "paper issue_06 (3,000 cigarettes seized from a van on Wednesday)",
+   "story_check": true
+  },
+  {
+   "date": "1990-11-02",
+   "id": "wrestling_drill_hall",
+   "kind": "off_map_venue",
+   "place": "drill_hall",
+   "start": "19:30",
+   "end": "22:30",
+   "crowd_effect": {
+    "note": "adults leave for the Drill Hall"
+   },
+   "src": "paper issue_06",
+   "chosen": true
+  },
+  {
+   "date": "1990-11-02",
+   "id": "caff_back_room_harbour_staff",
+   "kind": "weekly_from_date",
+   "place": "caff",
+   "start": "12:00",
+   "end": "14:00",
+   "crowd_effect": {
+    "note": "Harbour Board staff eat at the caff on Friday dinner times from this week"
+   },
+   "src": "paper issue_05",
+   "chosen": true
+  },
+  {
+   "date": "1990-11-03",
+   "id": "gas_main_cars_off",
+   "kind": "notice",
+   "place": "quay_street",
+   "start": "12:00",
+   "end": "24:00",
+   "crowd_effect": {
+    "note": "householders move cars off Quay Street by Saturday night"
+   },
+   "src": "paper issue_06"
+  },
+  {
+   "date": "1990-11-04",
+   "id": "quay_street_closed_gas_main",
+   "kind": "road_closed",
+   "place": "quay_street",
+   "start": "08:00",
+   "end": "18:00",
+   "crowd_effect": {
+    "road_closed_to_traffic": true,
+    "pedestrians": "may pass",
+    "diversion": "Weighhouse Lane (off the map)",
+    "real_time": "10 game hours = 20 real minutes"
+   },
+   "src": "paper issue_05, issue_07 (reopened on time at 6 pm)"
+  },
+  {
+   "date": "1990-11-05",
+   "id": "bonfire_night_bonfire",
+   "kind": "dated_evening",
+   "place": "bonfire_ground",
+   "start": "18:30",
+   "end": "22:00",
+   "crowd_effect": {
+    "adults_only": true,
+    "crowd": "adults from the street, 15 to 25 on the waste ground",
+    "no_children": true
+   },
+   "src": "2.1.6; brief; place chosen",
+   "chosen": true,
+   "real_time": "3.5 game hours = 7 real minutes"
+  },
+  {
+   "date": "1990-11-05",
+   "id": "bonfire_night_display",
+   "kind": "dated_evening",
+   "place": "fireworks_quay",
+   "start": "19:30",
+   "end": "20:00",
+   "crowd_effect": {
+    "adults_only": true,
+    "viewing": "the quay road from x 130 to 250",
+    "no_children": true
+   },
+   "src": "2.1.6 (a display on the quay, adults only)",
+   "chosen": true,
+   "real_time": "30 game minutes = 1 real minute"
+  },
+  {
+   "date": "1990-11-05",
+   "id": "berths_3_4_close",
+   "kind": "notice",
+   "place": "quay_road",
+   "start": "00:00",
+   "end": "24:00",
+   "crowd_effect": {
+    "note": "berths 3 and 4 on the Hook quay closed to shipping until the New Year; two coasters moved to the far quay"
+   },
+   "src": "paper issue_01, issue_06, issue_07"
+  },
+  {
+   "date": "1990-11-09",
+   "id": "planning_comments_close",
+   "kind": "notice",
+   "place": "empty_unit",
+   "start": "00:00",
+   "end": "24:00",
+   "crowd_effect": null,
+   "src": "paper issue_04, issue_09"
+  },
+  {
+   "date": "1990-11-10",
+   "id": "poll_tax_march",
+   "kind": "dated_day",
+   "place": "the_exchange_march",
+   "start": "11:00",
+   "end": "14:00",
+   "crowd_effect": {
+    "hook_effect": "adults leave the Hook for the Exchange from 10:00; the shops' daytime bands lose a quarter (chosen)",
+    "shops_daytime_multiplier": 0.75,
+    "assembly": "11:00 at the Exchange (off the map)"
+   },
+   "src": "paper issue_08, issue_10",
+   "chosen": true
+  },
+  {
+   "date": "1990-11-11",
+   "id": "remembrance_sunday",
+   "kind": "dated_day",
+   "place": "chapel",
+   "start": "10:30",
+   "end": "11:30",
+   "crowd_effect": {
+    "adults_only": true,
+    "silence": "11:00 for two game minutes (4 real seconds, kept at the chapel)",
+    "crowd": "the chapel busy; Quay Street quiet (Sunday)",
+    "real_time": "the silence is 4 real seconds at 120 s a game hour; the service 1 game hour = 2 real minutes"
+   },
+   "src": "2.1.6; 4.3.6; 11 Nov 1990 was a Sunday"
+  },
+  {
+   "date": "1990-11-11",
+   "id": "chip_shop_opens_sundays",
+   "kind": "hours_change",
+   "place": "chip_shop",
+   "start": "17:00",
+   "end": "22:00",
+   "crowd_effect": {
+    "note": "from this Sunday"
+   },
+   "src": "paper issue_09 (open on Sundays from this week)",
+   "chosen": true
+  },
+  {
+   "date": "1990-11-15",
+   "id": "licensing_committee",
+   "kind": "off_map_venue",
+   "place": "licensing",
+   "start": "10:00",
+   "end": "16:00",
+   "crowd_effect": {
+    "note": "private hire licences renewed; one deferred (a letter follows on story state)"
+   },
+   "src": "paper issue_10, issue_11; RT2-18",
+   "story_check": true
+  },
+  {
+   "date": "1990-11-16",
+   "id": "washeteria_last_wash",
+   "kind": "hours_change",
+   "place": "launderette",
+   "start": "16:30",
+   "end": "16:30",
+   "crowd_effect": {
+    "note": "the last wash is at 16:30 from this Friday (a machine out of order)"
+   },
+   "src": "paper issue_11",
+   "chosen": true
+  },
+  {
+   "date": "1990-11-16",
+   "id": "boxing_night_drill_hall",
+   "kind": "off_map_venue",
+   "place": "drill_hall",
+   "start": "19:30",
+   "end": "22:30",
+   "crowd_effect": {
+    "note": "adults leave for the Drill Hall"
+   },
+   "src": "paper issue_09, issue_11",
+   "chosen": true
+  },
+  {
+   "date": "1990-11-17",
+   "id": "old_time_dance",
+   "kind": "dated_evening",
+   "place": "chapel_hall",
+   "start": "19:30",
+   "end": "23:00",
+   "crowd_effect": {
+    "note": "tea and sandwiches; admission £1.50; no drink",
+    "crowd": "adults on Chapel Lane"
+   },
+   "src": "paper issue_09, issue_11"
+  },
+  {
+   "date": "1990-11-22",
+   "id": "act_two_fail_safe_starts",
+   "kind": "story_clock",
+   "place": "mickeys",
+   "start": "00:00",
+   "end": "24:00",
+   "crowd_effect": null,
+   "src": "BLUEPRINT-07 7.x (the fail-safe starts four game days before the end of Act II's fifth week, which ends Sun 25 Nov); date derived",
+   "chosen": true
+  },
+  {
+   "date": "1990-11-29",
+   "id": "poll_tax_last_meeting",
+   "kind": "dated_evening",
+   "place": "chapel_hall",
+   "start": "19:30",
+   "end": "21:30",
+   "crowd_effect": null,
+   "src": "paper issue_12 ('on Thursday'); time chosen",
+   "chosen": true
+  },
+  {
+   "date": "1990-12-01",
+   "id": "dock_gate_chained",
+   "kind": "story_check",
+   "place": "dock_gate",
+   "start": "06:00",
+   "end": "24:00",
+   "crowd_effect": {
+    "note": "chained to vehicles from early morning; lorries use Dock Road East (off the map)"
+   },
+   "src": "paper issue_13 (print_if; the frame's proposal)",
+   "chosen": true,
+   "story_check": true
+  }
+ ],
+ "calendar": [
+  {
+   "date": "1990-10-15",
+   "weekday": "mon",
+   "week": 1,
+   "act": "I",
+   "events": [
+    "tom_arrives"
+   ],
+   "recurring": [
+    "boxing_club_evening"
+   ],
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-10-16",
+   "weekday": "tue",
+   "week": 1,
+   "act": "I",
+   "events": [],
+   "recurring": [
+    "chapel_hall_tea_and_talk"
+   ],
+   "paper_issue": "issue_01",
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-10-17",
+   "weekday": "wed",
+   "week": 1,
+   "act": "I",
+   "events": [],
+   "recurring": [
+    "bin_day",
+    "boxing_club_evening"
+   ],
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-10-18",
+   "weekday": "thu",
+   "week": 1,
+   "act": "I",
+   "events": [],
+   "recurring": [
+    "market_thursday"
+   ],
+   "crowd_effect": {
+    "shops_daytime_multiplier": 0.67
+   }
+  },
+  {
+   "date": "1990-10-19",
+   "weekday": "fri",
+   "week": 1,
+   "act": "I",
+   "events": [],
+   "recurring": [
+    "rent",
+    "wages_dock_cold",
+    "protection_round",
+    "front_wash",
+    "boxing_club_evening"
+   ],
+   "paper_issue": "issue_02",
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-10-20",
+   "weekday": "sat",
+   "week": 1,
+   "act": "I",
+   "events": [
+    "jumble_sale"
+   ],
+   "recurring": [
+    "wages_shops",
+    "boxing_club_morning"
+   ],
+   "match": {
+    "home_away": "away",
+    "opponent": "Thornwick Town"
+   },
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-10-21",
+   "weekday": "sun",
+   "week": 1,
+   "act": "I",
+   "events": [],
+   "recurring": [
+    "shops_shut"
+   ],
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-10-22",
+   "weekday": "mon",
+   "week": 2,
+   "act": "II",
+   "events": [
+    "planning_notice_up"
+   ],
+   "recurring": [
+    "boxing_club_evening"
+   ],
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-10-23",
+   "weekday": "tue",
+   "week": 2,
+   "act": "II",
+   "events": [],
+   "recurring": [
+    "chapel_hall_tea_and_talk"
+   ],
+   "paper_issue": "issue_03",
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-10-24",
+   "weekday": "wed",
+   "week": 2,
+   "act": "II",
+   "events": [],
+   "recurring": [
+    "bin_day",
+    "boxing_club_evening"
+   ],
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-10-25",
+   "weekday": "thu",
+   "week": 2,
+   "act": "II",
+   "events": [
+    "poll_tax_meeting"
+   ],
+   "recurring": [
+    "market_thursday"
+   ],
+   "crowd_effect": {
+    "shops_daytime_multiplier": 0.67
+   }
+  },
+  {
+   "date": "1990-10-26",
+   "weekday": "fri",
+   "week": 2,
+   "act": "II",
+   "events": [],
+   "recurring": [
+    "rent",
+    "wages_dock_cold",
+    "protection_round",
+    "front_wash",
+    "boxing_club_evening"
+   ],
+   "paper_issue": "issue_04",
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-10-27",
+   "weekday": "sat",
+   "week": 2,
+   "act": "II",
+   "events": [],
+   "recurring": [
+    "wages_shops",
+    "boxing_club_morning"
+   ],
+   "match": {
+    "home_away": "home",
+    "opponent": "Fenby Albion"
+   },
+   "crowd_effect": {
+    "street_multiplier_14_30_to_15_00_and_17_00_to_17_30": 2.0
+   }
+  },
+  {
+   "date": "1990-10-28",
+   "weekday": "sun",
+   "week": 2,
+   "act": "II",
+   "events": [],
+   "recurring": [
+    "shops_shut"
+   ],
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-10-29",
+   "weekday": "mon",
+   "week": 3,
+   "act": "II",
+   "events": [],
+   "recurring": [
+    "boxing_club_evening"
+   ],
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-10-30",
+   "weekday": "tue",
+   "week": 3,
+   "act": "II",
+   "events": [
+    "poll_tax_advice_evening"
+   ],
+   "recurring": [
+    "chapel_hall_tea_and_talk"
+   ],
+   "paper_issue": "issue_05",
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-10-31",
+   "weekday": "wed",
+   "week": 3,
+   "act": "II",
+   "events": [
+    "customs_seizure"
+   ],
+   "recurring": [
+    "bin_day",
+    "boxing_club_evening"
+   ],
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-01",
+   "weekday": "thu",
+   "week": 3,
+   "act": "II",
+   "events": [],
+   "recurring": [
+    "market_thursday"
+   ],
+   "crowd_effect": {
+    "shops_daytime_multiplier": 0.67
+   }
+  },
+  {
+   "date": "1990-11-02",
+   "weekday": "fri",
+   "week": 3,
+   "act": "II",
+   "events": [
+    "wrestling_drill_hall",
+    "caff_back_room_harbour_staff"
+   ],
+   "recurring": [
+    "rent",
+    "wages_dock_cold",
+    "protection_round",
+    "front_wash",
+    "boxing_club_evening"
+   ],
+   "paper_issue": "issue_06",
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-03",
+   "weekday": "sat",
+   "week": 3,
+   "act": "II",
+   "events": [
+    "gas_main_cars_off"
+   ],
+   "recurring": [
+    "wages_shops",
+    "boxing_club_morning"
+   ],
+   "match": {
+    "home_away": "away",
+    "opponent": "Saltmarsh Athletic"
+   },
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-04",
+   "weekday": "sun",
+   "week": 3,
+   "act": "II",
+   "events": [
+    "quay_street_closed_gas_main"
+   ],
+   "recurring": [
+    "shops_shut"
+   ],
+   "crowd_effect": {
+    "quay_street_closed_to_traffic": "08:00 to 18:00"
+   }
+  },
+  {
+   "date": "1990-11-05",
+   "weekday": "mon",
+   "week": 4,
+   "act": "II",
+   "events": [
+    "bonfire_night_bonfire",
+    "bonfire_night_display",
+    "berths_3_4_close"
+   ],
+   "recurring": [
+    "boxing_club_evening"
+   ],
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-06",
+   "weekday": "tue",
+   "week": 4,
+   "act": "II",
+   "events": [],
+   "recurring": [
+    "chapel_hall_tea_and_talk"
+   ],
+   "paper_issue": "issue_07",
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-07",
+   "weekday": "wed",
+   "week": 4,
+   "act": "II",
+   "events": [],
+   "recurring": [
+    "bin_day",
+    "boxing_club_evening"
+   ],
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-08",
+   "weekday": "thu",
+   "week": 4,
+   "act": "II",
+   "events": [],
+   "recurring": [
+    "market_thursday"
+   ],
+   "crowd_effect": {
+    "shops_daytime_multiplier": 0.67
+   }
+  },
+  {
+   "date": "1990-11-09",
+   "weekday": "fri",
+   "week": 4,
+   "act": "II",
+   "events": [
+    "planning_comments_close"
+   ],
+   "recurring": [
+    "rent",
+    "wages_dock_cold",
+    "protection_round",
+    "front_wash",
+    "boxing_club_evening"
+   ],
+   "paper_issue": "issue_08",
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-10",
+   "weekday": "sat",
+   "week": 4,
+   "act": "II",
+   "events": [
+    "poll_tax_march"
+   ],
+   "recurring": [
+    "wages_shops",
+    "boxing_club_morning"
+   ],
+   "match": {
+    "home_away": "home",
+    "opponent": "Northwold Rangers"
+   },
+   "crowd_effect": {
+    "street_multiplier_14_30_to_15_00_and_17_00_to_17_30": 2.0,
+    "shops_daytime_multiplier": 0.75
+   }
+  },
+  {
+   "date": "1990-11-11",
+   "weekday": "sun",
+   "week": 4,
+   "act": "II",
+   "events": [
+    "remembrance_sunday",
+    "chip_shop_opens_sundays"
+   ],
+   "recurring": [
+    "shops_shut"
+   ],
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-12",
+   "weekday": "mon",
+   "week": 5,
+   "act": "II",
+   "events": [],
+   "recurring": [
+    "boxing_club_evening"
+   ],
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-13",
+   "weekday": "tue",
+   "week": 5,
+   "act": "II",
+   "events": [],
+   "recurring": [
+    "chapel_hall_tea_and_talk"
+   ],
+   "paper_issue": "issue_09",
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-14",
+   "weekday": "wed",
+   "week": 5,
+   "act": "II",
+   "events": [],
+   "recurring": [
+    "bin_day",
+    "boxing_club_evening"
+   ],
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-15",
+   "weekday": "thu",
+   "week": 5,
+   "act": "II",
+   "events": [
+    "licensing_committee"
+   ],
+   "recurring": [
+    "market_thursday"
+   ],
+   "crowd_effect": {
+    "shops_daytime_multiplier": 0.67
+   }
+  },
+  {
+   "date": "1990-11-16",
+   "weekday": "fri",
+   "week": 5,
+   "act": "II",
+   "events": [
+    "washeteria_last_wash",
+    "boxing_night_drill_hall"
+   ],
+   "recurring": [
+    "rent",
+    "wages_dock_cold",
+    "protection_round",
+    "front_wash",
+    "boxing_club_evening"
+   ],
+   "paper_issue": "issue_10",
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-17",
+   "weekday": "sat",
+   "week": 5,
+   "act": "II",
+   "events": [
+    "old_time_dance"
+   ],
+   "recurring": [
+    "wages_shops",
+    "boxing_club_morning"
+   ],
+   "match": {
+    "home_away": "away",
+    "opponent": "Fenby Albion"
+   },
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-18",
+   "weekday": "sun",
+   "week": 5,
+   "act": "II",
+   "events": [],
+   "recurring": [
+    "shops_shut"
+   ],
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-19",
+   "weekday": "mon",
+   "week": 6,
+   "act": "II",
+   "events": [],
+   "recurring": [
+    "boxing_club_evening"
+   ],
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-20",
+   "weekday": "tue",
+   "week": 6,
+   "act": "II",
+   "events": [],
+   "recurring": [
+    "chapel_hall_tea_and_talk"
+   ],
+   "paper_issue": "issue_11",
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-21",
+   "weekday": "wed",
+   "week": 6,
+   "act": "II",
+   "events": [],
+   "recurring": [
+    "bin_day",
+    "boxing_club_evening"
+   ],
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-22",
+   "weekday": "thu",
+   "week": 6,
+   "act": "II",
+   "events": [
+    "act_two_fail_safe_starts"
+   ],
+   "recurring": [
+    "market_thursday"
+   ],
+   "crowd_effect": {
+    "shops_daytime_multiplier": 0.67
+   }
+  },
+  {
+   "date": "1990-11-23",
+   "weekday": "fri",
+   "week": 6,
+   "act": "II",
+   "events": [],
+   "recurring": [
+    "rent",
+    "wages_dock_cold",
+    "protection_round",
+    "front_wash",
+    "boxing_club_evening"
+   ],
+   "paper_issue": "issue_12",
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-24",
+   "weekday": "sat",
+   "week": 6,
+   "act": "II",
+   "events": [],
+   "recurring": [
+    "wages_shops",
+    "boxing_club_morning"
+   ],
+   "match": {
+    "home_away": "away",
+    "opponent": "Easterby United"
+   },
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-25",
+   "weekday": "sun",
+   "week": 6,
+   "act": "II",
+   "events": [],
+   "recurring": [
+    "shops_shut"
+   ],
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-26",
+   "weekday": "mon",
+   "week": 7,
+   "act": "III",
+   "events": [],
+   "recurring": [
+    "boxing_club_evening"
+   ],
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-27",
+   "weekday": "tue",
+   "week": 7,
+   "act": "III",
+   "events": [],
+   "recurring": [
+    "chapel_hall_tea_and_talk"
+   ],
+   "paper_issue": "issue_13",
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-28",
+   "weekday": "wed",
+   "week": 7,
+   "act": "III",
+   "events": [],
+   "recurring": [
+    "bin_day",
+    "boxing_club_evening"
+   ],
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-11-29",
+   "weekday": "thu",
+   "week": 7,
+   "act": "III",
+   "events": [
+    "poll_tax_last_meeting"
+   ],
+   "recurring": [
+    "market_thursday"
+   ],
+   "crowd_effect": {
+    "shops_daytime_multiplier": 0.67
+   }
+  },
+  {
+   "date": "1990-11-30",
+   "weekday": "fri",
+   "week": 7,
+   "act": "III",
+   "events": [],
+   "recurring": [
+    "rent",
+    "wages_dock_cold",
+    "protection_round",
+    "front_wash",
+    "boxing_club_evening"
+   ],
+   "paper_issue": "issue_14",
+   "crowd_effect": {}
+  },
+  {
+   "date": "1990-12-01",
+   "weekday": "sat",
+   "week": 7,
+   "act": "III",
+   "events": [
+    "dock_gate_chained"
+   ],
+   "recurring": [
+    "wages_shops",
+    "boxing_club_morning"
+   ],
+   "match": {
+    "home_away": "home",
+    "opponent": "Northwold Rangers"
+   },
+   "crowd_effect": {
+    "street_multiplier_14_30_to_15_00_and_17_00_to_17_30": 2.0
+   }
+  },
+  {
+   "date": "1990-12-02",
+   "weekday": "sun",
+   "week": 7,
+   "act": "III",
+   "events": [],
+   "recurring": [
+    "shops_shut"
+   ],
+   "crowd_effect": {}
+  }
+ ],
+ "real_time": {
+  "note": "at 120 real seconds a game hour (2 s a game minute); the old figure is at 60 s a game hour",
+  "rows": [
+   [
+    "a game day",
+    "24 h",
+    "48 real minutes",
+    "24 real minutes"
+   ],
+   [
+    "the shop day 09:00 to 17:30",
+    "8.5 h",
+    "17 real minutes",
+    "8.5 real minutes"
+   ],
+   [
+    "the dock shift passing 05:30 to 07:00",
+    "1.5 h",
+    "3 real minutes",
+    "1.5 real minutes"
+   ],
+   [
+    "the landing window 22:00 to 01:00",
+    "3 h",
+    "6 real minutes",
+    "3 real minutes"
+   ],
+   [
+    "the night 22:00 to 06:00",
+    "8 h",
+    "16 real minutes",
+    "8 real minutes"
+   ],
+   [
+    "a match half hour (14:30 to 15:00, 17:00 to 17:30)",
+    "30 min",
+    "1 real minute",
+    "30 real seconds"
+   ],
+   [
+    "the Thursday market 08:00 to 16:00",
+    "8 h",
+    "16 real minutes",
+    "8 real minutes"
+   ],
+   [
+    "bonfire 18:30 to 22:00",
+    "3.5 h",
+    "7 real minutes",
+    "3.5 real minutes"
+   ],
+   [
+    "a ferry crossing",
+    "20 min",
+    "40 real seconds",
+    "20 real seconds"
+   ],
+   [
+    "the soft edge out and back",
+    "30 min",
+    "60 real seconds",
+    "30 real seconds"
+   ],
+   [
+    "Remembrance silence",
+    "2 min",
+    "4 real seconds",
+    "2 real seconds"
+   ],
+   [
+    "the beat's cycle (G5, real time)",
+    "about 7 real min",
+    "about 7 real minutes, unchanged (about 200 game minutes)",
+    "about 7 real minutes (about 400 game minutes at 60 s)"
+   ]
+  ]
+ }
+}

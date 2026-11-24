@@ -26759,8 +26759,9 @@
     "id": "n_vault_mickeys_fence_lane",
     "x": 150.0,
     "y": 11.0,
-    "kind": "vault",
-    "vault": "vault_mickeys_fence"
+    "kind": "vault_landing",
+    "vault": "vault_mickeys_fence",
+    "note": "where the vault over Mickey's back fence lands; the lane itself is clear"
    }
   ],
   "edges": [

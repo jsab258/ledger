@@ -939,7 +939,7 @@ for d in DOORS:
         link('n_' + d['id'], 'n_' + gate['id'], foot_only=True, kind='across_yard')
 # Mickey's yard: the back door to the quay gate, and over the back fence (vault) into the lane
 link('n_d_qs_1_back', 'n_d_mickeys_yard_quay_gate', foot_only=True, kind='across_yard')
-lane_node = node('n_vault_mickeys_fence_lane', 150.0, 11.0, 'vault', vault='vault_mickeys_fence')
+lane_node = node('n_vault_mickeys_fence_lane', 150.0, 11.0, 'vault_landing', vault='vault_mickeys_fence', note='where the vault over Mickey\'s back fence lands; the lane itself is clear')
 SPLITS_LATE = (lane_node, (150.0, 11.0))
 # split the lane edge containing y 11
 for e in list(EDGES_G):

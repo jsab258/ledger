@@ -1,0 +1,1983 @@
+{
+ "file": "police.json",
+ "version": "2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "BLUEPRINT-02 2.6.1, 2.6.2, 2.6.3, 2.6.4, 2.6.5, 2.6.6, 2.6.7, 2.6.8, 2.6.9, 2.6.10, RT-13, RT2-02, RT2-16, RT2-17, FIT-G5, FIT-G4",
+  "BLUEPRINT-01 FIT-G2, FIT-G3, FIT-F03, 1.2.9, 1.2.10",
+  "BLUEPRINT-04 4.3.7, 4.6.2",
+  "production/lane/design-proof/DEFINITIONS-2026-11-21.md (G2, G3, G4, G5, F03, C-01, RT2-08)",
+  "production/lane/blueprint/economy/ECONOMY-DESIGN-2026-11-26.md section 5.7, EC-11; PRICES-WAGES-1990.md",
+  "tools/lane/prototype/project/src/game/law.js, pieces/law.js, tune/law.js, tune/cars.js (numbers marked proto)",
+  "production/research/lane/KERBSIDE-RULES-1990-2026-11-17.md (read: yellow lines and plates only; no police-car data in it)",
+  "production/lane/blueprint/data/map.json (frozen graph, police_points, roads, doors)"
+ ],
+ "units": {
+  "length": "metres",
+  "time": "real seconds unless the name says game_minutes or game_hours",
+  "speed": "metres per second",
+  "clock_note": "1 game minute = 2 real seconds; 1 game hour = 120 real seconds; 48 real minutes a game day"
+ },
+ "open_points": [
+  "FIT-G5 standard 'every 2 minutes with the street on edge' for Mickey's door comes out at about 123 s (3 s over) on the frozen graph: the path from Quay Street's top round the yards' lane to the foot is 140 m (127 s) and the door is out of sight all that way. Every other G5 figure passes (one constable: door 222 s of 240; yards' lane and landing under 450; on edge under 240). Fix if wanted: a 3 s longer look at the foot (no effect), or the keeper reads 'every 2 minutes' as 'about 2'.",
+  "The War stop 'the north road's junction at Quay Street's top' (RT2-17, 2.6.6) is not the same place as map point stop_north_road (160-ish, y 230, chosen by the map keeper). The map point is used because the map is frozen; the built stop is 164 m north of the top of Quay Street's street.",
+  "FIT-G3's 'out and back' is 30 game minutes: 60 real seconds on the 120 s hour (30 s on the old 60 s hour). DATA-SWEEP.csv says 15 s: that figure is wrong; 60 s is used.",
+  "2.6.5 says a manhunt's sign shows 'one game hour (60 real seconds)': on the 120 s hour it is 120 real seconds; used.",
+  "2.6.5 says Ellis comes 'from the second day for talk'; the prototype says day 4 (ellisFromDayIndex 3). The blueprint is newer: day 2 used.",
+  "The night is 8 game hours = 960 real seconds, so a night holds about 2.3 beat cycles of 7 real minutes (G5 'the same under either clock' holds for the beat but a night under the old 60 s clock held only 1.1). Tuning of how the beat reads over a night is open.",
+  "G5 and 2.6.1 say 'round the bend to the yards' lane'; on the frozen graph the lane is a foot-only way with a vault by Mickey's fence, so the constable vaults it (1.2 s) on every short round; if the map keeper opens the lane, drop the vault.",
+  "DS Ellis can be bought (24 Nov): this file follows it and overrides 4.3.7 and 2.6.8 (the keeper should change both rows).",
+  "Bought officers: the blueprint says each acts once; the prototype let the look-away man act 99 times and priced the statement man at 150: blueprint and economy used.",
+  "Custody 'about 6 hours' for a window: 6 used; assault also 6 (proto) because the blueprint gives no figure for a plain assault.",
+  "Response times per deed are game minutes chosen from the prototype's single 20-minute figure; 2.6.10 gives no per-deed times and is itself 'pending'.",
+  "Search length 30 to 120 real seconds is from 2.6.10; DEFINITIONS marks the band PENDING.",
+  "Patrol count at War (3, one armed) is the prototype's; 2.6.6/2.6.7 say only 'at least one armed car' and 'more only at War'.",
+  "G4's constable run speed 5.2 m/s (just under Tom's 5.5) is PENDING on footage; the prototype used 4.2."
+ ],
+ "beat_constable": {
+  "id": "beat_constable",
+  "src": "2.6.1; FIT-G5; DEFINITIONS G5; G4",
+  "role": "beat_constable",
+  "person_ref": true,
+  "second_role": "beat_constable_second",
+  "second_person_ref": true,
+  "walk_speed_mps": 1.1,
+  "run_speed_mps": 5.2,
+  "vault_s": 1.2,
+  "note_speed": "G4 (1.1 walk, 5.2 run) is newer than the prototype (1.5 walk, 4.2 run) and wins; G4 is PENDING on footage",
+  "carries": "truncheon only (2.6.6)",
+  "night": {
+   "hours": "22:00-06:00",
+   "game_hours": 8,
+   "real_seconds_per_night": 960,
+   "start_node": "j_quay_street_foot",
+   "start_phase_s": 0,
+   "start_rule": "at 22:00 the beat starts at phase 0 at the start node on every night, so two runs from one save are identical (G5 standard 2); the day constable is off at 22:00",
+   "chosen_start": true,
+   "cycle_nodes": [
+    "j_quay_street_foot",
+    "j_quay_street_mouth",
+    "n_door_d_qs_1",
+    "n_door_d_qs_2",
+    "n_door_d_qs_3",
+    "n_door_d_qs_4",
+    "n_door_d_qs_5",
+    "n_door_d_qs_6",
+    "j_gap_east",
+    "n_door_d_qs_7",
+    "n_door_d_qs_8",
+    "n_door_d_qs_9",
+    "n_door_d_qs_10",
+    "n_door_d_qs_11",
+    "n_door_d_qs_12",
+    "n_door_d_qs_13",
+    "n_door_d_qs_14",
+    "j_quay_street_top",
+    "j_bend_top",
+    "n_door_d_bp_1",
+    "n_door_d_bp_3",
+    "n_door_d_bp_5",
+    "j_yards_lane_top",
+    "n_door_d_qs_11_yardgate",
+    "n_door_d_qs_9_yardgate",
+    "n_door_d_qs_7_yardgate",
+    "n_door_d_qs_5_yardgate",
+    "n_door_d_qs_3_yardgate",
+    "n_vault_mickeys_fence_lane",
+    "j_yards_lane_bend",
+    "j_yards_lane_mouth",
+    "j_yards_lane_foot",
+    "n_door_d_mickeys_yard_quay_gate",
+    "j_quay_street_foot",
+    "j_ginnel_quay",
+    "n_door_d_quay_4",
+    "n_door_d_quay_3",
+    "n_door_d_quay_2",
+    "n_door_d_landing_gangway",
+    "n_door_d_quay_1",
+    "j_landing",
+    "n_door_d_quay_1",
+    "n_door_d_landing_gangway",
+    "n_door_d_quay_2",
+    "n_door_d_quay_3",
+    "n_door_d_quay_4",
+    "j_ginnel_quay",
+    "j_quay_street_foot"
+   ],
+   "cycle_length_m": 437.224,
+   "short_round_length_m": 197.224,
+   "landing_leg_length_m": 240.0,
+   "cycle_real_s": 419.68,
+   "cycle_real_minutes": 6.99,
+   "arrival_s_at_node": [
+    0.0,
+    4.09,
+    8.32,
+    15.55,
+    18.64,
+    21.0,
+    26.45,
+    26.45,
+    30.55,
+    31.91,
+    34.64,
+    37.36,
+    40.09,
+    44.77,
+    45.55,
+    50.09,
+    51.45,
+    53.73,
+    57.91,
+    67.45,
+    75.64,
+    82.91,
+    85.92,
+    107.42,
+    112.88,
+    118.33,
+    123.79,
+    129.24,
+    134.24,
+    138.17,
+    146.95,
+    151.04,
+    167.4,
+    186.49,
+    241.04,
+    248.54,
+    260.13,
+    274.68,
+    281.95,
+    304.22,
+    310.59,
+    316.95,
+    324.22,
+    331.49,
+    346.04,
+    357.63,
+    365.13,
+    419.68
+   ],
+   "leave_s_at_node": [
+    0.0,
+    4.09,
+    14.32,
+    15.55,
+    18.64,
+    21.0,
+    26.45,
+    26.45,
+    30.55,
+    31.91,
+    34.64,
+    37.36,
+    40.09,
+    44.77,
+    45.55,
+    50.09,
+    51.45,
+    53.73,
+    57.91,
+    67.45,
+    75.64,
+    82.91,
+    85.92,
+    107.42,
+    112.88,
+    118.33,
+    123.79,
+    129.24,
+    135.44,
+    138.17,
+    146.95,
+    151.04,
+    167.4,
+    186.49,
+    241.04,
+    248.54,
+    260.13,
+    274.68,
+    296.95,
+    304.22,
+    310.59,
+    316.95,
+    324.22,
+    331.49,
+    346.04,
+    357.63,
+    365.13,
+    419.68
+   ],
+   "waypoints": [
+    {
+     "id": "start_foot",
+     "node": "j_quay_street_foot",
+     "index": 0,
+     "dwell_s": 0,
+     "what": "Quay Street foot; the cycle starts here at 22:00 and again every cycle"
+    },
+    {
+     "id": "mickeys_door_tried",
+     "node": "n_door_d_qs_1",
+     "dwell_s": 6.0,
+     "what": "Mickey's door tried (beat point beat_mickeys_door)",
+     "door": "d_qs_1",
+     "beat_point": "beat_mickeys_door",
+     "chosen": true,
+     "chosen_note": "dwell 6 s chosen; G5 gives the door tried but no time",
+     "index": 2
+    },
+    {
+     "id": "quay_street_top",
+     "node": "j_quay_street_top",
+     "dwell_s": 0,
+     "what": "top of Quay Street",
+     "index": 17
+    },
+    {
+     "id": "the_bend",
+     "node": "j_bend_top",
+     "dwell_s": 0,
+     "what": "round the bend into Back Parade",
+     "index": 18
+    },
+    {
+     "id": "yards_lane_top",
+     "node": "j_yards_lane_top",
+     "dwell_s": 0,
+     "what": "enters the yards' lane",
+     "index": 22
+    },
+    {
+     "id": "yards_lane_pass",
+     "node": "n_door_d_qs_9_yardgate",
+     "dwell_s": 0,
+     "what": "passes beat_yards_lane (150, 35) on the lane",
+     "beat_point": "beat_yards_lane",
+     "index": 24
+    },
+    {
+     "id": "lane_fence_vault",
+     "node": "n_vault_mickeys_fence_lane",
+     "dwell_s": 1.2,
+     "what": "vaults the fence by Mickey's yard (a constable vaults in 1.2 s, G4)",
+     "index": 28
+    },
+    {
+     "id": "yards_lane_foot",
+     "node": "j_yards_lane_foot",
+     "dwell_s": 0,
+     "what": "down to the quay road",
+     "index": 31
+    },
+    {
+     "id": "short_round_end",
+     "node": "j_quay_street_foot",
+     "dwell_s": 0,
+     "what": "back to Quay Street's foot; short round ends",
+     "index": 33
+    },
+    {
+     "id": "landing_look",
+     "node": "n_door_d_landing_gangway",
+     "dwell_s": 15.0,
+     "what": "the landing looked over for 15 s (beat point beat_landing)",
+     "beat_point": "beat_landing",
+     "index": 38
+    },
+    {
+     "id": "landing_turn",
+     "node": "j_landing",
+     "dwell_s": 0,
+     "what": "turns at the landing",
+     "index": 40
+    },
+    {
+     "id": "landing_leg_end",
+     "node": "j_quay_street_foot",
+     "dwell_s": 0,
+     "what": "back at Quay Street's foot; the cycle repeats",
+     "index": 47
+    }
+   ],
+   "legs": [
+    {
+     "from": "start_foot",
+     "to": "mickeys_door_tried",
+     "length_m": 9.15,
+     "walk_real_s": 8.3,
+     "dwell_at_end_s": 6.0
+    },
+    {
+     "from": "mickeys_door_tried",
+     "to": "quay_street_top",
+     "length_m": 43.35,
+     "walk_real_s": 39.4,
+     "dwell_at_end_s": 0
+    },
+    {
+     "from": "quay_street_top",
+     "to": "the_bend",
+     "length_m": 4.6,
+     "walk_real_s": 4.2,
+     "dwell_at_end_s": 0
+    },
+    {
+     "from": "the_bend",
+     "to": "yards_lane_top",
+     "length_m": 30.817,
+     "walk_real_s": 28.0,
+     "dwell_at_end_s": 0
+    },
+    {
+     "from": "yards_lane_top",
+     "to": "yards_lane_pass",
+     "length_m": 29.65,
+     "walk_real_s": 27.0,
+     "dwell_at_end_s": 0
+    },
+    {
+     "from": "yards_lane_pass",
+     "to": "lane_fence_vault",
+     "length_m": 23.5,
+     "walk_real_s": 21.4,
+     "dwell_at_end_s": 1.2
+    },
+    {
+     "from": "lane_fence_vault",
+     "to": "yards_lane_foot",
+     "length_m": 17.157,
+     "walk_real_s": 15.6,
+     "dwell_at_end_s": 0
+    },
+    {
+     "from": "yards_lane_foot",
+     "to": "short_round_end",
+     "length_m": 39.0,
+     "walk_real_s": 35.5,
+     "dwell_at_end_s": 0
+    },
+    {
+     "from": "short_round_end",
+     "to": "landing_look",
+     "length_m": 105.0,
+     "walk_real_s": 95.5,
+     "dwell_at_end_s": 15.0
+    },
+    {
+     "from": "landing_look",
+     "to": "landing_turn",
+     "length_m": 15.0,
+     "walk_real_s": 13.6,
+     "dwell_at_end_s": 0
+    },
+    {
+     "from": "landing_turn",
+     "to": "landing_leg_end",
+     "length_m": 120.0,
+     "walk_real_s": 109.1,
+     "dwell_at_end_s": 0
+    }
+   ],
+   "repeat": "cycle repeats until 06:00; the unfinished cycle at 06:00 is dropped and the day route starts at its start node",
+   "cycles_in_a_night_at_120s_hour": 2.29
+  },
+  "second_constable": {
+   "when": "the street on edge (A37: three seen deeds on one street within two game days; eases three game days after the last); also from the next night if the first constable is put out of the way (DEFINITIONS, 'the beat constable: the second constable takes the beat from the next night')",
+   "offset_s": 209.84,
+   "offset_rule": "half a cycle behind on the same route"
+  },
+  "day": {
+   "hours": "06:00-22:00",
+   "start_node": "j_quay_street_foot",
+   "chosen_start": true,
+   "route_nodes": [
+    "j_quay_street_foot",
+    "j_quay_street_mouth",
+    "n_door_d_qs_1",
+    "n_door_d_qs_2",
+    "n_door_d_qs_3",
+    "n_door_d_qs_4",
+    "n_door_d_qs_5",
+    "n_door_d_qs_6",
+    "j_gap_east",
+    "n_door_d_qs_7",
+    "n_door_d_qs_8",
+    "n_door_d_qs_9",
+    "n_door_d_qs_10",
+    "n_door_d_qs_11",
+    "n_door_d_qs_12",
+    "n_door_d_qs_13",
+    "n_door_d_qs_14",
+    "j_quay_street_top",
+    "j_bend_top",
+    "n_door_d_bp_1",
+    "n_door_d_bp_3",
+    "n_door_d_bp_5",
+    "j_yards_lane_top",
+    "j_north_road_foot",
+    "n_door_d_nr_1",
+    "n_door_d_nr_3",
+    "n_door_d_nr_2",
+    "n_door_d_nr_5",
+    "n_door_d_nr_4",
+    "n_door_d_nr_7",
+    "n_door_d_nr_6",
+    "n_door_d_nr_9",
+    "n_door_d_nr_8",
+    "n_door_d_nr_10",
+    "n_door_d_nr_12",
+    "n_door_d_nr_14",
+    "n_door_d_nr_11",
+    "n_door_d_nr_16",
+    "n_door_d_nr_18",
+    "j_cut150_west",
+    "n_door_d_nr_20",
+    "n_door_d_nr_13",
+    "n_door_d_nr_22",
+    "n_door_d_nr_15",
+    "n_door_d_nr_24",
+    "n_door_d_nr_17",
+    "n_door_d_nr_26",
+    "n_door_d_nr_19",
+    "n_door_d_nr_28",
+    "n_door_d_nr_21",
+    "n_door_d_nr_30",
+    "n_door_d_nr_23",
+    "n_door_d_nr_32",
+    "n_door_d_nr_25",
+    "n_door_d_nr_34",
+    "n_door_d_nr_27",
+    "n_door_d_nr_36",
+    "n_door_d_nr_29",
+    "n_door_d_nr_38",
+    "n_door_d_nr_40",
+    "n_door_d_nr_42",
+    "n_door_d_nr_31",
+    "n_door_d_nr_44",
+    "n_door_d_nr_33",
+    "n_door_d_nr_46",
+    "n_door_d_nr_35",
+    "n_door_d_nr_48",
+    "n_door_d_nr_37",
+    "n_door_d_nr_39",
+    "n_door_d_nr_41",
+    "j_chapel_lane",
+    "n_door_d_nr_43",
+    "n_door_d_nr_45",
+    "n_door_d_nr_47",
+    "n_door_d_nr_49",
+    "j_cut300_west",
+    "n_door_d_nr_53",
+    "j_ginnel_top",
+    "n_door_d_nr_55",
+    "n_door_d_nr_57",
+    "n_door_d_nr_50",
+    "n_door_d_nr_52",
+    "j_coldstore_west",
+    "n_door_d_nr_52",
+    "n_door_d_nr_50",
+    "n_door_d_nr_57",
+    "n_door_d_nr_55",
+    "j_ginnel_top",
+    "n_door_d_nr_53",
+    "j_cut300_west",
+    "n_door_d_nr_49",
+    "n_door_d_nr_47",
+    "n_door_d_nr_45",
+    "n_door_d_nr_43",
+    "j_chapel_lane",
+    "n_door_d_nr_41",
+    "n_door_d_nr_39",
+    "n_door_d_nr_37",
+    "n_door_d_nr_48",
+    "n_door_d_nr_35",
+    "n_door_d_nr_46",
+    "n_door_d_nr_33",
+    "n_door_d_nr_44",
+    "n_door_d_nr_31",
+    "n_door_d_nr_42",
+    "n_door_d_nr_40",
+    "n_door_d_nr_38",
+    "n_door_d_nr_29",
+    "n_door_d_nr_36",
+    "n_door_d_nr_27",
+    "n_door_d_nr_34",
+    "n_door_d_nr_25",
+    "n_door_d_nr_32",
+    "n_door_d_nr_23",
+    "n_door_d_nr_30",
+    "n_door_d_nr_21",
+    "n_door_d_nr_28",
+    "n_door_d_nr_19",
+    "n_door_d_nr_26",
+    "n_door_d_nr_17",
+    "n_door_d_nr_24",
+    "n_door_d_nr_15",
+    "n_door_d_nr_22",
+    "n_door_d_nr_13",
+    "n_door_d_nr_20",
+    "j_cut150_west",
+    "n_door_d_nr_18",
+    "n_door_d_nr_16",
+    "n_door_d_nr_11",
+    "n_door_d_nr_14",
+    "n_door_d_nr_12",
+    "n_door_d_nr_10",
+    "n_door_d_nr_8",
+    "n_door_d_nr_9",
+    "n_door_d_nr_6",
+    "n_door_d_nr_7",
+    "n_door_d_nr_4",
+    "n_door_d_nr_5",
+    "n_door_d_nr_2",
+    "n_door_d_nr_3",
+    "n_door_d_nr_1",
+    "j_north_road_foot",
+    "j_yards_lane_top",
+    "n_door_d_bp_5",
+    "n_door_d_bp_3",
+    "n_door_d_bp_1",
+    "j_bend_top",
+    "j_quay_street_top",
+    "n_door_d_qs_14",
+    "n_door_d_qs_13",
+    "n_door_d_qs_12",
+    "n_door_d_qs_11",
+    "n_door_d_qs_10",
+    "n_door_d_qs_9",
+    "n_door_d_qs_8",
+    "n_door_d_qs_7",
+    "j_gap_east",
+    "n_door_d_qs_6",
+    "n_door_d_qs_5",
+    "n_door_d_qs_4",
+    "n_door_d_qs_3",
+    "n_door_d_qs_2",
+    "n_door_d_qs_1",
+    "j_quay_street_mouth",
+    "j_quay_street_foot"
+   ],
+   "route_length_m": 763.378,
+   "turn_node": "j_coldstore_west",
+   "turn_note": "the cold-store road's west junction at the north road's foot of the cold-store road (160, 350)",
+   "waypoints": [
+    {
+     "id": "day_foot",
+     "node": "j_quay_street_foot",
+     "dwell_s": 10.0,
+     "chosen": true,
+     "what": "stands a moment at Quay Street's foot (day route start and end)"
+    },
+    {
+     "id": "day_top",
+     "node": "j_quay_street_top",
+     "dwell_s": 0,
+     "what": "top of Quay Street"
+    },
+    {
+     "id": "day_bend",
+     "node": "j_bend_top",
+     "dwell_s": 0,
+     "what": "Back Parade"
+    },
+    {
+     "id": "day_north_road_foot",
+     "node": "j_north_road_foot",
+     "dwell_s": 0,
+     "what": "north road starts"
+    },
+    {
+     "id": "day_cold_store_road",
+     "node": "j_coldstore_west",
+     "dwell_s": 10.0,
+     "chosen": true,
+     "what": "the cold-store road junction; turns back"
+    }
+   ],
+   "legs": [
+    {
+     "from": "day_foot",
+     "to": "day_top",
+     "length_m": 52.5,
+     "walk_real_s": 47.7
+    },
+    {
+     "from": "day_top",
+     "to": "day_bend",
+     "length_m": 4.6,
+     "walk_real_s": 4.2
+    },
+    {
+     "from": "day_bend",
+     "to": "day_north_road_foot",
+     "length_m": 41.089,
+     "walk_real_s": 37.4
+    },
+    {
+     "from": "day_north_road_foot",
+     "to": "day_cold_store_road",
+     "length_m": 283.5,
+     "walk_real_s": 257.7
+    },
+    {
+     "from": "day_cold_store_road",
+     "to": "day_foot",
+     "length_m": 381.689,
+     "walk_real_s": 347.0,
+     "note": "the same way back; full node path in route_nodes"
+    }
+   ],
+   "cycle_real_s": 714.0,
+   "cycle_real_minutes": 11.9,
+   "chosen": true,
+   "chosen_note": "G5 gives only \"Quay Street and the north road to the cold-store road and back\"; the junctions and 10 s stands are chosen"
+  },
+  "sight_checks": {
+   "method": "walked from the node path at 0.25 s steps; sight windows are chosen: Mickey's door in sight on Quay Street and within 6 m of its foot on the quay road; the yards' lane in sight on the lane, its two ends and within 8 m of its foot; the landing within 20 m of the landing node",
+   "chosen": true,
+   "cycle_real_s": 419.68,
+   "mickeys_door": {
+    "sight_windows_s_in_cycle": [
+     [
+      0.0,
+      58.0
+     ],
+     [
+      181.2,
+      192.0
+     ],
+     [
+      414.2,
+      419.8
+     ]
+    ],
+    "longest_unseen_gap_s_one_constable": 222.2,
+    "limit_s_one": 240,
+    "pass_one": true,
+    "longest_unseen_gap_s_with_second_constable_half_cycle_behind": 123.2,
+    "limit_s_on_edge": 120,
+    "pass_on_edge": false,
+    "over_by_s": 3.2
+   },
+   "yards_lane": {
+    "sight_windows_s_in_cycle": [
+     [
+      83.0,
+      158.5
+     ]
+    ],
+    "longest_unseen_gap_s_one_constable": 344.2,
+    "limit_s_one": 450,
+    "pass_one": true,
+    "longest_unseen_gap_s_with_second_constable_half_cycle_behind": 134.3,
+    "limit_s_on_edge": 240,
+    "pass_on_edge": true
+   },
+   "landing": {
+    "sight_windows_s_in_cycle": [
+     [
+      277.5,
+      329.0
+     ]
+    ],
+    "longest_unseen_gap_s_one_constable": 368.2,
+    "limit_s_one": 450,
+    "pass_one": true,
+    "longest_unseen_gap_s_with_second_constable_half_cycle_behind": 158.3,
+    "limit_s_on_edge": 240,
+    "pass_on_edge": true
+   }
+  },
+  "rules": {
+   "never_changes_by_chance": true,
+   "rattled_bin": {
+    "src": "G5 standard 3; 2.6.1",
+    "rule": "a rattled bin (the noise rule) moves him off the beat: he walks the shortest way to the bin, looks about 8 s (chosen), walks back to the node he left and rejoins the timetable from there, his phase shifted by the time away",
+    "look_s": 8,
+    "chosen": true
+   },
+   "heard_or_seen_before_challenge_s": 3,
+   "calls_out_first": true,
+   "challenge_causes": [
+    "carrying at night",
+    "running",
+    "bloodied",
+    "where he should not be",
+    "a weapon shown"
+   ],
+   "challenge_within_m": 14,
+   "challenge_within_src": "proto tune law.js challengesWithinMetres 14 (also challengeWithinMetres 12 there; 14 taken)",
+   "again_after_game_minutes": 45,
+   "again_src": "proto challengeAgainAfterGameMinutes (90 real s at 120 s an hour)",
+   "search_within_m": 2.5,
+   "answers": [
+    "stand and be searched",
+    "run",
+    "a word"
+   ],
+   "search": "finds exactly what is under the coat and in the hand; keeps what is unlawful",
+   "a_word": "talked round if he has no cause; a note offered works only on a bought officer; offered to an honest one it is a crime he saw",
+   "run": "a chase (see search_rules); caught on the collar means searched as if he stood",
+   "heard_within_m": 22,
+   "heard_src": "proto beatHeardWithinMetres 22",
+   "recognises_tom_within_m": 25,
+   "recognises_src": "RT2-16",
+   "rejoin_where_left": true
+  }
+ },
+ "patrol_car": {
+  "id": "patrol_car",
+  "src": "2.6.7; FIT-G2; DEFINITIONS G2; 2.6.6",
+  "role": "patrol_driver",
+  "person_ref": true,
+  "second_role": "patrol_passenger",
+  "second_person_ref": true,
+  "vehicle": "patrol_panda (vehicles.json)",
+  "count": {
+   "normal": 1,
+   "at_war": 3,
+   "at_war_armed": 1,
+   "src": "2.6.7 (one patrol car by day and night; more only at War); 2.6.6 (at War at least one armed car); proto patrolCarsAtWar 3",
+   "chosen": true,
+   "chosen_note": "three at War (proto), one of them the armed car"
+  },
+  "hours": "all day and night",
+  "route": {
+   "nodes": [
+    "j_quay_street_foot",
+    "j_quay_street_mouth",
+    "n_door_d_qs_1",
+    "n_door_d_qs_2",
+    "n_door_d_qs_3",
+    "n_door_d_qs_4",
+    "n_door_d_qs_5",
+    "n_door_d_qs_6",
+    "j_gap_east",
+    "n_door_d_qs_7",
+    "n_door_d_qs_8",
+    "n_door_d_qs_9",
+    "n_door_d_qs_10",
+    "n_door_d_qs_11",
+    "n_door_d_qs_12",
+    "n_door_d_qs_13",
+    "n_door_d_qs_14",
+    "j_quay_street_top",
+    "j_bend_top",
+    "n_door_d_bp_1",
+    "n_door_d_bp_3",
+    "n_door_d_bp_5",
+    "j_yards_lane_top",
+    "j_north_road_foot",
+    "n_door_d_nr_1",
+    "n_door_d_nr_3",
+    "n_door_d_nr_2",
+    "n_door_d_nr_5",
+    "n_door_d_nr_4",
+    "n_door_d_nr_7",
+    "n_door_d_nr_6",
+    "n_door_d_nr_9",
+    "n_door_d_nr_8",
+    "n_door_d_nr_10",
+    "n_door_d_nr_12",
+    "n_door_d_nr_14",
+    "n_door_d_nr_11",
+    "n_door_d_nr_16",
+    "n_door_d_nr_18",
+    "j_cut150_west",
+    "n_door_d_nr_20",
+    "n_door_d_nr_13",
+    "n_door_d_nr_22",
+    "n_door_d_nr_15",
+    "n_door_d_nr_24",
+    "n_door_d_nr_17",
+    "n_door_d_nr_26",
+    "n_door_d_nr_19",
+    "n_door_d_nr_28",
+    "n_door_d_nr_21",
+    "n_door_d_nr_30",
+    "n_door_d_nr_23",
+    "n_door_d_nr_32",
+    "n_door_d_nr_25",
+    "n_door_d_nr_34",
+    "n_door_d_nr_27",
+    "n_door_d_nr_36",
+    "n_door_d_nr_29",
+    "n_door_d_nr_38",
+    "n_door_d_nr_40",
+    "n_door_d_nr_42",
+    "n_door_d_nr_31",
+    "n_door_d_nr_44",
+    "n_door_d_nr_33",
+    "n_door_d_nr_46",
+    "n_door_d_nr_35",
+    "n_door_d_nr_48",
+    "n_door_d_nr_37",
+    "n_door_d_nr_39",
+    "n_door_d_nr_41",
+    "j_chapel_lane",
+    "n_door_d_nr_43",
+    "n_door_d_nr_45",
+    "n_door_d_nr_47",
+    "n_door_d_nr_49",
+    "j_cut300_west",
+    "n_door_d_nr_53",
+    "j_ginnel_top",
+    "n_door_d_nr_55",
+    "n_door_d_nr_57",
+    "n_door_d_nr_50",
+    "n_door_d_nr_52",
+    "j_coldstore_west",
+    "n_door_d_lot_hut",
+    "j_basin_road_top",
+    "n_door_d_cs_5",
+    "n_door_d_cs_7",
+    "n_door_d_cs_9",
+    "n_door_d_cs_11",
+    "n_door_d_cs_13",
+    "n_door_d_cs_15",
+    "n_door_d_cs_17",
+    "n_door_d_cs_2",
+    "n_door_d_cs_19",
+    "n_door_d_cs_4",
+    "n_door_d_cs_6",
+    "j_cold_yard_mouth",
+    "n_door_d_cold_office",
+    "j_warehouse_row_top",
+    "n_door_d_cs_3",
+    "j_coldstore_east",
+    "n_door_d_gate_sheds",
+    "j_dock_gate",
+    "n_door_d_tea_stall",
+    "j_harbour_board",
+    "n_door_d_dock_3",
+    "n_door_d_dock_1",
+    "j_fish_dock_corner",
+    "n_door_d_quay_10",
+    "n_door_d_widow_office",
+    "n_door_d_ice_hut",
+    "n_door_d_quay_9",
+    "j_warehouse_row_foot",
+    "j_basin_road_foot",
+    "n_door_d_quay_8",
+    "n_door_d_quay_11",
+    "n_door_d_quay_7",
+    "n_door_d_quay_6",
+    "n_door_d_quay_5",
+    "j_yards_lane_foot",
+    "n_door_d_mickeys_yard_quay_gate",
+    "j_quay_street_foot"
+   ],
+   "length_m": 1531.689,
+   "closed_loop": true,
+   "direction": "as listed (anticlockwise from the quay road: up Quay Street, Back Parade, north road, cold-store road, dock road, quay road)",
+   "junction_keys": [
+    "j_quay_street_foot",
+    "j_bend_top",
+    "j_north_road_foot",
+    "j_coldstore_west",
+    "j_coldstore_east",
+    "j_fish_dock_corner",
+    "j_quay_street_foot"
+   ],
+   "drivable_only_checked": true,
+   "cruise_real_s_per_lap": 143.1,
+   "src": "DEFINITIONS D-Q2 chase loop (1,528 m on the G1 plan; 1,531.7 m on the frozen graph); chosen as the patrol loop",
+   "chosen": true
+  },
+  "speeds_mps": {
+   "cruise": 10.7,
+   "cruise_mph": 24,
+   "cruise_chosen": true,
+   "town_slow_zone": 8.94,
+   "slow_zone_note": "slows to 20 mph from 60 m before Quay Street mouth like all traffic (4.5.1)",
+   "search_crawl": 4.5,
+   "search_crawl_chosen": true,
+   "chase_top": 26.8,
+   "chase_top_rule": "never faster than Tom's car on a straight and never out-accelerates the firm's cab (G2 standard 2)",
+   "chase_accel_share_of_firm_cab": 0.95,
+   "chase_accel_chosen": true,
+   "src": "G2: traffic 20 to 28 mph (8.9 to 12.5 m/s); 60 mph on 420 m straights"
+  },
+  "stop_bands_mph": {
+   "no_action_below": 31,
+   "look_and_note_plate": [
+    31,
+    49
+   ],
+   "stop_at_or_above": 50,
+   "stop_at_or_above_mps": 22.35,
+   "reckless_acts_that_stop": [
+    "a hit",
+    "on the pavement",
+    "a red light at speed"
+   ],
+   "speed_limit_mph": 30,
+   "src": "FIT-G2; 2.6.7; the proto stops over 1.6 x 13.4 m/s (21.4 m/s, 48 mph) is replaced by 50 mph",
+   "no_fines": true,
+   "sight": {
+    "sees_within_m": 45,
+    "needs_line_of_sight": true,
+    "src": "proto patrolSeesWithinMetres 45",
+    "chosen": true
+   },
+   "plate_noted_within_m": 18,
+   "plate_noted_min_light": 0.7,
+   "plate_src": "FIT-G3; RT2-16"
+  },
+  "stop_script": {
+   "src": "2.6.7; 2.6.2; proto law.js trafficStop",
+   "max_real_s": 120,
+   "steps": [
+    {
+     "id": "flash_and_sound",
+     "real_s": 1.5,
+     "what": "the blue light and two tones of the horn; the patrol closes to 28 m behind",
+     "chosen": true
+    },
+    {
+     "id": "driver_chooses",
+     "real_s": 8,
+     "what": "pull over, or put his foot down (a refusal is a chase)",
+     "choices": [
+      "Pull over.",
+      "Put his foot down."
+     ],
+     "chosen": true
+    },
+    {
+     "id": "constable_walks_up",
+     "real_s": 6,
+     "chosen": true
+    },
+    {
+     "id": "looks_at_car_and_driver",
+     "real_s": 10,
+     "chosen": true
+    },
+    {
+     "id": "search_if_cause",
+     "real_s": 20,
+     "what": "only with cause; finds what is carried and in the boot (GV-01); keeps what is unlawful",
+     "chosen": true
+    },
+    {
+     "id": "notes_plate",
+     "real_s": 4,
+     "chosen": true
+    },
+    {
+     "id": "caution",
+     "real_s": 8,
+     "what": "a caution; no fine",
+     "chosen": true
+    },
+    {
+     "id": "waves_on",
+     "real_s": 3,
+     "chosen": true
+    }
+   ],
+   "total_real_s_without_search": 40.5,
+   "total_real_s_with_search": 60.5,
+   "refuse": "a chase; a refused stop with no deed behind it ends in 2 game hours in custody and a caution, a charge the second time (RT2-16, 2.6.4)",
+   "bought_officer": "if the patrol driver is the bought man who looks away, the stop ends after the plate step with no note made, once (see bought_officers)"
+  },
+  "posts": {
+   "src": "2.6.7; 2.6.6; map.json police_points",
+   "rule": "on each lap the patrol holds one stop point in rotation, stands there with the car side-on, then carries on; so a player can learn the rotation",
+   "rotation": [
+    "stop_quay_road",
+    "stop_north_road",
+    "stop_coldstore_road",
+    "stop_dock_road"
+   ],
+   "hold_real_s": {
+    "night_22_06": 20,
+    "day_06_22": 10
+   },
+   "hold_chosen": true,
+   "order_resets_at": "22:00 and 06:00",
+   "war_posts": {
+    "points": [
+     "stop_north_road",
+     "stop_dock_road"
+    ],
+    "hours": "18:00-02:00",
+    "rule": "at War the armed car stands at each war stop in turn, 90 real s at a post then moves to the other (chosen); every vehicle passing within 12 m is waved down (chosen); a man on foot only with cause",
+    "stand_real_s": 90,
+    "wave_down_within_m": 12,
+    "chosen": true,
+    "gun_found": {
+     "src": "RT2-17",
+     "arrest_on_the_spot": true,
+     "custody_game_hours": 12,
+     "charge": true,
+     "gun_kept": true,
+     "ellis_up_one_stage": true,
+     "crewman_driving_firm_car_with_gun": "the crewman is arrested instead and may break past his nerve"
+    },
+    "armed_officers": true
+   }
+  },
+  "spur": {
+   "nodes": [
+    "j_quay_street_foot",
+    "j_ginnel_quay"
+   ],
+   "length_m": 60.0,
+   "what": "a 60 m spur west from the foot of Quay Street to the ginnel, driven out and back when the quay-road post is held (the loop itself ends at the foot)",
+   "chosen": true
+  },
+  "stop_points": [
+   {
+    "id": "stop_north_road",
+    "map_point": "stop_north_road",
+    "x": 157.4,
+    "y": 230.0,
+    "road": "north_road",
+    "on_edge": [
+     "n_door_d_nr_31",
+     "n_door_d_nr_44"
+    ],
+    "at_m_from_first_node": 1.0,
+    "war_stop": true,
+    "war_hours": "18:00-02:00",
+    "what": "the north road's junction, between the quay road and the cold-store road; the War stop (RT2-17: 'the north road's junction at Quay Street's top' is read as this chosen map point; see open_points)",
+    "src": "map.json police_points; 2.6.6, 2.6.7, RT2-17, FIT-G2"
+   },
+   {
+    "id": "stop_dock_road",
+    "map_point": "stop_dock_road",
+    "x": 537.4,
+    "y": 120.0,
+    "road": "dock_road",
+    "on_edge": [
+     "n_door_d_tea_stall",
+     "j_harbour_board"
+    ],
+    "at_m_from_first_node": 77.5,
+    "war_stop": true,
+    "war_hours": "18:00-02:00",
+    "what": "the dock road by the dock gate; the War stop",
+    "src": "map.json police_points; 2.6.6, 2.6.7, RT2-17, FIT-G2"
+   },
+   {
+    "id": "stop_quay_road",
+    "map_point": "stop_quay_road",
+    "x": 60.0,
+    "y": -3.0,
+    "road": "quay_road",
+    "on_edge": [
+     "j_ginnel_quay",
+     "j_quay_street_foot"
+    ],
+    "at_m_from_first_node": 0.0,
+    "war_stop": false,
+    "war_hours": null,
+    "what": "by the ginnel on the quay road; an ordinary stop place",
+    "src": "map.json police_points; 2.6.6, 2.6.7, RT2-17, FIT-G2"
+   },
+   {
+    "id": "stop_coldstore_road",
+    "map_point": "stop_coldstore_road",
+    "x": 420.0,
+    "y": 347.4,
+    "road": "coldstore_road",
+    "on_edge": [
+     "n_door_d_cold_office",
+     "j_warehouse_row_top"
+    ],
+    "at_m_from_first_node": 60.0,
+    "war_stop": false,
+    "war_hours": null,
+    "what": "on the cold-store road; an ordinary stop place",
+    "src": "map.json police_points; 2.6.6, 2.6.7, RT2-17, FIT-G2"
+   }
+  ],
+  "edge_waits": [
+   {
+    "id": "patrol_wait_north_edge",
+    "map_point": "patrol_wait_north_edge",
+    "x": 160.0,
+    "y": 396.0,
+    "road": "north_road",
+    "edge_node": "j_north_edge",
+    "on_edge": [
+     "n_door_d_nr_68",
+     "j_north_edge"
+    ],
+    "at_m_from_first_node": 1.0,
+    "src": "FIT-G3 (the patrol waits on the road of the edge)"
+   },
+   {
+    "id": "patrol_wait_west_edge",
+    "map_point": "patrol_wait_west_edge",
+    "x": -76.0,
+    "y": 260.0,
+    "road": "chapel_lane",
+    "edge_node": "j_west_edge",
+    "on_edge": [
+     "n_door_d_cl_101",
+     "j_west_edge"
+    ],
+    "at_m_from_first_node": 3.5,
+    "src": "FIT-G3 (the patrol waits on the road of the edge)"
+   }
+  ],
+  "edge_routes": [
+   {
+    "to": "patrol_wait_north_edge",
+    "from_node": "j_north_road_foot",
+    "nodes": [
+     "j_north_road_foot",
+     "n_door_d_nr_1",
+     "n_door_d_nr_3",
+     "n_door_d_nr_2",
+     "n_door_d_nr_5",
+     "n_door_d_nr_4",
+     "n_door_d_nr_7",
+     "n_door_d_nr_6",
+     "n_door_d_nr_9",
+     "n_door_d_nr_8",
+     "n_door_d_nr_10",
+     "n_door_d_nr_12",
+     "n_door_d_nr_14",
+     "n_door_d_nr_11",
+     "n_door_d_nr_16",
+     "n_door_d_nr_18",
+     "j_cut150_west",
+     "n_door_d_nr_20",
+     "n_door_d_nr_13",
+     "n_door_d_nr_22",
+     "n_door_d_nr_15",
+     "n_door_d_nr_24",
+     "n_door_d_nr_17",
+     "n_door_d_nr_26",
+     "n_door_d_nr_19",
+     "n_door_d_nr_28",
+     "n_door_d_nr_21",
+     "n_door_d_nr_30",
+     "n_door_d_nr_23",
+     "n_door_d_nr_32",
+     "n_door_d_nr_25",
+     "n_door_d_nr_34",
+     "n_door_d_nr_27",
+     "n_door_d_nr_36",
+     "n_door_d_nr_29",
+     "n_door_d_nr_38",
+     "n_door_d_nr_40",
+     "n_door_d_nr_42",
+     "n_door_d_nr_31",
+     "n_door_d_nr_44",
+     "n_door_d_nr_33",
+     "n_door_d_nr_46",
+     "n_door_d_nr_35",
+     "n_door_d_nr_48",
+     "n_door_d_nr_37",
+     "n_door_d_nr_39",
+     "n_door_d_nr_41",
+     "j_chapel_lane",
+     "n_door_d_nr_43",
+     "n_door_d_nr_45",
+     "n_door_d_nr_47",
+     "n_door_d_nr_49",
+     "j_cut300_west",
+     "n_door_d_nr_53",
+     "j_ginnel_top",
+     "n_door_d_nr_55",
+     "n_door_d_nr_57",
+     "n_door_d_nr_50",
+     "n_door_d_nr_52",
+     "j_coldstore_west",
+     "n_door_d_nr_54",
+     "n_door_d_nr_56",
+     "n_door_d_nr_58",
+     "n_door_d_nr_60",
+     "n_door_d_lot_gate",
+     "n_door_d_nr_62",
+     "n_door_d_nr_64",
+     "n_door_d_nr_66",
+     "n_door_d_nr_68",
+     "j_north_edge"
+    ],
+    "length_m": 333.5
+   },
+   {
+    "to": "patrol_wait_west_edge",
+    "from_node": "j_north_road_foot",
+    "nodes": [
+     "j_north_road_foot",
+     "n_door_d_nr_1",
+     "n_door_d_nr_3",
+     "n_door_d_nr_2",
+     "n_door_d_nr_5",
+     "n_door_d_nr_4",
+     "n_door_d_nr_7",
+     "n_door_d_nr_6",
+     "n_door_d_nr_9",
+     "n_door_d_nr_8",
+     "n_door_d_nr_10",
+     "n_door_d_nr_12",
+     "n_door_d_nr_14",
+     "n_door_d_nr_11",
+     "n_door_d_nr_16",
+     "n_door_d_nr_18",
+     "j_cut150_west",
+     "n_door_d_nr_20",
+     "n_door_d_nr_13",
+     "n_door_d_nr_22",
+     "n_door_d_nr_15",
+     "n_door_d_nr_24",
+     "n_door_d_nr_17",
+     "n_door_d_nr_26",
+     "n_door_d_nr_19",
+     "n_door_d_nr_28",
+     "n_door_d_nr_21",
+     "n_door_d_nr_30",
+     "n_door_d_nr_23",
+     "n_door_d_nr_32",
+     "n_door_d_nr_25",
+     "n_door_d_nr_34",
+     "n_door_d_nr_27",
+     "n_door_d_nr_36",
+     "n_door_d_nr_29",
+     "n_door_d_nr_38",
+     "n_door_d_nr_40",
+     "n_door_d_nr_42",
+     "n_door_d_nr_31",
+     "n_door_d_nr_44",
+     "n_door_d_nr_33",
+     "n_door_d_nr_46",
+     "n_door_d_nr_35",
+     "n_door_d_nr_48",
+     "n_door_d_nr_37",
+     "n_door_d_nr_39",
+     "n_door_d_nr_41",
+     "j_chapel_lane",
+     "j_ginnel_chapel",
+     "n_door_d_cl_35",
+     "n_door_d_cl_24",
+     "n_door_d_cl_33",
+     "n_door_d_cl_22",
+     "n_door_d_cl_31",
+     "n_door_d_cl_20",
+     "n_door_d_cl_29",
+     "n_door_d_cl_18",
+     "n_door_d_cl_27",
+     "n_door_d_cl_16",
+     "n_door_d_cl_25",
+     "n_door_d_cl_14",
+     "n_door_d_cl_23",
+     "n_door_d_cl_12",
+     "n_door_d_cl_21",
+     "n_door_d_cl_10",
+     "n_door_d_cl_19",
+     "n_door_d_cl_8",
+     "n_door_d_cl_17",
+     "n_door_d_cl_6",
+     "n_door_d_cl_15",
+     "n_door_d_cl_4",
+     "n_door_d_cl_13",
+     "n_door_d_cl_11",
+     "n_door_d_cl_9",
+     "n_door_d_cl_7",
+     "n_door_d_cl_5",
+     "n_door_d_cl_2",
+     "n_door_d_school",
+     "n_door_d_cl_3",
+     "n_door_d_chapel_hall",
+     "n_door_d_cl_1",
+     "n_door_d_cl_113",
+     "n_door_d_cl_111",
+     "n_door_d_cl_109",
+     "n_door_d_cl_107",
+     "n_door_d_allot_gate",
+     "n_door_d_pigeon_loft",
+     "n_door_d_cl_105",
+     "n_door_d_cl_103",
+     "n_door_d_cl_101",
+     "j_west_edge"
+    ],
+    "length_m": 433.5
+   }
+  ]
+ },
+ "chase": {
+  "src": "C-01; FIT-F03; FIT-G3; DEFINITIONS design pass 4",
+  "no_timer": true,
+  "endings": [
+   "lost",
+   "caught",
+   "wrecked",
+   "edge"
+  ],
+  "no_chase_passes_real_minutes": 4,
+  "lost_if": {
+   "unseen_real_s": 7,
+   "gap_while_unseen_m": {
+    "by_car": 200,
+    "on_foot": 70
+   },
+   "distance_driven_alone_never_loses": true,
+   "src": "FIT-F03; DEFINITIONS F03"
+  },
+  "caught_by_car": {
+   "follow_behind_m": 28,
+   "caught_if_speed_below_mps": 2,
+   "for_real_s": 3,
+   "src": "proto carChaseFollowsMetresBehind 28, carChaseCaught 2 m/s for 3 s",
+   "chosen": true
+  },
+  "caught_on_foot": "a hand on the collar: searched as if he stood (2.6.2)",
+  "soft_edge": {
+   "src": "FIT-G3; DEFINITIONS G3",
+   "ends_as_lost_within_real_s": 2,
+   "pursuer_turns_back": true,
+   "tom_out_of_hook_game_minutes": 30,
+   "tom_out_of_hook_real_s": 60,
+   "old_value_real_s_at_60s_hour": 30,
+   "csv_note_disagrees": "DATA-SWEEP.csv FIT-G3 says 15 real seconds at 120 s an hour; 30 game minutes is 60 real seconds at 120 s an hour (30 min x 2 s)",
+   "after_return": "the patrol waits on the edge road for the rest of the night, so Tom must come back past it",
+   "wait_node_north": "patrol_wait_north_edge",
+   "wait_node_west": "patrol_wait_west_edge",
+   "constable_to_office_next_morning_at": "10:00",
+   "if": "an officer saw the deed (a refused stop, a hit-and-run in sight); go with him or run",
+   "plate_noted_if_read_within_m": 18,
+   "plate_noted_min_light": 0.7
+  }
+ },
+ "search_rules": {
+  "src": "2.6.10; FIT-G3; DP5-C03; DEFINITIONS C-01",
+  "after_a_lost_chase": {
+   "who": "the patrol car, or the beat constable on foot",
+   "where": "the streets round the last place seen",
+   "duration_real_s": {
+    "min": 30,
+    "max": 120,
+    "draw": "one seeded draw per lost chase",
+    "chosen_draw": true
+   },
+   "pace": "slowly: the car at the search crawl speed, the constable at 1.1 m/s, lamp on the turnings",
+   "search_radius_m": 80,
+   "search_radius_chosen": true,
+   "search_radius_note": "the last-seen road and the streets that join it within 80 m (chosen)",
+   "then": "waits on that road for the rest of the night (night: until 06:00; by day: 120 real s, then back on the route; chosen)",
+   "wait_day_real_s": 120,
+   "wait_chosen": true,
+   "seen_inside_the_search": "the same chase resumes (DP5-C03)",
+   "no_mark_on_screen": true,
+   "caveat": "DEFINITIONS marks the 30 to 120 s band PENDING (a judgement; the 5-sample chase and search lengths of block 1)"
+  },
+  "wanted_spell": {
+   "note": "G5 heat samples: the whole spell, not the search",
+   "status": "pending"
+  },
+  "sees_tom_when": {
+   "knows_him_within_m": 25,
+   "description_only": "a man who matches two marks (coat and car, or coat and a limp) within 18 m in light 0.7 or more while the deed is hot",
+   "src": "RT2-16"
+  }
+ },
+ "after_a_deed": {
+  "src": "2.6.10; DESIGN-ADDENDUM A36; proto tune/law.js A36 rows",
+  "response_time_clock": "game minutes; real seconds are twice the game minutes on the 120 s hour (a proto 20 game minutes was 20 real s at 60 s an hour, now 40 real s)",
+  "rule": "a reported deed always brings an officer to its spot; the spot is watched ground for the rest of the night",
+  "officer_walks_to_spot_mps": 1.6,
+  "officer_walk_src": "proto officerToTheSpotMetresPerSecond",
+  "officer_stays_at_spot_game_minutes": 60,
+  "torch_at_night": true,
+  "tape_for_a_body": {
+   "blue_and_white_tape": true,
+   "stays_until_game_hour": 12,
+   "stays_chosen": true
+  },
+  "ellis_next_morning_at": "09:00",
+  "ellis_src": "proto ellisNextMorningAtHour 9",
+  "spot_watched_until": "07:00",
+  "watched_ground_radius_m": 24,
+  "watched_src": "proto spotWatchedUntilHour 7, watchedGroundWithinMetres 24",
+  "going_back_to_watched_ground": "an officer with cause challenges him; a back-at-the-spot call after 8 game minutes (proto backAtTheSpotCallAfterGameMinutes 8)",
+  "knock_street_rules": {
+   "when": "from 09:00 the next morning",
+   "who": "a constable (the day beat constable)",
+   "what": "knocks along the deed street and asks at windows; each door takes 12 real s and the walk between doors is at 1.1 m/s",
+   "door_real_s": 12,
+   "chosen": true,
+   "also": "for two nights after, the spot is walked more often: the night beat takes a detour past the spot node twice a cycle (beat_visits x 2, the same figure as a street on edge)",
+   "warm_for_game_days": 2
+  },
+  "street_on_edge": {
+   "deeds": 3,
+   "within_game_days": 2,
+   "eases_after_game_days": 3,
+   "walk_starts_sooner_times": 0.5,
+   "beat_visits_times": 2,
+   "second_constable": true,
+   "src": "A37; proto tune/law.js"
+  },
+  "deeds": [
+   {
+    "id": "window_broken",
+    "deed": "a window or windscreen broken",
+    "officer_response_game_minutes": 25,
+    "officer_response_real_s": 50,
+    "offence": "damage",
+    "tape": false,
+    "ellis_next_morning": false,
+    "chosen": true,
+    "src": "2.6.10; proto pieces/law.js afterDeed; response time chosen",
+    "reported_needed": true
+   },
+   {
+    "id": "door_forced",
+    "deed": "a door forced",
+    "officer_response_game_minutes": 20,
+    "officer_response_real_s": 40,
+    "offence": "damage",
+    "tape": false,
+    "ellis_next_morning": false,
+    "src": "proto afterDeed 20",
+    "reported_needed": true
+   },
+   {
+    "id": "break_in",
+    "deed": "a break-in",
+    "officer_response_game_minutes": 20,
+    "officer_response_real_s": 40,
+    "offence": "damage",
+    "tape": false,
+    "ellis_next_morning": false,
+    "detective_crime": true,
+    "src": "proto afterDeed 20",
+    "reported_needed": true
+   },
+   {
+    "id": "car_taken",
+    "deed": "a parked car taken (owner reports when he finds it gone)",
+    "officer_response_game_minutes": 25,
+    "officer_response_real_s": 50,
+    "offence": "damage",
+    "tape": false,
+    "ellis_next_morning": false,
+    "chosen": true,
+    "note": "clock starts when the owner reports, not when the car is taken",
+    "src": "2.6.10; proto pieces/law.js afterDeed; response time chosen",
+    "reported_needed": true
+   },
+   {
+    "id": "pocket_or_lift",
+    "deed": "a pocket picked or a thing lifted",
+    "officer_response_game_minutes": 20,
+    "officer_response_real_s": 40,
+    "offence": "damage",
+    "tape": false,
+    "ellis_next_morning": false,
+    "src": "proto afterDeed 20",
+    "reported_needed": true
+   },
+   {
+    "id": "shop_holdup",
+    "deed": "a hold-up of a shop",
+    "officer_response_game_minutes": 8,
+    "officer_response_real_s": 16,
+    "offence": "robbery",
+    "tape": false,
+    "ellis_next_morning": true,
+    "detective_crime": true,
+    "chosen": true,
+    "src": "2.6.10; proto pieces/law.js afterDeed; response time chosen",
+    "reported_needed": true
+   },
+   {
+    "id": "assault",
+    "deed": "a blow or a scuffle that leaves a mark",
+    "officer_response_game_minutes": 12,
+    "officer_response_real_s": 24,
+    "offence": "assault",
+    "tape": false,
+    "ellis_next_morning": false,
+    "chosen": true,
+    "src": "2.6.10; proto pieces/law.js afterDeed; response time chosen",
+    "reported_needed": true
+   },
+   {
+    "id": "wounding",
+    "deed": "a man cut or put down badly",
+    "officer_response_game_minutes": 10,
+    "officer_response_real_s": 20,
+    "offence": "wounding",
+    "tape": false,
+    "ellis_next_morning": true,
+    "detective_crime": true,
+    "chosen": true,
+    "src": "2.6.10; proto pieces/law.js afterDeed; response time chosen",
+    "reported_needed": true
+   },
+   {
+    "id": "officer_struck",
+    "deed": "an officer struck",
+    "officer_response_game_minutes": 4,
+    "officer_response_real_s": 8,
+    "offence": "officer_struck",
+    "tape": false,
+    "ellis_next_morning": true,
+    "chosen": true,
+    "note": "a colleague arrives; the manhunt rules of RT2-02 apply",
+    "src": "2.6.10; proto pieces/law.js afterDeed; response time chosen",
+    "reported_needed": false
+   },
+   {
+    "id": "body_found",
+    "deed": "a body",
+    "officer_response_game_minutes": 12,
+    "officer_response_real_s": 24,
+    "offence": "killing",
+    "tape": true,
+    "torch_at_night": true,
+    "ellis_next_morning": true,
+    "detective_crime": true,
+    "chosen": true,
+    "note": "tape up the same visit; Ellis at 09:00 next morning (proto ellisNextMorningAtHour 9)",
+    "src": "2.6.10; proto pieces/law.js afterDeed; response time chosen",
+    "reported_needed": true
+   },
+   {
+    "id": "hit_and_run",
+    "deed": "a person knocked down and the car driven off",
+    "officer_response_game_minutes": 15,
+    "officer_response_real_s": 30,
+    "offence": "hit_and_run",
+    "tape": false,
+    "ellis_next_morning": false,
+    "ambulance_game_minutes": 10,
+    "chosen": true,
+    "src": "2.6.10; proto pieces/law.js afterDeed; response time chosen",
+    "reported_needed": true
+   },
+   {
+    "id": "hit_and_stayed",
+    "deed": "a person knocked down and the driver stays",
+    "officer_response_game_minutes": 15,
+    "officer_response_real_s": 30,
+    "offence": null,
+    "tape": false,
+    "ellis_next_morning": false,
+    "ambulance_game_minutes": 10,
+    "chosen": true,
+    "note": "no offence unless reckless; the ambulance takes the person to hospital",
+    "src": "2.6.10; proto pieces/law.js afterDeed; response time chosen",
+    "reported_needed": true
+   },
+   {
+    "id": "gun_shown_reported",
+    "deed": "a gun seen and reported",
+    "officer_response_game_minutes": 15,
+    "officer_response_real_s": 30,
+    "offence": "gun",
+    "tape": false,
+    "ellis_next_morning": false,
+    "armed_by_dial": {
+     "fists": false,
+     "shown": false,
+     "fired": true,
+     "war": true
+    },
+    "chosen": true,
+    "src": "2.6.10; proto pieces/law.js afterDeed; response time chosen",
+    "reported_needed": true
+   },
+   {
+    "id": "shot_fired",
+    "deed": "a shot fired",
+    "officer_response_game_minutes": 6,
+    "officer_response_real_s": 12,
+    "offence": "gun",
+    "tape": false,
+    "ellis_next_morning": true,
+    "detective_crime": true,
+    "armed_by_dial": {
+     "fists": false,
+     "shown": false,
+     "fired": true,
+     "war": true
+    },
+    "chosen": true,
+    "src": "2.6.10; proto pieces/law.js afterDeed; response time chosen",
+    "reported_needed": true
+   },
+   {
+    "id": "refused_stop",
+    "deed": "a stop refused",
+    "officer_response_game_minutes": 0,
+    "officer_response_real_s": 0,
+    "offence": "refused_stop",
+    "tape": false,
+    "ellis_next_morning": false,
+    "note": "the officer is already there",
+    "src": "2.6.10",
+    "reported_needed": false
+   },
+   {
+    "id": "anonymous_999",
+    "deed": "an anonymous 999 call",
+    "officer_response_game_minutes": 40,
+    "officer_response_real_s": 80,
+    "offence": null,
+    "tape": false,
+    "ellis_next_morning": false,
+    "arrests_alone": false,
+    "same_night": true,
+    "src": "2.6.10: brings a constable that night but never makes an arrest alone",
+    "chosen": true,
+    "reported_needed": true
+   }
+  ]
+ },
+ "custody": {
+  "src": "2.6.4; 4.3.7; RT2-02; RT2-16; RT2-17; proto tune/law.js custodyGameHours",
+  "unit": "game hours in custody; the hours pass as skipped time, under 2 real minutes of play, so the 120 s hour is not played out",
+  "play_real_s_at_most": 120,
+  "rows": [
+   {
+    "offence": "damage",
+    "game_hours": 6,
+    "ends": "charged, or a caution for a first offence",
+    "src": "2.6.4 (about 6 for a window)"
+   },
+   {
+    "offence": "damage_owned_up",
+    "game_hours": 2,
+    "ends": "a caution",
+    "src": "2.6.4"
+   },
+   {
+    "offence": "assault",
+    "game_hours": 6,
+    "ends": "charged",
+    "src": "proto custodyGameHours assault 6",
+    "chosen": true
+   },
+   {
+    "offence": "wounding",
+    "game_hours": 8,
+    "ends": "charged"
+   },
+   {
+    "offence": "robbery",
+    "game_hours": 12,
+    "ends": "charged"
+   },
+   {
+    "offence": "killing",
+    "game_hours": 22,
+    "ends": "charged and remanded, or police bail (rare)"
+   },
+   {
+    "offence": "hit_and_run",
+    "game_hours": 8,
+    "ends": "charged",
+    "src": "RT2-16"
+   },
+   {
+    "offence": "officer_struck",
+    "game_hours": 8,
+    "ends": "always a charge, never a caution",
+    "src": "RT2-02"
+   },
+   {
+    "offence": "officer_killed",
+    "game_hours": 22,
+    "ends": "a charge; the manhunt at once",
+    "src": "RT2-02"
+   },
+   {
+    "offence": "gun_found_at_war_stop",
+    "game_hours": 12,
+    "ends": "always a charge, gun kept, Ellis up one stage",
+    "src": "RT2-17"
+   },
+   {
+    "offence": "refused_stop_no_deed",
+    "game_hours": 2,
+    "ends": "a caution; a charge the second time",
+    "src": "RT2-16"
+   }
+  ],
+  "one_case_adds_game_hours": 2,
+  "one_case_src": "proto oneCaseAddsGameHours 2 (once the street crimes and the fire are one case)",
+  "inside_pace_game_hours": 24,
+  "pace_serious_game_hours": 36,
+  "never_twice_for_one_deed": true,
+  "coat_kept_if_worn": true,
+  "duty_solicitor_free": true,
+  "signed_statement_made_at_station": "09:00 the morning after the call",
+  "ends": [
+   "released without charge",
+   "police bail pending inquiries",
+   "charged and remanded"
+  ],
+  "no_prison_no_court_scene": true,
+  "charges_accumulate": "one charge per arrest that ends in a charge; an office-search find adds one; trading Ellis a rival removes one (2.6.9)"
+ },
+ "ellis": {
+  "id": "ellis",
+  "role": "detective_sergeant",
+  "person_ref": true,
+  "src": "2.6.5; RT-13; 2.6.9; proto pieces/law.js ellis",
+  "is_on": "the warehouse fire already",
+  "comes_for": [
+   "a body",
+   "a detective's crime once reported",
+   "talk (from the second day, once three people of his day world pass on talk of his nights)"
+  ],
+  "talk_from_day": 2,
+  "talk_needs_day_people": 3,
+  "day_world_people": [
+   "ada",
+   "alison_sedman",
+   "philip_danby",
+   "father_walsh",
+   "june_suddaby",
+   "darren_milner",
+   "any regular called on or carried as a fare twice"
+  ],
+  "day_world_person_ref": true,
+  "stages": [
+   {
+    "stage": 0,
+    "name": "nothing",
+    "sign": null,
+    "signs": [],
+    "sign_text": []
+   },
+   {
+    "stage": 1,
+    "name": "asking round",
+    "promoted_by": [
+     "talk (the day-world rule above)"
+    ],
+    "signs": [
+     {
+      "id": "her_name_in_talk",
+      "kind": "street talk",
+      "what": "her name said in the street's talk by at least two people on the next walk"
+     },
+     {
+      "id": "woman_at_windows",
+      "kind": "seen",
+      "what": "a woman in a plain coat seen speaking to a shopkeeper on Quay Street (from 09:00)"
+     }
+    ],
+    "sign_text": [
+     "\"There was a woman in asking about your lot. Ellis, her name was.\"",
+     "\"CID, she said. Nobody told me what for.\""
+    ]
+   },
+   {
+    "stage": 2,
+    "name": "investigating",
+    "promoted_by": [
+     "a body",
+     "a detective's crime reported",
+     "a stage-1 file when a deed in the detective list is reported"
+    ],
+    "signs": [
+     {
+      "id": "officer_at_door",
+      "kind": "seen",
+      "what": "an officer at the office door or Tom's door, asking questions"
+     },
+     {
+      "id": "office_search_notice",
+      "kind": "told",
+      "what": "a constable at the door and Sheila warning him: the office will be searched, with notice the evening before",
+      "notice_game_hours_before": 12
+     }
+    ],
+    "sign_text": [
+     "\"A constable was here for you. Said he would be back tomorrow with the sergeant.\"",
+     "\"They want to look through the office, tomorrow. Sheila had it from the desk.\""
+    ],
+    "office_search": {
+     "once_only": true,
+     "needs_stage_at_least": 2,
+     "notice_game_hours": 12,
+     "notice_src": "proto officeSearchNoticeGameHours 12",
+     "what_is_stored_counts": true,
+     "find_adds_charge": true
+    }
+   },
+   {
+    "stage": 3,
+    "name": "a manhunt",
+    "promoted_by": [
+     "a killing",
+     "a charge while at stage 2",
+     "a witnessed killing",
+     "an officer knocked out and got away (within the game hour)",
+     "an officer killed (at once)"
+    ],
+    "signs": [
+     {
+      "id": "car_on_the_street",
+      "kind": "seen",
+      "what": "a police car on the street, stood at the foot of Quay Street"
+     },
+     {
+      "id": "description_said_aloud",
+      "kind": "heard",
+      "what": "his description said aloud by an officer to a passer-by"
+     }
+    ],
+    "sign_text": [
+     "\"Tall man, dark overcoat, drives a cab. Seen him?\"",
+     "\"They have a car outside. They are asking after you by name.\""
+    ],
+    "sign_shows_before_arrest_game_hours": 1,
+    "sign_shows_before_arrest_real_s": 120,
+    "old_value_real_s": 60,
+    "stale_note": "2.6.5 says \"one game hour (60 real seconds)\"; on the 120 s hour it is 120 real seconds",
+    "arrest_only_after_sign": true
+   }
+  ],
+  "rules": {
+   "one_stage_at_a_time": true,
+   "no_stage_skipped_unseen": true,
+   "next_stage_waits_for_sign_shown": true,
+   "promotion_rule": "stages move only on the events named under promoted_by; a stage cannot begin until the previous stage's sign has been shown; an event that wants a higher stage waits (\"owed\") and moves one step each time the sign has been shown",
+   "fall_rule": {
+    "quiet": "one stage down after two quiet game weeks with no new reported deed or charge (never below asking round once she has reached investigating)",
+    "quiet_game_days": 14,
+    "floor_once_investigating": 1,
+    "manhunt_falls_to": 2,
+    "manhunt_falls_after_game_days_without_sighting": 3,
+    "manhunt_ends_with": "an arrest, or three game days without a sighting"
+   },
+   "stage_up_for": {
+    "officer_struck": 1,
+    "gun_found_at_war_stop": 1
+   },
+   "tom_never_lays_hands_on": [
+    "Ellis",
+    "any woman officer"
+   ]
+  },
+  "bought": {
+   "override_note": "decision of 24 Nov: Ellis can be bought; this overrides 4.3.7's 'Ellis is not among them'",
+   "price_pounds": 800,
+   "weekly_pounds": 100,
+   "paid_only_from_cash": true,
+   "while_bought": {
+    "case_cools_times_faster": 2,
+    "loses_best_line_once": true
+   },
+   "missed_week": {
+    "ends_for_good": true,
+    "case_jumps_points": 3,
+    "she_remembers": true,
+    "never_bought_twice": true
+   },
+   "pay_day": "every seventh game day from the day she was bought",
+   "pay_day_chosen": true,
+   "src": "ECONOMY-DESIGN 5.7, EC-11, choice 2; PRICES-WAGES-1990 s.4",
+   "unit_of_case_points": "charges (the economy run counts \"points\"; read as charges on her file)",
+   "unit_chosen": true
+  }
+ },
+ "bought_officers": {
+  "src": "2.6.8; 4.3.7; ECONOMY-DESIGN 5.7; proto tune/law.js bought",
+  "rule": "police are corruptible as individuals, never as a thesis; the station as a whole never changes",
+  "officers": [
+   {
+    "id": "bought_look_away",
+    "role": "patrol_driver",
+    "person_ref": true,
+    "proto_name_hint": "PC Harker",
+    "price_pounds": 50,
+    "does": "looks away from a car once",
+    "uses": 1,
+    "proto_uses": 99,
+    "uses_note": "blueprint says once; the prototype allowed 99 and is overruled",
+    "works_on": "a stop or a challenge about a car",
+    "past_his_limit": "a crime he saw"
+   },
+   {
+    "id": "bought_lose_statement",
+    "role": "station_detective_constable",
+    "person_ref": true,
+    "proto_name_hint": "DC Pollitt",
+    "price_pounds": 200,
+    "does": "loses a statement once",
+    "uses": 1,
+    "proto_price_pounds": 150,
+    "price_note": "economy price (200) is newer than the prototype (150)",
+    "works_on": "one signed statement naming Tom",
+    "past_his_limit": "a crime he saw"
+   }
+  ],
+  "honest_officer_offered_a_note": "a crime he saw: bribery (an arrest with cause)",
+  "buying_is_an_act": "a colleague who sees the payment keeps it for good",
+  "struck_stops_being_bought_for_good": true,
+  "payment_only_from_cash": true
+ },
+ "armed_response": {
+  "src": "2.6.6; RT2-17; dial states in BLUEPRINT-02 (Fists, Shown, Fired, War)",
+  "none_before": "Fired",
+  "beat_constables_carry": "truncheon only",
+  "by_dial_state": [
+   {
+    "state": "fists",
+    "index": 0,
+    "armed_officers": false,
+    "delay_game_minutes": null
+   },
+   {
+    "state": "shown",
+    "index": 1,
+    "armed_officers": false,
+    "delay_game_minutes": null
+   },
+   {
+    "state": "fired",
+    "index": 2,
+    "armed_officers": true,
+    "delay_game_minutes": 45,
+    "delay_real_s": 90,
+    "from": "the station, slowly; later than an ordinary call (20 game minutes)",
+    "chosen": true,
+    "chosen_note": "2.6.6 says later than an ordinary call and gives no figure; about twice the ordinary 20 game minutes"
+   },
+   {
+    "state": "war",
+    "index": 3,
+    "armed_officers": true,
+    "delay_game_minutes": 10,
+    "delay_real_s": 20,
+    "from": "an armed car already working the Hook (two War stop posts, 18:00-02:00)",
+    "chosen": true
+   }
+  ],
+  "ordinary_response_game_minutes": 20,
+  "nothing_shown_on_any_map": true
+ },
+ "memory_and_description": {
+  "src": "RT2-16; 2.6.3",
+  "hot_for_game_days": {
+   "hit_and_run": 3,
+   "officer_struck": 7,
+   "killing": "never cools"
+  },
+  "recognises_known_tom_within_m": 25,
+  "description_match_within_m": 18,
+  "description_match_min_light": 0.7,
+  "description_marks_needed": 2,
+  "noted_plate_known_for_good": true,
+  "noted_plate_hot_deed_stops_car_on_sight": true,
+  "arrest_needs": "a signed statement from someone who knew it was him, or an officer who saw it (2.6.3); talk alone never",
+  "new_plates_or_respray_clear_a_noted_plate": "only for witnesses who have not told (GV-02; vehicles.json)"
+ }
+}

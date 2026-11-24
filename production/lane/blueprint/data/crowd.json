@@ -1,0 +1,2608 @@
+{
+ "file": "crowd.json",
+ "version": "2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "production/lane/design-proof/DEFINITIONS-2026-11-21.md (G9; GD-02 settled by the counts; design pass 4)",
+  "production/lane/blueprint/BLUEPRINT-02-town.md (2.1.2, FIT-G9, RT2-10)",
+  "production/lane/blueprint/data/map.json (frozen road, place and furniture ids)",
+  "production/lane/blueprint/data/tune.json (crowd.* keys)",
+  "production/specs/street-people.json (the made-place people)",
+  "production/specs/street-wear.json (checked: surface wear decals only, no clothes)",
+  "production/research/plain-1990-clothes/NOTE.md",
+  "production/research/shop-hours-1990/NOTE-2026-09-29.md",
+  "production/cloud-week/town/people.json (kept extras, seven days)"
+ ],
+ "open_points": [
+  "The measuring lane's crowd-count rows of 24 Nov (production/research/lane/measurements/) are not in the repository: only DECIDES-CHECK-2026-11-24.md (a plan) and DEFINITIONS line 77, which quotes the builder's row of 24 Nov 09:46 (busiest daytime streets about 5 to 10 in view in KCD2 and RDR2, middle about 6, quiet 0 to 3). Those figures are recorded under measured_frame_check on the parade and the quiet zones. Every other band is provisional until the rows land.",
+  "G9's parade front is 100 m on both pavements, but map.json's quay_street is 57.1 m. The front is read as quay_street plus back_parade (98.2 m); stretch counts for that zone cover both roads.",
+  "Clock: any real-time figure here is on 120 s a game hour. The repeat gap of KCD2's pool (32 s, a file-read lead) is matched by 16 game minutes (32 real seconds); the old 60 s clock would have made it 32 game minutes.",
+  "The 1990 pavement study (CLOUD-FIGURES B4, who walked a Humber port's pavements by hour) is still owed; the hour bands are the design's.",
+  "Step-aside distance and timing are owed from reference footage (DEFINITIONS 2.x, 26 to 28 Nov). tune.json crowd.avoid_radius_m, crowd.step_aside_time_s, crowd.look_before_step_s, crowd.spawn_min_distance_m are null there; this file keeps them null and owed, and gives a chosen working spawn distance separately.",
+  "G9 first pass counts (25 to 35 busy) and design pass 4 (12 to 20) differ; pass 4 is followed. street-wear.json holds wall wear decals only, so the look tables come from the plain-1990-clothes note and the clothes' floor; Jafar's ruling of 1 Oct (no trainers, no contrast stitching) is followed for every extra.",
+  "Match, bonfire, remembrance and chapel counts are chosen; the design gives only 'double at 15:00 and 17:00' and 'chapel is busy'.",
+  "ev_coldstore_in and ev_coldstore_out overlap on purpose: the map says the shift leaves at half past five; the arrival is a chosen mirror."
+ ],
+ "hour_bands": [
+  {
+   "id": "night_deep",
+   "from": "01:00",
+   "to": "05:30",
+   "class": "night",
+   "src": "G9 bands; evening/early splits chosen",
+   "chosen": false
+  },
+  {
+   "id": "dawn_shift",
+   "from": "05:30",
+   "to": "07:00",
+   "class": "dawn",
+   "src": "G9 bands; evening/early splits chosen",
+   "chosen": false
+  },
+  {
+   "id": "early",
+   "from": "07:00",
+   "to": "08:00",
+   "class": "day",
+   "src": "G9 bands; evening/early splits chosen",
+   "chosen": true
+  },
+  {
+   "id": "busy_am",
+   "from": "08:00",
+   "to": "09:30",
+   "class": "busy",
+   "src": "G9 bands; evening/early splits chosen",
+   "chosen": false
+  },
+  {
+   "id": "morning",
+   "from": "09:30",
+   "to": "12:00",
+   "class": "day",
+   "src": "G9 bands; evening/early splits chosen",
+   "chosen": true
+  },
+  {
+   "id": "busy_noon",
+   "from": "12:00",
+   "to": "14:00",
+   "class": "busy",
+   "src": "G9 bands; evening/early splits chosen",
+   "chosen": false
+  },
+  {
+   "id": "afternoon",
+   "from": "14:00",
+   "to": "16:30",
+   "class": "day",
+   "src": "G9 bands; evening/early splits chosen",
+   "chosen": true
+  },
+  {
+   "id": "busy_pm",
+   "from": "16:30",
+   "to": "18:00",
+   "class": "busy",
+   "src": "G9 bands; evening/early splits chosen",
+   "chosen": false
+  },
+  {
+   "id": "evening",
+   "from": "18:00",
+   "to": "22:00",
+   "class": "evening",
+   "src": "G9 bands; evening/early splits chosen",
+   "chosen": false
+  },
+  {
+   "id": "late",
+   "from": "22:00",
+   "to": "01:00",
+   "class": "late",
+   "src": "G9 bands; evening/early splits chosen",
+   "chosen": false
+  }
+ ],
+ "count_kinds": {
+  "per_frame": "people in one camera frame at the default 86-degree view; settled design counts (GD-02): busy 4 to 10, other daytime 2 to 7, quiet streets at night 0 to 2, market and match 15 to 25. About half stand or sit at a made place (tune crowd.at_made_place_share_min 0.4 is the test floor), groups of 2 to 3 facing in.",
+  "per_stretch": "people on a stretch, both pavements. Parade front: the whole 98.2 m (G9). Every other zone: people per 100 m of its own road. A frame holds fewer than a stretch."
+ },
+ "weather_and_day_modifiers": {
+  "rain_factor": 0.5,
+  "rain_note": "G9: rain halves each band, frame and stretch, rounded up for the max and down for the min; tune/light-weather crowd_factor must read 0.5 for rain. Drizzle uses the light-weather profile's own crowd_factor if it differs.",
+  "thursday_market": {
+   "factor": 0.667,
+   "applies_to": "zones with shop_daytime true, bands early to afternoon (09:00 to 17:30)",
+   "src": "2.1.2"
+  },
+  "saturday_match": {
+   "windows": [
+    [
+     "15:00",
+     "15:30"
+    ],
+    [
+     "17:00",
+     "17:30"
+    ]
+   ],
+   "factor": 2,
+   "frame_cap": 25,
+   "stretch_cap": 30,
+   "src": "2.1.2; GD-02"
+  },
+  "sunday": {
+   "shop_zones_factor": 0.35,
+   "note": "shops shut (Shops Act 1950); newsagent 07:00 to 12:00; chapel events replace the lane's base bands",
+   "chosen": true
+  },
+  "weather_ceiling_rule": "under rain a frame never exceeds half the dry frame_max, and shelter takes the made places first (doorways, bus shelter, ferry landing shelter)"
+ },
+ "zones": [
+  {
+   "id": "z_parade_quay_street",
+   "label": "Quay Street, the parade front (pavements both sides)",
+   "road": "quay_street",
+   "range_m": [
+    0,
+    57.1
+   ],
+   "place": null,
+   "shop_daytime": true,
+   "bands": [
+    {
+     "band": "night_deep",
+     "frame_min": 0,
+     "frame_max": 1,
+     "stretch_min": 0,
+     "stretch_max": 2
+    },
+    {
+     "band": "dawn_shift",
+     "frame_min": 2,
+     "frame_max": 6,
+     "stretch_min": 5,
+     "stretch_max": 8
+    },
+    {
+     "band": "early",
+     "frame_min": 2,
+     "frame_max": 7,
+     "stretch_min": 6,
+     "stretch_max": 12
+    },
+    {
+     "band": "busy_am",
+     "frame_min": 4,
+     "frame_max": 10,
+     "stretch_min": 12,
+     "stretch_max": 20
+    },
+    {
+     "band": "morning",
+     "frame_min": 2,
+     "frame_max": 7,
+     "stretch_min": 6,
+     "stretch_max": 12
+    },
+    {
+     "band": "busy_noon",
+     "frame_min": 4,
+     "frame_max": 10,
+     "stretch_min": 12,
+     "stretch_max": 20
+    },
+    {
+     "band": "afternoon",
+     "frame_min": 2,
+     "frame_max": 7,
+     "stretch_min": 6,
+     "stretch_max": 12
+    },
+    {
+     "band": "busy_pm",
+     "frame_min": 4,
+     "frame_max": 10,
+     "stretch_min": 12,
+     "stretch_max": 20
+    },
+    {
+     "band": "evening",
+     "frame_min": 1,
+     "frame_max": 4,
+     "stretch_min": 5,
+     "stretch_max": 10
+    },
+    {
+     "band": "late",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 2,
+     "stretch_max": 5
+    }
+   ],
+   "src": "G9 rescaled in design pass 4; GD-02 settled",
+   "provisional": false,
+   "note": "With back_parade this is the 98.2 m the design calls the 100 m parade front; stretch rows give the whole front, not each road.",
+   "stretch_covers": [
+    "quay_street",
+    "back_parade"
+   ],
+   "stretch_length_m": 98.2,
+   "stretch_note": "stretch_min and max are people on the whole 98.2 m front, both pavements (G9). Other zones: stretch counts are people per 100 m of their own road, both pavements.",
+   "measured_frame_check": {
+    "busy_band_measured": [
+     5,
+     10
+    ],
+    "src": "production/lane/design-proof/DEFINITIONS-2026-11-21.md line 77 quoting the measuring lane's row of 24 Nov 09:46 (KCD2 and RDR2 busiest daytime streets 5 to 10 in view)",
+    "note": "measured 5 to 10 sits inside the design 4 to 10; the design floor of 4 is kept, but spawn aims at 5 to 10 at busy bands"
+   }
+  },
+  {
+   "id": "z_parade_back_parade",
+   "label": "Back Parade (the parade front's turn)",
+   "road": "back_parade",
+   "range_m": [
+    0,
+    41.09
+   ],
+   "place": null,
+   "shop_daytime": true,
+   "bands": [
+    {
+     "band": "night_deep",
+     "frame_min": 0,
+     "frame_max": 1,
+     "stretch_min": 0,
+     "stretch_max": 2
+    },
+    {
+     "band": "dawn_shift",
+     "frame_min": 1,
+     "frame_max": 5,
+     "stretch_min": 3,
+     "stretch_max": 6
+    },
+    {
+     "band": "early",
+     "frame_min": 1,
+     "frame_max": 5,
+     "stretch_min": 4,
+     "stretch_max": 9
+    },
+    {
+     "band": "busy_am",
+     "frame_min": 2,
+     "frame_max": 7,
+     "stretch_min": 8,
+     "stretch_max": 14
+    },
+    {
+     "band": "morning",
+     "frame_min": 1,
+     "frame_max": 5,
+     "stretch_min": 4,
+     "stretch_max": 9
+    },
+    {
+     "band": "busy_noon",
+     "frame_min": 2,
+     "frame_max": 7,
+     "stretch_min": 8,
+     "stretch_max": 14
+    },
+    {
+     "band": "afternoon",
+     "frame_min": 1,
+     "frame_max": 5,
+     "stretch_min": 4,
+     "stretch_max": 9
+    },
+    {
+     "band": "busy_pm",
+     "frame_min": 2,
+     "frame_max": 7,
+     "stretch_min": 8,
+     "stretch_max": 14
+    },
+    {
+     "band": "evening",
+     "frame_min": 0,
+     "frame_max": 3,
+     "stretch_min": 3,
+     "stretch_max": 7
+    },
+    {
+     "band": "late",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 1,
+     "stretch_max": 4
+    }
+   ],
+   "src": "derived from the parade front: 41 m of the same front",
+   "provisional": true,
+   "note": "Scaled from the parade."
+  },
+  {
+   "id": "z_quay_road_landing",
+   "label": "The Quay by the ferry landing and its rank",
+   "road": "quay_road",
+   "range_m": [
+    0,
+    30
+   ],
+   "place": "ferry_landing",
+   "shop_daytime": false,
+   "bands": [
+    {
+     "band": "night_deep",
+     "frame_min": 0,
+     "frame_max": 1,
+     "stretch_min": 0,
+     "stretch_max": 2
+    },
+    {
+     "band": "dawn_shift",
+     "frame_min": 1,
+     "frame_max": 5,
+     "stretch_min": 3,
+     "stretch_max": 6
+    },
+    {
+     "band": "early",
+     "frame_min": 1,
+     "frame_max": 5,
+     "stretch_min": 4,
+     "stretch_max": 9
+    },
+    {
+     "band": "busy_am",
+     "frame_min": 2,
+     "frame_max": 7,
+     "stretch_min": 8,
+     "stretch_max": 14
+    },
+    {
+     "band": "morning",
+     "frame_min": 1,
+     "frame_max": 5,
+     "stretch_min": 4,
+     "stretch_max": 9
+    },
+    {
+     "band": "busy_noon",
+     "frame_min": 2,
+     "frame_max": 7,
+     "stretch_min": 8,
+     "stretch_max": 14
+    },
+    {
+     "band": "afternoon",
+     "frame_min": 1,
+     "frame_max": 5,
+     "stretch_min": 4,
+     "stretch_max": 9
+    },
+    {
+     "band": "busy_pm",
+     "frame_min": 2,
+     "frame_max": 7,
+     "stretch_min": 8,
+     "stretch_max": 14
+    },
+    {
+     "band": "evening",
+     "frame_min": 0,
+     "frame_max": 3,
+     "stretch_min": 3,
+     "stretch_max": 7
+    },
+    {
+     "band": "late",
+     "frame_min": 1,
+     "frame_max": 4,
+     "stretch_min": 3,
+     "stretch_max": 6
+    }
+   ],
+   "src": "chosen from the parade rows",
+   "provisional": true,
+   "note": "Ferry window 22:00 to 01:00 raises the late band."
+  },
+  {
+   "id": "z_quay_road_mid",
+   "label": "The Quay between the landing and the fish dock (caff, ginnel mouth, snooker)",
+   "road": "quay_road",
+   "range_m": [
+    30,
+    460
+   ],
+   "place": null,
+   "shop_daytime": true,
+   "bands": [
+    {
+     "band": "night_deep",
+     "frame_min": 0,
+     "frame_max": 1,
+     "stretch_min": 0,
+     "stretch_max": 1
+    },
+    {
+     "band": "dawn_shift",
+     "frame_min": 2,
+     "frame_max": 6,
+     "stretch_min": 5,
+     "stretch_max": 9
+    },
+    {
+     "band": "early",
+     "frame_min": 1,
+     "frame_max": 4,
+     "stretch_min": 3,
+     "stretch_max": 6
+    },
+    {
+     "band": "busy_am",
+     "frame_min": 2,
+     "frame_max": 5,
+     "stretch_min": 6,
+     "stretch_max": 10
+    },
+    {
+     "band": "morning",
+     "frame_min": 1,
+     "frame_max": 4,
+     "stretch_min": 3,
+     "stretch_max": 6
+    },
+    {
+     "band": "busy_noon",
+     "frame_min": 2,
+     "frame_max": 5,
+     "stretch_min": 6,
+     "stretch_max": 10
+    },
+    {
+     "band": "afternoon",
+     "frame_min": 1,
+     "frame_max": 4,
+     "stretch_min": 3,
+     "stretch_max": 6
+    },
+    {
+     "band": "busy_pm",
+     "frame_min": 2,
+     "frame_max": 5,
+     "stretch_min": 6,
+     "stretch_max": 10
+    },
+    {
+     "band": "evening",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 2,
+     "stretch_max": 5
+    },
+    {
+     "band": "late",
+     "frame_min": 0,
+     "frame_max": 1,
+     "stretch_min": 1,
+     "stretch_max": 3
+    }
+   ],
+   "src": "chosen from the parade rows",
+   "provisional": true,
+   "note": "Rinaldi's caff breakfast lifts dawn_shift near x 45 to 58."
+  },
+  {
+   "id": "z_quay_road_fish_dock",
+   "label": "The Quay by the fish dock and the ice hut",
+   "road": "quay_road",
+   "range_m": [
+    460,
+    540
+   ],
+   "place": "fish_dock",
+   "shop_daytime": false,
+   "bands": [
+    {
+     "band": "night_deep",
+     "frame_min": 0,
+     "frame_max": 1,
+     "stretch_min": 0,
+     "stretch_max": 2
+    },
+    {
+     "band": "dawn_shift",
+     "frame_min": 4,
+     "frame_max": 10,
+     "stretch_min": 10,
+     "stretch_max": 18
+    },
+    {
+     "band": "early",
+     "frame_min": 3,
+     "frame_max": 8,
+     "stretch_min": 6,
+     "stretch_max": 12
+    },
+    {
+     "band": "busy_am",
+     "frame_min": 3,
+     "frame_max": 9,
+     "stretch_min": 12,
+     "stretch_max": 20
+    },
+    {
+     "band": "morning",
+     "frame_min": 1,
+     "frame_max": 7,
+     "stretch_min": 6,
+     "stretch_max": 12
+    },
+    {
+     "band": "busy_noon",
+     "frame_min": 3,
+     "frame_max": 9,
+     "stretch_min": 12,
+     "stretch_max": 20
+    },
+    {
+     "band": "afternoon",
+     "frame_min": 1,
+     "frame_max": 7,
+     "stretch_min": 6,
+     "stretch_max": 12
+    },
+    {
+     "band": "busy_pm",
+     "frame_min": 3,
+     "frame_max": 9,
+     "stretch_min": 12,
+     "stretch_max": 20
+    },
+    {
+     "band": "evening",
+     "frame_min": 0,
+     "frame_max": 4,
+     "stretch_min": 5,
+     "stretch_max": 10
+    },
+    {
+     "band": "late",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 2,
+     "stretch_max": 5
+    }
+   ],
+   "src": "2.1.2 (fish dock 05:30 to 07:00, 10 to 18)",
+   "provisional": false,
+   "note": "Dawn is the design's own figure; other bands are chosen."
+  },
+  {
+   "id": "z_north_road",
+   "label": "North Road (the long road out to the Exchange)",
+   "road": "north_road",
+   "range_m": [
+    0,
+    333.5
+   ],
+   "place": null,
+   "shop_daytime": true,
+   "bands": [
+    {
+     "band": "night_deep",
+     "frame_min": 0,
+     "frame_max": 1,
+     "stretch_min": 0,
+     "stretch_max": 2
+    },
+    {
+     "band": "dawn_shift",
+     "frame_min": 1,
+     "frame_max": 4,
+     "stretch_min": 3,
+     "stretch_max": 5
+    },
+    {
+     "band": "early",
+     "frame_min": 1,
+     "frame_max": 5,
+     "stretch_min": 3,
+     "stretch_max": 8
+    },
+    {
+     "band": "busy_am",
+     "frame_min": 2,
+     "frame_max": 6,
+     "stretch_min": 7,
+     "stretch_max": 12
+    },
+    {
+     "band": "morning",
+     "frame_min": 1,
+     "frame_max": 5,
+     "stretch_min": 3,
+     "stretch_max": 8
+    },
+    {
+     "band": "busy_noon",
+     "frame_min": 2,
+     "frame_max": 6,
+     "stretch_min": 7,
+     "stretch_max": 12
+    },
+    {
+     "band": "afternoon",
+     "frame_min": 1,
+     "frame_max": 5,
+     "stretch_min": 3,
+     "stretch_max": 8
+    },
+    {
+     "band": "busy_pm",
+     "frame_min": 2,
+     "frame_max": 6,
+     "stretch_min": 7,
+     "stretch_max": 12
+    },
+    {
+     "band": "evening",
+     "frame_min": 0,
+     "frame_max": 3,
+     "stretch_min": 3,
+     "stretch_max": 6
+    },
+    {
+     "band": "late",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 1,
+     "stretch_max": 3
+    }
+   ],
+   "src": "chosen; measured quiet 0 to 3 on busy bands read as the ceiling",
+   "provisional": true,
+   "note": "The match crowd walks this road at 14:30 to 15:00 and 17:00 to 17:30."
+  },
+  {
+   "id": "z_chapel_lane",
+   "label": "Chapel Lane",
+   "road": "chapel_lane",
+   "range_m": [
+    0,
+    240
+   ],
+   "place": null,
+   "shop_daytime": false,
+   "bands": [
+    {
+     "band": "night_deep",
+     "frame_min": 0,
+     "frame_max": 1,
+     "stretch_min": 0,
+     "stretch_max": 1
+    },
+    {
+     "band": "dawn_shift",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 1,
+     "stretch_max": 2
+    },
+    {
+     "band": "early",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 1,
+     "stretch_max": 3
+    },
+    {
+     "band": "busy_am",
+     "frame_min": 1,
+     "frame_max": 3,
+     "stretch_min": 3,
+     "stretch_max": 5
+    },
+    {
+     "band": "morning",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 1,
+     "stretch_max": 3
+    },
+    {
+     "band": "busy_noon",
+     "frame_min": 1,
+     "frame_max": 3,
+     "stretch_min": 3,
+     "stretch_max": 5
+    },
+    {
+     "band": "afternoon",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 1,
+     "stretch_max": 3
+    },
+    {
+     "band": "busy_pm",
+     "frame_min": 1,
+     "frame_max": 3,
+     "stretch_min": 3,
+     "stretch_max": 5
+    },
+    {
+     "band": "evening",
+     "frame_min": 0,
+     "frame_max": 1,
+     "stretch_min": 1,
+     "stretch_max": 3
+    },
+    {
+     "band": "late",
+     "frame_min": 0,
+     "frame_max": 1,
+     "stretch_min": 0,
+     "stretch_max": 2
+    }
+   ],
+   "src": "chosen; chapel times in events",
+   "provisional": true,
+   "note": "Quiet outside chapel times.",
+   "measured_frame_check": {
+    "quiet_measured": [
+     0,
+     3
+    ],
+    "src": "DEFINITIONS-2026-11-21.md line 77 (the 24 Nov measuring row: quiet streets 0 to 3 in view)",
+    "note": "every daytime frame max on this zone is at or below the measured quiet ceiling of 3"
+   }
+  },
+  {
+   "id": "z_coldstore_road",
+   "label": "Cold Store Road",
+   "road": "coldstore_road",
+   "range_m": [
+    0,
+    380
+   ],
+   "place": null,
+   "shop_daytime": false,
+   "bands": [
+    {
+     "band": "night_deep",
+     "frame_min": 0,
+     "frame_max": 1,
+     "stretch_min": 0,
+     "stretch_max": 1
+    },
+    {
+     "band": "dawn_shift",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 1,
+     "stretch_max": 3
+    },
+    {
+     "band": "early",
+     "frame_min": 0,
+     "frame_max": 3,
+     "stretch_min": 1,
+     "stretch_max": 4
+    },
+    {
+     "band": "busy_am",
+     "frame_min": 1,
+     "frame_max": 3,
+     "stretch_min": 3,
+     "stretch_max": 6
+    },
+    {
+     "band": "morning",
+     "frame_min": 0,
+     "frame_max": 3,
+     "stretch_min": 1,
+     "stretch_max": 4
+    },
+    {
+     "band": "busy_noon",
+     "frame_min": 1,
+     "frame_max": 3,
+     "stretch_min": 3,
+     "stretch_max": 6
+    },
+    {
+     "band": "afternoon",
+     "frame_min": 0,
+     "frame_max": 3,
+     "stretch_min": 1,
+     "stretch_max": 4
+    },
+    {
+     "band": "busy_pm",
+     "frame_min": 1,
+     "frame_max": 3,
+     "stretch_min": 3,
+     "stretch_max": 6
+    },
+    {
+     "band": "evening",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 1,
+     "stretch_max": 3
+    },
+    {
+     "band": "late",
+     "frame_min": 0,
+     "frame_max": 1,
+     "stretch_min": 0,
+     "stretch_max": 2
+    }
+   ],
+   "src": "chosen; shift change in events",
+   "provisional": true,
+   "note": "Quiet outside the packing shift.",
+   "measured_frame_check": {
+    "quiet_measured": [
+     0,
+     3
+    ],
+    "src": "DEFINITIONS-2026-11-21.md line 77 (the 24 Nov measuring row: quiet streets 0 to 3 in view)",
+    "note": "every daytime frame max on this zone is at or below the measured quiet ceiling of 3"
+   }
+  },
+  {
+   "id": "z_dock_road",
+   "label": "Dock Road",
+   "road": "dock_road",
+   "range_m": [
+    0,
+    350
+   ],
+   "place": null,
+   "shop_daytime": false,
+   "bands": [
+    {
+     "band": "night_deep",
+     "frame_min": 0,
+     "frame_max": 1,
+     "stretch_min": 0,
+     "stretch_max": 1
+    },
+    {
+     "band": "dawn_shift",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 1,
+     "stretch_max": 3
+    },
+    {
+     "band": "early",
+     "frame_min": 0,
+     "frame_max": 3,
+     "stretch_min": 1,
+     "stretch_max": 4
+    },
+    {
+     "band": "busy_am",
+     "frame_min": 1,
+     "frame_max": 3,
+     "stretch_min": 3,
+     "stretch_max": 6
+    },
+    {
+     "band": "morning",
+     "frame_min": 0,
+     "frame_max": 3,
+     "stretch_min": 1,
+     "stretch_max": 4
+    },
+    {
+     "band": "busy_noon",
+     "frame_min": 1,
+     "frame_max": 3,
+     "stretch_min": 3,
+     "stretch_max": 6
+    },
+    {
+     "band": "afternoon",
+     "frame_min": 0,
+     "frame_max": 3,
+     "stretch_min": 1,
+     "stretch_max": 4
+    },
+    {
+     "band": "busy_pm",
+     "frame_min": 1,
+     "frame_max": 3,
+     "stretch_min": 3,
+     "stretch_max": 6
+    },
+    {
+     "band": "evening",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 1,
+     "stretch_max": 3
+    },
+    {
+     "band": "late",
+     "frame_min": 0,
+     "frame_max": 1,
+     "stretch_min": 0,
+     "stretch_max": 2
+    }
+   ],
+   "src": "chosen; dock gate in events",
+   "provisional": true,
+   "note": "Quiet outside shift changes.",
+   "measured_frame_check": {
+    "quiet_measured": [
+     0,
+     3
+    ],
+    "src": "DEFINITIONS-2026-11-21.md line 77 (the 24 Nov measuring row: quiet streets 0 to 3 in view)",
+    "note": "every daytime frame max on this zone is at or below the measured quiet ceiling of 3"
+   }
+  },
+  {
+   "id": "z_basin_road",
+   "label": "Basin Road",
+   "road": "basin_road",
+   "range_m": [
+    0,
+    352.278
+   ],
+   "place": null,
+   "shop_daytime": false,
+   "bands": [
+    {
+     "band": "night_deep",
+     "frame_min": 0,
+     "frame_max": 0,
+     "stretch_min": 0,
+     "stretch_max": 0
+    },
+    {
+     "band": "dawn_shift",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 1,
+     "stretch_max": 3
+    },
+    {
+     "band": "early",
+     "frame_min": 0,
+     "frame_max": 3,
+     "stretch_min": 1,
+     "stretch_max": 4
+    },
+    {
+     "band": "busy_am",
+     "frame_min": 1,
+     "frame_max": 3,
+     "stretch_min": 3,
+     "stretch_max": 6
+    },
+    {
+     "band": "morning",
+     "frame_min": 0,
+     "frame_max": 3,
+     "stretch_min": 1,
+     "stretch_max": 4
+    },
+    {
+     "band": "busy_noon",
+     "frame_min": 1,
+     "frame_max": 3,
+     "stretch_min": 3,
+     "stretch_max": 6
+    },
+    {
+     "band": "afternoon",
+     "frame_min": 0,
+     "frame_max": 3,
+     "stretch_min": 1,
+     "stretch_max": 4
+    },
+    {
+     "band": "busy_pm",
+     "frame_min": 1,
+     "frame_max": 3,
+     "stretch_min": 3,
+     "stretch_max": 6
+    },
+    {
+     "band": "evening",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 1,
+     "stretch_max": 3
+    },
+    {
+     "band": "late",
+     "frame_min": 0,
+     "frame_max": 1,
+     "stretch_min": 0,
+     "stretch_max": 1
+    }
+   ],
+   "src": "chosen",
+   "provisional": true,
+   "note": "Warehouse side: day trade only.",
+   "measured_frame_check": {
+    "quiet_measured": [
+     0,
+     3
+    ],
+    "src": "DEFINITIONS-2026-11-21.md line 77 (the 24 Nov measuring row: quiet streets 0 to 3 in view)",
+    "note": "every daytime frame max on this zone is at or below the measured quiet ceiling of 3"
+   }
+  },
+  {
+   "id": "z_basin_top",
+   "label": "Basin Top",
+   "road": "basin_top",
+   "range_m": [
+    0,
+    259.143
+   ],
+   "place": null,
+   "shop_daytime": false,
+   "bands": [
+    {
+     "band": "night_deep",
+     "frame_min": 0,
+     "frame_max": 0,
+     "stretch_min": 0,
+     "stretch_max": 0
+    },
+    {
+     "band": "dawn_shift",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 1,
+     "stretch_max": 2
+    },
+    {
+     "band": "early",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 1,
+     "stretch_max": 3
+    },
+    {
+     "band": "busy_am",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 2,
+     "stretch_max": 4
+    },
+    {
+     "band": "morning",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 1,
+     "stretch_max": 3
+    },
+    {
+     "band": "busy_noon",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 2,
+     "stretch_max": 4
+    },
+    {
+     "band": "afternoon",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 1,
+     "stretch_max": 3
+    },
+    {
+     "band": "busy_pm",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 2,
+     "stretch_max": 4
+    },
+    {
+     "band": "evening",
+     "frame_min": 0,
+     "frame_max": 1,
+     "stretch_min": 1,
+     "stretch_max": 2
+    },
+    {
+     "band": "late",
+     "frame_min": 0,
+     "frame_max": 1,
+     "stretch_min": 0,
+     "stretch_max": 1
+    }
+   ],
+   "src": "chosen",
+   "provisional": true,
+   "note": "",
+   "measured_frame_check": {
+    "quiet_measured": [
+     0,
+     3
+    ],
+    "src": "DEFINITIONS-2026-11-21.md line 77 (the 24 Nov measuring row: quiet streets 0 to 3 in view)",
+    "note": "every daytime frame max on this zone is at or below the measured quiet ceiling of 3"
+   }
+  },
+  {
+   "id": "z_warehouse_row",
+   "label": "Warehouse Row (the warehouses at night: nearly empty)",
+   "road": "warehouse_row",
+   "range_m": [
+    0,
+    350
+   ],
+   "place": null,
+   "shop_daytime": false,
+   "bands": [
+    {
+     "band": "night_deep",
+     "frame_min": 0,
+     "frame_max": 0,
+     "stretch_min": 0,
+     "stretch_max": 0
+    },
+    {
+     "band": "dawn_shift",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 1,
+     "stretch_max": 2
+    },
+    {
+     "band": "early",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 1,
+     "stretch_max": 3
+    },
+    {
+     "band": "busy_am",
+     "frame_min": 1,
+     "frame_max": 3,
+     "stretch_min": 3,
+     "stretch_max": 5
+    },
+    {
+     "band": "morning",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 1,
+     "stretch_max": 3
+    },
+    {
+     "band": "busy_noon",
+     "frame_min": 1,
+     "frame_max": 3,
+     "stretch_min": 3,
+     "stretch_max": 5
+    },
+    {
+     "band": "afternoon",
+     "frame_min": 0,
+     "frame_max": 2,
+     "stretch_min": 1,
+     "stretch_max": 3
+    },
+    {
+     "band": "busy_pm",
+     "frame_min": 1,
+     "frame_max": 3,
+     "stretch_min": 3,
+     "stretch_max": 5
+    },
+    {
+     "band": "evening",
+     "frame_min": 0,
+     "frame_max": 1,
+     "stretch_min": 0,
+     "stretch_max": 2
+    },
+    {
+     "band": "late",
+     "frame_min": 0,
+     "frame_max": 1,
+     "stretch_min": 0,
+     "stretch_max": 1
+    }
+   ],
+   "src": "chosen",
+   "provisional": true,
+   "note": "Night: one watchman at most; the street is the player's to be seen or not.",
+   "measured_frame_check": {
+    "quiet_measured": [
+     0,
+     3
+    ],
+    "src": "DEFINITIONS-2026-11-21.md line 77 (the 24 Nov measuring row: quiet streets 0 to 3 in view)",
+    "note": "every daytime frame max on this zone is at or below the measured quiet ceiling of 3"
+   }
+  }
+ ],
+ "events": [
+  {
+   "id": "ev_coldstore_in",
+   "label": "Cold stores: packing shift arrives",
+   "road": "coldstore_road",
+   "range_m": [
+    300,
+    470
+   ],
+   "place": "cold_stores",
+   "from": "05:00",
+   "to": "05:45",
+   "days": "daily Mon-Sat",
+   "trades": "cold_store_hand",
+   "src": "2.1.2; map cold_stores note 'packing shift leaves at half past five' read as arrival 05:00-05:45 and leaving 05:30-06:15",
+   "provisional": true,
+   "frame_min": 4,
+   "frame_max": 10,
+   "stretch_min": 10,
+   "stretch_max": 20
+  },
+  {
+   "id": "ev_coldstore_out",
+   "label": "Cold stores: packing shift leaves (shift change)",
+   "road": "coldstore_road",
+   "range_m": [
+    300,
+    470
+   ],
+   "place": "cold_stores",
+   "from": "05:30",
+   "to": "06:15",
+   "days": "daily Mon-Sat",
+   "trades": "cold_store_hand",
+   "src": "map.json cold_stores note; the contract's 'packing shift met on time' (BLUEPRINT-02)",
+   "provisional": false,
+   "frame_min": 4,
+   "frame_max": 10,
+   "stretch_min": 10,
+   "stretch_max": 20
+  },
+  {
+   "id": "ev_coldstore_pm",
+   "label": "Cold stores: second shift change",
+   "road": "coldstore_road",
+   "range_m": [
+    300,
+    470
+   ],
+   "place": "cold_stores",
+   "from": "17:30",
+   "to": "18:15",
+   "days": "daily Mon-Sat",
+   "trades": "cold_store_hand",
+   "src": "chosen",
+   "provisional": true,
+   "frame_min": 3,
+   "frame_max": 8,
+   "stretch_min": 8,
+   "stretch_max": 16
+  },
+  {
+   "id": "ev_dock_gate_am",
+   "label": "The dock gate: morning shift in",
+   "road": "dock_road",
+   "range_m": [
+    190,
+    224
+   ],
+   "place": "dock_gate",
+   "from": "05:30",
+   "to": "06:30",
+   "days": "daily Mon-Sat",
+   "trades": "docker",
+   "src": "2.1.2 dock shift at dawn; chosen figures",
+   "provisional": true,
+   "frame_min": 4,
+   "frame_max": 10,
+   "stretch_min": 10,
+   "stretch_max": 18
+  },
+  {
+   "id": "ev_dock_gate_pm",
+   "label": "The dock gate: afternoon shift change",
+   "road": "dock_road",
+   "range_m": [
+    190,
+    224
+   ],
+   "place": "dock_gate",
+   "from": "13:30",
+   "to": "14:15",
+   "days": "daily Mon-Sat",
+   "trades": "docker",
+   "src": "chosen",
+   "provisional": true,
+   "frame_min": 3,
+   "frame_max": 8,
+   "stretch_min": 8,
+   "stretch_max": 14
+  },
+  {
+   "id": "ev_dock_gate_night",
+   "label": "The dock gate tea stall at night",
+   "road": "dock_road",
+   "range_m": [
+    196,
+    200
+   ],
+   "place": "tea_stall",
+   "from": "22:00",
+   "to": "06:00",
+   "days": "daily",
+   "trades": "docker, night watchman",
+   "src": "4.2.3 (a tea stall 22:00 to 06:00); chosen counts, tea only",
+   "provisional": true,
+   "frame_min": 0,
+   "frame_max": 3,
+   "stretch_min": 0,
+   "stretch_max": 5
+  },
+  {
+   "id": "ev_chapel_sun_am",
+   "label": "Chapel Lane: Sunday service",
+   "road": "chapel_lane",
+   "range_m": [
+    0,
+    60
+   ],
+   "place": "chapel",
+   "from": "10:00",
+   "to": "11:45",
+   "days": "Sunday",
+   "trades": "chapel_goer",
+   "src": "BLUEPRINT-02 (on Sunday the chapel is busy); chosen times and counts",
+   "provisional": true,
+   "frame_min": 4,
+   "frame_max": 10,
+   "stretch_min": 10,
+   "stretch_max": 24
+  },
+  {
+   "id": "ev_chapel_sun_pm",
+   "label": "Chapel Lane: Sunday evening service",
+   "road": "chapel_lane",
+   "range_m": [
+    0,
+    60
+   ],
+   "place": "chapel",
+   "from": "18:00",
+   "to": "19:00",
+   "days": "Sunday",
+   "trades": "chapel_goer",
+   "src": "chosen",
+   "provisional": true,
+   "frame_min": 2,
+   "frame_max": 6,
+   "stretch_min": 5,
+   "stretch_max": 12
+  },
+  {
+   "id": "ev_chapel_hall_tue",
+   "label": "Chapel hall Tuesday evening",
+   "road": "chapel_lane",
+   "range_m": [
+    0,
+    60
+   ],
+   "place": "chapel_hall",
+   "from": "18:45",
+   "to": "21:45",
+   "days": "Tuesday",
+   "trades": "chapel_goer",
+   "src": "places hours: chapel hall 19:00 to 21:30 Tuesday",
+   "provisional": false,
+   "frame_min": 1,
+   "frame_max": 4,
+   "stretch_min": 3,
+   "stretch_max": 8
+  },
+  {
+   "id": "ev_remembrance",
+   "label": "Remembrance Sunday at the chapel (11 Nov 1990)",
+   "road": "chapel_lane",
+   "range_m": [
+    0,
+    60
+   ],
+   "place": "chapel",
+   "from": "10:30",
+   "to": "11:30",
+   "days": "11 Nov 1990",
+   "trades": "chapel_goer, retired",
+   "src": "BLUEPRINT-02 dated days; chosen counts",
+   "provisional": true,
+   "frame_min": 8,
+   "frame_max": 15,
+   "stretch_min": 20,
+   "stretch_max": 35
+  },
+  {
+   "id": "ev_bonfire",
+   "label": "Bonfire Night display on the quay (5 Nov 1990), adults only",
+   "road": "quay_road",
+   "range_m": [
+    180,
+    300
+   ],
+   "place": null,
+   "from": "19:00",
+   "to": "21:30",
+   "days": "5 Nov 1990",
+   "trades": "adults only",
+   "src": "BLUEPRINT-02 dated days; adults only",
+   "provisional": true,
+   "frame_min": 8,
+   "frame_max": 18,
+   "stretch_min": 25,
+   "stretch_max": 50
+  },
+  {
+   "id": "ev_match_1500",
+   "label": "Saturday match: kick-off crowd on Quay Street and North Road",
+   "road": "quay_street",
+   "range_m": [
+    0,
+    57.1
+   ],
+   "place": null,
+   "from": "15:00",
+   "to": "15:30",
+   "days": "Saturday",
+   "trades": "match_goer",
+   "src": "2.1.2 / G9: doubles at 15:00 and 17:00 for half an hour; GD-02 15 to 25 a frame, stretch up to 30",
+   "provisional": false,
+   "frame_min": 15,
+   "frame_max": 25,
+   "stretch_min": 24,
+   "stretch_max": 30
+  },
+  {
+   "id": "ev_match_1700",
+   "label": "Saturday match: full-time crowd",
+   "road": "quay_street",
+   "range_m": [
+    0,
+    57.1
+   ],
+   "place": null,
+   "from": "17:00",
+   "to": "17:30",
+   "days": "Saturday",
+   "trades": "match_goer",
+   "src": "same",
+   "provisional": false,
+   "frame_min": 15,
+   "frame_max": 25,
+   "stretch_min": 24,
+   "stretch_max": 30
+  },
+  {
+   "id": "ev_market_thu",
+   "label": "Thursday market: a third off the shops' daytime bands (rule, not a count)",
+   "road": "quay_street",
+   "range_m": [
+    0,
+    57.1
+   ],
+   "place": null,
+   "from": "09:00",
+   "to": "17:30",
+   "days": "Thursday",
+   "trades": "shopper",
+   "src": "2.1.2",
+   "provisional": false
+  },
+  {
+   "id": "ev_ferry_window",
+   "label": "The ferry landing window",
+   "road": "quay_road",
+   "range_m": [
+    0,
+    30
+   ],
+   "place": "ferry_landing",
+   "from": "22:00",
+   "to": "01:00",
+   "days": "daily",
+   "trades": "ferry_passenger",
+   "src": "places hours: ferry landing window 22:00 to 01:00",
+   "provisional": false,
+   "frame_min": 1,
+   "frame_max": 4,
+   "stretch_min": 3,
+   "stretch_max": 6
+  },
+  {
+   "id": "ev_caff_breakfast",
+   "label": "Rinaldi's breakfast: the dock shift's caff",
+   "road": "quay_road",
+   "range_m": [
+    45,
+    58.5
+   ],
+   "place": "caff",
+   "from": "06:00",
+   "to": "09:00",
+   "days": "Mon-Sat",
+   "trades": "docker, shop_staff",
+   "src": "places hours: caff 06:00 to 15:00 Mon-Sat",
+   "provisional": true,
+   "frame_min": 2,
+   "frame_max": 6,
+   "stretch_min": 4,
+   "stretch_max": 10
+  }
+ ],
+ "spawn_rule": {
+  "per_frame_target": "keep the count in view inside the zone's frame_min..frame_max for the hour band; top up one at a time, never in a burst",
+  "busy_band_target": [
+   4,
+   10
+  ],
+  "busy_band_aim": [
+   5,
+   10
+  ],
+  "spawn_out_of_sight": true,
+  "spawn_min_distance_m": {
+   "value": 30,
+   "tune_key": "crowd.spawn_min_distance_m",
+   "tune_value": null,
+   "owed": true,
+   "chosen": true,
+   "note": "working figure until the footage gives one; also never inside the camera frustum"
+  },
+  "spawn_where": [
+   "road ends and side-street mouths of the zone",
+   "doors of plots whose hours are open (map doors)",
+   "the ferry gangway and the dock gate"
+  ],
+  "despawn": {
+   "out_of_sight_distance_m": 40,
+   "out_of_frustum_s": 6,
+   "never_while": [
+    "a witness slot is held (RT2-10)",
+    "in a conversation or an act the player is watching"
+   ],
+   "chosen": true
+  },
+  "repeat": {
+   "no_same_face_within_m": 60,
+   "no_same_face_within_game_minutes": 16,
+   "real_seconds_equivalent": 32,
+   "basis": "KCD2 crowd pool repeat gap 32 s (file-read lead) on the 120 s clock",
+   "face_pool_min": 24,
+   "coat_pool_min": 12,
+   "chosen": true
+  },
+  "made_place_share": {
+   "min": 0.4,
+   "aim": 0.5,
+   "tune_key": "crowd.at_made_place_share_min",
+   "src": "GD-02 standard (2): at least 40 percent of a busy frame"
+  },
+  "groups": {
+   "sizes": [
+    1,
+    2,
+    3
+   ],
+   "weights": [
+    0.45,
+    0.4,
+    0.15
+   ],
+   "facing": "inward for standing groups of 2 and 3",
+   "chosen": true
+  },
+  "walkers": {
+   "speed_ms": [
+    1.2,
+    1.6
+   ],
+   "old_speed_ms": [
+    0.8,
+    1.1
+   ],
+   "src": "street-people.json walk speeds 0.8 to 1.5 m/s",
+   "chosen": true
+  },
+  "road_clearance_m": {
+   "value": 23,
+   "tune_key": "crowd.road_clearance_m",
+   "src": "G2: nobody steps into the road within 23 m of a car at 30 mph or less"
+  },
+  "step_aside": {
+   "avoid_radius_m": null,
+   "step_aside_time_s": null,
+   "look_before_step_s": null,
+   "owed": true,
+   "tune_keys": [
+    "crowd.avoid_radius_m",
+    "crowd.step_aside_time_s",
+    "crowd.look_before_step_s"
+   ],
+   "note": "to be timed from reference footage; null in tune.json too"
+  }
+ },
+ "who_is_out_by_hour": [
+  {
+   "band": "night_deep",
+   "who": "the beat constable (not crowd), the night watchman at the dock gate tea stall, a fish-dock hand or two near 04:30",
+   "trades": [
+    "night_watch",
+    "fish_dock_hand"
+   ]
+  },
+  {
+   "band": "dawn_shift",
+   "who": "dockers and cold-store hands arriving and leaving, fish-dock hands, newsagent and caff staff opening",
+   "trades": [
+    "docker",
+    "cold_store_hand",
+    "fish_dock_hand",
+    "shop_staff"
+   ]
+  },
+  {
+   "band": "early",
+   "who": "the shift tail, early shoppers for papers, shop staff walking in",
+   "trades": [
+    "shop_staff",
+    "docker",
+    "shopper"
+   ]
+  },
+  {
+   "band": "busy_am",
+   "who": "shop staff and office workers in, shoppers, retired on errands",
+   "trades": [
+    "shop_staff",
+    "office",
+    "shopper",
+    "retired"
+   ]
+  },
+  {
+   "band": "morning",
+   "who": "shoppers and retired people; a few trade vans' drivers",
+   "trades": [
+    "shopper",
+    "retired",
+    "shop_staff"
+   ]
+  },
+  {
+   "band": "busy_noon",
+   "who": "dinner-hour walkers, office and shop staff to the caff and chip shop, shoppers",
+   "trades": [
+    "office",
+    "shop_staff",
+    "shopper",
+    "docker"
+   ]
+  },
+  {
+   "band": "afternoon",
+   "who": "shoppers, retired, the afternoon shift change at the dock gate",
+   "trades": [
+    "shopper",
+    "retired",
+    "docker"
+   ]
+  },
+  {
+   "band": "busy_pm",
+   "who": "everyone going home, cold-store second shift, shoppers before the shops shut at 17:30",
+   "trades": [
+    "shop_staff",
+    "office",
+    "docker",
+    "cold_store_hand",
+    "shopper"
+   ]
+  },
+  {
+   "band": "evening",
+   "who": "launderette (to 23:00), chip shop queue, boxing and snooker men, chapel hall on Tuesday; shops shut by 18:00",
+   "trades": [
+    "docker",
+    "shopper",
+    "chapel_goer"
+   ]
+  },
+  {
+   "band": "late",
+   "who": "ferry window passengers, chip shop to 23:30, the tea stall, a few men going home",
+   "trades": [
+    "ferry_passenger",
+    "night_watch",
+    "docker"
+   ]
+  }
+ ],
+ "made_places": [
+  {
+   "id": "mp_bus_stop",
+   "at": "bus_stop_qs",
+   "kind": "street_furniture",
+   "stand": [
+    2,
+    5
+   ],
+   "seated": 2,
+   "hours": "06:00-23:00",
+   "src": "map.json street_furniture bus_stop_qs"
+  },
+  {
+   "id": "mp_shop_doors",
+   "at_plots": [
+    "qs_grocer",
+    "qs_pearts",
+    "qs_launderette",
+    "qs_ironmonger",
+    "qs_copper_kettle",
+    "qs_chandler",
+    "qs_ada"
+   ],
+   "kind": "door",
+   "stand": [
+    0,
+    2
+   ],
+   "hours": "shop hours (BLUEPRINT-02 shops 09:00 to 17:30; newsagent 06:00 to 18:00)",
+   "src": "map.json plots"
+  },
+  {
+   "id": "mp_rank",
+   "at": "rank_mickeys",
+   "kind": "cab_rank",
+   "stand": [
+    0,
+    2
+   ],
+   "hours": "all day",
+   "note": "drivers and a fare waiting; the firm's, not crowd",
+   "src": "map.json cab_ranks"
+  },
+  {
+   "id": "mp_rank_ferry",
+   "at": "rank_ferry",
+   "kind": "cab_rank",
+   "stand": [
+    0,
+    3
+   ],
+   "hours": "22:00-01:00 and ferry times",
+   "src": "map.json cab_ranks"
+  },
+  {
+   "id": "mp_caff_window",
+   "at": "quay_caff",
+   "kind": "window",
+   "stand": [
+    1,
+    3
+   ],
+   "seated": [
+    2,
+    6
+   ],
+   "hours": "06:00-15:00 (to 22:00 Fri and Sat)",
+   "src": "BLUEPRINT-02 shop hours"
+  },
+  {
+   "id": "mp_chapel_steps",
+   "at": "chapel",
+   "kind": "steps",
+   "stand": [
+    2,
+    10
+   ],
+   "hours": "chapel times (events)",
+   "src": "map.json chapel (three steps, a bench)"
+  },
+  {
+   "id": "mp_tea_stall",
+   "at": "tea_stall",
+   "kind": "stall",
+   "stand": [
+    1,
+    3
+   ],
+   "hours": "22:00-06:00",
+   "note": "tea only",
+   "src": "map.json tea_stall; 4.2.3"
+  },
+  {
+   "id": "mp_landing_shelter",
+   "at": "ferry_landing",
+   "kind": "shelter",
+   "stand": [
+    1,
+    4
+   ],
+   "hours": "22:00-01:00 and ferry times",
+   "src": "map.json ferry_landing"
+  },
+  {
+   "id": "mp_bench_triangle",
+   "at": "bench_triangle",
+   "kind": "bench",
+   "seated": [
+    1,
+    2
+   ],
+   "hours": "07:00-20:00 dry; none in rain",
+   "src": "map.json street_furniture"
+  },
+  {
+   "id": "mp_phone_boxes",
+   "at": [
+    "phone_landing",
+    "phone_parade",
+    "phone_dock_gate"
+   ],
+   "kind": "phone_box",
+   "stand": [
+    0,
+    1
+   ],
+   "hours": "all",
+   "src": "map.json phone_boxes"
+  },
+  {
+   "id": "mp_fish_boxes",
+   "at": "fish_boxes_dock",
+   "kind": "work_spot",
+   "stand": [
+    2,
+    5
+   ],
+   "hours": "04:30-09:00",
+   "src": "map.json street_furniture"
+  },
+  {
+   "id": "mp_pillar_box",
+   "at": "pillar_box_qs",
+   "kind": "pillar_box",
+   "stand": [
+    0,
+    1
+   ],
+   "hours": "all",
+   "src": "map.json"
+  }
+ ],
+ "rain_shelter_rule": "in drizzle and rain the stand counts at doors, the bus shelter and the landing shelter go first; umbrellas and headscarves show on the look tables' weather rows",
+ "look_tables": {
+  "adults_only": true,
+  "min_age": 18,
+  "note": "Every row is an adult; there is no child row and the generator must refuse any age under 18. Plain 1990 clothes; no trainers, no contrast stitching, no logos, no slogans, no real brand.",
+  "age_bands": [
+   {
+    "id": "a18_29",
+    "from": 18,
+    "to": 29,
+    "weight": 0.2
+   },
+   {
+    "id": "a30_44",
+    "from": 30,
+    "to": 44,
+    "weight": 0.28
+   },
+   {
+    "id": "a45_59",
+    "from": 45,
+    "to": 59,
+    "weight": 0.27
+   },
+   {
+    "id": "a60_plus",
+    "from": 60,
+    "to": 82,
+    "weight": 0.25
+   }
+  ],
+  "sex_split": {
+   "m": 0.52,
+   "f": 0.48,
+   "by_zone_override": {
+    "z_coldstore_road": {
+     "m": 0.6,
+     "f": 0.4
+    },
+    "z_dock_road": {
+     "m": 0.8,
+     "f": 0.2
+    },
+    "z_quay_road_fish_dock": {
+     "m": 0.85,
+     "f": 0.15
+    },
+    "z_warehouse_row": {
+     "m": 0.9,
+     "f": 0.1
+    }
+   },
+   "chosen": true
+  },
+  "trade_mix_by_zone": {
+   "z_parade_quay_street": {
+    "shop_staff": 0.25,
+    "shopper": 0.3,
+    "office": 0.1,
+    "retired": 0.15,
+    "docker": 0.1,
+    "cold_store_hand": 0.05,
+    "chapel_goer": 0.05
+   },
+   "z_parade_back_parade": {
+    "shop_staff": 0.25,
+    "shopper": 0.3,
+    "retired": 0.2,
+    "office": 0.1,
+    "docker": 0.15
+   },
+   "z_quay_road_landing": {
+    "ferry_passenger": 0.4,
+    "docker": 0.2,
+    "retired": 0.2,
+    "shopper": 0.2
+   },
+   "z_quay_road_mid": {
+    "docker": 0.3,
+    "shop_staff": 0.2,
+    "shopper": 0.2,
+    "retired": 0.2,
+    "office": 0.1
+   },
+   "z_quay_road_fish_dock": {
+    "fish_dock_hand": 0.5,
+    "docker": 0.35,
+    "cold_store_hand": 0.1,
+    "night_watch": 0.05
+   },
+   "z_north_road": {
+    "office": 0.25,
+    "shopper": 0.25,
+    "retired": 0.2,
+    "shop_staff": 0.15,
+    "match_goer": 0.15
+   },
+   "z_chapel_lane": {
+    "retired": 0.4,
+    "chapel_goer": 0.4,
+    "shopper": 0.2
+   },
+   "z_coldstore_road": {
+    "cold_store_hand": 0.8,
+    "docker": 0.1,
+    "office": 0.1
+   },
+   "z_dock_road": {
+    "docker": 0.8,
+    "night_watch": 0.1,
+    "office": 0.1
+   },
+   "z_basin_road": {
+    "docker": 0.5,
+    "office": 0.2,
+    "retired": 0.3
+   },
+   "z_basin_top": {
+    "docker": 0.4,
+    "retired": 0.4,
+    "shopper": 0.2
+   },
+   "z_warehouse_row": {
+    "night_watch": 0.6,
+    "docker": 0.4
+   }
+  },
+  "looks": [
+   {
+    "id": "dock_m_old",
+    "trade": "docker",
+    "sex": [
+     "m"
+    ],
+    "ages": [
+     "a45_59",
+     "a60_plus"
+    ],
+    "top": "collarless shirt or heavy jumper",
+    "bottom": "wide straight dark work trousers",
+    "shoes": "black boots",
+    "outer_dry": "donkey jacket or nylon anorak",
+    "hat": "flat cap or none",
+    "colours": [
+     "navy",
+     "charcoal",
+     "black",
+     "dark brown",
+     "bottle green"
+    ],
+    "smoker_share": 0.45,
+    "src": "production/research/plain-1990-clothes/NOTE.md; production/specs/street-people.json (the plain-clothes floor)",
+    "chosen": true
+   },
+   {
+    "id": "dock_m_young",
+    "trade": "docker",
+    "sex": [
+     "m"
+    ],
+    "ages": [
+     "a18_29",
+     "a30_44"
+    ],
+    "top": "work shirt or plain sweatshirt",
+    "bottom": "dark work trousers or plain jeans, no stitching contrast",
+    "shoes": "black boots",
+    "outer_dry": "nylon zip jacket or donkey jacket",
+    "hat": "woolly hat or none",
+    "colours": [
+     "navy",
+     "charcoal",
+     "black",
+     "dark brown",
+     "bottle green"
+    ],
+    "smoker_share": 0.5,
+    "src": "production/research/plain-1990-clothes/NOTE.md; production/specs/street-people.json (the plain-clothes floor)",
+    "chosen": true
+   },
+   {
+    "id": "cold_m",
+    "trade": "cold_store_hand",
+    "sex": [
+     "m"
+    ],
+    "ages": [
+     "a18_29",
+     "a30_44",
+     "a45_59"
+    ],
+    "top": "white or grey overall top under a padded jacket",
+    "bottom": "dark trousers",
+    "shoes": "black wellingtons or safety boots",
+    "outer_dry": "quilted padded jacket",
+    "hat": "white hairnet cap or woolly hat",
+    "colours": [
+     "white",
+     "grey",
+     "navy",
+     "dark green"
+    ],
+    "smoker_share": 0.35,
+    "src": "production/research/plain-1990-clothes/NOTE.md; production/specs/street-people.json (the plain-clothes floor)",
+    "chosen": true
+   },
+   {
+    "id": "cold_f",
+    "trade": "cold_store_hand",
+    "sex": [
+     "f"
+    ],
+    "ages": [
+     "a18_29",
+     "a30_44",
+     "a45_59"
+    ],
+    "top": "white overall with cardigan",
+    "bottom": "dark skirt or trousers",
+    "shoes": "flat black shoes",
+    "outer_dry": "raincoat or padded coat",
+    "hat": "headscarf or white cap",
+    "colours": [
+     "white",
+     "navy",
+     "grey",
+     "maroon"
+    ],
+    "smoker_share": 0.3,
+    "src": "production/research/plain-1990-clothes/NOTE.md; production/specs/street-people.json (the plain-clothes floor)",
+    "chosen": true
+   },
+   {
+    "id": "fish_m",
+    "trade": "fish_dock_hand",
+    "sex": [
+     "m"
+    ],
+    "ages": [
+     "a18_29",
+     "a30_44",
+     "a45_59",
+     "a60_plus"
+    ],
+    "top": "guernsey jumper",
+    "bottom": "oilskin trousers or dark trousers",
+    "shoes": "rubber boots",
+    "outer_dry": "oilskin smock or donkey jacket",
+    "hat": "woolly hat",
+    "colours": [
+     "navy",
+     "oiled yellow",
+     "grey",
+     "olive"
+    ],
+    "smoker_share": 0.5,
+    "src": "production/research/plain-1990-clothes/NOTE.md; production/specs/street-people.json (the plain-clothes floor)",
+    "chosen": true
+   },
+   {
+    "id": "shop_f",
+    "trade": "shop_staff",
+    "sex": [
+     "f"
+    ],
+    "ages": [
+     "a18_29",
+     "a30_44",
+     "a45_59"
+    ],
+    "top": "blouse and tabard or nylon overall",
+    "bottom": "skirt below the knee or plain trousers",
+    "shoes": "flat shoes or low court shoes",
+    "outer_dry": "plain mac or short coat",
+    "hat": "none or headscarf",
+    "colours": [
+     "grey",
+     "fawn",
+     "maroon",
+     "navy",
+     "mustard",
+     "cream",
+     "brown"
+    ],
+    "smoker_share": 0.3,
+    "src": "production/research/plain-1990-clothes/NOTE.md; production/specs/street-people.json (the plain-clothes floor)",
+    "chosen": true
+   },
+   {
+    "id": "shop_m",
+    "trade": "shop_staff",
+    "sex": [
+     "m"
+    ],
+    "ages": [
+     "a18_29",
+     "a30_44",
+     "a45_59"
+    ],
+    "top": "shirt and tie under a brown or grey shop coat",
+    "bottom": "plain trousers",
+    "shoes": "black lace-up shoes",
+    "outer_dry": "raincoat",
+    "hat": "none",
+    "colours": [
+     "grey",
+     "fawn",
+     "maroon",
+     "navy",
+     "mustard",
+     "cream",
+     "brown"
+    ],
+    "smoker_share": 0.3,
+    "src": "production/research/plain-1990-clothes/NOTE.md; production/specs/street-people.json (the plain-clothes floor)",
+    "chosen": true
+   },
+   {
+    "id": "office_m",
+    "trade": "office",
+    "sex": [
+     "m"
+    ],
+    "ages": [
+     "a30_44",
+     "a45_59"
+    ],
+    "top": "shirt and tie, sleeves down",
+    "bottom": "suit trousers",
+    "shoes": "black lace-up shoes",
+    "outer_dry": "belted raincoat or overcoat",
+    "hat": "none",
+    "colours": [
+     "grey",
+     "navy",
+     "brown",
+     "charcoal"
+    ],
+    "smoker_share": 0.35,
+    "src": "production/research/plain-1990-clothes/NOTE.md; production/specs/street-people.json (the plain-clothes floor)",
+    "chosen": true
+   },
+   {
+    "id": "office_f",
+    "trade": "office",
+    "sex": [
+     "f"
+    ],
+    "ages": [
+     "a18_29",
+     "a30_44",
+     "a45_59"
+    ],
+    "top": "blouse and cardigan",
+    "bottom": "skirt to the knee, tights",
+    "shoes": "court shoes or flats",
+    "outer_dry": "mac or wool coat",
+    "hat": "none or headscarf",
+    "colours": [
+     "navy",
+     "grey",
+     "burgundy",
+     "cream",
+     "teal"
+    ],
+    "smoker_share": 0.25,
+    "src": "production/research/plain-1990-clothes/NOTE.md; production/specs/street-people.json (the plain-clothes floor)",
+    "chosen": true
+   },
+   {
+    "id": "shopper_f",
+    "trade": "shopper",
+    "sex": [
+     "f"
+    ],
+    "ages": [
+     "a30_44",
+     "a45_59",
+     "a60_plus"
+    ],
+    "top": "jumper or blouse",
+    "bottom": "skirt, or plain slacks",
+    "shoes": "flat shoes",
+    "outer_dry": "mac or wool coat, headscarf",
+    "hat": "headscarf or plastic rain bonnet",
+    "colours": [
+     "grey",
+     "fawn",
+     "maroon",
+     "navy",
+     "mustard",
+     "cream",
+     "brown"
+    ],
+    "smoker_share": 0.2,
+    "src": "production/research/plain-1990-clothes/NOTE.md; production/specs/street-people.json (the plain-clothes floor)",
+    "chosen": true
+   },
+   {
+    "id": "shopper_m",
+    "trade": "shopper",
+    "sex": [
+     "m"
+    ],
+    "ages": [
+     "a30_44",
+     "a45_59",
+     "a60_plus"
+    ],
+    "top": "shirt and pullover",
+    "bottom": "plain trousers",
+    "shoes": "black lace-up shoes",
+    "outer_dry": "raincoat or anorak",
+    "hat": "flat cap or none",
+    "colours": [
+     "grey",
+     "fawn",
+     "maroon",
+     "navy",
+     "mustard",
+     "cream",
+     "brown"
+    ],
+    "smoker_share": 0.4,
+    "src": "production/research/plain-1990-clothes/NOTE.md; production/specs/street-people.json (the plain-clothes floor)",
+    "chosen": true
+   },
+   {
+    "id": "retired_m",
+    "trade": "retired",
+    "sex": [
+     "m"
+    ],
+    "ages": [
+     "a60_plus"
+    ],
+    "top": "shirt, waistcoat or cardigan",
+    "bottom": "wide trousers with braces or belt",
+    "shoes": "black lace-up shoes or boots",
+    "outer_dry": "gaberdine mac or overcoat",
+    "hat": "flat cap",
+    "colours": [
+     "grey",
+     "brown",
+     "navy",
+     "fawn"
+    ],
+    "smoker_share": 0.4,
+    "src": "production/research/plain-1990-clothes/NOTE.md; production/specs/street-people.json (the plain-clothes floor)",
+    "chosen": true
+   },
+   {
+    "id": "retired_f",
+    "trade": "retired",
+    "sex": [
+     "f"
+    ],
+    "ages": [
+     "a60_plus"
+    ],
+    "top": "blouse and knitted cardigan",
+    "bottom": "tweed skirt, thick stockings",
+    "shoes": "lace-up shoes",
+    "outer_dry": "wool coat or plastic mac",
+    "hat": "headscarf or felt hat",
+    "colours": [
+     "grey",
+     "fawn",
+     "navy",
+     "maroon",
+     "plum"
+    ],
+    "smoker_share": 0.1,
+    "src": "production/research/plain-1990-clothes/NOTE.md; production/specs/street-people.json (the plain-clothes floor)",
+    "chosen": true
+   },
+   {
+    "id": "chapel_m",
+    "trade": "chapel_goer",
+    "sex": [
+     "m"
+    ],
+    "ages": [
+     "a30_44",
+     "a45_59",
+     "a60_plus"
+    ],
+    "top": "white shirt and dark tie",
+    "bottom": "dark suit trousers",
+    "shoes": "polished black shoes",
+    "outer_dry": "dark overcoat",
+    "hat": "none or flat cap",
+    "colours": [
+     "black",
+     "navy",
+     "charcoal"
+    ],
+    "smoker_share": 0.15,
+    "src": "production/research/plain-1990-clothes/NOTE.md; production/specs/street-people.json (the plain-clothes floor)",
+    "chosen": true
+   },
+   {
+    "id": "chapel_f",
+    "trade": "chapel_goer",
+    "sex": [
+     "f"
+    ],
+    "ages": [
+     "a30_44",
+     "a45_59",
+     "a60_plus"
+    ],
+    "top": "plain dress or blouse and skirt",
+    "bottom": "knee-length skirt, stockings",
+    "shoes": "low court shoes",
+    "outer_dry": "wool coat",
+    "hat": "felt hat or headscarf",
+    "colours": [
+     "navy",
+     "plum",
+     "grey",
+     "bottle green"
+    ],
+    "smoker_share": 0.05,
+    "src": "production/research/plain-1990-clothes/NOTE.md; production/specs/street-people.json (the plain-clothes floor)",
+    "chosen": true
+   },
+   {
+    "id": "match_m",
+    "trade": "match_goer",
+    "sex": [
+     "m"
+    ],
+    "ages": [
+     "a18_29",
+     "a30_44",
+     "a45_59"
+    ],
+    "top": "plain scarf in team stripes of the invented town club, jumper",
+    "bottom": "plain jeans or dark trousers",
+    "shoes": "black boots or lace-up shoes",
+    "outer_dry": "anorak or donkey jacket",
+    "hat": "woolly hat or none",
+    "colours": [
+     "red and white",
+     "navy",
+     "grey"
+    ],
+    "smoker_share": 0.5,
+    "src": "chosen; invented club colours only, no real club or crest",
+    "chosen": true
+   },
+   {
+    "id": "night_m",
+    "trade": "night_watch",
+    "sex": [
+     "m"
+    ],
+    "ages": [
+     "a30_44",
+     "a45_59",
+     "a60_plus"
+    ],
+    "top": "heavy jumper",
+    "bottom": "dark trousers",
+    "shoes": "black boots",
+    "outer_dry": "donkey jacket or greatcoat",
+    "hat": "woolly hat or flat cap",
+    "colours": [
+     "navy",
+     "charcoal",
+     "black",
+     "dark brown",
+     "bottle green"
+    ],
+    "smoker_share": 0.55,
+    "src": "production/research/plain-1990-clothes/NOTE.md; production/specs/street-people.json (the plain-clothes floor)",
+    "chosen": true
+   },
+   {
+    "id": "ferry_f",
+    "trade": "ferry_passenger",
+    "sex": [
+     "f"
+    ],
+    "ages": [
+     "a18_29",
+     "a30_44",
+     "a45_59"
+    ],
+    "top": "blouse and cardigan",
+    "bottom": "skirt, tights",
+    "shoes": "low shoes",
+    "outer_dry": "mac, carrying a small case",
+    "hat": "headscarf",
+    "colours": [
+     "grey",
+     "fawn",
+     "maroon",
+     "navy",
+     "mustard",
+     "cream",
+     "brown"
+    ],
+    "smoker_share": 0.2,
+    "src": "production/research/plain-1990-clothes/NOTE.md; production/specs/street-people.json (the plain-clothes floor)",
+    "chosen": true
+   },
+   {
+    "id": "ferry_m",
+    "trade": "ferry_passenger",
+    "sex": [
+     "m"
+    ],
+    "ages": [
+     "a18_29",
+     "a30_44",
+     "a45_59"
+    ],
+    "top": "shirt and jumper",
+    "bottom": "plain trousers",
+    "shoes": "lace-up shoes",
+    "outer_dry": "raincoat, carrying a bag",
+    "hat": "none",
+    "colours": [
+     "grey",
+     "fawn",
+     "maroon",
+     "navy",
+     "mustard",
+     "cream",
+     "brown"
+    ],
+    "smoker_share": 0.4,
+    "src": "production/research/plain-1990-clothes/NOTE.md; production/specs/street-people.json (the plain-clothes floor)",
+    "chosen": true
+   }
+  ],
+  "weather_rows": {
+   "dry_overcast": {
+    "outer_choice": "each look's outer_dry; about 70 percent wear it",
+    "umbrella_share": 0.0,
+    "hood_or_headscarf_share": 0.1
+   },
+   "drizzle": {
+    "outer_choice": "mac, anorak, oilskin; others add a headscarf or cap pulled down",
+    "umbrella_share": 0.15,
+    "hood_or_headscarf_share": 0.4
+   },
+   "rain": {
+    "outer_choice": "mac, oilskin or anorak for all; fastened",
+    "umbrella_share": 0.4,
+    "hood_or_headscarf_share": 0.6,
+    "umbrella_look": "plain dark or tartan folding umbrella, no print or brand"
+   }
+  },
+  "time_rows": {
+   "night": "coats on, collars up, dark colours only",
+   "dawn": "work clothes, flasks and snap tins in hand",
+   "day": "each look as given",
+   "evening": "coats on, carrier bags from the chip shop (wrapped parcels, no drink)"
+  },
+  "no_moving_sun": "no sunglasses and no summer wear: the game runs 15 Oct to week 7 (autumn and winter)"
+ },
+ "witnesses": {
+  "rule": "RT2-10: a crowd extra who catches any slot of a deed becomes a kept person with a fixed face, coat and home (a terrace in the Hook, or a district at the soft edge) and a routine from these hour windows, saved with the town",
+  "keeps_for": "permanent memory; after 7 game days with no open matter he lives at the soft edge and comes into the Hook only on his routine's days; the police can still find and ask him",
+  "fields_from_look": [
+   "look_id",
+   "age_band",
+   "sex",
+   "face",
+   "coat",
+   "home",
+   "routine_zone_ids"
+  ],
+  "hold_off": "a witness-held extra is never despawned in view (despawn.never_while)",
+  "adults_only": true,
+  "src": "RT2-10; BLUEPRINT-02"
+ },
+ "content_gate": {
+  "enforcement_site": "crowd generation is one of canon's six enforcement sites",
+  "generator_must_refuse": [
+   "any age under 18: no child, infant, pushchair with a child, pupil or school uniform, in any look, group or witness",
+   "anyone with alcohol, a glass of drink, a bottle, a can, or at a pub, off-licence or bar; the boarded pub (lm_old_pub) stays shut with nobody at it",
+   "anyone betting, with a betting slip, at a fruit machine, bingo, raffle, pools coupon or any gambling place",
+   "signs, props or lines aimed at children; the old school (lm_school) has no one in or at it",
+   "sexual content; slurs; drugs shown",
+   "real people, real brands, logos, crests or slogans on clothes (the match scarf is the invented club's)",
+   "anything after 1992: trainers, slim or stitched denim, hoodies, branded sportswear, mobile phones, earphones"
+  ],
+  "allowed": [
+   "tobacco, smoking",
+   "tea, a mug or a flask, chip-shop parcels",
+   "a pigeon basket (the allotments)",
+   "adults only, 18 and over"
+  ],
+  "check": "after generation, assert every spawned record has age >= 18 and look ids from look_tables.looks only; fail the build otherwise"
+ },
+ "chosen_values": [
+  "hour_band splits early, morning and afternoon",
+  "per-zone factors for frame and stretch for every zone but the parade and the fish dock dawn",
+  "evening frame 1 to 4, late 0 to 2, night_deep 0 to 1",
+  "all event times and counts except the match windows, ferry window, chapel hall and tea stall hours",
+  "spawn and despawn distances, the repeat distance and time, group weights, walker speeds",
+  "every look row, the age and sex weights, trade mixes",
+  "Sunday factor 0.35"
+ ]
+}

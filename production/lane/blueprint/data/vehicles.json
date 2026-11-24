@@ -1,0 +1,1715 @@
+{
+ "file": "vehicles.json",
+ "version": "2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "BLUEPRINT-02 2.15.1, 2.15.2, 2.15.3, RT2-08, GV-02, RT2-16, 2.3.1 (storage rule), 3.5.6 (jobs read cars)",
+  "BLUEPRINT-01 1.2.9, 1.2.10, GV-01, FIT-G2, FIT-G3, 6.8 (photo mode reads the cars)",
+  "BLUEPRINT-04 4.5.1, 4.5.2, 4.6.1, 4.6.2, 4.3.8",
+  "production/specs/street-vehicles.json; production/specs/mickeys-office.json; production/specs/hook-cast.json",
+  "production/lane/TRAFFIC-STAGE1-REFERENCE-MODEL-2026-11-18.md; production/research/period-vehicles-and-props",
+  "production/lane/blueprint/economy/ECONOMY-DESIGN-2026-11-26.md (EC-02, EC-03); PRICES-WAGES-1990.md",
+  "tools/lane/prototype/project/src/game/firm.js, cars.js, tune/rise.js, tune/shops.js",
+  "production/lane/blueprint/data/map.json (road ids, plots, doors, cab ranks, police points)"
+ ],
+ "units": {
+  "length": "metres",
+  "speed": "metres per second unless the name says mph",
+  "money": "pounds",
+  "road_place": "road id, side (left or right of the road in the order its points are listed in map.json), s metres from the road's first point"
+ },
+ "open_points": [
+  "The traffic gap bands (50, 75, 150, 450 s) are real seconds and were set for a 30 s game hour; on the 120 s hour they give 2.4, 1.6, 0.8 and 0.27 cars per game hour. Kept as written; the keeper should say whether the hour counts should hold instead (then the gaps would be 4 times longer).",
+  "2.15.1 says two cars and two drivers at rung 1; no source says which car each drives or when Tom takes one. Shifts (Kevin 07:00-19:00 on car one, Terry 19:00-03:00 on car two, Tom takes the idle one) are chosen.",
+  "Rung 2 to 5: car three at rung 2 and cars four and five at rung 3 are slots filled at purchase from the lot or a seller; no source says what the sellers' cars are.",
+  "The lot's stock is fixed seven cars; nothing says it restocks.",
+  "New plates have no price in any source; the respray price (£90) is the prototype's, not the economy file's.",
+  "The ambulance livery (white with an orange band) is UNVERIFIED for 1990; the art keeper must check.",
+  "Parked-car kit: only the two kept places (street-vehicles.json) come from a source; the other eleven places are chosen, moved 0.7 and 1.1 m up Quay Street so the first two clear Mickey's rank (s 9.5 to 14.5) as the brief requires.",
+  "Plate year letters on parked and traffic cars are chosen; the fleet's E412 is the prototype's.",
+  "The milk float and the bus are chosen scenery; 4.6.2 names neither (RULINGS 23 Sep makes buses scenery; a milk float is a 1990 sight).",
+  "Boot slots: GV-01 names three things (envelope, spare coat, box) but no count; three item slots and one body slot are chosen.",
+  "A stop's 'steering lock' flag by registration year is a chosen rule; no source gives which cars have one."
+ ],
+ "fictional_note": "every make and model is invented (canon: no real car models); a look-alike check against real makes is owed at the art gate (4.6.1). No brand, badge, crest or logo is shown; the maker's plate is left blank (brand-bible).",
+ "makes": [
+  {
+   "id": "harwick",
+   "name": "Harwick Motors",
+   "ethos": "plain family saloons for people who keep one car for ten years",
+   "fictional": true,
+   "src": "4.6.1; canon Brands and law"
+  },
+  {
+   "id": "dunmere",
+   "name": "Dunmere Cars",
+   "ethos": "small, cheap hatchbacks that rust early",
+   "fictional": true,
+   "src": "4.6.1; canon Brands and law"
+  },
+  {
+   "id": "orsett",
+   "name": "Orsett",
+   "ethos": "an old-fashioned rear-driven saloon sold to taxi men and magistrates",
+   "fictional": true,
+   "src": "4.6.1; canon Brands and law"
+  },
+  {
+   "id": "stanbridge",
+   "name": "Stanbridge Commercials",
+   "ethos": "vans, lorries and ambulances on one chassis family",
+   "fictional": true,
+   "src": "4.6.1; canon Brands and law"
+  },
+  {
+   "id": "penhallow",
+   "name": "Penhallow Electric",
+   "ethos": "milk floats, mostly",
+   "fictional": true,
+   "src": "4.6.1; canon Brands and law"
+  }
+ ],
+ "models": [
+  {
+   "id": "harwick_carrow",
+   "make": "harwick",
+   "model": "Carrow",
+   "class": "saloon",
+   "length_m": 4.4,
+   "width_m": 1.7,
+   "doors": 4,
+   "src": "4.6.1 (invented marques; a look-alike check against real makes is owed at the art gate)",
+   "chosen": true
+  },
+  {
+   "id": "harwick_wensum",
+   "make": "harwick",
+   "model": "Wensum",
+   "class": "estate",
+   "length_m": 4.5,
+   "width_m": 1.7,
+   "doors": 5,
+   "src": "4.6.1 (invented marques; a look-alike check against real makes is owed at the art gate)",
+   "chosen": true
+  },
+  {
+   "id": "dunmere_tarn",
+   "make": "dunmere",
+   "model": "Tarn",
+   "class": "hatch",
+   "length_m": 3.9,
+   "width_m": 1.6,
+   "doors": 3,
+   "note": "the studio's own scripted hatchback (production/specs/street-vehicles.json hatch-navy, hatch-bluegrey) is this model",
+   "src": "4.6.1 (invented marques; a look-alike check against real makes is owed at the art gate)",
+   "chosen": true
+  },
+  {
+   "id": "dunmere_tarn_wagon",
+   "make": "dunmere",
+   "model": "Tarn Wagon",
+   "class": "hatch",
+   "length_m": 4.0,
+   "width_m": 1.6,
+   "doors": 5,
+   "note": "the traffic hatch's second variant (4.6.1, TRAFFIC-STAGE1 rule 3)",
+   "src": "4.6.1 (invented marques; a look-alike check against real makes is owed at the art gate)",
+   "chosen": true
+  },
+  {
+   "id": "dunmere_fenn",
+   "make": "dunmere",
+   "model": "Fenn",
+   "class": "small",
+   "length_m": 3.5,
+   "width_m": 1.55,
+   "doors": 3,
+   "src": "4.6.1 (invented marques; a look-alike check against real makes is owed at the art gate)",
+   "chosen": true
+  },
+  {
+   "id": "orsett_vale",
+   "make": "orsett",
+   "model": "Vale",
+   "class": "saloon",
+   "length_m": 4.3,
+   "width_m": 1.7,
+   "doors": 4,
+   "src": "4.6.1 (invented marques; a look-alike check against real makes is owed at the art gate)",
+   "chosen": true
+  },
+  {
+   "id": "stanbridge_carrier",
+   "make": "stanbridge",
+   "model": "Carrier",
+   "class": "van",
+   "length_m": 4.8,
+   "width_m": 1.9,
+   "doors": 3,
+   "src": "4.6.1 (invented marques; a look-alike check against real makes is owed at the art gate)",
+   "chosen": true
+  },
+  {
+   "id": "stanbridge_hauler",
+   "make": "stanbridge",
+   "model": "Hauler",
+   "class": "lorry",
+   "length_m": 7.5,
+   "width_m": 2.4,
+   "doors": 2,
+   "src": "4.6.1 (invented marques; a look-alike check against real makes is owed at the art gate)",
+   "chosen": true
+  },
+  {
+   "id": "stanbridge_medic",
+   "make": "stanbridge",
+   "model": "Medic",
+   "class": "ambulance",
+   "length_m": 5.4,
+   "width_m": 2.0,
+   "doors": 4,
+   "src": "4.6.1 (invented marques; a look-alike check against real makes is owed at the art gate)",
+   "chosen": true
+  },
+  {
+   "id": "penhallow_float",
+   "make": "penhallow",
+   "model": "Float",
+   "class": "float",
+   "length_m": 4.2,
+   "width_m": 1.9,
+   "doors": 0,
+   "src": "4.6.1 (invented marques; a look-alike check against real makes is owed at the art gate)",
+   "chosen": true
+  }
+ ],
+ "colours": [
+  {
+   "id": "burgundy",
+   "hex": "#6d1f2c",
+   "src": "TRAFFIC-STAGE1 rule 3 (8 colours; this list chosen)",
+   "chosen": true
+  },
+  {
+   "id": "bottle_green",
+   "hex": "#1f4a34",
+   "src": "TRAFFIC-STAGE1 rule 3 (8 colours; this list chosen)",
+   "chosen": true
+  },
+  {
+   "id": "navy",
+   "hex": "#1e2a4a",
+   "src": "TRAFFIC-STAGE1 rule 3 (8 colours; this list chosen)",
+   "chosen": true
+  },
+  {
+   "id": "cream",
+   "hex": "#e3d9bc",
+   "src": "TRAFFIC-STAGE1 rule 3 (8 colours; this list chosen)",
+   "chosen": true
+  },
+  {
+   "id": "silver_grey",
+   "hex": "#9ea3a6",
+   "src": "TRAFFIC-STAGE1 rule 3 (8 colours; this list chosen)",
+   "chosen": true
+  },
+  {
+   "id": "tan_brown",
+   "hex": "#7a5a3c",
+   "src": "TRAFFIC-STAGE1 rule 3 (8 colours; this list chosen)",
+   "chosen": true
+  },
+  {
+   "id": "blue_grey",
+   "hex": "#7d8c9a",
+   "src": "TRAFFIC-STAGE1 rule 3 (8 colours; this list chosen)",
+   "chosen": true
+  },
+  {
+   "id": "white",
+   "hex": "#e9e9e4",
+   "src": "TRAFFIC-STAGE1 rule 3 (8 colours; this list chosen)",
+   "chosen": true
+  }
+ ],
+ "plates": {
+  "format": "LETTER digits(1-3) SPACE three letters, the 1983-2001 style: the first letter is the year of first registration",
+  "year_letters": {
+   "A": "Aug 1983-Jul 1984",
+   "B": "Aug 1984-Jul 1985",
+   "C": "Aug 1985-Jul 1986",
+   "D": "Aug 1986-Jul 1987",
+   "E": "Aug 1987-Jul 1988",
+   "F": "Aug 1988-Jul 1989",
+   "G": "Aug 1989-Jul 1990",
+   "H": "Aug 1990 on"
+  },
+  "game_date_note": "the story opens Monday 15 October 1990, so H is current and a G car is under a year old",
+  "older_suffix_style": "cars from before 1983 carry digits then three letters then the year letter (123 ABC A to Y); allowed for tired traffic and the lorry",
+  "letters_avoided": "I, Q, Z in the trailing group, and any group that spells a word",
+  "src": "period-vehicles-and-props NOTE (plates G until 31 Jul 1990, then H); task brief",
+  "traffic_year_letter_weights": {
+   "H": 0.04,
+   "G": 0.1,
+   "F": 0.14,
+   "E": 0.14,
+   "D": 0.13,
+   "C": 0.11,
+   "B": 0.08,
+   "A": 0.06,
+   "suffix_style_older": 0.2
+  },
+  "traffic_weights_chosen": true
+ },
+ "firm_fleet": {
+  "src": "2.15.1; 2.15.2; EC-03; GV-02; 1.2.9; hook-cast.json; production/art/mickeys-cars (nine cars drawn)",
+  "start_rung": 1,
+  "board_lines_max": 9,
+  "board_lines_src": "production/art/mickeys-cars drew the office for nine cars (2.15.1 prior research)",
+  "roof_sign": {
+   "text": "MICKEY'S CARS",
+   "text_chosen": true,
+   "says_cars_not_taxi": true,
+   "no_roof_light": true,
+   "src": "canon; 01-RESEARCH-minicab-trade L7"
+  },
+  "by_rung": [
+   {
+    "rung": 1,
+    "cars": [
+     "firm_car_one",
+     "firm_car_two"
+    ],
+    "drivers": 2
+   },
+   {
+    "rung": 2,
+    "cars": [
+     "firm_car_one",
+     "firm_car_two",
+     "firm_car_three"
+    ],
+    "third_car": "bought on terms from the lot or a seller; the deposit comes from the book",
+    "src": "OSP s32; ECONOMY-DESIGN item 7"
+   },
+   {
+    "rung": 3,
+    "cars": [
+     "firm_car_one",
+     "firm_car_two",
+     "firm_car_three",
+     "firm_car_four",
+     "firm_car_five"
+    ],
+    "note": "five cars at rung 3; at least four for the cold-store contract (2.15.2); an honest firm stops at rung 2 (ECONOMY choice 3)"
+   },
+   {
+    "rung": 4,
+    "cars": "as rung 3; any more are bought like car three, up to the board limit",
+    "chosen": true
+   }
+  ],
+  "cars": [
+   {
+    "steering_lock": false,
+    "src": "2.15.1; proto cars.js plate E412, white cab",
+    "id": "firm_car_one",
+    "slot": 1,
+    "enters_at_rung": 1,
+    "start": true,
+    "owner": "firm",
+    "model": "harwick_carrow",
+    "colour": "white",
+    "plate": "E412 TKL",
+    "first_reg_year_letter": "E",
+    "wear": 3,
+    "roof_sign": true,
+    "driver_day": {
+     "role": "driver_day",
+     "person_ref": true,
+     "ref": "kevin_needham",
+     "shift": "07:00-19:00"
+    },
+    "free_for_tom": "19:00-03:00",
+    "sold_or_seized_or_wrecked_floor": null,
+    "boot": true,
+    "chosen": true,
+    "chosen_note": "make, plate letters and shifts chosen; the white cab and E412 are the prototype"
+   },
+   {
+    "steering_lock": false,
+    "src": "2.15.1; 2.15 floor",
+    "id": "firm_car_two",
+    "slot": 2,
+    "enters_at_rung": 1,
+    "start": true,
+    "owner": "mickey_own",
+    "model": "orsett_vale",
+    "colour": "cream",
+    "plate": "D208 HVM",
+    "first_reg_year_letter": "D",
+    "wear": 3,
+    "roof_sign": true,
+    "driver_night": {
+     "role": "driver_night",
+     "person_ref": true,
+     "ref": "terry_hodgson",
+     "shift": "19:00-03:00"
+    },
+    "free_for_tom": "07:00-19:00",
+    "protected": true,
+    "protected_rule": "never lost: cannot be sold, seized or wrecked for more than a day (2.15.1, floor)",
+    "boot": true,
+    "chosen": true,
+    "chosen_note": "make, colour, plate and shifts chosen; Mickey open 07:00-03:00 (hook-cast.json)"
+   },
+   {
+    "steering_lock": false,
+    "src": "2.15.1; EC-03",
+    "id": "firm_car_three",
+    "slot": 3,
+    "enters_at_rung": 2,
+    "start": false,
+    "owner": "firm_on_terms",
+    "identity": "taken from lot_stock or a private seller at purchase",
+    "roof_sign": true,
+    "boot": true
+   },
+   {
+    "steering_lock": false,
+    "src": "2.15.1",
+    "id": "firm_car_four",
+    "slot": 4,
+    "enters_at_rung": 3,
+    "start": false,
+    "owner": "firm",
+    "identity": "taken from lot_stock or a private seller at purchase",
+    "roof_sign": true,
+    "boot": true
+   },
+   {
+    "steering_lock": false,
+    "src": "2.15.1",
+    "id": "firm_car_five",
+    "slot": 5,
+    "enters_at_rung": 3,
+    "start": false,
+    "owner": "firm",
+    "identity": "taken from lot_stock or a private seller at purchase",
+    "roof_sign": true,
+    "boot": true
+   }
+  ],
+  "terms": {
+   "down_pounds": 90,
+   "weekly_pounds": 22,
+   "weeks": 52,
+   "src": "ECONOMY-DESIGN EC-03",
+   "missed_week": "a letter, said by Sheila",
+   "second_missed_week": "the car goes back",
+   "car_two_never_taken": true
+  },
+  "costs_per_car_week_pounds": {
+   "fuel_cover_repairs": 46,
+   "src": "ECONOMY-DESIGN section 3; the firm pays fuel and cover"
+  },
+  "takings_split": {
+   "driver_share": 0.5,
+   "book_share": 0.5,
+   "src": "ECONOMY-DESIGN choice 1"
+  },
+  "no_fuel_or_wear_on_screen": true,
+  "no_fuel_src": "1.2.9 (there is no fuel or wear; the book pays the fuel bill)",
+  "ranks_for_new_cars": "a bought car joins the board and the ranks (2.15.1 standard)",
+  "wreck_rules": {
+   "wrecked_cab_off_road_days": 1,
+   "dent_mended_overnight_at_game_hour": 6,
+   "src": "1.2.9; proto tune/cars.js dentMendedOvernightAtHour 6"
+  },
+  "respray": {
+   "by": "shaun_hewson",
+   "person_ref": true,
+   "price_pounds": 90,
+   "price_src": "proto tune/econ.js respray 9000 pence (not in the economy file)",
+   "price_chosen": true,
+   "takes_roof_sign_off": true,
+   "new_colour": "dark_blue",
+   "new_colour_src": "proto cars.js",
+   "days": 1,
+   "days_chosen": true,
+   "effect": "earlier sightings no longer name the car (GV-02)"
+  },
+  "new_plates": {
+   "clears_noted_plate_for_witnesses_who_have_not_told": true,
+   "price_pounds": null,
+   "price_note": "no source gives a price; the art/economy keeper decides"
+  },
+  "taken_car_has_no_roof_sign": true
+ },
+ "other_firm": {
+  "id": "portside_cars",
+  "name": "Portside Cars",
+  "name_src": "proto tune/rise.js otherFirm",
+  "owner": {
+   "role": "other_firm_owner",
+   "person_ref": true,
+   "proto_name_hint": "Len Wardle",
+   "note": "a new minor person (2.15.3)"
+  },
+  "src": "2.15.3; proto tune/rise.js; hook-cast.json ranks",
+  "works": "the north road rank (rank_north), the ferry rank if the firm has not won it",
+  "rank": "rank_north",
+  "drive_off_rule": "fares move to this firm after a hit-and-run drive-off and come back as the talk fades; a business, never a fourth rival (2.15.3)",
+  "roof_sign": {
+   "text": "PORTSIDE CARS",
+   "text_chosen": true
+  },
+  "cars": [
+   {
+    "steering_lock": true,
+    "src": "2.15.3; chosen",
+    "id": "portside_car_one",
+    "model": "dunmere_tarn",
+    "colour": "cream",
+    "livery": "cream with a navy band along the doors",
+    "plate": "F733 RKS",
+    "first_reg_year_letter": "F",
+    "wear": 2,
+    "chosen": true
+   },
+   {
+    "steering_lock": false,
+    "src": "2.15.3; chosen",
+    "id": "portside_car_two",
+    "model": "orsett_vale",
+    "colour": "cream",
+    "livery": "cream with a navy band along the doors",
+    "plate": "C516 NWP",
+    "first_reg_year_letter": "C",
+    "wear": 3,
+    "chosen": true
+   }
+  ]
+ },
+ "special_vehicles": {
+  "patrol_panda": {
+   "steering_lock": false,
+   "src": "2.6.7; period-vehicles-and-props NOTE; 4.6.1",
+   "id": "patrol_panda",
+   "role": "patrol_car",
+   "model": "harwick_carrow",
+   "colour": "white",
+   "livery": "white with a broad blue band along the doors, the word POLICE on the doors and bonnet, a blue lamp on the roof, no Battenburg (1990 stripe)",
+   "plate": "G227 PMK",
+   "first_reg_year_letter": "G",
+   "wear": 1,
+   "chosen": true,
+   "force_name": "none shown: the word POLICE only, no crest, no force name"
+  },
+  "patrol_armed_car": {
+   "steering_lock": false,
+   "src": "2.6.6",
+   "id": "patrol_armed_car",
+   "role": "armed_response_car",
+   "model": "harwick_wensum",
+   "colour": "white",
+   "livery": "as the panda; a plain roof lamp",
+   "plate": "G228 PMK",
+   "first_reg_year_letter": "G",
+   "wear": 1,
+   "only_from_dial_state": "war",
+   "chosen": true
+  },
+  "ambulance": {
+   "steering_lock": false,
+   "src": "4.3.8; 4.6.2; proto tune/law.js ambulanceArrivesGameMinutes 10",
+   "id": "ambulance",
+   "role": "ambulance",
+   "model": "stanbridge_medic",
+   "colour": "white",
+   "livery": "white with a broad orange band and a blue lamp; no real service logo (livery colour UNVERIFIED for 1990, art keeper to check)",
+   "plate": "F121 LNH",
+   "first_reg_year_letter": "F",
+   "chosen": true
+  },
+  "widow_van": {
+   "steering_lock": false,
+   "src": "RT2-08",
+   "id": "widow_van",
+   "role": "rival_vehicle",
+   "owner": "the_widow",
+   "owner_person_ref": true,
+   "model": "stanbridge_carrier",
+   "colour": "bottle_green",
+   "livery": "plain, no lettering",
+   "plate": "C351 DWB",
+   "first_reg_year_letter": "C",
+   "wear": 3,
+   "base": "base_widow",
+   "home_place": "pp_widow_van",
+   "chosen": true,
+   "hit_rule": "RT2-08: sending men at the van hits one thing; each hit is a deed against the Widow and leaves a mark (smashed light, scratched side) until mended"
+  },
+  "cammack_car": {
+   "steering_lock": true,
+   "src": "RT2-08",
+   "id": "cammack_car",
+   "role": "rival_vehicle",
+   "owner": "cammack",
+   "owner_person_ref": true,
+   "model": "harwick_carrow",
+   "colour": "burgundy",
+   "plate": "F890 KLR",
+   "first_reg_year_letter": "F",
+   "wear": 1,
+   "base": "base_cammack",
+   "home_place": "pp_cammack_car",
+   "chosen": true,
+   "hit_rule": "RT2-08: as the Widow's van"
+  }
+ },
+ "boot": {
+  "src": "GV-01; 1.2.10; production/specs (none); slots chosen",
+  "item_slots": 3,
+  "item_slots_chosen": true,
+  "item_kinds_allowed": [
+   "envelope",
+   "spare_coat",
+   "box"
+  ],
+  "body_slot": {
+   "count": 1,
+   "load_real_s": 4,
+   "uses_whole_boot": true,
+   "src": "GV-01 (a body goes into the boot in 4 s)"
+  },
+  "open_real_s": 1.5,
+  "open_chosen": true,
+  "opening_is_a_seen_act": true,
+  "act_slots": 7,
+  "act_note": "opening the boot in sight of a watcher writes the seven slots like any act",
+  "stop_with_cause_searches_boot": true,
+  "survives_save_and_load": true,
+  "start_contents": [],
+  "start_contents_note": "every boot starts empty; GV-01 names only what Tom may put there"
+ },
+ "taking_a_car": {
+  "src": "1.2.10",
+  "only_parked": true,
+  "never_with_someone_in_it": true,
+  "by_force_only": true,
+  "no_minigame": true,
+  "forced_entry_real_s": 6,
+  "loud_heard_at_force_reach": true,
+  "owner_reports_when_he_finds_it_gone": true,
+  "then_known_to_police": true,
+  "taken_car_has_no_roof_sign": true,
+  "steering_lock_cars_cannot_be_taken": true,
+  "steering_lock_rule": "chosen: cars first registered F, G or H carry a steering lock (a flag on every car record); older ones do not",
+  "steering_lock_chosen": true,
+  "never_a_moving_car": true
+ },
+ "witness_slot_for_the_car": {
+  "src": "GV-02; 1.2.9; RT2-16",
+  "sheds": "the second car, the roof sign off, new plates or a respray, only for witnesses who have not yet told anyone; gossip already carried is never undone",
+  "noted_plate": "a witness notes the plate as a mark; the police keep every plate noted for good; while its deed is hot the car is stopped on sight",
+  "plate_read_within_m": 18,
+  "plate_read_min_light": 0.7
+ },
+ "parked_places": [
+  {
+   "id": "pp_qs_east_1",
+   "road": "quay_street",
+   "side": "right",
+   "s_from": 16.2,
+   "s_to": 20.7,
+   "heading": "against_road",
+   "heading_rule": "left-hand traffic: the car stands nose with the direction of travel in the lane nearest the kerb; on a road's left that is along its point order, on its right against it",
+   "kerb_note": "the kept place hatch-navy (street x 11.0, world s 15.5) moved 0.7 m up the street to clear the rank (s 9.5 to 14.5)",
+   "src": "production/specs/street-vehicles.json kept_off_the_street; 4.5.2"
+  },
+  {
+   "id": "pp_qs_east_2",
+   "road": "quay_street",
+   "side": "right",
+   "s_from": 21.5,
+   "s_to": 26.0,
+   "heading": "against_road",
+   "heading_rule": "left-hand traffic: the car stands nose with the direction of travel in the lane nearest the kerb; on a road's left that is along its point order, on its right against it",
+   "kerb_note": "the kept place hatch-bluegrey (street x 15.9, world s 20.4) moved 1.1 m up the street",
+   "src": "production/specs/street-vehicles.json kept_off_the_street; 4.5.2"
+  },
+  {
+   "id": "pp_qs_west_1",
+   "road": "quay_street",
+   "side": "left",
+   "s_from": 36.0,
+   "s_to": 41.0,
+   "heading": "with_road",
+   "heading_rule": "left-hand traffic: the car stands nose with the direction of travel in the lane nearest the kerb; on a road's left that is along its point order, on its right against it",
+   "src": "4.5.2; chosen",
+   "chosen": true
+  },
+  {
+   "id": "pp_quay_north_1",
+   "road": "quay_road",
+   "side": "left",
+   "s_from": 168.0,
+   "s_to": 172.9,
+   "heading": "with_road",
+   "heading_rule": "left-hand traffic: the car stands nose with the direction of travel in the lane nearest the kerb; on a road's left that is along its point order, on its right against it",
+   "src": "4.5.2; chosen",
+   "chosen": true
+  },
+  {
+   "id": "pp_quay_north_2",
+   "road": "quay_road",
+   "side": "left",
+   "s_from": 206.0,
+   "s_to": 210.1,
+   "heading": "with_road",
+   "heading_rule": "left-hand traffic: the car stands nose with the direction of travel in the lane nearest the kerb; on a road's left that is along its point order, on its right against it",
+   "src": "4.5.2; chosen",
+   "chosen": true
+  },
+  {
+   "id": "pp_nr_east_1",
+   "road": "north_road",
+   "side": "right",
+   "s_from": 40.0,
+   "s_to": 45.1,
+   "heading": "against_road",
+   "heading_rule": "left-hand traffic: the car stands nose with the direction of travel in the lane nearest the kerb; on a road's left that is along its point order, on its right against it",
+   "src": "4.5.2; chosen",
+   "chosen": true
+  },
+  {
+   "id": "pp_nr_east_2",
+   "road": "north_road",
+   "side": "right",
+   "s_from": 112.0,
+   "s_to": 116.6,
+   "heading": "against_road",
+   "heading_rule": "left-hand traffic: the car stands nose with the direction of travel in the lane nearest the kerb; on a road's left that is along its point order, on its right against it",
+   "src": "4.5.2; chosen",
+   "chosen": true
+  },
+  {
+   "id": "pp_nr_west_1",
+   "road": "north_road",
+   "side": "left",
+   "s_from": 96.0,
+   "s_to": 100.9,
+   "heading": "with_road",
+   "heading_rule": "left-hand traffic: the car stands nose with the direction of travel in the lane nearest the kerb; on a road's left that is along its point order, on its right against it",
+   "src": "4.5.2; chosen",
+   "chosen": true
+  },
+  {
+   "id": "pp_nr_west_2",
+   "road": "north_road",
+   "side": "left",
+   "s_from": 150.0,
+   "s_to": 155.0,
+   "heading": "with_road",
+   "heading_rule": "left-hand traffic: the car stands nose with the direction of travel in the lane nearest the kerb; on a road's left that is along its point order, on its right against it",
+   "src": "4.5.2; chosen",
+   "chosen": true
+  },
+  {
+   "id": "pp_chapel_south_1",
+   "road": "chapel_lane",
+   "side": "left",
+   "s_from": 48.0,
+   "s_to": 52.1,
+   "heading": "with_road",
+   "heading_rule": "left-hand traffic: the car stands nose with the direction of travel in the lane nearest the kerb; on a road's left that is along its point order, on its right against it",
+   "src": "4.5.2; chosen",
+   "chosen": true
+  },
+  {
+   "id": "pp_chapel_south_2",
+   "road": "chapel_lane",
+   "side": "left",
+   "s_from": 92.0,
+   "s_to": 96.9,
+   "heading": "with_road",
+   "heading_rule": "left-hand traffic: the car stands nose with the direction of travel in the lane nearest the kerb; on a road's left that is along its point order, on its right against it",
+   "src": "4.5.2; chosen",
+   "chosen": true
+  },
+  {
+   "id": "pp_cammack_car",
+   "road": "north_road",
+   "side": "right",
+   "s_from": 242.0,
+   "s_to": 247.0,
+   "heading": "against_road",
+   "heading_rule": "left-hand traffic: the car stands nose with the direction of travel in the lane nearest the kerb; on a road's left that is along its point order, on its right against it",
+   "src": "RT2-08 (Cammack's lock-ups, east side, y 290 to 320)",
+   "home_of": "cammack_car"
+  },
+  {
+   "id": "pp_widow_van",
+   "road": "quay_road",
+   "side": "left",
+   "s_from": 513.0,
+   "s_to": 518.4,
+   "heading": "with_road",
+   "heading_rule": "left-hand traffic: the car stands nose with the direction of travel in the lane nearest the kerb; on a road's left that is along its point order, on its right against it",
+   "src": "RT2-08 (the Widow's dock office over the net store, x 512)",
+   "home_of": "widow_van"
+  }
+ ],
+ "parked_cars": [
+  {
+   "steering_lock": false,
+   "src": "production/specs/street-vehicles.json; 4.5.2",
+   "id": "pc_01",
+   "place": "pp_qs_east_1",
+   "model": "dunmere_tarn",
+   "colour": "navy",
+   "plate": "E655 WJT",
+   "first_reg_year_letter": "E",
+   "stage": "first",
+   "owner_role": "street_resident",
+   "owner_person_ref": true,
+   "chosen": true,
+   "glb": "hatch-navy"
+  },
+  {
+   "steering_lock": true,
+   "src": "production/specs/street-vehicles.json; 4.5.2",
+   "id": "pc_02",
+   "place": "pp_qs_east_2",
+   "model": "dunmere_tarn",
+   "colour": "blue_grey",
+   "plate": "F218 CVR",
+   "first_reg_year_letter": "F",
+   "stage": "first",
+   "owner_role": "street_resident",
+   "owner_person_ref": true,
+   "chosen": true,
+   "glb": "hatch-bluegrey"
+  },
+  {
+   "steering_lock": false,
+   "src": "4.5.2; 1.2.10",
+   "id": "pc_03",
+   "place": "pp_qs_west_1",
+   "model": "harwick_carrow",
+   "colour": "burgundy",
+   "plate": "D617 PNK",
+   "first_reg_year_letter": "D",
+   "stage": "after_first_look",
+   "owner_role": "street_resident",
+   "owner_person_ref": true,
+   "chosen": true
+  },
+  {
+   "steering_lock": false,
+   "src": "4.5.2; 1.2.10",
+   "id": "pc_04",
+   "place": "pp_quay_north_1",
+   "model": "orsett_vale",
+   "colour": "silver_grey",
+   "plate": "C283 TLB",
+   "first_reg_year_letter": "C",
+   "stage": "after_first_look",
+   "owner_role": "street_resident",
+   "owner_person_ref": true,
+   "chosen": true
+  },
+  {
+   "steering_lock": false,
+   "src": "4.5.2; 1.2.10",
+   "id": "pc_05",
+   "place": "pp_quay_north_2",
+   "model": "dunmere_fenn",
+   "colour": "tan_brown",
+   "plate": "B540 DHW",
+   "first_reg_year_letter": "B",
+   "stage": "after_first_look",
+   "owner_role": "street_resident",
+   "owner_person_ref": true,
+   "chosen": true
+  },
+  {
+   "steering_lock": true,
+   "src": "4.5.2; 1.2.10",
+   "id": "pc_06",
+   "place": "pp_nr_east_1",
+   "model": "harwick_wensum",
+   "colour": "bottle_green",
+   "plate": "G104 KRV",
+   "first_reg_year_letter": "G",
+   "stage": "after_first_look",
+   "owner_role": "street_resident",
+   "owner_person_ref": true,
+   "chosen": true
+  },
+  {
+   "steering_lock": false,
+   "src": "4.5.2; 1.2.10",
+   "id": "pc_07",
+   "place": "pp_nr_east_2",
+   "model": "dunmere_tarn_wagon",
+   "colour": "cream",
+   "plate": "E921 HNM",
+   "first_reg_year_letter": "E",
+   "stage": "after_first_look",
+   "owner_role": "street_resident",
+   "owner_person_ref": true,
+   "chosen": true
+  },
+  {
+   "steering_lock": false,
+   "src": "4.5.2; 1.2.10",
+   "id": "pc_08",
+   "place": "pp_nr_west_1",
+   "model": "orsett_vale",
+   "colour": "navy",
+   "plate": "D336 LMV",
+   "first_reg_year_letter": "D",
+   "stage": "after_first_look",
+   "owner_role": "street_resident",
+   "owner_person_ref": true,
+   "chosen": true
+  },
+  {
+   "steering_lock": true,
+   "src": "4.5.2; 1.2.10",
+   "id": "pc_09",
+   "place": "pp_nr_west_2",
+   "model": "harwick_carrow",
+   "colour": "white",
+   "plate": "F702 BSD",
+   "first_reg_year_letter": "F",
+   "stage": "after_first_look",
+   "owner_role": "street_resident",
+   "owner_person_ref": true,
+   "chosen": true
+  },
+  {
+   "steering_lock": false,
+   "src": "4.5.2; 1.2.10",
+   "id": "pc_10",
+   "place": "pp_chapel_south_1",
+   "model": "dunmere_fenn",
+   "colour": "burgundy",
+   "plate": "C459 NJR",
+   "first_reg_year_letter": "C",
+   "stage": "after_first_look",
+   "owner_role": "street_resident",
+   "owner_person_ref": true,
+   "chosen": true
+  },
+  {
+   "steering_lock": false,
+   "src": "4.5.2; 1.2.10",
+   "id": "pc_11",
+   "place": "pp_chapel_south_2",
+   "model": "orsett_vale",
+   "colour": "blue_grey",
+   "plate": "B813 WTK",
+   "first_reg_year_letter": "B",
+   "stage": "after_first_look",
+   "owner_role": "street_resident",
+   "owner_person_ref": true,
+   "chosen": true
+  }
+ ],
+ "parked_rules": {
+  "src": "4.5.2; 4.1.5 (outside); task brief",
+  "never_on_foot_only_ways": true,
+  "never_in_front_of_a_cab_rank_kerb": true,
+  "rank_margin_m": 1.0,
+  "junction_clearance_m": 8,
+  "clear_of_the_bus_stop_m": 6,
+  "never_on_the_basin_bridge": true,
+  "checked_by": "a python check over map.json roads, junctions, ranks and spans; all places pass",
+  "release_order": "the studio's hatchback goes first as the one parked car; the other cars follow only after the player has seen it (4.5.2, ruling 17 Nov); stage first or after_first_look",
+  "quay_street_never_blocked": "at most one parked car on the west side and two on the east of Quay Street, never opposite each other",
+  "budget": {
+   "triangles": 40000,
+   "lods": 4,
+   "texture_px": 2048,
+   "at_most_in_view": 6,
+   "ms": 0.5,
+   "src": "4.5.2; asset-budgets.json"
+  }
+ },
+ "cab_ranks": {
+  "rank_mickeys": {
+   "holder": "firm",
+   "cars": 2
+  },
+  "rank_ferry": {
+   "holder": null,
+   "cars": 4
+  },
+  "rank_north": {
+   "holder": null,
+   "cars": 3
+  }
+ },
+ "rank_zones_checked": [
+  {
+   "id": "rank_mickeys",
+   "road": "quay_street",
+   "side": "right",
+   "s_from": 9.5,
+   "s_to": 14.5
+  },
+  {
+   "id": "rank_ferry",
+   "road": "quay_road",
+   "side": "right",
+   "s_from": 4.0,
+   "s_to": 24.0
+  },
+  {
+   "id": "rank_north",
+   "road": "north_road",
+   "side": "left",
+   "s_from": 311.5,
+   "s_to": 325.5
+  }
+ ],
+ "lot": {
+  "src": "2.15.1; EC-03; 4.6.1 (£600 to £1,200); prototype tune/shops.js lot",
+  "plot": "lot",
+  "gate_door": "d_lot_gate",
+  "hut_door": "d_lot_hut",
+  "hours": "09:00-17:00",
+  "hours_src": "proto tune/shops.js lot fromHour 9 untilHour 17",
+  "seller": {
+   "role": "lot_seller",
+   "person_ref": true,
+   "note": "the man at the lot on the north road; if killed or hospitalised, cars are bought from a man selling one (DEFINITIONS fallback)"
+  },
+  "price_range_pounds": [
+   600,
+   1200
+  ],
+  "sale": {
+   "cash_from": "the book",
+   "or_on_terms": "EC-03",
+   "cash_only_line": "cash from the firm's book, friend, or it stays where it is",
+   "src": "proto firm.js buyCar"
+  },
+  "bays": [
+   {
+    "id": "lot_bay_1",
+    "x": 171.0,
+    "y": 361.0,
+    "facing_deg": 270,
+    "facing_chosen": true
+   },
+   {
+    "id": "lot_bay_2",
+    "x": 174.0,
+    "y": 361.0,
+    "facing_deg": 270,
+    "facing_chosen": true
+   },
+   {
+    "id": "lot_bay_3",
+    "x": 177.0,
+    "y": 361.0,
+    "facing_deg": 270,
+    "facing_chosen": true
+   },
+   {
+    "id": "lot_bay_4",
+    "x": 180.0,
+    "y": 361.0,
+    "facing_deg": 270,
+    "facing_chosen": true
+   },
+   {
+    "id": "lot_bay_5",
+    "x": 171.0,
+    "y": 368.0,
+    "facing_deg": 270,
+    "facing_chosen": true
+   },
+   {
+    "id": "lot_bay_6",
+    "x": 174.0,
+    "y": 368.0,
+    "facing_deg": 270,
+    "facing_chosen": true
+   },
+   {
+    "id": "lot_bay_7",
+    "x": 177.0,
+    "y": 368.0,
+    "facing_deg": 270,
+    "facing_chosen": true
+   },
+   {
+    "id": "lot_bay_8",
+    "x": 180.0,
+    "y": 368.0,
+    "facing_deg": 270,
+    "facing_chosen": true
+   }
+  ],
+  "bays_note": "bays are inside the lot plot, clear of the hut and of the gate route from d_lot_gate (166.6, 375); chosen",
+  "stock": [
+   {
+    "steering_lock": false,
+    "src": "2.15.1; prices from the economy range",
+    "id": "lot_01",
+    "bay": "lot_bay_1",
+    "model": "harwick_carrow",
+    "colour": "navy",
+    "plate": "B334 NTD",
+    "first_reg_year_letter": "B",
+    "price_pounds": 600,
+    "wear": 3,
+    "sold": false,
+    "chosen": true
+   },
+   {
+    "steering_lock": false,
+    "src": "2.15.1; prices from the economy range",
+    "id": "lot_02",
+    "bay": "lot_bay_2",
+    "model": "orsett_vale",
+    "colour": "burgundy",
+    "plate": "C611 PKR",
+    "first_reg_year_letter": "C",
+    "price_pounds": 650,
+    "wear": 3,
+    "sold": false,
+    "chosen": true
+   },
+   {
+    "steering_lock": false,
+    "src": "2.15.1; prices from the economy range",
+    "id": "lot_03",
+    "bay": "lot_bay_3",
+    "model": "dunmere_tarn",
+    "colour": "silver_grey",
+    "plate": "D472 WLT",
+    "first_reg_year_letter": "D",
+    "price_pounds": 750,
+    "wear": 2,
+    "sold": false,
+    "chosen": true
+   },
+   {
+    "steering_lock": false,
+    "src": "2.15.1; prices from the economy range",
+    "id": "lot_04",
+    "bay": "lot_bay_4",
+    "model": "harwick_wensum",
+    "colour": "bottle_green",
+    "plate": "D905 RMH",
+    "first_reg_year_letter": "D",
+    "price_pounds": 850,
+    "wear": 2,
+    "sold": false,
+    "chosen": true
+   },
+   {
+    "steering_lock": false,
+    "src": "2.15.1; prices from the economy range",
+    "id": "lot_05",
+    "bay": "lot_bay_5",
+    "model": "dunmere_fenn",
+    "colour": "cream",
+    "plate": "E188 TVC",
+    "first_reg_year_letter": "E",
+    "price_pounds": 950,
+    "wear": 2,
+    "sold": false,
+    "chosen": true
+   },
+   {
+    "steering_lock": true,
+    "src": "2.15.1; prices from the economy range",
+    "id": "lot_06",
+    "bay": "lot_bay_6",
+    "model": "harwick_carrow",
+    "colour": "white",
+    "plate": "F340 BNW",
+    "first_reg_year_letter": "F",
+    "price_pounds": 1050,
+    "wear": 1,
+    "sold": false,
+    "chosen": true
+   },
+   {
+    "steering_lock": true,
+    "src": "2.15.1; prices from the economy range",
+    "id": "lot_07",
+    "bay": "lot_bay_7",
+    "model": "dunmere_tarn",
+    "colour": "blue_grey",
+    "plate": "F577 DKP",
+    "first_reg_year_letter": "F",
+    "price_pounds": 1200,
+    "wear": 1,
+    "sold": false,
+    "chosen": true
+   }
+  ],
+  "restock": null,
+  "restock_note": "no source says the stock changes; fixed for the story; open point"
+ },
+ "working_vehicles": {
+  "src": "4.6.2; 4.3.8; RULINGS 23 Sep (boats and buses are scenery)",
+  "places": [
+   {
+    "id": "wp_delivery_qs",
+    "road": "quay_street",
+    "side": "right",
+    "s_from": 27.0,
+    "s_to": 32.4,
+    "heading": "against_road",
+    "heading_rule": "left-hand traffic: the car stands nose with the direction of travel in the lane nearest the kerb; on a road's left that is along its point order, on its right against it",
+    "src": "4.6.2; chosen",
+    "chosen": true
+   },
+   {
+    "id": "wp_delivery_parade",
+    "road": "back_parade",
+    "side": "left",
+    "s_from": 12.0,
+    "s_to": 17.4,
+    "heading": "with_road",
+    "heading_rule": "left-hand traffic: the car stands nose with the direction of travel in the lane nearest the kerb; on a road's left that is along its point order, on its right against it",
+    "src": "4.6.2; chosen",
+    "chosen": true
+   },
+   {
+    "id": "wp_delivery_nr",
+    "road": "north_road",
+    "side": "right",
+    "s_from": 128.0,
+    "s_to": 133.4,
+    "heading": "against_road",
+    "heading_rule": "left-hand traffic: the car stands nose with the direction of travel in the lane nearest the kerb; on a road's left that is along its point order, on its right against it",
+    "src": "4.6.2; chosen",
+    "chosen": true
+   },
+   {
+    "id": "wp_fish_lorry",
+    "road": "quay_road",
+    "side": "left",
+    "s_from": 522.0,
+    "s_to": 530.1,
+    "heading": "with_road",
+    "heading_rule": "left-hand traffic: the car stands nose with the direction of travel in the lane nearest the kerb; on a road's left that is along its point order, on its right against it",
+    "src": "4.6.2 (lorry-delivered fish); chosen",
+    "chosen": true
+   },
+   {
+    "id": "wp_gate_lorry",
+    "road": "dock_road",
+    "side": "right",
+    "s_from": 118.0,
+    "s_to": 126.1,
+    "heading": "against_road",
+    "heading_rule": "left-hand traffic: the car stands nose with the direction of travel in the lane nearest the kerb; on a road's left that is along its point order, on its right against it",
+    "src": "4.6.2 (a crate off a lorry at the dock gate); chosen; s from the south end of the dock road, the gate is at s 140",
+    "chosen": true
+   }
+  ],
+  "vehicles": [
+   {
+    "id": "wv_delivery_van",
+    "model": "stanbridge_carrier",
+    "colour": "white",
+    "plate": "E742 SHN",
+    "first_reg_year_letter": "E",
+    "steering_lock": false,
+    "count": 1,
+    "stops": [
+     {
+      "place": "wp_delivery_qs",
+      "arrives": "07:40",
+      "stays_game_minutes": 10
+     },
+     {
+      "place": "wp_delivery_parade",
+      "arrives": "08:15",
+      "stays_game_minutes": 12
+     },
+     {
+      "place": "wp_delivery_nr",
+      "arrives": "09:05",
+      "stays_game_minutes": 10
+     }
+    ],
+    "enters_and_leaves_at": "j_north_edge",
+    "rule": "goods lifted off a van or lorry are a lift (2.7); a van broken down across the lane is an event",
+    "src": "4.6.2; chosen",
+    "chosen": true
+   },
+   {
+    "id": "wv_fish_lorry",
+    "model": "stanbridge_hauler",
+    "colour": "white",
+    "plate": "916 JHA K",
+    "plate_style": "suffix style (1971)",
+    "steering_lock": false,
+    "count": 1,
+    "stops": [
+     {
+      "place": "wp_fish_lorry",
+      "arrives": "05:00",
+      "stays_game_minutes": 40
+     }
+    ],
+    "enters_and_leaves_at": "j_north_edge",
+    "src": "4.6.2; chosen",
+    "chosen": true
+   },
+   {
+    "id": "wv_dock_gate_lorry",
+    "model": "stanbridge_hauler",
+    "colour": "tan_brown",
+    "plate": "287 DNB L",
+    "plate_style": "suffix style (1972)",
+    "steering_lock": false,
+    "count": 1,
+    "stops": [
+     {
+      "place": "wp_gate_lorry",
+      "arrives": "07:30",
+      "stays_game_minutes": 45
+     },
+     {
+      "place": "wp_gate_lorry",
+      "arrives": "13:30",
+      "stays_game_minutes": 45
+     }
+    ],
+    "enters_and_leaves_at": "j_north_edge",
+    "src": "4.6.2 (a crate off a lorry at the dock gate); chosen",
+    "chosen": true
+   },
+   {
+    "id": "wv_cold_store_lorries",
+    "model": "stanbridge_hauler",
+    "colour": "white",
+    "plate_style": "a pool of three plates",
+    "plates": [
+     "B390 CMK",
+     "C145 HRP",
+     "D771 TNW"
+    ],
+    "steering_lock": false,
+    "count": 3,
+    "yard_door": "d_cold_yard",
+    "yard_mouth_node": "j_cold_yard_mouth",
+    "yard": "cold_stores loading yard (plot cold_stores, notch x 334 to 346)",
+    "arrivals": [
+     "05:30",
+     "08:30",
+     "11:00",
+     "14:30",
+     "17:00"
+    ],
+    "stays_game_minutes": 25,
+    "at_most_in_view": 1,
+    "src": "4.6.2 (lorries at the cold store); RT2-01 packing shift; times chosen",
+    "chosen": true
+   },
+   {
+    "id": "wv_milk_float",
+    "model": "penhallow_float",
+    "colour": "white",
+    "plate": "A118 GRT",
+    "first_reg_year_letter": "A",
+    "steering_lock": false,
+    "count": 1,
+    "round": {
+     "from": "05:00",
+     "until": "08:30",
+     "roads": [
+      "north_road",
+      "back_parade",
+      "quay_street",
+      "quay_road"
+     ],
+     "speed_mps": 4.5
+    },
+    "src": "chosen: a milk float is a 1990 street sight; no source names one",
+    "chosen": true,
+    "note": "carries cartons only"
+   },
+   {
+    "id": "wv_ambulance",
+    "vehicle": "ambulance",
+    "count": 1,
+    "call": {
+     "arrives_after_game_minutes": 10,
+     "arrives_after_real_s": 20,
+     "at_60s_hour_real_s": 10,
+     "src": "4.3.8; 4.6.2; proto ambulanceArrivesGameMinutes 10"
+    },
+    "enters_at": "j_north_edge",
+    "drives_to": "the nearest drivable graph node to the hurt person",
+    "load_real_s": 8,
+    "load_chosen": true,
+    "leaves_by": "j_north_edge",
+    "to": "hospital (off the map)",
+    "lamp_and_two_tone": true,
+    "rule": "a hit person is taken to hospital; hospital costs days, never money (4.3.8)"
+   }
+  ],
+  "scenery_only": [
+   {
+    "id": "sv_ferry",
+    "kind": "boat",
+    "berth_node": "j_landing",
+    "src": "RULINGS 23 Sep (boats scenery); 4.2.1",
+    "timetable": "not here: timetables.json"
+   },
+   {
+    "id": "sv_bus",
+    "kind": "bus",
+    "roads": [
+     "north_road",
+     "back_parade"
+    ],
+    "passes_per_hour": 3,
+    "stops": false,
+    "src": "RULINGS 23 Sep (buses scenery); 4.5.1; chosen",
+    "chosen": true,
+    "note": "drives through; never stops; no people on board shown"
+   }
+  ]
+ },
+ "traffic": {
+  "src": "4.5.1; TRAFFIC-STAGE1-REFERENCE-MODEL rules 1 to 3; FIT-G2; period-vehicles-and-props (Ford, Vauxhall, Rover about 55 per cent)",
+  "gap_clock_note": "gaps are real seconds of unpaused play (the model says so); the bands were set for a 30 s game hour. On the 120 s hour a night band car arrives about every 3.75 game hours: see open_points",
+  "min_gap_real_s_per_lane": 4,
+  "pool_max_cars": 3,
+  "waits_up_to_s_then_dropped": 10,
+  "lane_start_clear_m": 12,
+  "speed_mps": [
+   8.9,
+   12.5
+  ],
+  "speed_mph": [
+   20,
+   28
+  ],
+  "never_over_mph": 30,
+  "follower": "Intelligent Driver Model (Treiber and Kesting Table 11.2: time gap 1.0 s, minimum gap 2 m, accel 1.0, comfortable braking 1.5, exponent 4)",
+  "slow_to_mph_before_quay_street_mouth": {
+   "mph": 20,
+   "from_m": 60
+  },
+  "stop_behind_person_m": 2,
+  "hoot_at_s": [
+   3,
+   10
+  ],
+  "never_strikes_people": true,
+  "stopping_distance_m_at_30mph": 23,
+  "entry_nodes": [
+   "j_north_edge",
+   "j_west_edge",
+   "j_landing"
+  ],
+  "entry_chosen": true,
+  "entry_note": "traffic comes in at the soft edges and the landing; the lane tables themselves belong to tune.json",
+  "stage1": {
+   "kinds": [
+    "dunmere_tarn",
+    "dunmere_tarn_wagon"
+   ],
+   "mix": {
+    "dunmere_tarn": 0.6,
+    "dunmere_tarn_wagon": 0.4
+   },
+   "src": "TRAFFIC-STAGE1 rule 3 (hatch and its second variant)",
+   "mix_chosen": true,
+   "later_kinds_after": "the friends' build, after one passes (4.5.2)"
+  },
+  "colours": [
+   "burgundy",
+   "bottle_green",
+   "navy",
+   "cream",
+   "silver_grey",
+   "tan_brown",
+   "blue_grey",
+   "white"
+  ],
+  "colour_draw": "each car draws its colour, speed and variant from its own seeded stream",
+  "plates": {
+   "H": 0.04,
+   "G": 0.1,
+   "F": 0.14,
+   "E": 0.14,
+   "D": 0.13,
+   "C": 0.11,
+   "B": 0.08,
+   "A": 0.06,
+   "suffix_style_older": 0.2
+  },
+  "kinds": [
+   {
+    "model": "dunmere_tarn",
+    "role": "traffic",
+    "stage": 1
+   },
+   {
+    "model": "dunmere_tarn_wagon",
+    "role": "traffic",
+    "stage": 1
+   },
+   {
+    "model": "dunmere_fenn",
+    "role": "traffic",
+    "stage": 2
+   },
+   {
+    "model": "orsett_vale",
+    "role": "traffic",
+    "stage": 2
+   },
+   {
+    "model": "harwick_wensum",
+    "role": "traffic",
+    "stage": 2
+   },
+   {
+    "model": "stanbridge_carrier",
+    "role": "traffic_van",
+    "stage": 2
+   },
+   {
+    "model": "stanbridge_hauler",
+    "role": "traffic_lorry",
+    "stage": 2
+   }
+  ],
+  "bands": [
+   {
+    "band": "night",
+    "hours": "23:00-06:00",
+    "avg_gap_real_s": 450,
+    "cars_in_view_limit": 1,
+    "cars_per_game_hour_at_120s": 0.27,
+    "mix": {
+     "dunmere_tarn": 0.3,
+     "orsett_vale": 0.3,
+     "dunmere_fenn": 0.15,
+     "harwick_wensum": 0.1,
+     "stanbridge_carrier": 0.15
+    }
+   },
+   {
+    "band": "early",
+    "hours": "06:00-07:00",
+    "avg_gap_real_s": 75,
+    "cars_in_view_limit": 2,
+    "cars_per_game_hour_at_120s": 1.6,
+    "mix": {
+     "dunmere_tarn": 0.24,
+     "orsett_vale": 0.2,
+     "dunmere_fenn": 0.14,
+     "harwick_wensum": 0.1,
+     "stanbridge_carrier": 0.24,
+     "stanbridge_hauler": 0.08
+    }
+   },
+   {
+    "band": "rush_am",
+    "hours": "07:00-10:00",
+    "avg_gap_real_s": 50,
+    "cars_in_view_limit": 2,
+    "cars_per_game_hour_at_120s": 2.4,
+    "mix": {
+     "dunmere_tarn": 0.28,
+     "orsett_vale": 0.27,
+     "dunmere_fenn": 0.15,
+     "harwick_wensum": 0.1,
+     "stanbridge_carrier": 0.15,
+     "stanbridge_hauler": 0.05
+    }
+   },
+   {
+    "band": "day",
+    "hours": "10:00-16:00",
+    "avg_gap_real_s": 75,
+    "cars_in_view_limit": 2,
+    "cars_per_game_hour_at_120s": 1.6,
+    "mix": {
+     "dunmere_tarn": 0.24,
+     "orsett_vale": 0.24,
+     "dunmere_fenn": 0.14,
+     "harwick_wensum": 0.1,
+     "stanbridge_carrier": 0.2,
+     "stanbridge_hauler": 0.08
+    }
+   },
+   {
+    "band": "rush_pm",
+    "hours": "16:00-19:00",
+    "avg_gap_real_s": 50,
+    "cars_in_view_limit": 2,
+    "cars_per_game_hour_at_120s": 2.4,
+    "mix": {
+     "dunmere_tarn": 0.28,
+     "orsett_vale": 0.27,
+     "dunmere_fenn": 0.15,
+     "harwick_wensum": 0.1,
+     "stanbridge_carrier": 0.15,
+     "stanbridge_hauler": 0.05
+    }
+   },
+   {
+    "band": "evening",
+    "hours": "19:00-23:00",
+    "avg_gap_real_s": 150,
+    "cars_in_view_limit": 1,
+    "cars_per_game_hour_at_120s": 0.8,
+    "mix": {
+     "dunmere_tarn": 0.32,
+     "orsett_vale": 0.3,
+     "dunmere_fenn": 0.16,
+     "harwick_wensum": 0.12,
+     "stanbridge_carrier": 0.08,
+     "stanbridge_hauler": 0.02
+    }
+   }
+  ],
+  "hours": [
+   {
+    "hour": 0,
+    "band": "night",
+    "avg_gap_real_s": 450
+   },
+   {
+    "hour": 1,
+    "band": "night",
+    "avg_gap_real_s": 450
+   },
+   {
+    "hour": 2,
+    "band": "night",
+    "avg_gap_real_s": 450
+   },
+   {
+    "hour": 3,
+    "band": "night",
+    "avg_gap_real_s": 450
+   },
+   {
+    "hour": 4,
+    "band": "night",
+    "avg_gap_real_s": 450
+   },
+   {
+    "hour": 5,
+    "band": "night",
+    "avg_gap_real_s": 450
+   },
+   {
+    "hour": 6,
+    "band": "early",
+    "avg_gap_real_s": 75
+   },
+   {
+    "hour": 7,
+    "band": "rush_am",
+    "avg_gap_real_s": 50
+   },
+   {
+    "hour": 8,
+    "band": "rush_am",
+    "avg_gap_real_s": 50
+   },
+   {
+    "hour": 9,
+    "band": "rush_am",
+    "avg_gap_real_s": 50
+   },
+   {
+    "hour": 10,
+    "band": "day",
+    "avg_gap_real_s": 75
+   },
+   {
+    "hour": 11,
+    "band": "day",
+    "avg_gap_real_s": 75
+   },
+   {
+    "hour": 12,
+    "band": "day",
+    "avg_gap_real_s": 75
+   },
+   {
+    "hour": 13,
+    "band": "day",
+    "avg_gap_real_s": 75
+   },
+   {
+    "hour": 14,
+    "band": "day",
+    "avg_gap_real_s": 75
+   },
+   {
+    "hour": 15,
+    "band": "day",
+    "avg_gap_real_s": 75
+   },
+   {
+    "hour": 16,
+    "band": "rush_pm",
+    "avg_gap_real_s": 50
+   },
+   {
+    "hour": 17,
+    "band": "rush_pm",
+    "avg_gap_real_s": 50
+   },
+   {
+    "hour": 18,
+    "band": "rush_pm",
+    "avg_gap_real_s": 50
+   },
+   {
+    "hour": 19,
+    "band": "evening",
+    "avg_gap_real_s": 150
+   },
+   {
+    "hour": 20,
+    "band": "evening",
+    "avg_gap_real_s": 150
+   },
+   {
+    "hour": 21,
+    "band": "evening",
+    "avg_gap_real_s": 150
+   },
+   {
+    "hour": 22,
+    "band": "evening",
+    "avg_gap_real_s": 150
+   },
+   {
+    "hour": 23,
+    "band": "night",
+    "avg_gap_real_s": 450
+   }
+  ],
+  "mix_chosen": true,
+  "mix_note": "band gaps, limits and pool are from the model; the shares of kinds are chosen"
+ }
+}

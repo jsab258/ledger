@@ -29,7 +29,8 @@
   "Car handling: prototype driving numbers (accel 6.2 m/s2, top 14.5 m/s, turn) are arcade values not covered by the M1 to M12 bands; the build follows the bands. Prototype values listed only where a blueprint part uses them.",
   "Owed from footage (value null): firearm hit chance, timings, recoil, rate, reload; crowd avoid radius, step-aside time, look-before-step, spawn distance; sound reach of scuffle, voices, doors, engines; witness report strength by kind; car pull amount.",
   "Traffic arrival gaps are real seconds, but their hour bands are game hours, now 120 s each (the model was written for 30 s hours).",
-  "Entries with status 'working' are prototype values the blueprint relies on but does not state; 'ref' entries are held by the economy design."
+  "Entries with status 'working' are prototype values the blueprint relies on but does not state; 'ref' entries are held by the economy design.",
+  "Added 24 Nov by the data build: 53 sound.reach.* keys so sounds.json and light-weather.json resolve; aliases where tune.json already held the figure, owed (value null) where nothing gives one."
  ],
  "numbers": [
   {
@@ -8548,6 +8549,572 @@
    "basis": "real",
    "chosen": false,
    "status": "working"
+  },
+  {
+   "key": "sound.reach.bin",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": 20,
+   "alias_of": "noise.reach_day_m.bin",
+   "src": "alias of noise.reach_day_m.bin (sounds.json reach_key_map_suggested)",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.boxing",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.boxing_bell",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.cab_radio",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.call",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.car",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": 44,
+   "src": "SOUND-PLAN.md (by day)",
+   "note": "daytime reach; the hour bands in sounds.json scale it",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.car_door",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.cat",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.chapel_bell",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.clock",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.cloth",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.coin",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.crane",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.dog",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": 30,
+   "alias_of": "noise.reach_day_m.bark",
+   "src": "alias of noise.reach_day_m.bark (sounds.json reach_key_map_suggested)",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.door_close",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "alias_of": "noise.reach_day_m.door_open_close",
+   "src": "alias of noise.reach_day_m.door_open_close (sounds.json reach_key_map_suggested)",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.door_forced",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": 40,
+   "alias_of": "noise.reach_day_m.forced_door",
+   "src": "alias of noise.reach_day_m.forced_door (sounds.json reach_key_map_suggested)",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.door_latch",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.door_open",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "alias_of": "noise.reach_day_m.door_open_close",
+   "src": "alias of noise.reach_day_m.door_open_close (sounds.json reach_key_map_suggested)",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.door_slam",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.fight_heavy",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "alias_of": "noise.reach_day_m.scuffle",
+   "src": "alias of noise.reach_day_m.scuffle (sounds.json reach_key_map_suggested)",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.fight_light",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "alias_of": "noise.reach_day_m.scuffle",
+   "src": "alias of noise.reach_day_m.scuffle (sounds.json reach_key_map_suggested)",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.fight_weapon",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "alias_of": "noise.reach_day_m.scuffle",
+   "src": "alias of noise.reach_day_m.scuffle (sounds.json reach_key_map_suggested)",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.fish_boxes",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.fishing",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.glass_break",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": 45,
+   "alias_of": "noise.reach_day_m.broken_glass",
+   "src": "alias of noise.reach_day_m.broken_glass (sounds.json reach_key_map_suggested)",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.gull",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.horn",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": 60,
+   "src": "SOUND-PLAN.md (by day)",
+   "note": "daytime reach; the hour bands in sounds.json scale it",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.kettle",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.letterbox",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.lighter",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.milk_float",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.pager",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.paper",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.phone_ring",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.pigeon",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.plant",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.rain_cut",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.ship_horn",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.shop_bell",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.shot",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": 177,
+   "alias_of": "gun.shot_reach_day_m",
+   "src": "alias of gun.shot_reach_day_m (sounds.json reach_key_map_suggested)",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.shout",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": 35,
+   "alias_of": "noise.reach_day_m.shout",
+   "src": "alias of noise.reach_day_m.shout (sounds.json reach_key_map_suggested)",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.siren",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.snooker",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.stair",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.stamp",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.step_run",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": 14,
+   "alias_of": "noise.reach_day_m.run",
+   "src": "alias of noise.reach_day_m.run (sounds.json reach_key_map_suggested)",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.step_slow",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": 0,
+   "alias_of": "foot.reach_metres.slow_walk",
+   "src": "alias of foot.reach_metres.slow_walk (sounds.json reach_key_map_suggested)",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.step_stand",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.step_walk",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": 0,
+   "alias_of": "foot.reach_metres.footstep",
+   "src": "alias of foot.reach_metres.footstep (sounds.json reach_key_map_suggested)",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.stone",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": 12,
+   "alias_of": "noise.reach_day_m.stone",
+   "src": "alias of noise.reach_day_m.stone (sounds.json reach_key_map_suggested)",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.till",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.tyre_squeal",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
+  },
+  {
+   "key": "sound.reach.winch",
+   "unit": "m",
+   "group": "sound",
+   "basis": "none",
+   "value": null,
+   "status": "owed",
+   "src": "DATA-SWEEP section 3 file 6 (sound reach for acts beyond six is owed)",
+   "note": "to be set from the sound plan or measured; until then the sound is heard only within its room or 10 m",
+   "chosen": false
   }
  ]
 }
