@@ -2,11 +2,11 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed, the next steps and the tries used.
 
-**Started:** 2026-11-24 07:22 (the hourly run)
+**Started:** 2026-11-24 08:07 (the hourly run)
 
-**Row due:** at the next start (last row 07:27; page read 07:23; filter verdicts after 2026-11-24T06:23 UTC, advisor after 2026-11-24T07:27:00+01:00; last ack 2026-11-24-0710-337 at 07:27).
-**Uncommitted:** nothing (07:22 run committed STATUS.md's decides section with this file); the 01:36 run's commit (his page's new item and this file) and da1cb7941 (the solid speeds) are NOT pushed: ci fails page-answers-fresh (see next step 0).
-**Stopped:** 2026-11-24 07:26 (the 07:22 run: advisor 337 answered; stopped on the pace rule, 24.8 points ahead; no jobs of its own started)
+**Row due:** at the next start (last row 08:10; page read 08:08; filter verdicts after 2026-11-24T07:08 UTC, advisor after 2026-11-24T08:10:00+01:00; last ack 2026-11-24-0745-338 at 08:10).
+**Uncommitted:** nothing (08:07 run committed his page item, DECISIONS and this file); that commit, the 01:36 run's and da1cb7941 (the solid speeds) are NOT pushed: ci fails page-answers-fresh (see next step 0).
+**Stopped:** 2026-11-24 08:09 (the 08:07 run: advisor 338 answered, his page item rewritten (v187); stopped on the pace rule, +24.4 points; no jobs of its own started)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -49,7 +49,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 ## Next, in order
 00. Pace first: `python tools/pace_line.py <week> --fable <fable>`. 00:52 read 33% against 6.6% (+26.4): lean, no helpers; the 23:51 run stopped after its item on the pace rule (start nothing new while over 6 ahead).
-0. **Push blocked: page-answers-fresh fails. Second refusal 01:38; his page now carries ACTION item page-read-back-2026-11-24 (published v186, in the items data); do not try the read-back again until his yes, then run it, ci to failed=none, push wip, close the item.** Read-back last 21 Nov; the nightly task has not run since 12 Nov; the read is verdicts after 2026-11-20T23:00 UTC with out_dir production/approvals/answers/1VZHkCBAHdw8HBdNHrByL8, then `python tools/page_answers.py --index`.
+0. **Push blocked: page-answers-fresh fails.** Cause (advisor 338, 08:08): the nightly task "LEDGER: read back page answers (nightly)" is switched off since 12 Nov; the session's own copy is refused by the safety check (two tries, 24 Nov 00:50 and 01:38). His page item page-read-back-2026-11-24 (v187) now asks one switch: Scheduled, switch it on, Run now. Never add an allow rule to the session's own permissions and never copy round the refusal. When the task has run (its answers folder dated today), `python tools/page_answers.py --index` if needed, ci to failed=none, push wip, close the item.
 0b'. When he answers his dates question: follow it on STATUS.md's decides section (if he picks decides-only, footage for the six decides rows first).
 1. Sleeping Dogs on foot is done (solid). Driving and fists in Sleeping Dogs still open: fists need about 60 fps (item 2).
 2. Fists in Sleeping Dogs need about 60 fps (grabs here are 11 a second): recorder item or footage.

@@ -265,16 +265,17 @@
    "tag": "ACTION",
    "his_hands": true,
    "only_you": "his-setting",
-   "tried": "The session tried twice (00:50 and 01:38) to copy your page's answers into the project; this PC's safety check refused both, and the nightly copying task has not run since 12 November.",
-   "title": "Let the session copy your page's answers into the project, so the day's work can be saved",
-   "text": "The daily copy of your taps into the project is two days old, so the project's checks stop the session saving its work online; the safety check on this PC wants your own yes for the copy.",
+   "tried": "The nightly copying task was switched off after 12 November and a running session cannot switch it on; the session's own copy was refused twice by this PC's safety check (00:50, 01:38).",
+   "title": "Switch the nightly copy of your page's answers back on (one switch, no session needed)",
+   "text": "One switch in the Claude app turns the nightly copy back on; it then runs by itself each night at 04:46, with no yes from you.",
    "why": [
-    "Last night's Sleeping Dogs speeds are finished and recorded but cannot go up until the copy is fresh.",
-    "Nothing else is held: the session keeps working meanwhile."
+    "Last night's Sleeping Dogs speeds are recorded but cannot go up until the copy is fresh.",
+    "Works from the PC or through Chrome Remote Desktop; nothing else is held meanwhile."
    ],
    "steps": [
-    "Open the newest LEDGER session in the Claude app at the PC",
-    "Type: Yes, copy my page's answers into the project daily",
+    "In the Claude app, open the Code tab, then Scheduled",
+    "Open \"LEDGER: read back page answers (nightly)\" and switch it on",
+    "Press Run now on it once, so today's copy is made",
     "Tap Done below"
    ],
    "links": [
@@ -284,7 +285,7 @@
     }
    ],
    "blocks": "pushing the day's work to wip (ci page-answers-fresh); nothing else",
-   "recommendation": "Yes, when you are next at the PC.",
+   "recommendation": "Switch it on when you are next at the PC or on Chrome Remote Desktop.",
    "options": [
     [
      "done",
