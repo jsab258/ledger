@@ -125,3 +125,15 @@ hair colour 2 of 2; worn paint 2 of 2; the office and sit on by default 2 of 2; 
 - 23 Nov 21:50: the distance readout moves with Naz while he runs; only the stretch where he stands is a ruler. A colour-only marker search is fooled by the market's green nets: marker_read.py adds shape.
 - 23 Nov 21:52: the drill tool once left the game running a few seconds past its end; the queue line checks again after a 5 s pause.
 - 23 Nov 20:39: the tool's own taps reset Windows' idle clock, so each run waits 10 minutes after the last; queue with a wait loop, never --force.
+
+
+## Moved 24 Nov 09:01 from the handover
+- Earlier runs (13:07-21:03): order adopted, star reader, installed-game method, catalogue, n23-5 recipe rewrite, n23-3 first numbers, the fast film, Sleeping Dogs' opening scripted (watch_opening.py); GTA IV, GTA V, KCD2 copies NOT run (replaced unsigned launcher files, DECISIONS 23 Nov 20:30), their rows go to footage; do not re-ask him.
+- 21:36 run: advisors 334-336 recorded and acked (RULINGS at 4,899 of its cap; DECISIONS 23 Nov 22:00); NOTEBOOK's nine lessons; recipe map updated.
+- Sleeping Dogs speeds method: the chase's distance readout toward the standing Naz; Enter on the fail screen restarts in about 6 s; tools/drills/marker_read.py (SLEEPING-DOGS-DRILL-2026-11-23.md).
+- n23-3 voice alone, no game open: first heard 0.15 s median, worst 0.29 to 0.35 s (N23-3-QUESTIONS).
+- Rows at 21:40 and 22:28. Pushed through 2541d1f1e; this handover's commit carries sample 4's note.
+- 03:36, 04:22, 05:06, 05:51, 06:36 runs: page read, nothing new, a row each, pace +25 to +26; started nothing.
+- 01:36 run: page read (nothing new), read-back refused again, his page item added, row 01:39; pace 34% vs 7.0% (+27).
+- 24 Nov 00:10: sample 5 rerun filmed a white window for all 305 s (every grab mean 255): the game likely not recovered after the forced close. Try 2 queued at once; a second white run sets the fault aside.
+- 24 Nov 00:09: sample 5 lost: a queue started with a shell '&' was still alive though ps did not show it, so a second queue launched a second game 13 s later; the game is single-instance, both runs ended (20 and 0 frames) and the game was left running (closed by taskkill /T). Queue only with run_in_background, one at a time; check with PowerShell's process list, not ps.

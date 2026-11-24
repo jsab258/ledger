@@ -61,6 +61,7 @@ Friday 27 Nov at the five-sample rule (estimate): about 134 hours were left this
 | Feel: driving (Sleeping Dogs, GTA IV, GTA V) | decides | the car's acceleration, braking and weight bands | 4.5 | 1 | drills 1.5, footage 3 |
 | Feel: being seen (KCD2, RDR2 only) | decides | the constable's ladder: seen to alarm to pursuit | 4 | 1 | footage |
 | Feel: chases on foot (L.A. Noire, Sleeping Dogs, GTA V) | decides | foot-chase length and how an escape ends it | 5 | 1 | footage |
+| Crowd counts by street and hour (cloud check, 24 Nov) | decides | how crowds are built if the floor exceeds the card | 3 | 0.5 | footage: first readings 24 Nov 09:00 (crowd-counts-2026-11-24.md): KCD2 0 to about 9 in view on a quiet walking route, RDR2 0 to about 7 on a short ride; busy centres owed, five a game |
 | Street life Q3 (reactions spread and settle) | decides | the crowd's reaction radius and settle time | 3 | 1 | footage |
 | Feel: being seen (Hitman, GTA V) | a lead is enough | (the ladder is set by KCD2 and RDR2) | 4 | 0.5 | - |
 | GTA VI being seen (S1, S3, S7, G6) | a lead is enough | G5 heat length is solid already; the rest refines | 6 | 1 | - |
