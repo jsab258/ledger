@@ -1899,10 +1899,7 @@
     "officer_struck": 1,
     "gun_found_at_war_stop": 1
    },
-   "tom_never_lays_hands_on": [
-    "Ellis",
-    "any woman officer"
-   ]
+   "lays_hands_on_note": "Frank's line dropped by his ruling of 24 Nov; Ellis and women officers fall under the same rules as any officer (what-if/LONG-HEAT.md LH-13)"
   },
   "bought": {
    "override_note": "decision of 24 Nov: Ellis can be bought; this overrides 4.3.7's 'Ellis is not among them'",

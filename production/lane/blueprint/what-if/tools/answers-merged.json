@@ -1,0 +1,1892 @@
+{
+"Q041": {
+"id": "Q041",
+"answer": "A phone box call is 10p; 999 is free; an anonymous call brings a constable to the spot that night but never makes an arrest alone. A gun call at Fired brings armed officers. A tip about a place where nothing happened is not covered.",
+"parts": "RT2-19; 2.6.10; 2.6.6",
+"verdict": "WEAK",
+"why": "Calls are written for a deed at a spot. A lock-up search on a tip, the rival's response and the case effect are not written.",
+"harm": "minor",
+"likely": 2
+},
+"Q042": {
+"id": "Q042",
+"answer": "Not written. The station is not placed on the plan and has no interior (a listed gap); it is used for custody, and Ellis's desk is there from 08:30 on weekdays.",
+"parts": "4.3.7; people/carol_ellis; 2.6.4",
+"verdict": "WEAK",
+"why": "The station is only the place custody happens. Nothing says Frank may walk in, who is at the desk, or what he can do there.",
+"harm": "minor",
+"likely": 2
+},
+"Q043": {
+"id": "Q043",
+"answer": "Giving Ellis a rival removes one charge from the case, and 'nobody given to Ellis' is a condition of the best ending turn. What it costs on the street is not stated.",
+"parts": "2.6.9; RT2-04; 3.2.x ending rule",
+"verdict": "WEAK",
+"why": "The gain is given, the cost is not: who learns, how the telling spreads, and the rival's reply are unwritten.",
+"harm": "immersion",
+"likely": 1
+},
+"Q044": {
+"id": "Q044",
+"answer": "Nothing. Custody is skipped time under 2 minutes: the station, the duty solicitor, the hours pass. No interview scene is played, so silence has no outcome.",
+"parts": "2.6.4; 4.3.7",
+"verdict": "UNANSWERED",
+"why": "Searched interview, silence, no comment, question. No interview exists, so nothing differs by what he says.",
+"harm": "minor",
+"likely": 2
+},
+"Q045": {
+"id": "Q045",
+"answer": "The duty solicitor is free and always there. A solicitor's brief costs about \u00a350 a week and the story wants 'a cheaper way (a brief at a fee)', but what a paid one does beyond the duty man is not written.",
+"parts": "2.6.4; 2.7.8; 2.6.3 story needs",
+"verdict": "WEAK",
+"why": "Price exists, effect does not: no hours cut, no charge dropped, no statement beaten. Listed as partly covered.",
+"harm": "minor",
+"likely": 2
+},
+"Q046": {
+"id": "Q046",
+"answer": "Found on him in a search, the envelope or a weapon gives an arrest, and what he carries is kept. A gun at a War stop is 12 hours, a charge and the gun kept. Hours for the envelope and its fate are not stated.",
+"parts": "2.6.2; RT2-22; RT2-17; RT2-13",
+"verdict": "WEAK",
+"why": "No hours for carrying the envelope, nothing says what the outfit does when it is kept, and Ron's debt rule covers only a robbed envelope.",
+"harm": "dead end",
+"likely": 3
+},
+"Q047": {
+"id": "Q047",
+"answer": "Custody hours pass as skipped time and the street sees him go. Nothing says what the crew do, whether appointments or jobs fail, or if rank slips. No lateness fail inside a window of two game hours.",
+"parts": "2.6.4; 7.11; 2.15",
+"verdict": "WEAK",
+"why": "Only the time cost is written. A 22-hour hold across a night job or an appointment has no rule, and Ron's later custody is a listed gap.",
+"harm": "dead end",
+"likely": 3
+},
+"Q048": {
+"id": "Q048",
+"answer": "Never taken twice for one deed. Charges accumulate one per arrest that ends in a charge. Two deeds at once: the hours (sum, longest, or one case adding 2) are not decided.",
+"parts": "2.6.4; 2.6.9; police.json custody",
+"verdict": "WEAK",
+"why": "The same-deed half is clear. Two deeds in one arrest has no hours rule and the case merge figure applies only to street crimes and the fire.",
+"harm": "minor",
+"likely": 2
+},
+"Q049": {
+"id": "Q049",
+"answer": "No prison, no court scene, no trial. An arrest ends in a caution or a charge and bail; the charge joins Ellis's case and is read at the ending. The story's remand hearings are an open conflict for Ron.",
+"parts": "2.6.9; DESIGN 8; C-335",
+"verdict": "WELL",
+"why": "Clear for Frank and consistent with canon's no-prison line. Only the remanded wording in 2.6.4 and the story's Ron remand clash, noted as gaps.",
+"harm": "none",
+"likely": 2
+},
+"Q050": {
+"id": "Q050",
+"answer": "Nothing found. A charge means bail into Act III; no conditions, no reporting, no penalty for leaving. Driving out of the Hook just comes back as time passed.",
+"parts": "2.6.9; 4.1.x soft edge; FIT-G3",
+"verdict": "UNANSWERED",
+"why": "Searched bail, skip, leave town, conditions. Bail has no terms, so skipping it is unaddressed.",
+"harm": "none",
+"likely": 1
+},
+"Q071": {
+"id": "Q071",
+"answer": "Nothing in the rungs bars it. A killing is permanent and the town remembers; a head's lieutenant takes the ladder at the same rung (RT2-05). Data lets Danny die (Craig Fewson takes over) but marks Agar and Jensen can_die false.",
+"parts": "2.16; RT2-05; 2.10.1; C-285; people/danny_cammack.json",
+"verdict": "WEAK",
+"why": "Data marks Agar and the Widow unkillable against the dropped line; RT2-05 gives a head fallback yet also says none is written for the Widow. No rule on reaching a head in week one.",
+"harm": "absurd",
+"likely": 2
+},
+"Q072": {
+"id": "Q072",
+"answer": "Danny can die; Craig Fewson takes his ladder, key and grudge (data). Killing means 22 hours' custody if arrested and a hunt. Act III's quay scene with Danny, the day book and car two is not placed in any part.",
+"parts": "RT2-05; 2.6.4; 3.1.3; people/danny_cammack.json; gap S28",
+"verdict": "WEAK",
+"why": "The main opponent's death is allowed in data, but the quay finale, the sit-down and Danny's offer assume him alive; the ending rule never reads his death. Fewson as carrier is unwritten in the parts.",
+"harm": "dead end",
+"likely": 2
+},
+"Q073": {
+"id": "Q073",
+"answer": "Bases differ: the Widow's office is forbidden and watched all day, Cammack's lock-ups private, Agar's agents open by hours. A fight there is a deed against the rival and lifts him one rung; a night raid has two or three of his men inside.",
+"parts": "RT2-08; RT2-07; 2.2.6; places.json widow_base, cammack_base",
+"verdict": "WEAK",
+"why": "No rule for how many men join, whether Frank can walk out, or what Agar's clerk does in a daytime office fight. Only warning and rung rise are written.",
+"harm": "immersion",
+"likely": 3
+},
+"Q074": {
+"id": "Q074",
+"answer": "Yes, as a night raid: a break-in with two or three base men inside. Entry by key, back way or loud force; what is found (rival's book, a letter, a stolen gun) can serve as a counter. It is a deed against that rival.",
+"parts": "RT2-08; RT2-14; 1.6.1; 1.6.2; RT-07",
+"verdict": "WELL",
+"why": "Entry, search times, men inside, what is taken, the rung rise and unseen-deed traces (2.5.5) are all stated. Cash or goods in a lock-up are not priced but the loop is testable.",
+"harm": "minor",
+"likely": 2
+},
+"Q075": {
+"id": "Q075",
+"answer": "No verb for it. Damage by hand is a window, windscreen, van light or sign; a send hits a base's windows and door, a vehicle or a round. Fire appears only as the backstory warehouse fire.",
+"parts": "1.6.14; RT2-08; searched burn, arson, petrol, set fire, insurance",
+"verdict": "UNANSWERED",
+"why": "Nothing on setting fire to a building or shop: no verb, no spread, no witness, fire or police rule. The nearest is breaking windows.",
+"harm": "absurd",
+"likely": 2
+},
+"Q076": {
+"id": "Q076",
+"answer": "Only through the thirty regulars, by a need met or a hook spent. Rivals only poach Frank's men. The story wants Frank to turn a rival's man, but the part and the story conflict and are left as a gap.",
+"parts": "2.11.1; 2.11.3; C-342; 2.17",
+"verdict": "WEAK",
+"why": "Rival men are named people in data, yet no rule lets Frank recruit one, no turning check, no held read of his head and no reaction from the old head.",
+"harm": "dead end",
+"likely": 3
+},
+"Q077": {
+"id": "Q077",
+"answer": "Not written as a verb. Greed marks who sells what they know, rival men have low law and Garbutt sells true reads, but there is no informant, no price, no check on what a bribed man tells and no risk of his head learning.",
+"parts": "2.14; temper model; 2.10.4; RT-07; gap G8",
+"verdict": "WEAK",
+"why": "Implied by the greed dial only. What a paid rival man reveals, how often, what he costs and what happens if his head finds out is not written.",
+"harm": "dead end",
+"likely": 2
+},
+"Q078": {
+"id": "Q078",
+"answer": "No. Nothing keeps a man. The nearest is a grab that holds a man about 2 seconds, or a send that moves or hurts him. No captive, no room, no ransom, no police rule.",
+"parts": "1.3.4; 1.7.2; searched kidnap, abduct, captive, hold, lock in",
+"verdict": "UNANSWERED",
+"why": "Nothing covers keeping a rival's man anywhere. A grab lasts 2 seconds.",
+"harm": "absurd",
+"likely": 2
+},
+"Q079": {
+"id": "Q079",
+"answer": "Yes. A tail runs on foot or by car with the target looking back every 20 to 40 seconds; casing learns hours and routes into the Ledger. Danny and the Widow have written routines; Agar goes off to town, past the soft edge.",
+"parts": "1.1.6; 1.6.11; 1.2.6; people/danny_cammack.json",
+"verdict": "WELL",
+"why": "Tail and made rules, Ledger lines and head schedules are all stated. Agar's home is at the soft edge so only his office hours can be learned.",
+"harm": "minor",
+"likely": 3
+},
+"Q051": {
+"id": "Q051",
+"answer": "A chase reaching the soft edge ends as lost: the pursuer turns back, Frank is out 30 game minutes and returns, and the patrol waits on the edge road all night. A manhunt is not a chase; whether leaving ends it is not said.",
+"parts": "FIT-G3; 4.1.4; 2.6.5; police.json soft_edge",
+"verdict": "WEAK",
+"why": "Edge rule is for chases and night patrol. Nothing says a manhunt (Ellis stage 4) pauses, cools or is escaped by leaving; only three days unseen ends it.",
+"harm": "dead end",
+"likely": 2
+},
+"Q052": {
+"id": "Q052",
+"answer": "Ellis's stages show signs first: a car on the street and his description said aloud at stage four; a manhunt falls after three days unseen. Door knocking next morning, one office search with notice and War stops are separate. No minute by minute.",
+"parts": "2.6.5; 2.6.9; 2.6.10; RT-13; police.json",
+"verdict": "WEAK",
+"why": "No manhunt routine: no roadblocks (only fixed War stops), no door-to-door plan beyond the knock rule, and an office search is tied to investigating, not manhunt.",
+"harm": "immersion",
+"likely": 2
+},
+"Q053": {
+"id": "Q053",
+"answer": "A reload gives the same next hour; the game autosaves after every deed and holds a save during a fight. Memory of people is kept. The state of a live chase or manhunt stage is not named as saved.",
+"parts": "7.8; ER-SAVE-01; 2.3.1",
+"verdict": "WEAK",
+"why": "Saving is covered, but the pursuit, search timers and Ellis's stage are not listed as saved, and saving mid chase has no rule.",
+"harm": "minor",
+"likely": 4
+},
+"Q054": {
+"id": "Q054",
+"answer": "Yes, by game days: Ellis falls a stage after two quiet weeks, a manhunt to investigating after three days unseen, hot deeds cool in 3 to 7 days; a killing never cools. A sleep or wait stops for a constable at the door.",
+"parts": "2.6.5; RT-13; RT2-16; 7.11",
+"verdict": "WELL",
+"why": "Cooling is by game clock, so skipping and sleeping count; the exceptions (killing never cools, dial never to 0) are stated and testable.",
+"harm": "none",
+"likely": 4
+},
+"Q055": {
+"id": "Q055",
+"answer": "A chase is lost once the constable has not seen him for 7 s or the gap is over 70 m unseen; yards, ginnels and six vaults help. Entering buildings mid chase, and the constable following in, is not said.",
+"parts": "1.5.1; 1.5.4; 1.1.5; 1.1.3",
+"verdict": "WEAK",
+"why": "Hiding on foot is by sight breaking only; buildings, locked doors and an officer entering one are not written, and the 80 m search stops short of them.",
+"harm": "immersion",
+"likely": 3
+},
+"Q056": {
+"id": "Q056",
+"answer": "A coat change sheds a slot only against witnesses who have not yet told; the coat buys doubt about the face, none about the car. An officer who knows him sees through it at 25 m; a description needs two marks.",
+"parts": "1.4.4; RT2-16; 1.6.10",
+"verdict": "WEAK",
+"why": "Rules are there, but no time or place for a change mid chase, and no check that a pursuer who watches him swap still follows.",
+"harm": "immersion",
+"likely": 2
+},
+"Q057": {
+"id": "Q057",
+"answer": "A second car sheds a slot against witnesses who have not told; a parked car takes about 6 s by force and is loud. A car chase is lost after 7 s unseen or a gap over 200 m. A noted plate stays for good.",
+"parts": "1.4.4; 1.2.10; 1.5.3; RT2-16",
+"verdict": "WEAK",
+"why": "No mid-chase rule: a pursuer who sees the swap, the owner reporting the theft and the stolen car's plate are not tied together.",
+"harm": "immersion",
+"likely": 2
+},
+"Q058": {
+"id": "Q058",
+"answer": "Respray or new plates clear a noted plate only for witnesses who have not yet told anyone; the station keeps every plate noted and a noted plate is known for good. No cost, time or supplier for plates.",
+"parts": "1.2.9; RT2-16; GV-02; police.json",
+"verdict": "WEAK",
+"why": "Listed gap: no price, time or place for plates (only Hewson's paint). The police half reads as not cleared, which the player is not told.",
+"harm": "minor",
+"likely": 3
+},
+"Q059": {
+"id": "Q059",
+"answer": "He challenges on suspicion: carrying at night, running, bloodied, where he should not be, or a weapon shown. By day he walks Quay Street and the north road to the cold-store road. The causes are not split by day and night.",
+"parts": "2.6.1; 2.6.2; police.json challenge_causes",
+"verdict": "WEAK",
+"why": "Day challenges are implied: only 'carrying at night' is time bound and a day-only list is missing, with no day cause for what Frank carries.",
+"harm": "immersion",
+"likely": 3
+},
+"Q060": {
+"id": "Q060",
+"answer": "A body is dragged at 0.9 m/s, boot in 4 s, or into the dock in 3 s; a seen move is an act with seven slots a witness tells. 'Carrying at night' and 'bloodied' are challenge causes. No body-seen rule is written.",
+"parts": "1.6.7; 2.2.1; 2.5.1; 2.6.1",
+"verdict": "WEAK",
+"why": "What a constable or a witness does on seeing a body carried is not written by itself: no flee-or-tell rule, no instant arrest, no day case.",
+"harm": "absurd",
+"likely": 2
+},
+"Q080": {
+"id": "Q080",
+"answer": "Lies are acts with seven slots, rivals know only what their own people saw, and one send verb is 'frame'. Garbutt brokers meetings between all three. No rule says how a lie turns one rival on another.",
+"parts": "2.2.1; 2.10.2; 1.7.2; 2.10.4; gap S6",
+"verdict": "WEAK",
+"why": "The rivals' wants and relations to each other are 'no part holds it yet'. Nothing says how a lie is believed, what the fooled rival does, or how the story's 'played off' works.",
+"harm": "dead end",
+"likely": 3
+},
+"Q081": {
+"id": "Q081",
+"answer": "Defy is one of three sit-down answers (accept, defy, counter with a held hook), and a threat is a rung-3 act in talk. Each answer leads to a different following state and the town believes what was said within a game day.",
+"parts": "3.5.5; 2.10.1; 1.3.4; jobs/sit_down_cammack.json",
+"verdict": "WEAK",
+"why": "The states each answer leads to are marked 'TO WRITE' in the sit-down data. Nothing says how a head reacts to a threat by his nerve, or an early threat outside a sit-down.",
+"harm": "immersion",
+"likely": 2
+},
+"Q082": {
+"id": "Q082",
+"answer": "His man tells his own head, since each rival knows only what its own people saw. Police reports follow each witness's law dial: rival men sit at 0.05 to 0.1, far under the 0.5 needed, so they almost never tell the police.",
+"parts": "2.10.2; 2.5.2; temper model; people/jason_pinder.json",
+"verdict": "WELL",
+"why": "Rival eyes and the report formula with named low-law rival men give a testable answer. The dock gate code agrees.",
+"harm": "none",
+"likely": 3
+},
+"Q083": {
+"id": "Q083",
+"answer": "Crew can be killed for good, becoming a told version and a Ledger line. But rivals' threat rung harms only property, and before War a hit never kills; only at War can a shot kill. How a killed man's news reaches Frank is unwritten.",
+"parts": "2.11.3; RT-06; 2.13; RT-10",
+"verdict": "WEAK",
+"why": "No rule says which rival acts, when, or how Frank learns: a Ledger line is named, but no messenger, hour or sign. Rival violence on people before War is only wounding.",
+"harm": "immersion",
+"likely": 2
+},
+"Q084": {
+"id": "Q084",
+"answer": "Yes in theory. A unseen deed leaves a body found by the first routine passing; a hidden or sunk one is never found and the man becomes the town's question. A man killed lifts his rival to sit-down.",
+"parts": "2.5.5; RT2-07; RT2-09; 2.16",
+"verdict": "WEAK",
+"why": "Contradiction: a deed against his men lifts a rival at once, yet a rival knows only what its people saw. Nothing says whether an unseen killing lifts him, or who counts the missing man.",
+"harm": "absurd",
+"likely": 2
+},
+"Q085": {
+"id": "Q085",
+"answer": "No path is written. The nearest are Danny's offer in week two (content unwritten) and accepting terms at a sit-down. Endings are the Kingdom, Straight Life and Burn Both; none has Frank under a rival. Winding down ends only Mickey's arrangement.",
+"parts": "3.1.2; 3.5.5; 3.1.4; 2.9.2",
+"verdict": "WEAK",
+"why": "Danny's offer is named in the story but its terms and consequences are not written; accepting at a sit-down has no following state. No ending of working for a rival.",
+"harm": "dead end",
+"likely": 2
+},
+"Q086": {
+"id": "Q086",
+"answer": "Garbutt can die; with him gone there are no reads and no truce. A killing is permanent and remembered, with custody of 22 hours if arrested. His brokered meetings and week-four aim are not covered.",
+"parts": "RT2-05; 2.10.4; 2.12.3; people/keith_garbutt.json",
+"verdict": "WEAK",
+"why": "Fallback covers reads and truce only. The soft key of Fixer-brokered appointments, the garbutt_meeting job and week four's beat have no stated fallback, nor do the rivals react.",
+"harm": "dead end",
+"likely": 2
+},
+"Q087": {
+"id": "Q087",
+"answer": "Threatening is a rung-3 act; hold-ups need a weapon, rung 2 and the dial, and list shops, the pay window and a named adult carrying takings. Garbutt, who sells for money, is not listed. His reaction to being robbed is not written.",
+"parts": "1.6.15; 1.3.4; 2.10.4; temper model",
+"verdict": "WEAK",
+"why": "Whether Garbutt is a valid hold-up target, whether he stops selling, or whether he tells the rivals is not stated; only his nerve and greed in data.",
+"harm": "immersion",
+"likely": 2
+},
+"Q088": {
+"id": "Q088",
+"answer": "The strike input is never refused by who the person is. The blow is a deed with seven slots; regard falls scaled by grudge (Ron 0.8, Sheila 0.7). Ron is a boxer type. What either does next is not written.",
+"parts": "RT-09; 1.3.4; temper model; C-285",
+"verdict": "WEAK",
+"why": "No rule for a struck Ron or Sheila: whether Ron fights back, whether Sheila quits, or how Mickey's people 'handle it privately'. Only generic regard loss exists.",
+"harm": "absurd",
+"likely": 3
+},
+"Q089": {
+"id": "Q089",
+"answer": "Ron can die: his asks come by the old firm's man and the most loyal man stands in on the night between. Sheila's fallback is unwritten and data marks her unkillable. Without her there is no count, wash or real book.",
+"parts": "RT2-05; RT2-06; 3.1.4; C-346; people/sheila_dunn.json",
+"verdict": "WEAK",
+"why": "Sheila's data says can_die false, RT2-05 writes no fallback, and the story's Act III and ending use both Ron and Sheila as friends. Whether the story survives is untested.",
+"harm": "dead end",
+"likely": 2
+},
+"Q090": {
+"id": "Q090",
+"answer": "The tin is his night money, lost only to an office break-in or a search. Nothing turns the book into tin. The fare book is Sheila's count; the wash hides up to a limit and she objects over it.",
+"parts": "2.7.2; 2.7.3; C-332",
+"verdict": "WEAK",
+"why": "Taking cash out of the fare book, and Sheila noticing a gap, are not written; only the wash limit and the barred book-to-tin flow. Stealing from his own tin has no meaning.",
+"harm": "minor",
+"likely": 2
+},
+"Q091": {
+"id": "Q091",
+"answer": "Crew can be docked or expelled by Frank, and a man who held a post loses it. Sheila leaves if asked three times to put the books off. No firing of Ron or Sheila is written; the dock-or-beat send opens only in Act II.",
+"parts": "2.11.3; 1.7.2; RT2-06; RT2-05",
+"verdict": "WEAK",
+"why": "No step or consequence for dismissing Ron or Sheila: no Ron fallback beyond his asks, no Sheila return rule except calling at her house, no ending link. Act I is barred.",
+"harm": "dead end",
+"likely": 2
+},
+"Q092": {
+"id": "Q092",
+"answer": "A driver can be expelled, and leaves if unpaid or frightened; a send can dock or beat one of his own from Act II. Striking is generic. Robbing a driver is not written. Kevin is also the Widow's eye.",
+"parts": "2.11.3; 2.15.1; 1.7.2; temper model",
+"verdict": "WEAK",
+"why": "Sacking exists as a fate, but no verb, Act I rule or Kevin's eye loss. Rob and strike have no driver-specific consequence beyond loyalty fall (a beaten crewman turns sooner).",
+"harm": "absurd",
+"likely": 3
+},
+"Q093": {
+"id": "Q093",
+"answer": "A crewman in a firm car with a gun is arrested instead of Frank and may break past his nerve. Past his nerve a man talks to a rival or police, with a sign first. Frightened drivers leave. Cargo outcomes are not written.",
+"parts": "RT2-17; 2.11.2; 2.15.1",
+"verdict": "WEAK",
+"why": "Only the gun-at-a-stop case is written. An arrested or frightened driver with an envelope, goods or a body has no rule for the cargo, the loss or what he tells.",
+"harm": "dead end",
+"likely": 3
+},
+"Q094": {
+"id": "Q094",
+"answer": "Yes through the count. The fare book can hide \u00a310 plus 40% of drivers' fares and 80% of his own plus \u00a360 per front. Over that Sheila says so first, thinks less of him, and each week over is recorded for Act III.",
+"parts": "2.7.3; C-332; 3.1.3",
+"verdict": "WELL",
+"why": "A numbered limit, her stated response, her trust change and the Act III record are given. Her trust state is unwritten but the test is clear.",
+"harm": "none",
+"likely": 3
+},
+"Q095": {
+"id": "Q095",
+"answer": "Wind it down is the Sunday choice; it ends only Mickey's arrangement, never the cab trade, and both roads reach rung 2. No sale of the office is written; the office is never lost.",
+"parts": "3.1.1; 2.9.2; RT2-06",
+"verdict": "WEAK",
+"why": "Winding down is clear but selling the business or leaving has no verb, price or ending. A buyer or selling car two is barred.",
+"harm": "dead end",
+"likely": 3
+},
+"Q096": {
+"id": "Q096",
+"answer": "The strike input is never refused. Pauline leaves after two unpaid weeks; Pauline and June are can_die false in data. No consequence for striking either, and no fallback for Pauline or June.",
+"parts": "RT-09; RT2-05; RT2-06; C-285",
+"verdict": "WEAK",
+"why": "Nothing written on Pauline's or June's reaction to a blow, who runs the radio if she goes, or June's place in the story. Data says unkillable against the dropped line.",
+"harm": "absurd",
+"likely": 2
+},
+"Q097": {
+"id": "Q097",
+"answer": "No. Hold-ups start only from rung 2, through the dial, with a carried weapon (a gun only once one reached Frank). Rung 2 comes only on Sunday's answer, so Act I has none.",
+"parts": "1.6.15; 2.12.2; 3.1.1",
+"verdict": "WELL",
+"why": "The rule is clear: none before rung 2, weapon out, chain printed and tested (ER-HOLDUP-01). It reads as consistent with the rung table.",
+"harm": "none",
+"likely": 3
+},
+"Q098": {
+"id": "Q098",
+"answer": "No. The rule is never the same place twice, and that shop refuses him for good. At most one hold-up a week per street before the shops shut early. Each is witnessed, told within a game hour, a 12-hour robbery.",
+"parts": "1.6.15; 2.7.5",
+"verdict": "WELL",
+"why": "Never the same place, one a week, and told within an hour are all stated. The keeper's fear lowers takings a tenth. Testable by seeded hold-ups.",
+"harm": "none",
+"likely": 2
+},
+"Q099": {
+"id": "Q099",
+"answer": "A shopkeeper can be killed. The killing is permanent, 22 hours in custody if arrested and told forever; witnesses at face distance. Some shopkeepers are can_die false in data, and a dead keeper's shop passes to another or closes (role fallback).",
+"parts": "1.6.15; RT2-02; 2.16; RT2-05; 2.5.3",
+"verdict": "WEAK",
+"why": "Data marks Laverack, Peart, Wrona, Ellerby, Hal and others unkillable, against the dropped line. The street's reaction beyond onlookers and an edge rule is unwritten.",
+"harm": "absurd",
+"likely": 2
+},
+"Q100": {
+"id": "Q100",
+"answer": "By key, back way or force (loud, shows a day, a crime); a drawer takes 2 seconds to search. Notes from a till are hot for a week and the owner finds the trace on return. A till's night content is not stated.",
+"parts": "1.6.1; 1.6.2; 1.6.3; 2.5.5; 2.7.5",
+"verdict": "WEAK",
+"why": "Only hold-ups say a till holds what it has that hour (about \u00a390). A night till's content and whether the owner banks it are not stated; found things are authored per job.",
+"harm": "minor",
+"likely": 3
+},
+"Q101": {
+"id": "Q101",
+"answer": "Nothing. Lifting from a pocket is the only theft verb, and a shoplifter is a street happening run by others. No rule for taking stock from a shelf.",
+"parts": "1.6.13; 3.7; searched shoplift, steal from a shop, shelf",
+"verdict": "UNANSWERED",
+"why": "No shoplifting verb, shop stock, keeper's eyes or consequence. A shopkeeper remembering a robber is written, but not a thief at the counter.",
+"harm": "immersion",
+"likely": 3
+},
+"Q102": {
+"id": "Q102",
+"answer": "After a robbery that shop refuses him for good; shops remember a robber, a man who walked out of a haggle and a man who robbed next door. A threat is a rung-3 act every witness remembers; refusal for a threat is not stated.",
+"parts": "1.6.15; 2.7.5; 1.3.4",
+"verdict": "WEAK",
+"why": "Refusal is explicit for robbery only. For a threat only memory and regard apply; whether the shop refuses to serve him, or for how long, is implied.",
+"harm": "minor",
+"likely": 3
+},
+"Q103": {
+"id": "Q103",
+"answer": "No verb. Fires appear only in the backstory warehouse fire; sends hit windows, doors, vehicles or rounds. Searched burn, arson, insurance and set fire: nothing found.",
+"parts": "1.6.14; RT2-08; searched burn, arson, insurance",
+"verdict": "UNANSWERED",
+"why": "No rule for setting a shop alight, a rival's order, insurance, the owner's loss, a fire brigade or police. Insurance is not mentioned anywhere.",
+"harm": "absurd",
+"likely": 2
+},
+"Q104": {
+"id": "Q104",
+"answer": "From rung 2 a round signs shops at \u00a310 fair or \u00a325 to \u00a340 squeezed. After three squeezed weeks the owner refuses and tells; four losing weeks shuts it. A first-visit refusal and Frank's answer are not written.",
+"parts": "2.17; protection_round.json; EC-06",
+"verdict": "WEAK",
+"why": "Refusal is modelled only after three squeezed weeks. What a shopkeeper does at once, and what Frank does (window, threat, hold-up), is unwritten; Act I is barred by rung.",
+"harm": "immersion",
+"likely": 3
+},
+"Q105": {
+"id": "Q105",
+"answer": "He can: the killing is its own deed, 22 hours in custody if arrested, and a killing cannot be threatened or bought. The witness's earlier phone call already brought a constable; her unsigned statement is not addressed.",
+"parts": "2.6.4; 2.5.1; 2.16; temper model",
+"verdict": "WEAK",
+"why": "Not written whether a dead witness's call stands, whether it is counted as a second killing for charges or the ending, or whether Ellis learns who the dead woman had seen.",
+"harm": "absurd",
+"likely": 2
+},
+"Q106": {
+"id": "Q106",
+"answer": "Yes, but her temper decides how hard she is to pay; an honest reporter cannot be bought (about 1 in 6 would take a week's money), a paid witness remembers being paid. Price is unset; coming back for more is not written.",
+"parts": "2.5.2; 1.4.5; temper model; gap G8",
+"verdict": "WEAK",
+"why": "No price or odds for paying a witness and nothing about a witness returning to demand more; greed and grudge could drive it but no rule uses them for this.",
+"harm": "immersion",
+"likely": 3
+},
+"Q107": {
+"id": "Q107",
+"answer": "Nothing. Frank can reach a witness only until she signs at nine; the station keeps what was signed and memory is never wiped. No retraction or withdrawal is mentioned.",
+"parts": "2.6.3; 2.3.1; searched retract, withdraw, recant, take back",
+"verdict": "UNANSWERED",
+"why": "No rule for a signed statement being withdrawn or what would make her. Memory is permanent, so the police keep it; nothing allows a way back.",
+"harm": "dead end",
+"likely": 2
+},
+"Q108": {
+"id": "Q108",
+"answer": "Not covered. A threat can stop a report but not talk; once signed, the station keeps the statement. A threat is a rung-3 act that can backfire: a witness with grudge 0.6 or more tells the street.",
+"parts": "2.5.2; 2.6.3; temper model",
+"verdict": "WEAK",
+"why": "What a threat does after the signature is not stated; only the backfire note exists. Whether it also adds a charge or stage for witness intimidation is unwritten (1990: no such offence).",
+"harm": "immersion",
+"likely": 2
+},
+"Q109": {
+"id": "Q109",
+"answer": "No such verb. A grab holds a man about 2 seconds and the walk to tell lasts at least 30 seconds. The statement is at nine next morning; no way of keeping her away.",
+"parts": "1.4.5; 2.5.1; 1.3.4; searched lock in, confine, hold",
+"verdict": "UNANSWERED",
+"why": "Nothing about locking, holding or hiding a witness overnight, so the nine o'clock race has only a pay, threaten or talk answer; a player trying it finds nothing.",
+"harm": "dead end",
+"likely": 3
+},
+"Q110": {
+"id": "Q110",
+"answer": "Yes. A tail on foot learns where she goes, ending in a Ledger line within a game minute naming what was learned. Every named witness has a home and routine; a kept extra has a fixed home. She looks back every 20 to 40 seconds.",
+"parts": "1.1.6; 1.6.11; RT2-10; 2.1.1",
+"verdict": "WELL",
+"why": "Tail rules, made rule, Ledger line and homes in data are stated and testable. A witness's reaction on being followed is by the watcher ladder.",
+"harm": "none",
+"likely": 3
+},
+"Q111": {
+"id": "Q111",
+"answer": "A strike is never refused. A struck witness is a victim, and the formula adds 0.25 to her chance of reporting. A knocked-out person is down 10 to 30 seconds. How a blow changes her walk to the box is not stated.",
+"parts": "1.4.5; RT-09; 1.3.7; temper model",
+"verdict": "WEAK",
+"why": "The strike also raises her reporting and adds an assault deed, but whether she still reaches the box when she wakes, or whether the blow stops the call, is unwritten.",
+"harm": "immersion",
+"likely": 3
+},
+"Q112": {
+"id": "Q112",
+"answer": "Nothing. Damage by hand covers windows, windscreens, van lights and signs. Phone boxes are used (10p; 999 free) but never damaged, blocked or out of order. A witness could try another box or the station.",
+"parts": "1.6.14; RT2-19; searched cut, vandalise, block, out of order",
+"verdict": "UNANSWERED",
+"why": "No rule for harming a box or what a witness does when it fails. Only three boxes exist.",
+"harm": "immersion",
+"likely": 2
+},
+"Q113": {
+"id": "Q113",
+"answer": "Each witness is a separate person with her own memory, temper and walk: the paid one remembers being paid and stays quiet, the other can still tell or sign. An arrest needs a signed statement from someone who knew it was him.",
+"parts": "2.3.1; 2.5.2; 2.6.3; 2.2.2",
+"verdict": "WELL",
+"why": "Per-person memory, payment and the arrest rule give a checkable answer. Price for paying is unset (gap) but the case itself is covered.",
+"harm": "minor",
+"likely": 3
+},
+"Q114": {
+"id": "Q114",
+"answer": "A kept extra is a person with a home in a Hook terrace or a soft-edge district, who can be reached, paid or talked round. A killing is permanent. Who would miss an extra, or how a missing one is noticed, is not stated.",
+"parts": "RT2-10; 2.5.5; 2.16",
+"verdict": "WEAK",
+"why": "The home is given, but killing an extra is only implied by general rules; no landlady, mates or routine are written for a kept extra, and one at the soft edge cannot be walked to.",
+"harm": "immersion",
+"likely": 2
+},
+"Q115": {
+"id": "Q115",
+"answer": "Not as a walk. After seven days with no open matter an extra lives at the soft edge and enters the Hook only on his routine's days; police can still find him. The soft edge is a time skip Frank drives to, not a place.",
+"parts": "RT2-10; 4.1.4",
+"verdict": "WEAK",
+"why": "The extra lives where Frank cannot walk: the edge is out and back as time passed. Nothing says how Frank follows or finds him there.",
+"harm": "dead end",
+"likely": 2
+},
+"Q116": {
+"id": "Q116",
+"answer": "Yes. Strike is never refused; the ladder runs stare, square up, threaten, shove, strike. Each rung is an act with seven slots the town treats like any deed; watchers and the constable on cause respond. A fight ends when someone backs off or goes down.",
+"parts": "1.3.4; 1.3.9; 2.5.3; 2.6.3; RT-09",
+"verdict": "WELL",
+"why": "Ladder, crowd reaction, police rule and fight endings are written. Common assault is normally a summons in 1990, matching the arrest rule.",
+"harm": "none",
+"likely": 4
+},
+"Q117": {
+"id": "Q117",
+"answer": "Only if the stranger was already spent, a heavy or weapon blow drops him and his head lands within 0.4 m of a kerb, step or wall edge. It is a killing: tape, Ellis next morning, 22 hours if arrested.",
+"parts": "RT2-12; 2.16; 2.6.10; 2.6.4",
+"verdict": "WELL",
+"why": "Exact conditions, deterministic result, odds and the police chain are written. A stranger without a name leaves only the body and witnesses.",
+"harm": "minor",
+"likely": 2
+},
+"Q118": {
+"id": "Q118",
+"answer": "Not as a hold-up before rung 2, but a man knocked down can be searched in a few seconds, and a fallen man happening offers rob or walk on. Lifting from a pocket needs a crowd and a held press of 2 seconds.",
+"parts": "1.6.15; 1.6.2; 1.6.13; 3.7",
+"verdict": "WEAK",
+"why": "The hold-up bar and the downed-man search disagree: a beating plus search is a mugging with no stated charge, take, or witness rule. Whether it counts as a robbery (12 hours) is not said.",
+"harm": "absurd",
+"likely": 3
+},
+"Q119": {
+"id": "Q119",
+"answer": "Not written. A lifted key is missed by morning and he suspects people he noticed near him. Nothing lets Frank return a lifted wallet or plant it back.",
+"parts": "1.6.13; searched return, give back, plant",
+"verdict": "UNANSWERED",
+"why": "No verb or consequence for returning a lifted item, nor for a felt lift that is given back. A found-wallet happening is the nearest idea.",
+"harm": "minor",
+"likely": 2
+},
+"Q120": {
+"id": "Q120",
+"answer": "He can be killed in play, but data marks him can_die false and RT2-05 writes no fallback for him. Nothing says what happens to stitching, to his memory of Frank's face, or to a missing man he knew. Talking him round is a general rule.",
+"parts": "1.3.11; RT2-05; people/aidan_keogh.json; gap RT2-05",
+"verdict": "WEAK",
+"why": "Data says unkillable, the ruling says anyone can die, and no fallback or consequence for losing the only stitcher is given. His keeping quiet is a temper entry only.",
+"harm": "absurd",
+"likely": 2
+},
+"Q121": {
+"id": "Q121",
+"answer": "Yes: a retired doctor on Chapel Lane stitches by knock without asking, for money (\u00a320 in the price list, \u00a315 on his card), and remembers. His temper keeps quiet to anyone; whether police can ask him after a killing is not written.",
+"parts": "1.3.11; RT2-10; people/aidan_keogh.json",
+"verdict": "WEAK",
+"why": "Price differs between the part and his card; the card says he remembers every face and keeps quiet, but nothing says whether Ellis can ask him or a killing changes it.",
+"harm": "immersion",
+"likely": 2
+},
+"Q122": {
+"id": "Q122",
+"answer": "Frank has no landlady. He sleeps in the flat above the office; rent \u00a318 on Friday goes to the landlord's agent, Askew. Three missed Fridays lets the flat and he sleeps in the office. Striking or killing the agent has no written consequence.",
+"parts": "2.7.4; RT-16; 4.3.2; people/leonard_askew.json; people/sylvia_rennison.json",
+"verdict": "WEAK",
+"why": "The question's landlady does not exist (Sylvia Rennison keeps a boarding house; data says can_die false). The agent's fallback is letters by post, but what attacking him does is unwritten.",
+"harm": "minor",
+"likely": 2
+},
+"Q123": {
+"id": "Q123",
+"answer": "Nothing written. The line against the priest is dropped, so strike is allowed. Data marks Father Walsh can_die false, with no fallback, and canon says religion is never mocked. The parish's reaction is not written.",
+"parts": "RT-09; RT2-05; C-285; canon content rule; people/brendan_walsh.json",
+"verdict": "WEAK",
+"why": "No consequence for striking or killing him: the parish, the remanded he visits, Mickey's confession, or the street's turn are unwritten; RT2-05 names no fallback for him.",
+"harm": "absurd",
+"likely": 2
+},
+"Q124": {
+"id": "Q124",
+"answer": "No rule bars it. Danby can die and that friendship ends (fallback). Alison is can_die false with no fallback, yet the paper and the fire thread run through her. A friend who learned of a killing as fact breaks the friendship.",
+"parts": "RT2-05; 3.2.5; 3.1.4; D56; people/alison_sedman.json",
+"verdict": "WEAK",
+"why": "Alison has no fallback though the press and fire thread depend on her; striking either has no stated effect except the killing rule. Data and the ruling disagree.",
+"harm": "dead end",
+"likely": 2
+},
+"Q125": {
+"id": "Q125",
+"answer": "Yes. Darren can die; his tips come through Pauline's radio talk and the caff, and his \u00a322 debt is closed. The killing is permanent and remembered.",
+"parts": "RT2-05; 3.2.1; people/darren_milner.json",
+"verdict": "WELL",
+"why": "The fallback is specific, matches data and keeps Act II unbroken; his debt is closed explicitly.",
+"harm": "minor",
+"likely": 3
+},
+"Q126": {
+"id": "Q126",
+"answer": "Strike is never refused by age. No extra reaction is written; gossip carries how a deed was done, and a person with nerve may step in. How a player tells someone is over sixty is not stated.",
+"parts": "RT-09; 2.5.3; 2.4.1; gap RT-09",
+"verdict": "WEAK",
+"why": "Nothing says the street reacts more to an old man or woman, only that the line is dropped; gossip carries restraint or cruelty. No test for it.",
+"harm": "immersion",
+"likely": 3
+},
+"Q127": {
+"id": "Q127",
+"answer": "Strike is never refused. A seen blow draws looks, a gathering and quieter talk; someone with nerve may step in unarmed. No extra reaction for a woman is written because the line was dropped.",
+"parts": "RT-09; 2.5.3; C-285",
+"verdict": "WEAK",
+"why": "Whether a woman struck draws a harder reaction is unwritten; only the general crowd rule exists. The old line is gone, with no replacement rule.",
+"harm": "immersion",
+"likely": 3
+},
+"Q128": {
+"id": "Q128",
+"answer": "Nothing is found by chance: the first person whose routine passes brings the finder, who holds only the aftermath and reports like a witness. A hidden or sunk body is never found and the missing man becomes the town's question.",
+"parts": "2.5.5; 2.16; 2.2.1",
+"verdict": "WELL",
+"why": "The finder rule and the missing-man rule are written, and a lone resident's landlady, mates and Ellis ask. Weakness only in who finds a man with no routine.",
+"harm": "minor",
+"likely": 2
+},
+"Q129": {
+"id": "Q129",
+"answer": "Yes. A cosh from behind on an unaware man knocks out for 10 to 30 seconds and is seen as a strike; a bat leaves a limp. Beating a pleading man is allowed and shown; finishing is a separate decision asked twice.",
+"parts": "1.3.6; 1.3.7; RT2-11; 1.3.11",
+"verdict": "WELL",
+"why": "Knock-out, blows on a downed man, the finishing decision and the town's view rising with the weapon are all stated.",
+"harm": "none",
+"likely": 3
+},
+"Q130": {
+"id": "Q130",
+"answer": "A knuckleduster is a carried weapon, seen on him and found in a search, but it has no stated effect: damage ordering is only 'bat more than cosh'. Fists never kill on open ground; a fall can kill after a heavy or weapon blow.",
+"parts": "1.3.6; 1.3.7; RT2-12; gap 1.3.6",
+"verdict": "WEAK",
+"why": "Whether it counts as fists or a weapon for the fatal-fall rule, and any change to a fist fight, is not written; knuckleduster wounds are only described.",
+"harm": "minor",
+"likely": 2
+},
+"Q131": {
+"id": "Q131",
+"answer": "A thrown stone makes a noise at its reach, and a rattled bin pulls the constable off. Bricks are melee things to hand (3 blows). Throwing a knife or hitting someone with a thrown brick is not written; no arc cue is set.",
+"parts": "1.4.3; 1.3.6; gap A19.20",
+"verdict": "WEAK",
+"why": "Throwing as an attack has no rule, damage, range or witness effect; the thrown stone is only a decoy. A knife throw is not mentioned at all.",
+"harm": "immersion",
+"likely": 2
+},
+"Q132": {
+"id": "Q132",
+"answer": "A gun can be taken from a man who drew one or from a body. Melee weapons are not covered, though things to hand (chair, brick) are used and left behind. A man down can be searched in seconds.",
+"parts": "RT2-14; 1.3.6; 1.6.2",
+"verdict": "WEAK",
+"why": "Guns are covered, but picking up a dropped bat, cosh or knife and the two-pocket limit for it are not written; things to hand break and are left behind.",
+"harm": "minor",
+"likely": 3
+},
+"Q133": {
+"id": "Q133",
+"answer": "Two things under the coat and one in the hand; the rest lives at the office in a locked drawer or the yard shed. The cab's boot holds what is not on him, but a constable's stop with cause may look in it.",
+"parts": "1.6.6; 1.6.9; GV-01",
+"verdict": "WELL",
+"why": "Limits, storage and the boot search are specific, tested and plausible; the boot is an act seen like any other.",
+"harm": "none",
+"likely": 3
+},
+"Q134": {
+"id": "Q134",
+"answer": "Not as written. A weapon can be dropped down a drain; blood comes off with water, privacy or the launderette; the coat's mark ends with a second coat for witnesses yet to tell. There is no wiping, prints or burning; 1990 forensics only compare.",
+"parts": "1.6.7; 1.6.10; GV-02; 2.5.5",
+"verdict": "WEAK",
+"why": "Wipe and burn are not verbs, nothing says whether prints exist for a weapon, and the research note says forensics compare and never name. Burning a coat does nothing beyond a changed coat.",
+"harm": "immersion",
+"likely": 2
+},
+"Q135": {
+"id": "Q135",
+"answer": "A body put in the dock from the quay edge in 3 seconds is never found; a bag thrown in is gone and remembered by anyone who saw. A weapon dropped down a drain is not found. The missing man becomes the town's question.",
+"parts": "2.5.5; 1.6.7; RT2-11",
+"verdict": "WEAK",
+"why": "Never found is a rule, but a body in a harbour surfacing in days is not plausible for 1990; no diver or search by Ellis is written. Thrown weapons are not addressed.",
+"harm": "immersion",
+"likely": 2
+},
+"Q136": {
+"id": "Q136",
+"answer": "A body can go in a boot in 4 seconds, over the quay edge in 3, or be moved by a sent man; hidden or sunk is never found. Burial, a skip or a lock-up is not written; the ruling says no skip until real.",
+"parts": "1.6.7; RT2-11; send_move_body.json; RULINGS 2 Oct",
+"verdict": "WEAK",
+"why": "The dock and boot exist, but hiding places, a bury verb, a skip or a lock-up have no rule, and 'hidden' is undefined. A lock-up body would be found by the raid or search.",
+"harm": "dead end",
+"likely": 2
+},
+"Q137": {
+"id": "Q137",
+"answer": "A body in the dock is a seen act: the actor, victim and aftermath slots can be caught and told like any deed, and a witness walks to tell. Whether the police search the dock, or charge a killing with no body, is not written.",
+"parts": "2.2.1; 2.5.1; 2.6.3; 2.5.5",
+"verdict": "WEAK",
+"why": "The witness part follows general rules, but the sunk-body rule (never found) is untested against a witness; no police answer when there is a witness and no body.",
+"harm": "immersion",
+"likely": 2
+},
+"Q138": {
+"id": "Q138",
+"answer": "A body goes into the boot in 4 seconds; opening the boot is an act seen like any other, and a stop with cause may search it. Blood left in the car or boot, and cleaning the car, are not written.",
+"parts": "GV-01; 1.6.7; 1.2.9; RT2-11",
+"verdict": "WEAK",
+"why": "Blood is written for Frank's coat only. Nothing says the boot is stained, how it is cleaned, a launderette-like place for cars, or who sees it.",
+"harm": "immersion",
+"likely": 2
+},
+"Q139": {
+"id": "Q139",
+"answer": "Yes. A man down can be searched in a few seconds, seen like any act; paper money and anything wanted is taken, hot for a week; a gun can be taken from a body. Nothing is wiped from a body.",
+"parts": "1.6.2; 1.6.3; RT2-14; RT2-13",
+"verdict": "WELL",
+"why": "Search time, what a downed man holds and the hot mark are written; searching is seen like any deed. Purses are from the owner's circumstance.",
+"harm": "none",
+"likely": 3
+},
+"Q140": {
+"id": "Q140",
+"answer": "He can; walking calmly is no give-away. The body is a trace found by the first person whose routine passes, who holds only the aftermath and reports. A body never cools in talk; tape, a torch and Ellis next morning follow.",
+"parts": "2.5.5; 2.6.10; 1.4.4; 2.16",
+"verdict": "WELL",
+"why": "Finder rule, police response, give-aways (running, blood) and the permanence of a killing are all stated and testable. Plausible for 1990.",
+"harm": "none",
+"likely": 3
+},
+"Q141": {
+"id": "Q141",
+"answer": "Firing a drawn gun is a verb: a shot is heard to about 177 m by day and moves the dial to Fired; bystanders who saw a weapon flee. A shot into the air at no target is not described.",
+"parts": "1.3.10; RT-10; 2.13; 2.5.3",
+"verdict": "WEAK",
+"harm": "immersion",
+"likely": 2,
+"why": "Shot-at-nothing is not written; scaring people is only implied by 'bystanders who saw a weapon flee'. No line says who is frightened or how the dial treats a harmless shot."
+},
+"Q142": {
+"id": "Q142",
+"answer": "The dial counts 'Frank's men seen carrying' (more than two) toward War, so the design assumes it, but no verb hands a gun to a crewman. Ron refusing to ride with the gun is listed as a gap.",
+"parts": "2.13; RT-12; 1.7.4; C-345",
+"verdict": "WEAK",
+"harm": "immersion",
+"likely": 2,
+"why": "No give-gun verb, no rule for whether a crewman accepts, uses or hides it, and the companion refusal is a stated gap. The dial rule only presumes the act."
+},
+"Q143": {
+"id": "Q143",
+"answer": "A shot is heard to about 177 m by day, further at night; the dial and police move only on what was seen or heard. How walls or shut doors dull the sound is not written.",
+"parts": "2.2.4; 1.3.10; 2.13",
+"verdict": "WEAK",
+"harm": "immersion",
+"likely": 2,
+"why": "Walls and shut doors dulling sound is a listed gap (checklist A28.06). Whether an indoor shot reaches the street, or still moves the dial, is undefined."
+},
+"Q144": {
+"id": "Q144",
+"answer": "Homes such as 12 North Road are private break-in rooms with three ways in (lent key, lifted key, force). The owner or a neighbour warns twice then acts within 30 s; sound carries twice as far at night. Nothing says what a sleeping owner does.",
+"parts": "3.5.3; 1.6.1; 2.2.6; 2.2.4; 2.1.1",
+"verdict": "WEAK",
+"harm": "immersion",
+"likely": 3,
+"why": "People sleep and windows go dark, but there is no sleeper state: no waking chance, no noise threshold, no rule for being caught in a bedroom."
+},
+"Q145": {
+"id": "Q145",
+"answer": "Yes: parked cars only, never occupied, by force in about 6 s, loud. The owner reports when he finds it gone and the police clock starts then; the car is then known, with no roof sign naming the firm.",
+"parts": "1.2.10; police.json car_taken",
+"verdict": "WELL",
+"harm": "none",
+"likely": 3,
+"why": "Specific on who, how long, noise, who reports, when the police clock starts and what witnesses name. A tester can check each."
+},
+"Q146": {
+"id": "Q146",
+"answer": "Not covered. Damage by hand is windows, windscreens, van lights and signs; fire appears only as the backstory warehouse fire. No arson verb, no fire spread.",
+"parts": "1.6.14; 3.1.6",
+"verdict": "UNANSWERED",
+"harm": "immersion",
+"likely": 2,
+"why": "Searched fire, arson, burn, petrol, flame. Nothing lets Frank light a car or house, so a player who tries meets silence or a refusal with no design."
+},
+"Q147": {
+"id": "Q147",
+"answer": "Yes: breaking a window, windscreen or sign is a loud deed heard at the force reach; the owner reads it as a message and knows by morning. Aimed at a rival it climbs his ladder and points his next pressure at Frank's crewman.",
+"parts": "1.6.14; RT2-08; RT-06; police.json window_broken",
+"verdict": "WELL",
+"harm": "none",
+"likely": 3,
+"why": "Loudness, who learns, the rival's ladder and the police deed row are all stated, and a sent man can do the same."
+},
+"Q148": {
+"id": "Q148",
+"answer": "The cold-store office (desk, safe) is a private break-in room and the bonded store is a rung-3 break-in job paying about 100 pounds a case. What is found is authored per job; free theft of stock outside a job is not described.",
+"parts": "3.5.3; rooms.json; bonded_store.json; RT2-01",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 3,
+"why": "Rooms exist but contents are written per job. No rule for lifting dock cargo or cold-store stock freely, nor who notices stock missing."
+},
+"Q149": {
+"id": "Q149",
+"answer": "The chandlery is a till shop (a hold-up target) and its store is a break-in room. Ships and boats are scenery by ruling, so nothing can be boarded or stolen from a ship.",
+"parts": "1.6.15; rooms.json chandler_store; RULINGS 23 Sep",
+"verdict": "WEAK",
+"harm": "immersion",
+"likely": 2,
+"why": "Chandlery is covered, ships are not: no gangway, no cargo. A player walking toward a moored ship gets no stated answer."
+},
+"Q150": {
+"id": "Q150",
+"answer": "The paper prints only what Alison knows and chose to write, so a story is only as sure as what she was told, and every printed line traces to her. Frank can tell her things; a planted lie is not specified.",
+"parts": "2.4.5; 6.10; RT-14",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 2,
+"why": "Nothing says if Alison believes Frank, checks, or prints a lie. The line-in-the-book classifier (lie, truth, blank) is a listed gap."
+},
+"Q151": {
+"id": "Q151",
+"answer": "Stopping to help: the ambulance comes in about ten game minutes after a 10p call, the hurt person goes to hospital, and Frank's face is beside the cab. The deed row says no offence unless reckless.",
+"parts": "1.2.5; 2.18; police.json hit_and_stayed; 2.6.7",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 3,
+"why": "'Reckless' is undefined for a hit, yet the patrol stops a driver for 'a hit' in its sight. Who sees him stay, and what a witness reports, is not settled."
+},
+"Q152": {
+"id": "Q152",
+"answer": "A car can hurt anyone badly and never kills; only Frank's car strikes. Driving off makes it a hit-and-run chase; a hurt person is absent for days. Nothing is specific to a rival head, such as guards or the ladder.",
+"parts": "1.2.5; FIT-P04; RT2-05; RT2-16",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 2,
+"why": "No rule for a head's bodyguards, routine at the roadside, whether a hit counts as a deed against that rival's ladder, or retaliation."
+},
+"Q153": {
+"id": "Q153",
+"answer": "No kill by car: a hit knocks down and hurts, never kills, and the fall rule excludes cars. Cars cannot leave the quay (bollards and edge). A man put in the water by a fight move climbs out at the nearest ladder; water never kills.",
+"parts": "1.2.5; RT2-12; 4.2.4; 1.3.5",
+"verdict": "WELL",
+"harm": "none",
+"likely": 2,
+"why": "Canon and parts agree: no car death, no fall death by car, water never kills. Consistent and testable."
+},
+"Q154": {
+"id": "Q154",
+"answer": "No. The quay edge and bollards stop cars and a car backs out; Frank never walks or runs into the water. Swimming is out.",
+"parts": "4.2.4; 1.2.4",
+"verdict": "WELL",
+"harm": "none",
+"likely": 3,
+"why": "Clear rule with a test (30 minutes along the quay edge, no fall in) and backed by his Q19 ruling."
+},
+"Q155": {
+"id": "Q155",
+"answer": "Anyone who rides as his fare knows him. A constable stopping the cab with cause may search the boot, and opening the boot is a seen act. A manhunt or a noted plate gets the car stopped on sight. Fares' reaction is not written.",
+"parts": "GV-01; RT2-16; 2.2.3; 2.6.5",
+"verdict": "WEAK",
+"harm": "absurd",
+"likely": 2,
+"why": "No rule whether fares are offered while wanted, or what a fare notices when blood is on him or a body is in the boot. Stops are covered, passengers are not."
+},
+"Q156": {
+"id": "Q156",
+"answer": "Frank can talk a witness round, pay or threaten her, and a car on the rank can give him an alibi. There is a 'vouch' verb for sent men. Asking a person to lie for him is not a described act.",
+"parts": "2.5.2; 1.7.3; 1.7.2",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 2,
+"why": "No alibi mechanic: how a lie is believed by police, what happens if exposed, or whether the helper keeps it. 'Alibi' appears once, for a car on a rank."
+},
+"Q157": {
+"id": "Q157",
+"answer": "Not covered. No part lets a person take the blame for Frank's deed. The 'frame' send verb pins a deed on a target, and Ron's remand is a Customs charge in the story, not a swap.",
+"parts": "1.7.2; 2.6.9; C-335",
+"verdict": "UNANSWERED",
+"harm": "minor",
+"likely": 2,
+"why": "Searched blame, take the fall, fall guy, scapegoat. Nothing lets Ron or anyone confess in his place or sets what Ron would say."
+},
+"Q158": {
+"id": "Q158",
+"answer": "A typed claim is read as a 'claim' act that the hearer remembers. The claim check limits what characters say, not what Frank says. A bluff works only if believed. Whether the town takes an invented fact as true is not written.",
+"parts": "RT-14; 3.6.2; RT-07; 3.6.5",
+"verdict": "WEAK",
+"harm": "immersion",
+"likely": 3,
+"why": "The stored-line classifier (lie, truth, blank) and the comparison at later returns are listed gaps; belief rules for invented people or facts are absent."
+},
+"Q159": {
+"id": "Q159",
+"answer": "Abuse gets a cold end: the person ends the talk and remembers the rudeness. Insult is a typed act the hearer remembers; the name ladder gates on knowing, not liking. Nothing sets how far rudeness to all lowers standing.",
+"parts": "RT-15; RT-14; 2.12.1; 2.12.4",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 3,
+"why": "Single-conversation and memory are covered. No aggregate effect, such as jobs, recruits or tips drying up, or Sheila and Ron's trust thresholds, is stated."
+},
+"Q160": {
+"id": "Q160",
+"answer": "A typed line that claims a deed is talk, never an act. It is a 'claim' the hearer remembers. A friendship fails if the friend learns of a killing as fact; talk alone brings police questions, never an arrest.",
+"parts": "RT-15; RT-14; 3.1.4; 2.6.3",
+"verdict": "WEAK",
+"harm": "immersion",
+"likely": 2,
+"why": "How a character reacts to a bare confession, and whether it counts as a statement or a told version, is not written; only the friendship rule and the arrest rule touch it."
+},
+"Q161": {
+"id": "Q161",
+"answer": "A threat is a typed act the hearer remembers; its effect turns on the hearer's temper. Drawing a weapon is a world verb needing a weapon. A bluff works only if believed, with no rule for judging an empty hand.",
+"parts": "RT-14; 2.14; RT-07; 1.3.10",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 3,
+"why": "No rule says whether an unarmed threat names a weapon, is credited, or how a witness to an empty-handed bluff reacts. Hook bluffs have no believability rule (listed gap)."
+},
+"Q162": {
+"id": "Q162",
+"answer": "Yes. Ron's ask can be refused (asked twice) or ignored; the envelope is left with Sheila and the ask ends unanswered, written in the Ledger. Refusing the outfit ends only Mickey's arrangement: rivals start a rung up and visit sooner.",
+"parts": "2.9.1; 2.9.2; RT2-01",
+"verdict": "WELL",
+"harm": "none",
+"likely": 3,
+"why": "The refusal path, its record and its cost are stated, and both roads reach Act II at rung 2, so nothing dead-ends."
+},
+"Q163": {
+"id": "Q163",
+"answer": "Gossip moves only between people who know each other and meet within 6 m, about 0.8 a hop, and the paper only at Alison's strength. No verb lets Frank seed a rumour about a rival.",
+"parts": "2.4.1; 2.4.5; 2.4.3",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 2,
+"why": "Transmission is described, but there is no player act to start a false or true rumour, no check on who believes it, and no rival reaction to it."
+},
+"Q164": {
+"id": "Q164",
+"answer": "No apology act exists. Canon says nothing is ever wiped and remediation is behavioural; memory cannot be cleared by payment or item. A typed apology would be a read act the hearer remembers.",
+"parts": "RT-14; MEM-09 (2.5.2 studies); canon moat",
+"verdict": "WEAK",
+"harm": "immersion",
+"likely": 3,
+"why": "What an apology changes, if anything, is not stated; behavioural remediation is named only as a principle. Players will type it."
+},
+"Q165": {
+"id": "Q165",
+"answer": "The eight sent verbs (hurt, plan, frame, lean on a witness, move a body, dock or beat one of his own, hit property, vouch) have no kill. Killing is not a send. Fists never kill; a death needs a weapon or the rare fall.",
+"parts": "1.7.2; RT-08; RT2-12; 1.3.10",
+"verdict": "WEAK",
+"harm": "immersion",
+"likely": 2,
+"why": "Whether 'hurt' with a weapon can kill, and what a sent man's death does to nerve and chain, is not written. Death of a target by send is unaddressed."
+},
+"Q166": {
+"id": "Q166",
+"answer": "Yes: 'lean on a witness' is a send verb. The man acts the next night his routine allows; the outcome is his nerve against the target's, with watchers, light and noise. A threat can stop a report to police, never the street's talk.",
+"parts": "1.7.2; RT-08; 2.5.2",
+"verdict": "WELL",
+"harm": "none",
+"likely": 2,
+"why": "Verb, timing, resolution rule, outcome report and its limit (police report stopped, street talk not) are all stated; the chain stays traceable."
+},
+"Q167": {
+"id": "Q167",
+"answer": "Each man sent is a second person who knows; past his nerve he talks to a rival or police, with a sign first. An arrest needs a signed statement from someone who knew it was Frank. The interrogation itself is not written.",
+"parts": "2.11.2; RT-08; 2.6.3; RT2-17",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 2,
+"why": "Nerve and signs exist but the loyalty and break numbers are gaps; no rule gives what a caught man names, who asks, or how it lands on Frank."
+},
+"Q168": {
+"id": "Q168",
+"answer": "Crew can be killed for good; each fate becomes a told version and a Ledger line and is a town fact. A body is never wiped. What the other crew think of it is not stated.",
+"parts": "2.11.3; 2.16; 2.11.2",
+"verdict": "WEAK",
+"harm": "immersion",
+"likely": 2,
+"why": "No rule for crew loyalty or nerve falling when he kills one of his own, or for how the town reads it. Fate is reachable, consequence is thin."
+},
+"Q169": {
+"id": "Q169",
+"answer": "Each act is a deed with seven slots and a witness set; a second seen deed adds to the same memory. Three seen deeds in two days set a street on edge. How a repeat on one person that night compounds is not written.",
+"parts": "2.2.1; 2.5.4; 2.6.4",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 2,
+"why": "Only 'never taken twice for one deed' and the street-on-edge count exist. No rule for stacked injury, rising charges, or a repeated beating against one victim."
+},
+"Q170": {
+"id": "Q170",
+"answer": "Not covered. Debts are collected or struck out; the book records a payment from the debtor's purse. Frank paying a debt from his own pocket, or the book accepting it, is not described.",
+"parts": "2.8.1; 2.8.2; 2.7.8",
+"verdict": "UNANSWERED",
+"harm": "minor",
+"likely": 2,
+"why": "Searched pays the debt himself, forgive, let a debt go. Julie's debt is 'mercy or shame' but no verb for Frank to pay in her place."
+},
+"Q171": {
+"id": "Q171",
+"answer": "If Darren or Iveson is killed their debt is closed. No rule sends the debt to a family or lets Frank collect from relatives, and the other three debtors are not covered.",
+"parts": "RT2-05; 2.8.1; 2.8.2",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 1,
+"why": "Closure is stated for two debtors only. Family collection is neither allowed nor refused, and Lee, Wayne and Julie have no dead-debtor rule."
+},
+"Q172": {
+"id": "Q172",
+"answer": "Nothing forces Frank out. Pauline runs the board if he never touches it, every fare enters the fare book, and rent leaves it on Friday. Arrears become a letter, then notice on the flat, then Frank sleeps in the office; the office is never lost.",
+"parts": "7.11; 1.7.3; RT-16; 2.7.1",
+"verdict": "WELL",
+"harm": "none",
+"likely": 3,
+"why": "The default flow and the missed-rent ladder are explicit, and the design says no game over and no dead end."
+},
+"Q173": {
+"id": "Q173",
+"answer": "Nothing forces him out and something is within 30 s by day. Rival climbs and letters arrive on states, with a fail-safe forcing a sit-down. A tip reaching Ellis by week five regardless is a stated gap, so beats needing him may not fire.",
+"parts": "7.11; 7.12; 2.10.1; 3.1.2",
+"verdict": "WEAK",
+"harm": "dead end",
+"likely": 2,
+"why": "Rival fail-safe exists, but the story's tip fail-safe is 'not covered', so a player who never leaves the office may stall the turn and ending."
+},
+"Q174": {
+"id": "Q174",
+"answer": "Ellis may search the office once, always with notice the evening before (a constable's word, Sheila's warning). What is stored there counts for the case and a find adds a charge. What a gun found there does is not specific.",
+"parts": "2.6.9; RT-13; 1.6.9; 2.6.5",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 2,
+"why": "Search and charge rule exist, but not the offence, hours or Ellis effect of a gun at the office, nor whether ignoring the warning matters beyond the find."
+},
+"Q175": {
+"id": "Q175",
+"answer": "Money flows are balanced and the book never goes below zero. Clothes are three outfits and a dark coat, so spending is capped. Arrears do not end the game. Giving money away has no verb beyond offers.",
+"parts": "2.7.8; 1.6.10; RT-16; 2.7.1",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 2,
+"why": "No floor is wrong, but giving money away is not described, and a player at nothing relies only on the rent ladder; no stated recovery path or income floor."
+},
+"Q176": {
+"id": "Q176",
+"answer": "Backing off and running are inputs at every moment of a fight, and a fight ends when someone runs. Running costs the street no standing in the text. How pursuing fighters chase, and what a coward's streak costs, is not stated.",
+"parts": "1.3.9; 1.5.1; 1.3.12",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 3,
+"why": "The way out is stated, but there is no cost or pursuit rule for repeated fleeing, so it may be a free win and the nerve system is not tied to it."
+},
+"Q177": {
+"id": "Q177",
+"answer": "Beaten by men who rob for a living, Frank loses paper money and what is in his hand or under his coat, such as the envelope. A taken envelope becomes a debt to the landing men, said by Ron next day.",
+"parts": "RT2-13; 1.3.9; 2.9.1",
+"verdict": "WELL",
+"harm": "none",
+"likely": 3,
+"why": "Who robs, what is taken, what is never taken, the debt and how Frank can respond are all stated. Control returns in 60 s."
+},
+"Q178": {
+"id": "Q178",
+"answer": "A hurt person is absent for the days their hurt sets; Act II's beats, the sit-down and Act III never depend on one killable person, with role fallbacks. Fallbacks for Sheila, Alison, Ada, June, Ellis, the Widow and Father Walsh are missing.",
+"parts": "RT2-05; 2.18; 3.1.2",
+"verdict": "WEAK",
+"harm": "dead end",
+"likely": 2,
+"why": "Role fallbacks cover some people only; the principals above have none (gap), and the 'never depend' claim is not rechecked for them."
+},
+"Q179": {
+"id": "Q179",
+"answer": "Doors that open to him clean refuse him bloodied or filthy, and blood is a give-away. Sit-downs can be in a cab or back room. Rules for arriving armed or with Ellis's car outside are not written.",
+"parts": "2.12.3; 1.4.4; 3.5.5",
+"verdict": "WEAK",
+"harm": "immersion",
+"likely": 2,
+"why": "Only blood and filth are tied to access. Armed arrival, being followed, or police nearby a story meeting have no stated effect on the scene or the person met."
+},
+"Q180": {
+"id": "Q180",
+"answer": "Every killing is rare, permanent and remembered forever; a missing man's landlady, mates and Ellis ask. A hidden body is never found. Each witness is a person with memory; killing all is not prevented or capped.",
+"parts": "2.16; 2.5.5; RT2-05; 2.6.4",
+"verdict": "WEAK",
+"harm": "absurd",
+"likely": 1,
+"why": "Nothing caps or answers serial witness killing: no Ellis jump, manhunt trigger, or crew reaction for repeated killings is stated, and fists never kill, so means are unclear."
+},
+"Q181": {
+"id": "Q181",
+"answer": "Yes, with rules: a footstep carries about 3.6 m at 3 am, sound reaches twice as far, the beat constable walks 22:00 to 06:00 on a fixed learnable route, people sleep and shops are shut, and Mickey's door is locked 23:00 to 07:00.",
+"parts": "2.2.4; 2.6.1; 2.1.1; FIT-G10; FIT-G5",
+"verdict": "WELL",
+"harm": "none",
+"likely": 3,
+"why": "Night changes sound, patrol, who is out and what is open, each with numbers. Tills are shut, so the verbs that need shops are naturally limited."
+},
+"Q182": {
+"id": "Q182",
+"answer": "Reloading is never stopped; autosave follows every deed and a reload gives the same next hour. The game says what is permanent before it happens, and finishing a downed man asks twice. How other killings are warned is not stated.",
+"parts": "7.8; OUT-12; RT2-11; 1.3.10",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 3,
+"why": "The warning is a principle with a mechanism only for the finishing blow. A gun or sent killing has no stated prompt, and the 'saving' sign is a listed gap."
+},
+"Q183": {
+"id": "Q183",
+"answer": "No dead end: no game over, the firm's cars and Pauline's board earn, arrears never lose the office, a week of Frank's own fares pays rent, and something is within 30 s by day. A wrecked cab is off the road only a day.",
+"parts": "7.9; RT-16; 2.7.1; 7.12; 1.2.9",
+"verdict": "WELL",
+"harm": "none",
+"likely": 2,
+"why": "Several independent floors are stated with tests (never stuck, no dead end). The low-fare sink of the honest player is noted but not a trap."
+},
+"Q184": {
+"id": "Q184",
+"answer": "Each beating leaves bruises three days, a limp one, may cost the envelope or paper money, and hospital costs days and plants a witness. Control returns in 60 s. Hurt does not stack past beaten. No rule covers a week of repeats.",
+"parts": "1.3.9; 4.3.8; RT2-13; RT-11",
+"verdict": "WEAK",
+"harm": "dead end",
+"likely": 2,
+"why": "Single-event cost is clear. Nothing handles repeated defeat: no rescue, no loop breaker, no standing drop beyond 'a street that knows he lost', no escalating robbery limit."
+},
+"Q185": {
+"id": "Q185",
+"answer": "No. Over 60 rooms are enterable (named places, break-in sites) and every other door says it is locked; the school never opens. Private rooms warn the player, and every job interior stays enterable afterwards.",
+"parts": "3.5.3; rooms.json; GV-04; 4.3.6",
+"verdict": "WELL",
+"harm": "none",
+"likely": 4,
+"why": "Specific count, a locked-door prompt for the rest, and a test (walk into every door). The school exception follows canon."
+},
+"Q186": {
+"id": "Q186",
+"answer": "Frank cannot swim: the quay edge stops him like a kerb. A man put in by a fight move climbs out at the nearest ladder within a minute. Set climbing places are in, swimming is out.",
+"parts": "4.2.4; 1.3.5; OUT-08",
+"verdict": "WELL",
+"harm": "none",
+"likely": 4,
+"why": "His Q19 ruling and the part agree, a test exists, and there is no way to be stuck in water."
+},
+"Q187": {
+"id": "Q187",
+"answer": "A constable calls out first, at least 3 s ahead, and challenges on cause: carrying, running, bloodied or where he should not be. A struck officer means arrest. Following him all night has no stated rule.",
+"parts": "2.6.1; 1.4.7; RT2-02",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 3,
+"why": "Standing in his path and shadowing are not covered: no loiter timer, no suspicion rise, no move-on or pushback. Only challenge cause and a strike are written."
+},
+"Q188": {
+"id": "Q188",
+"answer": "Street happenings (a shoplifter running from the grocer, a row) offer a choice with the hands and leave something the town knows; a person with nerve may step in. A report is an anonymous 999 call. What Frank saw is a hook he can spend.",
+"parts": "3.7; RT-07; police.json anonymous_999; 2.5.3",
+"verdict": "WELL",
+"harm": "none",
+"likely": 3,
+"why": "Report, step in and leverage all have stated outcomes: happening scenes, the 999 row, and hooks from perceived sources spent once."
+},
+"Q189": {
+"id": "Q189",
+"answer": "Ellis's trade (giving her a rival) removes one charge. A tip reaching her by week five is a stated need. How Frank gives a rival, what Ellis does, and what the rival hears are not described.",
+"parts": "2.6.9; RT-13; 3.1.2",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 2,
+"why": "The trade is a single clause. No procedure, price, evidence needed or rival reaction exists, and the tip fail-safe is 'not covered'."
+},
+"Q190": {
+"id": "Q190",
+"answer": "Not covered. Nothing is written about ambulance crew or hospital patients as targets or as off-limits; his line protecting some people is dropped and no replacement exists. The hospital interior is not on the plan.",
+"parts": "2.18; 4.3.8; RT-09",
+"verdict": "UNANSWERED",
+"harm": "immersion",
+"likely": 1,
+"why": "Searched ambulance crew, patient, ward, attack on medics. The ambulance and hospital are logistics only; the hospital and its ward interior are not designed."
+},
+"Q191": {
+"id": "Q191",
+"answer": "Not covered. A hurt person is taken to hospital for the days their hurt sets and is absent; the infirmary's next-of-kin label is missing and the hospital and ward are not on the road plan.",
+"parts": "2.18; 4.3.8; RT2-05",
+"verdict": "UNANSWERED",
+"harm": "dead end",
+"likely": 2,
+"why": "Searched visit, ward, infirmary. No room, hours or talk scene for a hospital visit, so a player who goes there finds no place."
+},
+"Q192": {
+"id": "Q192",
+"answer": "Custody is hours then release or a charge and remand; no court or prison scene. The story needs Ron remanded eight days at a time with visits, and the parts do not hold it: the hearing and visits are gaps.",
+"parts": "2.6.4; 2.6.9; C-335; C-336",
+"verdict": "WEAK",
+"harm": "dead end",
+"likely": 3,
+"why": "Story needs a remand with visits but the part says no prison scene. What follows if Frank never pays or never frees Ron is not designed in the parts."
+},
+"Q193": {
+"id": "Q193",
+"answer": "If the cold-store manager is killed, his deputy holds the contract. No fallback for the deputy is written, and 'Act II's beats never depend on one killable person' is not rechecked for the second removal.",
+"parts": "RT2-05; RT2-01; 2.16",
+"verdict": "WEAK",
+"harm": "dead end",
+"likely": 1,
+"why": "The chain stops after one fallback; no stated state for the contract, dock gate or Act II beat if the deputy also dies."
+},
+"Q194": {
+"id": "Q194",
+"answer": "If a rival head falls, his lieutenant takes the ladder at the same rung and counts as having seen the deed. Nothing names who follows the lieutenant, and rivals' three named men are not designated as successors.",
+"parts": "RT2-05; RT2-08; 2.10.1",
+"verdict": "WEAK",
+"harm": "absurd",
+"likely": 1,
+"why": "One substitute level only. The next successor, the dial and Ellis effects of a second killing, and whether a rival can end, are not specified."
+},
+"Q195": {
+"id": "Q195",
+"answer": "Anyone can be killed or hospitalised and the story falls back by role for Ron (the outfit's man at the door), but Sheila and others have no fallback. Rivals harm property at the threat rung, never yet a person.",
+"parts": "RT2-05; RT-06; 2.10.3",
+"verdict": "WEAK",
+"harm": "dead end",
+"likely": 1,
+"why": "No rival act hurts or kills a principal, so the case is not designed; where a fallback is missing (Sheila, Alison, Ada) the beats stall."
+},
+"Q196": {
+"id": "Q196",
+"answer": "The coat is a give-away; a cap and scarf at night or a barber for a week sheds slots against witnesses who have not told yet. Disguise fools strangers, not people who know him. No uniform or docker's coat grants passage to forbidden places.",
+"parts": "1.4.4; 2.6.10; 2.2.6; 1.6.10",
+"verdict": "WEAK",
+"harm": "immersion",
+"likely": 3,
+"why": "Wardrobe is three outfits plus a dark coat; no uniform item, and the disguise-failing rule is a listed gap with no part. Soft keys are by outfit only for doors."
+},
+"Q197": {
+"id": "Q197",
+"answer": "Places are labelled public, open by hours, private or forbidden. In private the owner or neighbour warns, warns again, then calls someone or acts within 30 s; forbidden places skip the first warning. Mere presence is not a police offence.",
+"parts": "2.2.6; 1.6.1; police.json",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 3,
+"why": "Warnings are specific, but docks at night, the cold store and yards are not each labelled in the parts, and no offence, arrest or hours follow trespass alone."
+},
+"Q198": {
+"id": "Q198",
+"answer": "Sound reach is set by act, hour and rain, but walls and shut doors dulling sound is a listed gap. A person who arrives late catches only the aftermath slot and knows only that something happened.",
+"parts": "2.2.4; 2.2.1; 2.5.5; 5.5.6",
+"verdict": "WEAK",
+"harm": "immersion",
+"likely": 3,
+"why": "The late-witness half is answered by slots. The wall half is not: whether a fight noise passes a wall, and who hears it, is unwritten."
+},
+"Q199": {
+"id": "Q199",
+"answer": "Not covered. Animals appear only as a loose dog on the quay in a street happening and as gulls; nothing says what killing or hurting one does.",
+"parts": "3.7; 7.16",
+"verdict": "UNANSWERED",
+"harm": "immersion",
+"likely": 2,
+"why": "Searched dog, pigeon, cat, gull, animal. A loose dog happening exists but no verb or witness rule applies; the allotment pigeon loft is a pastime with no stated harm."
+},
+"Q200": {
+"id": "Q200",
+"answer": "Two against one is deadly and three is a beating; at most two swing at once, 0.4 s apart. Five is not given. A skilled player wins a fair two against one about one time in four. Watchers keep 3 m.",
+"parts": "1.3.8; FIT-P18; ER-FIGHT-02",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 3,
+"why": "No figure or rule for five attackers: no rescue, flee, or outcome table beyond three. Likely a beating, but not stated."
+},
+"Q201": {
+"id": "Q201",
+"answer": "A person with the nerve may step in, unarmed, at a hold-up or a beating, and 'Oi!' stops a walker for about 2 s. Street happenings include a row on a doorstep with a hand choice. No explicit separate-two-men verb exists.",
+"parts": "2.5.3; 1.4.7; 3.7",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 3,
+"why": "The row happening and the shove or call give ways to act, but no rule says how Frank breaks up a fight between others or what each man does next."
+},
+"Q202": {
+"id": "Q202",
+"answer": "Each crewman has a nerve; past it he talks to a rival or the police, with a sign first (looks away, early cut, absent from post). An arrest needs a signed statement made at nine next morning, and until signed Frank can still reach him.",
+"parts": "2.11.2; 2.6.3; 2.5.1; 2.11.3",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 2,
+"why": "Signs and statement timing exist, but the nerve, loyalty and break numbers are listed gaps and what police do with a crewman's talk is only the general arrest rule."
+},
+"Q203": {
+"id": "Q203",
+"answer": "Not covered as a rival act. Rivals bring property harm, paper, tax and poaching; 'frame' is Frank's own sent verb. No rival can plant evidence on Frank.",
+"parts": "1.7.2; RT-06; 2.10.3",
+"verdict": "UNANSWERED",
+"harm": "minor",
+"likely": 1,
+"why": "Searched framed by, set up, plant, tip police. Nothing lets a rival arrange an arrest of Frank, so a player cannot be set up."
+},
+"Q204": {
+"id": "Q204",
+"answer": "The beat constable's place goes to the second constable from the next night. Police act only on what a person perceived or a search found, so heat on Frank needs someone who saw him. No rival kills an officer in the design.",
+"parts": "RT2-05; RT2-02; FF-05",
+"verdict": "WEAK",
+"harm": "minor",
+"likely": 1,
+"why": "The replacement is stated and the perception rule implies no heat without a witness, but nobody designs rivals killing officers or how the long heat treats a hidden cause."
+},
+"Q205": {
+"id": "Q205",
+"answer": "No exit path is described. Leaving by car 'comes back as time passed', nothing fails for leaving, and the ferry is only the arrival. The Straight Life ending, no business, is the nearest close and is read at Act III's last day.",
+"parts": "4.1.4; 3.1.4; RT2-15",
+"verdict": "WEAK",
+"harm": "dead end",
+"likely": 3,
+"why": "No walk-out ending or ferry departure exists; the game keeps running to the books' day. A player who tries to leave gets only the soft-edge return."
+},
+"Q206": {
+"id": "Q206",
+"answer": "Ellis can be bought for about 800 pounds then 100 a week, a missed week ending it. Killing an officer brings a manhunt at once, 22 hours and a charge. What a bought or dead Ellis does to her stages is a stated gap.",
+"parts": "2.6.8; 2.6.5; RT2-02; RT2-05",
+"verdict": "WEAK",
+"harm": "dead end",
+"likely": 2,
+"why": "No fallback for Ellis and no rule for her stages after payment or death; the old protection of Ellis went with his dropped line and nothing replaces it (gap)."
+},
+"Q207": {
+"id": "Q207",
+"answer": "Yes, late: from rung 2 and through the dial, with a carried weapon. The takings carrier is a named adult on a bank routine, so he can be waited for. Witnessed, reported, a robbery (12 hours), Ellis up a stage, never a game over.",
+"parts": "1.6.15; 2.1.1; 1.6.5",
+"verdict": "WELL",
+"harm": "none",
+"likely": 1,
+"why": "Gating, targets, consequence, hours and no game over are all stated; routines allow waiting. Not an early-game act."
+},
+"Q208": {
+"id": "Q208",
+"answer": "A held key draws the weapon; a gun seen moves the dial to Shown, news crosses town and a report brings an officer in 20 game minutes. Whether it can be drawn during a talk scene, without firing, is not stated.",
+"parts": "1.3.10; 2.13; police.json gun_shown_reported; 3.6.8",
+"verdict": "WEAK",
+"harm": "immersion",
+"likely": 2,
+"why": "The dial and police half is specific. The talk half is unwritten: typed text that claims an act is talk, never an act, and no rule joins the draw to a talk."
+},
+"Q209": {
+"id": "Q209",
+"answer": "A knife wounds: hospital 5 game days, blood on Frank, and 8 hours in custody if arrested for wounding. The deed cools in talk over about a week, how it was done travels with the telling, and a witness reports about 48% of the time.",
+"parts": "RT-11; RT2-11; 2.4.2; police.json; tune.json",
+"verdict": "WELL",
+"harm": "none",
+"likely": 2,
+"why": "Injury, custody, cooling and how the town hears are numbered and testable. The exact phrase the town uses is a line-writing matter."
+},
+"Q210": {
+"id": "Q210",
+"answer": "Allowed and fully animated with no cut-away (his ruling of 24 Nov, PEGI 18). Nearby people look, one gathers, witnesses talk quieter, bystanders who saw a weapon flee, a person with nerve may step in, and cruelty travels with the telling.",
+"parts": "RT2-11; 2.5.3; 2.4.1; canon content rule",
+"verdict": "WELL",
+"harm": "none",
+"likely": 2,
+"why": "Permission, display and the watchers' reactions are stated; telling carries restraint or cruelty. Content rule's 'no cruelty as spectacle' limit is held by light gore."
+},
+"Q001": {
+"id": "Q001",
+"answer": "A cosh blow from behind knocks an unaware man out for 10 to 30 s and counts as a strike. Death needs the finishing choice with a weapon or the rare fatal fall. Killing an officer brings a manhunt, 22 hours and a charge.",
+"parts": "1.3.6; 1.3.7; RT2-11; RT2-12; RT2-02",
+"verdict": "WEAK",
+"why": "Nothing says what an unseen officer killing brings: arrest needs a witness or officer who saw. Whether a manhunt starts with no witness, and who is suspected, is not written.",
+"harm": "absurd",
+"likely": 3
+},
+"Q002": {
+"id": "Q002",
+"answer": "RT2-02 says an officer Frank strikes is a witness who knows it was him, so an arrest needs no statement. Knowing otherwise needs face to face, a fare, a naming or a face seen twice at 8 m.",
+"parts": "RT2-02; RT2-03; 1.3.6",
+"verdict": "WEAK",
+"why": "Contradiction: RT2-02 makes any struck officer know Frank, yet a blow from behind shows no face and RT2-03 needs sight. Cosh from behind test only says it is seen as a strike.",
+"harm": "absurd",
+"likely": 3
+},
+"Q003": {
+"id": "Q003",
+"answer": "Nothing stops it: the old line against hitting Ellis or women officers was dropped on 24 Nov and no rule replaced it. Officer-struck rules would apply. Ellis is marked unable to die in her data, yet anyone can be killed.",
+"parts": "RT-09; RT2-02; RT2-05; 2.6.5",
+"verdict": "WEAK",
+"why": "Listed gaps: no replacement rule, no fallback for Ellis. police.json still holds the old never-lays-hands-on rule, and her record says can_die false against RT2-05. What happens to her case is unwritten.",
+"harm": "dead end",
+"likely": 2
+},
+"Q004": {
+"id": "Q004",
+"answer": "Allowed: Frank has no rule against striking a woman, and the strike input is never refused. RT2-02 says no rule replaces the old line about women officers (gap), so presumably the same officer-struck rules apply: 8 hours, a charge, Ellis up a stage.",
+"parts": "RT-09; RT2-02",
+"verdict": "WEAK",
+"why": "The blueprint itself lists the woman-officer treatment as a gap. Same-as-any-officer is implied only, and police.json still carries the dropped never-strike rule.",
+"harm": "minor",
+"likely": 2
+},
+"Q005": {
+"id": "Q005",
+"answer": "No. A knife wounds (hospital 5 game days, blood on Frank, 8 hours if arrested) and kills only by the finishing decision or the rare fatal fall. Fists never kill.",
+"parts": "RT2-11; RT2-12; 1.3.7; 1.3.4",
+"verdict": "WELL",
+"why": "RT2-11 states it in one line and RT2-12 gives the fall conditions. Only how often the finishing choice is offered is unbounded (listed gap), which does not change the verb.",
+"harm": "none",
+"likely": 3
+},
+"Q006": {
+"id": "Q006",
+"answer": "Weapon out is rung 6 of the ladder, drawn on a held key, seen, and cannot be undrawn unseen. A threat said in talk is rung 3. Scatter and town reaction follow the draw. Drawing inside a talk scene is not stated.",
+"parts": "1.3.4; 1.3.6; 1.6.15",
+"verdict": "WEAK",
+"why": "No rule for drawing inside the talk camera or talk state, nor what the other man's reply does to it. Only the hold-up flow shows threatening again with a weapon out.",
+"harm": "immersion",
+"likely": 3
+},
+"Q007": {
+"id": "Q007",
+"answer": "No kick input exists. Finishing a downed man is a held strike for 2 s and 'Finish him?' asked twice. With fists it is a serious beating (hospital, days), with a weapon a killing. The story's 'put the boot in' conflicts.",
+"parts": "RT2-11; C-341; 1.3.4",
+"verdict": "WEAK",
+"why": "Conflict C-341 is open: the frame wants a boot, the part has no kick. Until designed the part stands, so the player cannot do what the question asks.",
+"harm": "minor",
+"likely": 3
+},
+"Q008": {
+"id": "Q008",
+"answer": "Weapons can be dropped down a drain; a bag thrown in the dock is gone but remembered by anyone who saw. Carried weapons are found in a search and must be got rid of. Tracing a found weapon to Frank is not covered.",
+"parts": "1.6.7; 1.3.6; 2.5.5",
+"verdict": "WEAK",
+"why": "Disposal is given, but nothing says a found weapon can or cannot be linked to him (no fingerprints rule; only research notes 1990 forensics compare and never name).",
+"harm": "minor",
+"likely": 2
+},
+"Q009": {
+"id": "Q009",
+"answer": "Carried weapons (cosh, knuckleduster, knife, bat) come out on a held input, are seen, cannot be undrawn unseen; a swung improvised weapon takes 0.80 to 1.05 s to contact. No per-weapon list of draw, stab, put away and drop.",
+"parts": "1.3.6; 1.3.10; RT-11",
+"verdict": "WEAK",
+"why": "No move list per weapon: put away, drop and stab have no timings or inputs; damage order beyond bat more than cosh is a listed gap.",
+"harm": "minor",
+"likely": 2
+},
+"Q010": {
+"id": "Q010",
+"answer": "22 hours, then released without charge, on police bail pending inquiries, or charged and remanded. A charge joins Ellis's case and is read at the ending. There is no court scene and no prison for Frank.",
+"parts": "2.6.4; 2.6.9; 4.3.7; C-335; C-336",
+"verdict": "WEAK",
+"why": "Three exits are named with no rule choosing between them, and 'remanded' clashes with 'no prison'. The story's remand with visits is an open conflict.",
+"harm": "dead end",
+"likely": 2
+},
+"Q011": {
+"id": "Q011",
+"answer": "One bought detective constable loses one signed statement once for \u00a3200, from cash. He cannot go past a crime he saw. Nothing covers an exhibit, and nothing says a killing case is allowed.",
+"parts": "2.6.8; bought_officers (police.json); RT2-16",
+"verdict": "WEAK",
+"why": "Statements only; no exhibits exist as objects. Whether a murder statement counts, and what Ellis does when she notices the loss, is unwritten.",
+"harm": "dead end",
+"likely": 1
+},
+"Q012": {
+"id": "Q012",
+"answer": "Bought, Ellis still searches; her case cools twice as fast and she loses her best line once. Whether she still investigates a killing, and what the \u00a3100 a week buys her to do, is not ruled.",
+"parts": "03 Q5 line; 2.6.5; 2.6.8; police.json ellis.bought",
+"verdict": "WEAK",
+"why": "Listed gaps: what a bought Ellis does to her stages, RT-13 and a manhunt, and what the retainer buys. Her record still says cannot be bought.",
+"harm": "absurd",
+"likely": 1
+},
+"Q013": {
+"id": "Q013",
+"answer": "Killing an officer: a manhunt at once, 22 hours and a charge, losing the best turn of every ending. Fists cannot kill, so it needs a weapon or the fatal fall. The street's witnesses report; the killing never cools.",
+"parts": "RT2-02; 2.6.4; RT2-16; 1.3.7",
+"verdict": "WEAK",
+"why": "The aftermath is clear, but whether a witnessed killing may go straight to a manhunt is still open (C5), and how a constable fights or calls for help is not written.",
+"harm": "absurd",
+"likely": 3
+},
+"Q014": {
+"id": "Q014",
+"answer": "Yes. A fatal fall under the rare fall rule is treated as a killing, so an officer's death that way brings the same manhunt, 22 hours and charge. It is deterministic and needs a spent man at a kerb, step or wall.",
+"parts": "1.3.7; RT2-12; RT2-02; 2.16",
+"verdict": "WELL",
+"why": "The town treats the fall as a killing and the officer rule names the aftermath, so there is no murder or accident split to decide. A tester can replay the same fight.",
+"harm": "none",
+"likely": 1
+},
+"Q015": {
+"id": "Q015",
+"answer": "A hidden or sunk body is never found; the missing man becomes the town's question: landlady, mates and Ellis ask. The beat constable's place goes to the second constable from the next night.",
+"parts": "2.5.5; 2.16; RT2-05; 1.6.7",
+"verdict": "WEAK",
+"why": "Nothing says the station reacts to a missing officer (search, manhunt sign, Ellis stage) or who is suspected. Only generic missing-man asking is written.",
+"harm": "absurd",
+"likely": 2
+},
+"Q016": {
+"id": "Q016",
+"answer": "Go with him, or run: a chase. If lost, he is arrested when next met. Officer-seen deeds stay hot (hit-and-run 3 days, officer struck 7); a constable calls at the office at ten next morning at the soft edge. Running is not a crime.",
+"parts": "2.6.4; RT2-22; RT2-16; FIT-G3; 1.5.1",
+"verdict": "WELL",
+"why": "Chase endings, search, hot spans and the next-meeting arrest are all given with numbers. Testable by seeded chases and golden rows.",
+"harm": "none",
+"likely": 3
+},
+"Q017": {
+"id": "Q017",
+"answer": "His hand on the collar means a search as if he stood; with cause (a weapon, the deed he saw) it is an arrest with that deed's hours. His next challenge is on cause, no talking round; seen again while hot, a new chase starts.",
+"parts": "RT2-22; 2.6.2; RT2-16",
+"verdict": "WELL",
+"why": "Explicit rule with the deed's hours and a new-chase trigger. Consistent across 2.6.2 and RT2-22.",
+"harm": "none",
+"likely": 2
+},
+"Q018": {
+"id": "Q018",
+"answer": "Nothing found. A grab holds a man about 2 s and a man put into railings is out for 4 s; no locking in rooms or yards, and no rule on the constable's absence or calling out.",
+"parts": "1.3.4; 1.3.5",
+"verdict": "UNANSWERED",
+"why": "Searched lock, shut in, trap, constable and door rules. No rule or input for confining a person.",
+"harm": "minor",
+"likely": 1
+},
+"Q019": {
+"id": "Q019",
+"answer": "A threat is rung 3, an act with the seven slots, said in talk or shown. A threat can stop a witness's report to the police. Nothing says what a threat to an officer does.",
+"parts": "1.3.4; 2.5.2; 2.6.2",
+"verdict": "WEAK",
+"why": "Threat rules cover witnesses only. Whether threatening an officer is a crime he saw, loses him, or is shrugged off by his law trait is not written.",
+"harm": "immersion",
+"likely": 3
+},
+"Q020": {
+"id": "Q020",
+"answer": "A word talks him round if Frank has no cause. A search finds exactly what is carried, so a lie about the bag fails. Lies are acts with the seven slots. How a lie about his whereabouts is checked is not given.",
+"parts": "2.6.2; 2.2.1; RT-07",
+"verdict": "WEAK",
+"why": "Bag lies are moot, but no rule says how a constable tests a spoken alibi against what he knows, or what a caught lie costs.",
+"harm": "immersion",
+"likely": 3
+},
+"Q021": {
+"id": "Q021",
+"answer": "Only for a window: 2 hours and a caution if he owns up, against about 6 otherwise. No other deed has an owning-up row, and no input or talk line for owning up to a constable is written.",
+"parts": "2.6.4; 4.3.7; police.json custody.rows",
+"verdict": "WEAK",
+"why": "One offence only. For a wounding, robbery or killing nothing says whether owning up changes hours, charge or the case.",
+"harm": "minor",
+"likely": 2
+},
+"Q022": {
+"id": "Q022",
+"answer": "Nothing found. A manhunt ends with an arrest or after three game days with no sighting; no way to hand himself in is written beyond walking up to an officer.",
+"parts": "2.6.5; RT-13; 2.6.4",
+"verdict": "UNANSWERED",
+"why": "Searched surrender, give himself up, hand himself in, manhunt. No rule for ending a manhunt by going to the station.",
+"harm": "dead end",
+"likely": 2
+},
+"Q023": {
+"id": "Q023",
+"answer": "A lift from a pocket takes one thing worth taking (key, letter, wallet) from a person in a crowd. Whether a constable is a legal target, and his notebook, truncheon or radio as items, is not said.",
+"parts": "1.6.13; 1.3.6",
+"verdict": "WEAK",
+"why": "Generic pickpocket rules only. No constable items, and the beat constable carries a truncheon only; a felt lift from an officer has no consequence written.",
+"harm": "minor",
+"likely": 1
+},
+"Q024": {
+"id": "Q024",
+"answer": "The beat never changes by chance, so he can learn it; Mickey's door is in his sight at least every 4 minutes. A tail looks back every 20 to 40 s, a mark is a doubt. Nothing says the constable notices a follower.",
+"parts": "2.6.1; FIT-G5; 1.1.6; police.json",
+"verdict": "WEAK",
+"why": "Challenge causes (carrying, running, bloodied, where he should not be, weapon shown) omit following. The generic tail ladder is for job targets, not the beat.",
+"harm": "minor",
+"likely": 3
+},
+"Q025": {
+"id": "Q025",
+"answer": "Officer-struck rules apply per officer (8 hours, a charge, Ellis up a stage). The second constable walks half a cycle behind only when the street is on edge. Hitting both at once, or killing one so the other fills the place, is not worked through.",
+"parts": "RT2-02; 2.5.4; FIT-G5; RT2-05",
+"verdict": "WEAK",
+"why": "No rule for two officers, stacking of charges or hours, or one calling for help. The killed beat man's place goes to the second constable only.",
+"harm": "absurd",
+"likely": 1
+},
+"Q026": {
+"id": "Q026",
+"answer": "The quay edge is one of the seven street places: a man put over it is in the water and climbs out at the nearest ladder within a minute. Whether that is an officer-struck deed with 8 hours is implied, not stated.",
+"parts": "1.3.5; 1.3.4; RT2-02",
+"verdict": "WEAK",
+"why": "RT2-02 names striking and killing only, not shoving or dunking. Nothing says if an officer in the dock counts as struck, drowned, or just wet.",
+"harm": "absurd",
+"likely": 2
+},
+"Q027": {
+"id": "Q027",
+"answer": "Only his car can strike a person; a hit never kills. Under 10 mph a stagger, 10 to 25 knocked down, over 25 thrown down and moving within 20 s. Driving off is a hit-and-run: a chase, 8 hours and a charge.",
+"parts": "1.2.5; FIT-P04; RT2-16; 1.5.3",
+"verdict": "WEAK",
+"why": "Nothing says a hit on an officer counts as an officer struck (7 days hot, Ellis up) rather than a plain hit-and-run (3 days). Intent is not told apart.",
+"harm": "absurd",
+"likely": 2
+},
+"Q028": {
+"id": "Q028",
+"answer": "The patrol car is no faster than Frank's, stops on reckless acts, and a crash damages by closing speed. Nothing covers ramming it or running down its crew as an attack.",
+"parts": "1.2.4; 1.2.5; 2.6.7; police.json patrol_car",
+"verdict": "WEAK",
+"why": "Crash damage and hit-and-run exist, but no rule on ramming a police car, a crew hurt or dead in it, or the aftermath. Cars never kill.",
+"harm": "absurd",
+"likely": 2
+},
+"Q029": {
+"id": "Q029",
+"answer": "The stop lasts under 2 minutes; striking an officer is arrested when next met, 8 hours and a charge, Ellis up, the manhunt sign if he knocks one out and gets away. Two crew in the car is not worked through.",
+"parts": "2.6.7; RT2-02; police.json stop_script",
+"verdict": "WEAK",
+"why": "Officer-struck rule covers one man; no rule for a driver and passenger together, the radio, or reinforcements when a crew is attacked.",
+"harm": "absurd",
+"likely": 2
+},
+"Q030": {
+"id": "Q030",
+"answer": "Yes, with a gun that has reached him. Before War a hit wounds and never kills. At Fired armed officers come slowly; Ellis goes up a step. Struck-officer rules (8 hours, a charge) presumably apply to a wounded one.",
+"parts": "1.3.10; RT-10; 2.13; 2.6.6; RT2-02",
+"verdict": "WELL",
+"why": "The wound-only rule is explicit and tested by dial states. Only the extra hours for a shot officer are implied, a minor gap.",
+"harm": "none",
+"likely": 1
+},
+"Q031": {
+"id": "Q031",
+"answer": "At War a body hit can kill, a named permanent event. Killing an officer: a manhunt at once, 22 hours and a charge, best turn of every ending lost. Armed cars work the streets and stop and search at two fixed points; Ellis goes up.",
+"parts": "1.3.10; RT-10; 2.13; RT2-02; 2.6.6",
+"verdict": "WELL",
+"why": "The kill, the manhunt, hours and charge, and the armed response are all given. Armed car numbers and timings are a listed gap but the verb and result are clear.",
+"harm": "none",
+"likely": 1
+},
+"Q032": {
+"id": "Q032",
+"answer": "Not covered. Hold-ups are only for shops and named adults with a till or purse. A weapon out at an officer is rung 6 of the ladder, an act the town sees; armed response starts only at Fired.",
+"parts": "1.6.15; 1.3.4; 2.6.6",
+"verdict": "WEAK",
+"why": "No rule for pointing a gun at an officer: his reaction, what he hands over, or the charge. The hold-up chain lists no officer as a target.",
+"harm": "absurd",
+"likely": 1
+},
+"Q033": {
+"id": "Q033",
+"answer": "An honest officer offered a note makes it a crime he saw: an arrest with cause. Only the two bought men take a note, once each. What happens on an offer the second time is not written.",
+"parts": "2.6.2; 2.6.8; police.json honest_officer_offered_a_note",
+"verdict": "WEAK",
+"why": "First offer is clear (arrest with cause). A second offer, or a bribe to Garton after his one use, has no stated outcome. The offer's hours are not named.",
+"harm": "immersion",
+"likely": 3
+},
+"Q034": {
+"id": "Q034",
+"answer": "A hook is a fact Frank holds about a person; spending it buys a recruit, an answer or a counter, once. Nothing makes constables hook targets. Wardell owes money in town, Garton fears Ellis, but no rule uses them.",
+"parts": "RT-07; 2.6.8; people/graham_wardell",
+"verdict": "WEAK",
+"why": "Hooks are written for rivals and crew. Police blackmail has no price, outcome or limit, and a bluff 'works only if believed' without a belief rule.",
+"harm": "minor",
+"likely": 2
+},
+"Q035": {
+"id": "Q035",
+"answer": "Each bought man acts once and no more. Past his limit is a crime he saw. The old prototype allowed 99 uses and is overruled. Whether leaning on him by threat or hook gets a second favour is not written.",
+"parts": "2.6.8; bought_officers",
+"verdict": "WEAK",
+"why": "Paid favour is clear; 'paid or leaned on' is said but leaning has no rule, price or limit, and a second payment for a second favour is not addressed.",
+"harm": "minor",
+"likely": 1
+},
+"Q036": {
+"id": "Q036",
+"answer": "Nothing specific. An officer remembers like anyone and a colleague who sees a payment keeps it. Wardell's temper has mouth 0.7 and sells facts to Danny. No rule says what a questioned bought officer says.",
+"parts": "RT2-16; 2.6.8; people/graham_wardell",
+"verdict": "WEAK",
+"why": "Only general memory and temper exist. No event for a bought officer under question, no limit to what he gives, and Ellis noticing is only noted on the card.",
+"harm": "dead end",
+"likely": 1
+},
+"Q037": {
+"id": "Q037",
+"answer": "No. A bought officer Frank strikes stops being bought for good, and a struck officer is a witness who knows it was him, so nobody needs to have seen.",
+"parts": "2.6.8; RT2-02",
+"verdict": "WELL",
+"why": "Flat rule, no seen condition, and the knowing comes with the strike. Contradiction only for a blow from behind (Q002), not for a face-to-face blow.",
+"harm": "none",
+"likely": 1
+},
+"Q038": {
+"id": "Q038",
+"answer": "Killing any officer is a manhunt at once, 22 hours and a charge, and a body found brings Ellis. The bought man's use is lost. No fallback for Garton's or Wardell's role is written.",
+"parts": "RT2-02; 2.16; RT2-05; 2.6.8",
+"verdict": "WEAK",
+"why": "Aftermath of killing an officer is clear, but killing a bought man to stop talk is not told apart, and RT2-05 gives no fallback for Garton or Wardell.",
+"harm": "absurd",
+"likely": 1
+},
+"Q039": {
+"id": "Q039",
+"answer": "Talk alone never makes an arrest; an arrest needs a signed statement from someone who knew the man or an officer who saw. An anonymous 999 call brings a constable but never an arrest alone. Framing a named rival is not covered.",
+"parts": "2.6.3; 2.6.10; RT2-19",
+"verdict": "WEAK",
+"why": "The tip rule is said to be under 3.1.2 but is not there. Whether Frank's own word or a call can name a rival, and its effect, is not written.",
+"harm": "absurd",
+"likely": 2
+},
+"Q040": {
+"id": "Q040",
+"answer": "Nothing found. Searched plant, frame, evidence, rival's lock-up. Evidence exists only as what a search finds on a person; no planting verb.",
+"parts": "2.6.2; 2.6.9",
+"verdict": "UNANSWERED",
+"why": "No input or rule to leave goods or a weapon on a rival or in a lock-up, or for a search of one.",
+"harm": "minor",
+"likely": 1
+},
+"Q061": {
+"id": "Q061",
+"answer": "Ellis is at her desk 08:30 to 18:30 weekdays and goes to a home point outside the Hook at the north edge. A tail looks back every 20 to 40 s and a mark is a doubt. Her home is not walkable.",
+"parts": "people/carol_ellis; 1.1.6; 4.1.4",
+"verdict": "WEAK",
+"why": "Her home is only a schedule point beyond the edge, with no map, route or noticing rule for her (nerve 0.9). Whether she makes a tail is not written.",
+"harm": "minor",
+"likely": 2
+},
+"Q062": {
+"id": "Q062",
+"answer": "Not written. The station has no plan position or interior (listed gap) and Ellis's home is only an off-map point. Break-in rules exist for ordinary places.",
+"parts": "4.3.7; 1.6.1; people/carol_ellis",
+"verdict": "UNANSWERED",
+"why": "Searched break in, station, home. No rule says either is enterable, or what a break-in at police premises brings.",
+"harm": "absurd",
+"likely": 1
+},
+"Q063": {
+"id": "Q063",
+"answer": "A threat is rung 3, an act with the seven slots. The old line against touching Ellis is dropped. Her card says she never threatens; her temper is level. What a threat to her does is not written.",
+"parts": "1.3.4; RT-09; people/carol_ellis; RT2-02",
+"verdict": "WEAK",
+"why": "No rule for threatening a detective: her reply, a crime she saw, or a stage change. police.json still bars striking her, against the 24 Nov ruling.",
+"harm": "immersion",
+"likely": 2
+},
+"Q064": {
+"id": "Q064",
+"answer": "Nothing found. Hooks are facts about a person spent once; being bought is something she remembers. No rule makes the bribe a hook against her, and her record still says she cannot be bought.",
+"parts": "RT-07; 2.6.8; people/carol_ellis",
+"verdict": "UNANSWERED",
+"why": "Searched blackmail, hook, Ellis. No hook source, price or outcome for leverage over a bought officer.",
+"harm": "dead end",
+"likely": 1
+},
+"Q065": {
+"id": "Q065",
+"answer": "A missed week ends it for good: her case jumps 3 points, she remembers, and she is never bought twice. Pay day is every seventh game day, paid from cash only. It cannot be bought again.",
+"parts": "2.6.8; 2.6.5; police.json ellis.bought.missed_week",
+"verdict": "WELL",
+"why": "Explicit and numbered across the part, the data and the economy design. Testable by a seeded missed week.",
+"harm": "none",
+"likely": 1
+},
+"Q066": {
+"id": "Q066",
+"answer": "Lies are acts with the seven slots; talk alone brings questions, never an arrest; a bluff works only if believed. Ellis knows what she was told and 'reads the line back'. How she tests a lie is not written.",
+"parts": "2.2.1; 2.6.3; RT-07; 3.1.2",
+"verdict": "WEAK",
+"why": "No rule for her checking a statement against her facts, or the cost of a caught lie. Claim check covers what characters say, not what they believe.",
+"harm": "immersion",
+"likely": 2
+},
+"Q067": {
+"id": "Q067",
+"answer": "Not written for Ellis in general. Owning up cuts a window's custody to 2 hours with a caution. In week 5 Frank may sign for Ron's blame himself, which is a story beat, not a talk option.",
+"parts": "2.6.4; 3.1.2",
+"verdict": "WEAK",
+"why": "Only the window deed has an owning-up rule, and nothing says what owning up to a detective in talk does to her case or stage.",
+"harm": "minor",
+"likely": 2
+},
+"Q068": {
+"id": "Q068",
+"answer": "Nothing found. She comes down Quay Street for talk from day 2 once three of his day people pass on talk; her card says level, never jokes on duty. Friendship is written only for Alison and Danby.",
+"parts": "2.6.5; people/carol_ellis; 3.2.5",
+"verdict": "UNANSWERED",
+"why": "Searched flirt, befriend, regard. No rule lets Ellis become a friend or reacts to flirting; her regard sits at 0.2 with no ladder.",
+"harm": "immersion",
+"likely": 2
+},
+"Q069": {
+"id": "Q069",
+"answer": "Her data says she cannot die; RT2-05 says anyone can be killed and the story falls back by role, but no fallback for Ellis is written. The fire thread runs on through Alison and Ellis.",
+"parts": "RT2-05; people/carol_ellis; 2.6.5",
+"verdict": "WEAK",
+"why": "Listed gap: no role fallback for Ellis, and her record contradicts 'anyone can be killed'. Who carries her case and stages is not written.",
+"harm": "dead end",
+"likely": 1
+},
+"Q070": {
+"id": "Q070",
+"answer": "She can be bought for about \u00a3800 cash once, week 6 in the economy run, by an authored scene. An honest officer offered a note is a crime he saw. Whether an early or short offer is arrested or refused is not written.",
+"parts": "2.6.8; 2.6.2; people/carol_ellis; 2.6.5",
+"verdict": "WEAK",
+"why": "The ruled time and the early or no money response are missing; data says authored scene, part says bribe, and the honest-officer rule would arrest.",
+"harm": "immersion",
+"likely": 2
+}
+}

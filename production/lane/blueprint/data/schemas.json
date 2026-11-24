@@ -6072,11 +6072,8 @@
           }
          }
         },
-        "tom_never_lays_hands_on": {
-         "type": "array",
-         "items": {
-          "type": "string"
-         }
+        "lays_hands_on_note": {
+         "type": "string"
         }
        }
       },
