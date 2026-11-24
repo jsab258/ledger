@@ -1,6 +1,14 @@
 # The story on paper: one page
 
-24 November 2026. The whole story now exists on paper: the frame revised to your decisions, every beat written as a card the game can choose from as the town's state allows, 25 side stories tied to the gangs, and 23 key scenes written in full. AI readers' marks are signs, not measurements.
+## Frank's deeds, tested (24 November)
+
+- Shortfall first: the test did not pass as set. Five key scenes were rewritten with one deed of Frank's own a week: the opening, the Landing with the gun fired, the night Ron goes to the police, the yard, and the funeral tea. Six fresh AI readers, not told which scenes had changed, marked them 7.1 out of 10, up from 6.7: a rise of 0.4, not the 0.7 asked.
+- The same readers marked five unchanged scenes 0.4 lower than the earlier readers did, so beside those the rewritten scenes gained 0.9. The yard rose most (5.7 to 6.8), then the opening (6.3 to 7.0); the night Ron goes to the police did not move.
+- No reader now calls Frank the quietest person in his story: five of six rank him first or second for what he does. But four still say the heaviest moments and feelings are Ron's, and that Frank's deeds are driving feats.
+- A second AI check, comparing short retellings with well-loved scenes from other games, moved the same way.
+- So Frank's seven deeds are written but not yet put into the story. The gun at the Landing stays, as you decided; one later scene and one story card still have to be brought into line with it.
+
+Your choice: A: Frank's lines in the key scenes fully written, one line at each big moment instead of a list to pick from, keeping the deeds, then the same five scenes tested again (this would change your ruling of 1 October on mixed lines, for Frank in the key scenes only; live talk stays everywhere else) [recommended]. B: put the deeds into the story as they are. C: leave Frank as before the test.
 
 ## Shortfalls first
 
@@ -19,8 +27,6 @@ Frank Nowak gets off the ferry with £23.50 and a dead uncle's cab office, on a 
 
 A checked AI scene judge read ten of the drafts, before the revision, in short disguised retellings: all ten beat the same four forgettable scenes from shipped games; the night between beat all four admired ones it met, the opening beat none.
 
-## Your choices
+## Your choices of 24 November (answered)
 
-1. Frank's voice. A: one loud deed of his own each week, done by him at his own risk, on top of the written lines he now has (untested) [recommended]. B: a fully written lead, like Arthur, which would replace your ruling of 1 October on mixed written lines. C: as now.
-2. The middle's menace. Guns are rare and come after fists (your combat ruling). A: at the Landing a gun is fired on every path, with a cost the town remembers [recommended]. B: shown, not fired, as now.
-3. Length, against your 15 to 20 hours. A: keep seven game weeks and let sleeping and waiting skip empty hours, aiming at about 20 hours for the main story, measured in the first loops [recommended]. B: shorten the story to about four game weeks.
+You chose A on all three: one loud deed of Frank's own each week, tested on key scenes first (the test is above); a gun fired at the Landing on every path, with a cost the town remembers; seven game weeks kept, with sleeping and waiting skipping empty hours, aiming at about 20 hours for the main story, measured in the first loops.

@@ -198,3 +198,12 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 - Cost: about 1.5 hours of waiting for the earlier run, then about 1.5 hours of work; four page-reading helpers and one reviewer.
 - Failed and why: point-in-time law pages are often a few years off the setting's date; record which version was read and mark the rest inferred.
 - Evidence: production/lane/story/paper/research/RECORD-CHECKS-2026-11-24.md
+
+### Testing a fix to the lead's voice on a few key scenes (24 Nov 2026)
+- Made: one deed of the lead's own for each story week, five key scenes rewritten with them, and a blind test of the five beside five unchanged scenes.
+- Method: the writer gets the readers' complaint and the owner's decision, not a theory; rewrite only the scenes that test it, keeping what readers praised; mix the rewritten scenes among unchanged ones under their usual names so fresh readers cannot tell which changed; compare each scene's mark before and after, and also the change on the unchanged scenes, which shows how much the new panel differs from the old; add one neutral question that measures the complaint directly (rank the people by their own deeds) instead of waiting for readers to raise it; screen with the pair judge, keeping old and new versions of a scene in different judges.
+- Tools: one strong writer model at high effort; six fresh readers; Sonnet retellings and Opus pair judges; one fresh reviewer.
+- Target and check: the rewritten scenes up by 0.7 and the complaint gone. Result: up 0.43 raw, 0.87 against the unchanged scenes; the complaint narrowed (no longer "quietest", now "his deeds are stunts, his choices a menu"), so not carried in.
+- Cost: about 3 hours wall clock, most of it the writer.
+- Failed and why: deeds made the lead visible but not felt; readers still gave the heaviest moments to a supporting character, and the many-way choices at each peak (mostly route and outcome) thinned the one strong act. A new panel can mark the same unchanged text lower than the old one, so a raw before-and-after threshold should be set against the unchanged scenes. Rewritten scenes ran longer than the unchanged ones, a possible tell; set a length band next time.
+- Evidence: production/lane/story/paper/frank-test/RESULTS.md
