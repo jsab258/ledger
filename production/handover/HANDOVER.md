@@ -4,9 +4,9 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-24 22:37 (the hourly run)
 
-**Row due:** 23:50 (last row 22:50; page read 22:58; filter verdicts after 2026-11-24T21:58 UTC, advisor after 2026-11-24T22:50:00+01:00; last ack 369 at 23:00).
+**Row due:** 00:20 (last row 23:20; page read 23:10; filter verdicts after 2026-11-24T21:58 UTC, advisor after 2026-11-24T23:15:00+01:00; last ack 370 at 23:09).
 **Uncommitted:** nothing; work pushed with this file.
-**Stopped:** 2026-11-24 22:00 (the 21:36 run: advisors 364-365 done; n23-3 cost closed; history near its point, no room for a scan)
+**Stopped:** 2026-11-24 23:18 (the 22:37 run: advisors 366-370 done or started; history at 230k, short of the point but too little room left for a footage item; two readers finished, nothing running)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -34,8 +34,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- 22:37 run: **advisor 367** done: his answers 1-3 applied in RULINGS; the 14 lines whose every enforcer is a check tool moved word for word to RULINGS-ENFORCED.md (cap 900, 765 words; RULINGS then 4,275); rulings_check, retention and research_rules_check read both; CLAUDE.md read-first names it. **Advisor 368**: fresh Opus recheck (DECIDES-RECHECK-2026-11-24.md): crowd counts a lead, headlamps and frame times not needed, being seen no longer sets lamp spacing; new order in STATUS. **Advisor 369**: killing a constable recorded in RULINGS (4,380 words); the keeper told RT2-02 is the lane's. **366** acked; pace clause dropped from rows this week. KCD2 thief Part 1 scanned: no witnessed crime (all 75 hits menus; parchment filter in frame_sheet.js). GTA V walk first look (ON-FOOT-METHOD, last section): unsure.
-- Earlier runs today: TRIED-ARCHIVE.md, "Moved from the handover, 24 Nov 23:05".
+- 22:37 run: **advisor 367** done: his answers 1-3 applied in RULINGS; the 14 lines whose every enforcer is a check tool moved word for word to RULINGS-ENFORCED.md (cap 900, 765 words; RULINGS then 4,275); Checks read both. **Advisor 368**: fresh Opus recheck (DECIDES-RECHECK-2026-11-24.md): crowd counts a lead, headlamps and frame times not needed, being seen no longer sets lamp spacing; new order in STATUS. **Advisor 369**: killing a constable recorded in RULINGS (4,380 words); the keeper told RT2-02 is the lane's. **366** acked; pace clause dropped from rows this week. KCD2 thief Part 1 scanned: no witnessed crime (all 75 hits menus; parchment filter in frame_sheet.js). GTA V walk first look (ON-FOOT-METHOD, last section): unsure.
 
 ## In flight
 - Nothing running. Browser pane on rzz5BOoJ9Rc (viewport reset to desktop).
@@ -47,7 +46,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 2. **RDR2 being seen, ladder timings** (witness to wanted, wanted to pursuit) from the clips already read (being-seen-readings-2026-11-24.md).
 3. **Chases on foot:** GTA V wanted-star scan (asdZoAycD1o, calibrate first); Sleeping Dogs parts 20-28; L.A. Noire length leads.
 4. **KCD2 being seen with crowd reactions** (one town crime clip serves both): ibyJamin Part 4 (wMk2tFAd26E) or 5 (AK8xLkS1Cfs), hare scan with the parchment filter (drop hits above 12% beige); first check by eye that this player shows the behaviour icon at a known alarm. If none by the week's end, say so in STATUS.
-5. 1990 sources the recheck moved: crowd counts (period footage, footfall records), headlamp reach (period lighting regulations), car braking against the Highway Code (flag: ours 8-11 m at 30 mph against its 14 m, unchecked).
+4a. **Advisor 370 photo counts (asked first):** 2 dated Hull photos only (street-photo-counts-2026-11-24.md; not reliable, no lamp spacing). Next: captioned archives (Hull History Centre, Tyne and Wear, Liverpool, dated Flickr groups), eight photos from three towns; counts in a row. 5. 1990 sources the recheck moved (period-braking-lamps-2026-11-24.md: 30 mph 23 m, 1987 edition unverified; beam reach and BS 5489-3:1989 not reached): crowd counts (period footage, footfall records), headlamp reach (period lighting regulations), car braking against the Highway Code (flag: ours 8-11 m at 30 mph against its 14 m, unchecked).
 6. n23-3 Q2-Q3 need a free machine with him away; n23-4 voice scan; n23-7 DAILY-2026-11-25 by 19:00.
 0a. Advisor 277: Kiln, hair and the crowd paused. 0b. Next night walk Mon 30 Nov 01:30 (held while the stop file holds). 4p. Marvelous stays open. No Unreal work until the browser prototype is done (advisor 288). 5p. History rewrite HELD for his word. Progress page daily (progress.json only).
 
@@ -55,10 +54,11 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 All in tools/drills/frame_sheet.js (each with its known faults): sheet, SAVED EVIDENCE (pane screenshots copied to F:/LedgerTools/game-inputs/footage/<id>/ with index.json and upload date), RED SCAN (RDR2 flag), HARE BOX SCAN (KCD2). Stamp every time from Get-Date: guesses ran 10-25 min ahead today too. NEW: YouTube's storyboard sprites (in-page fetch of /watch?v=ID, "playerStoryboardSpecRenderer"; L1 80x45, one frame per 5 s; URL storyboard3_L<n>/M<k>.jpg?sqp=...&sigh=<that level's rs$ token>) show a whole video in a few images: too small to tell missions; use for colour cues before seeking.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
+- 24 Nov 23:15: web readers cannot see enough dated 1988-1992 street photographs or the period standards (403s, paywalls): use captioned archives.
 - 24 Nov 23:00: automatic walk cadence from frame differences (GTA V, behind camera): a wide box reads only camera drift; a tight leg box with drift removed gives weak peaks. Two tries: set aside; read by eye on leg crops.
 - 24 Nov 22:55: a hare scan on a thief run hits only menus (75 of 75); filter by parchment share before looking.
 - 24 Nov 23:04: my own times ran up to 30 min ahead again (acks and records corrected from the clock and commit times): Get-Date before every written time.
-- 24 Nov 21:55: a Sonnet reader by web fetch cannot read YouTube; find clips in the browser pane yourself (search via an in-page fetch of /results and its ytInitialData works).
+- 24 Nov 21:55: web fetch cannot read YouTube; search in the browser pane (in-page fetch of /results, ytInitialData).
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3.
