@@ -16,6 +16,7 @@ Walking the town with the camera: the verb under every other verb.
 - Standard: ER-INPUT-01 (every action answers within 100 ms, eased keys, mouse look never jumps); feel numbers (start, stop, turn rate, run speed) to be measured from reference games Test: feel numbers inside measured bands (input probe); H: 'did moving feel heavy or slippery?'; his eye in Unreal
 - Source: DESIGN §17 ER-INPUT-01; advisor 256 (waits on a dated study). Designed in: DESCRIPTION-COPY-2 §6 and §3 (Controls); DESIGN §17 ER-INPUT-01; DEFINITIONS pass 3 §G4
 - Status: pending. Coverage row: 1.1.1.
+- Reference solid (Sleeping Dogs; STATUS.md on wip, 24 Nov 00:50, five-sample rule; samples in SLEEPING-DOGS-DRILL-2026-11-23): sprint 5.5 m/s (5.5 four times, 5.6) and jog 4.5 m/s (4.1 to 4.9), read from the game's distance readout toward a standing man. The design's run (5.5) equals the sprint; the built prototype runs at 4.2 m/s, about the jog (the drill's own comparison against Tom's built 160 and 420 cm/s); which Tom's run follows is open (C-267). One game only and it has no walk key, so the walk (1.6), slow walk, start, stop and turn stay pending; second game: KCD2 or GTA V footage, about 2 h (DECIDES-CHECK, 24 Nov). Status stays pending until the rest is solid.
 
 ### 1.1.2 On-foot camera follow
 
@@ -24,6 +25,8 @@ Walking the town with the camera: the verb under every other verb.
 - Source: ruling 28 Oct (camera); DESIGN §17 (waits on a dated study). Designed in: DESCRIPTION-COPY-2 §6; DESIGN §17 ER-CAM-01/02; RULINGS 28 Oct (camera) and 21 Nov (setting); FEEL-TARGETS-MELEE C10; DEFINITIONS AX-03 and pass 3 header
 - Status: pending. Coverage row: 1.1.2. Conflicts settled: C-001.
 - Prior research: PRIOR-RESEARCH-INDEX section 3 group 1: camera measured in his packaged build (production/specs/camera.json: feet fully in frame from 3.0 m); that file's talk (1.2 m, 63 degrees), run and room rows were copied from Mafia's files and are provisional.
+- Checklist (23 Nov, top twenty no. 10; A05.09, A05.11): missing: a rule for the camera when it is close in rooms (fade or hide Tom, or hold back) and for a usable view going up and down stairs, with a tight-room and stairs check. Gap for the design proof; status unchanged.
+- Checklist (23 Nov, top twenty no. 20; A05.13): missing: the camera must never override the player's mouse or stick input, with a test. Gap for the design proof; status unchanged.
 
 ### 1.1.3 Doors, stairs and thresholds
 
@@ -60,6 +63,8 @@ Walking the town with the camera: the verb under every other verb.
 - Standard: A stopped Tom draws less notice than a loiterer; tobacco allowed (canon); waiting under 10% of play (ER-CORE-06) Test: S: a seated or smoking Tom is caught less than one standing about; H: minding feels like play; addendum rules ER-STOP-01
 - Source: canon content rule; DESIGN §1 (no reference figure yet). Designed in: DESIGN-ADDENDUM A10 (ER-STOP-01); DESCRIPTION-COPY-2 §8 and §34; DESIGN §1 ER-CORE-06
 - Status: unmeasured. Coverage row: 1.1.7.
+- Being followed, stared at or crowded is noticed (catalogue 23 Nov, rank 4; seen in 3 games): A neighbour notices Tom loitering and says so. Partly: a stopped man who does not belong draws notice; short is the spoken warning, then a complaint or a report. Feature only; no timing; the part's status is unchanged.
+- A rest idle on world objects (catalogue 23 Nov, next tier): Tom leans on the harbour rail, smokes, watches. Partly: sitting and smoking are covered; leaning on the rail is not. Feature only; no timing; the part's status is unchanged.
 
 ### 1.1.8 Vaulting low walls and fences
 
@@ -67,6 +72,7 @@ Walking the town with the camera: the verb under every other verb.
 - Standard: His word of 20 Nov 07:54 (advisor 263, DECISIONS A26) confirmed it as recommended; never a jump (ruling 23 Sep); vault speed and heights to be measured Test: S: each vault point works in a chase; no vault anywhere else; addendum rules ER-VAULT-01
 - Source: ruling 23 Sep; Q1, answered by his words of 20 Nov 07:39 (advisor 263; DESIGN-ADDENDUM A26) (his answer; speed and heights wait on a dated study). Designed in: DESIGN-ADDENDUM A26; DESCRIPTION-COPY-2 §6; DEFINITIONS pass 3 §G1, §G4
 - Status: pending (in scope by his answer of 20 Nov; speed and heights wait on the measuring). Coverage row: 1.1.8. Conflicts settled: C-003.
+- Measuring note (SLEEPING-DOGS-DRILL, 23 Nov): in Sleeping Dogs the run key also vaults; no number for LEDGER's vault times yet.
 
 ### FIT-G4 Tom's, the constables' and the runner's speeds
 
@@ -74,6 +80,7 @@ Walking the town with the camera: the verb under every other verb.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (waits on a dated study). Designed in: DEFINITIONS design pass 3 §G4; FIT-CHECK F21
 - Status: pending. Coverage row: FIT-G4.
+- Reference solid (Sleeping Dogs; STATUS.md on wip, 24 Nov 00:50): sprint 5.5 m/s, equal to the design's run; jog 4.5 m/s, about the built prototype's run of 4.2 (C-267). The walk, the constable's speeds and the runner's 5% stay pending; one game only, a second wanted (DECIDES-CHECK, 24 Nov). Status unchanged.
 
 ## 1.2 Driving
 
@@ -87,6 +94,7 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - Source: FEEL-TARGETS-DRIVING (c2); DESIGN §5; to be replaced by the measured sheet (DRIVING-MEASUREMENT-METHOD) (waits on a dated study). Designed in: FEEL-TARGETS-DRIVING (c2) M1 to M9; DESIGN §5 ER-DRIVE-02; DESCRIPTION-COPY-2 §10; DEFINITIONS pass 3 §G2
 - Status: pending. Coverage row: 1.2.1. Conflicts settled: C-004, C-005.
 - Prior research: his rulings of 17 and 18 Nov (fun first, automatic gearbox, real figures a floor, game-band targets, cars hurt and never kill) replace the old 'no drivable vehicle, ever' (game-design/agency-model.md, streets-and-cars-spec.md); PRIOR-RESEARCH-INDEX section 1 item 4.
+- DECIDES-CHECK, 24 Nov: driving drops to a lead: the Hook's roads are fixed, so the car is tuned to the map; the open map question (R1) turns on chase speed and lap time from the car-chase clips, not on acceleration or braking. Sleeping Dogs drill plus a second game, about 3 h, as a lead.
 
 ### 1.2.2 Car camera
 
@@ -94,6 +102,7 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - Standard: M10: 5 to 6.5 m back, 1.6 to 2.0 m high, lag 0.1 to 0.25 s, field of view 60 to 65 deg at rest widening to 70 to 78 at 60 mph (the Hook's top speed, G2); ER-DRIVE-06 Test: S: D8 camera run; B: 40-minute soak with no clipped frame
 - Source: FEEL-TARGETS-DRIVING (c2) M10; DESIGN §5, §17 (waits on a dated study). Designed in: FEEL-TARGETS-DRIVING (c2) M10; DESIGN §5, §17 ER-DRIVE-06; DESCRIPTION-COPY-2 §10
 - Status: pending. Coverage row: 1.2.2.
+- DECIDES-CHECK, 24 Nov: the GTA VI car camera (M10) is a one-game lead; second game a Sleeping Dogs drill, about 0.3 h.
 
 ### 1.2.3 Getting in and out
 
@@ -145,6 +154,7 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - Source: DESIGN §5, §12, §18 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN-ADDENDUM A24; DESIGN §5, §12, §18; GTAVI-MAP GV-02
 - Status: decided. Coverage row: 1.2.9. Conflicts settled: C-011.
 - Studies: aaa-studies/IMMERSION-FEATURES.md: IM-01 no hunger, tiredness or hygiene value drains on a clock; decided; IM-06 cars and men show harm; no repeated care action required; decided. None measured.
+- People react to appearance (catalogue 23 Nov, rank 5; seen in 3 games): Passers-by remark on a clean or a battered cab. Not yet: a remark on the cab's state, for the design proof to place. Feature only; no timing; the part's status is unchanged.
 
 ### 1.2.10 Taking a parked car
 
@@ -207,6 +217,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Source: FEEL-TARGETS-MELEE (c); DESIGN §7 (waits on a dated study). Designed in: FEEL-TARGETS-MELEE C1 to C4, C10; DESIGN §7 Feel; DESCRIPTION-COPY-2 §9
 - Status: pending. Coverage row: 1.3.1.
 - Prior research: research/aaa-reference study 14 (read from files, a lead): KCD2 swing to contact about 0.75 s, hit reaction median 1.27 s; game-design/combat-design.md (12 Oct): no health bar, no lock-on, no combat music.
+- DECIDES-CHECK, 24 Nov: fist timings drop from deciding to a lead: they are band numbers the loops retune in minutes. Sleeping Dogs and KCD2 drills, about 2 h, as a lead. Status unchanged.
 
 ### 1.3.2 Reading and answering blows
 
@@ -214,6 +225,8 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Standard: Every incoming blow readable 0.45 to 0.80 s before it lands; at most two men swing at once, 0.4 s apart (ER-FIGHT-02) Test: S: drills; H: 'did you see the blow coming?'; addendum rules ER-DEFEND-01 to 02
 - Source: DESIGN §7; melee sheet (waits on a dated study). Designed in: DESIGN §7 ER-FIGHT-02; DESIGN-ADDENDUM A29; DESCRIPTION-COPY-2 §9, §3; FEEL-TARGETS-MELEE C5, C6, C8, C11
 - Status: pending. Coverage row: 1.3.2.
+- Checklist (23 Nov, top twenty no. 13; A18.05): missing: recovery times after a jab, heavy blow and swing, set and tested as readable. Gap for the design proof; status unchanged.
+- DECIDES-CHECK, 24 Nov: a lead, read with 1.3.1 (fist timings are band numbers).
 
 ### 1.3.3 Targeting without lock-on
 
@@ -257,6 +270,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Source: DESIGN §7 (no reference figure yet). Designed in: DESIGN §7 ER-FIGHT-07; DESCRIPTION-COPY-2 §9; DEFINITIONS pass 3 §P18
 - Status: unmeasured. Coverage row: 1.3.8.
 - Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-07 bot bands: the greedy bot is beaten or arrested, the lazy one not in Act I; decided. None measured.
+- DECIDES-CHECK, 24 Nov: against several is a lead, not deciding: at most two swing, 0.4 s apart, is already decided (ER-FIGHT-02) and the method is built whatever the number.
 
 ### 1.3.9 How a fight ends
 
@@ -273,6 +287,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Source: RULINGS 28 Oct combat line; DESIGN §7 dial (no reference figure yet). Designed in: DESCRIPTION-COPY-2 §27; DESIGN §7 dial; DEFINITIONS RT-10, RT2-14; RULINGS 28 Oct combat line (18 Nov end state A)
 - Status: unmeasured. Coverage row: 1.3.10.
 - Prior research: game-design/weapons-spec.md (approved 29 Jul): a .38 heard about 177 m on a daytime street, capped at 250 m; guns only through people; drawing a weapon is a verb that cannot be undone.
+- Checklist (23 Nov, top twenty no. 12; A19.04, A19.09, A19.11): missing: each gun needs visible recoil with aim return, a rate of fire, and an empty-gun cue (click and hand action) since there is no ammunition count; all measured against the firearms footage. Gap for the design proof; status unchanged.
 
 ### 1.3.11 Marks that last
 
@@ -284,6 +299,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Studies: aaa-studies/PLAYERS-STORIES.md: STORY-04 a third of moments turn on a mark a witness connected; decided; STORY-05 a rival's man meets Tom twice; every man he beat meets him within three game days; decided. None measured.
 - Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-01 failure costs game hours and standing, never replayed minutes; decided; FF-04 a cost to body or standing shows and has an end or a way back; decided. None measured.
 - Studies: aaa-studies/IMMERSION-FEATURES.md: IM-04 blood and dirt come from deeds, never walking or rain alone, and are noticed; decided. None measured.
+- The body shows the day (catalogue 23 Nov, rank 6; seen in 3 games): Bruises, blood and dirt show and are noticed. Partly: short are wet coat and hair in rain and breath on a cold night (a soaked man talked of is in 4.2.4; wetness drives the look in 2.1.4). Feature only; no timing; the part's status is unchanged.
 
 ### 1.3.12 Fighter types
 
@@ -368,6 +384,7 @@ The felt side of the town's eyes: the player's three questions answered from pic
 - Source: DESIGN §2; D29 (waits on a dated study). Designed in: DESIGN §2 ER-EYES-01, -03; DESIGN §6 ER-NIGHT-02; DESCRIPTION-COPY-2 §7
 - Status: pending. Coverage row: 1.4.1.
 - Prior research: research/detection-legibility: three states readable at once by posture and head turns, never bars; a readout is fair when it gives back what the character knows and the camera took away, cheating when it adds what he does not know.
+- Deciding row (DECIDES-CHECK, 24 Nov): being seen in KCD2 and RDR2 sets sight distances and light scaling, hence lamp spacing, cover places and the constable's ladder; none sampled; two games planned, about 5 h.
 
 ### 1.4.2 Light and dark as cover
 
@@ -375,6 +392,7 @@ The felt side of the town's eyes: the player's three questions answered from pic
 - Standard: Picture corners follow the rule's light value; Tom and 5 m round him always visible above a brightness floor (ER-NIGHT-01) Test: H: screenshots at the darkest spots; S: light value matches the cue
 - Source: DESIGN §2, §6 (waits on a dated study). Designed in: DESIGN §2, §6 ER-NIGHT-01; DESCRIPTION-COPY-2 §7, §3
 - Status: pending. Coverage row: 1.4.2.
+- Deciding row (DECIDES-CHECK, 24 Nov): read with 1.4.1 (KCD2 and RDR2, about 5 h).
 
 ### 1.4.3 Hearing his own noise
 
@@ -435,6 +453,7 @@ On foot and by car; every chase ends, caught or lost.
 - Standard: Lost once unseen for 7 s or 70 m (DESIGN §8); No chase ends while the pursuer can see Tom, except caught, wrecked or at the soft edge; lost car chase median 60 to 120 s, 90th percentile under 240 s; foot chase median 30 to 90 s; none past 240 s (design pass 4, DP5-C01 to C03); feel to be measured in reference games Test: S: 50 seeded chases, chase and search lengths logged (DP5-C01 to C03); H: 'how did you lose him?'
 - Source: DESIGN §8; advisor 256 (waits on a dated study). Designed in: DEFINITIONS design pass 4 C-01 to C-03 and Run 5 second pass; design pass 3 F03, G1, G4; DESIGN s.8
 - Status: pending. Coverage row: 1.5.1. Conflicts settled: C-021, C-022.
+- Deciding row (DECIDES-CHECK, 24 Nov): chases on foot (C1 to C8) decide where the ginnels, yards and six vault places go, by whether chases are won by breaking sight or by outrunning; none sampled yet; three games planned, about 4 h.
 
 ### 1.5.2 Pursuing on foot
 
@@ -442,6 +461,7 @@ On foot and by car; every chase ends, caught or lost.
 - Standard: none yet: catch-up speeds and give-up rules to be measured Test: S: a runner can be caught by a direct line and lost by a slow one; no timer, foot chase median 30 to 90 s (DP5-C02); addendum rules ER-PURSUE-01 to 02
 - Source: DESIGN §5 runner wrinkle, §7 'someone runs' (waits on a dated study). Designed in: DESIGN-ADDENDUM A3 (ER-PURSUE-01, -02); DEFINITIONS design pass 4 C-01, C-02; design pass 3 G4
 - Status: pending. Coverage row: 1.5.2. Conflicts settled: C-023.
+- Deciding row (DECIDES-CHECK, 24 Nov): read with 1.5.1 (chases on foot, three games planned, about 4 h); the runner's speed rests on Tom's run; Sleeping Dogs' sprint (5.5 m/s) is solid in one game, Tom's run is a design figure (C-267).
 
 ### 1.5.3 Car chases
 
@@ -456,6 +476,7 @@ On foot and by car; every chase ends, caught or lost.
 - Standard: Police announce themselves 3 s before a challenge (ER-POL-02); give up when sight is broken per 1.5.1 Test: S: pursuer gives up at the rule; never cheats through walls
 - Source: DESIGN §8 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN s.8 ER-POL-02; DESCRIPTION-COPY-2 s.18, s.19; DESIGN-ADDENDUM A3, A36; DEFINITIONS design pass 4 C-01, C-03; design pass 3 G2, G4, G5
 - Status: decided. Coverage row: 1.5.4. Conflicts settled: C-027.
+- Checklist (23 Nov, top twenty no. 19; A14.10, A14.14): missing: pursuers and people must replan when a door shuts or a car blocks a lane, and armed men must not fire without a clear line, with a wall-between test. Gap for the design proof; status unchanged.
 
 ### RT2-22 A foot chase caught by a constable
 
@@ -491,6 +512,7 @@ On foot and by car; every chase ends, caught or lost.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the chase Test: B: seeded chase set, lengths logged
 - Source: car-chases-sheet-2026-11-21 (leads); g5-heat-samples (SOLID, whole spell); FIT-CHECK F02 to F04, P13 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 4 C-01 and its Standard; car-chases-sheet; g5-heat-samples; FIT-CHECK F02 to F04, P13
 - Status: decided. Coverage row: DP5-C01. Conflicts settled: C-032.
+- Deciding row (DECIDES-CHECK, 24 Nov): chases on foot (read with 1.5.1); none sampled; three games planned, about 4 h.
 
 ### DP5-C02 Chase length on the Hook's loops
 
@@ -505,6 +527,7 @@ On foot and by car; every chase ends, caught or lost.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the chase Test: B: seeded chase set, lengths logged
 - Source: car-chases-sheet-2026-11-21 (leads); g5-heat-samples (SOLID, whole spell); FIT-CHECK F02 to F04, P13 (waits on a dated study). Designed in: DEFINITIONS design pass 4 C-03; g5-heat-samples; being-seen sheets
 - Status: pending. Coverage row: DP5-C03. Conflicts settled: C-034.
+- DECIDES-CHECK, 24 Nov: a lead, a 30 to 120 s band the bots check; the GTA VI wanted spell at peak two stars (median about 47 s) stays SOLID in STATUS.md after its star level was re-read by code on 23 Nov 15:33, and still falls inside the band.
 
 ## 1.6 Jobs with the hands
 
@@ -524,6 +547,7 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - Standard: none yet: search time per container and the noise of searching to be set Test: S: every container searchable, each search timed and heard at its reach; addendum rules ER-SEARCH-01 to 02
 - Source: DESIGN §4 (no numbers) (no reference figure yet). Designed in: DESIGN-ADDENDUM A4 (ER-SEARCH-01, -02), A33; DESCRIPTION-COPY-2 §9
 - Status: unmeasured. Coverage row: 1.6.2.
+- Checklist (23 Nov, top twenty no. 8; A36.02): missing: taking something must say what was taken, on screen or in Tom's words; the design describes no feedback. Gap for the design proof; status unchanged.
 
 ### 1.6.3 Lifts and the hot mark
 
