@@ -1,0 +1,41 @@
+part_id,class,data_file,reason
+9.13.1,D,none,"Machinery rule fully stated (layers, one clock, seeds). STALE CLOCK: says 60 s a game hour and prototype 45 s; now 120 s"
+2.1.3,D,none,Pure behaviour rule (unseen people keep the same rules); test method stated
+CLK-03,C,routines.json,"Constraint over every person's routine places; routines exist in production/specs/hook-cast.json (41, older placeholder ids) but not for the canon 44 in cloud-week/town/people.json. STALE CLOCK: 125 s = 2 game hours at 60 s"
+1.1.2,C,tune.json,"Street row exact in production/specs/camera.json (back 3.1, up 0.45, pivot 1.05, lens 86); 'Between height' and talk/room/run rows not in part text, camera.json rows provisional"
+FIT-G2,A,none,"All speeds, thresholds and stop rule numeric and complete (20-28, 60, 50, 31-49 mph, 23 m)"
+CLK-02,A,none,"Rule and example line given. STALE CLOCK: 1.5 game hours = 90 real s at 60 s; now 180 s; also leans on the ferry timetable"
+9.1.8,D,none,Unreal Kiln-to-game machinery stage
+7.16,C,places.json,"Hours given, but place position and room come from tools/lane/prototype/project/src/game/tune/way.js (boxing, 16,-40; hours there 17-22 conflict); its regulars/recruitable men listed nowhere"
+1.6.6,A,none,"Loadout rule complete (item list, two under coat, one in hand); office storage spots sit in production/specs/mickeys-office.json"
+6.2.5,C,ledger-texts.json,"Reading text by state needed; prototype holds a reading built from signs (src/game/ledgerx.js, pieces/story.js, readingSignsShownAtMost 6); story pending so texts partial"
+4.3.3,C,places.json,"Hours mostly given, but shop list, addresses and positions in src/game/tune/way.js PLACE_LIST (hours differ: launderette 8-20, chandler) and shop-interiors.json; prices economy (separate job)"
+4.6.1,D,none,"Outside: car look is Unreal; fleet counts given; used-car price economy (separate job); 8 traffic colours unlisted (minor)"
+1.7.3,C,places.json,"Board and ranks exist in src/game/firm.js and map.js (rank, rank2, ranksign) plus way.js ferryrank/northrank; second rank's identity and 'enough days' threshold not in part"
+8.8,C,lines/,"Word-list gate needs the lists: content/rules/slurs-v1.json and tools/content-gate.py hold them; brand and post-1992 name lists partial (production/specs/brand-bible-v1.md)"
+FIT-G6,B,happenings.json,"Needs 60 to 80 written happenings with places, hours, choices, lines; prototype src/game/tune/life.js holds only 6"
+3.6.6,C,lines/,"Written suggested lines exist in production/specs/suggested-lines.json (greet, leave, personal, deals; approved 1 Oct); part does not name it"
+8.12.2,D,none,Talk pipeline machinery with stated budgets and tests; browser figures to be measured
+10.5,D,none,Outside: release testing process
+5.8.1,C,tune.json,"Same as 1.1.2: rows by state in production/specs/camera.json; run/room/talk 'closer' and car widening rate not numeric in part"
+RT2-02,A,none,"Penalties numeric (8 h, 22 h, stage +1, within the game hour); rests on the interest ladder and manhunt lines defined elsewhere"
+RT-10,B,tune.json,"Hit chance by aim, distance and movement and draw/aim timings have no numbers (pending study); prototype tune has no firearm feel values"
+9.3,D,none,Machinery: one simulation and goldens
+8.2.1,D,none,Crash report process fully stated (consent wording rules not exact text; minor ui-text)
+1.1.1,C,tune.json,"Speeds given (1.6, 0.9, 5.5, 5.3) but start/stop ease and turn rate 'to be measured'; prototype first values in src/player.js and src/game/tune/feel.js"
+5.11.2,D,none,Reference teardown table
+5.6.2,D,none,Outside: voice generation on his PC
+1.3.5,B,map.json,"Rule numeric (4 s, a minute) but needs positions of railings, steps, bonnets context and quay ladders; prototype map.js has no ladders. Note: 'nothing shown at length' may contradict PEGI 18 fully animated blows"
+1.6.8,C,rooms.json,"Prompt rule exact but needs list of usable objects and their names; prototype src/map.js holds a names table (152 entries, e.g. 'the rank sign') for its own street only"
+FIT-F13,A,none,"Week count and fail-safe rule exact. STALE CLOCK: built on version B, 60 s a game hour; 5-week Act II needs rechecking at 120 s"
+FIT-G1,C,map.json,"Road centrelines with coordinates and widths sit in production/lane/design-proof/DEFINITIONS-2026-11-21.md G1 table; plots and buildings absent; prototype map.js/way.js use a different, conflicting geometry"
+2.10.2,B,people/,"Each rival's base, named lieutenant and three men with routines needed; src/game/tune/rivals.js and cloud-week/town/people.json give rival heads and eyes only"
+1.2.5,A,none,"Fall bands by speed, times, stopping distance and rumour line all given"
+8.6.1,D,none,Service and offline policy; brush-off lines belong to lines/
+9.1.6,D,none,Unreal Kiln-to-game machinery stage
+OUT-06,D,none,Out item
+5.4.2,C,light-weather.json,"Pool ratio and lux given, but brightness floor value and lamp settings in production/lane/LIGHT-WEATHER-VALUES-2026-11-17.md (lamp lumens, night fill); lamp positions from map.json"
+3.1.1,B,scenes/,"Week-one beats need scripted scenes; story pending; nearest: production/lane/story/STORY-FINAL.md (unapproved) and prototype hour1/acts; five debts in src/game/tune/econ.js (economy, separate job)"
+6.1.1,C,rooms.json,Same as 1.6.8: object list and prompt names; prototype src/map.js names table covers only its street
+RT2-17,A,none,"Two named stop points, hours 18:00-02:00, 12 h, charge; point positions resolve from the G1 road plan"
+RT-09,D,none,"Behaviour rule fully stated; who is covered comes from people cards (sex, age) owned elsewhere"
