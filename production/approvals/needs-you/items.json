@@ -392,8 +392,9 @@
      "C: keep squeezing as now"
     ]
    ],
-   "state": "open",
-   "added": "2026-11-24 20:08"
+   "state": "done",
+   "added": "2026-11-24 20:08",
+   "closed": "2026-11-24 21:40, answered in the advisor chat 24 Nov 21:1x (advisor 364): clean up the whole rulings file; done 21:50 (4,900 to 4,869 words; three questions to him in the advisor row)"
   }
  ]
 }
