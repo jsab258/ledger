@@ -1122,3 +1122,7 @@
 {"event": "stop", "at": "2026-11-24T11:56:00", "note": ""}
 {"event": "start", "at": "2026-11-24T11:56:00", "task": "n23-1 on-foot method check try 2 (side-on search) and method questioned", "phase": "5", "kind": "production"}
 {"event": "stop", "at": "2026-11-24T12:02:00", "note": ""}
+{"event": "start", "at": "2026-11-24T12:02:00", "task": "n23-1 being seen: RDR2 fine step, KCD2 short (footage)", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-24T12:09:00", "note": ""}
+{"event": "start", "at": "2026-11-24T12:09:00", "task": "n23-1 being seen: KCD2 long-session search", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-24T12:13:00", "note": ""}
