@@ -323,8 +323,9 @@
      "No, I will say what to drop"
     ]
    ],
-   "state": "open",
-   "added": "2026-11-24 15:58"
+   "state": "done",
+   "added": "2026-11-24 15:58",
+   "closed": "2026-11-24 16:39, Not needed: advisor 356 (16:10) had RULINGS tightened in notation only (ranges as 4-6, advisor numbers dropped from dates) to 4,896 words; no ruling changed"
   }
  ]
 }

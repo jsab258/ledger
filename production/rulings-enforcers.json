@@ -18,7 +18,7 @@
    "note": "scope, length, map, story: judgement; cars (17 Nov, advisor 208/209): the order of 23 November carries the traffic item, and the Monday audit checks the order and the progress page against the Cars line; feel (18 Nov, advisors 222-223): tools/driving_feel_check.py fails when the drives tool's default targets are not the game band, or a study copy newer than the ruling starts in manual Combat 18 Nov (advisor 226): the weapons spec lists no silenced .22 and names the escalation dial; Monday audit checks both. Cars canon 18 Nov (advisor 234): a car hurts, never kills; enforcers owed: a Core/simulation test that no car contact produces a death (none yet: no car contact code exists), and the cloud lane publish gate clumsy-player tester; Monday audit checks both exist once cars hit people. Hold-ups 20 Nov (advisor 263, his yes 07:39): enforcers owed: a consequence check in the simulation tests that every hold-up is witnessed, remembered and carries police and town-talk consequences and never ends the game (none yet: no hold-up code exists), then the cloud lane publish gate; Monday audit checks the spec and the check exist once hold-ups are built. 24 Nov (advisors 342-346, his decisions page): the sub-line's choices are design inputs the blueprint keeper reads from RULINGS; the Monday audit checks the blueprint against them (clock 48 real minutes a game day, PEGI 18 within canon, in/out lists)."
   },
   {
-   "line": "5 and 6 Nov: Full scope the target; no p",
+   "line": "5, 6 Nov: Full scope the target; no p",
    "by": [
     "monday-audit"
    ]
@@ -59,7 +59,7 @@
    "note": "allowance use and the DAILY file; records share measured, not refused"
   },
   {
-   "line": "6 and 7 Nov, testing: AI testing, so what",
+   "line": "6, 7 Nov, testing: AI testing, so what",
    "by": [
     "tools/nightly_walk.py::does the town visibly know Tom",
     "monday-audit"
@@ -275,7 +275,7 @@
    "note": "his ruling 17 Nov 22:33 (advisor 214); the build check exists: tools/outside_only_check.py (in ci-checks) fails on a decompiler, game-file extractor, a reader built on one, or another game's archive or extracted assets in the repo, tools/, the named F: folders and the storage map's study folders; the Monday audit catches what a name cannot; six public-footage frames for one blind line-up (18 Nov): monday-audit counts them (at most six) KCD2 the bar, Mafia never the yardstick (18 Nov, advisor 229): the Monday audit checks no target sheet, review panel or proof ranks Mafia as the bar. GTA VI no-spoiler (advisor 235): anything about GTA VI passes a fresh reviewer spoiler screen before it reaches him; Monday audit checks. GTA VI first and the higher bar (advisors 281, 282, his 22:08 and 22:10, 20 Nov): the Monday audit checks GTA VI's footage pass ran before the reference games' measuring and that every target sheet where GTA VI measured higher records both numbers with the design on the higher. GTA VI story studied, never spoiled (advisor 283, his 23:03, 20 Nov): story detail only in working folders named story-working; the same spoiler screen and Monday audit check nothing he reads (his page, progress page, FOR-JAFAR, rows, reports, messages) says what happens.; 21 Nov (advisor 297): research first for every study (advisor 294): research_rules_check fails a measuring sheet without a 'Built on' section (seven sheets of 21 Nov listed as owed until theirs land), the Monday audit backs it; Mafia never a reference, widened: the same check fails any line in the measuring sheets, FEEL-MEASUREMENT-METHOD, MEASUREMENTS-NEEDED or the waiting list naming Mafia without setting it aside, and the Monday audit checks no Mafia game is listed to be measured or compared"
   },
   {
-   "line": "21 Sep and 1 Oct: The Hook sheet (pass 4)",
+   "line": "21 Sep, 1 Oct: The Hook sheet (pass 4)",
    "by": [
     "tools/push_guard.py::a picture or film added or changed outside production/previews/",
     "monday-audit"
@@ -395,7 +395,7 @@
    ]
   },
   {
-   "line": "The voices in the game (3 Oct, 26 and 27 Oct)",
+   "line": "The voices in the game (3, 26, 27 Oct)",
    "by": [
     "tools/voice-cast-check.py::Every principal has a voice that can actually reach them",
     "tools/attribution-check.py::p286"
@@ -488,7 +488,7 @@
    ]
   },
   {
-   "line": "Speech (7 to 28 Oct): no prepared openings",
+   "line": "Speech (7-28 Oct): no prepared openings",
    "by": [
     "ledger/CoreTests/Program.Port.cs::The hard rule on names:",
     "tools/ci-checks.sh::talk-tests",
@@ -638,7 +638,7 @@
    "note": "advisor 257: tools/lane/parts-tree/check.py, run by the cloud lane at every loop (on lane-2026-11 until merged), and the Monday audit."
   },
   {
-   "line": "24 Nov (advisor 351): printed things rea",
+   "line": "24 Nov: printed things rea",
    "by": [
     "monday-audit"
    ],

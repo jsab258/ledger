@@ -1,5 +1,5 @@
 {
-  "updated": "Monday 23 November 2026, 13:14",
+  "updated": "Tuesday 24 November 2026, 16:43",
   "here": 2,
   "friends_eta": "around January",
   "friends_eta_note": "if phase 1 passes in the next week or two; low confidence",
@@ -178,7 +178,7 @@
         7.7
       ],
       "began": "2026-11-09",
-      "actual_w": 2.0
+      "actual_w": 2.1
     },
     {
       "n": 3,
@@ -544,8 +544,8 @@
   },
   "carried": [],
   "line2027": {
-    "as_of": "Monday 23 November",
-    "behind_w": 0.4,
+    "as_of": "Tuesday 24 November",
+    "behind_w": 0.5,
     "how": "Each phase's weeks so far against the top of the plan's own estimate (PLAN.md, adopted 5 October); a positive number is weeks behind. Measured on the calendar, re-measured each Monday."
   },
   "forecast": {
