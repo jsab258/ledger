@@ -168,3 +168,12 @@ hair colour 2 of 2; worn paint 2 of 2; the office and sit on by default 2 of 2; 
 - 24 Nov 15:58: changing his rulings' meaning is refused by the PC's safety check; notation-only tightening passed at 16:43 (advisor 356).
 - 24 Nov 15:44: a plain backward seek stalled the video; wait for 'seeked' and readyState before drawing.
 - 24 Nov 14:17: check any PC stream for mod lists, consoles or overlays before reading an incident.
+
+## Moved from the handover, 24 Nov 22:00
+- 19:37 run: **advisors 361-363**: 361 a recorder for his RDR2 drill (tools/drills/rdr2_record.py: `start` when he types "RDR2 drill starting", `stop` on "RDR2 drill done"; only the open game window, never the game's start, keys or files; frames to F:/LedgerTools/game-inputs/footage/rdr2-drill-<stamp>/; then read per block as his card in advisor 361 says). 362 Frank fully written in the key scenes (RULINGS story line). 363 a temper for every named person; his story yes after the next story pass (RULINGS; the dials check on Monday's people-data follow-up). Efficiency review (19:44): scan first; Sonnet readers find clips; DAILY 25 Nov restores its dropped rows.
+- **RDR2 being seen SOLID** (review-being-seen-rdr2-2026-11-24-d.md): 41.5, 70.5, 70.5, 84, 97 s, median ~70.5 s; the 84 s from 2FIC Gaming's 6 Nov 2018 stream ZkTHGLvWCYM (cart theft); a 47 s ride-then-wait spell kept out. Solid count four. RECIPE entry written.
+- His page: one open DECISION, rulings-room-2026-11-24 (A recommended: enforced rulings move word for word to a second file; B cap 6,000; C keep squeezing). RULINGS stands at exactly 4,900.
+- **KCD2 being seen: shortfall** after ~1 h: HARE BOX SCAN (frame_sheet.js) calibrated on vyA2Nm1BHyw; A56UfjfcsYc (4 h PS5) and N1uLUFEjydo (trophy run Pt 3) scanned whole: menus, tutorials, fights; no witnessed crime.
+- Chases on foot: foot-chase-candidates-2026-11-24.md (15 unverified rows; mission lists).
+- 24 Nov 19:00: a sample kept despite a solid red stage while another was dropped for one; review c caught it. Write the inclusion rule first.
+- 24 Nov 18:55: the KCD2 hare colour scan counts menu icons and adverts as alerts; needs a menu filter.
