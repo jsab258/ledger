@@ -16,10 +16,11 @@ Minute by minute: control at 0:20, first fare 2:30, a choice and a deed at 5:30,
 
 ### 7.1 The first hour
 
-- How it works: The ferry shot runs 20 s, then control at 0:20. Quay Street at 1:30 (talk possible, the AI notice once before the first talk), Sheila's walk-round at 1:45, the first verb with the hands at 2:30 (car two, a fare to the priest's house, the fare goes in the book), the debt book at 4:30, the first choice and deed at 5:30 (Darren's 22 pounds: front him, take what he offers, or strike it out), Ron's first ask at 7:00, the carry at 9:00 and the landing at 11:30. Tuesday at 13:00 brings it back to his face, the count at 14:00, and the hour runs on to minute 56 (two men by car two, rent due tomorrow). Numbers: control within 1.5 min (here 20 s), a verb within 3, a choice and a deed within 20 (aim 6), no stretch over 3.5 min without control, under 5% watched, every scene skippable and 60 s at most, something new every 3 min, about 13 distinct activities by minute 30, the town visibly knows him by minute 30 (planned at minute 13), a search, lost fight or arrest each under 2 min.
+- How it works: The ferry shot runs 20 s, then control at 0:20. Quay Street at 1:30 (talk possible, the AI notice once before the first talk), Sheila's walk-round at 1:45, the first verb with the hands at 2:30 (car two, a fare to the priest's house, the fare goes in the book), the debt book at 4:30, the first choice and deed at 5:30 (Darren's 22 pounds: front him, take what he offers, or strike it out), Ron's first ask at 7:00, the carry at 9:00 and the landing at 11:30. Tuesday at 13:00 brings it back to his face, the count at 14:00, and the hour runs on to minute 56 (two men by car two, rent due tomorrow). Numbers: control within 1.5 min (here 20 s), a verb within 3, a choice and a deed within 20 (aim 6), no stretch over 3.5 min without control, under 5% watched, every scene skippable and 60 s at most, something new every 3 min, about 13 distinct activities by minute 30, the town visibly knows him by minute 30 (planned at minute 13), a search, lost fight or arrest each under 2 min. His first hour is restaged as designed (his ruling of 24 Nov, Q12; DESIGN section 15), so the minutes above are the design's.
 - Standard: ER-FIRST-01 to 04: control within 1.5 min, a verb within 3, a choice within 20; town visibly knows him by minute 30 (Meridian Test) Test: H: first-hour run timed; S: control timing
-- Source: DESIGN §15; Study 2 (leads); canon targets (his ruling or canon). Designed in: DESIGN §15 (table and ER-FIRST-01 to 04); GAME-DESCRIPTION-COPY-2 §4; ONE-SHOT-PROMPT 4; DEFINITIONS design pass 3, clock table CLK-01; QUESTIONS 4; RULINGS 28 Sep, 3 Oct
+- Source: DESIGN §15; Study 2 (leads); canon targets (his ruling or canon). Designed in: DESIGN §15 (table and ER-FIRST-01 to 04); GAME-DESCRIPTION-COPY-2 §4; ONE-SHOT-PROMPT 4; DEFINITIONS design pass 3, clock table CLK-01; QUESTIONS 4; RULINGS 28 Sep, 3 Oct; his ruling of 24 Nov (RULINGS on wip, his decisions page) (Q12)
 - Status: ruled (his ruling or canon). Coverage row: 7.1. Conflicts settled: C-124, C-125.
+- Data (run 5): the data sweep (class C) needs the scenes file (data file 18), still to be made from the story on paper; exact values pending it.
 
 ## 7.2 An evening
 
@@ -31,38 +32,41 @@ One game day: an easy day, a tightening dusk, the job, getting home, the count, 
 
 ### 7.2 An evening
 
-- How it works: One game day is an easy day, a tightening dusk, a job done under watch for 3 to 6 real minutes, getting home, the count with Sheila (tin against the fare book), and the sting or reward said to his face next morning. The bar is that at least 7 of 8 panel players recommend the evening and the one who does not names no reason from the players study's top punished list (bugs or PC version, boring or same loop, slow controls, thin story). A 7 of 8 pass is met by a KCD2-grade game 89.4% of the time (KCD2 92.9% Steam positive, RDR2 92.1%, GTA V 83.8%); the milestone M1 stays 4 of 8. Under the ruled clock the game day is 24 real minutes and the 18:00 to 24:00 evening 6 running minutes.
-- Standard: At least 7 of 8 panel players recommend the evening, and the one who does not names no reason from the players study's top punished list (bugs or PC version, boring or same loop, slow controls, thin story). M1 milestone after the one-shot stays 4 of 8. 24 real minutes a game day, the evening 6 (his clock ruling of 21 Nov). Test: H: the evening run and the panel
-- Source: PANEL-BAR-2026-11-21.md: Steam positive shares KCD2 92.9%, RDR2 92.1%, GTA V 83.8% (players study, 20 Nov); 7 of 8 passes a KCD2-grade game 89% of the time (reference game). Designed in: PANEL-BAR-2026-11-21; DESIGN §1, §3; BUILD-ORDER M1; DEFINITIONS clock table CLK-05; GAME-DESCRIPTION-COPY-2 §2
-- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 7.2. Conflicts settled: C-126, C-127.
+- How it works: One game day is an easy day, a tightening dusk, a job done under watch for 3 to 6 real minutes, getting home, the count with Sheila (tin against the fare book), and the sting or reward said to his face next morning. The bar is that at least 7 of 8 panel players recommend the evening and the one who does not names no reason from the players study's top punished list (bugs or PC version, boring or same loop, slow controls, thin story). A 7 of 8 pass is met by a KCD2-grade game 89.4% of the time (KCD2 92.9% Steam positive, RDR2 92.1%, GTA V 83.8%); the milestone M1 stays 4 of 8. Under the ruled clock the game day is 48 real minutes and the 18:00 to 24:00 evening 12 running minutes (recomputed for the 48-minute day, his ruling of 24 Nov).
+- Standard: At least 7 of 8 panel players recommend the evening, and the one who does not names no reason from the players study's top punished list (bugs or PC version, boring or same loop, slow controls, thin story). M1 milestone after the one-shot stays 4 of 8. 48 real minutes a game day, the evening 12 (his clock ruling of 24 Nov; was 24 and 6 on 21 Nov; (recomputed for the 48-minute day, his ruling of 24 Nov)). Test: H: the evening run and the panel
+- Source: PANEL-BAR-2026-11-21.md: Steam positive shares KCD2 92.9%, RDR2 92.1%, GTA V 83.8% (players study, 20 Nov); 7 of 8 passes a KCD2-grade game 89% of the time (reference game). Designed in: PANEL-BAR-2026-11-21; DESIGN §1, §3; BUILD-ORDER M1; DEFINITIONS clock table CLK-05; GAME-DESCRIPTION-COPY-2 §2; his ruling of 24 Nov (RULINGS on wip, his decisions page) (R2)
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 7.2. Conflicts settled: C-126, C-127, C-307.
 
 ## 7.3 A week
 
-Act I, Monday to Sunday, about two hours.
+Act I, Monday to Sunday, 3.8 to 5.6 hours at the full clock (recomputed for the 48-minute day, his ruling of 24 Nov).
 
 
 ### 7.3 A week
 
-- How it works: Act I is Monday 15 October to Sunday, about two hours, the most scripted act. Five threads run through it: the outfit's claim (asks on nights one, three, five and seven), the warehouse fire, Mickey's real book behind the locked door, the street deciding who he is, and someone worth being honest for. Rent of 18 pounds falls on Friday; on Sunday Sheila asks which it is to be (wind it down, take it over, refuse to say). The bar is 7 of 8 panel players recommending the week, M1 stays 5 of 8.
+- How it works: Act I is Monday 15 October to Sunday, 3.8 to 5.6 hours (recomputed for the 48-minute day, his ruling of 24 Nov), the most scripted act. Five threads run through it: the outfit's claim (asks on nights one, three, five and seven), the warehouse fire, Mickey's real book behind the locked door, the street deciding who he is, and someone worth being honest for. Rent of 18 pounds falls on Friday; on Sunday Sheila asks which it is to be (wind it down, take it over, refuse to say). The bar is 7 of 8 panel players recommending the week, M1 stays 5 of 8.
 - Standard: At least 7 of 8 panel players recommend the week, the one who does not naming no reason from the top punished list. M1 milestone stays 5 of 8. Test: H: the week run and the panel
-- Source: PANEL-BAR-2026-11-21.md (as 7.2) (reference game). Designed in: PANEL-BAR-2026-11-21; GAME-DESCRIPTION-COPY-2 §30; DESIGN §16; DEFINITIONS CLK-06
-- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 7.3. Conflicts settled: C-128.
+- Source: PANEL-BAR-2026-11-21.md (as 7.2) (reference game). Designed in: PANEL-BAR-2026-11-21; GAME-DESCRIPTION-COPY-2 §30; DESIGN §16; DEFINITIONS CLK-06; his ruling of 24 Nov (RULINGS on wip, his decisions page)
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 7.3. Conflicts settled: C-128, C-307.
 
 ## 7.4 Acts II and III pacing
 
 State-fired beats across seven weeks, then the inspection week.
-- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-08 every sit-down and 80% of Act II beats name a deed of Tom's the speaker holds; decided. None measured.
+- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-08 every sit-down and 80% of Act II beats name a deed of Frank's the speaker holds; decided. None measured.
 - Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-09 no side story offered during a hurry or on an Act III morning; decided. None measured.
-- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-01 after Act I something reaches Tom at least every 30 real minutes; Open page names the next step; decided. None measured.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-01 after Act I something reaches Frank at least every 30 real minutes; Open page names the next step; decided. None measured.
 - Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-02 Act II in at least four stages of 4 real hours at most, each ending in a rung change; decided. None measured.
 - Prior research: aaa-studies/WHERE-PLAYERS-QUIT.md: RDR2 (the one full curve, a mirror site) loses 31.2 points of owners in chapter 2 (72.7% to 41.5%), more than the guided opening (12.7); 20.4% finish; leads, not measured.
 
 ### 7.4 Acts II and III pacing
 
-- How it works: Act II opens on a state (Sheila has her answer and the firm is his, rung 2) and its eight beats fire on states, never days, in any order the states allow: the old firm's end, each rival's first notice, the real book, the cold-store contract on rung 3, the first gun, one case (Ellis), the collision guaranteed once, and the sit-down that ends the act. Every game week brings at least one rival rung, one firm change and one return of a deed. Act III is one inspection week of 2 to 3 hours, each morning one deciding step. Under the ruled clock Act II is about 5 game weeks (9.3 to 14 running hours); if no rival has reached the top by four game days before the end of the fifth week, the highest rival climbs one rung a game day so Act II still ends at a sit-down.
+- How it works: Act II opens on a state (Sheila has her answer and the firm is his, rung 2) and its eight beats fire on states, never days, in any order the states allow: the old firm's end, each rival's first notice, the real book, the cold-store contract on rung 3, the first gun, one case (Ellis), the collision guaranteed once, and the sit-down that ends the act. Every game week brings at least one rival rung, one firm change and one return of a deed. Act III is one inspection week of 3.8 to 5.6 hours of clock before empty hours are skipped (recomputed for the 48-minute day, his ruling of 24 Nov), each morning one deciding step. Under the ruled clock Act II is about 5 game weeks (18.6 to 28 running hours played in full, (recomputed for the 48-minute day, his ruling of 24 Nov); empty hours skipped bring the main story to about 20 hours, measured first); if no rival has reached the top by four game days before the end of the fifth week, the highest rival climbs one rung a game day so Act II still ends at a sit-down.
 - Standard: Beats fire on states, never on days (DESIGN §16) Test: H: sampled stretches; S: no dead weeks
-- Source: DESIGN §16 (DECIDED by the design proof, for him to overturn). Designed in: GAME-DESCRIPTION-COPY-2 §31, §32, §38 (Act transitions); DESIGN §16; DEFINITIONS RT-04, RT2-07, F13 and CLK-06
-- Status: decided. Coverage row: 7.4. Conflicts settled: C-129, C-130.
+- Source: DESIGN §16 (DECIDED by the design proof, for him to overturn). Designed in: GAME-DESCRIPTION-COPY-2 §31, §32, §38 (Act transitions); DESIGN §16; DEFINITIONS RT-04, RT2-07, F13 and CLK-06; his ruling of 24 Nov (RULINGS on wip, his decisions page) (R2)
+- Status: decided. Coverage row: 7.4. Conflicts settled: C-129, C-130, C-307.
+- Data (run 5): exact values in production/lane/blueprint/data/happenings.json (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Story needs (paper, 24 Nov): length, seven game weeks kept, sleeping and waiting skip empty hours, the main story about 20 hours measured in the first loops (Frank's deeds test). Partly covered: seven weeks and skips exist; the 20 hours differs from the part's figures (see CONFLICT).
+- Story conflict C-344 (run 5): The gap between Act II's 18.6 to 28 hours of full clock and the main story's aim of about 20 hours (his ruling of 24 Nov), reached by skipping empty hours (sleeping and waiting), measured first. Until the design proof designs the story's need, the part stands; the need is a gap for the design proof.
 
 ### GD-03 Jobs done out of order and sequence breaks
 
@@ -77,17 +81,19 @@ State-fired beats across seven weeks, then the inspection week.
 
 - How it works: Act II opens on a state: Sheila has her answer and the firm is his (rung 2). 'Take it over' gives it on Sunday, 'wind it down' gives it on Sunday with the arrangement ended, and 'refuse to say' leaves Sheila to read his deeds until a third car, a first recruit, or the outfit's ask taken twice in the second week. Rung 3 needs five cars, a night desk, a first front, a first round and the cold-store contract all held; rung 4 needs at least two fronts and two rounds across the Hook and men at the dock gate, the cold store and the landing. If no rival has reached his top rung by the fail-safe, the highest rival climbs one rung a game day, each said to his face, so Act II still ends at a sit-down.
 - Standard: Every Sunday answer reaches rung 2 by a state; every Act II reaches a sit-down by the end of Act II's fifth game week (the fail-safe starts four game days before it; F13 under his clock) without a rung skipped unseen; rung changes fire exactly on the table's conditions. Test: B: three week-one bots (each answer) and a do-nothing Act II bot; the act, rung and ladder log checked.
-- Source: The description, sections 29 (ladder never skips a rung), 30 (Act II ends at a sit-down), 32 (the rung table), 36, 37 (opens on rung 2; beats on states); ER-CORE-04 (no dead end). (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS RT-04, F13; GAME-DESCRIPTION-COPY-2 §38, §31, §26; RULINGS 21 Nov
-- Status: decided. Coverage row: RT-04. Conflicts settled: C-132, C-133.
-- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-01 after Act I something reaches Tom at least every 30 real minutes; Open page names the next step; decided. None measured.
+- Source: The description, sections 29 (ladder never skips a rung), 30 (Act II ends at a sit-down), 32 (the rung table), 36, 37 (opens on rung 2; beats on states); ER-CORE-04 (no dead end). (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS RT-04, F13; GAME-DESCRIPTION-COPY-2 §38, §31, §26; RULINGS 21 Nov, 24 Nov (R2, the clock)
+- Status: decided. Coverage row: RT-04. Conflicts settled: C-132, C-133, C-307.
+- Clock, 24 Nov: no real-time figure sits in this part; its game-time figures (four game days, the fifth game week) stand under the 48-minute day, where a game week is 5.6 real hours.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-01 after Act I something reaches Frank at least every 30 real minutes; Open page names the next step; decided. None measured.
 - Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-02 Act II in at least four stages of 4 real hours at most, each ending in a rung change; decided. None measured.
+- Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
 
 ### FIT-F13 Act II's week count and its fail-safe
 
-- How it works: One week number: Act II is about 5 game weeks under the ruled clock (version B, 60 s a game hour), and the fail-safe starts four game days before the end of that fifth week so the remaining climbs (one a game day) bring the sit-down by the week's end. Act III is always the calendar's last week, the seventh. Pass: no Act II runs past its fail-safe week, tested by a do-nothing Act II bot. RT-04's old wording 'by the end of the eighth game week' is replaced by this one.
+- How it works: One week number: Act II is about 5 game weeks under the ruled clock (his ruling of 24 Nov: 120 s a game hour, 48 real minutes a day, a game week 5.6 real hours; version B's 60 s is replaced), and the fail-safe starts four game days before the end of that fifth week so the remaining climbs (one a game day) bring the sit-down by the week's end. Act III is always the calendar's last week, the seventh. Pass: no Act II runs past its fail-safe week, tested by a do-nothing Act II bot. RT-04's old wording 'by the end of the eighth game week' is replaced by this one.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the clock Test: B (bot) as written
-- Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 'The clock'; design pass 3 F13; RULINGS 21 Nov
-- Status: ruled (his ruling or canon). Coverage row: FIT-F13. Conflicts settled: C-134, C-135.
+- Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 'The clock'; design pass 3 F13; RULINGS 21 Nov; his ruling of 24 Nov (RULINGS on wip, his decisions page) (R2)
+- Status: ruled (his ruling or canon). Coverage row: FIT-F13. Conflicts settled: C-134, C-135, C-307.
 - Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-02 Act II in at least four stages of 4 real hours at most, each ending in a rung change; decided. None measured.
 
 ## 7.5 The hour budget
@@ -103,22 +109,22 @@ How play time is shared: on foot, driving, talk, jobs, fights and chases, the Le
 - Source: DESIGN §1 (judgement); his question 20:29 (advisor 257) (waits on a dated study). Designed in: DESIGN §1 (table, set for 18 hours); GAME-DESCRIPTION-COPY-2 §34, §41; canon pillar; MEASUREMENTS-NEEDED block 3
 - Status: pending. Coverage row: 7.5. Conflicts settled: C-136, C-137.
 
-### FIT-F15 What the act hours include (side stories inside 15 to 20 h)
+### FIT-F15 What the act hours include (side stories inside the main story's about 20 h)
 
-- How it works: Each act's hours count everything played in it: main beats, jobs, side stories, fares, happenings and free time. The main line is about 12 hours, about 25 side stories at about 12 minutes are about 5 hours (at least 22, at most 28), and the rest inside the acts' hours, so the whole lands at 15 to 20. Under his clock (CLK-06): Act I 1.9 to 2.8 hours, Act II 9.3 to 14, Act III 1.9 to 2.8; three bot playthroughs check the 15 to 20. A median panel playthrough must land at 15 to 20 hours with the library at 22 to 28 side stories of 10 to 14 minutes.
-- Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
-- Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS F15, D-Q3; FIT-CHECK F15, question 3; RULINGS 28 Oct and 21 Nov (15 to 20 hours, side stories inside)
-- Status: ruled (his ruling or canon). Coverage row: FIT-F15. Conflicts settled: C-138, C-139, C-140.
+- How it works: Each act's hours count everything played in it: main beats, jobs, side stories, fares, happenings and free time. The main line is about 12 hours (not yet re-fitted: gap), about 25 side stories (his ruling of 24 Nov, Q9) at about 12 minutes are about 5 hours (at least 22, at most 28), and the rest inside the acts' hours, so the whole lands at about 20 hours (his ruling of 24 Nov, R2: seven game weeks with empty hours skipped, measured in the first loops; it replaces 15 to 20 for the main story). Under his clock (CLK-06), played in full: Act I 3.8 to 5.6 hours, Act II 18.6 to 28, Act III 3.8 to 5.6 (recomputed for the 48-minute day, his ruling of 24 Nov); three bot playthroughs check the about 20. A median panel playthrough must land at about 20 hours with the library at 22 to 28 side stories of 10 to 14 minutes.
+- Standard: about 20 hours for the main story (his ruling of 24 Nov, R2); see also DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
+- Source: design pass 3; FIT-CHECK-2026-11-21.md; his ruling of 24 Nov (RULINGS on wip, his decisions page) (his ruling or canon). Designed in: DEFINITIONS F15, D-Q3; FIT-CHECK F15, question 3; RULINGS 28 Oct and 21 Nov (15 to 20 hours, side stories inside)
+- Status: ruled (his ruling or canon). Coverage row: FIT-F15. Conflicts settled: C-138, C-139, C-140, C-307, C-309.
 - Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-07 two thirds of side stories within three steps and 15 minutes, none over 30; decided. None measured.
-- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-06 main plus side stories inside 15 to 20 hours (ruled, 28 Oct), no act over 14 (decided by the study). None measured.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-06 main plus side stories inside 15 to 20 hours (ruled, 28 Oct), no act over 14 (decided by the study); the 15 to 20 is replaced by about 20 hours for the main story (his ruling of 24 Nov, R2; see the gap on act hours). None measured.
 
 ### FIT-F16 Act hours against places and people
 
-- How it works: The fit check spreads Act II's hours over about 19 named places and about 35 to 48 named people: about 40 minutes of Act II per place and 15 to 25 minutes per named person. There is no reference figure for how much a place or person can carry, so whether it is enough is measured by GD-02's density band (teardown, PC block 3, 25 to 27 Nov). D-Q4 gives the 12 people seen most 60 written street lines each and the rest 30.
+- How it works: The fit check spreads Act II's hours over about 19 named places and about 35 to 48 named people: about 60 to 90 minutes of Act II per place (18.6 to 28 hours over 19 places) and 30 to 50 minutes per named person (played in full, (recomputed for the 48-minute day, his ruling of 24 Nov); empty hours skipped bring it down, measured first). There is no reference figure for how much a place or person can carry, so whether it is enough is measured by GD-02's density band (teardown, PC block 3, 25 to 27 Nov). D-Q4 gives the 12 people seen most 60 written street lines each and the rest 30 (his ruling of 24 Nov, Q9: 60 for the most seen, 30 for the rest; residents 200 to 300 with shared lines plus about 5 own lines each, after the first loops).
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (waits on a dated study). Designed in: FIT-CHECK F16; DEFINITIONS GD-02, D-Q4 (L-01); MEASUREMENTS-NEEDED block 3
-- Status: pending. Coverage row: FIT-F16. Conflicts settled: C-141.
-- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-02 Act II in at least four stages of 4 real hours at most, each ending in a rung change; decided; WQ-06 main plus side stories inside 15 to 20 hours (ruled, 28 Oct), no act over 14 (decided by the study). None measured.
+- Status: pending. Coverage row: FIT-F16. Conflicts settled: C-141, C-307.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-02 Act II in at least four stages of 4 real hours at most, each ending in a rung change; decided; WQ-06 main plus side stories inside 15 to 20 hours (ruled, 28 Oct), no act over 14 (decided by the study); the 15 to 20 is replaced by about 20 hours for the main story (his ruling of 24 Nov, R2; see the gap on act hours). None measured.
 
 ## 7.6 Tension and retellable moments
 
@@ -134,6 +140,7 @@ Nine sources of tension; a retellable moment each evening.
 - Standard: ER-TENS-01: at least 12 tense moments per 30 min from at least four sources, none over half; ER-TENS-02 Test: H: tense log; panel 'most exciting moment'
 - Source: DESIGN §3 (no reference figure yet). Designed in: DESIGN §3 (ER-TENS-01, 02); GAME-DESCRIPTION-COPY-2 §2; VISION
 - Status: unmeasured. Coverage row: 7.6.
+- Story needs (measure): a full moment passes four tests (the player chose; it could have gone another way by replay; a named person was there; it came back and reached him); pass mark at least one in the first 30 minutes and two in every later hour, at least 5 in a three-hour evening, half from witnesses, recognition or returns, a third with a mark, 6 of 8 panel players naming a person and a consequence (EMERGENT-MEASURE T1 to T3, T10). Partly covered: the part holds the three-test retellable moment and the 5 of 8 panel bar; the replay test, the mark share and the 6 of 8 retelling are missing.
 
 ### GD-05 Humour and a mix of tones
 
@@ -142,6 +149,7 @@ Nine sources of tension; a retellable moment each evening.
 - Source: canon.md, Tone; STORY-PATTERNS-STEAM-2026-11-20 (rank 7 humour; tone clash a single mention). (waits on a dated study). Designed in: DEFINITIONS GD-05; canon.md Tone; STORY-PATTERNS-STEAM-2026-11-20 (rank 7 humour, 5 of 8); GAME-DESCRIPTION-COPY-2 §2
 - Status: pending. Coverage row: GD-05.
 - Studies: aaa-studies/PLAYERS-STORIES.md: STORY-06 one moment in five is funny; decided. None measured.
+- Data (run 5): the data sweep (class B) needs the scenes file (data file 18), still to be made from the story on paper; exact values pending it.
 
 ## 7.7 Rising in position, felt
 
@@ -150,11 +158,12 @@ What a newcomer can point to at each rung: the name, greetings, property, clothe
 
 ### 7.7 Rising in position, felt
 
-- How it works: Four rungs and no number on screen: the new owner (two cars, Ron, Sheila, 23.50 pounds), Nowak (firm is his, third car, first recruit; opens the real book on trust and Rita's back room), Tom (five cars, a night desk, a first front and round, the cold-store contract, whose winning on the way to rung 3 opens the dock gate (RT2-01); rung 3 opens the Harbour Board's counter), and the port's man (fronts and rounds across the Hook, men at the dock gate, cold store and landing; Tommy to two or three; people step aside). Each person uses the name they have reached, a step never goes back and each is heard within a game day. Walked at rung 1 and at rung 3 the same street gives at least three differences: greetings, the office filling, clothes (three outfits), access and the fleet passing him.
+- How it works: Four rungs and no number on screen: the new owner (two cars, Ron, Sheila, 23.50 pounds), Nowak (firm is his, third car, first recruit; opens the real book on trust and Rita's back room), Frank (five cars, a night desk, a first front and round, the cold-store contract, whose winning on the way to rung 3 opens the dock gate (RT2-01); rung 3 opens the Harbour Board's counter), and the port's man (fronts and rounds across the Hook, men at the dock gate, cold store and landing; Frankie to two or three; people step aside). Each person uses the name they have reached, a step never goes back and each is heard within a game day. Walked at rung 1 and at rung 3 the same street gives at least three differences: greetings, the office filling, clothes (three outfits), access and the fleet passing him.
 - Standard: ER-RISE-01 to 03: no number on screen; each rung changes three things a newcomer can point to Test: H: same street at rung 1 and 3
 - Source: DESIGN §14 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §14 (ER-RISE-01 to 03); GAME-DESCRIPTION-COPY-2 §26, §23; DEFINITIONS 2.12.2, 2.12.3
 - Status: decided. Coverage row: 7.7.
 - His ruling of 23 Nov (RULINGS on wip, genre line): growth is mainly in position; never levels: streets and people come to be known by practice, skills are taught by those who trust him and kept if lost, and hand skills improve quietly, at most a quarter better. The rungs above stand; the taught skills and the quarter cap are owed a design (gap, run 4). Conflict C-263.
+- Data (run 5): exact values in production/lane/blueprint/data/lines/ (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
 
 ## 7.8 Saving
 
@@ -166,7 +175,7 @@ An autosave after every deed, consequence and job step; reloading never stopped.
 
 ### 7.8 Saving
 
-- How it works: The game autosaves after every deed, every consequence and every change of a job step, holds the save during a fight and never refuses it, and saves on quit and when Tom sleeps. A reload at any moment gives the same next hour, and nothing about a person's memory is lost to a save, a load or skipped time. At least eight manual slots (picture, day, hour, place, rung in words) and three rotating autosaves; a save is written to a new file and swapped in once complete, so a power cut never loses the last good one.
+- How it works: The game autosaves after every deed, every consequence and every change of a job step, holds the save during a fight and never refuses it, and saves on quit and when Frank sleeps. A reload at any moment gives the same next hour, and nothing about a person's memory is lost to a save, a load or skipped time. At least eight manual slots (picture, day, hour, place, rung in words) and three rotating autosaves; a save is written to a new file and swapped in once complete, so a power cut never loses the last good one.
 - Standard: ER-SAVE-01: a reload gives the same next hour; held during a fight, never refused. Raised by Y8.2: see GV-05 (no blocking fault three nights running). Test: S: reload at random moments; SaveChaos
 - Source: DESIGN §17; D35, D58 (his ruling or canon). Designed in: DESIGN §17 (ER-SAVE-01); GAME-DESCRIPTION-COPY-2 §3, §35 (saving); DEFINITIONS AX-07; GTAVI-MAP Y8.2
 - Status: ruled (his ruling or canon). Coverage row: 7.8.
@@ -177,7 +186,7 @@ An autosave after every deed, consequence and job step; reloading never stopped.
 Beaten, arrested, refused, late: each ends in a state the town can talk about.
 - Prior research: research/failure-after-arrest: failure in a game with no reset is about the continuation, not the retry; permanent memory builds a death spiral by construction, so four brakes; the failure place needs its old content, not only a time bar.
 - Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-11 no memory closes the game or a main thread; another road within a game day; decided. None measured.
-- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-03 a fact Tom holds changes the reply and is named; a wrong push ends in a state, never a reload; decided; TALK-04 every way a decision talk fails leaves a state that comes back; decided. None measured.
+- Studies: aaa-studies/TALK-AS-PLAY.md: TALK-03 a fact Frank holds changes the reply and is named; a wrong push ends in a state, never a reload; decided; TALK-04 every way a decision talk fails leaves a state that comes back; decided. None measured.
 - Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-01 failure costs game hours and standing, never replayed minutes; decided; FF-06 a step lost twice brings another way within a game day; decided. None measured.
 - Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-07 bot bands: the greedy bot is beaten or arrested, the lazy one not in Act I; decided; FF-08 a forced-failure bot still finds jobs, rent and two brakes it can act on (talk it down, buy it quiet, a favour) the next week of Act II; decided. None measured.
 - Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-01 a job judges the result, never the route; decided; MS-04 a failed step changes the town, never sends him back; decided. None measured.
@@ -185,7 +194,7 @@ Beaten, arrested, refused, late: each ends in a state the town can talk about.
 
 ### 7.9 Failure without reload
 
-- How it works: No game-over screen and Tom cannot die. Beaten, he comes round on the pavement, in Grace Rinaldi's kitchen or in hospital, sometimes robbed, in control within 60 real seconds with the cost said. Arrested, he loses hours, never the game: about 6 game hours for a window, 8 a wounding, 12 a robbery, 22 a killing, under 2 real minutes of play. Late, refused or caught, each job ends in a state the town can talk about and control is back within 2 real minutes.
+- How it works: No game-over screen and Frank cannot die. Beaten, he comes round on the pavement, in Grace Rinaldi's kitchen or in hospital, sometimes robbed, in control within 60 real seconds with the cost said. Arrested, he loses hours, never the game: about 6 game hours for a window, 8 a wounding, 12 a robbery, 22 a killing, under 2 real minutes of play. Late, refused or caught, each job ends in a state the town can talk about and control is back within 2 real minutes.
 - Standard: ER-CORE-04: no game-over screen; control back within 2 real minutes Test: S: every failure route timed
 - Source: DESIGN §1 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §1 (ER-CORE-04), §4; GAME-DESCRIPTION-COPY-2 §3, §9, §17, §34; CLOUD-FIGURES B2
 - Status: decided. Coverage row: 7.9. Conflicts settled: C-142.
@@ -210,41 +219,43 @@ No stats, no difficulty ladder: assists only (seeing assist, hints, aim of drivi
 
 ### 7.11 Waiting and time skips
 
-- How it works: Nothing forces Tom out, sleeping is a skip never a need, and waiting is a key that offers 'wait until' each known appointment (the landing at ten, Ada's pot at nine, the shift at half past five). A wait or a sleep always stops for what the town has for him, a man at the door, a message or a constable. No lateness fail inside a window of at least 2 game hours; under the ruled clock every timed step is known at least 5 game hours (5 real min, one walking crossing) before it opens.
+- How it works: Nothing forces Frank out, sleeping is a skip never a need, and waiting is a key that offers 'wait until' each known appointment (the landing at ten, Ada's pot at nine, the shift at half past five). A wait or a sleep always stops for what the town has for him, a man at the door, a message or a constable. No lateness fail inside a window of at least 2 game hours; under the ruled clock every timed step is known at least 5 game hours (10 real min, two walking crossings where it was one) before it opens (recomputed for the 48-minute day, his ruling of 24 Nov).
 - Standard: ER-JOB-04; never force waiting (Study 17) Test: S: the week of waits
 - Source: DESIGN §4, §6 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §4 (ER-JOB-04), §6; GAME-DESCRIPTION-COPY-2 §34; DEFINITIONS CLK-04
-- Status: decided. Coverage row: 7.11.
+- Status: decided. Coverage row: 7.11. Conflicts settled: C-307.
 
 ## 7.12 Always something to do
 
 By day, with no job live, a fare, a debt or a person with a word for him within 30 real seconds.
 - Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-05 something within 30 s by day, no random fight; the 30 s pending, the fight ban ruled. None measured.
 - Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-03 no dead leg over 2 minutes; a job 5 to 30 minutes, planned ones to 45; decided. None measured.
-- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-01 after Act I something reaches Tom at least every 30 real minutes; Open page names the next step; decided. None measured.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-01 after Act I something reaches Frank at least every 30 real minutes; Open page names the next step; decided. None measured.
 - Prior research: aaa-studies/DENSE-DISTRICT-REVIEWS.md: Yakuza 0 critic: never far from a fight, few everyday dealings with passers-by; Like a Dragon random battles a wear-out; no encounter rate found.
 
 ### 7.12 Always something to do
 
-- How it works: By day with no job live, a fare, a debt or a person with a word for him is within 30 real seconds of wherever Tom stands, and street happenings fill the gaps; nowhere is there five minutes with nothing new. Tested by an idle probe at 20 random daytime moments. The fit check reckons that at a walk 30 seconds is a circle of about 48 m (walk 1.6 m/s, G4); the fit check's estimate of 20 to 30 live things across the Hook was made at 1.4 m/s and is to be redone must be up at once across the Hook by day.
+- How it works: By day with no job live, a fare, a debt or a person with a word for him is within 30 real seconds of wherever Frank stands, and street happenings fill the gaps; nowhere is there five minutes with nothing new. Tested by an idle probe at 20 random daytime moments. The fit check reckons that at a walk 30 seconds is a circle of about 48 m (walk 1.6 m/s, G4); the fit check's estimate of 20 to 30 live things across the Hook was made at 1.4 m/s and is to be redone must be up at once across the Hook by day.
 - Standard: ER-CORE-07; ER-CORE-05 (never more than 5 minutes with nothing new) Test: S: idle probe at 20 daytime moments; H empty minutes
 - Source: DESIGN §1 (no reference figure yet). Designed in: DESIGN §1 (ER-CORE-05, 07); GAME-DESCRIPTION-COPY-2 §34; FIT-CHECK F32; DEFINITIONS G1, G4
 - Status: unmeasured. Coverage row: 7.12. Conflicts settled: C-143.
 
 ### GD-02 Density: something to meet every so many metres or seconds on a street
 
-- How it works: Something to do or notice comes up every so often as Tom walks: a person with a word, a fare, a debt, a happening, a lit window with a life, a thing to touch. One camera frame at the default field of view (86 degrees) on the parade holds 4 to 10 distinct people at busy bands, 2 to 7 at other daytime hours and 0 to 2 on quiet nights; Thursday's market and Saturday's match may hold 15 to 25 in a frame. About half stand or sit at a made place (stall, bus stop, shop door, kerb, bench), groups of 2 to 3 facing inward; at least 40% in a busy frame. No shared street line is heard twice in one real hour, and everyday street talk comes at most every 45 s. The bands are replaced by five-sample counts when solid: the higher game count sets the floor, the 1990 archive the ceiling.
+- How it works: Something to do or notice comes up every so often as Frank walks: a person with a word, a fare, a debt, a happening, a lit window with a life, a thing to touch. One camera frame at the default field of view (86 degrees) on the parade holds 4 to 10 distinct people at busy bands, 2 to 7 at other daytime hours and 0 to 2 on quiet nights; Thursday's market and Saturday's match may hold 15 to 25 in a frame. About half stand or sit at a made place (stall, bus stop, shop door, kerb, bench), groups of 2 to 3 facing inward; at least 40% in a busy frame. No shared street line is heard twice in one real hour, and everyday street talk comes at most every 45 s. The bands are replaced by five-sample counts when solid: the higher game count sets the floor, the 1990 archive the ceiling.
 - Standard: one camera frame at FOV 86 on the parade: 4 to 10 people at busy bands, 2 to 7 other daytime, 0 to 2 quiet night; market and match 15 to 25; at least 40% standing or seated at a made place; replaced by five-sample counts (games set the floor, the 1990 archive the ceiling) Test: B: a one-hour walk logging every line and every meetable thing per minute.
 - Source: MEASUREMENTS-NEEDED A (density); Y2.5, Y4.1. (waits on a dated study). Designed in: DEFINITIONS GD-02 and design pass 4 Run 5 second pass; GTAVI-MAP Run 5 additions; COPY-2 s.28, s.37; MEASUREMENTS-NEEDED A9; street-life finding 5
-- Status: pending. Coverage row: GD-02. Conflicts settled: C-144, C-145, C-146, C-147.
+- Status: pending. Coverage row: GD-02. Conflicts settled: C-144, C-145, C-146, C-147, C-314.
 - Prior research: PRIOR-RESEARCH-INDEX section 3 group 7: the scale test never ran more than 20 walkers and his 30 Sep rule is one approved person before twenty; GTA VI's busiest ordinary view counted about 10 (G7 lead). Check the people budget before fixing 25.
 - Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-02 no stretch over 40 m without a door to a place with a person in it; decided; DENSE-06 something within 35 m of any walkable point except routine-empty places; decided. None measured.
 - Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-10 things met per minute and crossing times set from footage; pending. None measured.
 - Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-03 no dead leg over 2 minutes; a job 5 to 30 minutes, planned ones to 45; decided. None measured.
 - DECIDES-CHECK, 24 Nov: the crowd count by street and hour is now a deciding row (see FIT-G9); idle actions a minute and the small district stay leads.
+- Measured floor (STATUS.md on wip, crowd-counts-2026-11-24.md, 24 Nov 09:46): crowd counts SOLID by count, by eye: busiest daytime views KCD2 about 10, 9, 6, 6, 5 and RDR2 about 7, 6, 6, 5, 5 (median 6 each); quiet streets 0 to 3. By the part's own rule the higher game count sets the floor: 6 people in the busiest daytime view. The 1990 archive ceiling is still owed, so the part stays pending. data/crowd.json still calls these counts leads; STATUS.md wins (rule a).
+- Data (run 5): exact values in production/lane/blueprint/data/crowd.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
 
 ### FIT-F32 Something within 30 s by day
 
-- How it works: By day something is within 30 real seconds of Tom, which at a walk (1.6 m/s, G4) is a circle of about 48 m; the fit check's 20 to 30 live things across the Hook was reckoned at 1.4 m/s and is to be redone (about 620 by 400 m). Whether the design reaches that is not known; the test is 20 idle moments on the prototype, with the next build.
+- How it works: By day something is within 30 real seconds of Frank, which at a walk (1.6 m/s, G4) is a circle of about 48 m; the fit check's 20 to 30 live things across the Hook was reckoned at 1.4 m/s and is to be redone (about 620 by 400 m). Whether the design reaches that is not known; the test is 20 idle moments on the prototype, with the next build.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (waits on a dated study). Designed in: FIT-CHECK F32; DEFINITIONS 'open pairs' F32, G4; GAME-DESCRIPTION-COPY-2 §34
 - Status: pending. Coverage row: FIT-F32. Conflicts settled: C-148.
@@ -253,25 +264,27 @@ By day, with no job live, a fare, a debt or a person with a word for him within 
 ## 7.13 The game clock
 
 How fast a game hour passes in real time.
-- Prior research: research/game-clock: Skyrim 72 min a day, Fallout 3 and NV 48, Majora 54, Sims 4 24, Stardew about 14, KCD1 about 96 (official forum); 49 game days at 24 real minutes is about 19.6 hours, about 13 with nights skipped (PRIOR-RESEARCH-INDEX section 1 item 1).
+- Prior research: research/game-clock: Skyrim 72 min a day, Fallout 3 and NV 48, Majora 54, Sims 4 24, Stardew about 14, KCD1 about 96 (official forum); 49 game days at 48 real minutes is about 39 hours (at the old 24 minutes it was about 19.6), about 26 with nights skipped (at 24 minutes about 13; PRIOR-RESEARCH-INDEX section 1 item 1; recomputed for the 48-minute day, his ruling of 24 Nov).
 
 ### 7.13 The game clock
 
-- How it works: A game hour is 60 real seconds, so a game day is 24 real minutes; no first-evening rate change. The value lives once in the tuning table and every system reads it. The 30 s Unreal clock (a 12 minute day) is not to be built. References run 48 (GTA V, RDR2), about 96 (KCD) and about 144 (GTA VI, unconfirmed) real minutes a day, so LEDGER's day is the shortest by his choice; the evening is 6 real minutes against GTA V's about 12. No file may still carry 45 s, 18 real minutes or 9 weeks (text search).
-- Standard: 60 real s a game hour, 24 real minutes a day, evening 6 real minutes (references 48 to 144 minutes a day, CLOUD-FIGURES C2); no file still says 45 s Test: S: one value in the tuning table, read by both
-- Source: CLOUD-FIGURES-2026-11-21.md C2 (his ruling or canon). Designed in: RULINGS 21 Nov; DEFINITIONS design pass 4 'The clock: version B taken', R2; CLOUD-FIGURES C2
-- Status: ruled (his ruling or canon). Coverage row: 7.13. Conflicts settled: C-149.
+- How it works: A game hour is 120 real seconds, so a game day is 48 real minutes and a game week 5.6 real hours (his ruling of 24 Nov, R2; it replaces version B's 60 s and 24 minutes); the story runs about 7 game weeks with empty hours (sleeping and waiting) skipped, its real hours measured first; no first-evening rate change. The value lives once in the tuning table and every system reads it. The 30 s Unreal clock (a 12 minute day) is not to be built. References run 48 (GTA V, RDR2), about 96 (KCD) and about 144 (GTA VI, unconfirmed) real minutes a day, so LEDGER's day now equals GTA V's and RDR2's; the evening is 12 real minutes, equal to GTA V's about 12 (recomputed for the 48-minute day, his ruling of 24 Nov). No file may still carry 45 s, 18 real minutes or 9 weeks (text search).
+- Standard: 120 real s a game hour, 48 real minutes a day, evening 12 real minutes (references 48 to 144 minutes a day, CLOUD-FIGURES C2) (recomputed for the 48-minute day, his ruling of 24 Nov); no file still says 45 s Test: S: one value in the tuning table, read by both
+- Source: his ruling of 24 Nov (RULINGS on wip, his decisions page) (R2); CLOUD-FIGURES-2026-11-21.md C2 (his ruling or canon). Designed in: RULINGS 21 Nov; DEFINITIONS design pass 4 'The clock: version B taken', R2; CLOUD-FIGURES C2
+- Status: ruled (his ruling or canon). Coverage row: 7.13. Conflicts settled: C-149, C-307, C-308.
+- Economy conflict C-331 (run 5): Settled: the parts (7.13, CLK-07, 2.4.4, 2.6.5) are recomputed for the 48-minute day; the length is his about 20 hours for the main story.
 
 ### RT-18 Pause and clock
 
-- How it works: The clock stops in talk and in the pause menu and nowhere else. Opening the Ledger, the paper map or a letter stops Tom but not the town; getting ready takes a game minute, never a screen. An assist 'the Ledger pauses the town' is offered, off by default.
+- How it works: The clock stops in talk and in the pause menu and nowhere else. Opening the Ledger, the paper map or a letter stops Frank but not the town; getting ready takes a game minute, never a screen. An assist 'the Ledger pauses the town' is offered, off by default.
 - Standard: Clock frozen only in talk and pause (and with the assist on, in the Ledger); time passes at the clock rate otherwise. Test: B: clock read before and after each screen.
-- Source: The description, sections 24 (the map stops Tom but pauses nothing), 27, 34. (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS RT-18; GAME-DESCRIPTION-COPY-2 §38, §3; RT2-20
+- Source: The description, sections 24 (the map stops Frank but pauses nothing), 27, 34. (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS RT-18; GAME-DESCRIPTION-COPY-2 §38, §3; RT2-20
 - Status: decided. Coverage row: RT-18. Conflicts settled: C-150.
+- Story conflict C-343 (run 5): The part stops the clock only in talk and menus, while the story needs the clock slowed on authored rides. Until designed, the part stands; the need is a gap for the design proof.
 
 ### RT2-20 The clock in moving talk
 
-- How it works: The clock stops in talk only when Tom is standing and the talk screen is up. Talk staged while walking or driving (a fare's talk, a sit-down in the cab, a witness walked with) runs the clock at its rate and the world goes on: lines show as subtitles, choices as suggested lines, and Tom or the car keeps moving. A witness stopped with 'Oi!' and talked to is standing talk, so the clock and her walk stop. Pass: clock read before and after every talk.
+- How it works: The clock stops in talk only when Frank is standing and the talk screen is up. Talk staged while walking or driving (a fare's talk, a sit-down in the cab, a witness walked with) runs the clock at its rate and the world goes on: lines show as subtitles, choices as suggested lines, and Frank or the car keeps moving. A witness stopped with 'Oi!' and talked to is standing talk, so the clock and her walk stop. Pass: clock read before and after every talk.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4), RT2-20 Test: B (bot), as written under RT2-20
 - Source: design pass 3, RT2-20 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS RT2-20; GAME-DESCRIPTION-COPY-2 §28; RT-18
 - Status: decided. Coverage row: RT2-20. Conflicts settled: C-151.
@@ -279,53 +292,54 @@ How fast a game hour passes in real time.
 
 ### CLK-01 The staged first hour against the landing's window
 
-- How it works: The staged first hour's talk stops total 2.5 to 3.5 real minutes, so the hand-over at the landing falls between 22:00 and 01:00 on the clock (the landing's window). With about 2.5 real minutes stopped in talk, play minute 7:00 reads about 21:10 and 11:30 about 00:40; with 2 minutes the landing would read about 01:10. No first-evening rate change is built (version A's fix is withdrawn).
+- How it works: The staged first hour's talk stops total 2.5 to 3.5 real minutes, so the hand-over at the landing falls between 22:00 and 01:00 on the clock (the landing's window). With about 2.5 real minutes stopped in talk, play minute 7:00 reads about 21:10 and 11:30 about 00:40; with 2 minutes the landing would read about 01:10. No first-evening rate change is built (version A's fix is withdrawn). Under the 48-minute day a running minute covers half a game hour, so these clock readings fall about half as far along; they are not recomputed here because the start hour is not stated (gap).
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the clock Test: B (bot) as written
-- Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 'The clock' CLK-01; design pass 3 clock table CLK-01 (F07); FIT-CHECK F07
-- Status: ruled (his ruling or canon). Coverage row: CLK-01. Conflicts settled: C-152.
+- Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 'The clock' CLK-01; design pass 3 clock table CLK-01 (F07); FIT-CHECK F07; his ruling of 24 Nov (RULINGS on wip, his decisions page)
+- Status: ruled (his ruling or canon). Coverage row: CLK-01. Conflicts settled: C-152, C-307.
 
 ### CLK-02 The hurry wrinkle in clock terms
 
-- How it works: The hurry wrinkle is given in clock terms 1.5 game hours ahead ('it's gone half eight' for the ten o'clock ferry), which is 90 real seconds, about one car crossing with spare. The old line 'the last ferry in four minutes' fits neither game nor real minutes.
+- How it works: The hurry wrinkle is given in clock terms 1.5 game hours ahead ('it's gone half eight' for the ten o'clock ferry), which is 180 real seconds (recomputed for the 48-minute day, his ruling of 24 Nov) (it was 90, about one car crossing with spare; the spare is now larger and the lead is not re-fitted). The old line 'the last ferry in four minutes' fits neither game nor real minutes.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the clock Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 CLK-02; design pass 3 CLK-02 (F08); FIT-CHECK F08; COPY-2 s.12
-- Status: ruled (his ruling or canon). Coverage row: CLK-02. Conflicts settled: C-153.
+- Status: ruled (his ruling or canon). Coverage row: CLK-02. Conflicts settled: C-153, C-307.
 - Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-09 no side story offered during a hurry or on an Act III morning; decided. None measured.
 
 ### CLK-03 Routines against walking
 
-- How it works: Each person's places lie within about 200 m of walking (about 125 real seconds, 2 game hours); longer moves are a few blocks of several game hours.
+- How it works: Each person's places lie within about 200 m of walking (about 125 real seconds at a walk, about 1 game hour under the 48-minute day; recomputed, it was 2 game hours); longer moves are a few blocks of several game hours.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the clock Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 CLK-03; design pass 3 CLK-03 (F09)
-- Status: ruled (his ruling or canon). Coverage row: CLK-03. Conflicts settled: C-154.
+- Status: ruled (his ruling or canon). Coverage row: CLK-03. Conflicts settled: C-154, C-307.
+- Data (run 5): exact values in production/lane/blueprint/data/routines.json (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
 
 ### CLK-04 Job windows against the walk to them
 
-- How it works: Job windows are at least 2 game hours (2 real minutes) and every timed step is known at least 5 game hours (5 real minutes, one walking crossing) before it opens; 'wait until' is offered for all. A lint over the job library checks it.
+- How it works: Job windows are at least 2 game hours (4 real minutes) and every timed step is known at least 5 game hours (10 real minutes, two walking crossings of about 4.9 minutes where it was one) before it opens (recomputed for the 48-minute day, his ruling of 24 Nov); 'wait until' is offered for all. A lint over the job library checks it.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the clock Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 CLK-04 and the clock standard (2); design pass 3 CLK-04 (F10); G1 (crossing 4.9 min)
-- Status: ruled (his ruling or canon). Coverage row: CLK-04. Conflicts settled: C-155.
+- Status: ruled (his ruling or canon). Coverage row: CLK-04. Conflicts settled: C-155, C-307.
 
 ### CLK-05 The evening and the shop day
 
-- How it works: The evening (18:00 to 24:00) is 6 real minutes, the shop day (09:00 to 17:30) 8.5 minutes, and dark about 14 of the 24 real minutes of a day. GTA V's evening is about 12 real minutes and KCD's about 24; the player will feel the evening most, and CLK-04's windows are set so nothing is missed for it.
+- How it works: The evening (18:00 to 24:00) is 12 real minutes, the shop day (09:00 to 17:30) 17 minutes, and dark about 28 of the 48 real minutes of a day (recomputed for the 48-minute day, his ruling of 24 Nov). GTA V's evening is about 12 real minutes and KCD's about 24; the evening is now as long as GTA V's and the player will feel it most, and CLK-04's windows are set so nothing is missed for it.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the clock Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 CLK-05; design pass 3 CLK-05 (F11); CLOUD-FIGURES C2
-- Status: ruled (his ruling or canon). Coverage row: CLK-05. Conflicts settled: C-156.
+- Status: ruled (his ruling or canon). Coverage row: CLK-05. Conflicts settled: C-156, C-307, C-308.
 
 ### CLK-06 Calendar and acts
 
-- How it works: The calendar is 7 game weeks from Monday 15 October to about 2 December 1990: Act I one week (1.9 to 2.8 running hours), Act II five weeks (9.3 to 14), Act III one week (1.9 to 2.8); Act II's fail-safe starts four game days before the end of its fifth week. Bonfire Night and Remembrance Sunday stay inside week 4. The running total is 13 to 20 hours against his 15 to 20, so the low end may fall short; three bot playthroughs decide, and if the median is short the fix is fewer nights skipped by default, never a longer calendar.
+- How it works: The calendar is 7 game weeks from Monday 15 October to about 2 December 1990: Act I one week (3.8 to 5.6 running hours), Act II five weeks (18.6 to 28), Act III one week (3.8 to 5.6), played in full (recomputed for the 48-minute day, his ruling of 24 Nov); Act II's fail-safe starts four game days before the end of its fifth week. Bonfire Night and Remembrance Sunday stay inside week 4. The running total is 26 to 40 hours played in full (recomputed for the 48-minute day, his ruling of 24 Nov) against his about 20 for the main story (24 Nov, replacing 15 to 20), so empty hours (sleeping and waiting) are skipped and the real hours are measured first, in the first loops; three bot playthroughs decide. The old fix (fewer nights skipped if the median is short) pointed the other way and no longer applies; its replacement is not written (gap); a longer calendar is still never the fix.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the clock Test: B (bot) as written
-- Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 CLK-06 and F13; design pass 3 CLK-06 (F13, F14); RULINGS 21 Nov
-- Status: ruled (his ruling or canon). Coverage row: CLK-06. Conflicts settled: C-157, C-158.
+- Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 CLK-06 and F13; design pass 3 CLK-06 (F13, F14); RULINGS 21 Nov; his ruling of 24 Nov (RULINGS on wip, his decisions page) (R2)
+- Status: ruled (his ruling or canon). Coverage row: CLK-06. Conflicts settled: C-157, C-158, C-307, C-309.
 
 ### CLK-07 Weekly rhythms (rent, cooling, rival rungs)
 
-- How it works: Weekly rhythms hold in game days: rent of 18 pounds each Friday, two quiet game weeks to cool the dial and Ellis one step, a rival rung a week, talk cooling over 1 to 7 game days (24 real minutes to 2.8 real hours). Act II's five weeks hold two dial falls and every rival's four climbs; rival climbs fire on states, not weeks.
+- How it works: Weekly rhythms hold in game days: rent of 18 pounds each Friday, two quiet game weeks to cool the dial and Ellis one step, a rival rung a week, talk cooling over 1 to 7 game days (48 real minutes to 5.6 real hours, (recomputed for the 48-minute day, his ruling of 24 Nov)). Act II's five weeks hold two dial falls and every rival's four climbs; rival climbs fire on states, not weeks.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the clock Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 CLK-07; design pass 3 CLK-07 and RT2-07; FIT-CHECK F26
-- Status: ruled (his ruling or canon). Coverage row: CLK-07. Conflicts settled: C-159.
+- Status: ruled (his ruling or canon). Coverage row: CLK-07. Conflicts settled: C-159, C-307.
 
 ## 7.14 Variety
 
@@ -339,6 +353,7 @@ No set piece twice in 30 minutes; no fare wrinkle twice running.
 - Standard: ER-JOB-06 Test: H: the log
 - Source: DESIGN §4 (no reference figure yet). Designed in: DESIGN §4 (ER-JOB-06); GAME-DESCRIPTION-COPY-2 §13, §41; DEFINITIONS G6, G7, F20
 - Status: unmeasured. Coverage row: 7.14. Conflicts settled: C-160, C-161.
+- Data (run 5): exact values in production/lane/blueprint/data/happenings.json (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
 
 ## 7.15 After the ending
 
@@ -351,6 +366,7 @@ What happens when the story ends: the close, credits, and whether play continues
 - Standard: Optional presentation after the ending (ruling 23 Sep floor) Test: S: the close plays, credits roll, the player returns to a stated place; addendum rules ER-AFTER-01
 - Source: ruling 23 Sep (his ruling or canon). Designed in: DESIGN-ADDENDUM §A7 (ER-AFTER-01); GAME-DESCRIPTION-COPY-2 §33; DEFINITIONS RT2-21; RULINGS 23 Sep
 - Status: ruled (his ruling or canon). Coverage row: 7.15.
+- Data (run 5): the data sweep (class C) needs the scenes file (data file 18), still to be made from the story on paper; exact values pending it.
 
 ### GD-04 A second playthrough: what differs
 
@@ -362,31 +378,32 @@ What happens when the story ends: the close, credits, and whether play continues
 
 ### RT2-21 After the ending and past nine weeks (seven under the ruled clock)
 
-- How it works: After the ending the clock runs on from the ending's day. Side stories stay open; fares, happenings, rent and the dial run as before; fronts and rounds keep paying if the business survived; rivals stay on their rungs and climb no more; Ellis's stage holds; no new main beats. In Burn Both Tom keeps car two and the office. The town repeats its ordinary weeks (Thursday market, Saturday match, Sunday) with no special days beyond Christmas Day. Pass: 14 game days of post-ending play after each of the five endings without a fault.
+- How it works: After the ending the clock runs on from the ending's day. Side stories stay open; fares, happenings, rent and the dial run as before; fronts and rounds keep paying if the business survived; rivals stay on their rungs and climb no more; Ellis's stage holds; no new main beats. In Burn Both Frank keeps car two and the office. The town repeats its ordinary weeks (Thursday market, Saturday match, Sunday) with no special days beyond Christmas Day. Pass: 14 game days of post-ending play (11.2 real hours at the full clock, (recomputed for the 48-minute day, his ruling of 24 Nov)) after each of the five endings without a fault.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4), RT2-21 Test: B (bot), as written under RT2-21
 - Source: design pass 3, RT2-21 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS RT2-21; GAME-DESCRIPTION-COPY-2 §33; RT-16
-- Status: decided. Coverage row: RT2-21. Conflicts settled: C-163.
+- Status: decided. Coverage row: RT2-21. Conflicts settled: C-163, C-307.
 
 ## 7.16 Pastimes
 
-Things to do with people that are not crime: the recommended answer is an amateur boxing club.
+Things to do with people that are not crime: a boxing club, a snooker hall, quay fishing and an allotment pigeon loft (his ruling of 24 Nov).
 
 
 ### 7.16 Pastimes
 
-- How it works: Built to the recommended answer: one place, an amateur boxing club in the old hall behind the chandler's on the quay. Tom spars with gloves (the fight system with the fall rule off and no blood), men who train there can be recruited, and it is a place to be seen. It opens 18:00 to 21:30 on Monday, Wednesday and Friday and 10:00 to 13:00 on Saturday. No stakes, no betting, no drink, and Tom's line against hitting women, the over sixties and the priest holds there too.
-- Standard: Recommended answer to Q13 of this blueprint, built to it meanwhile; no stakes, no drink (canon) Test: H: chosen in free time; S: no stakes anywhere; addendum rules ER-PASTIME-01
-- Source: Q3 (open); canon (DECIDED by the design proof, for him to overturn). Designed in: DESIGN-ADDENDUM §A28; GAME-DESCRIPTION-COPY-2 §29; DEFINITIONS G10; QUESTIONS-FOR-JAFAR-2026-11-20 Q3
-- Status: decided. Coverage row: 7.16.
+- How it works: Four pastimes by his ruling of 24 Nov (Q13): a boxing club, a snooker hall (no money), quay fishing and an allotment pigeon loft (no betting). The boxing club is built as designed: an amateur boxing club in the old hall behind the chandler's on the quay. Frank spars with gloves (the fight system with the fall rule off and no blood), men who train there can be recruited, and it is a place to be seen. It opens 18:00 to 21:30 on Monday, Wednesday and Friday and 10:00 to 13:00 on Saturday. No stakes, no betting and no drink anywhere. The snooker hall, quay fishing and pigeon loft have no place, hours or design yet (gap). The lead's line against hitting women, the over sixties and the priest is dropped (his ruling of 24 Nov, Q3) and no longer holds there.
+- Standard: Four pastimes (24 Nov, Q13): boxing club, snooker hall with no money, quay fishing, allotment pigeon loft with no betting; no stakes, no drink (canon) Test: H: chosen in free time; S: no stakes anywhere; addendum rules ER-PASTIME-01
+- Source: his ruling of 24 Nov (RULINGS on wip, his decisions page) (Q13, Q3); canon. Designed in: DESIGN-ADDENDUM §A28; GAME-DESCRIPTION-COPY-2 §29; DEFINITIONS G10; QUESTIONS-FOR-JAFAR-2026-11-20 Q3
+- Status: ruled (his ruling or canon). Coverage row: 7.16. Conflicts settled: C-310, C-311.
+- Data (run 5): exact values in production/lane/blueprint/data/rooms.json and places.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
 
 ## 7.OUT Left out by his rulings
 
 
 ### OUT-01 Several playable leads
 
-- How it works: The player is Tom Nowak throughout and never another lead. Others (the crew) act on his orders and he never takes control of them.
+- How it works: The player is Frank Nowak throughout and never another lead. Others (the crew) act on his orders and he never takes control of them.
 - Standard: - Test: S38 to S40 guards where they apply
-- Source: canon: the player is Tom Nowak (left out by his ruling or canon). Designed in: canon.md Premise and cast; GAME-DESCRIPTION-COPY-2 §1, §22
+- Source: canon: the player is Frank Nowak (left out by his ruling or canon). Designed in: canon.md Premise and cast; GAME-DESCRIPTION-COPY-2 §1, §22
 - Status: out. Coverage row: OUT-01.
 
 ### OUT-02 First-person view
@@ -405,25 +422,26 @@ Things to do with people that are not crime: the recommended answer is an amateu
 
 ### OUT-04 Alcohol and gambling
 
-- How it works: No alcohol and no gambling, ever shown, served, drunk or spoken of; pubs stand as buildings, boarded or serving food, never entered for drink; nobody can bet anywhere, the boxing club included. Mickey's, once a pub, is a minicab office. Held at six enforcement sites including live speech.
+- How it works: No alcohol and no gambling, ever shown, served, drunk or spoken of; pubs stand as buildings, boarded or serving food, never entered for drink; nobody can bet anywhere, the boxing club, the snooker hall and the pigeon loft included. Mickey's, once a pub, is a minicab office. Held at six enforcement sites including live speech.
 - Standard: - Test: S38 to S40 guards where they apply
 - Source: canon content rule; project facts (left out by his ruling or canon). Designed in: canon.md content rule (D18); GAME-DESCRIPTION-COPY-2 §3
 - Status: out. Coverage row: OUT-04.
 
 ### OUT-05 A bigger map than the Hook and the docks
 
-- How it works: The playable map is the Hook plus the docks, about 620 by 400 m; the six other districts are where fares go and letters come from, reached at the soft edge as time passed, with nothing loading. If time runs short the docks are cut first, and car chases then run the 910 m parade loop, shorter by about half. More districts come after release. Design pass 4 puts a question to him (R1): the Hook holds chases of 1 to 3 minutes without repeating roads, the references run longer.
+- How it works: The playable map is the Hook plus the docks, about 620 by 400 m; the six other districts are where fares go and letters come from, reached at the soft edge as time passed, with nothing loading. If time runs short the docks are cut first, and car chases then run the 910 m parade loop, shorter by about half. More districts come after release. R1 answered 24 Nov: the map is kept, the Hook plus its docks, and chases run 1 to 3 minutes, rich in lanes and yards. The Hook is one map file in metres from the ferry landing (x east, y north), with a drawing (production/lane/blueprint/data/map.json and map-topdown.svg).
 - Standard: - Test: S38 to S40 guards where they apply
-- Source: ruling 28 Oct: the Hook plus the docks; more districts after release (left out by his ruling or canon). Designed in: RULINGS 28 Oct; canon.md (19 Nov docks ruling); DEFINITIONS design pass 3 G1, G3; design pass 4 C-01, R1
+- Source: ruling 28 Oct: the Hook plus the docks; more districts after release; his ruling of 24 Nov (RULINGS on wip, his decisions page) (R1) (left out by his ruling or canon). Designed in: RULINGS 28 Oct; canon.md (19 Nov docks ruling); DEFINITIONS design pass 3 G1, G3; design pass 4 C-01, R1
 - Status: out. Coverage row: OUT-05. Conflicts settled: C-164.
 - Prior research: aaa-studies/DENSE-DISTRICT-REVIEWS.md: 57% of 1,228 Push Square readers prefer smaller, densely detailed worlds; a larger Yakuza map was called three times emptier; a vote, not a measure; supports the Hook plus docks.
 
 ### OUT-06 Stats, levels, skill trees and survival meters
 
-- How it works: No stats, levels, perks or skill trees, no skill shown as a value, and no number of standing, loyalty, fear, heat or reputation on screen. Tom rises in position: what people call him (the new owner, Nowak, Tom, Tommy), greetings, property, three outfits, access and a fleet; money is said in words and the Ledger shows only what he knows. He never levels up: by his ruling of 23 Nov, streets and people come to be known by practice, skills are taught by those who trust him (kept if lost), and his hands improve quietly, at most a quarter better; the player's own skill carries the rest, and none of it is a number on screen (C-263).
+- How it works: No stats, levels, perks or skill trees, no skill shown as a value, and no number of standing, loyalty, fear, heat or reputation on screen. Frank rises in position: what people call him (the new owner, Nowak, Frank, Frankie), greetings, property, three outfits, access and a fleet; money is said in words and the Ledger shows only what he knows. He never levels up: by his ruling of 23 Nov, streets and people come to be known by practice, skills are taught by those who trust him (kept if lost), and his hands improve quietly, at most a quarter better; the player's own skill carries the rest, and none of it is a number on screen (C-263).
 - Standard: - Test: S38 to S40 guards where they apply
 - Source: ruling 30 Oct and D33, D34: position, never numbers; RULINGS 23 Nov, growth (left out by his ruling or canon). Designed in: RULINGS 30 Oct, 'What the game is'; GAME-DESCRIPTION-COPY-2 §3, §26
 - Status: out. Coverage row: OUT-06.
+- His ruling of 24 Nov (out list): mounts, gyro aiming, scopes, explosions, armour, combos, ammo types, healing items, name entry, swimming and free fast travel (his own driver may skip a trip) are out. Only swimming (OUT-08), name entry (6.4) and free fast travel (OUT-09, 6.9) have a home elsewhere; the rest have no part of their own (gap).
 - Studies: aaa-studies/IMMERSION-FEATURES.md: IM-01 no hunger, tiredness or hygiene value drains on a clock; decided; IM-07 sleep is a door, never a need, and always saves; decided. None measured.
 - Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-07 no purchase raises a fighting, driving or speaking value; decided. None measured.
 - Prior research: aaa-studies/IMMERSION-FEATURES.md: survival chores 3.8% of KCD2 Steam reviews, 0.6% RDR2, 0.2% GTA V (script counts, rough); RDR2 needs called half-baked; fits the ruling.
@@ -437,18 +455,20 @@ Things to do with people that are not crime: the recommended answer is an amateu
 
 ### OUT-08 Jumping and climbing walls
 
-- How it works: No jump key, no climbing, no crouch, no swimming. Tom vaults low walls, yard fences and bins under about 1.2 m at set places marked in the map data, when running at them, in about 0.8 s (a constable takes 1.2 s); the Hook has six such places on its foot-only back ways. This is built to the recommended answer of his question 1 and flips if he says no.
+- How it works: No jump key, no free climbing, no swimming and no mounts (his ruling of 24 Nov, Q19). Crouch is in and set climbing places are in (Q19). Frank vaults low walls, yard fences and bins under about 1.2 m at set places marked in the map data, when running at them, in about 0.8 s (a constable takes 1.2 s); the Hook has six such places on its foot-only back ways (whether the set climbing places are these six or more is not stated: gap). The vault was built to the recommended answer of his question 1.
 - Standard: - Test: S38 to S40 guards where they apply
-- Source: ruling 23 Sep: no jump (vaulting at set places to the recommended answer of his question 1) (left out by his ruling or canon). Designed in: RULINGS 23 Sep; DESIGN-ADDENDUM §A26; DEFINITIONS G1, G4; QUESTIONS-FOR-JAFAR-2026-11-20 Q1
-- Status: out. Coverage row: OUT-08.
+- Source: ruling 23 Sep: no jump (vaulting at set places to the recommended answer of his question 1); his ruling of 24 Nov (RULINGS on wip, his decisions page) (Q19) (left out by his ruling or canon). Designed in: RULINGS 23 Sep; DESIGN-ADDENDUM §A26; DEFINITIONS G1, G4; QUESTIONS-FOR-JAFAR-2026-11-20 Q1
+- Status: out. Coverage row: OUT-08. Conflicts settled: C-312.
+- Data (run 5): exact values in production/lane/blueprint/data/map.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
 
 ### OUT-09 Minimap, waypoints, markers
 
-- How it works: No minimap, waypoints or markers. The paper map (Comma) draws only the places he has been or been told of, and opening it stops Tom but not the town. Direction comes from landmarks, street name plates, door numbers, people asked the way, Pauline on the radio and a passenger's landmark lines; lost for 90 s, Tom's own line names the landmark once, and after 3 minutes a passer-by within 5 m offers the way.
+- How it works: No minimap, waypoints or markers. The paper map (Comma) draws only the places he has been or been told of, and opening it stops Frank but not the town. Direction comes from landmarks, street name plates, door numbers, people asked the way, Pauline on the radio and a passenger's landmark lines; lost for 90 s, Frank's own line names the landmark once, and after 3 minutes a passer-by within 5 m offers the way.
 - Standard: - Test: S38 to S40 guards where they apply
 - Source: D12, D20, D37: no minimap; a paper map and street signs (left out by his ruling or canon). Designed in: RULINGS 'What the game is'; DESIGN-ADDENDUM §A9; GAME-DESCRIPTION-COPY-2 §3, §28
 - Status: out. Coverage row: OUT-09.
-- His ruling of 23 Nov (RULINGS on wip): jobs keep no waypoints or markers; directions come from people, and each one is kept in the Ledger or Tom's notes to reread (R8 answered: keep). See 6.2.3 and 6.9.
+- His ruling of 23 Nov (RULINGS on wip): jobs keep no waypoints or markers; directions come from people, and each one is kept in the Ledger or Frank's notes to reread (R8 answered: keep). See 6.2.3 and 6.9.
+- His ruling of 24 Nov: free fast travel is out (his own driver may skip a trip), and Frank shows on the paper map only at a sign or landmark, never as a moving marker (Q20; see 6.3).
 
 ### OUT-10 Other spoken languages and translation
 
@@ -466,7 +486,7 @@ Things to do with people that are not crime: the recommended answer is an amateu
 
 ### OUT-12 Game-over screen
 
-- How it works: There is no game-over screen and Tom cannot die. Every failure ends in a state the town can talk about; control returns within 2 real minutes (beaten 60 s, arrest under 2 minutes). A chase has no timer and ends lost, caught, wrecked or at the edge, none passing 4 real minutes. Reloading is never stopped, and the game says what is permanent before it happens.
+- How it works: There is no game-over screen and Frank cannot die. Every failure ends in a state the town can talk about; control returns within 2 real minutes (beaten 60 s, arrest under 2 minutes). A chase has no timer and ends lost, caught, wrecked or at the edge, none passing 4 real minutes. Reloading is never stopped, and the game says what is permanent before it happens.
 - Standard: - Test: S38 to S40 guards where they apply
 - Source: D35, D58; ruling 30 Oct: no game over (left out by his ruling or canon). Designed in: GAME-DESCRIPTION-COPY-2 s.3, s.34; DESIGN s.1 ER-CORE-04; RULINGS Combat line; DEFINITIONS design pass 4 C-01
 - Status: out. Coverage row: OUT-12. Conflicts settled: C-165, C-166.

@@ -21,14 +21,14 @@ The packaged release build and installer.
 
 Store page, age rating, Steam's AI disclosure, price and length statement.
 - Prior research: research/ethics-and-reception: 508,192 Steam reviews, games disclosing generative AI recommended 68.4% against 86.3% (17.9 points lower), the penalty attaching to AI as a substitute for craft; research/steam-ai-disclosure: form rewritten 16 Jan 2026.
-- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-06 main plus side stories inside 15 to 20 hours (ruled, 28 Oct), no act over 14 (decided by the study). None measured.
+- Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-06 main plus side stories inside 15 to 20 hours (ruled, 28 Oct), no act over 14 (decided by the study); the 15 to 20 is replaced by about 20 hours for the main story (his ruling of 24 Nov, R2). None measured.
 
 ### 10.2 Store, rating and disclosure
 
-- How it works: Steam runs its own content survey and rating (unrated games are hidden in Germany since 15 Nov 2024); a PEGI 16 (ESRB M) target is likely, and what would push it to 18 is the design rule for fights, menace and talk (beating a downed or pleading person, torture, close-up gore or reward for cruelty, taught crime methods, live talk beyond the rated level). The AI disclosure is drafted: live-generated yes (townspeople's replies by Claude, voices made on the player's own computer), pre-generated yes for shipped AI art, voices and text, no for coding help, with seven guardrails described. The store fee is 100 US dollars per game, 30 days between paying and release, the Coming Soon page public at least two weeks before. The length statement is 15 to 20 hours.
-- Standard: Steam's AI disclosure as drafted (24 Sep); length 15 to 20 hours (28 Oct) Test: rating questionnaire; disclosure matches the build
-- Source: RULINGS 24 Sep, 28 Oct; G4-RATING-AND-STORE (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: G4-RATING-AND-STORE-2026-11-17 s1 to s4; production/store/steam-ai-disclosure.md; RULINGS 24 Sep, 28 Oct
-- Status: outside. Coverage row: 10.2. Conflicts settled: C-179.
+- How it works: Steam runs its own content survey and rating (unrated games are hidden in Germany since 15 Nov 2024); the target is PEGI 18 (his ruling of 24 Nov, Q15, replacing the PEGI 16 target), within canon's limits, live talk too; what once would have pushed a PEGI 16 game to 18 (beating a downed or pleading person) now stays, fully animated with no cut-away, while canon's limits (no torture or cruelty as spectacle, light gore) still hold (the matching ESRB rating is not stated: gap). The AI disclosure is drafted: live-generated yes (townspeople's replies by Claude, voices made on the player's own computer), pre-generated yes for shipped AI art, voices and text, no for coding help, with seven guardrails described. The store fee is 100 US dollars per game, 30 days between paying and release, the Coming Soon page public at least two weeks before, and his name search comes before Coming Soon opens (his ruling of 24 Nov, 10.10). The price is decided after the prototype (his ruling of 24 Nov, 10.12). The length statement is about 20 hours for the main story (his ruling of 24 Nov, R2, replacing 15 to 20; measured in the first loops).
+- Standard: Steam's AI disclosure as drafted (24 Sep); PEGI 18 target (24 Nov); the main story about 20 hours (24 Nov, replacing 15 to 20 of 28 Oct) Test: rating questionnaire; disclosure matches the build
+- Source: his ruling of 24 Nov (RULINGS on wip, his decisions page) (Q15, R2); RULINGS 24 Sep, 28 Oct; G4-RATING-AND-STORE (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: G4-RATING-AND-STORE-2026-11-17 s1 to s4; production/store/steam-ai-disclosure.md; RULINGS 24 Sep, 28 Oct
+- Status: ruled (his ruling or canon). Coverage row: 10.2. Conflicts settled: C-179, C-302, C-309.
 
 ## 10.3 Friends' builds
 
@@ -53,6 +53,7 @@ Third-party notices, credits for CC-BY makers, allowlist notices kept.
 - Standard: Every CC-BY maker credited; notices kept (allowlist) Test: script: every shipped licensed file has its notice
 - Source: RULINGS 3 Oct, 30 Oct; allowlist (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: THIRD-PARTY.md; RULINGS 3 Oct, 30 Oct; ledger-v2/research/license-allowlist.md; friends-build MAP; GAME-DESCRIPTION-COPY-2 §33
 - Status: outside. Coverage row: 10.4.
+- Data (run 5): exact values in production/lane/blueprint/data/ui-text.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
 
 ## 10.5 Release testing
 
@@ -78,6 +79,7 @@ Patches, new districts in updates, a stated position on mods.
 - Standard: More districts in updates after release (28 Oct) Test: none until release
 - Source: RULINGS 28 Oct (his ruling or canon). Designed in: RULINGS 28 Oct, 23 Sep; canon.md (seven districts); MECHANICS-MAP M10.4, M10.5; DECISIONS-PENDING 20 Nov
 - Status: ruled (his ruling or canon). Coverage row: 10.6.
+- His ruling of 24 Nov (Q15 to Q17): updates are decided after the prototype (their price and form with them).
 
 ### GD-06 Mods and community content
 
@@ -88,15 +90,15 @@ Patches, new districts in updates, a stated position on mods.
 
 ## 10.7 Platform account, cloud saves and achievements
 
-Steam integration: cloud saves, achievements if any, overlay, account handling.
+Steam integration: cloud saves, no achievements at release (his ruling of 24 Nov), overlay, account handling.
 - Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-07 the panel writes each tester's last stage and reason; decided. None measured.
 
 ### 10.7 Platform account, cloud saves and achievements
 
-- How it works: Steam first and no other account. Every save slot and the settings file sync through Steam Cloud; a clash shows both saves with day, hour and place and lets the player pick. No achievements at release, because a pop-up in play is a marker and the vision has none. Pass: a save made on one PC loads on another on the same account (10 trials), 5 forced clashes lose nothing, and no achievement or pop-up appears in play.
+- How it works: Steam first and no other account. Every save slot and the settings file sync through Steam Cloud; a clash shows both saves with day, hour and place and lets the player pick. No achievements (his ruling of 24 Nov, shipping set Q15 to Q17), because a pop-up in play is a marker and the vision has none. Pass: a save made on one PC loads on another on the same account (10 trials), 5 forced clashes lose nothing, and no achievement or pop-up appears in play.
 - Standard: (1) Two PCs, same account: a save made on one loads on the other; (2) a forced clash shows both and loses neither; (3) no achievement or pop-up appears in play. Test: Two-machine sync test x 10; clash test x 5.
-- Source: The description, section 3 (no meters); VISION (no stats or counts); Steamworks Cloud as commonly used [I]. (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS 10.7; GAME-DESCRIPTION-COPY-2 §36; G4-RATING-AND-STORE
-- Status: decided. Coverage row: 10.7.
+- Source: his ruling of 24 Nov (RULINGS on wip, his decisions page) (no achievements); The description, section 3 (no meters); VISION (no stats or counts); Steamworks Cloud as commonly used [I]. Designed in: DEFINITIONS 10.7; GAME-DESCRIPTION-COPY-2 §36; G4-RATING-AND-STORE
+- Status: ruled (his ruling or canon). Coverage row: 10.7.
 
 ## 10.8 Trailer, key art and store capsule
 
@@ -105,10 +107,10 @@ The pictures and film that sell it.
 
 ### 10.8 Trailer, key art and store capsule
 
-- How it works: Named only; not designed beyond: every picture is judged against the Hook sheet and KCD2 frames, dated photographs win, and a yes only for 2026-grade work. The store needs a header capsule 920 by 430, small 462 by 174, main 1232 by 706, vertical 748 by 896, screenshots at least 1920 by 1080 (at least five), library capsule 600 by 900, hero 3840 by 1240, a logo and icons, and a trailer is advised. G4 estimates 12 hours for capsules and five screenshots from the packaged build and 16 for a trailer.
-- Standard: Every visual judged against the Hook sheet and KCD2 frames, dated photographs win; yes only for 2026-grade work Test: his eye
-- Source: RULINGS 21 Sep, 1 Oct (the look); CLAUDE.md gate (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: RULINGS 21 Sep, 1 Oct; CLAUDE.md (gate); G4-RATING-AND-STORE s3, s4
-- Status: outside. Coverage row: 10.8.
+- How it works: Named only; not designed beyond: every picture is judged against the Hook sheet and KCD2 frames, photographs winning on shape and material and measured values and the Hook sheet on colour (his ruling of 24 Nov, R7), and a yes only for 2026-grade work. The capsule is made from a packaged frame, and money is paid only for 2026-grade frames (his ruling of 24 Nov, Q15 to Q17; how far the payment rule reaches is not stated: gap). The store needs a header capsule 920 by 430, small 462 by 174, main 1232 by 706, vertical 748 by 896, screenshots at least 1920 by 1080 (at least five), library capsule 600 by 900, hero 3840 by 1240, a logo and icons, and a trailer is advised. G4 estimates 12 hours for capsules and five screenshots from the packaged build and 16 for a trailer.
+- Standard: Every visual judged against the Hook sheet and KCD2 frames, photographs on shape and material, measured values and the Hook sheet on colour (24 Nov); yes only for 2026-grade work; capsule from a packaged frame; pay only for 2026-grade frames (24 Nov) Test: his eye
+- Source: his ruling of 24 Nov (RULINGS on wip, his decisions page); RULINGS 21 Sep, 1 Oct (the look); CLAUDE.md gate (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: RULINGS 21 Sep, 1 Oct; CLAUDE.md (gate); G4-RATING-AND-STORE s3, s4
+- Status: outside (trailer and key art are made from packaged Unreal frames; his rulings of 24 Nov, noted above, set the judging, the capsule's source and the payment rule). Coverage row: 10.8. Conflicts settled: C-303.
 
 ## 10.9 Player support and community
 
@@ -129,10 +131,10 @@ Name search, the company's admin, tax and contracts for selling the game.
 
 ### 10.10 Legal and company admin
 
-- How it works: Named only; not designed beyond: name search, company admin, tax and contracts for selling the game are money and accounts matters that are his alone; sessions only record the gap. Licences are not his question (sessions decide by the allowlist), money stays his.
-- Standard: none; money matters are his Test: his yes
-- Source: map-departments; RULINGS 16 Sep (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: RULINGS 16 Sep, 19 Nov; map-departments gap 7
-- Status: outside. Coverage row: 10.10.
+- How it works: Named only; not designed beyond: name search, company admin, tax and contracts for selling the game are money and accounts matters that are his alone; sessions only record the gap. His name search comes before the Coming Soon page opens (his ruling of 24 Nov, Q15 to Q17). Licences are not his question (sessions decide by the allowlist), money stays his.
+- Standard: none; money matters are his; his name search before Coming Soon (24 Nov) Test: his yes
+- Source: his ruling of 24 Nov (RULINGS on wip, his decisions page); map-departments; RULINGS 16 Sep (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: RULINGS 16 Sep, 19 Nov; map-departments gap 7
+- Status: ruled (his ruling or canon). Coverage row: 10.10.
 
 ## 10.11 Player data and privacy
 
@@ -145,6 +147,7 @@ Consent and data protection for what players type that is sent to the talk servi
 - Standard: (1) The AI notice, its own screen before the first typed line, says replies are made by a named AI service over the internet, what is sent, why and for how long, and offers offline play as an equal choice; readable again from pause; (2) nothing typed is sent before it is answered; (3) offline mode plays the whole first hour; (4) no copy of typed text kept beyond the story's memory unless reported; (5) the service's retention and the deletion route are as stated. Test: B: first-hour run offline; S: note present before first talk.
 - Source: PRIVACY-CHECK-2026-11-21.md: ICO guidance; EU AI Act Article 50(1), in force 2 Aug 2026 (Commission FAQ 24 Jul 2026) (real-world figure or published standard). Designed in: DEFINITIONS 10.11; PRIVACY-CHECK-2026-11-21; GAME-DESCRIPTION-COPY-2 §28, §36
 - Status: sourced (dated real-world figure or published standard; not a five-sample measurement). Coverage row: 10.11. Conflicts settled: C-183, C-184.
+- Data (run 5): exact values in production/lane/blueprint/data/ui-text.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
 
 ## 10.12 Demo, price and wishlists
 
@@ -153,7 +156,7 @@ A demo of the first hour, the price, the wishlist plan.
 
 ### 10.12 Demo, price and wishlists
 
-- How it works: Not part of play. A store page with wishlists opens when the Unreal build has the first street frame he approves; a demo, if any, is the first evening only; the price is his money decision.
-- Standard: None at this gate. Test: his yes on price
-- Source: CLAUDE.md (money is his); the shipping rows 10.1 to 10.5 already OUTSIDE. (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: DEFINITIONS 10.12; CLAUDE.md (money is his)
-- Status: outside. Coverage row: 10.12.
+- How it works: Not part of play. A store page with wishlists opens when the Unreal build has the first street frame he approves; a demo, if any, is the first evening only; the price, updates and demo are decided after the prototype (his ruling of 24 Nov, Q15 to Q17), and the price stays his money decision.
+- Standard: Price, updates and demo are decided after the prototype (24 Nov). Test: his yes on price
+- Source: his ruling of 24 Nov (RULINGS on wip, his decisions page); CLAUDE.md (money is his); the shipping rows 10.1 to 10.5 already OUTSIDE. (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: DEFINITIONS 10.12; CLAUDE.md (money is his)
+- Status: ruled (his ruling or canon). Coverage row: 10.12.
