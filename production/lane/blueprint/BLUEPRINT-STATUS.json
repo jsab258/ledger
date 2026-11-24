@@ -1,126 +1,96 @@
 {
  "version": 1,
- "updated": "2026-11-24 (keeper run 4)",
+ "updated": "2026-11-24 (keeper run 5, evening)",
  "by": "blueprint keeper, claude-opus-5-5",
  "totals": {
   "measured": 1,
-  "ruled": 75,
+  "ruled": 87,
   "sourced": 15,
-  "decided": 134,
+  "decided": 126,
   "pending": 61,
   "unmeasured": 45,
-  "out": 14,
-  "outside": 57,
+  "out": 15,
+  "outside": 52,
   "machinery": 22,
   "parts": 424
  },
- "conflicts_settled": 252,
- "gaps": 551,
+ "conflicts_settled": 323,
+ "gaps": 631,
  "groups": {
   "What the player does with his hands": {
    "parts": 86,
    "measured": 1,
-   "decided": 31,
+   "decided": 29,
    "pending": 28,
    "unmeasured": 15,
-   "out": 0,
+   "out": 1,
    "outside": 0,
    "machinery": 0,
-   "open_questions": [
-    "Q3",
-    "Q4"
-   ],
+   "open_questions": [],
    "note": "includes 1.6.15 hold-ups (no coverage row yet)",
-   "ruled": 11,
+   "ruled": 12,
    "sourced": 0,
-   "rulings_to_revisit": [
-    "R1"
-   ]
+   "rulings_to_revisit": []
   },
   "The town under the hood": {
    "parts": 94,
    "measured": 0,
-   "decided": 54,
+   "decided": 53,
    "pending": 12,
    "unmeasured": 10,
    "out": 0,
    "outside": 0,
    "machinery": 0,
    "open_questions": [
-    "Q5",
-    "Q6",
-    "Q7",
-    "Q10"
+    "Q6"
    ],
-   "ruled": 15,
+   "ruled": 16,
    "sourced": 3,
-   "rulings_to_revisit": [
-    "R11",
-    "R13"
-   ]
+   "rulings_to_revisit": []
   },
   "Story and people": {
    "parts": 45,
    "measured": 0,
-   "decided": 10,
+   "decided": 9,
    "pending": 11,
    "unmeasured": 8,
    "out": 0,
    "outside": 1,
    "machinery": 0,
    "open_questions": [
-    "Q7",
-    "Q8",
-    "Q9",
     "Q18"
    ],
-   "ruled": 15,
+   "ruled": 16,
    "sourced": 0,
-   "rulings_to_revisit": [
-    "R13"
-   ]
+   "rulings_to_revisit": []
   },
   "The place": {
    "parts": 33,
    "measured": 0,
-   "decided": 8,
+   "decided": 7,
    "pending": 1,
    "unmeasured": 0,
    "out": 0,
    "outside": 18,
    "machinery": 0,
-   "open_questions": [
-    "Q3",
-    "Q10"
-   ],
-   "ruled": 6,
+   "open_questions": [],
+   "ruled": 7,
    "sourced": 0,
-   "rulings_to_revisit": [
-    "R1",
-    "R5",
-    "R6"
-   ]
+   "rulings_to_revisit": []
   },
   "How it looks and sounds": {
    "parts": 39,
    "measured": 0,
-   "decided": 2,
+   "decided": 1,
    "pending": 0,
    "unmeasured": 8,
    "out": 0,
-   "outside": 25,
+   "outside": 23,
    "machinery": 0,
-   "open_questions": [
-    "Q8",
-    "Q11"
-   ],
-   "ruled": 4,
+   "open_questions": [],
+   "ruled": 7,
    "sourced": 0,
-   "rulings_to_revisit": [
-    "R3",
-    "R4",
-    "R7"
-   ]
+   "rulings_to_revisit": []
   },
   "The interface and the Ledger": {
    "parts": 19,
@@ -131,35 +101,24 @@
    "out": 0,
    "outside": 0,
    "machinery": 0,
-   "open_questions": [
-    "Q20"
-   ],
+   "open_questions": [],
    "ruled": 4,
    "sourced": 1,
-   "rulings_to_revisit": [
-    "R10"
-   ]
+   "rulings_to_revisit": []
   },
   "The game's shape": {
    "parts": 48,
    "measured": 0,
-   "decided": 10,
+   "decided": 9,
    "pending": 8,
    "unmeasured": 3,
    "out": 13,
    "outside": 0,
    "machinery": 0,
-   "open_questions": [
-    "Q12",
-    "Q13",
-    "Q19"
-   ],
-   "ruled": 14,
+   "open_questions": [],
+   "ruled": 15,
    "sourced": 0,
-   "rulings_to_revisit": [
-    "R1",
-    "R2"
-   ]
+   "rulings_to_revisit": []
   },
   "Technical": {
    "parts": 25,
@@ -170,16 +129,10 @@
    "out": 0,
    "outside": 5,
    "machinery": 0,
-   "open_questions": [
-    "Q14"
-   ],
+   "open_questions": [],
    "ruled": 5,
    "sourced": 10,
-   "rulings_to_revisit": [
-    "R3",
-    "R4",
-    "R10"
-   ]
+   "rulings_to_revisit": []
   },
   "The machinery": {
    "parts": 22,
@@ -198,41 +151,19 @@
   "Shipping": {
    "parts": 13,
    "measured": 0,
-   "decided": 2,
+   "decided": 1,
    "pending": 0,
    "unmeasured": 0,
    "out": 1,
-   "outside": 8,
+   "outside": 5,
    "machinery": 0,
-   "open_questions": [
-    "Q15",
-    "Q16",
-    "Q17"
-   ],
-   "ruled": 1,
+   "open_questions": [],
+   "ruled": 5,
    "sourced": 1,
    "rulings_to_revisit": []
   }
  },
  "open_questions": [
-  {
-   "id": "Q3",
-   "parts": "RT-09, 4.3.6",
-   "question": "Tom's own line: he will not strike women, over-sixties or the priest. Sparing the priest brushes canon's \"religion is never a mechanic\" (canon).",
-   "recommended": "Keep it as Tom's character, never framed as a religious rule."
-  },
-  {
-   "id": "Q4",
-   "parts": "RT2-11",
-   "question": "Holding strike for 2 s over a downed man: is that a \"finisher\" under his combat design ruling of 12 Oct? (his ruling)",
-   "recommended": "Keep as written: no animation, asked twice, camera turns away."
-  },
-  {
-   "id": "Q5",
-   "parts": "2.6.8",
-   "question": "Can DS Ellis herself be bought? (canon: police corruptible as individuals, never as a thesis)",
-   "recommended": "No, as the description says; two named officers can be."
-  },
   {
    "id": "Q6",
    "parts": "2.14",
@@ -240,91 +171,13 @@
    "recommended": "Yes, measured before it lands."
   },
   {
-   "id": "Q7",
-   "parts": "3.1.6, 2.12.1",
-   "question": "Sheila's trust: what opens the book and her use of his name (his open point C12, canon). Built meanwhile to \"a clean week in which he never asked her to put the books off\".",
-   "recommended": "A state the town can see, not a day count."
-  },
-  {
-   "id": "Q8",
-   "parts": "3.2.1, 5.6.1",
-   "question": "Uncast voices: Danny, June, Father Walsh and six more (canon: no voice cast without his yes).",
-   "recommended": "One listening page for all nine; he picks the best fit for each."
-  },
-  {
-   "id": "Q9",
-   "parts": "3.3, 3.2.3, FIT-L01",
-   "question": "Advisor decisions on scope: about 25 side stories inside the ruled hours; 60 street lines for the 12 most seen, 30 for the rest.",
-   "recommended": "Keep both; he may cut lines to about 50 to save writing."
-  },
-  {
-   "id": "Q10",
-   "parts": "4.9, 2.2.5",
-   "question": "A second CCTV site, which canon leaves to him (canon).",
-   "recommended": "None: the bank alone."
-  },
-  {
-   "id": "Q11",
-   "parts": "5.7.1, FIT-P09",
-   "question": "A short made-for-the-game score under the few cut scenes and act ends (money; music is otherwise only where it plays in the world, and canon already rules out real bands and lyrics).",
-   "recommended": "Yes, short and made for the game; none is built until he says."
-  },
-  {
-   "id": "Q12",
-   "parts": "7.1",
-   "question": "Restaging his approved first hour of 29 Sep (arrival by ferry, a fare at 2:30, the debt book at 4:30), his question 4.",
-   "recommended": "Yes, as DESIGN section 15 stages it."
-  },
-  {
-   "id": "Q13",
-   "parts": "7.16",
-   "question": "Pastimes: is the boxing club the only one? (scope, his question 3)",
-   "recommended": "The club alone."
-  },
-  {
-   "id": "Q14",
-   "parts": "8.6.1",
-   "question": "The live-talk allowance per copy and the monthly ceiling (money).",
-   "recommended": "Fix only after the talk bench measures a playthrough's cost, as his 24 Sep ruling says."
-  },
-  {
-   "id": "Q15",
-   "parts": "10.2, 10.12",
-   "question": "The store fee, the price, a paid age-rating review, a demo (money).",
-   "recommended": "PEGI 16 as the design target; pay only when 2026-grade frames exist; a demo of the first evening; price after the prototype."
-  },
-  {
-   "id": "Q16",
-   "parts": "10.6, 10.7",
-   "question": "District updates free or paid; achievements at release (scope, money).",
-   "recommended": "Decide free or paid with the release price, say nothing now; no achievements at release."
-  },
-  {
-   "id": "Q17",
-   "parts": "10.8, 10.10",
-   "question": "The first store capsule (a whole street frame) and a name search for LEDGER (his accounts and money).",
-   "recommended": "Show him the capsule from a packaged frame; he runs the name search before the Coming Soon page."
-  },
-  {
    "id": "Q18",
    "parts": "3.1, BLUEPRINT.md story section",
-   "question": "His yes on the measured story, which the one-shot waits on. Direction picked 24 Nov (A on top of C, as reported; not yet in RULINGS on wip); frame due Thu 26 Nov.",
-   "recommended": "Give the yes on the measured frame and its first-week slice, not on the v3 bibles or STORY-FINAL."
-  },
-  {
-   "id": "Q19",
-   "parts": "OUT-08; checklist A27.01 to A27.06",
-   "question": "OUT-08 reads wider than his no-jump ruling: crouch, swimming, climbing and mounts are unruled (scope).",
-   "recommended": "One ruling line: no crouch, no swimming, no climbing beyond the set vault places, no mounts; all out."
-  },
-  {
-   "id": "Q20",
-   "parts": "6.3; checklist A35.02, A35.03",
-   "question": "Is Tom's own position shown on the paper map (scope)?",
-   "recommended": "No; landmarks, street name plates and door numbers, in line with OUT-09."
+   "question": "His yes on the measured story; the story is chosen and on paper (frame 24 Nov, 69 spine cards, key scenes)",
+   "recommended": "yes on the measured frame and its first-week slice once the written-Frank or mixed-lines choice is settled on the story lane page"
   }
  ],
- "story": "his pick reported 24 Nov (builder's row 09:46): A on top of C (living town, light written spine); not yet in RULINGS on wip; frame due Thu 26 Nov; Q18 open",
+ "story": "chosen and on paper: frame production/lane/story/frame/STORY-FRAME-2026-11-26.md and production/lane/story/paper/ (69 spine cards with deeds F1 to F7, side cards, cast, key scenes); lead Frank Nowak; Q18 open",
  "measured_rule": "measured only where production/research/lane/measurements/STATUS.md marks the number solid (five uncut, dated samples at a finer step; advisor 302)",
  "added_sections": [
   "5.11 craft standards",
@@ -332,58 +185,7 @@
   "8.12 live voices hookup",
   "9.13 browser build modules, data and test door"
  ],
- "rulings_to_revisit": [
-  {
-   "id": "R1",
-   "ruling": "The map: the Hook plus its docks",
-   "recommended": "a) keep the map; chases 1 to 3 minutes"
-  },
-  {
-   "id": "R2",
-   "ruling": "The clock: 60 real seconds a game hour, Act II about 5 game weeks",
-   "recommended": "a) keep 60 s and seven weeks; fix shortfalls inside it"
-  },
-  {
-   "id": "R3",
-   "ruling": "The thinking sound",
-   "recommended": "a) drop it; the glance covers the wait"
-  },
-  {
-   "id": "R4",
-   "ruling": "The card: the 6 GB line for the game alone and the day's spare card time of 1.7 ms",
-   "recommended": "a) keep both until the newest packaged build is re-measured with Pocket on the processor, then budget people, cars and lamps from what is spare"
-  },
-  {
-   "id": "R5",
-   "ruling": "The empty unit, bay 3",
-   "recommended": "b) bare glass dressed with card, cardboard and a fallen blind"
-  },
-  {
-   "id": "R6",
-   "ruling": "Window surrounds",
-   "recommended": "a) keep white frames and plain surrounds"
-  },
-  {
-   "id": "R7",
-   "ruling": "Colour from photographs",
-   "recommended": "b) photographs win on shape and material, measured reflectances and the Hook sheet on colour"
-  },
-  {
-   "id": "R10",
-   "ruling": "No prepared openings",
-   "recommended": "a) a written line replaces a reply later than 2 s"
-  },
-  {
-   "id": "R11",
-   "ruling": "Fares few and chosen",
-   "recommended": "a) keep; fare worth 2.50 to 3.50 pounds, at least 7 fares in week one"
-  },
-  {
-   "id": "R13",
-   "ruling": "The resident cast",
-   "recommended": "a) keep the cast; shared kinds plus about 5 own lines each, after the first loops"
-  }
- ],
+ "rulings_to_revisit": [],
  "answered": [
   {
    "id": "Q1",
@@ -400,18 +202,123 @@
   {
    "id": "R9",
    "answer": "mainly position, never levels; streets and people known by practice; taught skills kept if lost; hand skills at most a quarter better (his ruling 23 Nov)"
+  },
+  {
+   "id": "Q3",
+   "answer": "dropped (RT-09 out) (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "Q4",
+   "answer": "stays, fully animated, no cut-away; PEGI 18 within canon (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "Q5",
+   "answer": "bribable, about 800 then 100 a week, a missed week ends it (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "Q7",
+   "answer": "a state the town sees (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "Q8",
+   "answer": "one listening page for the nine (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "Q9",
+   "answer": "about 25 side stories; street lines 60/30 (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "Q10",
+   "answer": "the bank alone (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "Q11",
+   "answer": "a short score, nothing built until he says (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "Q12",
+   "answer": "restaged as designed (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "Q13",
+   "answer": "boxing club, snooker hall (no money), quay fishing, pigeon loft (no betting) (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "Q14",
+   "answer": "after a playthrough's measured cost (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "Q15",
+   "answer": "PEGI 18; price, updates, demo after the prototype; pay only for 2026-grade frames (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "Q16",
+   "answer": "no achievements; updates after the prototype (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "Q17",
+   "answer": "capsule from a packaged frame; his name search before Coming Soon (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "Q19",
+   "answer": "crouch in, set climbing places in, swimming out, mounts out (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "Q20",
+   "answer": "Frank on the paper map only at a sign or landmark (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "R1",
+   "answer": "map kept; chases 1 to 3 min (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "R2",
+   "answer": "48 real minutes a game day, ~7 weeks, empty hours skipped; main story ~20 h (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "R3",
+   "answer": "thinking sound dropped (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "R4",
+   "answer": "card budget kept (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "R5",
+   "answer": "bare glass with card, cardboard, a fallen blind (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "R6",
+   "answer": "white frames, some surrounds painted (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "R7",
+   "answer": "photographs on shape and material; measured values and Hook sheet on colour (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "R10",
+   "answer": "a reply later than 2 s becomes a written line (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "R11",
+   "answer": "2.50 to 3.50 pounds, at least 7 fares in week one (his decisions page, 24 Nov; RULINGS on wip)"
+  },
+  {
+   "id": "R13",
+   "answer": "200 to 300 residents, shared lines plus ~5 own each, after the first loops (his decisions page, 24 Nov; RULINGS on wip)"
   }
  ],
  "blocking": [
-  "his yes on the measured story (Q18), on the frame due Thu 26 Nov",
-  "PC measuring five-sample numbers on the deciding rows (DECIDES-CHECK 24 Nov, about 18 h estimate)",
-  "feasibility: content cannot be made inside the one-shot week (INVENTORY)"
+  "his yes on the measured story (Q18)",
+  "deciding measuring rows still leads: on foot walk/start/stop/turn, being seen (RDR2 set aside at four, KCD2 none), chases on foot, crowd reactions",
+  "data files: scenes (18) and the people cast changes W1 to W12; 1,800 own street lines and most job, fare and side-story words TO WRITE",
+  "feasibility: content to make ahead before 7 Dec (INVENTORY)"
  ],
  "deciding_measuring_rows": [
   "on foot (1.1.1, FIT-G4: run 5.5 m/s solid in Sleeping Dogs, walk pending)",
   "being seen KCD2 and RDR2 (1.4.1, 1.4.2)",
   "chases on foot (1.5.1, 1.5.2)",
   "crowd reactions (2.3.2)",
-  "crowd counts by street and hour (FIT-G9, GD-02)"
+  "crowd counts by street and hour (FIT-G9, GD-02): SOLID by count as a floor (median 6 in the busiest daytime view, KCD2 and RDR2); the 1990 archive ceiling owed"
  ]
 }

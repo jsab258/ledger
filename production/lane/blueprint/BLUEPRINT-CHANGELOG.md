@@ -27,3 +27,100 @@ One line per change, with its source.
 - 2026-11-24 run 4: checkers proven (production/lane/checkers/CHECKERS-PROVEN.md) and landscape lessons (production/research/lane/ai-games-landscape/LESSONS-2026-11-24.md) into 9.5 and 3.2.1; story judge and writing approach into 9.11.
 - 2026-11-24 run 4: gaps 371 to 551, conflicts 245 to 252; BLUEPRINT-STATUS.json rebuilt for questions, answered rulings and blocking items.
 - 2026-11-24 run 4: fresh Opus review of the fold, 25 points, fixed once (the run-speed lines renamed "Reference solid" with the built 4.2 m/s beside the design's 5.5 in C-267; stale growth wording in 2.x prior research and OUT-06's source; story measures marked proposed; catalogue overclaims corrected in 2.3.2, 2.4.5, 2.5.4, 2.6.10, 2.18, 3.7, 3.4.1, 1.3.11; deciding marks extended to 2.2.2, 2.2.3, DP5-C01, 2.4.1, 2.1.2, 1.2.2, 1.3.2; top twenty added to the gap list; gaps to 551).
+- 2026-11-24 run 5: the lead renamed in every chapter, Tom Nowak to Frank Nowak, ladder the new owner, Nowak, Frank, Frankie (canon and RULINGS of 24 Nov, advisor 348; C-347).
+- 2026-11-24 run 5: index: his decisions page of 24 Nov folded: Q3 to Q5, Q7 to Q17, Q19, Q20 and R1 to R7, R10, R11, R13 answered and moved to the answered list; Q6 and Q18 stay open; no new ruling to revisit; the binding rules carry the 48-minute day, about 20 hours, PEGI 18, the map file, crouch, climbing places, no swimming, mounts or free fast travel (RULINGS on wip).
+- 2026-11-24 run 5: story chapter and 3.1: the story is chosen and on paper (story/frame/STORY-FRAME-2026-11-26.md; story/paper/ SPINE-CARDS 69 cards with deeds F1 to F7, SIDE-CARDS, CAST, scenes); the written-Frank test missed its bar, his 1 Oct mixed lines stand (C-348).
+- 2026-11-24 run 5: 168 "Data (run 5)" lines under the parts the data sweep classed B or C (data-sweep/DATA-SWEEP.csv), naming the data file now made in data/ (waves 1 and 2, 24 Nov), the economy job, or the scenes file still to come.
+- 2026-11-24 run 5: 33 "Economy" lines, 15 economy conflicts (C-320 to C-334) and 4 gaps from economy/ECONOMY-DESIGN-2026-11-26.md (helper extraction; his rulings of 24 Nov win over the design, the design over older blueprint numbers; diesel: the dated prices file's about 38p over the design's 36p).
+- 2026-11-24 run 5: 55 "Story needs" lines, 12 story conflicts (C-335 to C-346) and 14 gaps from story/frame/SYSTEMS-THE-STORY-NEEDS.md, EMERGENT-MEASURE.md and the story-on-paper keeper notes (paper second run, deeds test, deeds carried).
+- 2026-11-24 run 5: GD-02: crowd counts SOLID by count (STATUS.md on wip, 24 Nov 09:46) noted as the busiest-daytime floor of 6; the part stays pending on the 1990 archive ceiling (C-314). RDR2 being seen set aside at four clean samples, on-foot walk method a lead: no status moved to measured.
+- 2026-11-24 run 5: 5.2.2, 5.3.1, 5.3.4, 5.9, 5.10, 8.1.1 kept outside (Unreal work; his rulings noted inside) after a helper had set them ruled.
+- 2026-11-24 run 5: 1.1.1: "there is no crouch" replaced by crouch in; input and effect not yet written (source: RULINGS on wip, his decisions page, Q19)
+- 2026-11-24 run 5: 1.1.5: crouch named as a hiding input, effect not yet set (source: Q19)
+- 2026-11-24 run 5: 1.1.2: camera re-centre in, input and time not yet written (source: his in list)
+- 2026-11-24 run 5: 1.1.8: "no climbing" now "no free climbing; set climbing places in" (source: Q19)
+- 2026-11-24 run 5: 1.2.8: free fast travel out; his own driver's skip is the one allowed (source: his out list)
+- 2026-11-24 run 5: FIT-G3: soft-edge trip recomputed, 30 real seconds to 60 (recomputed for the 48-minute day, his ruling of 24 Nov) (source: R2)
+- 2026-11-24 run 5: 1.3.1: no combos (source: his out list)
+- 2026-11-24 run 5: 1.3.5: "nothing is shown at length" and "no finisher shown at length" replaced by fully animated, no cut-away, PEGI 18, gore light (source: Q4, RULINGS 24 Nov combat line, canon content rule)
+- 2026-11-24 run 5: 1.3.7: no armour, no healing items (source: his out list)
+- 2026-11-24 run 5: 1.3.10, RT-10: one fixed aiming shoulder; empty revolver's click in; no gyro, scopes, explosions or ammo types (source: Q4 and his in/out lists)
+- 2026-11-24 run 5: RT2-14: one kind of round (ammo types out)
+- 2026-11-24 run 5: RT2-11: no kick/finisher-animation and "camera turns away" removed; the held-strike blow and beating a pleading man stay, fully animated, no cut-away, PEGI 18 with light gore; status decided -> ruled (source: Q4)
+- 2026-11-24 run 5: RT-09: the lead's line dropped; part set to out (source: Q3)
+- 2026-11-24 run 5: 1.6.15: bar on Ada, the priest and anyone sixty or over removed with the line; no children kept (source: Q3)
+- 2026-11-24 run 5: 1.6.3: buyback in (7 game days, price plus a quarter; fences hold nothing) (source: his in list)
+- 2026-11-24 run 5: 1.5.1, 1.5.3, DP5-C01, DP5-C02: chases run 1 to 3 minutes by his ruling; old bot bands kept as checks (source: R1)
+- 2026-11-24 run 5: 2.1.1: clock stated (120 s a game hour, 48 real minutes a day, 5.6 real hours a week, about 7 game weeks, empty hours skipped, real hours measured first); walking figure doubled to about 250 real seconds, marked recomputed (source: R2, his ruling of 24 Nov).
+- 2026-11-24 run 5: 2.4.2: cooling in real time 24 min to 2.8 h became 48 min to 5.6 h, marked recomputed (source: R2).
+- 2026-11-24 run 5: 2.4.4: game day 24 became 48 real minutes; old first-hour figures to be re-run at 120 s a game hour; the first-30-real-minutes figure kept as a feel figure (source: R2).
+- 2026-11-24 run 5: 2.6.5: manhunt sign lead 60 became 120 real seconds, marked recomputed; Ellis bribable line added (source: R2, Q5).
+- 2026-11-24 run 5: 2.6.8, 2.7.8, FIT-G8: DS Ellis bribable, about 800 pounds then 100 a week, a missed week ends it (source: Q5, his decisions page of 24 Nov).
+- 2026-11-24 run 5: 2.2.5: the bank the only CCTV; Q10 pointer replaced by "answered 24 Nov"; decided -> ruled (source: Q10).
+- 2026-11-24 run 5: 2.5.3, RT2-02, RT2-05: Frank's line (women, over-sixties, priest; no hands on a woman officer or Ellis) dropped; RT2-05's protected list no longer protects (source: Q3).
+- 2.12.1: Sheila's trust is a state the town sees, not a day count; Q7 pointer replaced; name ladder (new owner, Nowak, Frank, Frankie) added to Source from canon of 24 Nov (source: Q7, canon).
+- 2026-11-24 run 5: 2.7.1, 2.7.4, 2.11.4, RT-17, FIT-G8: the 90 pound weekly wage replaced by drivers keeping half each car's takings with the firm paying fuel and cover; 2.7.1 decided -> ruled (source: economy picks, advisor 347).
+- 2026-11-24 run 5: 2.7.1, 2.7.4, FIT-G8, FIT-F24: fares 2.50 to 3.50 pounds, at least 7 in week one, replacing about 18 fares at 1.30; FIT-G8's "confirm at the Thursday price check" replaced by "answered 24 Nov" (source: R11).
+- 2026-11-24 run 5: GD-07: heading and How changed from 15 to 20 hours to about 20 hours (main story, measured in the first loops); economy picks noted; stays pending. The heading text changed, the id GD-07 did not (source: R2, economy picks).
+- 2026-11-24 run 5: 2.7.6: buyback added (7 game days, price plus a quarter; fences hold nothing) (source: his In list).
+- 2026-11-24 run 5: 2.12.2: an honest firm stops at rung 2; decided -> ruled (source: economy picks).
+- 2026-11-24 run 5: 2.12.4: street lines 60 for the most seen and 30 for the rest; residents 200 to 300 with shared lines plus about 5 own each after the first loops; unmeasured -> ruled (source: Q9, R13).
+- 2026-11-24 run 5: 2.16: blow on a downed man stays, fully animated, no cut-away; PEGI 18 within canon's limits (blows fully animated, gore light, both hold) (source: Q4).
+- 2026-11-24 run 5: 3.1.1, 3.1.2, 3.1.3, 3.1.4, 3.1.5, 3.1.6, RT-01, RT-02, RT2-04, RT2-15, RT-03, RT-19: the "Story status: the chosen story is pending ..." sentence replaced by the frame-on-paper sentence (12 parts); C-297 added (source: his pick of 24 Nov, STORY-FRAME-2026-11-26.md, paper/SUMMARY.md).
+- 2026-11-24 run 5: 3.1.1, 3.1.2, 3.1.3: new "Story (24 Nov)" line for each act (week one; weeks 2 to 6; week 7) from the frame and paper/SUMMARY.md (source: those files).
+- 2026-11-24 run 5: 3.1.1: Length line added (seven weeks, about 39 hours of clock, main story about 20 hours, empty hours skipped, measured in the first loops); Q12 first hour restaged as designed; "about two hours" recomputed to about four (source: his ruling of 24 Nov, R2, Q12).
+- 2026-11-24 run 5: 3.1.2: Act II hours 9.3 to 14 recomputed to 18.6 to 28 hours of clock before empty hours skip (How and Standard); Ellis bribable and Sheila's trust a state added to its story line; WQ-06 study line annotated (source: R2, Q5, Q7).
+- 2026-11-24 run 5: 3.1.3: "2 to 3 hours (1.9 to 2.8)" recomputed to 4 to 6 (3.8 to 5.6) (source: R2).
+- 2026-11-24 run 5: 3.1.4, 3.1.6, RT-02: story lines added (Ron and Sheila counted as friends in the ending; Mickey's envelope holds a copy of the night's fares; Sheila's trust a state, Q7; beats now have paper behind them; part stays pending) (source: the frame, canon 24 Nov, Q7).
+- 2026-11-24 run 5: 3.2.1: nine uncast voices on one listening page (was three named voices), Q3 lead's line dropped, Q5 Ellis bribable, Q7, Danny the main opponent, cast on paper (source: his rulings of 24 Nov; canon).
+- 2026-11-24 run 5: 3.2.3, 3.2.4, 3.6.3, FIT-L01: residents 200 to 300 with shared lines plus about 5 own each after the first loops; street lines 60 and 30 kept (Q9, R13). FIT-L01 source changed to his ruling and the old Q9 pointer replaced by "answered 24 Nov".
+- 2026-11-24 run 5: 3.3: "25 to 40" became "about 25"; "inside the 15 to 20" replaced; SIDE-CARDS.md named (source: Q9, R2).
+- 2026-11-24 run 5: 3.4.1, FIT-G7: fares few, 2.50 to 3.50 pounds, at least 7 in week one (was 80p plus distance); economy pick noted (source: R11, advisor 347 picks).
+- 2026-11-24 run 5: 3.4.2, RT-19: hurry "about 90 real seconds" recomputed to about 180; game week "about 2.8 real hours" recomputed to about 5.6 (source: R2).
+- 2026-11-24 run 5: 3.5.4: buyback noted as ruled in (7 game days, price plus a quarter, fences hold nothing); no part yet (source: his in-list).
+- 2026-11-24 run 5: 3.6.1: no thinking sound (R3); a reply later than 2 s becomes a written line, replacing "dropped after about 8 s" (R10); allowance set after a playthrough's measured cost (Q14).
+- 2026-11-24 run 5: 3.6.6, 3.6.8: his ruling of 1 Oct on mixed lines stands; the written-Frank test (7.4 against 7.1, rise 0.3 against 0.5 asked) missed its bar; his A or B choice open (source: paper/SUMMARY.md).
+- 2026-11-24 run 5: 4.1.1 and 13 other parts (4.1.2, 4.2.1, 4.2.2, 4.2.3, 4.3.1 to 4.3.8, 4.4): "dated photographs win" replaced by "photographs win on shape and material, measured values and the Hook sheet on colour" (R7); C-291.
+- 2026-11-24 run 5: 4.1.1: bay 3 bare glass dressed with card, cardboard and a fallen blind (R5, was whitewashed); white window frames, some surrounds painted (R6).
+- 2026-11-24 run 5: 4.1.2, GD-01: map file made (map.json in metres, drawings map-topdown.svg and paper-map.svg) with its drawn lengths; GD-01 notes the crossings are still G1's figures.
+- 2026-11-24 run 5: 4.1.3: Frank on the paper map only at a sign or landmark (Q20); printed things get a final 2026 look as 2D, paper map first.
+- 2026-11-24 run 5: FIT-G1: chases 1 to 3 minutes, rich in lanes and yards; docks kept so the "if the docks are cut" fallback is not planned; status decided to ruled (R1, the map in metres).
+- 2026-11-24 run 5: 4.2.1: first hour restaged as designed (Q12); quay fishing in, swimming out. 4.2.2: "docks cut first" removed (R1); a working crane in. 4.2.3: dock barriers in. 4.2.4: swimming out, set climbing places in (Q19).
+- 2026-11-24 run 5: 4.3.3: pastimes (boxing club, snooker hall no money, quay fishing, allotment pigeon loft no betting) with their map.json places; shop mirror in. 4.10: no money in the snooker hall, no betting at the loft.
+- 2026-11-24 run 5: 4.3.7: Ellis can be bought once (about 800 pounds, then 100 a week, a missed week ends it) (Q5).
+- 2026-11-24 run 5: 4.7: game day 24 to 48 real minutes (120 real seconds a game hour), dark part about 14 to about 28 (R2).
+- 2026-11-24 run 5: 4.9: CCTV only at the bank, answered (Q10); printed things line.
+- 2026-11-24 run 5: 5.1.5: measured floor of 6 people in the busiest daytime view noted, pointing to GD-02; status unchanged (source: STATUS.md on wip, crowd-counts-2026-11-24.md).
+- 2026-11-24 run 5: 5.2.2: PEGI 18 within canon's limits; blow on a downed man and beating of a pleading man stay, fully animated, no cut-away; one fixed aiming shoulder; canon's light gore noted as also holding; status outside -> ruled (source: his ruling of 24 Nov, Q4, Q15).
+- 2026-11-24 run 5: 5.2.4, 5.2.9: thinking sound removed, glance kept; status unchanged (source: his ruling of 24 Nov, R3).
+- 2026-11-24 run 5: 5.3.1: photographs win on shape and material, measured values and the Hook sheet on colour; the 0.56 brick saturation ceiling flagged for recheck; status -> ruled (source: R7).
+- 2026-11-24 run 5: 5.3.4: white frames with some surrounds painted; status -> ruled (source: R6).
+- 2026-11-24 run 5: 5.6.1: one listening page for the nine uncast voices, cast only on his yes; status -> ruled (source: Q8).
+- 2026-11-24 run 5: 5.6.3: no thinking sound, no loading sign; a reply later than 2 s becomes a written line, replacing the 8 s drop; status decided -> ruled (source: R3, R10).
+- 2026-11-24 run 5: 5.7.1: a short score wanted, nothing built until he says; Q11 pointer replaced by "answered"; status -> ruled (source: Q11). FIT-P09: line added that the world-only music rule needs an exception once a score is built.
+- 2026-11-24 run 5: 5.8.1: one fixed aiming shoulder; camera re-centre in (line added; no wording yet).
+- 2026-11-24 run 5: 5.9: "light gore at most", "never a beating at length" replaced by fully animated blows with light gore, PEGI 18 within canon's limits; status -> ruled (source: Q4, Q15).
+- 2026-11-24 run 5: 5.10 (and the 5.11 intro): R7 colour rule; printed things as 2D with a final 2026 look before Unreal, the paper map first; status -> ruled (source: R7, his 24 Nov ruling on printed things).
+- 2026-11-24 run 5: 6.1.5: game hour 120 real seconds, game day 48 real minutes, game week 5.6 real hours (recomputed for the 48-minute day, his ruling of 24 Nov); status ruled unchanged.
+- 2026-11-24 run 5: 6.3: Frank on the paper map only at a sign or landmark (Q20); paper map first for the 2D final look; the Hook one map file with its drawing; status ruled unchanged.
+- 2026-11-24 run 5: 6.4, 6.6, 6.9, 6.10: lines added for name entry out, gyro and scopes out, crouch and camera re-centre in, free fast travel out, printed things' 2D final look (source: his rulings of 24 Nov); statuses unchanged.
+- 2026-11-24 run 5: 7.1: first hour restaged as designed (Q12); status ruled unchanged.
+- 2026-11-24 run 5: 7.2, 7.3, 7.4, FIT-F13, CLK-05, CLK-07, 7.11, 7.13, RT2-21: real-time figures recomputed for the 48-minute day (evening 12 real minutes, day 48, week 5.6 hours, Act I 3.8 to 5.6 hours, Act II 18.6 to 28, Act III 3.8 to 5.6, crossing rule 10 real minutes, talk cooling 48 minutes to 5.6 hours, 14 post-ending days 11.2 hours); version B's 60 s replaced (source: R2).
+- 2026-11-24 run 5: RT-04: clock note added (no real-time figure in the part; game-time figures stand).
+- 2026-11-24 run 5: CLK-01, CLK-02, CLK-03, CLK-04, CLK-06: clock readings kept or recomputed as the text allows, with gap lines where the start hour or the rule's intent is not stated; CLK-06's running total 26 to 40 hours against about 20 for the main story, old "fewer nights skipped" fix withdrawn (source: R2).
+- 2026-11-24 run 5: FIT-F15: "15 to 20 hours" for the main story replaced by about 20 hours (seven game weeks, empty hours skipped, measured in the first loops); about 25 side stories (Q9); recomputed act hours. WQ-06 study lines in 7.x and 10.2 annotated (source: R2, Q9).
+- 2026-11-24 run 5: FIT-F16: per-place and per-person minutes recomputed (about 80; 30 to 50); street lines 60 and 30 and residents confirmed (Q9); status pending unchanged.
+- 2026-11-24 run 5: GD-02: measured-floor line added as given; status pending unchanged (source: STATUS.md on wip, 24 Nov 09:46).
+- 2026-11-24 run 5: 7.16: four pastimes (boxing club, snooker hall without money, quay fishing, allotment pigeon loft without betting); the lead's line on women, over-sixties and the priest dropped; status decided -> ruled (source: Q13, Q3). OUT-04: snooker hall and pigeon loft added to the no-betting list.
+- 2026-11-24 run 5: OUT-05: R1 answered (map kept, chases 1 to 3 minutes, rich in lanes and yards); map file noted. OUT-06: his out list recorded. OUT-08: no free climbing, swimming and mounts out; crouch and set climbing places in (Q19). OUT-09: free fast travel out and Frank on the map only at a sign or landmark.
+- 2026-11-24 run 5: 8.1.1: 6 GB line and 1.7 ms spare kept; status outside -> ruled (source: R4).
+- 2026-11-24 run 5: AX-04: explosions removed from the loud-noise switch (out list).
+- 2026-11-24 run 5: 8.5: install message, start error message and skippable logos in (line added; status unchanged).
+- 2026-11-24 run 5: 8.6.1: allowance set after a playthrough's measured cost (Q14); a reply later than 2 s becomes a written line, the 8 s drop replaced (R10); status ruled unchanged.
+- 2026-11-24 run 5: 8.8: PEGI 18 within canon's limits, live talk too, content rule unchanged (line added).
+- 2026-11-24 run 5: 8.11.2, 9.13.1, 9.13.3, 9.6: one clock now 120 s a game hour (was 60); 9.6 notes the clock row; 9.2 notes printed things' 2D final look.
+- 2026-11-24 run 5: 8.12.1: nine uncast voices on one listening page (Q8). 8.12.2: no thinking sound, no loading sign; reply later than 2 s becomes a written line (R3, R10).
+- 2026-11-24 run 5: 10.2: PEGI 18 target replaces PEGI 16; length about 20 hours; name search before Coming Soon; price after the prototype; status -> ruled (source: Q15, R2).
+- 2026-11-24 run 5: 10.6: updates decided after the prototype. 10.7: no achievements, status decided -> ruled. 10.8: capsule from a packaged frame, pay only for 2026-grade frames, R7 colour rule, status -> ruled. 10.10: his name search before Coming Soon, status -> ruled. 10.12: price, updates and demo decided after the prototype, status -> ruled (source: Q15 to Q17).
+- 2026-11-24 run 5: fresh Opus review of the fold, 9 must-fix and about 14 lesser points, fixed once: the 200 m walk kept at about 125 real seconds; stale economy conflict lines marked settled (C-320 to C-331); diesel about 38p in 2.7.4; thinking-sound and 8 s gaps dropped and old-clock gaps restated; 60/30 street lines per person in 2.12.4; 10.8 back to outside and 2.7.1, 2.12.2, 2.12.4 back to decided or unmeasured with his ruling cited; C-016, C-046, C-000a marked superseded; one Act III and week-one figure; FIT-F15, FIT-F16, FIT-F24 (seven fares at 2.50 fall under the 18 pound rent: a gap), 2.15.1, 2.15.2, 3.4.1, 10.2, 10.7, 7.13 corrected.
+- 2026-11-24 run 5: counts: 424 parts (1 measured, 87 ruled, 15 sourced, 126 decided, 61 pending, 45 unmeasured, 15 out, 52 outside, 22 machinery); 323 conflicts; 631 gaps; questions Q6 and Q18 open; no ruling to revisit.
