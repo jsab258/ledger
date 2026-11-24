@@ -8,7 +8,7 @@
 - All six say the same thing stands most in the way: Frank is the quietest person in his own story. Ron, Sheila, the Widow and Danny carry the scenes people would retell. One revision gave Frank written lines at every decision and a habit; the marks did not move (7.0 from the first three readers, 7.0 from three new ones; principles 22.7, then 23.7 of 30), so I stopped revising, as the method says.
 - The middle is small for a crime game: fists in nearly every fight, crime mostly off stage, Danny's gains in the middle weeks mostly heard about, not seen. Four readers find the climax too much like bookkeeping.
 - The weakest scenes, even rebuilt: the yard (the night men queue in his yard to be paid or take a car) and the funeral tea where Frank meets the three gang heads.
-- Not yet checked against the record: whether Ron would be held on remand in 1990 for the charge he owns up to, and whether a minicab could lawfully use a street rank then (canon has one).
+- Checked against the record since (24 November, second run): Ron could be kept on remand in 1990, but it is not certain, and it is a Customs charge, so a Customs officer now lays it; he comes back before the magistrates every eight days, once in the last week. A minicab may not lawfully stand on a public taxi rank: Mickey's own rank at the firm's door is a grey place in law that nobody tested while Mickey was alive, and winning the ferry rank is now plainly a crime that can cost the licence. The one card left over (Danny's go at Ron on the ferry rank when the Widow is your ally) is written, and uses that law.
 - The length does not fit your 15 to 20 hours: seven game weeks at 48 minutes a day is about 39 hours of clock.
 
 ## The story, as you would tell a friend

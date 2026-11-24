@@ -2,7 +2,7 @@
 
 - Where it sits: Act IIb, week five: the Widow's go at one of Frank's men. One of the week's three, and the only one by day.
 - What wakes it: the Landing has been played; Garbutt has said the week's aim; Ron has carried tally 39 in his pocket since week three; it is the morning call at the pen. The word reaches Frank over the radio.
-- Who must be present: Ron Kirby, Frank Stathers, the men of the pen. Kevin Needham on the air. Fallback for Stathers: Mark Billany reads the list, and reads it worse. If the Widow is Frank's ally this scene does not wake; Danny's go is at Ron instead, at the ferry rank, and is a different card.
+- Who must be present: Ron Kirby, Frank Stathers, the men of the pen. Kevin Needham on the air. Fallback for Stathers: Mark Billany reads the list, and reads it worse. If the Widow is Frank's ally this scene does not wake; Danny's go is at Ron instead, at the ferry rank, and is a different card (S30b).
 
 Frank is trying to get Ron out of the pen with the docks looking on. He will give up a day's money and an owner's dignity, or the last of Ron's standing with his own, or nothing, and hear about it.
 

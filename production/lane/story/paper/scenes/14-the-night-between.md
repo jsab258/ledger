@@ -122,7 +122,7 @@ The first is going back up the steps at the last minute, and runs as above. To t
 
 ELLIS: Mr Kirby.
 
-Ron draws the paper to him. He holds the pen the way he holds a tally. He writes the first line himself, in a docker's capitals. I MAKE THIS STATEMENT OF MY OWN FREE WILL. He signs each page. He is charged with conspiring to evade duty on that landing's loads, and kept, because he will not name the men.
+Ron draws the paper to him. He holds the pen the way he holds a tally. He writes the first line himself, in a docker's capitals. I MAKE THIS STATEMENT OF MY OWN FREE WILL. He signs each page. A Customs officer Ellis has rung at home comes in with his coat over his pyjama collar, because a duty case is Customs' business before it is hers. Ron is charged with conspiring to evade the duty on that landing's loads, and kept for the magistrates on Monday, because he will not name the men.
 
 At the counter his pockets go into a bag: laces, a comb, thirty-eight pounds in notes he has not broken, if Frank called him at the pen; a brass tally, if he kept it; the watch, if he has it.
 

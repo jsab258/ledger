@@ -10,6 +10,8 @@ Frank is trying to get one easy word out of a man who has stopped saying what he
 
 Inside. The remand wing is the old gaol behind the Exchange. Visits for men who have not been tried are fifteen minutes, any weekday afternoon. Since a fight on his wing, his are in the closed boxes: a stool, a shelf, a pane of thick glass with a brass grille under it to talk through, and the same on the other side. An officer walks the row behind the visitors. On the wall is a clock.
 
+That morning his eight days were up, and he was taken across to the magistrates in a van and remanded again in under two minutes: his name, "Aye", and down. If Frank sat in the public seats, Ron did not look round. It is the first thing Frank can say to him through the glass, and Ron does not answer it.
+
 Ron is in his own clothes, as a man on remand may be: the black overcoat, a clean collar. His lower lip is split and has scabbed. His right hand is bandaged across the knuckles and round the thumb.
 
 Free. Quay Street, a dry grey afternoon. Car two at the kerb with its two L-plates, engine running, the driving seat run right back. The dock road is the lesson's road. At the far end of it the old dock gate has a Harbour Board notice wired to it, and a new chain lying coiled by the post, not yet on.

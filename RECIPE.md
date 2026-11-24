@@ -189,3 +189,12 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 - Target and check: readers' scene mean against the bar (10) and a good shipped game (7); the pair judge's floor (beat all forgettable). Result: floor met by all ten screened; readers 7.0 before and after the revision; the lead's voice named by every reader as the gap.
 - Failed and why: a revision aimed at the lead's voice (written lines, a habit) moved nothing; readers want deeds, not lines. A judge seed shared across scenes repeats the same shelf and control pairs, so one bad control discounts a model on many scenes.
 - Evidence: production/lane/story/paper/judging/RESULTS.md
+
+## Story on paper, second run: closing a predecessor's leftovers (24 Nov 2026)
+- Made: one missing story-director card, and two period facts checked against primary law texts, with the scenes, cards and summary corrected to match.
+- Method: wait for the earlier run's end signal (its end row, or a long silence) before writing; read its log and summary for what it lists as left; research each unchecked fact from a written question list, primary texts read in full by page-reading helpers; let the facts change the fiction where they are richer (the law became the opponent's weapon in the new card); one fresh reviewer on the changed files.
+- Tools: the shared report rows and git as the end signal; web search, then page-reading helpers on primary law texts and Hansard; one fresh Opus reviewer; plain text edits.
+- Target and check: every leftover named by the earlier run closed or named again; the reviewer's must-fixes applied.
+- Cost: about 1.5 hours of waiting for the earlier run, then about 1.5 hours of work; four page-reading helpers and one reviewer.
+- Failed and why: point-in-time law pages are often a few years off the setting's date; record which version was read and mark the rest inferred.
+- Evidence: production/lane/story/paper/research/RECORD-CHECKS-2026-11-24.md

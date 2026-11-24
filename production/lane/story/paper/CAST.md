@@ -57,7 +57,7 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
   - "I've told her nowt that isn't so. I've just not told her you." (scene 14)
 - What he calls Frank: "boss". "Mr Nowak" at the gate in the Burn Both close (scene 23). "Frankie" once, if ever. In the Kingdom close Frank asks him to say "Frank" once, and he says "Boss" (scene 21).
 - Data id: ron_kirby.
-- Path notes: Ron is one of the friends the ending counts (owner's decision 4), with Sheila, Alison and Danby. Ron lives on every path (can_die false; a rival's harm to him never goes past the hospital). Free or inside, he has a beat every week; if he is gone he is on the remand wing, charged with conspiracy to evade duty on the landing's loads, and the Straight Life close has him driving on his L-plates.
+- Path notes: Ron is one of the friends the ending counts (owner's decision 4), with Sheila, Alison and Danby. Ron lives on every path (can_die false; a rival's harm to him never goes past the hospital). Free or inside, he has a beat every week; if he is gone he is on the remand wing, charged with conspiracy to evade duty on the landing's loads, and the Straight Life close has him driving on his L-plates. On the Widow's path his week-5 go is on the ferry rank, not at the gate: he stands at the wing of car four and will not answer the council man (S30b).
 
 ### Sheila Dunn
 
@@ -98,7 +98,7 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
   - "You've got the book, nephew. I am the book." (frame section 3)
 - What he calls Frank: "nephew" (outside the name ladder). "Frankie", to needle him, once the ladder reaches it: "Evening, Frankie." (scene 21).
 - Data id: danny_cammack.
-- Path notes: pact, he is the best earner the firm has and turns in sight from the phone box. Refused, the loudest rival. Given the top line he never turns and Craig Fewson takes the key. Honest firm, he picks up the nights Frank put down. He can be put on a boat (scene 19) or back on the board under Frank.
+- Path notes: pact, he is the best earner the firm has and turns in sight from the phone box. Refused, the loudest rival; where the Widow is Frank's ally his week-5 go is at Ron on the ferry rank, with two hackneys on rented plates and the council's licensing officer (S30b). Given the top line he never turns and Craig Fewson takes the key. Honest firm, he picks up the nights Frank put down. He can be put on a boat (scene 19) or back on the board under Frank.
 
 ### Maureen Jensen, the Widow
 
@@ -182,7 +182,7 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
 - Age: 44 (REGULARS).
 - Role: Mickey's dispatcher, the radio and the phone. Brisk and dry on the air, kind off it. She says the name ladder aloud: the new owner, Mr Nowak, Frank, nothing at all in week five ("he wants you at the gate"), his name said carefully in week six, and in week seven what the week has earned (frame section 1 table).
 - Ties: Sheila (the two women of the office); Ron (his mug with R.K. on its base); Kevin and Terry (her cars); Julie (the night desk); Danny (she calls car two on the air); Frank.
-- Carries: spine S04 The line in the book (she starts the half line), S14 Danny's six minutes and the offer, S56 Car two not answering, S58 The counter at five, S59 to S61 the closes; side D02 Two real minutes (hers), D01, D07 (giver).
+- Carries: spine S04 The line in the book (she starts the half line), S14 Danny's six minutes and the offer, S30b The ferry rank (on the air), S56 Car two not answering, S58 The counter at five, S59 to S61 the closes; side D02 Two real minutes (hers), D01, D07 (giver).
 - Voice: brisk, never stops talking, funny. Lines: "Car two is not answering." (scenes 6 and 19). "Mickey's. (She listens.) He's in." (scene 21)
 - Data id: pauline_kitching.
 
@@ -254,7 +254,7 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
 - Age: 36 (REGULARS).
 - Role: day driver, car one; the Widow's eyes; skims forty-two miles a week; leads the settle in the yard; his log is what the Customs man asks for.
 - Ties: the Widow; Pauline; Terry; Sheila (the mileage); Ron; Frank.
-- Carries: side D01 The long way round; spine S16 The Widow's first look, S30 The gate (on the air), S43 A load (fallback, sells the route), S51 The second morning: the cars' records; scene 15.
+- Carries: side D01 The long way round; spine S16 The Widow's first look, S30 The gate (on the air), S30b The ferry rank (at the wheel of car four; the Widow's eyes on her own path), S43 A load (fallback, sells the route), S51 The second morning: the cars' records; scene 15.
 - Voice: flat, moaning, talkative. Line: "I'll have my cards Friday. You've never once asked me where her miles went." (scene 15)
 - Data id: kevin_needham.
 
@@ -308,7 +308,7 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
 - Age: thirty (scene 5). The people file says 25: no sheet, so the scene wins for now.
 - Role: Danny's second, who wants Danny's seat. On the wall beside Danny in week one, setting Danny's driving seat to fit himself. Drives Danny's hatchback away in scene 19. If Danny is gone or never turns, he has the brass key and is the man on the quay.
 - Ties: Danny (the key, the seat); Frank (the board he reads from the doorway); Ron (stands at the bonnet on the quay); the van of Frank's man at the landing.
-- Carries: spine S06 Car three, S14 Danny's six minutes, S28 The landing by night, S34 The pact turning, S41 A turned man, S46 The room at Grace's (sits for Danny), S56, S57 The quay at four.
+- Carries: spine S06 Car three, S14 Danny's six minutes, S28 The landing by night, S30b The ferry rank (on the bollards; carries it if Danny is gone), S34 The pact turning, S41 A turned man, S46 The room at Grace's (sits for Danny), S56, S57 The quay at four.
 - Voice: few words, a stare. Lines: "So whose are we?" (scene 6). "I want to see what you do." (scene 19)
 - Data id: craig_fewson.
 
@@ -425,10 +425,10 @@ Names: the lead is Frank Nowak, never Tom or Tommy. His name ladder is the new o
 | Name | Age | Role | Where met | One tie | Gives | Data id |
 |---|---|---|---|---|---|---|
 | Simon Ombler | 44 | Agar's managing clerk; signs his letters; types Nowak right from Tuesday of week seven | scenes 14, 17; S17, S42, S52 | Agar | none | simon_ombler |
-| Alan Sowerby | 51 | council licensing officer who acts on Agar's letters | D06 | Agar | none | alan_sowerby |
+| Alan Sowerby | 51 | council licensing officer who acts on Agar's letters | D06; S30b (the clipboard at the ferry rank) | Agar | none | alan_sowerby |
 | Wayne Harrison | 27 | Rita's back-room hand; owes £30 in goods; the first front | D24; S19 | Rita Welburn | D24 The back room | wayne_harrison |
 | Ian Megginson | 34 | locksmith and repairman at the yard | D03; S29, S52; scene 16 | Frank's lock; Norman Dent | D03 (the hairpin line) | ian_megginson |
-| Karen Grummitt | 25 | ferry ticket clerk; lodges at the boarding house | scenes 1, 3, 23 | Gordon Leckenby | none | karen_grummitt |
+| Karen Grummitt | 25 | ferry ticket clerk; lodges at the boarding house | scenes 1, 3, 23; S30b (tells it at her hatch) | Gordon Leckenby | none | karen_grummitt |
 | Shaun Hewson | 26 | sign painter; paints MICKEY'S in every close | scenes 1, 5, 19, 21, 22, 23; D06 | Frank's sign; Sowerby reads it | D06 The name on the board | shaun_hewson |
 | Peter Tang | 44 | keeps the takeaway with Lily; fetches Grace's car in scene 15 | D11; scene 15 | Lily Tang (wife) | none | peter_tang |
 | Sylvia Rennison | 64 | keeps the boarding house; Friday means Friday | scenes 2, 3, 23; D20 | Danny (her lodger) | D20 Friday means Friday | sylvia_rennison |
@@ -455,6 +455,7 @@ Each is a role filled in play from the people above or from the generated reside
 | The old firm's man at the landing | stands by the ticket window after ten; says "Mickey's?"; "Somebody's started writing you down."; buried on Monday 26 November, game week 7; a later man says "Cammack's?" | scenes 2, 3, 17, 23; S02, S03, S11, S28, S35, S39 | old_firm_man (age 61 after the change; file now 59) |
 | The custody sergeant | books Frank as Novak, Nowack, Knowak; writes Nowak right when Ron spells it | scene 14; S37 | sgt_bellwood (Roy Bellwood, 52; first name owed a change, CAST-CHANGES K1) |
 | The duty solicitor | offered at the station: "The duty solicitor is free." | scene 13 | none |
+| The Customs officer of the night between | rung at home by Ellis; comes in with his coat over his pyjama collar; lays Ron's charge, because a duty case is Customs' business | scene 14; S38 | none (Derek Hebblewhite is VAT, a different desk; not him) |
 | The constables of the search | empty the drawers, bag the keys; "I'll need the bag, madam." | scene 13; S36 | pc_ackrill, pc_haigh, pc_ibbotson |
 | The constable on foot at the Landing | writes down a cab with its boot tied with string | scene 10; S24 | pc_ibbotson |
 | The packers: the youngest, the middle one and the eldest (six, one with a licence) | gossip on the new owner; the eldest threatens Stathers | scenes 8, 11; S21 | none |

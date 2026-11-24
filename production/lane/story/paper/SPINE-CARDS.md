@@ -216,8 +216,8 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Shape card: opening a queue forming; turn a fight breaks; ending a man down; action fight; place the ferry rank; company Ron, a crowd; mood loud, tense.
 - Carriers: Mark Billany (or Fewson, if Danny has it); Ron back to back with Frank before the boat queue. Fallback: if Ron is sent elsewhere that day, the first man stands; a car on the rank five days in a fortnight wins it without fists.
 - The sign before it: the boat's horn; Billany's cap pushed back on the rank.
-- The aim it sets or serves: closes Ron's week-2 aim. A car on it, a word, or fists. If Billany goes down: hand him his cap, walk off, or hit him again while he is down.
-- What the town remembers: the boat queue saw it. Billany keeps a stitched eyebrow: spared, he lays his keys down at the Landing ("That's us straight"); struck when down, he leans on the horn (S24).
+- The aim it sets or serves: closes Ron's week-2 aim. A car on it, a word, or fists. If Billany goes down: hand him his cap, walk off, or hit him again while he is down. The ferry rank is a hackney stand: a minicab taking the boat queue there is plying for hire without a hackney licence, an offence each time and a reason the council can suspend Mickey's licence, so winning it is a crime done in daylight in front of a queue, and every ferry fare goes in the book as phoned in (Sheila: "Phoned from the ferry. They've a box there, haven't they?") (research/RECORD-CHECKS-2026-11-24.md).
+- What the town remembers: the boat queue saw it, and so can the council: Agar can hand Alan Sowerby, the licensing officer, the ferry fares at any hearing (S17). Billany keeps a stitched eyebrow: spared, he lays his keys down at the Landing ("That's us straight"); struck when down, he leans on the horn (S24).
 - Fails into: lost, the rank is theirs and Ron says nothing all the way home.
 
 ### S16 The Widow's first look
@@ -408,7 +408,7 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 
 ### S30 The gate: Ron cornered
 - Act and week: Act IIb; game week 5, twenty to seven in the morning (scene 11).
-- Conditions: S24 played; Garbutt's aim said; Ron has carried tally 39 since the fifth morning; the morning call. Sleeps if the Widow is Frank's ally; then Danny's go is at Ron on the ferry rank, a card not yet written (see the checks).
+- Conditions: S24 played; Garbutt's aim said; Ron has carried tally 39 since the fifth morning; the morning call. Sleeps if the Widow is Frank's ally; then Danny's go is at Ron on the ferry rank (S30b).
 - Priority: 5
 - Weight: middle
 - Cooldown: 12 game hours (24 real minutes).
@@ -418,6 +418,19 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - The aim it sets or serves: Garbutt's week-5 aim. Call him ("Kirby" or "Mr Kirby"; £38 into his palm; he hangs the tally up), stand with him, go in swinging, send somebody, or stay away: left alone, Ron stands the call out and is on the door by ten, wet and unhurt.
 - What the town remembers: the pen tells it by its own rules. A cheaper way at the night between needs Frank to have called, stood or fought (S38). Feeds S33.
 - Fails into: staying away is a choice too; Ron turns the tally over on the door all week.
+
+### S30b The ferry rank: Ron and the council man
+- Act and week: Act IIb; game week 5, Tuesday or Wednesday, the 08:10 boat (only where the Widow is Frank's ally; it stands in for S30).
+- Conditions: S24 played; Garbutt's aim said; the Widow is Frank's ally, so S30 sleeps; the ferry rank is Ron's post for the morning boats, Kevin Needham driving and Ron, still on L-plates, standing at the front wing; Danny is a rival at "pressure" or above (if Danny is dead, gone or under Frank, Craig Fewson carries it at the same rung). If the ferry rank is not Frank's, the same go comes at Ron on Mickey's own rank, where the council man has less to write and Danny more to say.
+- Priority: 5
+- Weight: middle
+- Cooldown: 12 game hours (24 real minutes).
+- Shape card: opening two black cabs where none ever stood; turn a question Ron will not answer; ending a name written in a council book, or not; action talk; place the ferry rank; company Ron, Danny, the boat queue; mood bright, needling.
+- Carriers: Danny, in a borrowed camel coat, with two hackney carriages on rented plates (judgement: £40 a week each from retired cabmen); Craig Fewson and two of Danny's lads on the bollards; Alan Sowerby, the council's licensing officer, with a clipboard, because Danny wrote to the council in capitals and a written complaint has to be acted on; Ron at the front wing of car four, Kevin at its wheel; Karen Grummitt at the ferry's ticket hatch. Fallback: if Sowerby is off sick or already in somebody's pocket, a constable on his beat asks the same question, worse.
+- The sign before it: Pauline, on the air: "There's two black cabs on the ferry rank. Proper ones, with meters. Ron's still on it." The day before, Danny's letter to the council is on Agar's desk, if Frank has reason to be there.
+- The aim it sets or serves: Garbutt's week-5 aim ("Get to Sunday with your three men stood where you put them"); the ferry rank is Ron's post. The law is the weapon, not fists: the rank is a hackney stand, and a minicab on it plies for hire (S15). Danny, to the queue: "Hackney carriage, lawful, metered, and it'll be there tomorrow. Who's first?" Sowerby, to Ron, pen up: "Was this vehicle booked through the operator before the journey commenced?" Ron says nothing, which Sowerby writes down as an answer. Frank can claim it (walk onto the rank and say he is the operator and answers for his cars; Sowerby writes Mickey's, not Kirby; Agar gains a mark for any hearing); show the book (radio Sheila, who reads out a booking for a Mr Hall, a name she makes up on the spot: "Phoned from the ferry, ten past eight, to the cold stores"; Danny: "Phoned from what? That box has been broke since August."; Sowerby notes both and goes; Ron has heard Frank lie for him, and the book holds a second false line for Ellis to find on Friday); pay Sowerby (£20 folded under the clip; he goes, Agar knows by noon, and Sowerby is a hook Agar holds); fists (Fewson and the lads, in front of the queue and the council man; Ron comes off the wing at the first blow; whoever wins, Sowerby has both names and the hearing is certain); or stay away or send somebody (Ron says nothing all morning and Sowerby has his name; by noon the two black cabs hold the ferry rank and Danny has his week-5 gain; Ron is on the door by eleven and says nothing about it then either). Claiming it and fists count as standing with Ron for a cheaper way at the night between (S38); the book, the money and staying away do not.
+- What the town remembers: the boat queue saw who came. Karen Grummitt tells it at her hatch by Danny's line ("lawful, metered"), and either "the new owner came down" or "the old lad stood there on his own." Sowerby's note is in the council's file for any hearing (S17), and a paper Ellis can be shown. If Frank lied by the book, Ron does not name the ferry terminal when they next drive past it.
+- Fails into: staying away is a choice too; the rank is Danny's, and Ron's name is in a council book days before the search.
 
 ### S31 The collision
 - Act and week: Act IIb; game week 5.
@@ -521,7 +534,7 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Shape card: opening a night with no sleep; turn a price paid; ending a question at nine; action walk; place the station, the Exchange, Rita's window; company alone; mood dark, quiet.
 - Carriers: Ron; Ellis; Ombler at Agar's door; Wardell; Rita. Fallback: none.
 - The sign before it: "Saying's nowt, boss. You've a firm to stand in. I've a door."
-- The aim it sets or serves: let it stand (Ron signs, is charged with conspiring to evade duty on the landing's loads, and is kept because he will not name the men); sign first (charged; the licence off a fortnight, the drivers to Danny unless paid in full from the tin; Tharratt drops the contract; the Kingdom's better turn closed; "You've took the one thing I had to give."); or a cheaper way, each a hook: Agar's brief (a paper about the yard, signed on Agar's hall table), Wardell (£200 cash, once; sold to Danny), or Ellis, only with £800 cash in his hand that night (£100 every Friday after). Ron allows one only if Frank came for him at the pen or redeemed Mickey's watch (Rita, tonight). At nine Ellis asks: "Is there anything you want to tell me?"
+- The aim it sets or serves: let it stand (Ron signs; a Customs officer charges him with conspiring to evade duty on the landing's loads; on Monday the magistrates refuse bail because he will not name the men, and he is brought back every eight days); sign first (charged; the licence off a fortnight, the drivers to Danny unless paid in full from the tin; Tharratt drops the contract; the Kingdom's better turn closed; "You've took the one thing I had to give."); or a cheaper way, each a hook: Agar's brief (a paper about the yard, signed on Agar's hall table), Wardell (£200 cash, once; sold to Danny), or Ellis, only with £800 cash in his hand that night (£100 every Friday after). Ron allows one only if Frank came for him at the pen (or, on the Widow's path, claimed the car or fought beside him on the ferry rank, S30b) or redeemed Mickey's watch (Rita, tonight). At nine Ellis asks: "Is there anything you want to tell me?"
 - What the town remembers: who slept where. Feeds S39, S50, S52, S57.
 - Fails into: silence at nine is letting it stand.
 
@@ -671,7 +684,7 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 
 ### S50 Ron in the last week
 - Act and week: Act III; game week 7, Wednesday, between the second and third mornings (scene 18).
-- Conditions: S38 played; Wednesday. Inside: Ron's message has reached Frank (Father Walsh always carries it); visiting time. Free: Ron on the door, Frank with somewhere to be.
+- Conditions: S38 played; Wednesday. Inside: Ron's message has reached Frank (Father Walsh always carries it); visiting time. That morning Ron's eight days are up and he is remanded again at the magistrates' court in two minutes (his name, and "Aye"); Frank can sit in the public seats, and Ron does not look round. Free: Ron on the door, Frank with somewhere to be.
 - Priority: 4
 - Weight: light
 - Cooldown: 4 game hours (8 real minutes).
@@ -826,11 +839,11 @@ Shape card fields: opening (how it starts), turn (what changes inside it), endin
 - Fails into: none.
 ## The checks
 
-Sixty-one cards, S01 to S61, in story order, rechecked after the fresh reviewers' notes against the revised frame and scenes 01 to 23.
+Sixty-two cards, S01 to S61 and S30b, in story order, rechecked after the fresh reviewers' notes against the revised frame and scenes 01 to 23.
 
 Reachability. Every card can wake on every path. Lesson five (S33) wakes after the Landing whatever lessons were taken, and by Thursday of week 5 Ron is waiting in car two. The first morning (S48) needs only the room at Grace's and the Tuesday, because every firm has a driver paid in cash off the book; S49 to S55 need S46 and their own day, not S48. The closes split every result at five three ways: the firm survives (S59), the firm is lost with a friend (S60), or neither (S61, the default). Where a card needs a person, the person is in its carriers, not its conditions, and its fallback covers him absent, hostile or dead.
 
-Not yet carded: when the Widow is Frank's ally, S30 sleeps and Danny's go at Ron is on the ferry rank (scene 11 names it as a different card). Until it is written, week 5 on that path has two goes at Frank's men and the collision.
+Where the Widow is Frank's ally, S30 sleeps and S30b (Danny's go at Ron on the ferry rank, with the council man) plays in its place, so week 5 has three goes at Frank's men and the collision on every path. S30b was added by the second run on 24 November; it uses the law on minicabs and ranks checked that day (research/RECORD-CHECKS-2026-11-24.md).
 
 Neighbouring shapes. Every pair of neighbouring cards differs on at least five of the seven shape fields as written, so the rule of three holds everywhere. The opening, turn and ending fields always differ, so the honest test is the four concrete fields (action, place, company, mood). On those, two runs of neighbours share two fields, place and company, and pass on the other five: S05 and S06 (Quay Street with Ron: the debts, then car three; one a walk and grey, the other a drive and loud); and S17 and S19 at the office counter with Sheila, with S18 between them in Mickey's locked office, also with Sheila. The director should put a street card or a side story among those three when it can, since none of them wakes on the same state. S22 now plays at the office counter too (Garbutt with Sheila's tea, scene 10); its neighbours are the dock gate (S21) and the counter with the plan in tea things (S23), which differ from it on company, opening, turn, ending and mood.
 
