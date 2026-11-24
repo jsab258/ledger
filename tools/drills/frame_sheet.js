@@ -28,3 +28,10 @@ window.sheet = async (ts) => {
   }
   return [v.videoWidth, v.videoHeight, res];
 };
+
+// SAVED EVIDENCE (24 Nov 2026, after the RDR2 review failed five readings with nothing saved): the pane refuses a
+// page's request to a local receiver ("Unsafe attempt to load URL http://127.0.0.1"), so pictures cannot be posted
+// from the page. The pane's own screenshots are kept as files in the session's tool-results folder: draw the frame
+// with its time label (one(t) above, or a canvas the pane's width), take a screenshot at scale 0.4, and copy that
+// file to F:/LedgerTools/game-inputs/footage/<video id>/<t>-<label>.jpg with an index.json. The screenshot lags one
+// draw: name each file by the yellow label in it, never by the call order. First used on KvZfR0IU9ms 1,102-1,293 s.

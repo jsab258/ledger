@@ -4,9 +4,9 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-24 16:37 (the hourly run)
 
-**Row due:** 16:45 (last row 15:45; page read 15:53; filter verdicts after 2026-11-24T14:53 UTC, advisor after 2026-11-24T15:25:00+01:00 (355 came late with an earlier "at"); last ack 355 at 16:00).
-**Uncommitted:** RULINGS.md (355; over its cap, the hook refuses it); the rest committed, not pushed.
-**Stopped:** 2026-11-24 16:05 (the 15:37 run: advisor 355 in RULINGS, cap item open; RDR2 being seen 5 of 5, review owed; history OVER)
+**Row due:** 17:49 (last row 16:49; page read 17:05; filter verdicts after 2026-11-24T16:05 UTC, advisor after 2026-11-24T16:12:00+01:00; last ack 357 at 16:56).
+**Uncommitted:** nothing after this commit; pushed to wip.
+**Stopped:** 2026-11-24 17:19 (the 16:37 run: advisors 356 and 357 done; RDR2 being seen not solid on review, four spells' edges saved; history near its limit)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -34,31 +34,33 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- 15:37 run: **advisor 355** (his picks 15:2x) recorded in RULINGS: deciding rows to leads on two games, being seen alone five uncut samples; Frank's one loud deed a week (tested; written lead the fallback); a Landing gun on every path; seven game weeks, empty hours skipped, main story about 20 hours (the 15-20 h line removed). RULINGS is 26 words over its cap; rewording his other rulings to make room was refused by the PC's safety check and undone. **His page has one open item**: rulings-cap-2026-11-24 (cap 4,930, recommended yes). Acked 16:00.
-- **RDR2 being seen: five uncut samples** of wanted lit to cleared by riding off, no lawman close: about 42, 65, 71, 71, 188 s (median 71; four of five LordGedi; No13 a live stream, 1,104 to 1,291 s, a house break-in). Also qOP054QxyAc (ZpresidentGames PS5): a shootout spell about 513 s, solid red then white then clear (a second ending pattern); No12: a witness run down before the report, about 39 s, no wanted. No10, No11: no flag. The sheet tool now seeks through the page's player (seekTo) and counts red and white pixels per cell.
-- 14:06 run: push unblocked; advisors 352-354; n23-3 repeat pair (Sonnet 5.5 1.41 s, 1.64 s).
+- 16:37 run: **advisor 356**: RULINGS back under its cap (4,896) by notation only (ranges 4-6, advisor numbers off date labels; enforcer keys follow); cap item closed; pushed. **Advisor 357** (RDR2 installed): the copy in C:/Games is NOT run (RDR2.exe fails Rockstar's signature, Launcher_with_cracktro.exe and 1911.dll unsigned; the 23 Nov 20:30 safety line); one money item on his page, rdr2-store-copy-2026-11-24 (footage recommended). Progress page refreshed (live index kept; progress.json and 24 Nov pictures). DAILY-2026-11-24.md written (n23-7).
+- **RDR2 being seen: fresh review NOT SOLID** (review-being-seen-rdr2-2026-11-24.md): nothing saved, 1drjFJjei8g edited with unknown platform, No13 maybe the solid-red case. Since then edges SAVED for No8, No9 x2, No13 (F:/LedgerTools/game-inputs/footage/<id>/, index.json each, uploads 9 and 13 Mar 2025); the readings' solid-red claim corrected.
+- **n23-3 question 4** from the bench totals: Sonnet 5.5 about US$0.0057 a line, US$0.09 an hour at 15 replies (a floor: first questions); per-model rows need a per-model tally in ClaimBench.
+- Earlier runs today: advisor 355 in RULINGS; RDR2 five readings; n23-3 repeat pair.
 
 ## In flight
-- Nothing runs. The browser pane is on YouTube (No13).
+- Nothing runs. The browser pane is on YouTube No9.
 
 ## Next, in order
-00. Pace: 64% at 16:00; **the weekly stop is 90%** (advisor 352): at the newest reading of 90% finish the step, commit, push, one row, write production/weekly-stop.json {"until": "2026-11-30T13:00", "reading": N}, set this file's "**Next due:** 2026-11-30 13:00" line, put one item on his page (switch off 'ledger-daily-fresh-session', Code tab, Scheduled; on after Monday 13:00), and stop all work.
-0. Read the verdict on rulings-cap-2026-11-24: on yes set RULINGS' cap to 4,930 in tools/doc-caps.py (his yes quoted), close the item (needs_you_page.py --close), run ci, push. On no, ask which line to drop (never reword his rulings unasked: refused 15:58).
-1. Advisor 355's measuring plan, owed in the next row: deciding rows to leads (about 5.7 h, about 28 points at the 5-points-an-hour upper bound) against 26 points left to 90%: leads first in the deciding rows' order, the lead-is-enough rows not before the stop; being seen strict.
-2. **RDR2 being seen: one fresh reviewer** (final-reviewer, no clicks) on the five samples against being-seen-readings-2026-11-24.md (the RDR2 sections from 1drjFJjei8g on) before STATUS says SOLID; then RECIPE and NOTEBOOK lines for the unit.
-3. **KCD2 being seen, five uncut samples** (now required by 355): footage found none uncut and unmodded; long console sessions with crime, read by the compass crop; if none within about 1 h, report the shortfall plainly (search DECISIONS for the KCD2 copy's status before pricing any scripted run).
-4. On-foot cadence leads (GTA V, KCD2, RDR2 footage); chases on foot leads (L.A. Noire, GTA V); crowd reactions Q3 (leads on two games).
-5. n23-3 cost per hour (question 4) from the bench's dollars and turn counts. The bench's held probes say "I'm Tom": waiting list (the lead is Frank since 348).
-6. n23-4 voice scan; n23-7 (DAILY file 19:00 with the measuring-hours line; credit row). Advisor 320 (the backup's 28 GB on C:): two tries used; research before a third.
-0a. Advisor 277: Kiln, hair and the crowd paused. 0b. Next night walk Mon 30 Nov 01:30 (held while the stop file holds). 4p. Marvelous stays open. No Unreal work until the browser prototype is done (advisor 288). 5p. History rewrite HELD for his word. Progress page daily (progress.json only).
+00. Pace: 67% at 16:49; **the weekly stop is 90%** (advisor 352): at the newest reading of 90% finish the step, commit, push, one row, write production/weekly-stop.json {"until": "2026-11-30T13:00", "reading": N}, set "**Next due:** 2026-11-30 13:00", one page item (switch off the scheduled task ledger-daily-fresh-session, Code tab, Scheduled; on after Monday 13:00), stop all work.
+0. Read the verdict on rdr2-store-copy-2026-11-24 (footage or store). A row is owed at 17:49.
+1. **RDR2 being seen to SOLID:** replace 1drjFJjei8g (edited) and decide on No13 (or replace it): read LordGedi No3, No4, No6 (or a second player's uncut console session) for riding-off spells; save every edge the new way (below); then one fresh final-reviewer (no clicks) against the readings and the saved pictures.
+2. KCD2 being seen, five uncut samples (footage found none unmodded so far; long console sessions, compass crop); report the shortfall plainly if none within about 1 h.
+3. On-foot cadence leads; chases on foot leads (L.A. Noire, GTA V); crowd reactions Q3 leads on two games.
+4. n23-3: per-model tally in ClaimBench before the per-model rows; prices re-read with dates. The probes' "I'm Tom": waiting list.
+5. n23-4 voice scan; n23-7 (DAILY tomorrow by 19:00; credit row). Advisor 320 (backup's 28 GB on C:): two tries used; research before a third.
+0a. Advisor 277: Kiln, hair and the crowd paused. 0b. Next night walk Mon 30 Nov 01:30 (held while the stop file holds). 4p. Marvelous stays open. No Unreal work until the browser prototype is done (advisor 288). 5p. History rewrite HELD for his word. Progress page daily (progress.json only; publish the LIVE index.html read back, not the local one, which differs).
+
+## Saving footage evidence (works, 24 Nov 17:10)
+In the pane: define draw(vid, t) (seek, wait for readyState 4, draw the frame on a fixed canvas the pane's width, yellow label of id and time), wait 2 s, then computer zoom region [0,0,800,450] at scale 0.5: the result names a file in the session's tool-results folder; copy it to F:/LedgerTools/game-inputs/footage/<id>/<t>-<label>.png and list it in index.json with the upload date (meta itemprop uploadDate). Without the 2 s wait the capture lags one draw; trust only the label.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
-- 24 Nov 15:58: rewording his other rulings to fit 355 under the cap was refused by the PC's safety check (it touched the deletion and tries lines); undone. Only he raises the cap or names a line to drop.
-- 24 Nov 15:44: a plain backward seek (video.currentTime) stalled the YouTube video unbuffered twice; seek with the page player's seekTo(t, true) and wait for readyState 2. Notes timed 16:00 to 16:20 by guess were really 15:47 to 15:53: Get-Date before every time.
-- 24 Nov 14:35: a shell append with no input waited for ever (moved to the background, then stopped); write files with a heredoc, Write or Edit only.
-- 24 Nov 14:17: the KCD2 stream was taken as unmodded until a mod list showed at 2,625 s: check any PC stream for mod lists, consoles or overlays before reading an incident.
-- 24 Nov 12:41: the 11:53 plan priced a scripted KCD2 run against a copy already ruled out; search DECISIONS for a program's name before pricing any run in it. Always Get-Date before a timestamp.
-- 24 Nov 10:43: long awaited javascript_tool calls fail 'target closed'; start unawaited into window.sres and poll. The pane drops the 1600x900 viewport when its width changes: set it before each screenshot.
+- 24 Nov 17:08: posting crops from the YouTube page to a local receiver (127.0.0.1) is refused by the pane ("Unsafe attempt to load URL"); the receiver was deleted. Use the pane's own saved captures.
+- 24 Nov 16:52: the installed RDR2 is a modified copy; not run (safety line). Do not price drills in it.
+- 24 Nov 15:58: changing his rulings' meaning is refused by the PC's safety check; notation-only tightening passed at 16:43 (advisor 356).
+- 24 Nov 15:44: a plain backward seek stalled the video; wait for 'seeked' and readyState before drawing.
+- 24 Nov 14:17: check any PC stream for mod lists, consoles or overlays before reading an incident.
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3.
