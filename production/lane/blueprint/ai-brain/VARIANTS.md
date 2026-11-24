@@ -36,6 +36,10 @@ The rules are the temper model's (temper/TEMPER-MODEL.md section 3; temper/tempe
 - The breaker had five turns at most; a human with hours and a reload button will find more. Zero granted impossible asks is a floor on safety, not a proof.
 - The constable's knowledge of the blow on the rank is written into his moment's facts, so his callback is the scene's, not play's (the interest judge noticed).
 - The ambient passes ran once each, on the racketeer's week only.
+- For V1, V2 and V5 an impossible ask is refused once the classifier tags it impossible; the classifier tagged all fifteen breaker talks so, and no line was written to fool it.
+- The blinding leaks a little: the outcome line is a fixed grant sentence for V1, V2, V5 and V3's guarded moments and free text for V4 and V3's open ones.
+- Two harness defects (M11's grant names facts missing from the card; M15's honest grant passes on a story the lines never told) cost V1 and V2 faults; RESULTS gives the counts with and without them.
+- V2 as tested had no guarded moments; the mode BRAIN-SWITCH proposes (the rules decide money, freedom, life and turning points) was not run.
 
 ## 4. Files
 
