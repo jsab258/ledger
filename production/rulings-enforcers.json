@@ -643,6 +643,13 @@
     "monday-audit"
    ],
    "note": "advisor 351, 24 Nov: printed things get their final 2D look before Unreal; the paper map is one sample for his judgement after the reset; the Monday audit checks no other printed piece is finalised before it passes"
+  },
+  {
+   "line": "24 Nov, open question: how much the AI",
+   "by": [
+    "monday-audit"
+   ],
+   "note": "advisor 365, 24 Nov: the brain-level test runs in the cloud lane (production/lane/blueprint/ai-brain/); the Monday audit checks no design change lands before his decision on its result"
   }
  ]
 }
