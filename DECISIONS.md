@@ -677,3 +677,5 @@ Decision: his pick A carried out. A line moves when every enforcer production/ru
 
 ## 2026-11-24 22:58 - Killing a constable recorded in RULINGS (advisor 369, his pick A)
 Decision: his pick recorded as one line under People and the street's life; it replaces the lane's RT2-02 killing line (RT2-02 lives in the lane's definitions, not in RULINGS, so the keeper is told in the ack). Enforcer: the Monday audit. The PC session does not design the long heat (the cloud what-if job does). Link: RULINGS.md.
+
+- 2026-11-24 23:53: Advisors 371-373 (his picks 23:13, 23:29, 23:34) recorded in RULINGS: main cast's gossip on rules; Quay Street lamps two at ~34 m; Monday's paper playthrough first; fares at the late-1991 tariff; AI-brain re-run V1-V4 plus hybrid, V5 dropped; only build-shaping gaps before the one-shot. The keeper reads RULINGS. Link: RULINGS.md.
