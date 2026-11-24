@@ -1116,3 +1116,9 @@
 {"event": "stop", "at": "2026-11-23T20:22:00", "note": ""}
 {"event": "start", "at": "2026-11-23T20:26:00", "task": "n23-1 Sleeping Dogs opening and first drill", "phase": "0", "kind": "production"}
 {"event": "stop", "at": "2026-11-23T21:06:00", "note": ""}
+{"event": "start", "at": "2026-11-24T10:43:00", "task": "being seen: KCD2 and RDR2 footage sheets", "phase": "0", "kind": "production"}
+{"event": "stop", "at": "2026-11-24T10:54:00", "note": "measuring: two KCD2 clips, one stream, RDR2 fine sheets"}
+{"event": "start", "at": "2026-11-24T11:43:00", "task": "n23-1 on-foot method check try 1 (Sleeping Dogs cadence, footage)", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-24T11:56:00", "note": ""}
+{"event": "start", "at": "2026-11-24T11:56:00", "task": "n23-1 on-foot method check try 2 (side-on search) and method questioned", "phase": "5", "kind": "production"}
+{"event": "stop", "at": "2026-11-24T12:02:00", "note": ""}

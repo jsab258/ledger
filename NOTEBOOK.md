@@ -2974,3 +2974,12 @@ Cost of this entry about 0.1 h.
 - Cost: about 0.5 h for two clips after the first readings.
 - Failed and why: the screenshot shows the grab before the last (match the yellow label, not the call order); a full-size screenshot cropped the right third until the viewport was set again; a walking route through quiet lanes gives few busy views, so pick clips by place, not by length.
 - Recipe map: no step moved (a measuring method already on the map as footage reading).
+
+### On-foot speeds from third-person footage, set aside (24 Nov 2026)
+- Made: a cadence reading from behind (white soles' highest point alternating left and right, at 1/15 s steps over about 3 s): about 2.8 steps a second, one sample.
+- Method: speed = cadence x step length; cadence from the swing foot's highest frame, step length from landings against a fixed ground mark side-on.
+- Tools: browser pane, a seek-and-draw crop sheet in the page (24 cells, video time on each).
+- Target and check: within 10% of a speed known from the game's own distance readout. Not reached.
+- Cost: about 0.4 h.
+- Failed and why: runs have a flight phase, so "heel gap with both feet down" does not exist; a following camera never shows side-on landings with the ground still; an automatic white-pixel count read the pavement. Lesson: speeds need the game's own distances (scripted runs), footage gives cadence and gait shape only.
+- Evidence: production/research/lane/measurements/ON-FOOT-METHOD-2026-11-24.md (Try 1, Try 2).

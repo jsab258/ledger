@@ -238,7 +238,7 @@
    "note": "the day's ceiling refuses a batch; settings_check.py judges each logged day against its ceiling; calls never logged are not caught"
   },
   {
-   "line": "28 Sep: The relay, when friends need it",
+   "line": "28 Sep: The relay, when needed, runs",
    "by": [
     "monday-audit"
    ]
@@ -290,7 +290,7 @@
    ]
   },
   {
-   "line": "30 Sep: His page's pictures are taken at 2560",
+   "line": "30 Sep: His page's pictures: 2560",
    "by": [
     "tools/needs_you_page.py::not 2560x1440 (RULINGS 30 Sep)",
     "monday-audit"
@@ -362,7 +362,7 @@
    ]
   },
   {
-   "line": "4 Oct: Mickey's office is the front room Tom",
+   "line": "4 Oct: Mickey's office, the front room Tom",
    "by": [
     "tools/office_look.py",
     "monday-audit"
