@@ -296,6 +296,35 @@
    ],
    "state": "done",
    "closed": "2026-11-24 13:00, he tapped done 10:39; his run stopped at a permission prompt and was interrupted, the task is still off; the session handles it (advisor 349)"
+  },
+  {
+   "id": "rulings-cap-2026-11-24",
+   "tag": "DECISION",
+   "kind": "scope",
+   "title": "Rulings file: allow 30 more words for today's picks?",
+   "text": "Your picks of 15:2x (advisor 355: loud deed a week, the gun at the Landing, 20 hours, being seen five samples) are written into the rulings file, which is now 26 words over its 4,900 cap. The cap rises only with your yes.",
+   "why": [
+    "Nothing in the file may be cut to make room without your word; until then the push to the backup branch waits."
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "recommendation": "Yes, cap 4,930: the four picks need the words; the file stays one read.",
+   "options": [
+    [
+     "yes",
+     "Yes, cap 4,930 (recommended)"
+    ],
+    [
+     "no",
+     "No, I will say what to drop"
+    ]
+   ],
+   "state": "open",
+   "added": "2026-11-24 15:58"
   }
  ]
 }

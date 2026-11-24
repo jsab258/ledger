@@ -2,11 +2,11 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed, the next steps and the tries used.
 
-**Started:** 2026-11-24 14:06 (the hourly run)
+**Started:** 2026-11-24 15:37 (the hourly run)
 
-**Row due:** 15:55 (last row 14:55; page read 14:58; filter verdicts after 2026-11-24T13:00 UTC, advisor after 2026-11-24T15:00:00+01:00; last ack 354 at 14:59).
-**Uncommitted:** nothing (this stop's commit, pushed if ci ends failed=none).
-**Stopped:** 2026-11-24 15:02 (the 14:06 run: advisors 352-354; RDR2 4 of 5; history past its point)
+**Row due:** 16:45 (last row 15:45; page read 15:53; filter verdicts after 2026-11-24T14:53 UTC, advisor after 2026-11-24T15:25:00+01:00 (355 came late with an earlier "at"); last ack 355 at 16:00).
+**Uncommitted:** RULINGS.md (355; over its cap, the hook refuses it); the rest committed, not pushed.
+**Stopped:** 2026-11-24 16:05 (the 15:37 run: advisor 355 in RULINGS, cap item open; RDR2 being seen 5 of 5, review owed; history OVER)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -34,26 +34,27 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- 14:06 run: **push unblocked**: his page's answers read back by this session (ArtifactData query of verdicts with out_dir production/approvals/answers/1VZHkCBAHdw8HBdNHrByL8, then page_answers.py --index); 15 commits pushed 14:13. The nightly copy task stays off (his).
-- **Advisor 352**: weekly stop 90% until Mon 30 Nov 13:00 (RULINGS 7/10 Nov line, NOW.md). **353**: each row carries measuring hours and the meter's rise; first estimate about 5 points a measuring hour (upper bound). **354**: the stop-file route, done in part: tools/nightly_walk.py now ends before packaging or the AI tester while production/weekly-stop.json holds ({"until": "2026-11-30T13:00"}), self-test 35/35. All acked 14:27 and 14:59.
-- **Being seen**: KCD2 stream vyA2Nm1BHyw is modded (a mod list and a wanted overlay at 2,625 s): leads only. Compass colours from two guides: white searching, yellow noticing, red combat (kcd2-compass-icons-2026-11-24.md). KCD2 clips read (AlNbGAgF3EM PS5, wLgaIdxZI3M, 39yKmjz13Ts): no sample. **RDR2 4 of 5 uncut samples**: 1drjFJjei8g (65 s), ks7t4W22p3U No8 PS5 (71 s; witness to wanted 106 s at a remote ranch), -gj2OL_TeG8 No9 PS5, two in Valentine (71 s and 42 s; witness to wanted 10 and 44 s). Three of four from one player (LordGedi). Method: the HUD-corner flag sheet, 48 cells at 40 s (RECIPE chapter 1); ads pause it, it resumes.
-- **n23-3 repeat pair** (B then C): Sonnet 5.5 median 1.27 s, 41/60 under 2 s; Sonnet 5 2.09 s, 29/60; pooled over two days 1.41 against 1.64 s. US$0.69 (task measure-2026-11-24). N23-3-QUESTIONS-2026-11-23.md.
+- 15:37 run: **advisor 355** (his picks 15:2x) recorded in RULINGS: deciding rows to leads on two games, being seen alone five uncut samples; Frank's one loud deed a week (tested; written lead the fallback); a Landing gun on every path; seven game weeks, empty hours skipped, main story about 20 hours (the 15-20 h line removed). RULINGS is 26 words over its cap; rewording his other rulings to make room was refused by the PC's safety check and undone. **His page has one open item**: rulings-cap-2026-11-24 (cap 4,930, recommended yes). Acked 16:00.
+- **RDR2 being seen: five uncut samples** of wanted lit to cleared by riding off, no lawman close: about 42, 65, 71, 71, 188 s (median 71; four of five LordGedi; No13 a live stream, 1,104 to 1,291 s, a house break-in). Also qOP054QxyAc (ZpresidentGames PS5): a shootout spell about 513 s, solid red then white then clear (a second ending pattern); No12: a witness run down before the report, about 39 s, no wanted. No10, No11: no flag. The sheet tool now seeks through the page's player (seekTo) and counts red and white pixels per cell.
+- 14:06 run: push unblocked; advisors 352-354; n23-3 repeat pair (Sonnet 5.5 1.41 s, 1.64 s).
 
 ## In flight
-- Nothing runs. The browser pane is on YouTube.
+- Nothing runs. The browser pane is on YouTube (No13).
 
 ## Next, in order
-00. Pace: 63% at 14:55; **the weekly stop is 90%** (advisor 352): at the newest reading of 90% finish the step, commit, push, one row saying so, write production/weekly-stop.json {"until": "2026-11-30T13:00", "reading": N}, set this file's "**Next due:** 2026-11-30 13:00" line (the gate then holds starts at WAIT), put one item on his page (switch off LEDGER: the hourly fresh session, Code tab, Scheduled; on after Monday 13:00), and stop all work.
-0. Advisor 354's rest: say in the next row the route taken (the stop file holds the night walk, done; the hourly task needs his switch, about US$0.46 a held run, up to four an hour). Each row: measuring hours this run and the meter's rise (advisor 353).
-1. **RDR2 being seen, sample 5**: the LordGedi PS5 series' unread parts (No3 NsBRalZza9M, No4 EF7TwaM9q_g, No6 vhJXGyjhH-4, No10 8q0sla5lgeQ, No11 BsmPLcJ2PRg, No12 BNiEtuMviwU, No13 KvZfR0IU9ms); prefer a second player for the fifth (otherwise four of five from one player, stated beside the number). Then one fresh reviewer on the five against being-seen-readings-2026-11-24.md before the row is called solid.
-2. KCD2 being seen stays leads this week (titled clips show the talk after a catch; no uncut console session with crimes found). Only if time remains before 90%: long "KCD2 PS5 no commentary" sessions with crime themes, read with the compass crop.
-3. n23-3: cost per hour (question 4) can be computed now from the bench's dollars and turn counts; the voice beside and inside the packaged game (question 3) needs Unreal and a free machine with him away, not before the prototype (advisor 288) unless the order says so.
-4. On-foot cadence leads (GTA V, KCD2, RDR2 footage); chases on foot leads (L.A. Noire, GTA V); crowd reactions Q3 (advisor 341: leads on two games).
-5. The bench's held probes say "I'm Tom": a follow-up for the story lane (the lead is Frank since advisor 348); put it on the order's waiting list; do not edit the bench set mid-measure.
+00. Pace: 64% at 16:00; **the weekly stop is 90%** (advisor 352): at the newest reading of 90% finish the step, commit, push, one row, write production/weekly-stop.json {"until": "2026-11-30T13:00", "reading": N}, set this file's "**Next due:** 2026-11-30 13:00" line, put one item on his page (switch off 'ledger-daily-fresh-session', Code tab, Scheduled; on after Monday 13:00), and stop all work.
+0. Read the verdict on rulings-cap-2026-11-24: on yes set RULINGS' cap to 4,930 in tools/doc-caps.py (his yes quoted), close the item (needs_you_page.py --close), run ci, push. On no, ask which line to drop (never reword his rulings unasked: refused 15:58).
+1. Advisor 355's measuring plan, owed in the next row: deciding rows to leads (about 5.7 h, about 28 points at the 5-points-an-hour upper bound) against 26 points left to 90%: leads first in the deciding rows' order, the lead-is-enough rows not before the stop; being seen strict.
+2. **RDR2 being seen: one fresh reviewer** (final-reviewer, no clicks) on the five samples against being-seen-readings-2026-11-24.md (the RDR2 sections from 1drjFJjei8g on) before STATUS says SOLID; then RECIPE and NOTEBOOK lines for the unit.
+3. **KCD2 being seen, five uncut samples** (now required by 355): footage found none uncut and unmodded; long console sessions with crime, read by the compass crop; if none within about 1 h, report the shortfall plainly (search DECISIONS for the KCD2 copy's status before pricing any scripted run).
+4. On-foot cadence leads (GTA V, KCD2, RDR2 footage); chases on foot leads (L.A. Noire, GTA V); crowd reactions Q3 (leads on two games).
+5. n23-3 cost per hour (question 4) from the bench's dollars and turn counts. The bench's held probes say "I'm Tom": waiting list (the lead is Frank since 348).
 6. n23-4 voice scan; n23-7 (DAILY file 19:00 with the measuring-hours line; credit row). Advisor 320 (the backup's 28 GB on C:): two tries used; research before a third.
 0a. Advisor 277: Kiln, hair and the crowd paused. 0b. Next night walk Mon 30 Nov 01:30 (held while the stop file holds). 4p. Marvelous stays open. No Unreal work until the browser prototype is done (advisor 288). 5p. History rewrite HELD for his word. Progress page daily (progress.json only).
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
+- 24 Nov 15:58: rewording his other rulings to fit 355 under the cap was refused by the PC's safety check (it touched the deletion and tries lines); undone. Only he raises the cap or names a line to drop.
+- 24 Nov 15:44: a plain backward seek (video.currentTime) stalled the YouTube video unbuffered twice; seek with the page player's seekTo(t, true) and wait for readyState 2. Notes timed 16:00 to 16:20 by guess were really 15:47 to 15:53: Get-Date before every time.
 - 24 Nov 14:35: a shell append with no input waited for ever (moved to the background, then stopped); write files with a heredoc, Write or Edit only.
 - 24 Nov 14:17: the KCD2 stream was taken as unmodded until a mod list showed at 2,625 s: check any PC stream for mod lists, consoles or overlays before reading an incident.
 - 24 Nov 12:41: the 11:53 plan priced a scripted KCD2 run against a copy already ruled out; search DECISIONS for a program's name before pricing any run in it. Always Get-Date before a timestamp.
