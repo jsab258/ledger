@@ -143,3 +143,15 @@ hair colour 2 of 2; worn paint 2 of 2; the office and sit on by default 2 of 2; 
 - 23:51 run: Sleeping Dogs on foot SOLID: sprint 5.5 m/s, jog 4.5 m/s (five samples each; SLEEPING-DOGS-DRILL-2026-11-23.md).
 - 24 Nov 01:38: page read-back with out_dir refused again (Undermining Oversight); two tries used; asked on his page.
 - 24 Nov 00:50: page read-back with out_dir refused by the permission check (Undermining Oversight); ci then fails page-answers-fresh; nothing pushed.
+
+
+## Moved 24 Nov 10:57 (from the handover's Done today)
+- 09:36 run: **advisor 340** (his choices 08:48 to 09:04, 'A on top of C') in RULINGS: the story is first a living town where Tom builds a crime empire, a light spine on top, never fixed missions, cast 4-6 / 20-30 / 200-300; two or three endings kept; within the 4,900 cap by tighter wording; enforcer entry renamed. The frame is the story lane's (its row 09:08 shows it started). **Advisor 341**: fists and driving are leads (STATUS), named second games per one-game lead; deciding about 18 h. Both acked 09:43. Row 09:46.
+- **Crowd counts SOLID by count** (crowd-counts-2026-11-24.md): five busiest daytime views KCD2 about 10, 9, 6, 6, 5; RDR2 about 7, 6, 6, 5, 5; quiet 0 to 3; four clips dated. NOTEBOOK entry written.
+- **Being seen, first readings** (being-seen-readings-2026-11-24.md): three RDR2 clips, all leads (flag within about 4 to 8 s of a fight; investigating to seen about 27 s; wanted cleared within about 10 s near a lawman); KCD2 none. tools/drills/frame_sheet.js: twelve frames a picture, works.
+- Readers: ON-FOOT-RULERS (no on-screen ruler; heights community estimates only) and BEING-SEEN-CLIPS (leads by title).
+- 08:51 run: advisor 339 in RULINGS (five samples only on deciding rows; measuring about 35 points, story about 10 beyond 35%, stop 95% (advisor 346 corrected 88%); pace_line.py's over-6 line ignored to Mon 30 Nov). Detail and the 23:51 Sleeping Dogs speeds moved to TRIED-ARCHIVE.md 'Moved 24 Nov 09:55'.
+- 23 Nov runs (order adopted, star reader, catalogue, n23-5, n23-3 first numbers, the fast film; GTA IV, GTA V, KCD2 copies NOT run, DECISIONS 23 Nov 20:30, do not re-ask him) and the night's quiet runs: moved to TRIED-ARCHIVE.md, 'Moved 24 Nov 09:01'.
+- 24 Nov 09:45: research readers cannot see YouTube pages (title only); lengths and dates come from the page's own data read in the pane (uploadDate, lengthSeconds by fetch in the page).
+- 24 Nov 08:57: frame sheets of several frames (play and pause between seeks) drew black cells, twice; replaced by seek-and-wait, one frame a grab (frame_grab.js), which works. The pane's screenshot can show the previous grab: read the yellow label.
+- 24 Nov 09:00: the pane's YouTube search drew an empty page twice (with and without the 1600x900 viewport); WebSearch limited to youtube.com found clips instead.
