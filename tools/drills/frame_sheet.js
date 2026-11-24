@@ -35,3 +35,46 @@ window.sheet = async (ts) => {
 // with its time label (one(t) above, or a canvas the pane's width), take a screenshot at scale 0.4, and copy that
 // file to F:/LedgerTools/game-inputs/footage/<video id>/<t>-<label>.jpg with an index.json. The screenshot lags one
 // draw: name each file by the yellow label in it, never by the call order. First used on KvZfR0IU9ms 1,102-1,293 s.
+
+// RED SCAN (24 Nov 2026, 18:05): scanRed(t0, t1, step) runs in the background (call without await, then poll
+// window.scan.rows / window.scan.done in calls under 40 s): each row [time, red pixels, white pixels] in the flag
+// region (top-right 30% by 10.5%; red = R>170, G<70, B<70). Any row over 15 red is looked at with flags([...]),
+// which draws the flag region itself at 2 x: the ammo counter turning red at zero gives about 100 red pixels too.
+window.scanRed = async (t0, t1, step) => {
+  const v = document.querySelector('video'); v.muted = true; v.pause();
+  const c = document.createElement('canvas'); const W = v.videoWidth, H = v.videoHeight;
+  const cw = Math.round(W * 0.30), ch = Math.round(H * 0.105); c.width = cw; c.height = ch;
+  const g = c.getContext('2d', { willReadFrequently: true });
+  window.scan = { done: false, rows: [] };
+  for (let t = t0; t <= t1; t += step) {
+    if (document.querySelector('.ad-showing')) { await new Promise((r) => setTimeout(r, 2000)); t -= step; continue; }
+    v.currentTime = t;
+    await Promise.race([new Promise((r) => v.addEventListener('seeked', r, { once: true })), new Promise((r) => setTimeout(r, 6000))]);
+    for (let k = 0; k < 30 && v.readyState < 3; k++) await new Promise((r) => setTimeout(r, 200));
+    await new Promise((r) => setTimeout(r, 250));
+    g.drawImage(v, W - cw, 0, cw, ch, 0, 0, cw, ch);
+    const d = g.getImageData(0, 0, cw, ch).data; let red = 0, wh = 0;
+    for (let i = 0; i < d.length; i += 4) { if (d[i] > 170 && d[i + 1] < 70 && d[i + 2] < 70) red++; if (d[i] > 230 && d[i + 1] > 230 && d[i + 2] > 230) wh++; }
+    window.scan.rows.push([Math.round(v.currentTime), red, wh]);
+  }
+  window.scan.done = true;
+};
+window.flags = async (ts) => {
+  const v = document.querySelector('video'); v.muted = true; v.pause();
+  let c = document.getElementById('lsheet');
+  if (!c) { c = document.createElement('canvas'); c.id = 'lsheet'; document.documentElement.appendChild(c); }
+  const W = v.videoWidth, H = v.videoHeight, cw = Math.round(W * 0.30), ch = Math.round(H * 0.105);
+  c.width = 800; c.height = 100 * Math.ceil(ts.length / 2);
+  c.style.cssText = 'position:fixed;left:0;top:0;width:800px;z-index:2147483647;background:#000';
+  const g = c.getContext('2d'); g.fillStyle = '#000'; g.fillRect(0, 0, c.width, c.height);
+  for (let i = 0; i < ts.length; i++) {
+    v.currentTime = ts[i];
+    await Promise.race([new Promise((r) => v.addEventListener('seeked', r, { once: true })), new Promise((r) => setTimeout(r, 6000))]);
+    for (let k = 0; k < 30 && v.readyState < 3; k++) await new Promise((r) => setTimeout(r, 200));
+    await new Promise((r) => setTimeout(r, 400));
+    const x = (i % 2) * 400, y = Math.floor(i / 2) * 100;
+    g.drawImage(v, W - cw, 0, cw, ch, x, y, 396, 96);
+    g.fillStyle = '#ff0'; g.font = 'bold 16px sans-serif'; g.fillText(v.currentTime.toFixed(1), x + 4, y + 90);
+  }
+  return 'ok';
+};
