@@ -50,3 +50,7 @@ Measured or published reach: not found. The E-approval photometric values (UN Re
 - BS 5489-3:1989 tables (paid standard).
 - The MOT regulations and the 1990 amendment of C&U Schedule 3.
 - Hella light-distribution page (404); TRID record (connection refused); AA stopping distances page (no table); Magzter article (403).
+
+## The braking flag checked against our own code (25 Nov 00:20 Swiss)
+- The town simulation's traffic (ledger/Assets/Scripts/Core/Traffic.cs, kinds' Brake 3.5 to 6.0 m/s²): at 30 mph (13.4 m/s) braking distance v²/2a = 15 m (6.0) to 22 m (4.0), 16 m for the common 5.5. So these cars stop LONGER than the Highway Code's 14 m braking figure, not shorter: the flag's "8 to 11 m" does not match this code.
+- The browser prototype's player car (lane-2026-11, tools/lane/prototype/project/src/qr/vehicle.js) has no braking constant: its stopping distance comes out of the tyre model, so it can only be measured by a run (a stop from 30 mph on dry and wet). That is the cloud lane's code: the check goes to the keeper's list, not done here. The 8 to 11 m may come from there; unverified.

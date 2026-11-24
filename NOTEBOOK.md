@@ -3013,3 +3013,12 @@ Cost of this entry about 0.1 h.
 
 ## 2026-11-24 23:05 - Walking rate from third-person footage, automatic reading set aside
 Made: an in-page reading of step rate from a following-camera clip (frame difference in a box, drift removed, autocorrelation). Method: sample the frame at a fixed step by seeking, sum brightness change or left-right balance in a box over the legs, remove the slow trend, take the lag of the strongest repeat. Tools: the browser pane, canvas reads. Target and check: a clear peak at the step period, checked by eye on a leg crop sheet. Cost: about 0.2 h. Failed: a wide box sees only camera drift; a tight box gives weak peaks (0.17), because a following camera and small legs at 720p carry little repeating signal. Evidence: production/research/lane/measurements/ON-FOOT-METHOD-2026-11-24.md (last section). Also: a menu filter (share of parchment-coloured pixels in the frame centre) removed every false icon hit in a thief-run scan.
+
+## 25 Nov 2026, 00:40: is a footage upload playing at real speed? (measuring block, on foot)
+- Made: a playback-speed check for an hour-long gameplay upload, and a walk cadence read beside a townsperson.
+- Method: where a game runs a fixed day length, scan the frame's mean brightness every 10 s across the whole clip; match the same brightness on two successive dawns (or dusks); the interval against the published day length gives the playback ratio. A pause lengthens it, a cut shortens it, so a match within 1% rules out speed-up. Read the hero's cadence beside an ambient walker at the same pace to catch a mis-read.
+- Tools: the built-in browser pane, an in-page canvas scan (no download); the published day length from guides.
+- Target and check: ratio 1.00 within 2%; got 2,900 s against 2,880 s.
+- Cost: about 0.5 h, scan 12 min unattended.
+- Failed and why: the first cadence (3.3 steps a second) was likely one stride read as one step; townspeople at a crossing were standing, not walking (check motion before reading legs).
+- Evidence: production/research/lane/measurements/ON-FOOT-METHOD-2026-11-24.md (last entries).
