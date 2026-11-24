@@ -1,7 +1,7 @@
 # 13. Write it again
 
 - Where it sits: Act IIb, week five, the Friday morning. The turn.
-- What wakes it: the Landing and lesson five have played; a tip has reached DS Ellis, by a leak the player watched this week; notice came last evening (a constable's word at the door, and Sheila: "Clear it by morning. Leave the book."); the night's clearing is done, or not. It is seven.
+- What wakes it: the Landing and lesson five have played; a tip has reached DS Ellis, by a leak the player watched this week; word came last evening, unofficially (a constable talking at the door, and Sheila: "Clear it by morning. Leave the book."); the night's clearing is done, or not. It is seven.
 - Who must be present: DS Carol Ellis. Sheila Dunn. DC Graham Wardell and two constables for the drawers. Pauline at the radio. Ron on the door until near the end. Fallback: if Sheila has left the firm, her chair is empty and the day book lies on the counter with the pen on it; Ellis reads from it the same.
 
 Frank is trying to keep his own first line standing under a detective's eye. He will give up the one cover he has had for five weeks, which is that nobody ever made him say it twice.
@@ -12,7 +12,7 @@ The office, seven in the morning, the street lamp still on outside and the sky b
 
 Ellis stands at the counter in a raincoat with a magistrate's warrant unfolded on the fare book. She has read it to the room once. It names these premises and the yard behind them.
 
-The constables are working: every drawer out and stacked, the kettle lifted, the cushions off the customers' bench. Each thing taken goes into a clear bag with a brown label, and Wardell writes each label into a property book, a line an item. The keys on the board have gone into one bag: car one, car two, and a Yale.
+The constables are working: every drawer out and stacked, the kettle lifted, the cushions off the customers' bench. Each thing taken goes into a clear bag with a brown label, and Wardell writes each label into a property book, a line an item. Wardell has had the keys off the board, written each into his book, and hung them back: car one, car two, and a Yale.
 
 Sheila is sitting at her desk, which they have emptied round her. Her handbag is on her knee with both her hands on the clasp. Her knitting shows at the top of it.
 
@@ -112,11 +112,11 @@ He does. It is the sixteenth of November.
 
 ELLIS: Five weeks I've had this firm in front of me, and not one line in its book in the owner's hand. (She caps the pen.) Now there is.
 
-Wardell has the photocopier case open on the bench. He copies the page twice and Ellis signs each copy across the corner.
+A constable photographs the page, twice, with a flash. Ellis will sign each print across the corner.
 
 ELLIS: It's a working book. I'll not stop a business. The copies are certified; the book stops where it is. If a page leaves it, Mr Nowak, I'll know what that means, and so will a court.
 
-She puts the copies in her case.
+She puts the film in her case.
 
 ELLIS: Frank Nowak, I'm arresting you on suspicion of false accounting. You do not have to say anything unless you wish to do so, but what you say may be given in evidence.
 
@@ -139,23 +139,23 @@ Somebody, across the road, lets the curtain fall.
 - Write something else on purpose (the truth under a lie, a lie under the truth). It is "That's two," and it is in ink.
 - Answer her question about R.K., or the passenger, or not.
 - Ask for a solicitor. "At the station. The duty solicitor is free. Mr Wardell will write down that you asked."
-- Look at Sheila's bag. Nothing happens. She meets his eye and looks at her mints.
+- Look at Sheila's bag. She looks at her mints.
 - Speak to Ron on the way in or during. He says "Boss," and looks at the street. When Frank is led out he is gone.
 
 ## What the town remembers
 
 - Ada saw two cars at seven and the new owner walked to one of them at eight with a constable's hand on his arm. By nine: "Saw the police put you in the car." By noon the fish shop is wrapping in it.
 - Pauline said "All cars. Wait," on an open channel, and the Hook heard a cab office go quiet.
-- Wardell's property book has a Yale key in it, from the third hook. Asked whose door, Sheila said, "We never found out." Wardell did not ask twice. He knows whose unit is three doors up, and it is worth something to him to know it.
+- Wardell's book lists a Yale from the third hook, hung back where it was. Asked whose door, Sheila said, "We never found out." Wardell did not ask twice. He knows whose unit is three doors up, and it is worth something to him to know it.
 - Ellis holds two certified copies: one line in Sheila's hand, one beneath it in the owner's, dated. It is the best line she has ever had on the Hook, and she says so to nobody.
 - Sheila holds the red book and Mickey's real book, under her knitting, where they were all morning. She tells nobody, and takes the bag home.
 - Ron heard none of it and all of it. He was outside the glass when a detective asked who R.K. was. He has gone home for his other coat (scene 14).
-- The page now carries three hands: Pauline's half line, Sheila's finish, Frank's copy. On the last Saturday a fourth is asked for.
+- The page now carries three hands: Pauline's half line, Sheila's finish, Frank's copy. On the last Saturday a fourth entry is asked for.
 
 ## Variants by path
 
 - A ride for the sergeant was taken. Before she opens the book she says back to him, word for word, one thing he told her in the back of Terry's cab. "So I know how you put things."
 - The office was not cleared. The cocoa tin of unbanked cash is on the counter in a bag, and Mickey's office stands open: the arrest adds "and handling", and Mickey's real book, which nobody put in a handbag, is on the bench with a label on it.
 - He has been fetching his own. Nothing in this room shows it; the F.N. lines are in the red book. They matter at five o'clock on the last day.
-- Ellis is already bought. She has to come: the tip is on paper at the station and a superintendent reads. She sends the constables to the yard before she opens the book. Everything is said as written, in the same voice. She does not ask who R.K. is, or who the passenger was. As he is led out she says, for him alone: "This has to happen, Mr Nowak. What becomes of it is Friday's business. Have it with you."
+- Ellis is already bought. She has to come: the tip is on paper at the station and a superintendent reads. She sends the constables to the yard before she opens the book. Everything is said as written, in the same voice. She does not ask who R.K. is, or who the passenger was. As he is led out she says, for him alone: "This has to happen, Mr Nowak. What becomes of it is tonight's business. Have it with you."
 - A firm with no night money. The line is one of four, all in week one, and nothing follows them. She reads the first. The rest is the same, and she is nearly civil.

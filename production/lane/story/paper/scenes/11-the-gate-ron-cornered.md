@@ -10,9 +10,9 @@ Frank is trying to get Ron out of the pen with the docks looking on. He will giv
 
 The pen, twenty to seven. First light, grey, and rain coming in off the water at a slant.
 
-There were fourteen men in it a fortnight ago. This morning there are nine, and one fruit boat on four berth that wants six.
+There were fourteen men in it a fortnight ago. This morning there are nine, and one fruit boat on four berth that wants five.
 
-Ron is the ninth. He is at the back rail, under the open half, where the tin roof does not reach: donkey jacket, cap, hands in his pockets, rain running off the peak. It is where he stood for thirty-six years. The other eight have left a clear yard on each side of him.
+Ron is the ninth. He is at the back rail, under the open half, where the tin roof does not reach: donkey jacket, cap, hands in his pockets, rain running off the peak. It is where he stood as a young man, and where the call came back last year. The other eight have left a clear yard on each side of him.
 
 Nothing keeps him there. The pen has a wicket on the latch and no lock. What keeps him is the rule, and everybody present knows it: a man holding a tally stands the call until he is called or the list is shut.
 
@@ -40,15 +40,15 @@ The player has it from there. If he goes, he arrives as the hooter sounds a quar
 
 Stathers reads from the board. He does not raise his voice; he has never needed to.
 
-STATHERS: Four berth. Six.
+STATHERS: Four berth. Five.
 
-He calls six surnames, each with its number. Each man called comes to the stand, takes a tally off the loop, and goes through the wicket toward the ship without looking back. It takes a minute. Three men are left in the pen, and they are standing in the rain a yard clear of the fourth.
+He calls five surnames, each with its number. Each man called comes to the stand, takes a tally off the loop, and goes through the wicket toward the ship without looking back. It takes a minute. Three men are left in the pen, and they are standing in the rain a yard clear of the fourth.
 
 Stathers does not shut the board. He lays it flat on the stand and puts his hand on it.
 
 STATHERS: List's open.
 
-He calls nobody. He looks at his watch, and then at the weather.
+He calls nobody.
 
 ONE OF THE THREE (low, to the rail in front of him): Hand it him back, Ron. Let us get home.
 
@@ -135,7 +135,7 @@ Do nothing. Stathers keeps the list open until the hatches are off, and shuts it
 - Stand with him. Sign: the clear yard each side of Ron. What follows: the morning's cars are late, and Tharratt counts it; the town has the new owner stood on the casual in the rain; Ron keeps the tally and his place, and one man nods.
 - Fight. Sign: Lee's lip, and the men on the leaf watching Frank's hands. What follows: the gate by force, or the road; Ron has hit men of the pen, in the pen, and there is no nod after that.
 - Send somebody, or nobody. Sign: Pauline's "He wouldn't." What follows: as written, and the telling reaches Frank within the day, to his face.
-- Pay, or not. Thirty-eight pounds is from his pocket. Short, he cannot make the call stand. "Then it's not work you're calling him to, Mr Nowack. It's a favour. I don't shut a list for a favour."
+- Pay, or not. Short of thirty-eight pounds, he cannot make the call stand. "Then it's not work you're calling him to, Mr Nowack. It's a favour. I don't shut a list for a favour."
 
 ## What the town remembers
 
@@ -143,9 +143,9 @@ Do nothing. Stathers keeps the list open until the hatches are off, and shuts it
 - Brenda, by dinner, if he stood: "I hear you've been looking for work."
 - Stathers tells Maureen Jensen which it was. If Frank stood: "He stands where his men stand." She says that is not a man you tax; it is a man you wait for. If he called: "He bought him off my hook for thirty-eight pound." She has the tally sent to her and keeps it.
 - Ron. Called: he keeps the day's money in his pocket and does not break it; it is counted out of his pockets at the station, or, if he walks, it pays for both of number nine. Stood with: he says nothing about it, ever; in lesson five he names the pen for the first time. Fought for: his knuckles are split on the wheel. Left: he turns the tally over on the door all week where Frank can see it.
-- The night between reads this morning. Ron will let a cheaper way be done in his name only if Frank came for him here: if he called, or stood, or fought.
+- The night between reads this morning. Ron will let a cheaper way be done in his name only if Frank came for him here (called, stood or fought), or if Mickey's watch is back on his wrist.
 
 ## Variants by path
 
 - In week three Frank sent Ron to open the gate. The eight have their backs to him, and have had since. If Frank stands with him, the nod at the end is the first face Ron has been shown in a fortnight.
-- No man on the gate (a firm with no night money, or nobody of his on the gate). No leaf is shut. Stathers: "Nothing to do with your cars, Mr Nowack. This is between a man and his number."
+- No man on the gate (nobody of his on it). No leaf is shut. Stathers: "Nothing to do with your cars, Mr Nowack. This is between a man and his number."

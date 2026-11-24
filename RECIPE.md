@@ -182,3 +182,10 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 - Made: one drape refitted onto two other bodies, passing every check. Cost: 7 h lane.
 - Method: untangle seam-side crossings before the start check, refit, sew with bands frozen, settle; two band measures, the line set before any run. Shortfall: one band 0.3 points over a self-set line, less than the source itself moves; the cure is a source at rest.
 - Evidence: F:/LedgerTools/tool-dev/reports/KILN-LANE-R4-REFIT2-2026-11-19.md
+
+### A story on paper from a frame (24 Nov 2026)
+- Made: a revised story frame, the spine as 61 director cards, 25 side stories as cards tied to the rivals, 23 key scenes in full, a cast in three layers and a change list for the people data. Cost: about 2 h lane, wall clock; one strong writer model, two passes and one revision, about 25 helper runs.
+- Method: the lead fixes the owner's decisions and the readers' weak points in one brief before any helper runs; the writer revises the frame and writes scenes in order while a second helper writes the cards from the same brief; cards are then brought into line with the scenes (scenes win). Judge twice: the checked pair judge on short disguised retellings, and fresh blind readers against the principles and an admired shelf. One revision, then fresh readers again; stop when the mean barely moves. One fresh reviewer per file; must-fixes applied by the file's own writer.
+- Target and check: readers' scene mean against the bar (10) and a good shipped game (7); the pair judge's floor (beat all forgettable). Result: floor met by all ten screened; readers 7.0 before and after the revision; the lead's voice named by every reader as the gap.
+- Failed and why: a revision aimed at the lead's voice (written lines, a habit) moved nothing; readers want deeds, not lines. A judge seed shared across scenes repeats the same shelf and control pairs, so one bad control discounts a model on many scenes.
+- Evidence: production/lane/story/paper/judging/RESULTS.md

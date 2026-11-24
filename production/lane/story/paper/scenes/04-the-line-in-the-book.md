@@ -14,7 +14,7 @@ On the counter: the day book, open at last night. It is a duplicate book, each w
 
 Sheila is ticking each line of the sheet with a pencil against a pile of coins and bagging as she goes. She does not talk while she counts.
 
-Pauline is making the tea and has not stopped talking since she took her coat off.
+Pauline is at the kettle with her headphones round her neck. Off the air she is kinder than she sounds on it.
 
 Ron is inside the door, where he stands for ten minutes every morning, with a big white mug that has R.K. on its base in red nail varnish. Pauline did that, so nobody else would use it.
 
@@ -22,7 +22,7 @@ The camera sits at Frank's shoulder across the counter and can read the book whe
 
 ## The scene
 
-PAULINE: ...so my sister's to keep it up on a stool, and I said, you've never sat still in your life. Sugar's in. Is that him down? Morning. There's one in the pot if you don't mind it stewed, Mickey liked it stewed, you could have tarred a boat with it.
+PAULINE: Morning. There's one in the pot. It's stewed; Mickey liked it stewed.
 
 SHEILA (to the coins): Ten fares. Twenty-four sixty. Half's the drivers'. Twelve thirty to the tin.
 
@@ -30,7 +30,7 @@ She cranks the handle, tears the slip, pins it to the sheet, and runs her pencil
 
 SHEILA: Pauline. You've started a line and not finished it.
 
-PAULINE: Have I? Which? Oh, him. (She nods at Ron.) He said he was off the rank at ten, so I put him off the rank at ten, and then the phone went.
+PAULINE: Twenty-one forty: Ron, off rank at ten. That's all I was given.
 
 The camera can read it: 10.00, Office, three empty columns, R.K.
 
@@ -66,7 +66,7 @@ FRANK: Yes.
 
 She writes it across the three empty columns. Then she pulls the adding machine round.
 
-SHEILA: A mile and a bit there and back. Two pound ten. Waiting's ten pence a minute after the first five, and I'll say you waited twelve. Two pound eighty.
+SHEILA: A mile and a bit there and back, on the stroke of ten, so I'll call it day rate. Two pound ten. Waiting's ten pence a minute after the first five, and I'll say you waited twelve. Two pound eighty.
 
 She holds her hand out flat across the counter, palm up, and goes on reading the slip.
 
@@ -112,7 +112,7 @@ PAULINE: At ten at night. Every other night. I never knew a man read so much.
 
 SHEILA: I can't leave half a line. If you've nothing to say, I'll say it.
 
-She turns the book a quarter toward herself and curls her left hand round the top of the page, as a person does who was taught young to guard her sums. She writes one line, quickly, in a hand that has written it before. Pauline leans. Sheila moves her elbow.
+She turns the book a quarter toward herself and curls her left hand round the top of the page, as a person does who has guarded her sums all her life. She writes one line, quickly, in a hand that has written it before. Pauline leans. Sheila moves her elbow.
 
 PAULINE: What's it say?
 
@@ -126,7 +126,7 @@ SHEILA: That's the other book. A hundred and fifty-six pounds, five names, and n
 
 Outside, Ron finishes his tea, comes in to rinse the mug, stands it upside down with its letters showing, and puts his cap on.
 
-PAULINE (already back at the radio, to nobody): I just put what gets shouted at me. I never ask what for. I'd be here while Christmas. Car one, Kevin, are you out of your bed?
+PAULINE (back at the radio, clipped again): Car one, Kevin. Eight thirty-one. Are you out of your bed?
 
 ## What the player can do
 
@@ -139,8 +139,8 @@ PAULINE (already back at the radio, to nobody): I just put what gets shouted at 
 
 ## What the town remembers
 
-- Sheila tells nobody. Pauline tells everybody, and what she tells is the argument: "Forty yard. He stood there with his tea and said forty yard, as if he'd paced it." Nobody outside the office hears what was written.
-- Ron went out to the step on purpose. He does not know what was written after his letters, and he chose not to. Five weeks on, in a car, he asks (scene 12). It is the only time.
+- Sheila tells nobody. Pauline tells Terry at the change, off the air, and what she tells is the argument: "Forty yard, he said, as if he'd paced it." Nobody outside the office hears what was written.
+- Ron went out to the step on purpose. He does not know what was written after his letters, and he chose not to. Five weeks on, in a car, he asks (scene 12). It is the only thing he ever asks for himself.
 - On the later nights of the ask Pauline writes the same half line without being told, and Sheila finishes each the way the first was finished. By Sunday there are up to four in the book, alike.
 - It comes back three times. In week three Sheila turns back to this page: "Same as your first night?" (scene 09). In week five DS Ellis reads the line aloud in the searched office and holds out her pen. On the last Saturday a man from Customs and Excise asks which of two entries is the firm's.
 - A fare paid from his own pocket is remembered by the tin. On Friday, if he is short for the rent, Sheila counts what there is and says, "You'd have had it but for a waiting fare."

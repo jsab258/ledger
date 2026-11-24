@@ -1,7 +1,7 @@
 # 23. Close: Burn Both
 
 - Where it sits: the close, Saturday 1 December, from five until the last boat, or until a man under an overhang has been answered.
-- What wakes it: when the books opened there was neither a firm that held nor a friend who still counted him. He left the line and a morning fell; or he bargained the book away across his own counter; or he put a name to it and lost both anyway.
+- What wakes it: the firm is lost at five and no friend still counts him (Ron, Sheila, Alison Sedman or Philip Danby). A morning fell; or he bargained the book away across his own counter; or he put a name to it and lost both; or he wrote it true with nobody left to see.
 - Who must be present: whoever has the rank now (Danny Cammack; if not, Craig Fewson; if not, Frank Stathers for the Widow). Sheila, for a minute, unless she left long ago. Lily Tang. Ron, by path. Fallback: if none of the three will have him, the envelope is not offered, and there is only the boat.
 
 Frank is trying to find one thing on Quay Street that is still his to do. He gave the rest up a door at a time. What is left is an errand, or a ticket.
@@ -28,7 +28,7 @@ PAULINE: They're mine, these. (At the door.) I'd have stopped, you know. If ther
 
 The man who has the rank is sitting on the counter. If it is Danny, he has his heels on the customers' bench.
 
-DANNY: You do days, I said. Only there's no days left, so here's an after. (He taps the new envelope.) Ten o'clock, the landing. He'll say Cammack's. You say nowt else. You know the way; you never had to ask it. Three pound a night. That's a fare.
+DANNY: There's no days left for you, so here's an after. (He taps the new envelope.) Ten o'clock, the landing. He'll say Cammack's. You say nowt else. You know the way; you never had to ask it. Three pound a night. That's a fare.
 
 Sheila has her coat on. She takes one thing from the counter, which is her pen. She looks at the man sitting where the book used to lie.
 
@@ -61,7 +61,7 @@ SYLVIA: I'm not Mickey. That's what you said. (She goes in.) Well.
 
 The wall at the end of the lamps, where a man once stood with his hands in his pockets and said he would be there. Nobody is.
 
-The gate, along the dock road. A chain is being drawn through iron. If Ron is free he is one of the two men doing it, in a jacket with the Widow's mark on the back. When the lock is shut he takes a brass number out of the pocket and hangs it on the hook by the post.
+The gate, along the dock road. A chain is being drawn through iron. If Ron is free he is one of the two men doing it, in a jacket with the Widow's mark on the back. When the lock is shut he takes a brass number out of the pocket, his old one or a new one of hers, and hangs it on the hook by the post.
 
 FRANK (if the player wants it): Ron.
 
@@ -92,7 +92,7 @@ He will ask three times. When he has the envelope he opens it under the timetabl
 
 THE MAN AT THE LANDING: Eleven. (He puts the sheet inside his coat and drops the envelope in the water.) Right. Monday, same again.
 
-That is the last thing anybody says to him. It is another man's name.
+It is the last thing anybody says to him: another man's name.
 
 With the suitcase. The boat is at the stage with her lights on. At the ticket window Frank empties his pocket onto the ledge, and the player sees what six weeks came to. Karen Grummitt counts out the single fare and pushes the rest back.
 
@@ -118,7 +118,7 @@ From the deck, going out, the Hook is a row of lamps. One sign is lit, too far o
 ## What the town remembers
 
 - By the spring the parade has him down to one story, the first: "Him that put Cammack's motor on the edge. What happened to him?"
-- If he carried it: "He's on the landing for Cammack, nights. Three pound." Brenda does not make a joke of it.
+- If he carried it: "He's on the landing for Cammack, nights. Three pound." 
 - If he sailed: Gordon, to Karen, shutting the window: "Wouldn't be told the way. Either time."
 - Sheila has the red book, and her pen, and nothing to write.
 

@@ -8,7 +8,7 @@ Frank is trying to get one easy word out of a man who has stopped saying what he
 
 ## Staging
 
-Inside. The remand wing is the old gaol behind the Exchange. Visits for men who have not been tried are fifteen minutes, any weekday afternoon, in a row of wooden boxes: a stool, a shelf, a pane of thick glass with a brass grille under it to talk through, and the same on the other side. An officer walks the row behind the visitors. On the wall is a clock.
+Inside. The remand wing is the old gaol behind the Exchange. Visits for men who have not been tried are fifteen minutes, any weekday afternoon. Since a fight on his wing, his are in the closed boxes: a stool, a shelf, a pane of thick glass with a brass grille under it to talk through, and the same on the other side. An officer walks the row behind the visitors. On the wall is a clock.
 
 Ron is in his own clothes, as a man on remand may be: the black overcoat, a clean collar. His lower lip is split and has scabbed. His right hand is bandaged across the knuckles and round the thumb.
 
@@ -48,7 +48,7 @@ RON: Three.
 
 What the third is depends on the tally.
 
-- He kept it, and it is in a bag at the station with his laces: "There's a brass number in my property. Thirty-nine. Sign for it at the desk and take it down the gate before Saturday. Hang it on Stathers's post yourself, where they can see you do it. If he asks, say Kirby says it can't be both."
+- He kept it, and it is in his property at the gaol: "There's a brass number in my property here. Thirty-nine. I've signed for you to have it. Take it down the gate before Saturday. Hang it on Stathers's post yourself, where they can see you do it. If he asks, say Kirby says it can't be both."
 - It was hung up, or it is in Frank's pocket from the Widow: "If she sends owt for me, a number, owt, send it back. I've got a door. It's this one."
 
 FRANK (if the player wants it): That's three. I can count that far.
@@ -151,7 +151,6 @@ Free:
 
 ## Variants by path
 
-- Inside, and Frank came for him at the pen. Under the three things there is a fourth, said standing: "Thirty-eight pound. It's in my property. Give it Lily. That's nineteen Fridays."
+- Inside, and Frank came for him at the pen. Under the three things there is a fourth, said standing: "Thirty-eight pound. It's in my property. Give it Lily. That's a good few Fridays."
 - Inside, with the Widow's blanket. He has found out. "Somebody's give me the cell by the pipes. I've asked to be moved. They'll not."
 - Free, and Mickey's watch is on Ron's wrist. He looks at it at the gate. "Five to." It is the only time in the drive that he tells Frank something Frank has not asked.
-- Free, in a firm with no night money. The drive is the same, and as quiet.

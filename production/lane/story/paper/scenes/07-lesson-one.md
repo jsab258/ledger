@@ -14,7 +14,7 @@ Car two stands on the rank with a white square and a red L on its bonnet and ano
 
 Ron is in the driving seat with the seat run right back and both hands on the wheel at ten to two. He has taken his cap off and laid it on the dash. On the passenger side, by Frank's right knee, is the handbrake.
 
-The road ahead: down Quay Street to the fish dock corner, where an iron bollard leans; left along the dock wall past the ice house, whose doors are chained; over the dock railway, four wet rails set in cobbles with a white board that says STOP LOOK LISTEN; past the pen and the dock gate; and on to the ferry rank.
+The road ahead: down Quay Street to the fish dock corner, where an iron bollard leans; left along the dock wall past the ice house, whose doors are chained; over the dock railway, four wet rails set in cobbles with a white board that says STOP LOOK LISTEN; past the pen and the dock gate; and on to the ferry rank, which is by the car ramp at the far end of the dock road, not at the foot landing.
 
 The camera sits low between the seats and shows both men and the road. In the windscreen the wipers go, one a beat behind the other.
 
@@ -107,7 +107,7 @@ RON: Leaving the gate.
 
 He never says he was coming up on it.
 
-The ferry rank is a painted bay by the ticket window with room for three. One car is on it already, and Mark Billany is leaning on its wing with his cap pushed back. Ron has to stop behind it. He brakes a length early, and then a yard at a time. The handbrake is the player's if he wants it.
+The ferry rank is a painted bay by the ramp's ticket hut with room for three. One car is on it already, and Mark Billany is leaning on its wing with his cap pushed back. Ron has to stop behind it. He brakes a length early, and then a yard at a time. The handbrake is the player's if he wants it.
 
 Ron switches off. He takes his cap from wherever it has got to, puts it on, gets out, and goes and stands by car two's front wing with his hands in his pockets, squarely, facing the boat queue. It is the first thing he has done all morning that he knows how to do. The camera, from inside the car, sees it through the wet glass: nobody could move him.
 
@@ -136,8 +136,8 @@ RON: I only say it when it's me.
 - Say "Stop". Hands: one key. It always works and it is always total. Used where Ron had named the thing, he says "Aye," and sets off again; nothing is lost but his cap.
 - Pull the handbrake. Hands: hold. Softer, slower, and Ron says he had seen it.
 - Do nothing. Sign: Ron has not named what is ahead. What follows: a dent, a horn, an opinion. Each dent is kept on car two for good, and in the last week a man from Customs and Excise walks round the car and counts them.
-- Talk. Ron on the arm signals: "It's in the book. I've had the book since I were called up. Never had the car." On the naming: "On the tugs they sing out what they see. Then nobody has to shout." On the pen, once, and no more: "I stood there. Thirty-six year." On Mickey's L-plates: nothing; he looks at the road.
-- Take the wheel back. Hands: say so, or get out at any stop. The lesson ends where it is; Ron walks the rest and stands the rank. Nothing is lost. He will ask again in his own time.
+- Talk. Ron on the arm signals: "It's in the book. I've had the book since I were called up. Never had the car." On the naming: "On the tugs they sing out what they see. Then nobody has to shout." On the pen, once, and no more: "I stood there. First ten year, and this last one." On Mickey's L-plates: nothing; he looks at the road.
+- Take the wheel back. Hands: say so, or get out at any stop. The lesson ends where it is; Ron walks the rest and stands the rank.
 - Come back for lesson two. Any dry morning, from Ron: "Right turns, the book says. I've only done lefts."
 
 ## What the town remembers
@@ -146,7 +146,6 @@ RON: I only say it when it's me.
 - The lorry driver tells the fish dock that Mickey's is putting learners on the road now.
 - The pen saw Ron Kirby stopped dead in front of them in a little car with a red L on it, or saw him drive past without turning his head. They hold whichever it was. Stopped: "Had him sat there like a parcel." Passed: "Went by us. Never looked." The man at the gate with the list is Frank Stathers, and he saw it too. A week on, at dawn, he opens with it (scene 08).
 - Billany tells the Widow's people that Kirby stood the ferry rank for ten minutes under an L-plate and would not be stared off it. It is the first report she has that the old man is being put to use.
-- Kevin, on the air, all week: "Car one. I'm behind car two on the dock road. I'll be a while."
 - The naming is in the car from now on, every time Ron drives, and the player learns to drive by it: the thing Ron names is the thing he has seen. Four weeks later it is still the sound of the car.
 
 ## Variants by path

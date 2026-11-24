@@ -1,6 +1,6 @@
 # 02. The ask on the rank
 
-- Where it sits: Act I, week one, the Monday night (night one), about ten real minutes into play.
+- Where it sits: Act I, week one, the Monday night (night one).
 - What wakes it: dark has fallen on day one; Mickey's arrangement stands; Ron has found Frank. Ron brings it to the office and, if Frank is not there, goes looking. If he has not found him by one in the morning the ask passes unasked and comes again on Wednesday.
 - Who must be present: Ron Kirby. Darren Milner is on the pavement if his routine has him there; if not, Pauline, through the open door, carries his part. Fallback carrier for the ask itself: the old firm's man walks up from the landing and says "Mickey's?" at the office door, and Ron explains it after.
 
@@ -10,7 +10,7 @@ Frank is trying to get told the size of what he has been left. He will give up t
 
 The rank outside Mickey's, twenty to ten. Fine rain has started. One lamp column makes a pool over the rank and the wet road gives it back; beyond the pool the street is dark as far as Rita Welburn's pawnshop window, which is lit, and the phone box.
 
-Car two stands on the rank. Car one is out. The office door is propped open with the bucket, and through it comes the desk lamp and Pauline's voice closing the evening: one fare given out, then the sound of a sheet torn off a pad along its perforation.
+Car two stands on the rank. Car one is out. The office door is propped open with the bucket, and through it comes the desk lamp and Pauline's voice closing the evening.
 
 Ron comes out carrying two things. Over his arm, on a wire hanger, a plain dark coat that is nobody's, with a laundry ticket still pinned inside the collar. In his hand a brown window envelope gone soft as cloth. It has been turned inside out and re-stuck more than once, so an electricity board's red printing shows backwards through the paper. Behind the window is a strip of pink carbon paper with figures on it in blue: 2.40, 1.90, 3.10.
 
@@ -20,9 +20,11 @@ The camera comes in close for talk. It may read the window of the envelope. It m
 
 ## The scene
 
-PAULINE (inside, on the radio): Car one, Terry, the boarding house for the cold-store road, he says he's late already. Two minutes. Real ones, I can see the clock from here.
+PAULINE (inside, on the radio): Car one, Terry. Boarding house for the cold-store road, twenty-one forty. Two minutes. Real ones.
 
-The pad tears. Ron steps out under the lamp and stops in front of Frank. He holds the envelope a little away from himself, as a man holds something that belongs to somebody else.
+RON (in the doorway, to her): I'm off the rank at ten.
+
+She writes it, the last line on the sheet, and tears the pink out from under it. Whatever Terry takes after this goes on a fresh one. Ron steps out under the lamp and stops in front of Frank. He holds the envelope a little away from himself, as a man holds something that belongs to somebody else.
 
 RON: Mickey took this down the ferry landing, regular. After ten, to the man who asks for Mickey's. They'll be expecting it. Say no and that's Mickey's arrangement finished, mind; your call.
 
@@ -54,7 +56,7 @@ RON (not turning his head): Shift, Darren.
 
 DARREN: I'm shifting. I'm only saying. It's October, and I've known this firm late with a taxi.
 
-He goes, walking backwards for the first three steps so as not to miss anything. If Darren is not on the street, the line is Pauline's, called through the door: "By Christmas! Shall I put it in the diary, or will you remember?"
+He goes, walking backwards for the first three steps so as not to miss anything. If Darren is not on the street, the line is Pauline's, through the door, dry: "By Christmas. Logged, twenty-one forty-three."
 
 Ron lifts the coat on its hanger.
 
@@ -106,8 +108,8 @@ He is. When Frank comes back up from the landing, by whatever road and however l
 
 ## What the town remembers
 
-- Darren heard all of it. At the caff next morning, to the man from the landing, who is eating: "Forty-one doors, he's counted. And Mickey's runs the Hook, he says, by Christmas." By the second day it comes back to Frank's face as a joke: Brenda Laverack, wrapping fish, "Morning. Does the Hook know yet?"; Kevin, on the radio, "Car one to the Kingdom, come in."
-- "Forty-one doors" goes round as well. Sylvia Rennison, from her step: "I'm told you've counted us. I'm thirty-eight, if you're keeping a book."
+- Darren heard all of it. At the caff next morning, to the man from the landing, who is eating: "Forty-one doors, he's counted. And Mickey's runs the Hook, he says, by Christmas." By the second day it comes back to Frank's face as a joke: Brenda Laverack, wrapping fish, "Morning. Does the Hook know yet?"; Kevin, on the radio, "Car one to the Kingdom."
+- "Forty-one doors" goes round as well. Sylvia Rennison, from her step: "I'm told you've counted us."
 - "Mickey's runs the Hook" stays in the town's mouth all game and changes its tone without changing a word. Danny says it in week one, sitting on the counter (scene 05). Garbutt says it in week four, as a fact.
 - Ada saw two men under the lamp and one of them walk to the wall with an envelope. It is no crime, so it is talk: "He was out late, the first night. With Ron."
 - Pauline holds the time. She has written ten o'clock, Office, and R.K. in the column for whoever brought the job in, and left the rest of the line for somebody to finish. It is on tonight's carbon, in the envelope.

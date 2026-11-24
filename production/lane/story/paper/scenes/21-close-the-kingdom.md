@@ -1,7 +1,7 @@
 # 21. Close: the Kingdom
 
 - Where it sits: the close, Saturday 1 December, from a quarter past five until he sleeps. The Harbour Board chains the old dock gate tonight in every ending.
-- What wakes it: at five the line was left as it stood, and the books held. The firm survives.
+- What wakes it: the firm survives at five, whatever was written (the line left, or Danny's name put to it, with the books holding). A firm lost with a friend left is scene 22; with none, scene 23.
 - Who must be present: Pauline; Sheila, unless she has left; the man who stands at Frank's shoulder now; Frank Stathers at the gate; Maureen Jensen; Lily Tang; Ron, by path. Fallback: if the Widow is gone, Stathers says the last name.
 
 Frank is trying to walk home through a town that is his. He has already given what it cost; tonight he is handed the receipt.
@@ -22,7 +22,7 @@ The camera walks behind him, as it did off the ferry.
 
 The office. Pauline is giving out fares faster than she can write them.
 
-PAULINE: Car four, the Tivoli. Car six, boarding house. Car one, Fairview, and he says take the top road, so take it, Kevin's not here to argue.
+PAULINE: Car four, the Tivoli. Car six, boarding house. Car one, Fairview, he says the top road. Eighteen-ten.
 
 She has not said who "he" is for a fortnight. She tears the first pink sheet of the night along its perforation and lays it on the counter in front of Frank.
 
@@ -64,7 +64,7 @@ Maureen Jensen has had a kitchen chair carried out to the cobbles to watch her g
 
 THE WIDOW: Frankie.
 
-Nobody has called him that before. She is the one who has said it.
+Nobody has called him that before.
 
 Ron. What is left is one of three, and in each of them Frank says a thing that stays said.
 
@@ -118,7 +118,6 @@ She does not ask who is wanted.
 
 - Everything; and from tonight nobody on the Hook tells him any of it to his face.
 - The third column of the red book has a new name in it, and Sheila goes on writing it.
-- What he said at the hatch. Ron has it. Nobody else will ever hear it.
 
 ## Variants by path
 

@@ -8,7 +8,7 @@ Frank is trying to get Danny's men, his car and his nerve under Mickey's name wi
 
 ## Staging
 
-Quay Street at lighting-up time, about ten to five by the Harbour Board clock. The rain has stopped and the road holds the sky.
+Quay Street at lighting-up time, about ten to six by the Harbour Board clock. The rain has stopped and the road holds the sky.
 
 Car two comes up the street from the wrong end with its roof sign lit: MICKEY'S, yellow, on a magnet, its curly lead running in through the top of the driver's window to the lighter socket. It is a ten-year-old saloon that drives from the back wheels, washed every morning by a man who cannot drive it.
 
@@ -16,7 +16,7 @@ Danny is at the wheel with the seat run forward. In the ignition is a brass key 
 
 On the dash: a meter with a flag, and the radio handset on its clip. In Frank's inside pocket, as on the day he came, is the typed envelope with Mickey's letter in it.
 
-The camera rides in the back seat, between the two heads. The ride is about three real minutes of play, and six by Danny's count.
+The camera rides in the back seat, between the two heads. As on every authored ride, the game clock slows to the pace of the talk. It is six minutes by Danny's count.
 
 ## The scene
 
@@ -38,7 +38,7 @@ DANNY: Flag's down. Six minutes, the whole Hook. Mickey took twenty and called i
 
 The radio opens.
 
-PAULINE: Car two? Car two, who's got car two? Your keys are sat here on my hook looking at me.
+PAULINE: Car two. Car two, come in. Seventeen fifty-two. Your key's on my hook.
 
 The handset is in reach of Frank's hand.
 
@@ -55,7 +55,7 @@ DANNY (a dark warehouse on the cold-store road, doors shut; he says it lightly):
 
 DANNY (the landing, the overhang by the ticket window, nobody under it yet): Sixty a case, two cases a week, and an old man with a torch who thinks it's nineteen sixty.
 
-PAULINE: Car two is not answering. Kevin, if you see car two, tell it I'm cross.
+PAULINE: Car two is not answering. Car one, if you see car two, tell it.
 
 DANNY: She used to say that about me. I was answering. I just wasn't answering her.
 
@@ -100,7 +100,7 @@ DANNY: You can still read me. He never washed it. He used his cuff.
 
 He takes the chalk off the ledge and holds it out.
 
-- The top line. Frank chalks D. CAMMACK above CAR 1. Danny looks at it and for once has nothing ready. "That'll do." Sheila, from her desk: "Then one is two and two is three. I'll alter the sheets." The share is a third.
+- The top line. Frank chalks D. CAMMACK above CAR 1. Danny looks at it and for once has nothing ready. "That'll do." Sheila, from her desk: "Cars keep their numbers, love. He can have the top of the board." The share is a third.
 - The third line. Frank chalks his name after CAR 3. Danny takes the chalk back and adds a small arrow beside it, pointing up. "For now." Sheila: "That comes off in the morning." Danny: "It goes back on at night." The share is half.
 - Nowhere. Frank puts the chalk down. Danny nods, goes out, and on the shutter of the empty unit three doors up writes CAMMACK in letters a foot high. "Mine doesn't rub off, nephew. I go over it."
 - Frank pockets the chalk. "Think quick."
@@ -113,7 +113,7 @@ SHEILA: That's a Yale. That's somebody's front door.
 
 She hangs it on the third hook all the same.
 
-PAULINE (who has been timing it): Six minutes! I had you at eleven and a half, and that's with me being kind.
+PAULINE: Out seventeen fifty-two, in eighteen-oh-three and a half. That's not six.
 
 ## What the player can do
 

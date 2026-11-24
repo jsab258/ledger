@@ -24,7 +24,7 @@ The camera is wide, so the queue, the gate and the lamp are in one frame, and it
 
 ## The scene
 
-It reaches Frank on the air, wherever he is.
+It reaches Frank on the air, wherever he is. With nobody on the night desk it is Terry's handset; with neither, he finds it himself: his gate on the latch, and a lamp in his yard.
 
 JULIE (radio): It's the night desk. Ada's rung. She says there's men in your yard, and you're not one of them. (A beat.) She says they're queueing.
 
@@ -54,7 +54,7 @@ A man gets out of the back of the spare car, in his socks, with a coat round him
 
 DARREN: Am I on that sheet? I'm not on it. I owe him. (He finds a pound coin and puts it on the fish box, in the light.) There. I'm the only one stood in this yard who does.
 
-FRANK: Twenty-one to go, Darren.
+FRANK: Twenty-one pound to go, Darren.
 
 DARREN: I know what it is.
 
@@ -121,29 +121,26 @@ Stood. It was fists, and Frank is in his gateway with the cars behind him. Ron s
 
 On the ground. Nobody waited for Friday, or not enough. The cars go out past him one at a time, slowly, steering round. He comes round on a kitchen floor with a folded tea towel under his head.
 
-GRACE: Don't get up. You've been carried. (Over her shoulder.) Peter, he's woke. Fetch the car.
+GRACE: Don't get up. You've been carried. (Over her shoulder.) Peter Tang, he's woke. Fetch the car.
 
 ## What the player can do
 
 - Settle, refuse, or go straight to it. Sign: Kevin says the rule aloud. A full tin and a fair six weeks can end this without a blow.
 - Choose who is called first. Hands: read a name, count the money. Sign: the sheet and the tin are both in the lamp. Whoever the tin does not reach takes a car, or waits, or swings.
-- Pay Screeton, or not.
 - Stand in the gateway. Hands: walk there and stop. The cars stop.
 - Hit a man who is down. That man is in hospital for days; his people do not open their doors in the last week; if Ron is there he says "Boss," once.
-- Take Screeton himself, or let the one who offers.
 - Go for the tin alone, leave it, or go round with the Yale.
 
 ## What the town remembers
 
 - Who said Fridays. It is told by each of them, shortly. Terry, at the caff: "All cars, she said. I've waited thirty year for somebody to say all cars."
-- Darren's pound. Sheila finds it on the fish box in the morning and writes it in the debt book: "D. Milner, £1, received." It is the second entry that book has had in three years.
+- Darren's pound. Sheila finds it on the fish box in the morning and writes it in the debt book: "D. Milner, £1, received." It is the first that book has had from anybody who was not made to.
 - Kevin has gone, with car one's log and its forty-two miles a week. On the second morning of the last week a man from Customs and Excise asks for it.
 - The key on car one's fob is still in the gate in the morning. Sheila hangs it on the board.
-- The arm, if it went: plaster to the elbow and a sling. For days he cannot drive, cannot fight with it, cannot tie a lace or do up a button. Pauline has him on the telephones by Friday: "Mickey's. He'll be two minutes. I don't know, pet, I'm the owner."
+- The arm, if it went: plaster to the elbow and a sling. For days he cannot drive, cannot fight with it, cannot tie a lace or do up a button. Pauline has him on the telephones by Friday: "Mickey's. He'll be two minutes. I don't know, I'm the owner."
 - The night is not over. See scene 16.
 
 ## Variants by path
 
 - Ron is inside. Nobody holds the lamp. When Frank reads "Kirby" off the sheet, nobody answers, and the yard hears him read it.
 - Frank signed first. The cars have been off the rank all week and the drivers are owed for it. The sums on the sheet are bigger, and Kevin says so.
-- A firm with no night money. The tin has a week's fares in it. Fewer are owed, and the choices are the same.

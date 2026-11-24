@@ -14,8 +14,6 @@ The front office: a counter with a flap, a bench under a noticeboard, a clock wi
 
 Outside, seven stone steps under a blue lamp. Then the Hook after dark, wet, from six in the evening until nine. Lit: Rita's pawnshop window, with a man's watch in it. One upstairs office in the Exchange. The station's back step, where a detective constable smokes on the hour. A car in the station yard with its inside light on and a woman writing.
 
-Frank comes out with his bootlaces in his hand.
-
 The camera in the cell stays on his bench. On the street it walks behind him and looks at what he is carrying.
 
 ## The scene
@@ -58,13 +56,13 @@ If he lied to him, there is a silence in the next cell. It is not long.
 
 RON: Read that again. (She does.) Aye. That's right. That's how it were.
 
-Then, on every path, steady, as he says the buildings:
+Then, on every path:
 
 RON: Mickey's arrangement were mine to carry. Thirty year. That envelope on that night were part of it, and I brought it in, like it says. Who had it off us at the water I'll not say, and you can write that I'll not.
 
 ELLIS: And Mr Nowak?
 
-RON: New. Didn't know what he had hold of. I've told you nowt that isn't so.
+RON: New. I've told you nowt that isn't so.
 
 ELLIS: It'll be typed for nine. It opens with a line you write yourself, in your own hand: I make this statement of my own free will. Go home, Mr Kirby.
 
@@ -90,7 +88,7 @@ FRANK: Frank Nowak. N, O, W, A, K. I want to make a statement. That line's mine.
 
 Ellis is fetched. It is done in the open cell, under caution, in Frank's own hand: the opening she dictates, I make this statement of my own free will, and then the line from the book, a third time.
 
-ELLIS: Three times the same. I'll say that for you, Mr Nowak.
+ELLIS: Three times the same, Mr Nowak.
 
 She charges him. Ron is brought to the cell door and told his own is not wanted. He looks at the paper under Frank's hand.
 
@@ -124,7 +122,7 @@ The first is going back up the steps at the last minute, and runs as above. To t
 
 ELLIS: Mr Kirby.
 
-Ron draws the paper to him. He holds the pen the way he holds a tally. He writes the first line himself, in a docker's capitals. I MAKE THIS STATEMENT OF MY OWN FREE WILL. He signs each page. He is charged and kept.
+Ron draws the paper to him. He holds the pen the way he holds a tally. He writes the first line himself, in a docker's capitals. I MAKE THIS STATEMENT OF MY OWN FREE WILL. He signs each page. He is charged with conspiring to evade duty on that landing's loads, and kept, because he will not name the men.
 
 At the counter his pockets go into a bag: laces, a comb, thirty-eight pounds in notes he has not broken, if Frank called him at the pen; a brass tally, if he kept it; the watch, if he has it.
 
@@ -142,6 +140,8 @@ RON: Hang that on my hook, boss.
 
 The player has to take it, or leave a man standing there with his arm out. Left, it goes in the bag with the laces.
 
+At home the question comes to his door instead. A yes puts him in the constable's car, to write it before nine. After a no, the constable is back by half past with a paper bag, and a cap in it. "He said you'd know which hook."
+
 Frank goes down the seven steps carrying another man's cap. He drives home by the dock road with it on the dash, where it sat through five lessons. The chained doors of the ice house come up on the left, and pass, and nobody in the car says so.
 
 ## What the player can do
@@ -157,10 +157,8 @@ Frank goes down the seven steps carrying another man's cap. He drives home by th
 - Quay Street sees the owner of Mickey's come home at half past nine and hang a cap on a hook beside a donkey jacket. Pauline will not have either moved, nor the chair by the radio. On the next Friday Lily Tang counts out one of number nine. "One."
 - A way was bought: the town knows only that both men walked. Whoever sold it knows, and Ron knows.
 - From this morning Ron names nothing, on every path. The player hears it the first time he drives the dock road.
-- If Frank lied in lesson five, Ron has that. He says it once, later: "It read different through a wall, boss."
 
 ## Variants by path
 
-- Ellis was paid before the search. The car in the yard costs nothing more tonight. "I said it was Friday's business."
-- A firm with no night money. The only lit windows are Rita's and the Exchange.
+- Ellis was paid before the search. The car in the yard costs nothing more tonight. "I said it was tonight's business."
 - The Widow allied. Stathers is on the bench beside Ron at midnight with a flask of tea, and pours him the lid. He says nothing to Frank.

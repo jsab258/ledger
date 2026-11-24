@@ -97,7 +97,7 @@ The boat sounds. Her ropes come in, and she takes her lights away across the bas
 ## What the town remembers
 
 - The man himself tells it first, at his breakfast in the caff, to Darren: "Mickey's nephew brought the envelope down the landing." By the middle of the morning Darren says it to Frank's face: "Heard you did Mickey's run." If Frank would not answer to the name: "Heard they waited on you at the landing."
-- Karen saw a coat, or, if he wore the suit, the man who got off her boat that morning. In the coat she holds a shape and tells nobody. In the suit she tells Sylvia Rennison at the boarding house that the new owner keeps Mickey's hours, and it is on the parade by Wednesday. Either way she has now seen him at the landing once, which is half of what opens her own story later.
+- Karen saw a coat, or, if he wore the suit, the man who got off her boat that morning. In the coat she holds a shape and tells nobody. In the suit she tells Sylvia Rennison at the boarding house that the new owner keeps Mickey's hours, and it is on the parade by Wednesday.
 - Terry Hodgson, coming back empty down the cold-store road at ten past ten, was passed by a van with no lights. He tells Kevin at the morning change, and Kevin tells the Widow's people, because Kevin does.
 - Sylvia Rennison has a lodger, one of Danny Cammack's, whose bed was not slept in. He is back on Wednesday with his hand strapped and nothing to say. When Frank meets Sylvia on her step in Friday means Friday, this is the lodger.
 - Danny Cammack knows by Tuesday night that somebody found his lock-up, and how. It is the first reason he walks into Mickey's on Thursday and sits on the counter (scene 05). "You've got the book, nephew."

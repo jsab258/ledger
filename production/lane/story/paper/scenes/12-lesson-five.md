@@ -2,7 +2,7 @@
 
 - Where it sits: Act IIb, week five, after the three goes at Frank's men and before the turn. The breach. The turn cannot wake until this has played.
 - What wakes it: Ron has had four lessons (any the player skipped, Kevin gave him, complaining); this week the player has watched one leak happen with his own eyes (Danny in the phone box, a crewman at the caff window with a constable, Iveson at DS Ellis's car, or the old hand lifted off the landing); it is afternoon; Ron, on the door: "Lesson five, the book says. If you've the time. I'd as soon it were you sat there."
-- Who must be present: Ron Kirby. Pauline at the back door for one line. Fallback: none. This one is his.
+- Who must be present: Ron Kirby. Pauline at the back door for one line. Fallback: if the player has watched no leak this week, one is played in front of him first. Ron asks again each morning, and the lesson plays the next time Frank gets into car two before the week is out.
 
 Frank is trying to get to the end of a driving lesson without being made to say what is in his own book. He will give up the truth, or the old man's trust in his word, and whichever it is he lets the brake off on it himself.
 
@@ -60,7 +60,7 @@ He does not start her. His hands go back to the wheel, at ten to two, and he loo
 
 RON: That first night. What did you have her put in the book?
 
-It is the first question he has asked since the morning Frank got off the boat.
+It is the first thing he has asked for himself since the morning Frank got off the boat.
 
 FRANK (the player picks one, or speaks his own):
 
@@ -86,7 +86,7 @@ RON: A fare. Landing and back. Waited. (He works it through.) And I'm down as bo
 
 He thinks for a long moment.
 
-RON: Then I booked a fare. I can say that. It's not a lie; I did say you were off the rank.
+RON: Then I booked a fare. I can say that. It's not a lie; I did tell Pauline I were off the rank.
 
 If the book has Sheila's line, and the player tells him so:
 
@@ -158,14 +158,12 @@ He gets out, and goes round to the street, and stands on the door.
 
 ## What the town remembers
 
-- Pauline holds that car two went astern on three hoots, and says it on the air for a week whenever Kevin reverses.
-- Ron holds what he was told, word for word. It is the only thing in the game he takes on trust and then stakes himself on. In the station, two days on, it is what he sets his own statement against.
+- Ron holds what he was told, word for word. It is the only thing in the game he takes on trust and then stakes himself on. On the morning of the search it is what he sets his own statement against.
 - The naming. The ice house on the way home was the last building Ron names for Frank before the night between. After that night, on every path, the car is quiet: he is inside; or he is on the door and has had the one thing he had to give taken off him; or he knows what was bought in his name. The player drives the dock road alone, and nobody tells him he is coming up on anything.
 - The test. The form comes. It is on Sheila's desk through the last two weeks, filled in, in her hand, with a date on it he does not keep. In one ending there is still an L on the car.
 
 ## Variants by path
 
 - The pen, by what Frank did in scene 11. He called Ron out, or stood beside him: "Coming up on the pen. That's the pen." It is the first time he has named it, and he does not say he is leaving it. He fought, or sent somebody, or did not come: Ron goes by it in silence, as in lesson one, and a hundred yards on says, "Leaving the gate."
-- He fought at the gate. Ron's knuckles are split and taped, at ten to two.
 - A bought Ellis. Ron does not know she is bought, and the question is the same. Nothing Frank can say in this car is "She's paid for", unless the player says it. Then Ron looks at him for the first time in the scene. "Paid." He turns back to the rails. "Handbrake's yours."
 - A firm with no night money. The line still names the old arrangement, and the question is the same. Under it there is only the one night, and three more like it, and the brown pages.

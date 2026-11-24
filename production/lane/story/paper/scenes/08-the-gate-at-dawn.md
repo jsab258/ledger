@@ -2,7 +2,7 @@
 
 - Where it sits: Act IIa, week three: the fifth of the five mornings Eric Tharratt asked for.
 - What wakes it: the firm has four cars and has met the packing shift on the minute four mornings this week; the Widow's people have had their first look at the firm; it is twelve minutes to six; Frank is driving the first car of four.
-- Who must be present: Frank Stathers, the Widow's man on the gate. Ron Kirby, who is driving the fourth car on his L-plates because the firm is a driver short; he asked all six packers which of them held a licence, one did, and she is sat beside him because the book says somebody must be. The packers. The pen. Fallback for Stathers: Mark Billany, with the list and without the tally; then the offer to Ron is made a day later, at the office door, by the Widow's car.
+- Who must be present: Frank Stathers, the Widow's man on the gate. Ron Kirby, who is driving the fourth car on his L-plates because the firm is a driver short; he asked all twelve packers which of them held a licence, one did, and she is sat beside him because the book says somebody must be. The packers. The pen. Fallback for Stathers: Mark Billany, with the list and without the tally; then the offer to Ron is made a day later, at the office door, by the Widow's car.
 
 Frank is trying to get four cars of packers to a clock by six. He will give up twenty pounds and his pride in front of the docks, or Ron's place among the men he stood with.
 
@@ -96,7 +96,7 @@ STATHERS (after a time): Today. (To Frank.) Friday it's twenty.
 
 A bluff that is only a threat does not hold. Stathers says, "Then come and open it," and it is a push.
 
-Push it himself. FRANK: "I'll open it myself." He walks to the leaf and puts his shoulder to it. The two gate men come at him, and it is a fight in the headlights, with fists, in front of the pen and three cars of women. Ron stands where he is with his hand in his pocket. Then the second man goes for Frank's back, and Ron is there: one shove, the man on the cobbles, and Ron's boot on the tail of his coat, holding him down without hitting him. He looks at nobody. Stathers does not lift a hand; he is watching Ron. If Frank wins, he walks the leaf open himself. If he loses, he is put against his own bonnet, and the packers get out and walk.
+Push it himself. FRANK: "I'll open it myself." He walks to the leaf and puts his shoulder to it. The two gate men come at him, and it is a fight in the headlights, with fists, in front of the pen and four cars of women. Ron stands where he is with his hand in his pocket. Then the second man goes for Frank's back, and Ron is there: one shove, the man on the cobbles, and Ron's boot on the tail of his coat, holding him down without hitting him. He looks at nobody. Stathers does not lift a hand; he is watching Ron. If Frank wins, he walks the leaf open himself. If he loses, he is put against his own bonnet, and the packers get out and walk.
 
 Send Ron. FRANK: "Ron. Open it." (Or anything in the player's own words that orders Ron to the gate.)
 
@@ -108,7 +108,7 @@ They step away. Ron sets both hands on the cold iron of the leaf and walks it op
 
 Ron walks back to the fourth car and gets in.
 
-Go round. Hands: back in the car, and reverse. The cold-store road and the fish dock, unlit, a long mile against the minutes. The fourth car cannot do it at eleven. Either its two packers are late, and Tharratt counts three cars; or they are squeezed into the others, six to a back seat, and Ron is left standing by an empty car with an L on it, between Stathers and the pen, with a tally in his pocket, until somebody comes back for him.
+Go round. Hands: back in the car, and reverse. The cold-store road and the fish dock, unlit, a long mile against the minutes. The fourth car cannot do it at eleven. Either its packers are late, and Tharratt counts three cars; or they are squeezed into the others, four to a back seat, and Ron is left standing by an empty car with an L on it, between Stathers and the pen, with a tally in his pocket, until somebody comes back for him.
 
 Let them walk. The packers get out, say what they think, and go through the wicket at a run, boots in bags. They may make the clock. The cars did not, and Tharratt was counting cars.
 
@@ -120,12 +120,10 @@ Ron does not answer it.
 
 ## What the player can do
 
-- Pay. Sign: the price is said aloud, with the day it falls due. What follows: the contract; £20 every Friday; a receipt made out to Mr Nowack, and a day later a second, in the Widow's own hand, spelt the same. That receipt is the name behind the gate entries on the fourth morning of the last week.
+- Pay. Sign: the price is said aloud, with the day it falls due. What follows: the contract; £20 every Friday; a receipt made out to Mr Nowack (the second, if Kevin's was got in week two), and a day later another in the Widow's own hand, spelt the same. That receipt is the name behind the gate entries on the fourth morning of the last week.
 - Bluff. Sign: the eldest packer's window is already down. What follows: through today, and the twenty still owed on Friday.
 - Push it himself. Sign: two men, squared up, and Ron's hand in his pocket. What follows: the gate, if he wins; the Widow moves against him a step; Ron has laid a hand on a gate man in front of the pen, and it was to keep him off Frank's back.
 - Send Ron. Sign: Ron looks at him first, for as long as the player lets him. What follows: the gate opens without a blow, and the pen turns its back on Ron Kirby. It stays turned on Remembrance Sunday, and in week five.
-- Go round, and decide what to do about the fourth car.
-- Let them walk.
 - Ask Ron about the tally, afterwards, in the car. He takes it out, looks at it, puts it back. "It's brass. It'll keep."
 
 ## What the town remembers

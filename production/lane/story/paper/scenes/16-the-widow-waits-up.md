@@ -105,7 +105,7 @@ The pot is still warm. There is a second cup, poured, that nobody drank.
 - Sit and eat. Hands: one. Sign: the plate is cut. What follows: she talks, as above; she has seen him eat at her hand, and counts it. On Monday she opens harder for it, as she said, and she does not walk out.
 - Stand, and hear her out. She says everything the same and leaves the plate covered.
 - Send her away. FRANK: "Not in his chair, Mrs Jensen." (Or the player's own words.) She goes at once, without a word, putting her gloves on in the street. On the counter in the morning: the plate, cold, and under it a receipt for the gate tax to date, made out to Mr Nowack, with the dinner added as a line. "Haddock, 1. Laces, nil."
-- Take the tally, if it is there, or leave it on the desk. Taken: it is his to give to Ron, or not, and Ron is asked a question by it either way. Left: Sheila finds it in the morning, looks at the number, and puts it on the third hook.
+- Take the tally, if it is there, or leave it on the desk. Taken: it is his to give to Ron, or not, and Ron is asked a question by it either way. Left: Sheila finds it in the morning, looks at the number, and puts it in the tin.
 - Put his foot up, or not. If not: "Then you'll go over on the stairs, and I shall have come for nothing." She leaves them undone.
 - Ask her things. She will not speak of her husband, of Monday's terms, or of the fire. To the last: "Ask your priest. He'll not tell you either."
 

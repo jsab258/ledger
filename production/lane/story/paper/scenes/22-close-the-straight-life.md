@@ -1,7 +1,7 @@
 # 22. Close: the Straight Life
 
 - Where it sits: the close, Saturday 1 December, from five until a car pulls away from the kerb, some time after eight.
-- What wakes it: at five Frank wrote the line true, ruled the fourth column and put his name at its head. The firm does not survive its own books. A friend still counts him: Ron, Sheila, Alison or Philip Danby.
+- What wakes it: the firm is lost at five and a friend still counts him (Ron, Sheila, Alison Sedman or Philip Danby). Most often he wrote the line true and ruled the fourth column; if a morning fell instead, the close is the same without the red book.
 - Who must be present: Sheila, Pauline, DS Ellis, Ron. Up to five who each hold a deed of his. Fallback: if Sheila left the firm weeks ago, the red book was never opened and the last word in the office is Pauline's; Ron drives in every case.
 
 Frank is trying to get out of his own office with nothing in his hands. He has given up the firm to do it, an hour ago, with a ruler.
@@ -32,9 +32,11 @@ SHEILA: Goodnight, Frank.
 
 If she has said his name before, this is not the first time. If she never has, it is.
 
-Ellis is at the door with her case. She has a certified copy of a page that now has four hands on it.
+Ellis is at the door with her case. She has a certified copy of a page that now has four entries on it.
 
 ELLIS: The same way twice, Mr Nowak. I'll say that for you.
+
+If he wrote it differently at the search, or would not: "Three goes, and the last one true. I'll take it."
 
 Pauline tears the last pink sheet off the pad and looks at it.
 
@@ -50,7 +52,7 @@ Outside, as he crosses the pavement, each of these has one thing.
 
 - Lily Tang, come down from the takeaway with a carrier bag, puts it through the car's open window onto the back seat. "Two of number nine. I remember. Everybody thinks I don't." She takes the money for them and counts his change.
 - The Man in Black, passing on his way down to the gate, lifts his hat an inch. "Seven. Half a firm. I've marked the half I saw."
-- Father Walsh, at the corner: "A parishioner of mine was let out at eight. I'm told he walked straight here."
+- Father Walsh, at the corner, if Ron was inside: "A parishioner of mine was let out at eight. I'm told he walked straight here."
 
 Nobody sounds the horn. Frank gets in on the passenger side.
 
@@ -95,8 +97,7 @@ RON: Where to, Frankie?
 ## What the town remembers
 
 - Sheila left the true book open on the counter and went home. On Monday whoever opens the office finds it, and reads it.
-- Lily counted two.
-- Stathers, with the padlock in his hand, saw Mickey's car go by with an L on it and heard a man tell his gate what it was. He tells the Widow. She says, "That's Ron," and then, of the other: "And that's a man who's short of nothing I can sell him."
+- Stathers, padlock in hand, heard a man tell his gate what it was. He tells the Widow. She says, "That's Ron," and, of the other: "And that's a man who's short of nothing I can sell him."
 - The fourteenth of December, ten past two. Ron keeps it, or does not; the game does not say.
 
 ## Variants by path
@@ -105,4 +106,4 @@ RON: Where to, Frankie?
 - Nobody took it over. The cars are sold to pay the assessment, and the bay is whitewashed. Shaun has not been told to take the sign down, and will not until he is.
 - Frank signed in week five. Ron has been on the door and silent for a fortnight. The car, the drive and the gate are the same, and the gate is the first thing he has named since the night between.
 - Frank has number 39 from the Widow. He can hold it out in the car. Ron takes it, looks at it, and as they pass the gate hangs it by its hole on the end of Stathers's chain. "It can't be both."
-- He is hunted for a killing. The car is at the kerb with its engine running and Ron in it, and nobody comes out of the office. Pauline, to Sheila: "He'll not wait all night." Sheila: "He will." The last line is Ron's, to the empty seat: "Where to."
+- He is hunted for a killing. The car is at the kerb with Ron in it, and nobody comes out of the office. The last line is Ron's, to the empty seat: "Where to."

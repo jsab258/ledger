@@ -34,7 +34,8 @@ What he says next is the night between's.
 
 - Ron went in: "One night, and he's sat in a cell for it. What's he get for eleven?"
 - Frank signed: "She's got you for one, in your own hand. Here's the other ten of you."
-- A way was bought: he says it to the wall, loud. "Ask him what got lost at the station, and who lost it. Go on. And then ask how long Ron stops out when she's seen this."
+- Wardell was paid, and has sold it to him: he says it to the wall, loud. "Ask him what got lost at the station, and who lost it. Then ask how long Ron stops out when she's seen this."
+- Agar's man, or a paid detective: "Both of you walked and nobody's charged. I can't see how. She will, when she's read this."
 
 He shuts the book and lays his hand on it.
 
@@ -76,9 +77,9 @@ DANNY (watching it go): Leave my mirror alone.
 
 FRANK (the player picks one, or speaks his own):
 
-- "There's a boat at half six, Mr Cammack. Be on it." Danny gets a hand to the door and stands. "I'll want a cab to it. Two forty to the quay, I believe. Put it on my account." Sheila does, and it is the only debt in Mickey's book that is ever paid: the money comes in an envelope from across the water, in the spring.
+- "There's a boat at half six, Mr Cammack. Be on it." Danny gets a hand to the door and stands. "I'll want a cab to it. Two forty to the quay, I believe. Put it on my account." Sheila does, and it is the only debt in that book ever paid from across the water: the money comes in an envelope, in the spring.
 - "Third line. No arrow." Danny holds a hand up to be pulled to his feet. "You've my word. For what it fetches."
-- Nothing. He holds the brass key up where Danny can see it, and looks up the street at the plain car. "You'd not. (Danny reads his face.) Mickey'd not." He is still sitting there when Ellis walks down at ten past five.
+- Nothing. He holds the brass key up where Danny can see it, and looks up the street at the plain car. "You'd not. (Danny reads his face.) Mickey'd not." He is still sitting there when a constable walks down at ten past five.
 
 If Frank loses. He is on the stones. Danny stands over him getting his breath, one eye closing, and straightens the chain at his neck. He does not hit him again unless he was hit when he was down.
 
@@ -98,14 +99,13 @@ Ron, if he is there, gets Frank up by his good arm. They walk back up past the w
 - Stand in his way, or tell him he will not get there. Hands: fists; one arm if the yard took the other. Sign: he has said how far it is to her window.
 - Hit him when he is down, or not. What follows: the wall saw. If he did, Danny is carried, and takes no boat and no line; and if Frank is put down later in the fight, he gets it back.
 - Say what Danny is worth: the boat, the board, or the detective.
-- Use the handset first, from the office. "Car two. Where are you, Mr Cammack?" Danny: "Where you put me, nephew. Come and look."
 
 ## What the town remembers
 
 - The wall saw it, start to end, and it is the last thing the Hook tells about either of them. Won: "Put him sat against Mickey's own wheel and took the key out of her." Lost: "Cammack parked her on the rank himself. First go."
-- Ada saw Ron stand between two men and the water and not lift a hand. She says so afterwards.
+- Ada saw Ron stand between two men and the water and not lift a hand.
 - Fewson went, in Danny's car, with Danny's seat set to fit him. By Monday the crew is his, whichever of the two men won.
-- The brass key is on the third hook by five, for the first time in nine years, unless Danny still has it.
+- The brass key is on car two's hook by five, beside her own, for the first time in nine years, unless Danny still has it.
 - Every set on the Hook heard "Car two is not answering", in the words Pauline used in week two.
 - What Danny shouted about the station, if he shouted it, is in the caff before the books open.
 - Ellis watched all of it through a windscreen and did not get out. It was not on paper yet.

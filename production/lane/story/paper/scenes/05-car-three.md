@@ -94,20 +94,20 @@ If the car is in the dock, none of this plays. Danny stops laughing at the splas
 - Drive it to the corner. What follows: the rank is clear and nobody is shamed. Danny pays £2.40 in coins and says, "He's tidied me up." Brenda's version by noon: "He moved it for him."
 - Drive it to the edge on Ron's hands. Sign: the palms, then the fist. What follows: as written. This is the telling the town keeps.
 - Drive through the fist. Sign: Ron's fist, and the bang of the sill on the stone. What follows: the dock; no fare; Danny moves against the office a week early; the Harbour Board's crane lifts it on Friday with the parade watching, and sends Mickey's the bill.
-- The twenty, by one of Frank's lines. "Mrs Dunn, open Mr Cammack an account." The rent is paid by Cammack's money, Sheila writes "D. Cammack, on account, £17.60 in credit", and he parks there seven more times as of right. "Seventeen pound sixty. Count it." Frank counts it out of his own pocket if he has it, which leaves him nearly nothing for tomorrow. "Two forty. I don't sell my rank." Danny pats his pockets, has nothing smaller, and says, "Then I owe you." Sheila opens the debt book and writes him in, under Mickey's five. "That's the only one in there that'll pay," says Danny, "so you'll want to look after me."
+- The twenty, by one of Frank's lines. "Mrs Dunn, open Mr Cammack an account." The rent is paid by Cammack's money, Sheila writes "D. Cammack, on account, £17.60 in credit", and he parks there seven more times as of right. "Seventeen pound sixty. Count it." Frank counts it out of his own pocket if he has it; the twenty goes in the book as the firm's, and he has nearly nothing of his own for tomorrow. "Two forty. I don't sell my rank." Danny pats his pockets, has nothing smaller, and says, "Then I owe you." Sheila opens the debt book and writes him in, under Mickey's five. "That's the only one in there that'll pay," says Danny, "so you'll want to look after me."
 - The car on the edge. It is front-wheel drive and cannot back itself off. Tow it with car two (Fewson has to come into Mickey's and ask for a rope); leave them to it (six men from the caff lift the front, Fewson calling the count); or hand Fewson the keys off the hook yourself, or say, "They're on the board, Mr Fewson. Ask Mrs Dunn." What follows: how Fewson was treated goes with him.
 
 ## What the town remembers
 
 - Ada saw all of it from her window; Shaun from the ladder; Brenda from her step with a haddock in her hand. By noon it is said to Frank's face: "You're never him that put Cammack's motor on the edge." Lee Drewery has it third-hand: "A man from Mickey's did it. Was it Ron?" The player can leave Ron's name on it or claim it.
 - Danny tells it himself, better than anyone, at the caff: the suit, the sun strip, the wheels going round. It is his best story for a week, which is why he comes back.
-- Kevin, on the radio, to anybody: "Car three's on the quay. Car three's not answering."
 - The board keeps CAR 3. Sheila does not rub it out. Under CAR 2 the old paint still shows the ghost of a name that was chalked there for years and rubbed off with a sleeve; the player may not read it yet.
 - Danny saw which hook his keys went on. A week later he comes for Frank in Mickey's own car (scene 06).
 - Fewson holds what was done to him in front of the street: towed, left, handed the keys or made to ask. He set that seat to fit himself, and Danny saw. In week five he has one of Frank's men in a van; in the yard, or on the quay at the end, he is there with this morning on him.
-- The quay's edge is where it ends. On the last afternoon a car stands there with its front wheels over. It is car two, which drives from the back, and can leave whenever it likes.
 
 ## Variants by path
 
 - He told Ron no on Monday. Danny's opening changes: "No envelope, I hear. So who's reading your book now, nephew? I'll tell you. Me."
-- Ron is not on the door (sent on a debt). Nobody walks the car down. The player has no hands to read, only the coping stones, and the edge is harder to find than the water.
+- Ron is not on the door (sent on a debt). Nobody walks the car down, and the edge is harder to find than the water.
+- The corner, or the dock. Frank chalks the third line on his way in all the same.
+- The ask first reached him on Wednesday. Danny comes on the Friday, and the fare he reads out is Wednesday's.

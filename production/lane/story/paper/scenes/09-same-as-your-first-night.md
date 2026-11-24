@@ -78,7 +78,7 @@ On a plain yes she writes it so. On anything else: "Then say it how you want it,
 
 When the day book is done she reaches behind her without looking and takes a second book out of the handbag, from under the knitting. It is red, the kind the newsagent sells, and it has a ribbon. She opens it at the ribbon, writes one line quickly, and blots it.
 
-The telephone rings. Pauline has gone home. Sheila turns in her chair to the desk and lifts it.
+The telephone rings. Pauline goes at six, except on the old firm's nights. Sheila turns in her chair to the desk and lifts it.
 
 SHEILA: Mickey's. (A pause.) No, love, we're a taxi.
 
@@ -120,7 +120,7 @@ SHEILA: Sunday I'll read you the week. I always do it Sundays.
 - Change it. Sign: in the second case she says outright that the page will show the day it changed; in the first and third he has to ask. What follows: two hands in one book, with a date between them. In week five that date is the second thing DS Ellis puts her finger on.
 - Keep it out of the book. What follows: cash in a cocoa tin, good for men's cuts and for nothing with a receipt.
 - Look at the red book while she is on the telephone. Hands: look; one key turns a leaf back. Sign: she has never before left it open. What follows: nothing is said unless he speaks. He has now seen the first night twice in one evening, and seen whose name is beside it.
-- Not look. The call is short. She shuts the book as written and says, "That's mine," to nobody in particular.
+- Not look. She shuts the book and says, "That's mine," to nobody.
 - Go and fetch it himself, from now on. This is the only way the third column ever changes. Any night job Frank does alone, with Ron sent home, goes down as F.N. Any job Ron brings to him, rides on or carries goes down as R. Kirby. Alone, Frank has nobody at his shoulder.
 
 ## What the town remembers

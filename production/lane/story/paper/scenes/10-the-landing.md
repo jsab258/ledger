@@ -8,7 +8,7 @@ Frank is trying to get the Widow's load off the landing stage and a man of his s
 
 ## Staging
 
-First, the Monday, at the counter. A man in a car coat he never unbuttons is drinking Sheila's tea standing up: a moustache, a clean handkerchief. He has been in every firm's office on the Hook this week. This is Keith Garbutt. He sells each of them the truth about the others, and none of them has caught him in a lie.
+First, the Monday, at the counter. A man in a car coat he never unbuttons has a cup of Sheila's tea, standing up: a moustache, a clean handkerchief. He has been in every firm's office this week. This is Keith Garbutt. He sells each of them the truth about the others, and none of them has caught him in a lie.
 
 GARBUTT: Her load comes in on Saturday's last boat. Whoever's stood there Sunday morning has the landing. (He lays a coin by the saucer.) That's a pound for the tea, Mrs Dunn. I'd not want it said anybody here gave me anything.
 
@@ -32,9 +32,9 @@ PAULINE (not turning from the radio): Don't stand him near the pot. He'll dissol
 
 The plan, as the lump has it: when the last rocket goes, if Frank is not back at the car inside five minutes, bring her to the top of the brow.
 
-Then the night. Twenty to eight. The Harbour Board fires its display from a barge moored off the quay, as it does every year on the Saturday. The whole Hook is along the wall in coats, faces up. Grace Rinaldi has a trestle with an urn and trays of parkin; Brenda is selling hot peas in paper cups, with mint sauce. The bangs come off the water and back off the cold stores.
+Then the night. Twenty to eight. The Harbour Board fires its display from a barge moored off the quay, as it does every year on the Saturday after the Fifth. The whole Hook is along the wall in coats, faces up. Grace Rinaldi has a trestle with an urn and trays of parkin; Brenda is selling hot peas in paper cups, with mint sauce. The bangs come off the water and back off the cold stores.
 
-The last boat should have tied up at twenty past seven, before any of it. She has not. She is standing off in the basin with her deck lights on and a Harbour Board launch across her bows showing a red lamp. Nothing lands while the barge is firing.
+The last boat (no late one on a Saturday) should have tied up at twenty past seven. She has not. She is standing off in the basin with her deck lights on and a Harbour Board launch across her bows showing a red lamp. Nothing lands while the barge is firing.
 
 The tide board at the head of the brow says low water, half past eight. The stage has dropped. The brow, which was a gentle ramp this morning, is steep and wet.
 
@@ -134,7 +134,7 @@ FRANK (the player picks one, or speaks his own): "That's yours. You did a night'
 - Half the Hook walked past it and saw nothing but a cab going home. What they hold is a sound: a man calling out the ticket window. On Sunday, after chapel, Ada: "That was Ron I heard. He was telling the buildings who they were."
 - The constable writes down a cab with its boot tied down with string, because that is a thing he can name. It is the first line on Frank in a police notebook.
 - The gun was shown, and Frank has been told so in those words. From tonight, the other side may bring one.
-- Danny has it by midnight and tells it by morning with himself in it. On Monday the caff says Cammack took the landing, and Danny lets it.
+- Danny tells it by morning with himself in it. On Monday the caff says Cammack took the landing, and Danny lets it.
 - Sunday. Remembrance, at the chapel. The men of the pen stand in a row with their caps off, and Ron stands at the end of it, and a space is left.
 
 ## Variants by path

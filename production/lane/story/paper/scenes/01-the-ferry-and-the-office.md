@@ -70,15 +70,15 @@ FRANK: Nowak. N, O, W, A, K.
 
 Pauline has her pencil up. She looks at the fare book, which is ruled for fares. She looks at the board.
 
-PAULINE: Ooh, I've nowhere to put that. The book's for fares and the board's for cars. You want a column of your own, you do.
+PAULINE: Board's for cars. Book's for fares. You've no column yet.
 
 She puts the pencil behind her ear and leans to the microphone.
 
-PAULINE: Car one, be told. The new owner's in.
+PAULINE: Car one, be told. New owner's in. Nine twelve.
 
 KEVIN (on the radio, through traffic): What's he like?
 
-PAULINE: He can spell.
+PAULINE: He can spell. Out.
 
 Sheila walks him round. Each stop is one line; the player can stand and listen or walk on, and she finishes to his back.
 
@@ -88,7 +88,7 @@ SHEILA (the board): One driver by day, one by night, and the radio in between. T
 
 If the player looks at the hooks:
 
-SHEILA: Car one's out with Kevin. Car two's in the car. That one's been empty a while.
+SHEILA: Car one's out with Kevin. Car two's is out in her with Ron; it lives on that hook. That one's been empty a while.
 
 SHEILA (a shut door behind the counter): That's Mickey's office. It's been locked since he died, and I've the key. Not today.
 
@@ -136,7 +136,7 @@ What Ron will say if he is asked, each once, in his own time:
 
 - About the engine: "She wants running or the battery goes. Ten minute. I've not missed a morning."
 - About driving it: "Never had call. Docks is walking distance."
-- About the key: "Stops in her. That's how he had it."
+- About the key: "Lives on the board. I fetch it of a morning and hang it back."
 - About Mickey: one of the two approved lines, and then he looks up the street until the subject changes.
 - About himself: "I do the door. And the rank. I'm here while eleven."
 
@@ -149,7 +149,7 @@ He does not ask Frank one question. He folds the leather into his coat pocket, s
 - Look at the board and the hooks. Sign: the camera lets the bare hook sit in frame while she talks. What follows: only her one line. It is the first sight of the key Danny Cammack kept (scene 06).
 - Try Mickey's door. It is locked. Sheila, not looking up: "Not today."
 - Talk to Ron, Pauline or Shaun. To each he can give his name. Ron goes on saying boss; Pauline goes on saying the new owner into the microphone; Shaun says Nowak from then on, because he was told it twice.
-- Get into car two. Sign: the key is in it and the door is not locked. If Frank takes the driving seat, Ron gets in beside him without a word, pulls the seat belt across and says, "Where to." Any drive is free and unscored; Ron names nothing yet. Pauline, on the car's radio, after a moment: "Car two, is that you, Ron?" "It's him." "Who's him?" "Boss."
+- Get into car two. Sign: Ron has her key in his fist, on its way back to the board. If Frank takes it, and the driving seat, Ron gets in beside him without a word, pulls the seat belt across and says, "Where to." Any drive is free and unscored; Ron names nothing yet. Pauline, on the car's radio, after a moment: "Car two, is that you, Ron?" "It's him." "Who's him?" "Boss."
 - Pick the money up, or leave it lying on the counter. Left, it is still there when he comes back, and Sheila has put the rent book square on top of it.
 
 ## What the town remembers
@@ -158,7 +158,7 @@ He does not ask Frank one question. He folds the leather into his coat pocket, s
 - Shaun, at the caff counter at noon, to Grace Rinaldi: "Gave me his whole name off the pavement. Both halves. Like he was stood for the council." This is where the street's joke about the name starts, and how it comes to call him Nowak: because it was told, twice, without asking.
 - Pauline, to Terry Hodgson at the evening change: "N, O, W, A, K. I've nowhere to write it." Terry says "the new owner" until he is told otherwise.
 - Gordon, to Karen Grummitt at the ticket window: "Wouldn't be told the way." It comes back in the last week, when Frank is carrying a dead man's watch that runs five minutes fast.
-- Sheila's entry, cash introduced, £23.50, is the first line of week one. On the fifth morning of the last week Mr Hebblewhite reads it out and asks whether that was all of it. Sheila: "It's what was there."
+- Sheila's entry, cash introduced, £23.50, is the first line of week one. At five on the last Saturday Mr Hebblewhite reads it out and asks whether that was all of it. Sheila: "It's what was there."
 - Frank's notebook, which the game calls the Ledger, keeps the week's aim in Sheila's words: eighteen pound by Friday; and Sunday you tell me what this firm is.
 
 ## Variants by path

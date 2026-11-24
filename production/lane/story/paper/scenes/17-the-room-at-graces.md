@@ -12,7 +12,7 @@ The back room at the caff, three o'clock, rain on the yard window, a gas fire. T
 
 He stood under the overhang by the ticket window for thirty years. He ate his breakfast in this caff every weekday. All three firms have come to see him buried, since each needs the other two to see it done, and Garbutt has got them to stop for the tea.
 
-There are five chairs. Garbutt is at the side in his car coat; he is going on somewhere, as always. The Widow has the pot. Agar, seventy, pink and soft-voiced, has not taken a sandwich. Danny, in a black tie that is not his, has taken several. The chair at the foot of the table is empty. It is where the family sits.
+There are five chairs. Garbutt is at the side in his car coat; he is going on somewhere, as always. The Widow has the pot. Agar, sixty-two, silver hair swept back, rimless glasses and a soft voice, has not taken a sandwich. Danny, in a black tie that is not his, has taken several. The chair at the foot of the table is empty. It is where the family sits.
 
 Wet coats hang on a stand by the door: a camel overcoat, a fur collar, a leather jacket. At a tea, a person who is stopping takes his coat off. A person who keeps it on has paid his respects and is going.
 
