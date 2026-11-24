@@ -18,6 +18,7 @@ Everyone keeps a day, with Tom or without him.
 - Status: decided. Coverage row: 2.1.1. Conflicts settled: C-036.
 - Prior research: production/specs/hook-cast.json gives routines for 41 people and 24 areas; hours out and in per person in production/art/clothing/HOOK-GARMENT-LIST-2026-11-03.md; research/small-town-meetings (dock rhythm, market days; Hull bobbers from about 2 am, auction 7 am).
 - Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-06 a named person's routine repeats each ordinary day; a deed changes it visibly; decided. None measured.
+- A day, not a post (catalogue 23 Nov, rank 14; seen in 2 games): Regulars' days run as job chains, meeting at the caff and launderette after work (the newsagent shuts at 18:00), no pub. Partly: hourly routines exist; short are chained jobs and a shared evening place. Feature only; no timing; the part's status is unchanged.
 
 ### 2.1.2 The crowd's clock windows
 
@@ -26,6 +27,7 @@ Everyone keeps a day, with Tom or without him.
 - Source: DESIGN §2; aaa-s01-05 (no reference figure yet). Designed in: DESIGN §2; DESCRIPTION-COPY-2 §5; DEFINITIONS G9 (FIT-G9); CLOUD-FIGURES B4
 - Status: unmeasured. Coverage row: 2.1.2.
 - Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-06 something within 35 m of any walkable point except routine-empty places; decided. None measured.
+- Deciding row (DECIDES-CHECK, 24 Nov): crowd counts by street and hour (read with FIT-G9).
 
 ### 2.1.3 Off-screen life
 
@@ -34,6 +36,8 @@ Everyone keeps a day, with Tom or without him.
 - Source: DESIGN §2 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §2; DESCRIPTION-COPY-2 §5; DESIGN §4 (ER-JOB-07)
 - Status: decided. Coverage row: 2.1.3.
 - Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-06 a named person's routine repeats each ordinary day; a deed changes it visibly; decided. None measured.
+- Never break character where watched (catalogue 23 Nov, next tier): No cheat shows where Tom can see it. Partly: unseen people keep the same rules; that no shortcut is visible when watched is for the design proof to place. Feature only; no timing; the part's status is unchanged.
+- Self-healing schedules after interference (catalogue 23 Nov, next tier): Routines close up after Tom upsets them. Partly: a week plays out the same unseen; mending a routine after interference is not named. Feature only; no timing; the part's status is unchanged.
 
 ### 2.1.4 Weather and hour change who is out
 
@@ -43,6 +47,7 @@ Everyone keeps a day, with Tom or without him.
 - Status: decided. Coverage row: 2.1.4.
 - Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-06 a named person's routine repeats each ordinary day; a deed changes it visibly; decided. None measured.
 - Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-08 the night is its own street; a third of jobs and side stories after dark; decided. None measured.
+- Weather changes people (catalogue 23 Nov, rank 7; seen in 2 games): In rain people shelter in doorways and the bus shelter, under umbrellas. Partly: rain already empties the street and halves each crowd band; where people stand and umbrellas are not yet named. Feature only; no timing; the part's status is unchanged.
 
 ### 2.1.5 Crowd movement and avoidance
 
@@ -51,6 +56,7 @@ Everyone keeps a day, with Tom or without him.
 - Source: MASTER-CHECKLIST A12, A13 (no numbers) (no reference figure yet). Designed in: DESCRIPTION-COPY-2 §5; DEFINITIONS G2; MEASUREMENTS-NEEDED A4; PARTS-TREE 2.1.5
 - Status: unmeasured. Coverage row: 2.1.5.
 - Prep: PRIOR-RESEARCH-INDEX section 8: KCD2 step-aside distance and timing in Kuttenberg (A4) and GTA V pedestrians stepping aside are to be measured from play on his PC.
+- Checklist (23 Nov, top twenty no. 3; A13.25, A25.16): missing: nobody may appear or vanish in plain view, and crowd and happening spawns must come in out of sight or beyond a set distance from Tom, with a distance test. Gap for the design proof; status unchanged.
 
 ### 2.1.6 The town's calendar
 
@@ -68,6 +74,7 @@ Everyone keeps a day, with Tom or without him.
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (waits on a dated study). Designed in: DEFINITIONS design pass 3 G9; design pass 4 'The crowd against the counted views' and Run 5 second pass (stretch counts stay as rescaled)
 - Status: pending. Coverage row: FIT-G9. Conflicts settled: C-038.
 - Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-06 something within 35 m of any walkable point except routine-empty places; decided. None measured.
+- Deciding row added (DECIDES-CHECK, 24 Nov): crowd counts by street and hour; a measured floor above what the card can draw (R4) changes how crowds are built. Planned: KCD2 and RDR2 busy daytime, five views each, about 3 h. First counts reported in the builder's row of 24 Nov 09:46 (busiest daytime streets about 5 to 10 in view in both games, middle about 6, quiet streets 0 to 3; clip dates still to read): leads until STATUS.md on wip marks them solid.
 
 ### FIT-G10 Opening hours, day and night
 
@@ -98,6 +105,7 @@ The moat: every act exposes seven slots; identification climbs five rungs.
 - Status: ruled (his ruling or canon). Coverage row: 2.2.2.
 - Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-02 a witness who caught a mark but not Tom links him only while he wears it; decided, thin. None measured.
 - Studies: aaa-studies/PLAYERS-STORIES.md: STORY-04 a third of moments turn on a mark a witness connected; decided. None measured.
+- Deciding row (DECIDES-CHECK, 24 Nov): being seen in KCD2 and RDR2 (read with 1.4.1); none sampled; about 5 h.
 
 ### 2.2.3 Sight by distance and light
 
@@ -107,6 +115,7 @@ The moat: every act exposes seven slots; identification climbs five rungs.
 - Status: pending. Coverage row: 2.2.3.
 - Prior research: research/eyewitness-testimony: identification about 96% at 5 m, 42% at 20 m, about 30% at 40 m; research/gaze-and-knowing (Fotios 2015). KCD2 recognition about 4 s, night minus 0.7, fog minus 0.5 are file-read leads; the old Unity Core held 40 m, not 35.
 - Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-05 no reaction without a printable chain of sightings; never through walls; decided. None measured.
+- Deciding row (DECIDES-CHECK, 24 Nov): being seen in KCD2 and RDR2 (read with 1.4.1); none sampled; about 5 h.
 
 ### 2.2.4 Sound reach
 
@@ -162,6 +171,8 @@ Permanent per-person memory.
 - Source: ruling 30 Sep; DESIGN §2 (his ruling or canon). Designed in: RULINGS 30 Sep; DESIGN §2 (ER-EYES-06); DESCRIPTION-COPY-2 §5, §20; ONE-SHOT-PROMPT Who tells whom
 - Status: ruled (his ruling or canon). Coverage row: 2.3.2.
 - Prior research: research/eyewitness-testimony: weapon focus; witnesses who talk corrupt each other; confidence rises with retelling. The entry omits weapon focus and contamination.
+- Deciding row (DECIDES-CHECK, 24 Nov): crowd reactions (spread and settling) decide how one guard against a knot of onlookers is built; KCD2, RDR2 and Yakuza 0 give three answers, so footage bounds a design choice; two games planned, about 4 h.
+- Witnesses make the crime (catalogue 23 Nov, rank 1; seen in 4 games): A witness is only as sure as the sight, so a cap or another coat blurs the description, and no heat bar shows. Already covered: the part holds the certainty rule; coat and cap blurring a description sit in 1.4.4, 2.2.5 and 1.6.10. Feature only; no timing; the part's status is unchanged.
 
 ## 2.4 Gossip
 
@@ -175,6 +186,7 @@ Talk passing between people who meet; the engine, never the show.
 - Source: canon; C# Core; map-players (reference game). Designed in: DESIGN §2; ONE-SHOT-PROMPT Who tells whom; GTAVI-MAP GV-06; PARTS-TREE map-players S6
 - Status: decided (the old Core's own design values, no outside measurement; C-221).md marks it solid). Coverage row: 2.4.1.
 - Prior research: research/rumour-propagation (14 Sep): 0.8 a hop and the 0.2 floor are tunables with no measurement, corroboration is not modelled; research/small-town-networks: tie layers 5, 15, 50, 150, dense clusters weakly joined.
+- Deciding row (DECIDES-CHECK, 24 Nov): crowd reactions (read with 2.3.2); the games read so far give three answers, so footage bounds a design choice.
 
 ### 2.4.2 Cooling by kind
 
@@ -213,6 +225,7 @@ Talk passing between people who meet; the engine, never the show.
 - Standard: The press works only through a person, Alison (D56); a story prints only what she knows (canon moat) Test: S: every printed line traces to what Alison was told or saw; addendum rules ER-PAPER-01
 - Source: D56; DESIGN §11 (his ruling or canon). Designed in: DESIGN-ADDENDUM A19; DESCRIPTION-COPY-2 §5; DESIGN §11 (D56)
 - Status: ruled (his ruling or canon). Coverage row: 2.4.5.
+- The world writes things down (catalogue 23 Nov, rank 18; seen in 1 game): The local paper, notices in the newsagent's window, the cab office's board. Partly: the paper is covered here and the board in 1.7.3; newsagent window notices are not. Feature only; no timing; the part's status is unchanged.
 
 ## 2.5 Witnesses after a deed
 
@@ -226,6 +239,7 @@ What people do once they have seen something.
 - Source: canon era; DESIGN §2 (his ruling or canon). Designed in: DESIGN §2 (ER-EYES-04); DESCRIPTION-COPY-2 §16; DESIGN-ADDENDUM A10; DEFINITIONS RT2-19
 - Status: ruled (his ruling or canon). Coverage row: 2.5.1.
 - Studies: aaa-studies/PLAYERS-STORIES.md: STORY-03 half the moments come from witnesses, recognition or a returning person; physics and driving alone never count; decided. None measured.
+- Word passed person to person (catalogue 23 Nov, rank 11; seen in 1 game): A neighbour crosses to tell the grocer, and who heard depends on who talked. Already covered for a witness walking to tell; partly for second-hand tellers shown crossing the street. Feature only; no timing; the part's status is unchanged.
 
 ### 2.5.2 Stopping a witness
 
@@ -245,6 +259,7 @@ What people do once they have seen something.
 - Source: ruling 23 Sep (his ruling or canon). Designed in: RULINGS 23 Sep; DESIGN §2 (ER-EYES-09); GTAVI-MAP Y2.6; DESCRIPTION-COPY-2 §16
 - Status: ruled (his ruling or canon). Coverage row: 2.5.3.
 - Prior research: game-design/town-traits-draft-2026-09-29.md: nerve, loyalty and greed for all 41 residents, with who would report a wounding (14) or a killing (32); scope left on his page 29 Sep (Q6).
+- Checklist (23 Nov, top twenty no. 4; A13.18): missing: bystanders who saw a weapon must run away from the danger and toward doors, not past it, with a test. Gap for the design proof; status unchanged.
 
 ### 2.5.4 A street on edge
 
@@ -253,6 +268,7 @@ What people do once they have seen something.
 - Source: DESIGN-ADDENDUM-2026-11-20 A37 (from REFERENCE-MECHANICS-2026-11-20 M2.16) (reference game). Designed in: DESIGN-ADDENDUM A37; DESCRIPTION-COPY-2 §16; DEFINITIONS G5
 - Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 2.5.4.
 - Prior research: research/group-standing-without-a-score: taking the maximum makes one furious person and a town that has turned both read 'hostile'; count people above the sharing floor and band them into words.
+- Repeated deeds grow the response (catalogue 23 Nov, rank 12; seen in 1 game): Repeated deeds bring quieter witnesses, fewer people out and talk at the counter. Partly: the street on edge has witnesses telling sooner, the opposite of quieter witnesses; fewer people out and talk of it at the counter are for the design proof to weigh. Feature only; no timing; the part's status is unchanged.
 
 ### 2.5.5 Finding an unseen deed
 
@@ -360,6 +376,7 @@ A pressure Tom can read and answer, never the end of the game.
 - Source: DESIGN-ADDENDUM-2026-11-20 A36 (from REFERENCE-MECHANICS-2026-11-20 M2.8, M2.30) (reference game). Designed in: DESIGN-ADDENDUM A36; GTAVI-MAP Y2.3 (bars raised); DESCRIPTION-COPY-2 §18; DEFINITIONS RT2-19
 - Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 2.6.10. Conflicts settled: C-048.
 - Prior research: research/crime-scene-1990 (no cold hits in 1990) and research/police-response-1990 (witness reporting rates); canon names CCTV and the weekly tape.
+- Witnesses make the crime (catalogue 23 Nov, rank 1; seen in 4 games): Police act only on a report, and the constable asks where Tom was seen. Already covered: the patrol searches the last-seen streets and nothing on screen marks where he searches. Feature only; no timing; the part's status is unchanged.
 
 ### RT-13 Ellis's case model
 
@@ -446,6 +463,8 @@ Two pots: clean money in the fare book, night money in the tin.
 - Source: DESIGN §9, §18 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §9, §18; DESIGN-ADDENDUM A30; DESCRIPTION-COPY-2 §14; DEFINITIONS G10
 - Status: decided. Coverage row: 2.7.5.
 - Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-05 every buyer has a weekly purse; a refusal or part-payment in the last two weeks; decided. None measured.
+- Shopkeepers remember (catalogue 23 Nov, rank 2; seen in 3 games): The grocer and newsagent remember Tom's last visit and any trouble. Partly: shops already remember a robber or a walked-out haggle; short is a clerk asking after the last visit, and trust or a quicker call to the police following. Feature only; no timing; the part's status is unchanged.
+- Townspeople visibly buy (catalogue 23 Nov, next tier): People are seen buying, and the calls match the stock. Not yet: the part holds shop stock and haggling but not visible buying or calls matching stock. Feature only; no timing; the part's status is unchanged.
 
 ### 2.7.6 Fencing
 
@@ -722,7 +741,7 @@ The rise under the hood: never a number.
 - Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-01 three changes a week a returning player can point to; decided. None measured.
 - Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-07 no purchase raises a fighting, driving or speaking value; decided. None measured.
 - Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-02 Act II in at least four stages of 4 real hours at most, each ending in a rung change; decided. None measured.
-- Prior research: aaa-studies/MONEY-AND-PROGRESSION.md MP-07: KCD2 skills reach about 20 of 30 by the first region's end and late Henry is a powerhouse (two reviews, thin); growth here stays position only.
+- Prior research: aaa-studies/MONEY-AND-PROGRESSION.md MP-07: KCD2 skills reach about 20 of 30 by the first region's end and late Henry is a powerhouse (two reviews, thin); growth here is mainly position (his ruling of 23 Nov: practice, taught skills, hand skills at most a quarter better).
 
 ### RT-07 Hooks and knowledge as leverage
 
@@ -810,6 +829,7 @@ A killing is permanent and remembered forever; a man who stops keeping his routi
 - Standard: Killing possible, rare, permanent, remembered forever (canon) Test: S: a missing routine is noticed; a body never cools
 - Source: canon content rule (his ruling or canon). Designed in: canon (content rule); DESIGN §7; DEFINITIONS RT2-11, RT2-12; ONE-SHOT-PROMPT 14
 - Status: ruled (his ruling or canon). Coverage row: 2.16.
+- The gap the bar leaves (catalogue 23 Nov, rank 13; seen in 1 game): A regular who stops appearing is noticed, asked after and talked about. Already covered for a killed or missing man; partly for an ordinary absence such as illness. Feature only; no timing; the part's status is unchanged.
 
 ### RT2-05 Killing principals and needed people
 
@@ -855,6 +875,7 @@ Someone hurt is taken to hospital after a call from the phone box; stopping to h
 - Standard: Stop and help costs minutes and puts his face beside the cab (DESIGN §5) Test: S: an ambulance arrives after a call within its set time; addendum rules ER-AMB-01
 - Source: DESIGN §5 (no reference figure yet). Designed in: DESIGN §5; DESIGN-ADDENDUM A22; DEFINITIONS RT2-19; canon (content rule)
 - Status: unmeasured. Coverage row: 2.18.
+- Emergency services come (catalogue 23 Nov, rank 16; seen in 2 games): An ambulance for a man hurt, never killed. Partly: the ambulance is covered (tape only for a body, 2.6.10); short are a crowd kept at a distance and the constable's notebook. Feature only; no timing; the part's status is unchanged.
 
 ## 2.19 Lasting marks on the town
 
