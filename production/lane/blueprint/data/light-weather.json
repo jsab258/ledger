@@ -6947,7 +6947,31 @@
     "chosen_note": "inverse-square with cosine and a smoothstep edge from 22 to 46 degrees; the edge shape is chosen"
    }
   ],
-  "gap_note": "at 5 m (mid-gap between lamps 10 m apart) the ground sits at the cone edge, so the gap is lit by the fill alone; pool to gap is measured in the night view, nothing changed on this note (review correction)"
+  "gap_note": "at 5 m (mid-gap between lamps 10 m apart) the ground sits at the cone edge, so the gap is lit by the fill alone; pool to gap is measured in the night view, nothing changed on this note (review correction)",
+  "real_spacing_check": {
+   "period_code": "BS 5489-3:1977 (the code side streets lit between 1977 and 1989 were laid out under; the 1989 edition set no spacing), group B5/6 (residential roads, 5 to 6 m mounting height): target spacing 34 m, plus or minus 10% (31 to 37 m)",
+   "source": "Fotios and Robbins, Research note: Describing average illuminance for P-class roads, Lighting Research and Technology 52(8), 2020, describing the 1977 code; read 24 Nov 2026 (reality-check/RESEARCH.md L1)",
+   "state": "the map's 30 to 32 m on the residential roads sits at or just under the band; Quay Street's columns alternate sides 10 m apart along the street (20 m on each side), far tighter; dock roads at 40 m are unchecked (group B8 spacing varied with road width, not reached); the code's rule on one side or staggered placing was not reached. Positions unchanged pending his answer (reality-check SUMMARY Q1).",
+   "photo_counts": "owed from the PC: dated 1988 to 1992 photographs of northern port terraces counted for columns per street length (the cloud cannot view images)"
+  },
+  "period_lighting_classes": {
+   "code": "BS 5489-3:1989 (kept in 1992): subsidiary road classes, average and minimum horizontal illuminance",
+   "3/1": [
+    10.0,
+    5.0
+   ],
+   "3/2": [
+    6.0,
+    2.5
+   ],
+   "3/3": [
+    3.5,
+    1.0
+   ],
+   "unit": "lux",
+   "source": "Fotios and Robbins 2020, Table 1, as returned by the fetch tool (layout flattened, values aligned by order); fetched 24 Nov 2026, recorded in reality-check/research/lamps.md",
+   "note": "the 3.5 to 6 lux average for real side streets in 5.4.2 matches classes 3/3 and 3/2 of the period code, so it is a 1990 figure, not a modern one; the game lamp stays game-scaled (pool_lumens_note)"
+  }
  },
  "night": {
   "id": "night",

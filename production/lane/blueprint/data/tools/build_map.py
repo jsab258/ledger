@@ -572,7 +572,7 @@ def stagger_lamps(r, spacing):
                     side = 1
                 x, y = along(pts[i], pts[i + 1], s - acc, off * side)
                 LAMPS.append(pt('lamp_%s_%d' % (r['id'], k + 1), 'lamp_column', x, y, road=r['id'], model='lamp_post_C', height_m=5.0,
-                                lamp='35 W low-pressure sodium', src='chosen (spacing)', chosen=True))
+                                lamp='35 W low-pressure sodium', src='chosen (spacing); real check: BS 5489-3:1977 B5/6 34 m plus or minus 10% (reality-check RESEARCH.md L1), his answer pending', chosen=True))
                 break
             acc += l
         k += 1
@@ -641,7 +641,7 @@ for r in ROADS:
             BOLLARDS.append(pt('bollard_%s_%s%d' % (r['id'], end, k + 1), 'lane_bollard', x, y, way=r['id'], src='G1 (foot-only lanes are bollarded or gated at both ends)'))
 
 PHONE_BOXES = [
-    pt('phone_landing', 'phone_box', 32.0, -5.6, model='KX100', src='RT2-19 (by the landing)', chosen=True),
+    pt('phone_landing', 'phone_box', 32.0, -5.6, model='KX100', src='RT2-19 (by the landing); count of three within the inferred 3 to 6 for the district (Hansard 12 Feb 1992: about 100,000 BT boxes; reality-check RESEARCH.md P1)', chosen=True),
     pt('phone_parade', 'phone_box', 120 + 3.0 + KERB_W + 0.55 + 0.457, qy(16.5), model='KX100', src='vignette-scene.json furniture E3 (street x 16.5, east, setback 0.55); RULINGS 2 Oct'),
     pt('phone_dock_gate', 'phone_box', 548.6, 224.0, model='KX100', src='RT2-19 (at the dock gate)', chosen=True),
 ]

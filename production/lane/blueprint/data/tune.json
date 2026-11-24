@@ -2751,9 +2751,9 @@
    "unit": "game_min",
    "group": "car",
    "src": "1.2.4; A22",
-   "basis": "game",
+   "basis": "real",
    "chosen": false,
-   "note": "= 20 real s."
+   "note": "= 20 real s. Real check (reality check 24 Nov 2026): London ambulance standard 8 min for 50% of urgent calls from 1990 (Hansard 1991); urban Patient's Charter 1992 to 1993: 14 min for 95%; 10 game minutes sits inside that range."
   },
   {
    "key": "beat.night_from_hour",
@@ -3053,8 +3053,8 @@
    "src": "production/specs/camera.json; 5.8.1",
    "basis": "real",
    "chosen": false,
-   "status": "provisional",
-   "note": "Street row is his pick, measured in the packaged game. Talk, run and room rows come from Mafia files and are provisional."
+   "status": "owed",
+   "note": "Street row is his pick, measured in the packaged game. Talk, run and room rows came from Mafia files: Mafia is never a reference (standing rule), so these four are placeholders only, owed from a measured second game (Sleeping Dogs, GTA V or KCD2) (reality check, 24 Nov 2026, R-CAM)."
   },
   {
    "key": "cam.talk.side_m",
@@ -3134,8 +3134,8 @@
    "src": "production/specs/camera.json; 5.8.1",
    "basis": "real",
    "chosen": false,
-   "status": "provisional",
-   "note": "Street row is his pick, measured in the packaged game. Talk, run and room rows come from Mafia files and are provisional."
+   "status": "owed",
+   "note": "Street row is his pick, measured in the packaged game. Talk, run and room rows came from Mafia files: Mafia is never a reference (standing rule), so these four are placeholders only, owed from a measured second game (Sleeping Dogs, GTA V or KCD2) (reality check, 24 Nov 2026, R-CAM)."
   },
   {
    "key": "cam.talk_close.side_m",
@@ -3165,8 +3165,8 @@
    "src": "production/specs/camera.json; 5.8.1",
    "basis": "real",
    "chosen": false,
-   "status": "provisional",
-   "note": "Street row is his pick, measured in the packaged game. Talk, run and room rows come from Mafia files and are provisional."
+   "status": "owed",
+   "note": "Street row is his pick, measured in the packaged game. Talk, run and room rows came from Mafia files: Mafia is never a reference (standing rule), so these four are placeholders only, owed from a measured second game (Sleeping Dogs, GTA V or KCD2) (reality check, 24 Nov 2026, R-CAM)."
   },
   {
    "key": "cam.run.lens_deg",
@@ -3196,8 +3196,8 @@
    "src": "production/specs/camera.json; 5.8.1",
    "basis": "real",
    "chosen": false,
-   "status": "provisional",
-   "note": "Street row is his pick, measured in the packaged game. Talk, run and room rows come from Mafia files and are provisional."
+   "status": "owed",
+   "note": "Street row is his pick, measured in the packaged game. Talk, run and room rows came from Mafia files: Mafia is never a reference (standing rule), so these four are placeholders only, owed from a measured second game (Sleeping Dogs, GTA V or KCD2) (reality check, 24 Nov 2026, R-CAM)."
   },
   {
    "key": "cam.room.side_m",
