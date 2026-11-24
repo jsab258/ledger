@@ -154,6 +154,7 @@ What a newcomer can point to at each rung: the name, greetings, property, clothe
 - Standard: ER-RISE-01 to 03: no number on screen; each rung changes three things a newcomer can point to Test: H: same street at rung 1 and 3
 - Source: DESIGN §14 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §14 (ER-RISE-01 to 03); GAME-DESCRIPTION-COPY-2 §26, §23; DEFINITIONS 2.12.2, 2.12.3
 - Status: decided. Coverage row: 7.7.
+- His ruling of 23 Nov (RULINGS on wip, genre line): growth is mainly in position; never levels: streets and people come to be known by practice, skills are taught by those who trust him and kept if lost, and hand skills improve quietly, at most a quarter better. The rungs above stand; the taught skills and the quarter cap are owed a design (gap, run 4). Conflict C-263.
 
 ## 7.8 Saving
 
@@ -169,6 +170,7 @@ An autosave after every deed, consequence and job step; reloading never stopped.
 - Standard: ER-SAVE-01: a reload gives the same next hour; held during a fight, never refused. Raised by Y8.2: see GV-05 (no blocking fault three nights running). Test: S: reload at random moments; SaveChaos
 - Source: DESIGN §17; D35, D58 (his ruling or canon). Designed in: DESIGN §17 (ER-SAVE-01); GAME-DESCRIPTION-COPY-2 §3, §35 (saving); DEFINITIONS AX-07; GTAVI-MAP Y8.2
 - Status: ruled (his ruling or canon). Coverage row: 7.8.
+- Checklist (23 Nov, top twenty no. 6; A39.01, A39.03): missing: the player must be told in plain words when the game saves, and a visible saving sign must show while a save is written. Gap for the design proof; status unchanged.
 
 ## 7.9 Failure without reload
 
@@ -238,6 +240,7 @@ By day, with no job live, a fare, a debt or a person with a word for him within 
 - Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-02 no stretch over 40 m without a door to a place with a person in it; decided; DENSE-06 something within 35 m of any walkable point except routine-empty places; decided. None measured.
 - Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-10 things met per minute and crossing times set from footage; pending. None measured.
 - Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-03 no dead leg over 2 minutes; a job 5 to 30 minutes, planned ones to 45; decided. None measured.
+- DECIDES-CHECK, 24 Nov: the crowd count by street and hour is now a deciding row (see FIT-G9); idle actions a minute and the small district stay leads.
 
 ### FIT-F32 Something within 30 s by day
 
@@ -417,9 +420,9 @@ Things to do with people that are not crime: the recommended answer is an amateu
 
 ### OUT-06 Stats, levels, skill trees and survival meters
 
-- How it works: No stats, levels, skills, perks or skill trees and no number of standing, loyalty, fear, heat or reputation on screen. Tom rises in position: what people call him (the new owner, Nowak, Tom, Tommy), greetings, property, three outfits, access and a fleet; money is said in words and the Ledger shows only what he knows. He never gets better at fighting or driving; the player does.
+- How it works: No stats, levels, perks or skill trees, no skill shown as a value, and no number of standing, loyalty, fear, heat or reputation on screen. Tom rises in position: what people call him (the new owner, Nowak, Tom, Tommy), greetings, property, three outfits, access and a fleet; money is said in words and the Ledger shows only what he knows. He never levels up: by his ruling of 23 Nov, streets and people come to be known by practice, skills are taught by those who trust him (kept if lost), and his hands improve quietly, at most a quarter better; the player's own skill carries the rest, and none of it is a number on screen (C-263).
 - Standard: - Test: S38 to S40 guards where they apply
-- Source: ruling 30 Oct and D33, D34: position, never numbers (left out by his ruling or canon). Designed in: RULINGS 30 Oct, 'What the game is'; GAME-DESCRIPTION-COPY-2 §3, §26
+- Source: ruling 30 Oct and D33, D34: position, never numbers; RULINGS 23 Nov, growth (left out by his ruling or canon). Designed in: RULINGS 30 Oct, 'What the game is'; GAME-DESCRIPTION-COPY-2 §3, §26
 - Status: out. Coverage row: OUT-06.
 - Studies: aaa-studies/IMMERSION-FEATURES.md: IM-01 no hunger, tiredness or hygiene value drains on a clock; decided; IM-07 sleep is a door, never a need, and always saves; decided. None measured.
 - Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-07 no purchase raises a fighting, driving or speaking value; decided. None measured.
@@ -445,6 +448,7 @@ Things to do with people that are not crime: the recommended answer is an amateu
 - Standard: - Test: S38 to S40 guards where they apply
 - Source: D12, D20, D37: no minimap; a paper map and street signs (left out by his ruling or canon). Designed in: RULINGS 'What the game is'; DESIGN-ADDENDUM §A9; GAME-DESCRIPTION-COPY-2 §3, §28
 - Status: out. Coverage row: OUT-09.
+- His ruling of 23 Nov (RULINGS on wip): jobs keep no waypoints or markers; directions come from people, and each one is kept in the Ledger or Tom's notes to reread (R8 answered: keep). See 6.2.3 and 6.9.
 
 ### OUT-10 Other spoken languages and translation
 
