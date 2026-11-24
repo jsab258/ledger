@@ -2,11 +2,11 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed, the next steps and the tries used.
 
-**Started:** 2026-11-23 23:51 (the hourly run)
+**Started:** 2026-11-24 01:36 (the hourly run)
 
-**Row due:** at the next start (last row 00:53; page read 00:47: nothing new; filter verdicts after 2026-11-23T22:53 UTC, advisor after 2026-11-23T22:35:00+01:00; last ack 2026-11-23-2235-336 at 22:55).
-**Uncommitted:** nothing of this session's but this file; commit da1cb7941 (the solid speeds) is NOT pushed: ci fails page-answers-fresh (see next step 0).
-**Stopped:** 2026-11-24 00:53 (the 23:51 run: Sleeping Dogs on foot solid; push blocked by page-answers-fresh; stopped on the pace rule, 26 points ahead)
+**Row due:** at the next start (last row 01:39; page read 01:37: nothing new; filter verdicts after 2026-11-24T00:37 UTC, advisor after 2026-11-23T22:35:00+01:00; last ack 2026-11-23-2235-336 at 22:55).
+**Uncommitted:** nothing; the 01:36 run's commit (his page's new item and this file) and da1cb7941 (the solid speeds) are NOT pushed: ci fails page-answers-fresh (see next step 0).
+**Stopped:** 2026-11-24 01:39 (the 01:36 run: read-back refused a second time, his page item added; stopped on the pace rule, 27 points ahead)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -39,6 +39,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - Sleeping Dogs speeds: the ruler is the chase's distance readout while Naz stands at 45 m (he stands from about 12 s after a checkpoint restart, for over 23 s); Enter on the fail screen restarts the chase in about 6 s; Shift is sprint (the game's own prompt). tools/drills/marker_read.py finds the green marker and tiles its numbers with grab times. Samples 1 to 3: sprint 5.5 m/s each; jog (W alone) about 4.4. Sample 4 lost (see Tried). SLEEPING-DOGS-DRILL-2026-11-23.md; STATUS.md on-foot 2.0 h logged.
 - n23-3 voice alone, no game open: first heard 0.15 s median, worst 0.29 to 0.35 s (N23-3-QUESTIONS).
 - Rows at 21:40 and 22:28. Pushed through 2541d1f1e; this handover's commit carries sample 4's note.
+- 01:36 run: page read (nothing new), read-back refused again, his page item added, row 01:39; pace 34% vs 7.0% (+27).
 - 23:51 run: **Sleeping Dogs on foot SOLID** (five samples each): sprint 5.5 m/s (5.5 x4, 5.6), jog 4.5 m/s (4.1 to 4.9); STATUS.md solid count three; drill note and NOTEBOOK entry; DAILY 23 Nov measuring line closed (about 2.2 drill hours). Committed da1cb7941, not pushed. Rows 23:56 and 00:53.
 
 ## In flight
@@ -46,7 +47,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 ## Next, in order
 00. Pace first: `python tools/pace_line.py <week> --fable <fable>`. 00:52 read 33% against 6.6% (+26.4): lean, no helpers; the 23:51 run stopped after its item on the pace rule (start nothing new while over 6 ahead).
-0. **Push blocked: page-answers-fresh fails** (read-back last 21 Nov; the nightly task ledger-page-answers-nightly has not run since 12 Nov). The 00:50 read-back (verdicts after 2026-11-20T23:00 UTC with out_dir production/approvals/answers/1VZHkCBAHdw8HBdNHrByL8, then `python tools/page_answers.py --index`) was refused by the auto-mode permission check as undermining oversight; do not work round it. Try it once in the next run; if refused again, his page: one ACTION item (only_you: the read-back needs his yes or his run of the nightly task; tried: two refused reads). Then ci to failed=none and push wip.
+0. **Push blocked: page-answers-fresh fails. Second refusal 01:38; his page now carries ACTION item page-read-back-2026-11-24 (published v186, in the items data); do not try the read-back again until his yes, then run it, ci to failed=none, push wip, close the item.** Read-back last 21 Nov; the nightly task has not run since 12 Nov; the read is verdicts after 2026-11-20T23:00 UTC with out_dir production/approvals/answers/1VZHkCBAHdw8HBdNHrByL8, then `python tools/page_answers.py --index`.
 1. Sleeping Dogs on foot is done (solid). Driving and fists in Sleeping Dogs still open: fists need about 60 fps (item 2).
 2. Fists in Sleeping Dogs need about 60 fps (grabs here are 11 a second): recorder item or footage.
 3. n23-3: order-swapped repeat pair (B then C) on measure-2026-11-24's dollar; the voice beside the game goes with question 3's packaged run (him away); cost per hour. Due Fri 27 Nov.
@@ -58,6 +59,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 5p. History rewrite HELD for his word at the PC. Progress page daily (progress.json only); DAILY token file 19:00.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
+- 24 Nov 01:38: page read-back with out_dir refused again (Undermining Oversight); two tries used; asked on his page.
 - 24 Nov 00:50: page read-back with out_dir refused by the permission check (Undermining Oversight); ci then fails page-answers-fresh; nothing pushed.
 - 24 Nov 00:25: one run's Shift hold gave jog speed (4.0 m/s, an obstacle in view): check every run's speed band before counting; a sixth run replaced it.
 - 24 Nov 00:10: sample 5 rerun filmed a white window for all 305 s (every grab mean 255): the game likely not recovered after the forced close. Try 2 queued at once; a second white run sets the fault aside.
