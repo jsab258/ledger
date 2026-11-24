@@ -2,7 +2,7 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed, the next steps and the tries used.
 
-**Started:** 2026-11-24 08:51 (the hourly run)
+**Started:** 2026-11-24 09:36 (the hourly run)
 
 **Row due:** 09:55 (last row 08:55; page read 08:52; filter verdicts after 2026-11-24T07:52 UTC, advisor after 2026-11-24T08:25:00+01:00; last ack 2026-11-24-0825-339 at 09:00).
 **Uncommitted:** nothing (09:01 commit: crowd counts, the frame grabber, two reader notes, STATUS row, this file). Local commits since da1cb7941 NOT pushed: ci fails page-answers-fresh (next step 0).

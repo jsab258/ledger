@@ -35,6 +35,44 @@ KCD2's views on this route hold 0 to about 9 people, the busiest about 9. Five b
 | 3:20 | park edge, outside the streets | 0 |
 Not a busy view; the busy centre (the trolley streets, the market) is still owed: five views a game.
 
+## Busy views, second pass (24 Nov 2026, 09:45 to 09:56 Swiss)
+Method as above (frame_grab.js, one frame a grab, read by the yellow label; the screenshot shows the grab before the last, so each label was matched by eye). People visible in the whole frame, the player and his horse left out. Both clips play as single uncut walks or rides (no cuts seen in the frames read); upload dates not read.
+
+### KCD2: https://www.youtube.com/watch?v=JXR-XfhiTyc ("Exploring medieval Kuttenberg - Relaxing ambient walk", 57 min 21 s, 720p, first person)
+| Video time | Place | Light | People |
+|---|---|---|---|
+| 5:00 | side lane by a cart | day | 2 |
+| 10:00 | yard with a bench | day | 0 |
+| 15:00 | street into the town, thatched houses | day | about 10 (the busiest seen) |
+| 20:00 | street along the wall | day | about 3 |
+| 25:00 | market lane with stalls | day | about 3 |
+| 30:00 | street with arcades, a guard | day | about 5 |
+| 35:00 | under an archway | day | 0 |
+| 40:00 | square with arcades and a vegetable stall | day | about 6 |
+| 45:00, 50:00 | lane under the town wall | day | 1, 1 |
+| 52:30 | square with stalls | dusk | about 5 |
+| 55:00 | lane with one lamp | dusk | about 1 |
+
+### RDR2: https://www.youtube.com/watch?v=7vzuOl96f5s ("10 Mins in Saint Denis. Freeroam with no commentary", 10 min 1 s, 720p, third person)
+| Video time | Place | Light | People |
+|---|---|---|---|
+| 1:00 | square with a street musician | day | about 5 |
+| 2:15 | avenue by railings, a carriage | day | about 2 |
+| 3:30 | indoors | - | left out (not a street) |
+| 4:45 | tram street by a park gate | day | about 6 |
+| 6:00 | market edge, produce store | day | about 4 |
+| 7:15 | tram street, galleried corner | day | about 5 |
+| 8:30 | fields outside the city | day | 0 |
+| 9:35 | street of shops | day | about 6 |
+
+### Five busiest daytime views a game (both passes)
+- KCD2: about 10, 9, 6, 6, 5 (median 6). Kuttenberg, the game's biggest city.
+- RDR2: about 7, 6, 6, 5, 5 (median 6). Saint Denis, the game's biggest city.
+- Quiet streets and lanes in both: 0 to 3. Dusk in KCD2: 1 to 5.
+
+### What it means
+Busy daytime streets in both reference cities hold about 5 to 10 people in one view, median about 6; quiet streets 0 to 3. Five samples a game from uncut walks, but read by eye at 720p (distant figures under about 20 px could be missed, unverified) and the upload dates not read: state "five samples, dates owed". The market at midday in KCD2 (the busiest scene the check named) was not in either clip at its peak; the counts are a floor for the busiest place, not a ceiling.
+
 ## Next for this row
-- Clips with busy daytime centres: KCD2 candidates https://www.youtube.com/watch?v=JXR-XfhiTyc ("Exploring medieval Kuttenberg") and https://www.youtube.com/watch?v=nfNSPfffE5U ("A Quick Stroll Through Kuttenberg"); RDR2 https://www.youtube.com/watch?v=7vzuOl96f5s ("10 Mins in Saint Denis, free roam, no commentary"). Found by web search 24 Nov 09:03, none opened yet.
-- The screenshot after a grab can show the previous grab: take a throwaway screenshot first, read by the yellow label.
+- Dates of the four clips (each watch page's description). The KCD2 market at midday if a clip shows it, as a check on the ceiling.
+- The number our crowd needs per view goes to the crowd part with these bands; the card's count is measured on our own build.

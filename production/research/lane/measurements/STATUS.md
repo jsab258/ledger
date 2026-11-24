@@ -56,18 +56,18 @@ Friday 27 Nov at the five-sample rule (estimate): about 134 hours were left this
 "Decides": its number would change a blueprint part's standard enough to change what the one-shot builds. "A lead is enough": the first pass or a published figure serves. Strict = five uncut samples a number; lead = one or two samples, or the first pass as it stands. GTA IV, GTA V and KCD2 copies are not run (DECISIONS 23 Nov 20:30), so their rows are footage; Sleeping Dogs is the one drill game.
 | Row | Verdict | Blueprint part it feeds | Strict h | Lead h | Route for the strict hours |
 |---|---|---|---|---|---|
-| Feel: on foot (GTA IV, GTA V, KCD2, RDR2; Sleeping Dogs solid) | decides | Tom's walk and run speeds, start and stop | 4.8 | 1 | footage |
-| Feel: fists (Sleeping Dogs, KCD2, GTA IV) | decides | the fight's wind-up, hit and recovery timing | 7.5 | 1.5 | drills 3 (Sleeping Dogs, needs the recorder item), footage 4.5 |
-| Feel: driving (Sleeping Dogs, GTA IV, GTA V) | decides | the car's acceleration, braking and weight bands | 4.5 | 1 | drills 1.5, footage 3 |
+| Feel: on foot (GTA IV, GTA V, KCD2, RDR2; Sleeping Dogs solid, no walk) | decides | Tom's walk and run speeds, start and stop | 4.8 | 1 | footage; the walk from KCD2 or GTA V |
+| Feel: fists (Sleeping Dogs, KCD2) | a lead is enough (advisor 341) | the fight's wind-up, hit and recovery timing: bands; 'at most two swing' decided | 7.5 | 2 | lead: Sleeping Dogs and KCD2, about 1 h a game (Sleeping Dogs drill needs the recorder item) |
+| Feel: driving (Sleeping Dogs plus a second game) | a lead is enough (advisor 341) | the car's bands, tuned to the fixed map; chase speed from the car-chase clips | 4.5 | 3 | lead: Sleeping Dogs drill plus a second game, about 1.5 h a game |
 | Feel: being seen (KCD2, RDR2 only) | decides | the constable's ladder: seen to alarm to pursuit | 4 | 1 | footage |
 | Feel: chases on foot (L.A. Noire, Sleeping Dogs, GTA V) | decides | foot-chase length and how an escape ends it | 5 | 1 | footage |
-| Crowd counts by street and hour (cloud check, 24 Nov) | decides | how crowds are built if the floor exceeds the card | 3 | 0.5 | footage: first readings 24 Nov 09:00 (crowd-counts-2026-11-24.md): KCD2 0 to about 9 in view on a quiet walking route, RDR2 0 to about 7 on a short ride; busy centres owed, five a game |
+| Crowd counts by street and hour (cloud check, 24 Nov) | decides | how crowds are built if the floor exceeds the card | 3 | 0.5 | footage, five samples a game, dates owed (crowd-counts-2026-11-24.md, 24 Nov 09:56): busiest daytime views KCD2 about 10, 9, 6, 6, 5, RDR2 about 7, 6, 6, 5, 5 (median 6 each); quiet streets 0 to 3; read by eye at 720p |
 | Street life Q3 (reactions spread and settle) | decides | the crowd's reaction radius and settle time | 3 | 1 | footage |
 | Feel: being seen (Hitman, GTA V) | a lead is enough | (the ladder is set by KCD2 and RDR2) | 4 | 0.5 | - |
-| GTA VI being seen (S1, S3, S7, G6) | a lead is enough | G5 heat length is solid already; the rest refines | 6 | 1 | - |
+| GTA VI being seen (S1, S3, S7, G6) | a lead is enough | G5 heat length is solid already; the rest refines | 6 | 1 | second game: RDR2, inside the being-seen row |
 | Car chases | a lead is enough | pursuit by car, first pass reconciled | 6 | 0 | - |
 | Conversations | a lead is enough | the talk camera's shot sizes (first pass serves) | 3 | 0 | - |
-| GTA VI driving, G-rows, split hour | a lead is enough | GTA VI never a blocker (DESIGN 5) | 9 | 0 | - |
+| GTA VI driving, G-rows, split hour | a lead is enough | GTA VI never a blocker (DESIGN 5) | 9 | 1 | second games: car camera a Sleeping Dogs drill (0.3 h); split hour GTA V's hour in the teardown; headlamps GTA V night footage (0.5 h) or Unreal-only; repeated lines a GTA V or RDR2 listen |
 | Players' first hours | a lead is enough | the opening's pace (the story judge sets it) | 3.5 | 0 | - |
 | Port towns, small district | a lead is enough | period research answers most | 3 | 0 | - |
 | Street life Q1 and busy views | a lead is enough | idle actions and counts | 3 | 0 | - |
@@ -75,7 +75,8 @@ Friday 27 Nov at the five-sample rule (estimate): about 134 hours were left this
 | Frame times (PresentMon) | a lead is enough | our budget is measured on our own build | 2 | 0.5 | - |
 | Rest of the feel block (activity timing, teardown, clip checks, scene finding, the survey's other driving games) | a lead is enough | published figures serve | about 39 | 2 | - |
 | Extra rows (listening, MEASUREMENTS-NEEDED A) | a lead is enough, unverified | the sheet is not on this PC (lane branch); verdict to be checked against it | 16.5 | 2 | - |
-- Decides rows only: about 29 h at the strict rule (drills about 4.5 h, footage about 24 h); about 6.5 h as leads. Every other row as a lead: about 6.5 h more (about 97 h if held to the strict rule; more than Monday's 105 h split implied, since three of the four drill games became footage).
+- Advisor 341 (24 Nov 09:10, the independent check DECIDES-CHECK-2026-11-24.md on lane-2026-11, upheld by a fresh reviewer): deciding rows are on foot, being seen (KCD2, RDR2), chases on foot, crowd reactions and crowd counts; fists and driving are leads; each one-game lead gets its named second game; deciding about 18 h (the check's estimate). Finish target Sat 28 Nov or sooner.
+- Before advisor 341: decides rows only about 29 h at the strict rule (drills about 4.5 h, footage about 24 h); about 6.5 h as leads. Every other row as a lead: about 6.5 h more (about 97 h if held to the strict rule; more than Monday's 105 h split implied, since three of the four drill games became footage).
 - At about 7 measuring hours a day the decides rows take about 4 working days; Fri 27 Nov is in reach for them if footage reading starts today, the fists drill waiting on his recorder item.
 
 ## The cheap-reader trial (n23-2, 23 Nov 2026 14:00-14:55 Swiss)

@@ -533,7 +533,7 @@
    ]
   },
   {
-   "line": "28 Sep: The story's spine is canon's baseline",
+   "line": "28 Sep: canon's baseline feeds the spine",
    "by": [
     "tools/canon-gate.py::real brand besides",
     "monday-audit"
