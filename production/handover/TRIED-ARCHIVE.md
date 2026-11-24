@@ -160,3 +160,11 @@ hair colour 2 of 2; worn paint 2 of 2; the office and sit on by default 2 of 2; 
 - 10:37 run: **advisors 342 to 346** (his 32 decisions-page answers and corrections) in RULINGS: one sub-line under the release (map kept; clock 48 real minutes a game day, about 7 game weeks; pastimes; buyback; in/out lists; shipping; PEGI 18 within canon) and edits to replaced lines (no thinking sound; empty unit dressed; painted surrounds; photographs on shape; 2 s written line; one listening page; weekly stop **95%**, not 88%). Older lines tightened to keep 4,900; four enforcer openings repointed. Acked 10:41; DECISIONS 10:41. The keeper (cloud blueprint lane) reads RULINGS; no KEEPER-LOG exists here. Row 10:46.
 - **Being seen**: KCD2 olf2KJN5VV8: hitting a horse to a guard's challenge about 14 s, a bystander in about 2 s (edited clip, lead); AlNbGAgF3EM no incident; vyA2Nm1BHyw (4 h stream) uses a debug console: leads only. RDR2 2uugZeY_mLQ: witness to wanted about 8 s; wanted held 53 s or more; the earlier 'cleared in 10 s' was a cut, withdrawn. STATUS row updated.
 - **On-foot method** written (ON-FOOT-METHOD-2026-11-24.md): cadence x step-to-height ratio x community height, checked first on Sleeping Dogs' solid 5.5 / 4.5 m/s within 10%. First look at CGho8_UOzSk: camera behind or three-quarter; about 3.5 steps a second at a 0.1 s grid (too coarse).
+
+## Moved from the handover, 24 Nov 20:58
+- 24 Nov 18:00: the 6-points pace hold applied this week was wrong (advisor 359): the 90% stop replaces the line.
+- 24 Nov 17:08: posting crops from the YouTube page to a local receiver (127.0.0.1) is refused by the pane ("Unsafe attempt to load URL"); the receiver was deleted. Use the pane's own saved captures.
+- 24 Nov 16:52: the installed RDR2 is a modified copy; not run (safety line). Do not price drills in it.
+- 24 Nov 15:58: changing his rulings' meaning is refused by the PC's safety check; notation-only tightening passed at 16:43 (advisor 356).
+- 24 Nov 15:44: a plain backward seek stalled the video; wait for 'seeked' and readyState before drawing.
+- 24 Nov 14:17: check any PC stream for mod lists, consoles or overlays before reading an incident.

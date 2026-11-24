@@ -4,7 +4,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-24 19:37 (the hourly run)
 
-**Row due:** 19:50 (last row 18:50; page read 18:55; filter verdicts after 2026-11-24T17:55 UTC, advisor after 2026-11-24T18:15:00+01:00; last ack 360 at 18:27).
+**Row due:** 21:55 (last row 20:55; page read 20:47; filter verdicts after 2026-11-24T19:47 UTC, advisor after 2026-11-24T20:15:00+01:00; last ack 363 at 20:16).
 **Uncommitted:** nothing after this commit; pushed to wip.
 **Stopped:** 2026-11-24 19:05 (the 17:51 run: advisors 358-360 done; RDR2 being seen set aside at four clean samples on the third review; history past its point)
 
@@ -34,36 +34,35 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- 17:51 run: **advisors 358-360**: Frank's deeds F1-F7 in RULINGS' story line (cap 4,897 by notation: consecutive dates as ranges, about as ~; enforcer keys follow); full pace to the 90% stop (the 6-points hold is not applied this week); rdr2-store-copy closed as footage, his page republished empty. **Never raise store copies or the installed games' files again** (his word, advisor 360).
-- **RDR2 being seen, third review NOT SOLID** (review-being-seen-rdr2-2026-11-24-c.md): clean one-deed riding-off samples 41.5, 70.5, 70.5, 97 s, all LordGedi, every edge saved at 1-2 s (F:/LedgerTools/game-inputs/footage/<id>/). LordGedi No3-No13 read through. Dropped: 65 s (edited), 188 s and The Phenom 3QeLY8_sWW8 83 s (solid red stage; second deed). Shootout case: GamerWolfBR Po_7A5A-rVM 109 s, ZpresidentGames 513 s. EightBitHD 2qcvPlsHx2s (2 h PS4): no crime.
-- KCD2 being seen: the hare colour scan (frame_sheet.js HARE SCAN) on the 88 h PS5 longplay sLU3UQlw62o hits menus and adverts; shortfall stands.
+- 19:37 run: **advisors 361-363**: 361 a recorder for his RDR2 drill (tools/drills/rdr2_record.py: `start` when he types "RDR2 drill starting", `stop` on "RDR2 drill done"; only the open game window, never the game's start, keys or files; frames to F:/LedgerTools/game-inputs/footage/rdr2-drill-<stamp>/; then read per block as his card in advisor 361 says). 362 Frank fully written in the key scenes (RULINGS story line). 363 a temper for every named person; his story yes after the next story pass (RULINGS; the dials check on Monday's people-data follow-up). Efficiency review (advisor, 19:44) acknowledged: scan first, Sonnet readers find clips; DAILY 25 Nov must restore the measuring-hours line, solid numbers, dollars per solid number, the Opus share and the skipped rows.
+- **RDR2 being seen SOLID** (review-being-seen-rdr2-2026-11-24-d.md): 41.5, 70.5, 70.5, 84, 97 s, median ~70.5 s; the 84 s from 2FIC Gaming's 6 Nov 2018 stream ZkTHGLvWCYM (cart theft); a 47 s ride-then-wait spell kept out. Solid count four. RECIPE entry written.
+- His page: one open DECISION, rulings-room-2026-11-24 (A recommended: enforced rulings move word for word to a second file; B cap 6,000; C keep squeezing). RULINGS stands at exactly 4,900.
+- **KCD2 being seen: shortfall** after ~1 h: HARE BOX SCAN (frame_sheet.js) calibrated on vyA2Nm1BHyw; A56UfjfcsYc (4 h PS5) and N1uLUFEjydo (trophy run Pt 3) scanned whole: menus, tutorials, fights; no witnessed crime.
+- Chases on foot: foot-chase-candidates-2026-11-24.md (15 unverified rows; mission lists).
 
 ## In flight
-- The KCD2 hare scan may still run in the pane's first tab; nothing reads it. No helpers running.
+- Nothing running. The browser pane's tab holds a stopped scan only.
 
 ## Next, in order
-00. Pace: 70% at 18:31; **the weekly stop is 90%** (advisor 352): at the newest reading of 90% finish the step, commit, push, one row, write production/weekly-stop.json {"until": "2026-11-30T13:00", "reading": N}, set "**Next due:** 2026-11-30 13:00", one page item (switch off the scheduled task ledger-daily-fresh-session, Code tab, Scheduled; on after Monday 13:00), stop all work. Advisor 359: full pace until then.
-1. **RDR2 being seen: one more one-deed riding-off spell**, preferably a second player's (uncut, dated, console): search long no-commentary console free-roam sessions or streams (2018-2019 streams are console for certain); the RED SCAN finds flags; keep only spells that flash then drain with no solid red stage and no lawman seen; save edges at 1 s and full frames at 2 s; then one fresh final-reviewer, no clicks. The inclusion rule is now written: apply it to every sample alike.
-2. KCD2 being seen, five uncut samples: make the hare scan skip menus (or read only the hare's box), or find the longplay's thieves' quest parts; report the shortfall plainly if none within about 1 h.
-3. On-foot cadence leads; chases on foot leads (L.A. Noire, GTA V); crowd reactions Q3 leads on two games.
+00. Pace: 74% at 20:22; **the weekly stop is 90%** (advisor 352): at the newest reading of 90% finish the step, commit, push, one row, write production/weekly-stop.json {"until": "2026-11-30T13:00", "reading": N}, set "**Next due:** 2026-11-30 13:00", one page item (switch off the scheduled task ledger-daily-fresh-session, Code tab, Scheduled; on after Monday 13:00), stop all work. Full pace until then (advisor 359).
+0. If he types "RDR2 drill starting": run `python tools/drills/rdr2_record.py start` in the background at once; on "RDR2 drill done": `python tools/drills/rdr2_record.py stop`; then read the frames by his card (advisor 361) and fold usable trials into being seen, crowd reactions and chases on foot.
+1. **Chases on foot (deciding):** GTA V first: a whole-session scan of the wanted stars (top right; calibrate on one known spell first, as the hare scan was) over the PS4 walkthrough asdZoAycD1o and any uncut console free-roam session; on-foot spells only (frames at 2 s). Sleeping Dogs: Santosx07 PS4 parts holding "Meet the New Boss" (police escape on foot). L.A. Noire chases end in tackles: a lead for chase length only.
+2. KCD2 being seen: later parts of BlackTorito TV's PS5 trophy run (pickpocket, lockpick, thief trophies: find the part by title or chapters), then the thief-titled ibyJamin series; scan whole; filter menu frames (skip when the top band holds the menu tab row).
+3. On-foot cadence leads; crowd reactions Q3 leads on two games.
 4. n23-3: per-model tally in ClaimBench before the per-model rows; prices re-read with dates. The probes' "I'm Tom": waiting list.
-5. n23-4 voice scan; n23-7 (DAILY-2026-11-25 by 19:00; credit row). Advisor 320 (backup's 28 GB on C:): two tries used; research before a third.
-0a. Advisor 277: Kiln, hair and the crowd paused. 0b. Next night walk Mon 30 Nov 01:30 (held while the stop file holds). 4p. Marvelous stays open. No Unreal work until the browser prototype is done (advisor 288). 5p. History rewrite HELD for his word. Progress page daily (progress.json only; publish the LIVE index.html read back, not the local one, which differs).
+5. n23-4 voice scan; n23-7 (DAILY-2026-11-25 by 19:00 with the advisor's restored rows; credit row). Advisor 320 (backup's 28 GB on C:): two tries used; research before a third.
+0a. Advisor 277: Kiln, hair and the crowd paused. 0b. Next night walk Mon 30 Nov 01:30 (held while the stop file holds). 4p. Marvelous stays open. No Unreal work until the browser prototype is done (advisor 288). 5p. History rewrite HELD for his word. Progress page daily (progress.json only; publish the LIVE index.html read back).
 
-## Saving footage evidence (works, 24 Nov 17:10)
-In the pane: define draw(vid, t) (seek, wait for readyState 4, draw the frame on a fixed canvas the pane's width, yellow label of id and time), wait 2 s, then computer zoom region [0,0,800,450] at scale 0.5: the result names a file in the session's tool-results folder; copy it to F:/LedgerTools/game-inputs/footage/<id>/<t>-<label>.png and list it in index.json with the upload date (meta itemprop uploadDate). Without the 2 s wait the capture lags one draw; trust only the label.
-
-Scanning a whole clip: frame_sheet.js RED SCAN (scanRed in the page, polled in calls under 40 s; every hit looked at with flags(); ammo at zero and status icons also read red). Stamp every time from Get-Date: today the session's own guesses ran 15-25 min ahead.
+## Footage tools
+All in tools/drills/frame_sheet.js (each with its known faults): sheet, SAVED EVIDENCE (pane screenshots copied to F:/LedgerTools/game-inputs/footage/<id>/ with index.json and upload date), RED SCAN (RDR2 flag), HARE BOX SCAN (KCD2). Stamp every time from Get-Date: guesses ran 10-25 min ahead today too.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
+- 24 Nov 20:50: KCD2 story walkthroughs (two PS5 sessions, ~5 h) hold no witnessed crime; orange hits in the hare box are menu tabs. Search trophy-run parts named for crime trophies instead.
+- 24 Nov 20:05: the 360p red scan caught a flashing RDR2 wanted spell on one row only (the word mostly white or pink); look at every short hit, or count bright pixels in the word's own box.
+- 24 Nov 19:55: a hidden browser pane unloads the YouTube video mid-scan (duration null) and long waits close the call: re-query the video each step, a 5 s watchdog (movie_player.seekTo, playVideo), polls under 35 s; a quality change mid-scan changes the frame size (compute the box each step).
+- 24 Nov 19:55: two scans in one page fight over the video; reload the page before starting another.
 - 24 Nov 19:00: a sample kept despite a solid red stage while another was dropped for one; review c caught it. Write the inclusion rule first.
 - 24 Nov 18:55: the KCD2 hare colour scan counts menu icons and adverts as alerts; needs a menu filter.
-- 24 Nov 18:00: the 6-points pace hold applied this week was wrong (advisor 359): the 90% stop replaces the line.
-- 24 Nov 17:08: posting crops from the YouTube page to a local receiver (127.0.0.1) is refused by the pane ("Unsafe attempt to load URL"); the receiver was deleted. Use the pane's own saved captures.
-- 24 Nov 16:52: the installed RDR2 is a modified copy; not run (safety line). Do not price drills in it.
-- 24 Nov 15:58: changing his rulings' meaning is refused by the PC's safety check; notation-only tightening passed at 16:43 (advisor 356).
-- 24 Nov 15:44: a plain backward seek stalled the video; wait for 'seeked' and readyState before drawing.
-- 24 Nov 14:17: check any PC stream for mod lists, consoles or overlays before reading an incident.
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3.
