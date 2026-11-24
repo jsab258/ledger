@@ -26,7 +26,12 @@ Frank comes down past the timetable. The man does not move from the wall.
 
 THE MAN: Mickey's?
 
-PLAYER (own words). The scene reads one of four kinds.
+FRANK (the player picks one, or speaks his own, or holds it out and says nothing):
+
+- "Mickey's."
+- "Frank Nowak. It's my office now."
+
+The scene reads one of four kinds.
 
 - A yes, a nod, or the envelope held out without a word. The man takes it. If nothing was said: "That'll do for a yes."
 - His own name, or that he is the owner:
@@ -72,7 +77,7 @@ Frank takes it. It weighs nothing.
 
 THE MAN: Right. Wednesday, same again.
 
-If the player tries to talk now:
+FRANK (if the player wants it): Then they can learn to spell it.
 
 THE MAN: You've done your bit. Go home.
 

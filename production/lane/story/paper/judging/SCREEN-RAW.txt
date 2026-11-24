@@ -1,0 +1,100 @@
+== 01-the-ferry-and-the-office/
+opus controls ['right', 'tie', 'right', 'right'] (counted)
+  against admired: ['shelf', 'shelf', 'shelf', 'shelf']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  floor (beats all 4 forgettable): met
+  against praised: 0 won, 0 tied, 4 lost
+sonnet controls ['tie', 'wrong', 'right', 'right'] (NOT counted: a control was wrong)
+  against admired: ['shelf', 'shelf', 'LEDGER', 'shelf']
+  against forgettable: ['LEDGER', 'LEDGER', 'tie', 'LEDGER']
+== 02-the-ask-on-the-rank/
+opus controls ['right', 'tie', 'right', 'right'] (counted)
+  against admired: ['shelf', 'shelf', 'LEDGER', 'shelf']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  floor (beats all 4 forgettable): met
+  against praised: 1 won, 0 tied, 3 lost
+sonnet controls ['tie', 'wrong', 'right', 'right'] (NOT counted: a control was wrong)
+  against admired: ['tie', 'shelf', 'LEDGER', 'shelf']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+== 04-the-line-in-the-book/
+opus controls ['right', 'tie', 'right', 'right'] (counted)
+  against admired: ['shelf', 'shelf', 'LEDGER', 'shelf']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  floor (beats all 4 forgettable): met
+  against praised: 1 won, 0 tied, 3 lost
+sonnet controls ['tie', 'wrong', 'right', 'right'] (NOT counted: a control was wrong)
+  against admired: ['shelf', 'shelf', 'LEDGER', 'shelf']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+== 05-car-three/
+opus controls ['right', 'right', 'right', 'right'] (counted)
+  against admired: ['LEDGER', 'shelf', 'shelf', 'LEDGER']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  floor (beats all 4 forgettable): met
+  against praised: 2 won, 0 tied, 2 lost
+sonnet controls ['right', 'right', 'right', 'right'] (counted)
+  against admired: ['LEDGER', 'shelf', 'shelf', 'tie']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  floor (beats all 4 forgettable): met
+  against praised: 1 won, 1 tied, 2 lost
+== 10-the-landing/
+opus controls ['right', 'tie', 'right', 'right'] (counted)
+  against admired: ['tie', 'shelf', 'LEDGER', 'shelf']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  floor (beats all 4 forgettable): met
+  against praised: 1 won, 1 tied, 2 lost
+sonnet controls ['tie', 'wrong', 'right', 'right'] (NOT counted: a control was wrong)
+  against admired: ['LEDGER', 'shelf', 'LEDGER', 'shelf']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+== 13-write-it-again/
+opus controls ['right', 'tie', 'right', 'right'] (counted)
+  against admired: ['LEDGER', 'tie', 'LEDGER', 'shelf']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  floor (beats all 4 forgettable): met
+  against praised: 2 won, 1 tied, 1 lost
+sonnet controls ['tie', 'wrong', 'right', 'right'] (NOT counted: a control was wrong)
+  against admired: ['LEDGER', 'shelf', 'LEDGER', 'shelf']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+== 14-the-night-between/
+opus controls ['right', 'tie', 'right', 'right'] (counted)
+  against admired: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  floor (beats all 4 forgettable): met
+  against praised: 4 won, 0 tied, 0 lost
+sonnet controls ['tie', 'tie', 'right', 'right'] (counted)
+  against admired: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  floor (beats all 4 forgettable): met
+  against praised: 4 won, 0 tied, 0 lost
+== 15-the-yard/
+opus controls ['right', 'tie', 'right', 'right'] (counted)
+  against admired: ['LEDGER', 'tie', 'LEDGER', 'LEDGER']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  floor (beats all 4 forgettable): met
+  against praised: 3 won, 1 tied, 0 lost
+sonnet controls ['tie', 'tie', 'right', 'right'] (counted)
+  against admired: ['tie', 'tie', 'LEDGER', 'shelf']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  floor (beats all 4 forgettable): met
+  against praised: 1 won, 2 tied, 1 lost
+== 19-the-quay-at-four/
+opus controls ['right', 'right', 'right', 'right'] (counted)
+  against admired: ['LEDGER', 'LEDGER', 'shelf', 'LEDGER']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  floor (beats all 4 forgettable): met
+  against praised: 3 won, 0 tied, 1 lost
+sonnet controls ['right', 'right', 'right', 'right'] (counted)
+  against admired: ['LEDGER', 'tie', 'shelf', 'shelf']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  floor (beats all 4 forgettable): met
+  against praised: 1 won, 1 tied, 2 lost
+== 20-the-counter-at-five/
+opus controls ['right', 'right', 'right', 'right'] (counted)
+  against admired: ['LEDGER', 'LEDGER', 'tie', 'LEDGER']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  floor (beats all 4 forgettable): met
+  against praised: 3 won, 1 tied, 0 lost
+sonnet controls ['right', 'right', 'right', 'right'] (counted)
+  against admired: ['LEDGER', 'tie', 'shelf', 'tie']
+  against forgettable: ['LEDGER', 'LEDGER', 'LEDGER', 'LEDGER']
+  floor (beats all 4 forgettable): met
+  against praised: 1 won, 2 tied, 1 lost

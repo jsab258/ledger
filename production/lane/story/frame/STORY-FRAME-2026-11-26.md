@@ -6,7 +6,7 @@ Written 24 November 2026; revised the same day for phase 2 (the story on paper) 
 
 What Frank wants. Frank Nowak steps off the ferry with £23.50 and a dead uncle's cab office. On his first night he tells Ron: by Christmas every night fare, every door and every quay on the Hook goes through Mickey's, and when people say Mickey's they will mean him. He wants to be somebody, fast.
 
-How the empire grows. You never see a number. You see cars on the board, your men at their posts, shops that wash your money, and the name the town calls you: the new owner, Nowak, Frank, Frankie. You can fight the three gangs, pay them, side with one against another, turn their men, and take a beaten gang in. An honest firm stops at three cars and a name.
+How the empire grows. You never see a number. You see cars on the board, your men at their posts, shops that wash your money, and the name the town calls you: the new owner, Nowak, Frank, Frankie. You can fight the three gangs, pay them, side with one against another, and turn their men. An honest firm stops at three cars and a name.
 
 The opponent. Danny Cammack, who drove Mickey's own car and never gave the key back. Quicker and funnier than Frank, he wants the same thing, and can be your best earner or your loudest enemy. Every week you watch him gain something, and his complaint is chalked on your board.
 
@@ -22,9 +22,11 @@ The five choices of the earlier page were decided on 24 November and are written
 
 ### What Frank wants
 
-Night one. Ron comes in off the rank with a dark coat over his arm and an envelope: Mickey's arrangement, down to the ferry landing after ten. Whatever Frank does about it, he first says this, a fixed scene:
+Night one. Ron comes in off the rank with a dark coat over his arm and an envelope: Mickey's arrangement, down to the ferry landing after ten. Frank asks what Mickey got for it. Whatever he then does about it, he first says this, a fixed scene:
 
-> FRANK: Thirty years, and that's the firm? An old man walking an envelope down to the water? Not for me. Every fare after dark, every door on this street, every quay with a rope on it: it goes through this office or it doesn't go. By Christmas, Ron. Mickey's runs the Hook. And when they say Mickey's, they'll mean me.
+> RON: Left alone.
+>
+> FRANK: I had that for nothing, all the way up from the boat. Forty-one doors on this street, Ron. I counted. Not one opened. Thirty years. Two cars, a rent book, and this. Not for me. Every fare after dark goes in my book. Every door on this street rings my telephone. Every quay with a rope on it. By Christmas, Ron. Mickey's runs the Hook. And when they say Mickey's, they'll mean me.
 >
 > RON: Aye. Well. Envelope still wants carrying.
 
@@ -50,9 +52,9 @@ In position, never in numbers, on the blueprint's four rungs: the nephew, Nowak,
 
 Cars come on terms (£90 down, £22 a week), which is why the board can fill. A firm that never runs a round stops at the second rung: three cars, a first man, the name Nowak. That is the honest firm, and it is a whole game: its Landing is done in the open, and its rivals still come.
 
-He can lose a post, the contract, a man, the licence for a fortnight; never the office, Pauline's radio or car two, so there is always a way back.
+He can lose a post, the contract, a man, the licence for a fortnight; never the office, the radio or car two.
 
-Three people say Frankie, at the fourth rung. The Widow, to own him. Danny, to needle him. Ron, once, if ever.
+Three people say Frankie. The Widow, to own him. Danny, to needle him. Ron, once, if ever.
 
 > What the player has to understand: three things, all on the surface. The name he is called. The board in the office, where cars, men and posts are chalked up and rubbed out. And what people tell him: each week's aim, each ask and each warning is said to his face before it lands, and kept in that person's words in the Ledger.
 
@@ -86,8 +88,8 @@ PROPOSED; the truce and the bought men are the blueprint's. The player meets all
 - A pact is made with one rival against another, at his visit, at Garbutt's table or at a sit-down. Its terms are spoken and kept in the Ledger: which posts each holds, one joint job, whose ground each keeps off. While it holds, that rival does not move against Frank.
 - It breaks when Frank grows past what the ally can live with (the fourth rung makes every ally a rival), when his men do a deed against the ally's, or when either side is offered more. A betrayal never comes without signs the player has seen: the ally stops coming in person, asks for his share early, and his men are seen with another firm's. Its form is the ally's own: Danny talks and takes the rank, the Widow takes a man, Agar withdraws a paper.
 - War is felt as what the other side brings: fists, then a gun shown, then a gun fired. It moves only on what was seen or heard, and never cools back to fists.
-- A truce is Garbutt's one a game, holding one rival for two game weeks. Paying a rival holds him as long unless Frank does a deed against him.
-- A rival's man who has been paid short, shamed or spared can be turned by a need met or a hook spent, and brings a true read of his head's habits. A whole firm can come over once its head has lost: Danny back on the board, under Frank.
+- A truce is Garbutt's one a game, holding one rival for two game weeks; paying a rival holds him as long.
+- A rival's man who has been paid short, shamed or spared can be turned by a need met or a hook spent. A whole firm can come over once its head has lost: Danny back on the board, under Frank.
 
 ## 3. The core six
 
@@ -96,8 +98,10 @@ Frank, and five people carried through every week. Everybody else is light.
 ### Frank Nowak, 32
 
 - Wants: to be the Hook's name by Christmas (section 1). His bond is Ron.
-- Flaw: pride, a stranger's need to be seen to win, and a temper that goes when he is treated as Mickey's lad.
-- Good at the wheel, and at walking straight up to things; canon never says where he learned, and nobody asks. Laughed at for giving everybody his whole name, like a man standing for the council, and for never asking the way.
+- Flaw: pride, and a stranger's need to be seen to win. Good at the wheel, and at walking straight up to things; canon never says where he learned, and nobody asks.
+- His voice, in four lines. (1) Short and in order: what it is, then what he will do about it; he counts aloud: doors, minutes, money to the penny. (2) His temper is quiet: treated as Mickey's lad he does up the middle button of his jacket, goes formal (Mr Cammack, Mrs Jensen), says it once and does it with his hands; he does not shout, explain or say sorry. (3) Both names to everybody, spelt if needed; he never asks the way, a price twice or a favour. (4) His jokes are dry, come late, and are at his own cost or a thing's, never at somebody weaker.
+- At every decision the player can pick one of two or three written lines in that voice, or speak his own. Samples: "Frank Nowak. Both names are mine." "Forty-one doors on this street. I counted. Not one opened." "That leaves five pound fifty. I'll try not to go mad."
+- The habit the camera sees: the middle button, done up before anything he means. In plaster he cannot do it.
 - The one deed only he would do, in week one. Danny Cammack leaves his car across Mickey's rank with the keys in it, because nobody on the Hook would touch it, and sits on Frank's counter. Frank, in the suit he brought for a funeral he missed, drives it down Quay Street, parks it on the quay's edge with the front wheels over the water, walks back, hangs the keys on Mickey's board and chalks a third line: CAR 3. He risks his body (Craig Fewson is on the wall beside Danny) and his standing (the parade is watching). Danny answers: he laughs, pays the fare, and a week later comes back with an offer. How far the player takes it is his (the corner, the edge, the water). The edge is where the two meet at the end.
 - His second is offered in week five: his own name, signed, to keep Ron out (section 5).
 - By path. With Danny, loudest and laziest. With the Widow, safest and smallest. Alone, most at risk in his own body. The honest firm, the same want by daylight.
@@ -125,8 +129,8 @@ The bond is built in the hands, week by week:
 - Week 3. The dawn convoy, Ron naming buildings a street late (drive). The gate: Frank Stathers offers him his old place in front of Frank, and a brass tally; he pockets it and says nothing (action; the first strain, his want against Frank's).
 - Week 4. The Landing: in the plan, and at the wheel when it goes wrong (action and drive; trust at its height). The cut, settled in the car going home: paid from the tin like a crewman, or kept on Mickey's wage (drive; strain).
 - Week 5. The gate again: Ron stood in the pen with the tally in his pocket, and nobody calling him (action, or Frank's absence; strain). Lesson five: he stops the car properly for once, puts the handbrake on himself and asks what is in the book (drive; the breach: Frank answers, true or false, and lets the brake off). Clearing the office the night before the search (action). The cells, and the night between (Frank's deed, or Ron's; the loss, or its price).
-- Week 6. Free: at Frank's back in the yard, and silent in the car. Inside: a job he sends Frank on, by Father Walsh (action).
-- Week 7. Free: he drives Frank down to the quay, naming nothing. Inside: the visit (drive, or talk). The last scene (a drive, or a hatch; the last word).
+- Week 6. Free: holding the lamp in the yard, silent in the car. Inside: jobs he sends Frank on, by Father Walsh (action).
+- Week 7. Free: he drives Frank to the quay, naming nothing. Inside: the visit. The last scene (a drive, or a hatch; the last word).
 
 Seventeen beats, at least one a week, three strains before the breach; twelve are jobs or drives. Extra lessons, Mickey's Friday and Mickey's watch are invitations that cost nothing if refused.
 
@@ -136,7 +140,7 @@ Seventeen beats, at least one a week, three strains before the breach; twelve ar
 - Flaw: she writes what she is told. She has never told a man no; she withholds instead: his name, a key, her opinion.
 - The one deed only she would do: she sits at her desk through the whole search with her handbag on her knee, Mickey's real book and her own red book inside it under her knitting, and offers DS Ellis a mint from the same bag. (The red book is PROPOSED: her true count, in her hand, of each night as it really was and who brought it in.)
 - Bond: she makes him say what he did, each morning, in words she can write, and reads them back in her own. She calls him new management until she trusts him; the day she says "Frank" is a rung of its own. She pulls against him at the first wash: "Same as your first night?"
-- By path. Trusted: the firm's brain, who says where the lie will hold and hands him the pen at the end. Asked to put the books off three counts running: she leaves until he comes to her door. Never trusted: she keeps the red book anyway, hers to hold out or hold back.
+- By path. Trusted: the firm's brain, who hands him the pen at the end. Asked to put the books off three counts running: she leaves until he comes to her door. Never trusted: she keeps the red book anyway. She is dry and exact; Pauline, at the radio, is warm and never stops talking.
 - Voice:
   - "The book will hide ten pounds and four fifths of what the cars really drove. Past that I'm not keeping accounts, love, I'm writing you a reference."
   - "Thirty-one years I've written what I was told. You write this one."
@@ -146,7 +150,7 @@ Seventeen beats, at least one a week, three strains before the breach; twelve ar
 - Wants what Frank wants: to be the Hook's name. For himself: his name back on Mickey's board, at the top.
 - Flaw: he cannot wait and cannot be second. He spends what he has not yet earned, money and trust alike.
 - The one deed only he would do: he drove car two for Mickey and never gave back his key. A week after car three he takes Mickey's own car off the rank with it, roof sign lit, and drives Frank the whole Hook in six minutes by his own count, pricing every door, to stop on the quay's edge with the front wheels over. "That's how you park it." Asked for the key, he hands one over cheerfully. It is a door key.
-- Bond: the only man on the Hook who treats Frank as an equal from the first day, which is why the pact works and the turn hurts. He calls him "nephew" (Danny's needle, outside the name ladder). He pulls against him the morning after the Landing, when the town says Cammack took it and Danny lets it.
+- Bond: the only man on the Hook who treats Frank as an equal from the first day. He calls him "nephew" (his needle, outside the name ladder). He wants to know what Mickey's letter said of him. He pulls against him the morning after the Landing, when the town says Cammack took it and Danny lets it.
 - His grievance is on the board from week two, where the player chalked it. Under car two's line the ghost of D. CAMMACK still shows in the paint, rubbed and never washed. At the offer Danny holds out the chalk, and the player chooses: the top line, the third line, or nowhere. On the third line, or nowhere, he chalks a small arrow pointing up beside his name every time he is in the office; Sheila rubs it out each morning, and it is back by night. He asks twice to be the top line. That is the cause of his turn, made and seen. If he was given the top line no grievance is planted, and he does not turn: Craig Fewson, who wanted the seat Danny left, takes the old key off him and is the man on the quay, and Danny stands beside Frank or is the price of the fight.
 - By path. Pact: car three is real, and he is the best earner the firm has. When he turns he does it in sight: from the box across the street he books car two to the police station over Mickey's own radio, and Frank can drive the fare himself. Refused: the loudest rival. The honest firm: he picks up the nights Frank put down, and offers Frank a wage.
 - Voice:
@@ -221,7 +225,7 @@ Found on foot, never marked. Each touches a rival, a post, a car, a front or a m
 24. The back room (new). Rita Welburn's back room and Wayne Harrison. The first front, and Danny's fence: what Danny knows of Frank's goods.
 25. An hour to nowhere (new). Captain Arvids Ozols (proposed), master of the timber ship held at the wall: every night a cab "to nowhere, please, one hour", paid in tinned fish that Darren sells on as Baltic caviar. The ship is towed out in week four; his boat-hand is a way onto the landing stage.
 
-Kept on file, not in the 25: the laundry's hampers, off the back of a lorry, posters on the glass, the quiet quay, lilies, sign there dear, Monday at Hal's, one way, the lamp outside Ada's, the camcorder.
+Kept on file: the laundry's hampers, off the back of a lorry, posters on the glass, the quiet quay, lilies, sign there dear, Monday at Hal's, one way, the lamp outside Ada's, the camcorder.
 
 ## 5. The spine
 
@@ -266,7 +270,7 @@ Opens on the ferry; closes on Sheila's Sunday question. Stakes: money. The most 
 
 Danny's car across the rank is his first move and the deed only Frank would do. The Widow and Agar are names overheard. Their first looks open Act IIa: the Widow's men tax Kevin at the dock gate (pay, defy or counter; if he pays, he asks for a receipt in front of the whole pen, and a day later gets one in her own hand, made out to Mr Nowack), and Agar's letter about the licence comes addressed to Mr Nowek.
 
-By path. Take it over: the arrangement stands. Wind it down: it ends that night, and every rival comes sooner. Refuse to say: the street decides. Every road reaches the second rung. A player who stops here has had a small whole story: a stranger arrives with nothing, makes one enemy laugh and gets a name.
+By path. Take it over: the arrangement stands. Wind it down: it ends that night, and every rival comes sooner. Refuse to say: the street decides. A player who stops here has had a small whole story: a stranger arrives with nothing, makes one enemy laugh and gets a name.
 
 ### Act IIa, The Rise (weeks two and three)
 
@@ -310,9 +314,9 @@ Week five is Garbutt's read: three goes at three men, one a post, each waking on
 
 Week six is three jobs and a room. Garbutt names the day. Each head wants one thing Frank can fetch, each by its own kind of play: for Danny, a man (one of his whom Frank turned or can turn: talk and a need); for Agar, a paper with his name on it (quiet hands at night); for the Widow, a load of hers gone astray (a heavy night drive, her taxmen on the road). He may fetch one, two or all three. The Customs letter arrives in the middle of it, spelt right.
 
-- The yard breaks into the week. Men he made, cast from everybody he beat, shamed or let down, come in by a gate somebody had a key to. He can win it. The arm is lost only for a choice he makes in the yard, with its sign in front of him: taking the hardest man himself, or going back alone for the tin. Then for days he fights one-handed, is driven, and has to ask (PROPOSED: a lasting injury beyond the blueprint's bruises). A player who lets his people carry the fight keeps his arm and pays another way: one of them is hurt and gone for the week, and the post he stood is open. Who comes decides the rest: Ron at his back (if free), Darren (if he let him sleep in the spare car), Ada's call (if he kept paying for her window), the night desk (if he gave Julie the job). With nobody, he comes round in Grace Rinaldi's kitchen.
+- The yard breaks into the week. Men he made, cast from everybody he paid short, beat, shamed or let down, come in by a gate somebody had a key to, all on one night, to be settled with before the firm goes under: a run on the tin. He can meet it. The arm is lost only for a choice he makes in the yard, with its sign in front of him: taking the hardest man himself, or going back alone for the tin. Then for days he fights one-handed, is driven, and has to ask (PROPOSED: a lasting injury beyond the blueprint's bruises). A player who lets his people carry the fight keeps his arm and pays another way: one of them is hurt and gone for the week, and the post he stood is open. Who comes decides the rest: Ron at his back (if free), Darren (if he let him sleep in the spare car), Ada's call (if he kept paying for her window), the night desk (if he gave Julie the job). With nobody, he comes round in Grace Rinaldi's kitchen.
 - The Widow waits up.
-- The sit-down: the back room at Grace's, all three heads and Garbutt. For each head he has fetched for, he can accept, defy or counter from strength; for each he has not, he takes that head's terms or walks out with his coat on and a war. He goes in hurt.
+- The sit-down: the back room at Grace's, at the funeral tea of the old man from the landing, all three heads and Garbutt. For each head he has fetched for, he can accept, defy or counter from strength; for each he has not, he takes that head's terms or walks out with his coat on and a war. He goes in hurt.
 
 By path. With the Widow: she never talks to the law; she forecloses. The honest firm: the line still names the old arrangement. Act IIb closes on the fall: a player who stops here has had a rise and its price.
 
@@ -320,7 +324,7 @@ By path. With the Widow: she never talks to the law; she forecloses. The honest 
 
 Frank is arrested on the entry: custody for hours. Then, through the wall: "That you, boss? Say nowt." Ron has walked in by himself and offered a statement that covers whatever Frank told him in lesson five was in the book, to be signed at nine. If Frank lied to him in the car, Ron hears the true line read out through the wall, and covers that instead. Frank is bailed that evening. The night between is the player's.
 
-- Let it stand. At nine Ellis asks Frank to his face whether he has anything to tell her, and his silence is his answer. Ron signs: that Mickey's arrangement was his to carry, that the envelope on the night in the book was part of it, and that he will not say who took it at the landing. Not a word is false, and Frank is not in it. He informs on nobody but himself. Ron goes in against anything Frank only says, and never against what Frank signs: "Saying's nowt, boss. You've a firm to stand in. I've a door."
+- Let it stand. At nine Ellis asks Frank to his face whether he has anything to tell her, and his silence is his answer. Ron hands him his cap to hang up, and signs: that Mickey's arrangement was his to carry, that the envelope on the night in the book was part of it, and that he will not say who took it at the landing. Not a word is false, and Frank is not in it. He informs on nobody but himself. Ron goes in against anything Frank only says, and never against what Frank signs: "Saying's nowt, boss. You've a firm to stand in. I've a door."
 - Sign first. Before nine Frank can walk back in and put the line on paper under his own name. Ron walks. Frank is charged to the end. The licence is suspended a fortnight: every car off the rank, and the drivers go to Danny unless paid in full from the tin. Eric Tharratt drops the contract; no charged firm meets his packing shift. Ellis's case sits on Frank, which closes the Kingdom's better turn. And Ron's door is taken from him by the man he offered it to: "You've took the one thing I had to give." He stays, silent.
 - A cheaper way, each a hook somebody holds over Frank to the end. Agar's brief gets Ron out as a messenger: Agar's price comes due in Act III, the yard's lease, and the third morning harder. Wardell loses the statement that named the night, for £200, once: and sells the fact to Danny, who uses it on the quay. Or Ellis herself, only if Frank has £800 in cash in his hand that night: she loses her best line, once, and is owed £100 every Friday to the end, each one written in her notebook. Ron lets any of these be done in his name only if Frank came for him at the gate or redeemed Mickey's watch.
 
@@ -394,7 +398,7 @@ PROPOSED; not yet in the blueprint. A small scheduler over a pool of authored be
 
 Each beat is a card (paper/SPINE-CARDS.md): its conditions in world state, its weight, a shape card of seven fields (opening, turn, ending, action, place, company, mood), who can carry it and a fallback, and the sign shown before it lands.
 
-- Pacing. After Act I something reaches Frank at least once in every fifteen game hours (thirty real minutes). Act II runs in at least four stages of at most five game days (four real hours), each ending in a change he can see on the board. At most one heavy beat a game week, a rest or a funny beat after each, and at least two and a half game days (two real hours) between two heavy beats, so a fast player cannot stack them. A slow player's gaps fill with side stories, never with standing at a post.
+- Pacing. After Act I something reaches Frank at least once in every fifteen game hours (thirty real minutes). Act II runs in at least four stages of at most five game days (four real hours), each ending in a change he can see on the board. At most one heavy beat a game week, a rest or a funny beat after each, and at least two and a half game days (two real hours) between two heavy beats. A slow player's gaps fill with side stories.
 - The week's aim. The Ledger always holds the week's aim in its speaker's words and, beneath it, one named next thing (who, where, what for). No markers.
 - No repeats. Neighbouring beats differ on at least three of the seven shape fields; no beat plays twice.
 - Late, absent, or the carrier is gone. Every main beat has a second way in: the old firm's man brings the ask to the door; if car three sits a day, Danny moves it and tells it his way. The simulation may take away only who is alive, who knows what, who is where, who will talk, and how the law stands.
@@ -409,13 +413,13 @@ Two chairs keep the spine standing; the third is never empty. If Danny is dead o
 - Live talk: anybody can be spoken to, and says only what the simulation knows.
 - The name ladder is the town's verdict, spoken.
 
-Worked example 1: a telling he can use. Car three is seen by Ada from her window and Shaun Hewson from his ladder. By noon Brenda has it whole: "You're never him that put Cammack's motor on the edge." Lee Drewery has it third-hand and thin: a man from Mickey's did it. "Was it Ron?" The player can leave Ron's name on it, which the pen respects and Danny's men will act on, or claim it, and that wins Lee.
+Worked example 1: a telling he can use. Car three is seen by Ada from her window and Shaun Hewson from his ladder. By noon Brenda has it whole: "You're never him that put Cammack's motor on the edge." Lee Drewery has it third-hand: "Was it Ron?" The player can leave Ron's name on it, or claim it, and that wins Lee.
 
-Worked example 2: one debt, three returns. Dennis Iveson owes £80 and has it. Front up his yard hand, Neil Screeton, and in week six Screeton is the hardest man in the yard: "Eighty pound, Mr Nowak. I've your change here." Go into the hut at night, and Norman Dent has a noise and a shape, never "he did it": in week five it is a description in Ellis's notebook. Lean on what Iveson bought out of the burned warehouse, and he pays on the spot and remembers: he is the one the player later sees leaning in at Ellis's car window.
+Worked example 2: one debt, three returns. Dennis Iveson owes £80 and has it. Take it off him, and he stops it out of his yard hand's wages; in week six Neil Screeton is the hardest man in the yard: "Eighty pound, Mr Nowak. I've your change here." Go into the hut at night, and Norman Dent has a noise and a shape: in week five it is a description in Ellis's notebook. Lean on what Iveson bought out of the burned warehouse, and he is the one the player later sees leaning in at Ellis's car window.
 
-Worked example 3: a returning enemy with a mark. On the ferry rank in week two the Widow's taxman, Mark Billany, goes down in front of the boat queue. Frank can hand him his cap, walk off, or hit him again while he is down. In week four Billany, with a stitched eyebrow, is at the Landing. Spared, he lays his keys on the roof and walks: "That's us straight." Struck when down, he leans on the horn until the gate men come.
+Worked example 3: a returning enemy with a mark. On the ferry rank in week two the Widow's taxman, Mark Billany, goes down in front of the boat queue. Frank can hand him his cap, walk off, or hit him again while he is down. In week four Billany is at the Landing with a stitched eyebrow. Spared: "That's us straight." Struck when down, he leans on the horn until the gate men come.
 
-With the line, car three, the chalk, the tally, the gate tax, Iveson's debt, the man on the ferry rank, the cut, the pen and the side stories, more than a dozen acts of his own return as scenes. No wrong deed is forced. Every main job has at least two ways through, and failing one moves the story on.
+With the line, car three, the chalk, the tally, Iveson's debt, the man on the ferry rank, the cut, the pen and the side stories, more than a dozen acts of his own return as scenes. No wrong deed is forced. Every main job has at least two ways through.
 
 ## 8. How the ending is assembled
 
@@ -445,7 +449,7 @@ Voices. Sheila, closing the book: "First line in thirty-one years I'd let anybod
 
 ### Burn Both
 
-Neither the firm nor a friend. He held on and a morning fell; or he bargained the book away at his own counter; or he named a name and lost both anyway. Another firm's cars stand on the rank, and the chain goes on the gate with nobody of his there to see it. Ron takes the Widow's coat, and hangs her tally on its hook. Shaun Hewson has his ladder against the front: "Wants doing. What's it to say?" Nobody tells him. The last name comes from a stranger in the doorway with a suitcase, come about the office: "Mr Nowak?" It is spelt right on his letter.
+Neither the firm nor a friend. He held on and a morning fell; or he bargained the book away at his own counter; or he named a name and lost both anyway. Another firm's cars stand on the rank, and the chain goes on the gate with nobody of his there to see it. Ron takes the Widow's coat, and hangs her tally on its hook. Shaun Hewson has his ladder against the front: "Wants doing. What's it to say?" Nobody tells him. The long letter from Customs is spelt right. What is left is the player's to pick up: the new firm's envelope, to carry down to the landing for three pounds a night and answer to another man's name; or his suitcase, and the last boat.
 
 If he is hunted for a killing when the books open, each ending plays from that state: the close is spoken about him, and not to him.
 
@@ -463,26 +467,23 @@ With them: the 48-minute game day; the economy (Ellis can be bought; an honest f
 
 Three questions raised by this revision, answered by the lead the same day:
 
-1. Length. The 48-minute day stands. Seven game weeks at that rate is about 39 real hours against the release ruling of 15 to 20; the gap is noted here and not solved.
-2. The dearest cheaper way. Ellis can be bought on the night between only if Frank has £800 in cash in his hand; otherwise that way is closed to him. Being poor costs him a door.
-3. Two Franks. Frank Stathers stays, with his line: "There's one Frank on this gate."
+1. The 48-minute day stands. Seven game weeks at that rate is about 39 real hours against the release ruling of 15 to 20; the gap is noted, not solved.
+2. Ellis can be bought on the night between only with £800 cash in hand; otherwise that way is closed.
+3. Frank Stathers stays: "There's one Frank on this gate."
 
 ## 10. What changed in this revision
 
 1. The lead is Frank Nowak, and the ladder's last rung is Frankie (until 24 November he was Tom, and the rung Tommy); the echo of an older crime game that two readers named goes with the old name.
 2. The five choices are decided. Ellis can be bought. The honest firm stops at the second rung, and meets the Landing through Garbutt.
-3. The loss is the brief's: Ron lives; something stays lost on every path; the naming stops; each cheaper way is a hook. The breach is Frank's answer in lesson five, sealed by his hand on the handbrake.
-4. One aim a week, said by a person. Week six is three jobs for three heads and one room.
-5. The 25 side stories are tied by name.
-6. The line in the book finishes Pauline's half line; a cover fare costs its price from his own pocket; he reads the line again in week three, and R. Kirby down the red book's column.
-7. The turn's tip is always a leak the player watched.
-8. Danny's grievance is chalked where the player put him; with none, Fewson is the man on the quay.
-9. The arm is lost only for a choice made in the yard. A lost quay fight brings Danny to the counter with the book.
-10. Two of the five mornings are set pieces. The Customs letter comes in week six; the five mornings run Tuesday to Saturday 1 December.
-11. New in the play: Ron's morning engine, his hand signals, the brass tally, the call at the pen, the clock cards, the boat held off for the display.
-12. Pacing is restated in game time; the 48-minute day replaces the ruling of 21 November.
-13. Cut: the readers' table, the first departures list, and engine vocabulary the player never meets.
+3. The loss is the brief's: Ron lives; the naming stops; each cheaper way is a hook. The breach is Frank's answer in lesson five, sealed by his hand on the handbrake.
+4. One aim a week, said by a person; week six is three jobs and one room. The 25 side stories are tied by name.
+5. The line in the book finishes Pauline's half line; a cover fare costs its price from his own pocket; he reads the line again in week three, and R. Kirby down the red book's column.
+6. The turn's tip is always a leak the player watched. Danny's grievance is chalked where the player put him; with none, Fewson is the man on the quay.
+7. The arm is lost only for a choice made in the yard. A lost quay fight brings Danny to the counter with the book.
+8. Two of the five mornings are set pieces. The Customs letter comes in week six; the five mornings run Tuesday to Saturday 1 December.
+9. Pacing is restated in game time; the 48-minute day replaces the ruling of 21 November.
+10. After the blind scene readers: Frank has a written voice and a habit; the want speech starts from the forty-one doors; the yard is a midnight settle; the room at Grace's is a funeral tea; Burn Both ends on an errand or a boat.
 
 ## 11. The readers' marks
 
-Six fresh blind readers scored the earlier text against the fifteen principles: 24.3 of 30 before its one revision, 26.3 after; all six said revise, not rethink. These are signs, not measurements; the table is in the working copy. This revision answers their weak points and has not been scored. The scenes go to the scene judge and to new blind readers.
+Six blind readers scored the earlier frame 24.3 of 30, then 26.3. Three more read the 23 scenes: about 7.1 of 10 a scene, and 21, 23 and 24 of 30 on the principles; all three named Frank's missing voice first.

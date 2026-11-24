@@ -60,7 +60,7 @@ Ron has seen Frank. He looks at the far wall.
 
 What Frank does now is the scene.
 
-Call him. PLAYER (own words). The pen has its own rule for this as well, and Stathers is bound by it: any man with work may call a man off the stand, by his surname.
+Call him. FRANK (the player picks one, or calls a name of his own). The pen has its own rule for this as well, and Stathers is bound by it: any man with work may call a man off the stand, by his surname.
 
 - "Kirby." Said as a foreman says it. Every head in the pen comes up. Ron takes his hands out of his pockets. He walks the length of the pen to the wicket, lifts the latch, and comes out to the road. He stops in front of Frank.
 
@@ -77,7 +77,9 @@ After a call that stands:
 
 STATHERS: You call a man off my stand, you pay his day. Down. In his hand. Thirty-eight pound.
 
-Frank counts thirty-eight pounds into Ron's palm in front of three men who were not called. Ron has to take it; that is the rule too. He closes his hand on it and does not look at it.
+FRANK: Thirty-eight pound. Count it, Mr Stathers.
+
+He counts it into Ron's palm in front of three men who were not called. Ron has to take it; that is the rule too. He closes his hand on it and does not look at it.
 
 STATHERS: And a man called for another firm hangs his tally up.
 
@@ -117,7 +119,7 @@ STATHERS: List's shut. Keep it, Ron. It's brass.
 
 He goes through to the ship. One of the three, leaving, nods to Ron. It is the first time since the fifth morning.
 
-Go in swinging. Hands: over the rail, or at the two men on the leaf. It is fists, by the gate, in the rain. Ron comes off the back rail at the first blow and is at Frank's shoulder, and then at his back, as on the ferry rank in week two. This time the men in front of him are men he stood beside, and two of the three in the pen come out against him because it is their gate. Ron hits them. Stathers does not fight. When it is over, if Frank is standing, the leaf is open and Lee is on his feet. Stathers walks over to Ron, who is breathing hard, and holds out his hand, palm up. Ron puts the tally in it.
+Go in swinging. Hands: over the rail, or at the two men on the leaf. It is fists, by the gate, in the rain. Ron comes off the back rail at the first blow and is at Frank's shoulder, and then at his back, as on the ferry rank in week two, if it came to fists there. This time the men in front of him are men he stood beside, and two of the three in the pen come out against him because it is their gate. Ron hits them. Stathers does not fight. When it is over, if Frank is standing, the leaf is open and Lee is on his feet. Stathers walks over to Ron, who is breathing hard, and holds out his hand, palm up. Ron puts the tally in it.
 
 STATHERS: That's that, then.
 
@@ -138,14 +140,12 @@ Do nothing. Stathers keeps the list open until the hatches are off, and shuts it
 ## What the town remembers
 
 - The pen tells it, this time, because this time it was done by its rules. "Called him out like a ganger." "Called him Mister. In the pen. I thought Stathers'd swallow his board." "Stood there an hour next to him in a ninety-pound coat and never said owt." Or: "Nobody come."
-- The packers have the owner on the casual round the cold stores by first break. Brenda, by dinner: "I hear you've been looking for work."
+- Brenda, by dinner, if he stood: "I hear you've been looking for work."
 - Stathers tells Maureen Jensen which it was. If Frank stood: "He stands where his men stand." She says that is not a man you tax; it is a man you wait for. If he called: "He bought him off my hook for thirty-eight pound." She has the tally sent to her and keeps it.
 - Ron. Called: he keeps the day's money in his pocket and does not break it; it is counted out of his pockets at the station, or, if he walks, it pays for both of number nine. Stood with: he says nothing about it, ever; in lesson five he names the pen for the first time. Fought for: his knuckles are split on the wheel. Left: he turns the tally over on the door all week where Frank can see it.
 - The night between reads this morning. Ron will let a cheaper way be done in his name only if Frank came for him here: if he called, or stood, or fought.
-- The close. In one ending number 39 is on the Widow's hook again, under Ron's coat.
 
 ## Variants by path
 
 - In week three Frank sent Ron to open the gate. The eight have their backs to him, and have had since. If Frank stands with him, the nod at the end is the first face Ron has been shown in a fortnight.
-- The cut at the Landing. Paid from the tin: after "Thirty-eight pound" Ron says, quietly, "That's twice you've paid me, boss," and takes it.
-- No man on the gate (the honest firm, or the post never taken). No leaf is shut. Stathers: "Nothing to do with your cars, Mr Nowack. This is between a man and his number."
+- No man on the gate (a firm with no night money, or nobody of his on the gate). No leaf is shut. Stathers: "Nothing to do with your cars, Mr Nowack. This is between a man and his number."

@@ -26,7 +26,7 @@ SHEILA: That's not fares.
 
 She pulls the mileage board toward her and runs her pencil down it.
 
-SHEILA: Car one did two hundred and twelve mile this week, and I've fares for a hundred and seventy. Kevin drives forty-two mile a week nobody pays for. He must like the view. (She lets that lie.) It gives me room, any road. The book will hide ten pounds and four fifths of what the cars really drove. Past that I'm not keeping accounts, love, I'm writing you a reference.
+SHEILA: Kevin drives forty-two mile a week that nobody pays for. He must like the view. (She lets that lie.) It gives me room. The book will hide ten pounds and four fifths of what the cars really drove. Past that I'm not keeping accounts, love, I'm writing you a reference.
 
 She draws the pile across with the flat of her pencil, counts it by eye, and unscrews her pen. It stops above the page.
 
@@ -42,7 +42,9 @@ What she says next depends on what is there.
 
 SHEILA: Waiting. It's the only thing a cab earns stood still. I can lay thirty-five pound of waiting across four cars and a week, and nobody's going to count the minutes.
 
-PLAYER (own words). A plain yes, and she turns back to today and writes seven lines, a car and a night to each, saying them under her breath as she goes: landing and return, waited; Fairview and return, waited. She puts the pile in the tin.
+FRANK: Same.
+
+She turns back to today and writes seven lines, a car and a night to each, saying them under her breath as she goes: landing and return, waited; Fairview and return, waited. She puts the pile in the tin.
 
 SHEILA: And the tin's got it this time. I'll not want your pocket.
 
@@ -50,15 +52,19 @@ SHEILA: And the tin's got it this time. I'll not want your pocket.
 
 SHEILA: I can't bank no charge. Your first night's no good to me, love.
 
-She waits, pen up. The player has to say what he wants now. If he asks for fares:
+She waits, pen up.
+
+FRANK (the player picks one, or speaks his own): "Then write them as fares." / "Write it as it was." / "Keep it out of the book."
+
+To the first:
 
 SHEILA: Then it's a different hand from that one, and it starts tonight. Anybody reading down the page'll see the day it changed.
 
-On a plain yes she writes them. If he asks for it as it was:
+She writes them. To the second:
 
 SHEILA: A round. In a fare book. (She writes it, small.) Collected, by hand, Quay Street. Thirty-five pounds. No fare. It's your book.
 
-If he says to keep it out, she folds the notes into an old cocoa tin from under the counter. "Then it's cash, and it stops cash. You can't pay the rent with it and you can't pay the cars."
+To the third, she folds the notes into an old cocoa tin from under the counter. "Then it's cash, and it stops cash. You can't pay the rent with it and you can't pay the cars."
 
 3. The line is hers, written behind her hand on the first morning. He has not seen it until now: Office to ferry landing. Collection, a/c M. Suddaby. Settled.
 
@@ -90,11 +96,13 @@ Sheila puts the telephone down. She sees where he is looking. She does not hurry
 
 SHEILA: That's mine.
 
-PLAYER (own words). If he asks why it is Ron's name:
+FRANK (the player picks one, or speaks his own): "Why's it his name?" / "Put mine." / nothing.
+
+To the first:
 
 SHEILA: Because he brought it. I write who brought it in. That's all that column's for.
 
-If he asks why it is not his own, or tells her to put him:
+To the second:
 
 SHEILA: There's no column for who it was brought to, love. Mickey never needed one. He went himself. (She screws the cap on her pen.) You want your name in there, you go and fetch it yourself.
 
@@ -126,6 +134,6 @@ SHEILA: Sunday I'll read you the week. I always do it Sundays.
 
 ## Variants by path
 
-- The honest firm. There is no night money. The scene wakes instead on the first Sunday reading after Frank has seen Mickey's locked office: Sheila opens the red book to enter nothing, and the phone rings. He sees the brown pages of M.S., and then three lines of R. Kirby for the nights of the envelope, and then white paper. "That's mine. It stops there, if it stops."
+- A firm with no night money. The scene wakes instead on the first Sunday reading after Frank has seen Mickey's locked office: Sheila opens the red book to enter nothing, and the phone rings. He sees the brown pages of M.S., and then three lines of R. Kirby for the nights of the envelope, and then white paper. "That's mine. It stops there, if it stops."
 - The arrangement ended on night one. The page has one envelope line, a message carried, R. Kirby; the rest is whatever came after.
 - Frank has already been going alone. Some lines read F.N. Sheila, shutting the book: "You've been fetching your own. I'd noticed."

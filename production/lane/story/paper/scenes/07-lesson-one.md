@@ -30,7 +30,7 @@ RON: Door. Mirror. Belt.
 
 He does each as he says it. Then he winds his window all the way down, and the drizzle comes in on his sleeve.
 
-PLAYER (own words). If he asks about the window:
+FRANK (if the player wants it): It's raining in, Ron.
 
 RON: For signalling.
 
@@ -62,6 +62,10 @@ RON: I'll say what's coming, boss. Then you'll know I've seen it.
 
 He turns left onto the dock road with his arm out and turning in a slow circle, which is the signal for left in the book he learned it from. The needle comes up to eleven and stops there.
 
+FRANK (if the player wants it): She does go faster.
+
+RON: Aye. I don't.
+
 RON: Coming up on the ice house. (The chained doors go by.) That's the ice house. (A pause of one wiper.) Leaving the ice house.
 
 This is the lesson. What Ron names, he has seen, and the player can leave alone. What he does not name, he has not seen.
@@ -73,6 +77,8 @@ He stops at the board, by himself, short and square. He looks left along rails t
 RON: Nowt coming.
 
 Over the rails. A milk float comes up behind, whining, bottles ringing, pulls out and goes past them. Its driver lifts a hand.
+
+FRANK: We've been overtaken by a milk float.
 
 RON: He knows the road.
 
@@ -117,9 +123,11 @@ Billany looks at him, and at the L, and goes back to leaning. Ron comes round to
 
 RON: This one's wanted on Quay Street. Get a third car on that board and stand on the ferry rank till they stop asking whose it is.
 
-The Ledger takes it, in his words. He walks round and gets in on the passenger side, and puts his belt on, and waits to be driven home.
+Frank's notebook keeps it, in Ron's words. He walks round and gets in on the passenger side, and puts his belt on, and waits to be driven home.
 
-On the way back, with Frank at the wheel, he names nothing. If the player asks why:
+On the way back, with Frank at the wheel, he names nothing.
+
+FRANK (if the player wants it): You've gone quiet.
 
 RON: I only say it when it's me.
 
@@ -127,7 +135,7 @@ RON: I only say it when it's me.
 
 - Say "Stop". Hands: one key. It always works and it is always total. Used where Ron had named the thing, he says "Aye," and sets off again; nothing is lost but his cap.
 - Pull the handbrake. Hands: hold. Softer, slower, and Ron says he had seen it.
-- Do nothing. Sign: Ron has not named what is ahead. What follows: a dent, a horn, an opinion. Each dent is kept on car two for good, and in the last week the tax inspector walks round the car and counts them.
+- Do nothing. Sign: Ron has not named what is ahead. What follows: a dent, a horn, an opinion. Each dent is kept on car two for good, and in the last week a man from Customs and Excise walks round the car and counts them.
 - Talk. Ron on the arm signals: "It's in the book. I've had the book since I were called up. Never had the car." On the naming: "On the tugs they sing out what they see. Then nobody has to shout." On the pen, once, and no more: "I stood there. Thirty-six year." On Mickey's L-plates: nothing; he looks at the road.
 - Take the wheel back. Hands: say so, or get out at any stop. The lesson ends where it is; Ron walks the rest and stands the rank. Nothing is lost. He will ask again in his own time.
 - Come back for lesson two. Any dry morning, from Ron: "Right turns, the book says. I've only done lefts."

@@ -52,7 +52,7 @@ Then she turns the book round on the counter to face him, takes a pen from her i
 
 ELLIS: Write it again. Underneath. Same words.
 
-The player writes. He has seen the line twice: when he said it, and when Sheila turned the book round in week three. Nothing on the screen offers it to him now. The Core reads what he writes against what stands, by its kind and by its facts: where, what, for whom, what was paid.
+The player writes. He has seen the line twice: when he said it, and when Sheila turned the book round in week three. Nothing on the screen offers it to him now. The game reads what he writes against what stands: where, what, for whom, what was paid.
 
 1. The line is a fare.
 
@@ -60,7 +60,7 @@ If he writes the same fare, with the landing, the waiting and the cash:
 
 ELLIS: The same way twice. (She writes one word in her notebook.) Who was the passenger?
 
-PLAYER (own words). A name is a new fact she can go and ask. No name:
+FRANK (the player picks one, or speaks his own): "He didn't give a name." / a name / nothing. A name is a new fact she can go and ask. No name:
 
 ELLIS: A cab that went to the water at ten at night and waited, with nobody in it. I'll call that one.
 
@@ -78,9 +78,13 @@ Her finger moves along the line he has just written, to the right, off the end o
 
 ELLIS: The book has a column for who brought a job in. It hasn't one for who it was brought to. (She looks up.) Who's R.K.?
 
-PLAYER (own words). If he says the name, he has said it to a detective, on the record, with the man ten feet away on the other side of the glass. If he says nothing, she turns to the inside of the cover, where Sheila listed the firm's initials thirty years ago and has kept the list up.
+FRANK (the player picks one, or speaks his own): "It's a column. Ask the book." / "Ron Kirby. He works my door." / nothing.
 
-ELLIS: R.K. Kirby, R. Door. (She closes the cover.) It's all right. I can read.
+If he says the name, he has said it to a detective, on the record, with the man ten feet away on the other side of the glass. If he says nothing, she turns to the inside of the cover, where Sheila listed the firm's initials thirty years ago and has kept the list up.
+
+ELLIS: Kirby, R. Door.
+
+She closes the cover.
 
 3. The line is Sheila's.
 
@@ -116,6 +120,10 @@ She puts the copies in her case.
 
 ELLIS: Frank Nowak, I'm arresting you on suspicion of false accounting. You do not have to say anything unless you wish to do so, but what you say may be given in evidence.
 
+FRANK (if the player wants it): Nowak. You'll want it spelt right on the form.
+
+ELLIS: The sergeant does the forms.
+
 A constable takes his arm. Sheila has not moved. Pauline has stopped giving out fares.
 
 PAULINE (to the microphone, after a moment): All cars. Wait.
@@ -150,4 +158,4 @@ Somebody, across the road, lets the curtain fall.
 - The office was not cleared. The cocoa tin of unbanked cash is on the counter in a bag, and Mickey's office stands open: the arrest adds "and handling", and Mickey's real book, which nobody put in a handbag, is on the bench with a label on it.
 - He has been fetching his own. Nothing in this room shows it; the F.N. lines are in the red book. They matter at five o'clock on the last day.
 - Ellis is already bought. She has to come: the tip is on paper at the station and a superintendent reads. She sends the constables to the yard before she opens the book. Everything is said as written, in the same voice. She does not ask who R.K. is, or who the passenger was. As he is led out she says, for him alone: "This has to happen, Mr Nowak. What becomes of it is Friday's business. Have it with you."
-- The honest firm. The line is one of four, all in week one, and nothing follows them. She reads the first. The rest is the same, and she is nearly civil.
+- A firm with no night money. The line is one of four, all in week one, and nothing follows them. She reads the first. The rest is the same, and she is nearly civil.

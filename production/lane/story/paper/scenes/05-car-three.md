@@ -28,7 +28,15 @@ He looks up, pleased to see Frank, as if Frank had come into his office.
 
 DANNY: Nephew. Mickey's runs the Hook, I heard. So I've come down to be run. (He nods at the window.) Don't mind the motor. Nobody'll touch it.
 
-PLAYER (own words). Danny answers anything in the same key and moves for nothing. Asked to shift it: "I will. I'm having my breakfast." Told to: "Mickey used to say please. For about a fortnight." Threatened: he smiles past Frank at Ron. "Morning, Ron. You've got thinner." What the street hears from this is only that the new owner stood and talked to him.
+Frank does up the middle button of his jacket.
+
+FRANK (the player picks one, or speaks his own):
+
+- "Move it, Mr Cammack." "I will. I'm having my breakfast."
+- "You're on my rank. That's eighty pence, and ten pence a minute after the first five." "Mickey used to say please. For about a fortnight."
+- Nothing. He turns and walks out to the car.
+
+Threatened, in the player's own words, Danny smiles past Frank at Ron. "Morning, Ron. You've got thinner."
 
 The player can go on talking. Or he can walk out to the car.
 
@@ -86,8 +94,8 @@ If the car is in the dock, none of this plays. Danny stops laughing at the splas
 - Drive it to the corner. What follows: the rank is clear and nobody is shamed. Danny pays £2.40 in coins and says, "He's tidied me up." Brenda's version by noon: "He moved it for him."
 - Drive it to the edge on Ron's hands. Sign: the palms, then the fist. What follows: as written. This is the telling the town keeps.
 - Drive through the fist. Sign: Ron's fist, and the bang of the sill on the stone. What follows: the dock; no fare; Danny moves against the office a week early; the Harbour Board's crane lifts it on Friday with the parade watching, and sends Mickey's the bill.
-- The twenty. Take it: the rent is paid by Cammack's money, Sheila writes "D. Cammack, on account, £17.60 in credit", and he parks there seven more times as of right. Change it: count £17.60 out of Frank's own pocket onto the counter if he has it, which leaves him nearly nothing for tomorrow. Push it back and hold out for the £2.40: Danny pats his pockets, has nothing smaller, and says, "Then I owe you." Sheila opens the debt book and writes him in, under Mickey's five. "That's the only one in there that'll pay," says Danny, "so you'll want to look after me."
-- The car on the edge. It is front-wheel drive and cannot back itself off. Tow it with car two (Fewson has to come into Mickey's and ask for a rope); leave them to it (six men from the caff lift the front, Fewson calling the count); or hand Fewson the keys off the hook yourself, or make him ask Sheila. What follows: how Fewson was treated goes with him.
+- The twenty, by one of Frank's lines. "Mrs Dunn, open Mr Cammack an account." The rent is paid by Cammack's money, Sheila writes "D. Cammack, on account, £17.60 in credit", and he parks there seven more times as of right. "Seventeen pound sixty. Count it." Frank counts it out of his own pocket if he has it, which leaves him nearly nothing for tomorrow. "Two forty. I don't sell my rank." Danny pats his pockets, has nothing smaller, and says, "Then I owe you." Sheila opens the debt book and writes him in, under Mickey's five. "That's the only one in there that'll pay," says Danny, "so you'll want to look after me."
+- The car on the edge. It is front-wheel drive and cannot back itself off. Tow it with car two (Fewson has to come into Mickey's and ask for a rope); leave them to it (six men from the caff lift the front, Fewson calling the count); or hand Fewson the keys off the hook yourself, or say, "They're on the board, Mr Fewson. Ask Mrs Dunn." What follows: how Fewson was treated goes with him.
 
 ## What the town remembers
 

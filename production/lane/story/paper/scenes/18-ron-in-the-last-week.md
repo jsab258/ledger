@@ -30,7 +30,7 @@ The box. Ron is already on his stool when Frank sits. He looks at Frank's arm, i
 
 RON: Boss.
 
-PLAYER (own words). If he asks about the lip, or the hand:
+FRANK (the player picks one, or speaks his own): "Who did that?" / nothing.
 
 RON: Walked into a door. (He nearly smiles, and it opens the lip.) I know about doors.
 
@@ -51,7 +51,9 @@ What the third is depends on the tally.
 - He kept it, and it is in a bag at the station with his laces: "There's a brass number in my property. Thirty-nine. Sign for it at the desk and take it down the gate before Saturday. Hang it on Stathers's post yourself, where they can see you do it. If he asks, say Kirby says it can't be both."
 - It was hung up, or it is in Frank's pocket from the Widow: "If she sends owt for me, a number, owt, send it back. I've got a door. It's this one."
 
-Then the thing he has not sat here to leave unsaid.
+FRANK (if the player wants it): That's three. I can count that far.
+
+Then the thing Ron has not sat here to leave unsaid.
 
 RON: You keep that rank going, boss. I've not sat in here for you to finish with nowt.
 
@@ -65,7 +67,7 @@ If Mickey's watch came to Frank from the station desk:
 
 RON: Have you got it on?
 
-PLAYER (own words). If he has, and says the time by it:
+If he has, Frank reads the time off it aloud.
 
 RON: Then it's five to. They shout on the hour. (He glances up at the wall clock, which agrees with him.) He liked to be early. You get five minutes nobody else has got. I never knew what he did with them.
 
@@ -99,13 +101,15 @@ A fish lorry begins to back out of a gateway.
 
 The ice house comes up on the left. The camera gives it room: the chained doors, the grass at the foot of them. The car goes by at fourteen. The wipers are off. Nobody says it.
 
-PLAYER (own words). He can say it himself. If he says the name of the building, or anything like "That's the ice house":
+FRANK (if the player wants it): That's the ice house.
 
 RON (after a while): Aye.
 
 He can go on. He can name the railway, and Ron will stop at the white board, and look left and right and listen, and say nothing about what is or is not coming, and go over. He can name the pen, where two men are standing. To each thing the player names, Ron says "Aye," or nothing. It is not the same, and both of them can hear that it is not.
 
-If the player asks him why he has stopped, he answers once, by what was done on the night between.
+FRANK (if the player wants it): You've stopped saying them.
+
+Ron answers once, by what was done on the night between.
 
 - Frank signed: "There's a charge on you for a line with my letters on it. You'll not want me telling you what's coming."
 - A statement was lost, or a detective paid: "I say what I've seen, boss. I've seen a thing I'll not say. So I've given over."
@@ -150,4 +154,4 @@ Free:
 - Inside, and Frank came for him at the pen. Under the three things there is a fourth, said standing: "Thirty-eight pound. It's in my property. Give it Lily. That's nineteen Fridays."
 - Inside, with the Widow's blanket. He has found out. "Somebody's give me the cell by the pipes. I've asked to be moved. They'll not."
 - Free, and Mickey's watch is on Ron's wrist. He looks at it at the gate. "Five to." It is the only time in the drive that he tells Frank something Frank has not asked.
-- Free, on the honest firm. The drive is the same, and as quiet.
+- Free, in a firm with no night money. The drive is the same, and as quiet.

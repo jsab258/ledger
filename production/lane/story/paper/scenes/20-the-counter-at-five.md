@@ -58,11 +58,13 @@ Sheila turns the book round on the counter to face Frank. She unscrews her pen, 
 
 SHEILA: Thirty-one years I've written what I was told. You write this one.
 
+Frank's hand goes to the middle button of his jacket.
+
 If she has ever called him by his name, she says it now, after: "Frank." If she has not, she does not.
 
 The player has the pen, the clean inch of paper, and three things he can do.
 
-Leave it as it stands. He does not write. He can cap the pen and give it back, or leave it lying.
+Leave it as it stands. FRANK: "It stands." He does not write. He can cap the pen and give it back, or leave it lying.
 
 HEBBLEWHITE: Then the entries stand as written.
 
@@ -82,6 +84,8 @@ Hebblewhite looks at a third book he was not told of. Ellis has come forward int
 
 ELLIS: There's no column for who they were brought to.
 
+FRANK: It wants a fourth column, Mrs Dunn. I'll rule it.
+
 There is a ruler in Sheila's pen tray. The player's hand takes it. He rules a line down the right-hand edge of the page, top to bottom, to make a fourth column that the book has never had. At the head of it he writes two words, and under them his name.
 
 SHEILA (of the lines marked F.N.): Those you'd fetched yourself. They want nothing writing beside them.
@@ -92,13 +96,13 @@ HEBBLEWHITE: This is not the book I was sent to inspect. (He takes his spectacle
 
 ELLIS: A man can't sign for another man's column. Mr Kirby will be out by eight. (Or: That takes most of the weight off your own, Mr Nowak. Not all.)
 
-Put Danny's name to it. He writes, beneath the two lines, that the job was brought in by D. Cammack, who drove car two and held its key.
+Put Danny's name to it. FRANK: "Cammack brought it in. I'll sign to that." He writes, beneath the two lines, that the job was brought in by D. Cammack, who drove car two and held its key.
 
 Sheila does not read that one. She looks at the board.
 
 ELLIS: And you'll sign to it. (He does.) One charge goes. Whose?
 
-PLAYER (own words): his own, or Ron's.
+FRANK: "Mine." / "Mr Kirby's."
 
 Pauline takes her headphones off and lays them on the desk. In the street doorway Terry Hodgson has come in for his half of the night's takings. He has heard. He looks at Frank, says, "Now then," to nobody, and goes out without his money.
 
@@ -116,7 +120,7 @@ He goes out. Down the street a Harbour Board lorry passes the end of the parade 
 - Leave it. Hands: nothing, or the pen handed back. Sign: Hebblewhite has asked which entry is the firm's, and silence is an answer. What follows: the firm, if the books hold. Whoever was carrying the line goes on carrying it.
 - Write it true. Hands: the pen; then the ruler. Sign: Sheila has said, every Sunday for four weeks, whose name stood by each night. What follows: Ron walks, or Frank's own charge lightens. The firm does not survive its books. The nights he fetched alone are already his; every other is his from now.
 - Put Danny's name to it. Hands: the pen, and a signature. Sign: Ellis offered it on Thursday, and said then that the street would know. What follows: one charge goes; Danny is taken on the quay or at his door; Terry has told the rank before the ink is dry.
-- Try to write something else. A fourth thing (a new lie, another man's name, a joke) is read by the Core as leaving it, and Hebblewhite says so: "I'll take that as no alteration."
+- Try to write something else. A fourth thing (a new lie, another man's name, a joke) is taken as leaving it, and Hebblewhite says so: "I'll take that as no alteration."
 - Ask Sheila what she would do. "I'd write what I was told, love. That's why it's you."
 
 ## What the town remembers
@@ -135,7 +139,6 @@ He goes out. Down the street a Harbour Board lorry passes the end of the parade 
   - Leave it: Danny lifts his hand only when his name is on the top line. He chalks it himself, behind Frank's back, while a man from Customs watches a firm change hands in chalk. "Partners. I'll do the talking."
   - Write it true: "Write what you like. It sinks you, not me. I'll have the rank outside when you've done." Sheila writes one line more: the rank, to D. Cammack.
   - His own name: he lifts his hand to let Frank write, expecting anything else. He reads it upside down. Ellis is already beside him. "You've brought me the exhibit yourself, Mr Cammack. I couldn't have asked you to." Danny looks at Frank. "He's moved my motor." He is not laughing. "Mickey would've said sorry."
-- The book went in the dock. There is nothing on the counter but a clean oblong. Ellis lays a certified copy of one page in its place, and her own pen. Everything is as written, on her paper, and she takes the paper away with her whichever way it goes. Hebblewhite: "For the remainder I must use my best judgment. People seldom care for it."
 - Ellis is bought. She is by the door as before. If every Friday was paid she offers no trade and reads no column aloud; when the red book is opened she says only, "I'll need a copy of that," and writes in a small notebook that is not the station's. If one Friday was missed, the small notebook is on the counter beside the day book, open. "There are two books opened at five, Mr Nowak."
 - Sheila has left. The book is not turned round for him, and nobody says thirty-one years. If he writes it true there is no red book to open; he has only his own line, and Ellis says, "It's a start."
 - Frank refused the pen at the search. There is one line and a gap. Hebblewhite: "I have an entry, and under it a space somebody was asked to fill." The choice is the same, an inch higher up the page.

@@ -1,6 +1,6 @@
 # LEDGER: the side stories as cards
 
-Written 24 November 2026 by the lead's helper, from the lead's brief of the same day (section 5: the 25 kept, in its order, with their ties), the side stories of 8 November (22 of them redrawn here), the story frame (sections 4, 6 and 7) and SPINE-CARDS.md, whose ids (S01 to S61) the Returns lines use. Three are new: Fifteen pounds, The back room, An hour to nowhere, written from the frame's mentions.
+Written 24 November 2026 by the lead's helper, from the lead's brief of the same day (section 5: the 25 kept, in its order, with their ties), the side stories of 8 November (22 of them redrawn here), the story frame (sections 4, 6 and 7) and SPINE-CARDS.md, whose ids (S01 to S61) the Returns lines use. Brought into line the same day with the revised frame and the 23 key scenes in paper/scenes/, which win where they differ. Three are new: Fifteen pounds, The back room, An hour to nowhere, written from the frame's mentions.
 
 How these differ from spine cards: a side story is found on foot (overheard, asked in passing, seen through a window), never marked. The director offers it when its state is true and fills the spine's gaps with it before any filler job. It waits on a person's patience in game time (a game hour is 2 real minutes, a game day 48), and when the giver stops waiting it ends in its own outcome, never a failure of the run. Each ends in something the town knows, says or remembers, and each comes back in one named spine scene. The Ledger holds one line a step, naming the person and the place by a landmark. Weight here is for the director's pacing: light (a few real minutes), middle (a small job with a cost). No side story is heavy.
 
@@ -24,7 +24,7 @@ How these differ from spine cards: a side story is found on foot (overheard, ask
 - Waits: while the caller holds, about 30 game minutes (one real minute).
 - Steps: take the phone; get the caller's booking right ("for the doctor's at ten", her name only for Pauline); repeat it back to Pauline.
 - Endings: right, and Pauline tells Terry "He'll do" on the air, and backs Julie for the night desk when Frank asks; wrong, and the caller tells the newsagent's queue Mickey's has gone to pot, and Pauline will not share the desk with anybody he picks; hand it back, and nothing.
-- Returns: S56 Car two not answering. Pauline, on the air: "Car two's not answering, Frank. You'll do, I said. Prove it." (wrong: "Car two's not answering. Somebody get him.")
+- Returns: S44 The yard. The night desk Pauline backed is where Ada's call is answered: Julie, "All cars. The yard." Pauline herself keeps saying "the new owner" on the air a week longer if the booking went wrong, and "Mr Nowak" from the next day if it went right.
 - Tone: light. Weight: light.
 - Shape card: opening a phone ringing; turn a name withheld; ending a booking taken; action talk; place the office counter; company Pauline; mood funny, brisk.
 - Carriers and fallback: Pauline; if gone, Julie at the desk gives the same test.
@@ -58,12 +58,12 @@ How these differ from spine cards: a side story is found on foot (overheard, ask
 
 ### D05 A coat from the back room
 - Giver: Tracey Scarth, at her market stall.
-- Tie: Mickey's name (who is his heir), June Suddaby; Danny, who drove for the man who wore it.
+- Tie: Mickey's name (who is his heir), and June Suddaby's claim to it.
 - Offered when: Tracey has seen Frank twice in the same jacket.
 - Waits: until the market's next day (about 2 game days).
 - Steps: Mickey's coat on the office hook; Tracey's pins ("I'll take it in two inches"); June, if she sees it on him.
 - Endings: wear it (the street reads him as Mickey's heir; June goes cold); give it to June (she keeps it, or gives it back on her terms, and the street reads that); leave it on the hook (Ron's coat and Mickey's hang side by side).
-- Returns: S57 The quay at four. Worn, Danny: "Mickey's coat. He let me wear it once, to a funeral. You've had it took in." Given to June, she is on the wall in it.
+- Returns: S48 The first morning: the wages, among the doors Frank calls at between the mornings. June's door: worn, she does not open it, and says through it, "You've had it took in." Given to her, she opens, in it.
 - Tone: grey. Weight: light.
 - Shape card: opening a stranger's remark; turn an heir's clothes; ending a coat worn or given; action talk; place the market stall; company Tracey, June; mood wry, tender.
 - Carriers and fallback: Tracey; if gone, Pauline says the coat wants wearing.
@@ -89,7 +89,7 @@ How these differ from spine cards: a side story is found on foot (overheard, ask
 - Waits: 30 game minutes (a real minute), then she walks.
 - Steps: Terry takes the job; Frank rides along, sends Terry alone, or refuses the fare; the back of the cab, the fish market to the station.
 - Endings: rides with her (live talk; she learns what he says and how, and he sees what an envelope to her would need); Terry alone (Terry tells Frank what she asked, or says "nothing" and means it); refused (she walks home in the rain and remembers).
-- Returns: S36 The search and the line. Ellis, turning the book: "You said 'nowt' twice in my cab, Mr Nowak, and both times you meant it. Write it again."
+- Returns: S36 The search and the line. Before she opens the book, Ellis says back to him, word for word, one thing he told her in the back of Terry's cab: "So I know how you put things."
 - Tone: grey. Weight: light.
 - Shape card: opening a phone call; turn the law in the back seat; ending a fare paid or refused; action drive; place the fish market to the station; company Ellis; mood cold, wry.
 - Carriers and fallback: Ellis; if gone, DC Wardell asks for the car, and takes a receipt.
@@ -102,7 +102,7 @@ How these differ from spine cards: a side story is found on foot (overheard, ask
 - Waits: 3 dawns (3 game days).
 - Steps: the fish market railing at dawn; the porter who signs for Brenda's boxes; the Widow's man who takes the porters' cut.
 - Endings: catch the porter himself (a word, or fists, seen on the dock); pay Brenda's loss and say nothing; ask the Widow's people to sort it (sorted at once; the dock knows whose favour he asked, and she has it written down).
-- Returns: S54 The fourth morning: the gate. In the back of his cab, the Widow: "You asked me once about Brenda's boxes. I sorted it the same morning. That's on my page too." (If he never asked: "You sorted Brenda yourself. I noticed.")
+- Returns: S21 The gate at dawn, where Stathers opens with it ("She's done you one turn already this month, Mr Nowack"); and S54 The fourth morning: the gate. In the back of his cab, the Widow: "You asked me once about Brenda's boxes. I sorted it the same morning. That's on my page too." (If he never asked: "You sorted Brenda yourself. I noticed.")
 - Tone: light. Weight: light.
 - Shape card: opening a complaint shouted; turn a porter caught; ending a favour asked or not; action walk; place the fish dock at dawn; company Brenda, the porter; mood loud, funny.
 - Carriers and fallback: Brenda; if the porter is gone, the Widow's man himself.
@@ -115,7 +115,7 @@ How these differ from spine cards: a side story is found on foot (overheard, ask
 - Waits: 6 game hours, then she takes a job across town.
 - Steps: the laundry's office; its owner, who mentions his solicitor in the Exchange; Doreen Harland, who saw the pay packets made up.
 - Endings: lean on the owner (he pays, and Agar's office writes about threats); pay her from the office (Sheila marks it); give her the night desk beside Pauline (she runs it; the £9 is forgotten).
-- Returns: S49 The successor's offer, where Julie stays late: "I'll keep the cars going. Under his name, not mine." In S44 The yard, the night desk rings the help in.
+- Returns: S49 The successor's offer, where Julie stays late: "I'll keep the cars going. Under Mickey's name, not mine." In S44 The yard, the night desk rings the help in.
 - Tone: grey. Weight: light.
 - Shape card: opening a grievance overheard; turn a solicitor named; ending a job given; action talk; place the kiosk and the laundry; company Julie; mood grey, hopeful.
 - Carriers and fallback: Julie; if gone, Doreen asks for the same justice.
@@ -128,7 +128,7 @@ How these differ from spine cards: a side story is found on foot (overheard, ask
 - Waits: until the glazier comes (2 game days).
 - Steps: Grace; Tracey, who saw a young man running; Danny's newest on the corner.
 - Endings: bring him to wash Grace's pots for a week (her justice; he owes Frank, not Danny); hand him to Ellis (Grace calls it police and says so at her counter); hurt him (Grace bars Frank, and says why).
-- Returns: S41 A turned man. The pot-washer is the man to turn: "She made me do the big pans. You could've had me done." After S44 The yard, Grace's kitchen is where Frank wakes if nobody came.
+- Returns: S46 The room at Grace's. Turned (S41), he is at the sink behind the hatch when Danny turns in his chair: "She made me do the big pans." After S44 The yard, Grace's kitchen is where Frank wakes if nobody came.
 - Tone: grey. Weight: light.
 - Shape card: opening a boarded window; turn a young man named; ending justice chosen; action walk; place the caff and the corner; company Grace; mood grey, firm.
 - Carriers and fallback: Grace; if the young man is gone, Danny's next-newest.
@@ -141,7 +141,7 @@ How these differ from spine cards: a side story is found on foot (overheard, ask
 - Waits: three closing times (3 game days), then it goes on without him.
 - Steps: be at the counter at closing on the next nights; or send Ron; or speak to the men at the corner.
 - Endings: presence ends it (Lily remembers); humiliate the leader in front of the parade (it ends, and Danny's crew notices and holds it); nothing (it goes on, and the regulars see him not see it). Racism here is a fact about the men, never voiced and never rewarded.
-- Returns: S46 The sit-down. Danny, or Fewson standing at the back for him: "You stood in a takeaway three nights over some lads. Who stands for you?"
+- Returns: S44 The yard. Humiliated, the leader is one of the men: "Not so big with no counter to stand at." Stood at the counter quietly, Peter Tang's door is open to Frank in the last week (S48).
 - Tone: grey. Weight: light.
 - Shape card: opening noise at a window; turn a presence noticed; ending a quiet counter; action wait; place the Tangs' counter at closing; company Lily, Peter; mood tense, still.
 - Carriers and fallback: Lily and Peter; Danny's young men, any three.
@@ -154,7 +154,7 @@ How these differ from spine cards: a side story is found on foot (overheard, ask
 - Waits: until the berth's next night (about 1 game day).
 - Steps: Colin's question; the night berth; one night's look from the fish market railing.
 - Endings: tell him to take it (a man inside her nights; Colin's risk is Frank's); tell him not to (Colin is short and resents it, or thanks him); give him driving work (another car's driver).
-- Returns: S28 The landing, by night. Inside her nights, Colin knows where the van parks: "Second shed. They always use the second shed. You told me to take the work."
+- Returns: S43 A load. Inside her nights, Colin knows where her four cases went: "Second shed on the north road. They always use the second shed. You told me to take the work." He gave the Landing's timing too (S23).
 - Tone: dark. Weight: middle.
 - Shape card: opening a question asked straight; turn a man's risk taken on; ending advice given; action talk; place the crane's foot; company Colin; mood dark, quiet.
 - Carriers and fallback: Colin; if caught on the berth, the dock decides whose man he was, and his mate carries the knowledge.
@@ -167,7 +167,7 @@ How these differ from spine cards: a side story is found on foot (overheard, ask
 - Waits: until Dennis melts it down (3 game days).
 - Steps: Albert's story of his boat's board; Dennis's yard on the warehouse row; Dennis's price, and the £80 he owes Mickey's.
 - Endings: buy it back at Dennis's price (Dennis remembers who pays fair); take it (Dennis remembers that too); tell Albert it is gone.
-- Returns: S35 The notice and clearing the office. Paid fair, Dennis at the yard gate: "They asked me about a Saturday. I told them I can't read a calendar." Taken, his van is outside the station the week before.
+- Returns: S35 The notice and clearing the office. Taken, Dennis is the leak the player watches: leaning in at Ellis's car window. Paid fair, he tells Frank: "They asked me about a Saturday. I told them I can't read a calendar." His hand Neil Screeton is in the yard (S44) only if Frank fronted him for the eighty pounds.
 - Tone: light. Weight: light.
 - Shape card: opening an old man's story; turn a price set; ending a board returned or not; action walk; place the nets and the scrap yard; company Albert, Dennis; mood light, wistful.
 - Carriers and fallback: Albert; if Dennis is gone, his hand Neil Screeton sells it.
@@ -180,7 +180,7 @@ How these differ from spine cards: a side story is found on foot (overheard, ask
 - Waits: until the yard's month end (up to a game week).
 - Steps: the boatyard; the bill, three months unpaid; the Widow's man, asking about the mooring the same week.
 - Endings: pay and keep it empty (the Widow notices a man keeping a berth he does not use; the Landing's boat way opens from it); let her people have it (money, and a goodwill debt she will call in); let the yard take it back.
-- Returns: S23 The Landing: a day of looking. Kept, Gary walks him down to it: "You can see her stage from here, and she can't see you." Given to her, her boat is on it the night of the load.
+- Returns: S24 The Landing: the night. Kept, the boat on Mickey's mooring puts Frank onto the stage from the river side, behind the Widow's two men; Gary, on the day of looking: "You can see her stage from here, and she can't see you." Given to her, her boat is on it.
 - Tone: grey. Weight: light.
 - Shape card: opening a bill mentioned; turn a rival's interest; ending a berth kept or let go; action walk; place the boatyard; company Gary; mood grey, curious.
 - Carriers and fallback: Gary; if gone, the yard's own letter.
@@ -219,7 +219,7 @@ How these differ from spine cards: a side story is found on foot (overheard, ask
 - Waits: until the cold weather ends (to game week 6).
 - Steps: Nora's ask; a car that "just happens" to be passing on a wet night; the priest in the back, saying nothing.
 - Endings: arrange it quietly (he guesses within a week and says nothing, which is his thanks); tell him outright (he refuses, kindly); leave it.
-- Returns: S50 Ron at Frank's back, or Ron's visit. With Ron inside, Father Walsh brings his folded paper to the counter: "From a parishioner. He says you'll know the door." Without the rides, the message comes by post, two days late.
+- Returns: S50 Ron in the last week. With Ron inside, Father Walsh brings his folded paper to the counter: "From a parishioner. He says you'll know the door." Without the rides, the message comes by post, two days late.
 - Tone: light. Weight: light.
 - Shape card: opening a woman's worry; turn a kindness disguised; ending a priest's silence; action drive; place the chapel side by night; company Father Walsh; mood quiet, warm.
 - Carriers and fallback: Father Walsh; Nora carries the message if he is ill.
@@ -245,7 +245,7 @@ How these differ from spine cards: a side story is found on foot (overheard, ask
 - Waits: until the ticket runs out (about four game weeks).
 - Steps: the ticket; Rita, who will not say who brought it in; Hal, who knows already: Ron, for the funeral flowers.
 - Endings: redeem it and give it back without a word (Ron's loyalty takes a big step); ask him why (he tells, and is ashamed); leave it in the window (the street sees Mickey's watch for sale).
-- Returns: S38 The night between. Redeemed, it opens a cheaper way, and if Ron goes in he leaves it at the station desk: "Tell him it's five minutes fast. Mickey liked to be early." Left, it is still in Rita's window in the closes.
+- Returns: S38 The night between. Redeemed, it opens a cheaper way; still in the window, Frank can knock Rita up that night ("Fourteen pound, and the fortnight's interest. Looking costs you nothing."), and Ron sets it five minutes on: "Mickey liked to be early. I'd hear you." If Ron goes in, it goes to the station desk for Frank. Left, it is in Rita's window in Burn Both.
 - Tone: grey. Weight: light.
 - Shape card: opening a watch in a window; turn a pawner named; ending a watch returned or left; action talk; place the pawn's counter; company Rita, Hal; mood grey, tender.
 - Carriers and fallback: Rita; Hal tells it if she will not.
@@ -284,7 +284,7 @@ How these differ from spine cards: a side story is found on foot (overheard, ask
 - Waits: until the crates move (2 game nights).
 - Steps: the row at night with Norman's flask of tea; the empty warehouse; the crates.
 - Endings: tip Ellis (the crew loses its stock, and Norman saw him ask); take the crates and sell them through the back of Rita's (money, and Danny's grudge); warn Danny (a favour owed).
-- Returns: S36 The search and the line. In Ellis's notebook, Norman's description: "A tall man, a car without its roof sign lit, three nights. He never said he did it. I never said he didn't."
+- Returns: S36 The search and the line. In Ellis's notebook, Norman's description: a noise and a shape on the row, three nights, a car with its roof sign unlit; never "he did it".
 - Tone: dark. Weight: middle.
 - Shape card: opening a lonely man's talk; turn crates found; ending a tip or a theft; action sneak; place the warehouse row by night; company Norman; mood dark, still.
 - Carriers and fallback: Norman; if gone, Ian Megginson saw the lights.
@@ -296,8 +296,8 @@ How these differ from spine cards: a side story is found on foot (overheard, ask
 - Offered when: S05 has reached Lee and he has paid short.
 - Waits: a game week, then Stathers pays it for him and owns him.
 - Steps: Lee in the doorway with £9 and his word for the rest; Lee seen passing word to Frank Stathers at the gate; the car-three telling, claimed or left on Ron (claiming it wins Lee).
-- Endings: take the rest by force (Lee pays, stays hers, and is among the men at the gate later); let him work it off at the gate post (he becomes Frank's first man there, with a line to the Widow Frank can use); forgive it (he owes in another coin and tells the pen).
-- Returns: S30 The dock gate, by day. On the post: "Fifteen pound, Mr Nowak. I said I'd stand for it." Forced: he is in the ring around Ron, and looks away.
+- Endings: take it by force (he pays, and stays hers); let him work it off at the gate post (Frank's first man there, with a line to the Widow Frank can use); forgive it (he owes in another coin, and tells the pen).
+- Returns: S30 The gate: Ron cornered. On the post, Lee is sat on the kerb outside the shut leaf with a split lip: "Fifteen pound, Mr Nowak. I stood for it." Forced, he is not on the post, and watches from the wicket.
 - Tone: grey. Weight: light.
 - Shape card: opening a man in a doorway; turn a double loyalty found; ending a man taken on; action talk; place the rows and the dock gate; company Lee, Ron; mood grey, wary.
 - Carriers and fallback: Lee; if gone, another casual of the Widow's.
@@ -310,7 +310,7 @@ How these differ from spine cards: a side story is found on foot (overheard, ask
 - Waits: until Rita's next stock day (3 game days).
 - Steps: Wayne's crate of kettles at the back door; Rita's offer to pass night money through the pawn's books at a cut; Danny's own goods on the next shelf; Sheila asked.
 - Endings: take the front with Rita (the first front opens; Danny sees the numbers); take it and put Wayne in as Frank's man (Rita resents it, Danny loses an eye); refuse (no front yet; the first wash waits for the contract's money).
-- Returns: S19 The first wash and the red book. Wayne's takings in a paper bag on the counter; Sheila: "Same as your first night?" Later, at S57, Danny knows the back room's numbers to the pound if Rita kept her eyes.
+- Returns: S19 The first wash and the red book. The front's share, folded once, on the counter; Sheila: "Same as your first night?" Later, at S57, Danny knows the back room's numbers to the pound if Rita kept her eyes.
 - Tone: grey. Weight: middle.
 - Shape card: opening goods at a back door; turn an offer of a front; ending a front opened or refused; action talk; place the pawn's back room; company Wayne, Rita; mood grey, sly.
 - Carriers and fallback: Wayne; if gone, Rita makes the offer herself.
@@ -334,35 +334,35 @@ How these differ from spine cards: a side story is found on foot (overheard, ask
 | Side story | Ties to | Returns in |
 |---|---|---|
 | D01 The long way round | the Widow; car one | S51 The second morning: the cars' records |
-| D02 Two real minutes | the radio; the night desk | S56 Car two not answering |
+| D02 Two real minutes | the radio; the night desk | S44 The yard |
 | D03 The night lodger | the yard; Darren | S44 The yard |
 | D04 Mickey's Friday | Ron | S39 The empty door; the closes |
-| D05 A coat from the back room | Mickey's name; June; Danny | S57 The quay at four |
+| D05 A coat from the back room | Mickey's name; June | S48 The first morning (June's door) |
 | D06 The name on the board | the office's front; Agar's licensing | the closes (S59 to S61) |
 | D07 A ride for the sergeant | Ellis | S36 The search and the line |
-| D08 Haddock's dear | the Widow | S54 The fourth morning: the gate |
+| D08 Haddock's dear | the Widow | S21 The gate at dawn; S54 The fourth morning: the gate |
 | D09 Twelve weeks' notice | the night desk; Agar | S49 The successor's offer; S44 The yard |
-| D10 The window at the caff | Danny | S41 A turned man |
-| D11 Closing time at the Tangs' | Danny | S46 The sit-down |
-| D12 Half the berths empty | the Widow | S28 The landing, by night |
+| D10 The window at the caff | Danny | S46 The room at Grace's (after S41) |
+| D11 Closing time at the Tangs' | Danny | S44 The yard; Peter's door at S48 |
+| D12 Half the berths empty | the Widow | S43 A load |
 | D13 The name board | Iveson; Ellis | S35 The notice and clearing the office |
-| D14 Mickey's mooring | the Widow | S23 The Landing: a day of looking |
+| D14 Mickey's mooring | the Widow | S24 The Landing: the night |
 | D15 The ferry parcel | June; Mickey's name | the closes (S59 to S61) |
 | D16 All on the forms | Agar | S52 The third morning: an invoice |
-| D17 Father Walsh's rounds | Ellis's cells; Ron | S50 Ron at Frank's back, or Ron's visit |
+| D17 Father Walsh's rounds | Ellis's cells; Ron | S50 Ron in the last week |
 | D18 Lead off the roof | Danny; Ellis | S53 Ellis's trade |
 | D19 Looking costs nothing | Ron; Mickey's watch | S38 The night between |
 | D20 Friday means Friday | Danny | the closes (S59 to S61) |
 | D21 The rent on Ada's window | Agar | S44 The yard |
 | D22 Nothing moves but me | Danny; Ellis | S36 The search and the line |
-| D23 Fifteen pounds | the Widow; the dock gate post | S30 The dock gate, by day |
+| D23 Fifteen pounds | the Widow; the dock gate post | S30 The gate: Ron cornered |
 | D24 The back room | the first front; Danny | S19 The first wash and the red book |
 | D25 An hour to nowhere | the Widow's landing | S24 The Landing: the night |
 
 The check, each rival with at least four:
 
 - The Widow: six (D01, D08, D12, D14, D23, D25).
-- Danny Cammack: six (D10, D11, D18, D20, D22, D24), and a seventh in part (D05).
+- Danny Cammack: six (D10, D11, D18, D20, D22, D24).
 - Geoffrey Agar: four (D06, D09, D16, D21). Two of the four are ties this sheet adds: the brief gives D06 and D09 no rival, so the sign is read by Agar's licensing officer and the laundry's owner is made Agar's client. If the lead would rather not stretch them, Agar has two and needs two more.
 - DS Ellis: five (D07, D13, D17, D18, D22). Three are hers alone; D18 and D22 are shared with Danny, since in each the deed is handing Danny's men to her or being seen by her witness.
 

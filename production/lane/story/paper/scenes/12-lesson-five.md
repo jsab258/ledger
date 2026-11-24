@@ -42,12 +42,7 @@ He swings her round in the street in one, finds first, puts his arm out and hold
 
 It is a different drive from lesson one. He names the bollard, coming up, at, and leaving. He names Brenda's step. He names a fish lorry before it has begun to back. The needle goes past eleven and sits on fourteen. There is nothing for the player to stop. He can say the word, and Ron will stop dead and say "Aye," and go on; but nothing needs it. For the first time the man in the passenger seat is not wanted.
 
-One line here is keyed to the leak the player saw this week. Ron says it in the same voice as the buildings.
-
-- Passing the phone box across from the office: "That's the box. (A breath.) That's where he stood."
-- Passing the caff: "That's Grace's. That's the window."
-- Passing the scrap yard's end: "Leaving Iveson."
-- Passing the head of the landing: "That's the landing. Nobody stood there."
+Once on the drive he names the place where the player watched somebody talk this week, in the same voice as the buildings. Passing the phone box: "That's the box. (A breath.) That's where he stood." Or the caff's window, or the scrapyard's end, or the head of the landing: "Nobody stood there."
 
 Then the ice house, three times. Then the pen comes up on the right, with four men in it. See Variants for what he says there.
 
@@ -67,7 +62,13 @@ RON: That first night. What did you have her put in the book?
 
 It is the first question he has asked since the morning Frank got off the boat.
 
-PLAYER (own words). The Core holds the line that stands in the day book and reads the answer against it. The scene reads three kinds.
+FRANK (the player picks one, or speaks his own):
+
+- "I'll tell you what it says." And he says it, as it stands.
+- "It says a fare. You're not in it." Or whatever else is not so.
+- "Drive on, Ron."
+
+The game holds the line that stands in the day book and reads his answer against it.
 
 The truth, whatever the line is.
 
@@ -113,7 +114,9 @@ He waits a little more.
 
 RON: Nowt coming.
 
-If the player asks why he wants to know, he answers once, with the thing the player saw:
+FRANK (if the player wants it): Why now?
+
+Ron answers once, with the thing the player saw:
 
 RON: They lifted that old lad off the landing with paper in his coat. (Or: Cammack stood in that box and give your car to the station. Or: Iveson's had his head in her car window. Or: your lad's been sat in Grace's window with a constable.) She'll be reading soon. It's my two letters at the end of that line. I've a right to know what's in front of them.
 
@@ -155,7 +158,6 @@ He gets out, and goes round to the street, and stands on the door.
 
 ## What the town remembers
 
-- Colin Mastin, from his crane cab, saw Mickey's car stood at the old crossing for five minutes with two men in it and the engine off, and then go on. He says so at the caff. Nobody can make anything of it.
 - Pauline holds that car two went astern on three hoots, and says it on the air for a week whenever Kevin reverses.
 - Ron holds what he was told, word for word. It is the only thing in the game he takes on trust and then stakes himself on. In the station, two days on, it is what he sets his own statement against.
 - The naming. The ice house on the way home was the last building Ron names for Frank before the night between. After that night, on every path, the car is quiet: he is inside; or he is on the door and has had the one thing he had to give taken off him; or he knows what was bought in his name. The player drives the dock road alone, and nobody tells him he is coming up on anything.
@@ -165,6 +167,5 @@ He gets out, and goes round to the street, and stands on the door.
 
 - The pen, by what Frank did in scene 11. He called Ron out, or stood beside him: "Coming up on the pen. That's the pen." It is the first time he has named it, and he does not say he is leaving it. He fought, or sent somebody, or did not come: Ron goes by it in silence, as in lesson one, and a hundred yards on says, "Leaving the gate."
 - He fought at the gate. Ron's knuckles are split and taped, at ten to two.
-- Danny on the top line, with Fewson gone quiet. The leak the player saw is Fewson's, at the box, and Ron's line is: "That's the box. That's where the other one stood."
 - A bought Ellis. Ron does not know she is bought, and the question is the same. Nothing Frank can say in this car is "She's paid for", unless the player says it. Then Ron looks at him for the first time in the scene. "Paid." He turns back to the rails. "Handbrake's yours."
-- The honest firm. The line still names the old arrangement, and the question is the same. Under it there is only the one night, and three more like it, and the brown pages.
+- A firm with no night money. The line still names the old arrangement, and the question is the same. Under it there is only the one night, and three more like it, and the brown pages.

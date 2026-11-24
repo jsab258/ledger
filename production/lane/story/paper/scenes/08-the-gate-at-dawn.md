@@ -60,7 +60,9 @@ STATHERS: At your age.
 
 RON: Aye.
 
-PLAYER (own words), at any point. If he gives his own name, or says that he is Frank:
+Frank does up his jacket button.
+
+FRANK (his line, or the player's own words): Frank Nowak. They're my cars.
 
 STATHERS: I know what you're called. There's one Frank on this gate, and he was here first. (He reads from the board.) Mr Nowack. Four cars. Five pound a car, the week. That's twenty pound, and it's Friday. You'll get a receipt.
 
@@ -80,11 +82,13 @@ A packer winds her window down. It is nine minutes to six. The rest is the playe
 
 Pay. Frank counts twenty pounds onto Stathers's board. Stathers writes it up on a duplicate pad against his knee and tears off the top copy.
 
-STATHERS: Mr Nowack.
+FRANK: And a receipt. Nowak. N, O, W, A, K.
 
-If the player spells it, he looks at what he has written: "That's what I've put." The men walk the leaf open. Four cars go through with five minutes in hand, past a pen that watched the new owner pay.
+STATHERS (looking at what he has written): That's what I've put.
 
-Bluff. PLAYER (own words). It holds if it names something Stathers cannot check before six (Tharratt, the Harbour Board, whose shift this is) and if the packers will back it, which they will for any driver who has got them there four mornings running.
+The men walk the leaf open. Four cars go through with five minutes in hand, past a pen that watched the new owner pay.
+
+Bluff. FRANK (his line, or the player's own words): "That's Mr Tharratt's packing shift you've shut out. It clocks on at six. Go and tell him why." It holds if it names something Stathers cannot check before six (Tharratt, the Harbour Board, whose shift this is) and if the packers will back it, which they will for any driver who has got them there four mornings running.
 
 THE ELDEST (out of the window): Frank Stathers, I danced at your wedding. That's the packing shift you're stood in front of. Open that gate or I'll see your mother in chapel.
 
@@ -92,9 +96,9 @@ STATHERS (after a time): Today. (To Frank.) Friday it's twenty.
 
 A bluff that is only a threat does not hold. Stathers says, "Then come and open it," and it is a push.
 
-Push it himself. Frank walks to the leaf and puts his shoulder to it. The two gate men come at him, and it is a fight in the headlights, with fists, in front of the pen and three cars of women. Ron stands where he is with his hand in his pocket. Then the second man goes for Frank's back, and Ron is there: one shove, the man on the cobbles, and Ron's boot on the tail of his coat, holding him down without hitting him. He looks at nobody. Stathers does not lift a hand; he is watching Ron. If Frank wins, he walks the leaf open himself. If he loses, he is put against his own bonnet, and the packers get out and walk.
+Push it himself. FRANK: "I'll open it myself." He walks to the leaf and puts his shoulder to it. The two gate men come at him, and it is a fight in the headlights, with fists, in front of the pen and three cars of women. Ron stands where he is with his hand in his pocket. Then the second man goes for Frank's back, and Ron is there: one shove, the man on the cobbles, and Ron's boot on the tail of his coat, holding him down without hitting him. He looks at nobody. Stathers does not lift a hand; he is watching Ron. If Frank wins, he walks the leaf open himself. If he loses, he is put against his own bonnet, and the packers get out and walk.
 
-Send Ron. PLAYER (own words; anything the scene reads as an order to Ron to open it).
+Send Ron. FRANK: "Ron. Open it." (Or anything in the player's own words that orders Ron to the gate.)
 
 Ron looks at Frank. Then he walks to the gate. The two men look at Stathers.
 
@@ -126,16 +130,15 @@ Ron does not answer it.
 
 ## What the town remembers
 
-- The pen saw all of it and tells it by which thing Frank did. Paid: "Counted it onto Stathers's board like a lad paying his subs." Pushed: "Went at the gate himself, I'll give him that." Sent Ron: nobody in the pen tells it at all, and that is how the street knows.
+- The pen saw all of it and tells it by which thing Frank did. Paid: "Counted it onto Stathers's board like a man paying his subs." Pushed: "Went at the gate himself, I'll give him that." Sent Ron: nobody in the pen tells it at all, and that is how the street knows.
 - The packers tell the cold stores before the hooter. "There's nowt of him" has gone round the packing floor by the first break; so has what he did at the gate. Eric Tharratt has it from them before he comes to the door with his clipboard: "Five mornings. On the minute. Now we'll talk." Or: "Four cars, I said."
 - Stathers tells Maureen Jensen that Kirby took the tally and gave no answer. She asks which pocket.
 - Ron has number 39 in his coat from this morning on. The player sees him turn it over in his fingers on the door, and once in the car. In week five Stathers calls him into the pen on it (scene 11). In one ending it hangs on a hook again.
 - The name. Stathers says Mr Nowack to the end. The pen says "Mickey's lad" until the Landing. Ron goes on saying boss.
-- Colin Mastin, up in his crane cab at ten to six, saw four sets of headlights stopped at the gate and one man walk forward. He says so at the caff, and whoever hears it asks Frank which man it was.
 
 ## Variants by path
 
 - A pact with the Widow. The gate is open and Stathers waves the cars through with his board. He still stops Ron's. "Thirty-nine. It's yours whenever. She says so." Ron pockets it the same.
 - Danny on the board. He drives the third car and gets out to watch, eating. To Stathers: "Morning, Frank. This is Frank. Have you two met?" It does not help.
 - Haddock's dear ended with the Widow's favour asked. Stathers opens with that: "She's done you one turn already this month, Mr Nowack."
-- The honest firm. The same morning and the same tax, paid out of fares.
+- A firm with no night money. The same morning and the same tax, paid out of fares.

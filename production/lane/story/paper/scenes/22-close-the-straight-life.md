@@ -50,7 +50,6 @@ Outside, as he crosses the pavement, each of these has one thing.
 
 - Lily Tang, come down from the takeaway with a carrier bag, puts it through the car's open window onto the back seat. "Two of number nine. I remember. Everybody thinks I don't." She takes the money for them and counts his change.
 - The Man in Black, passing on his way down to the gate, lifts his hat an inch. "Seven. Half a firm. I've marked the half I saw."
-- Ada knocks on her glass with one knuckle and holds up a cup.
 - Father Walsh, at the corner: "A parishioner of mine was let out at eight. I'm told he walked straight here."
 
 Nobody sounds the horn. Frank gets in on the passenger side.
@@ -91,7 +90,7 @@ RON: Where to, Frankie?
 - Shut the red book before he goes. Sheila, from the door: "Leave it, love."
 - Pay Lily. He has to; she will not let the bag go otherwise.
 - Say "Stop", or name a building himself, on the drive. Ron stops, or says "Aye."
-- Answer the last question. PLAYER (own words). Whatever he says, it is the drop that finishes the line, and nobody is left to write it down. The car goes there.
+- Answer the last question, with one of Frank's lines ("Straight on, Ron." / "You pick.") or his own. Whatever he says, it is the drop that finishes the line, and nobody is left to write it down. The car goes there.
 
 ## What the town remembers
 
@@ -102,8 +101,8 @@ RON: Where to, Frankie?
 
 ## Variants by path
 
-- The better turn. Three weeks' service and an offer made on Tuesday evening: Julie Kettlewell, or whoever was most loyal, took the firm over before five. The board is not wiped. Pauline does not say "That's your lot"; she says, "Car four, the Tivoli," and Julie, at the night desk, answers the telephone: "Mickey's. Two minutes. Real ones." The paint over the door is fresh. The half line and the envelope are the same.
-- The plainer turn. The cars are sold to pay the assessment, and the bay is whitewashed. Shaun has not been told to take the sign down, and will not until he is.
+- Somebody took the firm over first. An offer was made on Tuesday evening by Julie Kettlewell, or whoever had stood by him longest, and he said yes to it before five. The board is not wiped. Pauline does not say "That's your lot"; she says, "Car four, the Tivoli," and Julie, at the night desk, answers the telephone: "Mickey's. Two minutes. Real ones." The paint over the door is fresh. The half line and the envelope are the same.
+- Nobody took it over. The cars are sold to pay the assessment, and the bay is whitewashed. Shaun has not been told to take the sign down, and will not until he is.
 - Frank signed in week five. Ron has been on the door and silent for a fortnight. The car, the drive and the gate are the same, and the gate is the first thing he has named since the night between.
 - Frank has number 39 from the Widow. He can hold it out in the car. Ron takes it, looks at it, and as they pass the gate hangs it by its hole on the end of Stathers's chain. "It can't be both."
 - He is hunted for a killing. The car is at the kerb with its engine running and Ron in it, and nobody comes out of the office. Pauline, to Sheila: "He'll not wait all night." Sheila: "He will." The last line is Ron's, to the empty seat: "Where to."

@@ -1,136 +1,149 @@
 # 15. The yard
 
 - Where it sits: Act IIb, week six, a night in the middle of the week. It breaks into the three jobs Garbutt set.
-- What wakes it: at least two and a half game days have passed since the night between; there are men in the town whom Frank beat, shamed, short-paid or let down; one of them has a key to the yard gate; Frank comes into the yard on foot after dark.
-- Who must be present: the men, cast from his record. The hardest is Neil Screeton, Dennis Iveson's yard hand, if Frank ever fronted him for the eighty pounds; otherwise the heaviest man he has put down. Who comes for Frank is read from the record too: Ron, Darren, Ada, the night desk, the drivers. Fallback: if fewer than three men bear him a grudge, Craig Fewson brings two from away, and says so.
+- What wakes it: at least two and a half game days have passed since the night between; the Hook has decided Mickey's will not see Friday; Frank is out on a job after dark. Somebody with a key to the yard gate has called a settle.
+- Who must be present: Kevin Needham, the day driver, who called it and has the key. Neil Screeton, Dennis Iveson's yard hand, if Frank ever went to Iveson for the eighty pounds; otherwise the heaviest man he has put on the ground. Everybody Frank pays. Who stands by him is read from how he has paid and treated them: Terry Hodgson, Darren Milner, Julie Kettlewell on the night desk, Ron if he is free, Ada at her window. Fallback: if Kevin was sacked in week one, Craig Fewson has called it, with Danny's roll in his pocket and a tenner over for any man who brings a car.
 
-Frank is trying to keep the tin and the board in his own office. He will give up the use of an arm, or let somebody who came for him take the hurt that was meant for him.
+Frank is trying to keep his cars in his yard and his people's keys on his board for one more night. He will give up the tin to its last pound, or the use of an arm.
 
 ## Staging
 
-The yard behind Mickey's, after eleven. Dry and cold enough to see breath.
+The yard behind Mickey's, after eleven. Dry, and cold enough to see breath.
 
-Brick on three sides. In the street wall, the double gate; in the back wall, a plank door to the tenfoot, the lane that runs behind the whole parade. Those are the yard's two ways.
+Brick on three sides. In the street wall the double gate; in the back wall a plank door to the tenfoot, the lane behind the parade. The gate is on the latch, and a key is in its lock on the outside, on car one's leather fob.
 
-The lamp over the office's back door is out. Its bulb is lying on the step, whole. Somebody unscrewed it and set it down carefully.
+The lamp over the office's back door is out. Its bulb is lying on the step, whole; somebody unscrewed it and set it down carefully. They have brought their own light: a storm lamp on an upturned fish box in the middle of the yard.
 
-The street gate is on the latch, and the key is in the lock on the outside, on its string. Whose string is the record's: a bootlace, if Darren was put out of the spare car; car one's leather fob, if Kevin was sacked; a ring with a brass car key on it, if Danny has turned.
+Four cars are drawn up nose to the gate with their engines running and their drivers in them. Along the wall, in the lamp's edge, eight or nine people stand in a line with their hands in their pockets, not together. It looks like the pen at a quarter to seven.
 
-In the tenfoot a van is ticking over with its back doors open.
+Pinned to the back door is Sheila's wages sheet for the week, in her hand, a name and a sum to each line.
 
-The office's back door stands wide. A torch moves inside. There is the sound of nails coming out of plaster.
+In a cab office, a settle is what happens every night at the counter: the driver and the firm square up. This one is in the yard, at midnight, and nobody from the firm called it.
 
-The spare car is in the corner with a coat over something on its back seat.
-
-Across the street, above the gate, is Ada's window.
-
-The camera is wide for the fighting, so that feet and the ground are in frame, and it does not cut away from a blow.
+The camera is wide, so the queue, the gate and the lamp are in one frame, and it does not cut away from a blow.
 
 ## The scene
 
-Frank pushes the gate. Four men are in the yard, spread, hands out of their pockets. They have been waiting for the gate.
+It reaches Frank on the air, wherever he is.
 
-Each of them says one thing, and each thing is a deed of Frank's.
+JULIE (radio): It's the night desk. Ada's rung. She says there's men in your yard, and you're not one of them. (A beat.) She says they're queueing.
 
-SCREETON (if cast; he comes off the wall last, with a wheel brace hanging from his fist): Eighty pound, Mr Nowak. I've your change here.
+Frank pushes the gate. Kevin Needham is by the fish box in his anorak, with car one's log book under his arm.
 
-BILLANY (if Frank struck him when he was down; the eyebrow has healed white): You should've give me my cap.
+KEVIN: It's a settle. That's all it is. Word is you'll not see Friday, so we'll have what's ours tonight, in the hand. (He nods at the running cars.) Or we'll have it in motors. Six year I've had car one.
 
-A YOUNG MAN from the Tangs' corner (if Frank shamed him at the counter): Not so big with no counter to stand at.
+Frank does up the middle button of his jacket.
 
-KEVIN (if sacked; by the gate, already leaving): I only opened it. I'm not stopping.
+FRANK (the player picks one, or speaks his own):
 
-FEWSON (if it is his; from the back door): Board's coming down. He wants his name.
+- "Then we'll settle. One at a time. By name."
+- "Pay day's Friday. Hang your keys up and go home."
+- "Take what you can carry, Mr Needham. You'll carry it past me."
 
-A fifth man backs out of the office with the board under his arm, the chalk dragged to smears. Another, inside, has the tin.
+To the first, Frank fetches the tin from the office himself, sets it on the fish box by the lamp, takes Sheila's sheet off the door, and calls. The rule is Kevin's and everybody knows it: a man called and paid hangs his key on the board. A man the tin cannot pay drives out.
 
-The player has his hands. It is fists. The first man comes straight; the second comes while the first is still up. A man Frank puts down stays down long enough to be hit again, and the player may: the camera stays on it. If Frank goes down they do the same to him, with a boot, twice, in the ribs and the side of the head. There is blood from his nose on the bricks. He can get up.
+The order is the player's. The tin holds what it holds; if he has been paying a detective on Fridays, it is not much. He reads a surname, and counts.
 
-The one with the wheel brace does not join in. He stands by the van's doors and waits for Frank to be free.
+Some of what happens when a name is called is read from the six weeks behind it.
 
-Then whoever is coming, comes.
+FRANK: Drewery.
 
-Ron, if he is not inside. He has been on the door at the front. He comes through the office and meets the man with the board in the back doorway. He takes the board off him with both hands and stands it against the wall, face in.
+Lee comes to the lamp. If he was taken on for his need, he looks at the notes and does not pick them up. "I'll wait. I've waited longer for worse." If he was taken on by a hook, he counts it twice and cannot look up.
 
-RON: That's not yours.
+A man gets out of the back of the spare car, in his socks, with a coat round him. He has not been called.
 
-Then he is at Frank's back. He does not name anything. He says one more word all night.
+DARREN: Am I on that sheet? I'm not on it. I owe him. (He finds a pound coin and puts it on the fish box, in the light.) There. I'm the only one stood in this yard who does.
 
-Darren, if Frank let him sleep in the spare car. The coat on the back seat sits up. He gets out on the wrong side, in his socks, with the starting handle.
+FRANK: Twenty-one to go, Darren.
 
-DARREN: I live here, me.
+DARREN: I know what it is.
 
-He is not good at it, and he does not stop.
+Headlights swing in at the gate from the street. Julie has had the microphone open: "All cars. The yard." A fare is still in the back of the car that answers it. Terry Hodgson gets out.
 
-Ada, if Frank kept her at her window. The light comes on above the gate. Inside the office the telephone starts to ring. If there is a night desk it is answered, and Julie's voice comes out through the open door, first to the receiver and then to the air.
+TERRY: Now then. (He looks at the queue.) Where to?
 
-JULIE: Mickey's. (A beat.) There's what in the yard? (The microphone.) All cars. The yard. All cars, it's the yard. No, Terry, not a fare.
+FRANK: Hodgson.
 
-Inside two minutes headlights fill the gate. Terry Hodgson gets out of his cab with a wheel brace of his own.
+TERRY: Mine's Fridays. (He reaches in and turns his engine off.) It's always been Fridays.
 
-TERRY: Now then. Where to?
+If Ron is not inside, he has come through from the front and is holding the storm lamp up so Frank can see the sheet. When Frank reads his name, he says one word.
 
-If nobody is on the night desk, the telephone rings twenty times and stops, and the light in the window stays on.
+RON: Fridays.
 
-There are two things in the yard that cost the arm. Each has a sign, and each is refused by somebody before Frank does it.
+One man in the yard is not on the sheet. He is by the gatepost. He has taken his jacket off and folded it on car one's bonnet.
 
-The man with the iron. When the yard thins, Screeton steps out and lifts the brace.
+SCREETON: Eighty pound, Mr Nowak. I've your change here.
 
-RON (moving across): Mine.
+FRANK: Mr Iveson paid that.
 
-Or Darren, grinning, blood in his teeth: "I'll have him. He's only big."
+SCREETON: He paid you. Then he stopped it out of mine, a fiver a Friday. Four gone. (He opens and shuts his hands.) So it's twenty I'm out, and it were never my debt.
 
-- If Frank lets him: Ron takes it on the forearm he puts up, and puts Screeton on the ground with the other hand; he finishes the night and is in a sling by morning, off the door for a week. Or Darren takes it across the scalp, goes down, and bleeds a great deal for a small cut; he is gone a week, and whatever post he stood is open.
-- If Frank steps in front: he can beat him. The block that wins it he takes on his left arm. There is a sound. The arm hangs, and the fingers will not close.
+FRANK (the player picks one, or speaks his own):
 
-The tin. The man inside has it, and with the yard lost he goes for the front.
+- "Twenty. Count it." If the tin still has it, Screeton takes it, looks at it, and puts his jacket on. "That's us." If it has gone to the drivers, there is nothing to count.
+- "Take it up with Mr Iveson."
+- Nothing; he steps away from the fish box toward him.
 
-RON: Leave it, boss.
+It comes to fists if Frank refused the settle, or the tin ran dry with men unpaid, or Screeton was told to see Iveson.
 
-Or Darren: "It's a tin. Let it go."
+The cars move for the gate. No driver on the Hook will run a man down, so if Frank stands in his own gateway they stop, a yard off, on their lights. Then they have to shift him by hand. It is the first time he has stood a gate himself.
 
-- If Frank goes in after him alone, through the back door: the man is behind it. He throws it shut on Frank with all his weight, and Frank's arm is in the frame. He opens it and does it again. Frank gets the tin. He does not get the use of the arm.
-- If he leaves it: the tin goes out by the front and into the van.
-- If the Yale is still on the third hook, or in his pocket: out by the plank door, along the tenfoot, in at the side door of the unit three doors up, through it, out onto Quay Street and in at his own front door. The man with the tin meets him at the counter, face on, with no door between them.
+Kevin does not fight; he sits in car one with the log on his knee. The men who come are the ones the tin did not reach. A man Frank puts down stays down long enough to be hit again, and the player may; the camera stays on it. If Frank goes down they do the same to him, with a boot, twice. There is blood from his nose on the bricks. He can get up.
 
-In the unit, on the way through, a storm lamp is lit. If Danny has turned, he is sitting on a crate with chips in paper on his knee.
+Two things in the yard cost the arm. Each is refused by somebody before Frank does it.
 
-DANNY: You've used the key. I wondered when you'd find the door. (He does not get up.) They're not all mine in there, nephew. Two of them.
+Screeton. He walks in last, when the gateway has thinned.
 
-When it ends, it ends one of three ways.
+RON (stepping across): Mine.
 
-On his feet, with people round him. The van has gone down the tenfoot with whoever could reach it. The board is against the wall. Ron picks it up, carries it in, and hangs it on its two nails, and looks at it, and straightens it.
+Or Terry, wheel brace in his fist, unhappy: "I'll have a go. I'm fifty-two, mind." Or Darren: "He's only big."
 
-On his feet, alone. He beat them himself, and it cost what it cost.
+- If Frank lets him: whoever it was puts Screeton on the ground and is hurt doing it, and is gone a week, with his rank or his door or his gate standing empty.
+- If Frank steps in front: he can beat him. The block that wins it he takes on his left forearm. There is a sound. The arm hangs, and the fingers will not close.
 
-On the ground. Nobody came, or not enough. The last thing the camera has is bricks, a boot, and the van's doors closing on the board. He comes round on a kitchen floor with a tea towel folded under his head and the smell of a fryer.
+The tin. A young man who was not paid lifts it off the fish box and runs in at the back door, to go out by the front.
 
-GRACE: Sit down before you fall down. No. You are down. Stop there. (Over her shoulder.) Peter, he's woke. Fetch the car round.
+RON: Leave it, boss. (Or Darren: "It's a tin.")
+
+- If Frank goes in after him alone: the man is behind the door. He throws it shut with all his weight, and Frank's arm is in the frame. He does it again. Frank gets the tin. He does not get the use of the arm.
+- If he leaves it: the week's money goes down the street.
+- If the Yale is still on the third hook: out by the plank door, along the tenfoot, in at the side door of the unit three doors up, through it, and in at his own front. He meets the man at the counter, face on. In the unit a lamp is lit, and if Danny has turned he is sitting on a crate. "You've used the key. I wondered when you'd find the door."
+
+It ends one of three ways.
+
+Settled. Nobody was hit. The engines go off one by one. Keys go back on hooks. Kevin gets out of car one, hangs her key up himself, and keeps the log.
+
+KEVIN: I'll have my cards Friday. You've never once asked me where her miles went.
+
+He goes out by the gate and leaves his key in it.
+
+Stood. It was fists, and Frank is in his gateway with the cars behind him. Ron sets the lamp down on the fish box and screws the bulb back in over the door.
+
+On the ground. Nobody waited for Friday, or not enough. The cars go out past him one at a time, slowly, steering round. He comes round on a kitchen floor with a folded tea towel under his head.
+
+GRACE: Don't get up. You've been carried. (Over her shoulder.) Peter, he's woke. Fetch the car.
 
 ## What the player can do
 
-- Fight. Hands: fists, as everywhere. Sign: four men and a van. He cannot die. He can lose.
-- Hit a man who is down. Hands: the same blow, on the ground. Sign: the man is not getting up. What follows: that man is in hospital, days; he and his remember it; if Ron is there he says his one word, "Boss," and no more is said about it.
-- Take the man with the iron himself, or let the one who offers. Sign: he is the only one armed, and he waits. What follows: Frank's arm, or another's week.
-- Go back alone for the tin, leave it, or go round with the Yale. Sign: he is told to leave it. What follows: the arm; or the week's cash; or neither.
-- Run. Hands: the plank door. He keeps his skin. They take the tin and the board, and the street hears he went over his own back wall.
-- Shout for help. The street is asleep. One window is not.
+- Settle, refuse, or go straight to it. Sign: Kevin says the rule aloud. A full tin and a fair six weeks can end this without a blow.
+- Choose who is called first. Hands: read a name, count the money. Sign: the sheet and the tin are both in the lamp. Whoever the tin does not reach takes a car, or waits, or swings.
+- Pay Screeton, or not.
+- Stand in the gateway. Hands: walk there and stop. The cars stop.
+- Hit a man who is down. That man is in hospital for days; his people do not open their doors in the last week; if Ron is there he says "Boss," once.
+- Take Screeton himself, or let the one who offers.
+- Go for the tin alone, leave it, or go round with the Yale.
 
 ## What the town remembers
 
-- Who came is told by every one of them, and who did not is noticed. Terry, at the caff: "All cars, she said. I've waited thirty year for somebody to say all cars."
-- Ada rang. She tells Frank what she said: "There's men in your yard, and you're not one of them." If she had been moved to her back room, she saw nothing, and says so, and that she is sorry.
-- Darren has a bandage like a turban for a week and a new story for every day of it. He sells none of them.
-- Each man from the yard carries his own end of it. One struck when he was down does not come to the quay, and his people do not open their doors in the last week. Screeton, beaten fair, pays the eighty pounds on Friday himself, in an envelope, and says nothing.
-- The key on its string is still in the gate in the morning. Sheila takes it out, looks at the string, and hangs it on the board.
-- If they got the board: on Thursday it is nailed to the shutter of the unit three doors up with one name chalked on its top line.
-- The arm, if it went: plaster to the elbow and a sling. For days he cannot drive, cannot fight with it, cannot tie a lace or lift the tin. Pauline has him answering telephones by Friday: "Mickey's. He'll be two minutes. I don't know, I'm the owner."
-- Brenda, wrapping fish in last week's front page, FARE COP: "You've been in the paper and the wars. Which arm? I'll give you a fillet. You can eat that one-handed."
+- Who said Fridays. It is told by each of them, shortly. Terry, at the caff: "All cars, she said. I've waited thirty year for somebody to say all cars."
+- Darren's pound. Sheila finds it on the fish box in the morning and writes it in the debt book: "D. Milner, £1, received." It is the second entry that book has had in three years.
+- Kevin has gone, with car one's log and its forty-two miles a week. On the second morning of the last week a man from Customs and Excise asks for it.
+- The key on car one's fob is still in the gate in the morning. Sheila hangs it on the board.
+- The arm, if it went: plaster to the elbow and a sling. For days he cannot drive, cannot fight with it, cannot tie a lace or do up a button. Pauline has him on the telephones by Friday: "Mickey's. He'll be two minutes. I don't know, pet, I'm the owner."
 - The night is not over. See scene 16.
 
 ## Variants by path
 
-- Ron is inside. Nobody says "Mine." Car one stands in the yard where it has stood since he went, and the first man who comes through the office is Julie with the poker from the back room.
-- Frank signed first. The cars are off the rank for the fortnight, so "All cars" brings only those drivers he paid in full from the tin. Each one who comes says what he is owed.
-- Danny on the top line. The key on the string is Fewson's copy of Danny's, and Danny is not in the unit. He is in the gateway behind Terry, out of breath. "I heard it on the radio. Which ones are mine?"
-- The honest firm. The men are fewer and from away, sent by whichever rival he would not pay. The tin has a week's fares in it and nothing else. The choices are the same.
+- Ron is inside. Nobody holds the lamp. When Frank reads "Kirby" off the sheet, nobody answers, and the yard hears him read it.
+- Frank signed first. The cars have been off the rank all week and the drivers are owed for it. The sums on the sheet are bigger, and Kevin says so.
+- A firm with no night money. The tin has a week's fares in it. Fewer are owed, and the choices are the same.

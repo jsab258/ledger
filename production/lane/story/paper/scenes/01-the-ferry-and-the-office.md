@@ -34,9 +34,11 @@ The player has the street. If he stands for four seconds the walking hint shows.
 
 Under the ladder, Shaun Hewson stops whistling and looks down, brush across the pot.
 
-SHAUN: You'll be the new owner.
+SHAUN: You'll be Mickey's nephew, then.
 
-FRANK: Frank Nowak.
+Frank stops. He does up the middle button of his jacket. He does that before anything he means, and the camera always shows it.
+
+FRANK: Frank Nowak. Both names are mine.
 
 SHAUN: That's what I said.
 
@@ -50,7 +52,11 @@ SHEILA: New management. Sheila Dunn, I keep the books. Come on, I'll show you ro
 
 FRANK: Frank Nowak.
 
-SHEILA: It says so on the letter. Come on.
+SHEILA: It says so on the letter.
+
+FRANK: And I'm not lost. It's the forty-first door up from the boat.
+
+SHEILA: Is it. I've never counted. Come on.
 
 Inside, Pauline Kitching is on the radio with her back to the door.
 
@@ -64,7 +70,7 @@ FRANK: Nowak. N, O, W, A, K.
 
 Pauline has her pencil up. She looks at the fare book, which is ruled for fares. She looks at the board.
 
-PAULINE: Board's for cars, love.
+PAULINE: Ooh, I've nowhere to put that. The book's for fares and the board's for cars. You want a column of your own, you do.
 
 She puts the pencil behind her ear and leans to the microphone.
 
@@ -92,7 +98,9 @@ She comes back to the counter, opens a narrow cash book at a clean page and unsc
 
 SHEILA: What did you come with?
 
-Frank says nothing. He empties his pocket onto the counter: two tens, three pound coins, a fifty. Sheila does not pick any of it up. She moves each coin an inch with one finger as she counts it, the way a bank does.
+FRANK: Twenty-three pound fifty.
+
+He empties his pocket onto the counter to prove it: two tens, three pound coins, a fifty. Sheila does not pick any of it up. She moves each coin an inch with one finger as she counts it, the way a bank does.
 
 SHEILA: Twenty-three pound fifty.
 
@@ -104,17 +112,23 @@ From under the counter she takes a buff rent book, limp with handling, and lays 
 
 SHEILA: The tin's paid it three weeks. The tin's done. Eighteen pound by Friday, love, or the landlord has the keys. And Sunday you tell me what this firm is.
 
+FRANK: That leaves five pound fifty. I'll try not to go mad.
+
+SHEILA: See you don't.
+
 She caps her pen. Through the window the engine on the rank stops. In the quiet the kettle can be heard, and the gulls.
 
 SHEILA: That's Ron on the rank. Go and say hello. Everyone out there wants a look at you.
 
-The AI notice shows, once. Then the talk hint. From here Frank's words are the player's.
+The AI notice shows, once. Then the talk hint. From here, wherever Frank speaks, the player can pick one of his lines or say his own.
 
 Outside, Ron Kirby has got out of the car. He is wiping the driver's door handle with a leather. He looks at the suitcase, which Frank may still be carrying, and does not offer to take it.
 
 RON: Boss.
 
-PLAYER (own words). Whatever he says, Ron's first answer is the same.
+FRANK (the player picks one, or speaks his own): "Frank Nowak." / "You've kept her clean." / "Does she go?"
+
+Whatever he says, Ron's first answer is the same.
 
 RON: Aye. I know who you are.
 
@@ -141,11 +155,11 @@ He does not ask Frank one question. He folds the leather into his coat pocket, s
 ## What the town remembers
 
 - Gordon, Shaun, Ada, Ron, Sheila and Pauline saw him come, and hold it at first hand. Within the day one of them, or somebody they told, says it to his face: "You'll be Mickey's nephew, then," or "Saw you come in. Mickey's nephew, is it?" Never Sheila, never June.
-- Shaun, at the caff counter at noon, to Grace Rinaldi: "Gave me his whole name off the pavement. Both halves. Like he was stood for the council." This is where the street's joke about the name starts, and it feeds the name ladder: Nowak comes from people who were told, not from people who were asked.
+- Shaun, at the caff counter at noon, to Grace Rinaldi: "Gave me his whole name off the pavement. Both halves. Like he was stood for the council." This is where the street's joke about the name starts, and how it comes to call him Nowak: because it was told, twice, without asking.
 - Pauline, to Terry Hodgson at the evening change: "N, O, W, A, K. I've nowhere to write it." Terry says "the new owner" until he is told otherwise.
 - Gordon, to Karen Grummitt at the ticket window: "Wouldn't be told the way." It comes back in the last week, when Frank is carrying a dead man's watch that runs five minutes fast.
 - Sheila's entry, cash introduced, £23.50, is the first line of week one. On the fifth morning of the last week Mr Hebblewhite reads it out and asks whether that was all of it. Sheila: "It's what was there."
-- The Ledger takes its first aim, in Sheila's words: eighteen pound by Friday; and Sunday you tell me what this firm is.
+- Frank's notebook, which the game calls the Ledger, keeps the week's aim in Sheila's words: eighteen pound by Friday; and Sunday you tell me what this firm is.
 
 ## Variants by path
 

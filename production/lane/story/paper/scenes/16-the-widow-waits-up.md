@@ -34,7 +34,11 @@ She does not get up. She looks at the sling, and at the laces.
 
 THE WIDOW: Sit down. It's been in the oven twice.
 
-PLAYER (own words). She answers what she is asked, and nothing makes her hurry. If he stays standing she waits, and says it again exactly, and the second time lifts the top plate off.
+Frank's good hand goes to the middle button of his jacket. It cannot be done with one.
+
+FRANK (the player picks one, or speaks his own): "What do you want, Mrs Jensen?" / "I can cut my own dinner." / nothing.
+
+Nothing makes her hurry. If he stays standing she waits, and says it again exactly, and the second time lifts the top plate off.
 
 It is haddock, done in milk, with mashed potato and peas. It has been cut up. Every piece on the plate is a size for a fork.
 
@@ -42,7 +46,7 @@ THE WIDOW: I was told the left. I'd have looked a fool if it had been the right;
 
 She puts a fork by his good hand. She pours the tea, both cups, because he cannot hold the pot and the lid at once.
 
-If he asks what she wants:
+To his question, or to none:
 
 THE WIDOW: I never ask anybody for anything, Mr Nowak. I find out what they're short of.
 
@@ -62,31 +66,33 @@ THE WIDOW: He stood my gate thirty-six years and your door six weeks, and he's n
 
 If he asks about the yard:
 
-THE WIDOW: Not mine. Mine don't come over walls. Mine are let in.
+THE WIDOW: Not mine. Mine don't queue for it. Mine are paid Fridays.
 
 If he asks about Mickey:
 
 THE WIDOW: He sat where I'm sat and told me no, most politely, for thirty years. I miss it more than I'd have said.
 
-When he has eaten, or has not, she takes one thing more out of her bag and lays it by his plate. It is a brass tally. The number is 39.
-
-If Frank called Ron out of the pen and it was hung up:
+If Frank called Ron out of the pen and the tally was hung up, she takes it out of her bag when he has eaten and lays it by his plate. The number is 39.
 
 THE WIDOW: That's come back to me twice now. Once in nineteen seventy-two and once off your say-so. I don't keep what won't hang still. You give it him. From you he might take it.
 
-If Ron kept it, and it went into a police bag, or is still in his coat:
+If Ron kept it, there is nothing on the desk but the plates.
 
-THE WIDOW: That's its fellow. There were always two struck. He has the one. Keep that, and when you want to know whose he is, see if they're both on the one hook.
+THE WIDOW: He's a number of mine in his pocket still, or the police are minding it for him. I shan't ask for it back. Ask him which pocket.
 
 She puts her gloves on, a finger at a time.
 
-THE WIDOW: Monday I shall sit across a cloth from you at Grace Rinaldi's and I shall be very hard on you. I can't do that to a man who's falling off his chair. Eat. Take your tablets. Sleep on your right side.
+THE WIDOW: Monday they bury that old man from the landing, and after it I shall sit across a cloth from you at Grace Rinaldi's and be very hard on you. I can't do that to a man who's falling off his chair. Eat. Take your tablets. Sleep on your right side.
 
 She stands, and is smaller than she looked. At the door of Mickey's office she stops beside him. She looks down.
 
 THE WIDOW: Put your foot up.
 
 If he does, she bends, in the fur collar, and ties his bootlace. A double bow, pulled hard. Then the other.
+
+FRANK (if the player wants it): I'd have managed. In a week.
+
+THE WIDOW: You've not got a week.
 
 THE WIDOW: That's a dinner you owe me, Mr Nowak, and a pair of laces. I'll not want it back in money.
 
@@ -98,8 +104,8 @@ The pot is still warm. There is a second cup, poured, that nobody drank.
 
 - Sit and eat. Hands: one. Sign: the plate is cut. What follows: she talks, as above; she has seen him eat at her hand, and counts it. On Monday she opens harder for it, as she said, and she does not walk out.
 - Stand, and hear her out. She says everything the same and leaves the plate covered.
-- Send her away. PLAYER (own words). She goes at once, without a word, putting her gloves on in the street. On the counter in the morning: the plate, cold, and under it a receipt for the gate tax to date, made out to Mr Nowack, with the dinner added as a line. "Haddock, 1. Laces, nil."
-- Take the tally, or leave it on the desk. Taken: it is his to give to Ron, or not, and Ron is asked a question by it either way. Left: Sheila finds it in the morning, looks at the number, and puts it on the third hook.
+- Send her away. FRANK: "Not in his chair, Mrs Jensen." (Or the player's own words.) She goes at once, without a word, putting her gloves on in the street. On the counter in the morning: the plate, cold, and under it a receipt for the gate tax to date, made out to Mr Nowack, with the dinner added as a line. "Haddock, 1. Laces, nil."
+- Take the tally, if it is there, or leave it on the desk. Taken: it is his to give to Ron, or not, and Ron is asked a question by it either way. Left: Sheila finds it in the morning, looks at the number, and puts it on the third hook.
 - Put his foot up, or not. If not: "Then you'll go over on the stairs, and I shall have come for nothing." She leaves them undone.
 - Ask her things. She will not speak of her husband, of Monday's terms, or of the fire. To the last: "Ask your priest. He'll not tell you either."
 
@@ -117,4 +123,4 @@ The pot is still warm. There is a second cup, poured, that nobody drank.
 - The arm was not lost. Somebody else's was, or a scalp; he has been at casualty with them, and has four stitches of his own. The dinner is cut up all the same. "I was told an arm. I'll have a word with who told me. You'll have to eat it like a man with two." She does not tie his laces; they are tied.
 - He came from Grace's kitchen floor, not casualty. No plaster yet. "You want that looked at. Stathers'll run you up. No, he will. Finish that first."
 - A pact with the Widow. She is not in Mickey's chair but in the customer's, at the side of the desk. "I'd not sit in his. Not while we've an understanding." The rest is the same, and Monday she will sit on his side of the cloth.
-- The honest firm. "You've not a racket to your name and they've still broke your arm for you. Mickey would have laughed. I shan't."
+- A firm with no night money. "You've not a racket to your name and they've still broke your arm for you. Mickey would have laughed. I shan't."
