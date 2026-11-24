@@ -2238,7 +2238,7 @@ Made: a night-report line naming each run of movement legs that ran out short of
 - Method: a hold that saves budget must name its exceptions as state the gate can read, written by whoever knows them (the stopping session), not as a field another tool overwrites. For a full drive: size folders two levels down, add bytes written since the last good reading, then sort into own (delete), rebuildable cache (cap, never wipe) and the owner's (one item with sizes and a recommendation each).
 - Tools: the start gate script; PowerShell folder sums; the engine's derived-data cache settings (garbage-collect age in project config).
 - Target and check: the gate's self-test (three new cases: no mark waits, mark goes, cleared waits again); drive above the build floor (40 GB) after.
-- Cost: about 0.4 h.
+- Cost: about 0.1 h (11:42 to 11:48 on 24 Nov).
 - Failed: the earlier flag lived in a file the budget tool rewrote every reading, so it was never set and priority work waited two hours. A recursive temp-folder scan ran over 10 minutes: use du with a timeout.
 - Evidence: tools/fresh_gate.py; production/approvals/needs-you/items.json (c-drive-room-2026-11-12).
 
@@ -2980,6 +2980,6 @@ Cost of this entry about 0.1 h.
 - Method: speed = cadence x step length; cadence from the swing foot's highest frame, step length from landings against a fixed ground mark side-on.
 - Tools: browser pane, a seek-and-draw crop sheet in the page (24 cells, video time on each).
 - Target and check: within 10% of a speed known from the game's own distance readout. Not reached.
-- Cost: about 0.4 h.
+- Cost: about 0.1 h (11:42 to 11:48 on 24 Nov).
 - Failed and why: runs have a flight phase, so "heel gap with both feet down" does not exist; a following camera never shows side-on landings with the ground still; an automatic white-pixel count read the pavement. Lesson: speeds need the game's own distances (scripted runs), footage gives cadence and gait shape only.
 - Evidence: production/research/lane/measurements/ON-FOOT-METHOD-2026-11-24.md (Try 1, Try 2).

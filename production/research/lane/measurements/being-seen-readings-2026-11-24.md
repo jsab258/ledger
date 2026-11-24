@@ -50,14 +50,14 @@ One RDR2 incident, edited: the flag rises within about 4 to 8 s of a fist fight;
 - 36 s no flag; 38 s red WITNESS up (an alley); 38 to 45 s WITNESS; 46 s WANTED. Witness to wanted about 8 s (a camera swing at 44 to 45 s, no cut seen).
 - 46 to 99 s WANTED throughout, Arthur walking near lawmen and a wagon; 102 s no flag, running in another street; 106 to 114 s a man lies in an alley (a cut back). So wanted held at least 53 s while acting normal; its clearing is behind a cut. The earlier "cleared within about 10 s" lead is withdrawn: it was a cut.
 
-## RDR2, IBsRlI5GfWs fine step (71 to 77 s every 0.5 s; read 24 Nov about 12:08 Swiss)
+## RDR2, IBsRlI5GfWs fine step (71 to 77 s every 0.5 s; read 24 Nov 11:50 Swiss)
 - White (investigating) through 72.0 s, red (seen) from 72.5 s: so investigating to seen about 27.5 s (45 to 72.5 s). Red held to 76.5 s (the word animating out at 76.0 to 76.5), gone at 77.0 s, while Arthur turns and raises his arm at the approaching rider (75.5 to 76.5 s). The flag likely ends because the witness is dealt with, not because he loses Arthur: "seen to cleared under 4 s" is withdrawn as a clearing time; it is the end of a witness, about 4.5 s after being seen.
 
-## KCD2, 9AvBB12w7q0 ("Caught stealing in Nebakov", 74 s, uploaded 29 May 2025; coarse sheet every 4.6 s, read about 12:05)
+## KCD2, 9AvBB12w7q0 ("Caught stealing in Nebakov", 74 s, uploaded 29 May 2025; coarse sheet every 4.6 s, read 11:49)
 - Edited for a short (captions, a face camera, jumps between places): the inventory at about 5 s, a walk through the village 10 to 24 s, a man's challenge from about 28 s ("that'll probably cause a ruckus", then talk to 69 s). Deed to challenge not timeable across the jumps: a lead that a challenge comes after the walk, never a sample. Titled shorts are edited too; the long uncut sessions remain the route for KCD2.
 
 ## Count so far
 RDR2: three clips read, all leads (one edited, one likely cut, one cut twice); witness to wanted about 8 s (one incident). KCD2: one incident timed (deed to guard challenge about 14 s, edited clip: lead); two clips held none. Five uncut incidents a game owed; the published ladder plus these leads is all KCD2 has so far.
 ## Next
-- 24 Nov about 12:12: a search for long uncut KCD2 sessions found full-game no-commentary walkthroughs (35 to 88 h, story-led, where systemic crimes are rare) and titled crime clips and shorts (edited). Recommendation, as for on-foot speeds: the installed KCD2 played offline by script (allowed, 17 and 23 Nov) for staged, timed incidents (theft seen, assault seen), five each; footage stays for leads. To be priced by the next session before it starts.
+- 24 Nov 11:52: a search for long uncut KCD2 sessions found full-game no-commentary walkthroughs (35 to 88 h, story-led, where systemic crimes are rare) and titled crime clips and shorts (edited). Recommendation, as for on-foot speeds: the installed KCD2 played offline by script (allowed, 17 and 23 Nov) for staged, timed incidents (theft seen, assault seen), five each; footage stays for leads. To be priced by the next session before it starts.
 2uugZeY_mLQ (RDR2; IBsRlI5GfWs's 73 to 77 s step); for KCD2, long uncut play sessions (streams or "Part N" walkthroughs without commentary) are likelier than titled crime clips, which are edited; vyA2Nm1BHyw's first three hours by 10-minute sheets before 12,600 s if nothing better turns up.

@@ -4,9 +4,9 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-24 11:37 (the hourly run)
 
-**Row due:** 11:46 (last row 10:46; page read 10:53; filter verdicts after 2026-11-24T09:40 UTC, advisor after 2026-11-24T10:30:00+01:00; last acks 342 to 346 at 10:41).
-**Uncommitted:** nothing (commits 3ca4dcf5b and this one). Local commits since da1cb7941 NOT pushed: ci fails page-answers-fresh (next step 0).
-**Stopped:** 2026-11-24 10:55 (the 10:37 run: advisors 342 to 346 in RULINGS and acked; being seen KCD2 first lead; on-foot method written; history 230k of 250k, the next footage try would cross it mid-piece)
+**Row due:** 12:42 (last row 11:42; page read 11:55; filter verdicts after 2026-11-24T10:55 UTC, advisor after 2026-11-24T11:20:00+01:00; last ack 347 at 11:39).
+**Uncommitted:** nothing (commits 0fd2de7fd, 369151fc4 and this one). Local commits since da1cb7941 NOT pushed: ci fails page-answers-fresh (next step 0).
+**Stopped:** 2026-11-24 11:55 (the 11:37 run: advisor 347 in RULINGS and acked; on-foot check tries 1 and 2, step length set aside, method moved to scripted runs; being seen RDR2 step and a KCD2 short; history about 215k of 250k, the KCD2 harness would cross it mid-piece)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -34,11 +34,11 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- 10:37 run: **advisors 342 to 346** (his 32 decisions-page answers and corrections) in RULINGS: one sub-line under the release (map kept; clock 48 real minutes a game day, about 7 game weeks; pastimes; buyback; in/out lists; shipping; PEGI 18 within canon) and edits to replaced lines (no thinking sound; empty unit dressed; painted surrounds; photographs on shape; 2 s written line; one listening page; weekly stop **95%**, not 88%). Older lines tightened to keep 4,900; four enforcer openings repointed. Acked 10:41; DECISIONS 10:41. The keeper (cloud blueprint lane) reads RULINGS; no KEEPER-LOG exists here. Row 10:46.
-- **Being seen**: KCD2 olf2KJN5VV8: hitting a horse to a guard's challenge about 14 s, a bystander in about 2 s (edited clip, lead); AlNbGAgF3EM no incident; vyA2Nm1BHyw (4 h stream) uses a debug console: leads only. RDR2 2uugZeY_mLQ: witness to wanted about 8 s; wanted held 53 s or more; the earlier 'cleared in 10 s' was a cut, withdrawn. STATUS row updated.
-- **On-foot method** written (ON-FOOT-METHOD-2026-11-24.md): cadence x step-to-height ratio x community height, checked first on Sleeping Dogs' solid 5.5 / 4.5 m/s within 10%. First look at CGho8_UOzSk: camera behind or three-quarter; about 3.5 steps a second at a 0.1 s grid (too coarse).
+- 11:37 run: **advisor 347** (economy picks, Ellis's price, rung 2, all 19 data files first) in RULINGS within 4,900, three enforcer openings repointed; acked 11:39; DECISIONS 11:39. Keeper's Q19/Q20 stand answered by 342. Row 11:42.
+- **On-foot check, tries 1 and 2** (ON-FOOT-METHOD: Try 1, Try 2, Priced): cadence from behind works: Sleeping Dogs about 2.8 steps a second at 557 to 560 s of CGho8_UOzSk (lead). Step length unreadable: runs have no double support; no side-on, still-camera landings in CGho8_UOzSk or nDThIiEgyDA 300 to 2,000 s. Set aside; NOTEBOOK entry. **Decided (DECISIONS 11:53):** on-foot speeds and KCD2 being seen move to scripted offline runs of the installed games; KCD2 being seen first (no ruler needed; about 3 h harness plus 1.5 h, estimate), then the GTA V ruler check, then on-foot runs.
+- **Being seen**: IBsRlI5GfWs at 0.5 s: investigating to seen about 27.5 s; the red flag ends as Arthur turns on the witness (not a clearing time; the 'under 4 s' clearing withdrawn). KCD2 short 9AvBB12w7q0 edited (lead). KCD2 walkthroughs are story-led: no systemic crimes to time.
 - **Page copy**: he tapped 'done' on page-read-back at 10:39 and started the nightly task once by hand; that run (local_075af6d2...) has shown no activity since 10:39:57 (likely waiting on an approval in its own window); the task itself is still switched OFF. Told him in chat (NEEDS YOU).
-- Earlier today (09:36 and 08:51 runs, crowd counts solid, first being-seen readings, readers) and 23 Nov: TRIED-ARCHIVE.md, 'Moved 24 Nov 10:57' (written 10:55).
+- Earlier today (10:37 run: advisors 342-346, KCD2 first lead, on-foot method; 09:36 and 08:51 runs, crowd counts solid, first being-seen readings, readers) and 23 Nov: TRIED-ARCHIVE.md, 'Moved 24 Nov 10:57' and 'Moved 24 Nov 11:56'.
 
 ## In flight
 - Nothing of this session runs. His page-copy run (scheduled task 'LEDGER: read back page answers (nightly)') stalled since 10:39; it is his window, never approve for him.
@@ -46,8 +46,8 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 ## Next, in order
 00. Pace: this week measuring may run to about 70% (advisor 339), story about 10 more; full pace on the deciding rows with up to four helpers; footage reading is the session's own (helpers never click). Finish target Sat 28 Nov. Allowance 44% at 10:41.
 0. **Push blocked: page-answers-fresh fails.** The nightly task "LEDGER: read back page answers (nightly)" is off since 12 Nov; the session's copy is refused by the safety check (two tries). His page item page-read-back-2026-11-24 asks one switch. Never add an allow rule, never copy round the refusal. When the task has run (answers folder dated today): `python tools/page_answers.py --index` if needed, ci to failed=none, push wip, close the item.
-1b. **On-foot speeds**: the Sleeping Dogs check first (ON-FOOT-METHOD's First look): cadence at 1/30 s seeks over 4 s of steady running (CGho8_UOzSk at about 564-617 s, or the no-commentary walkthroughs nDThIiEgyDA, q-XdObZ24eA), plus side-on footfalls for the step ratio; within 10% of 5.5 / 4.5 m/s or question the method. Then five runs a gait for KCD2, GTA V, RDR2; the walk from KCD2 or GTA V.
-1c. **Being seen** (being-seen-readings, its Next): titled crime clips are edited; look for long uncut KCD2 sessions (streams, 'Part N' no-commentary); vyA2Nm1BHyw's first three hours by 10-minute sheets before 12,600 s (leads only); RDR2 IBsRlI5GfWs 73-77 s. Paste frame_sheet.js after each navigation; start sheet() without await (window.sres, poll after about 20 s; an awaited call closed the target); viewport 1600x900 before each screenshot; desktop after.
+1b. **KCD2 being seen by scripted offline run** (decided 11:53; Priced in ON-FOOT-METHOD): research what to stage first, then read the drill launch scripts (tools/drills/watch_opening.py, marker_read.py, SLEEPING-DOGS-DRILL-2026-11-23.md) and KCD2 in C:/Games; the recorder item on his page is open (use what the Sleeping Dogs drill used meanwhile). Stage theft seen and assault seen, five each; time deed to reaction, to guard, to challenge.
+1c. **GTA V ruler check** for on-foot runs (first-person view, road dash length: research its size first), then scripted on-foot runs (five a gait) for GTA V and KCD2; footage gives cadence leads only. RDR2 being seen from footage stays leads (three clips read).
 1d. Chases on foot (L.A. Noire, GTA V); crowd reactions Q3. Fists and driving as leads on two games each (advisor 341).
 
 2. Fists (if kept deciding) need about 60 fps: the recorder item or footage.
@@ -59,6 +59,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 5p. History rewrite HELD for his word at the PC. Progress page daily (progress.json only); DAILY token file 19:00.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
+- 24 Nov 11:46: step length from following-camera footage (tries 1 and 2 of the on-foot check, both used): runs have no double support; side-on stretches swing the camera and the foot leaves the picture at landing. Guessed clock times (12:00 to 12:16) corrected from Get-Date: always Get-Date.
 - 24 Nov 10:43: an awaited sheet() call in javascript_tool failed 'target closed' (the call outlasted the tool); running it unawaited into window.sres and polling works.
 - 24 Nov 09:40: full-size screenshots cropped the frame's right third until the viewport was set again (the pane drops it when its width changes): set it before each screenshot.
 
