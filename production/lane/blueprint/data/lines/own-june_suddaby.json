@@ -1,0 +1,2088 @@
+{
+ "file": "lines/own-june_suddaby.json",
+ "version": "wave2-2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "people/june_suddaby.json (card: who, speak)",
+  "production/cloud-week/lines/lines.json (the bank's own lines for this person)"
+ ],
+ "open_points": [],
+ "note": "June Suddaby's own street lines: once a day each (3.6.3). 30 needed, 102 written.",
+ "lines": [
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-owner.01",
+   "situation": "greeting.owner",
+   "text": "You'll be the new owner. I'm June.",
+   "src": "production/cloud-week/lines/lines.json june.greet-owner.01",
+   "tokens": [],
+   "bank": "greeting/owner",
+   "context": "greeting",
+   "rung": "owner",
+   "conditions": {
+    "standing": [
+     "owner"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/owner@june",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-owner.02",
+   "situation": "greeting.owner",
+   "text": "So you're the new owner. I'm not stopping.",
+   "src": "production/cloud-week/lines/lines.json june.greet-owner.02",
+   "tokens": [],
+   "bank": "greeting/owner",
+   "context": "greeting",
+   "rung": "owner",
+   "conditions": {
+    "standing": [
+     "owner"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/owner@june",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-owner.03",
+   "situation": "greeting.owner",
+   "text": "The new owner. Another time. I'm late.",
+   "src": "production/cloud-week/lines/lines.json june.greet-owner.03",
+   "tokens": [],
+   "bank": "greeting/owner",
+   "context": "greeting",
+   "rung": "owner",
+   "conditions": {
+    "standing": [
+     "owner"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/owner@june",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-owner.04",
+   "situation": "greeting.owner",
+   "text": "Morning. The new owner, I take it.",
+   "src": "production/cloud-week/lines/lines.json june.greet-owner.04",
+   "tokens": [],
+   "bank": "greeting/owner",
+   "context": "greeting",
+   "rung": "owner",
+   "conditions": {
+    "standing": [
+     "owner"
+    ],
+    "time": [
+     "morning"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/owner@june",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-owner.05",
+   "situation": "greeting.owner",
+   "text": "I'm June. You'll want to know that.",
+   "src": "production/cloud-week/lines/lines.json june.greet-owner.05",
+   "tokens": [],
+   "bank": "greeting/owner",
+   "context": "greeting",
+   "rung": "owner",
+   "conditions": {
+    "standing": [
+     "owner"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/owner@june",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-owner.06",
+   "situation": "greeting.owner",
+   "text": "New owner. We'll talk. Not now.",
+   "src": "production/cloud-week/lines/lines.json june.greet-owner.06",
+   "tokens": [],
+   "bank": "greeting/owner",
+   "context": "greeting",
+   "rung": "owner",
+   "conditions": {
+    "standing": [
+     "owner"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/owner@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-owner.07",
+   "situation": "greeting.owner",
+   "text": "Evening, new owner. I'm leaving soon, so be quick.",
+   "src": "production/cloud-week/lines/lines.json june.greet-owner.07",
+   "tokens": [],
+   "bank": "greeting/owner",
+   "context": "greeting",
+   "rung": "owner",
+   "conditions": {
+    "standing": [
+     "owner"
+    ],
+    "time": [
+     "evening"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/owner@june",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-owner.08",
+   "situation": "greeting.owner",
+   "text": "New owner, you're getting wet. Move.",
+   "src": "production/cloud-week/lines/lines.json june.greet-owner.08",
+   "tokens": [],
+   "bank": "greeting/owner",
+   "context": "greeting",
+   "rung": "owner",
+   "conditions": {
+    "standing": [
+     "owner"
+    ],
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/owner@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-owner.09",
+   "situation": "greeting.owner",
+   "text": "So you're the new owner. I'll not keep you.",
+   "src": "production/cloud-week/lines/lines.json june.greet-owner.09",
+   "tokens": [],
+   "bank": "greeting/owner",
+   "context": "greeting",
+   "rung": "owner",
+   "conditions": {
+    "standing": [
+     "owner"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/owner@june",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-nowak.01",
+   "situation": "greeting.nowak",
+   "text": "Nowak. Let's keep it brief.",
+   "src": "production/cloud-week/lines/lines.json june.greet-nowak.01",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@june",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-nowak.02",
+   "situation": "greeting.nowak",
+   "text": "Mr Nowak. I've a train to see about.",
+   "src": "production/cloud-week/lines/lines.json june.greet-nowak.02",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@june",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-nowak.03",
+   "situation": "greeting.nowak",
+   "text": "Morning, Nowak. You look as if you've not slept.",
+   "src": "production/cloud-week/lines/lines.json june.greet-nowak.03",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ],
+    "time": [
+     "morning"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@june",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-nowak.04",
+   "situation": "greeting.nowak",
+   "text": "Nowak. Don't make it a thing.",
+   "src": "production/cloud-week/lines/lines.json june.greet-nowak.04",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-nowak.05",
+   "situation": "greeting.nowak",
+   "text": "Afternoon, Nowak. I'm packing.",
+   "src": "production/cloud-week/lines/lines.json june.greet-nowak.05",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ],
+    "time": [
+     "afternoon"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@june",
+   "delivery": "normal",
+   "words": 4
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-nowak.06",
+   "situation": "greeting.nowak",
+   "text": "Nowak. If you need anything, ask Sheila, not me.",
+   "src": "production/cloud-week/lines/lines.json june.greet-nowak.06",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@june",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-nowak.07",
+   "situation": "greeting.nowak",
+   "text": "Nowak. I'll say it once: be careful.",
+   "src": "production/cloud-week/lines/lines.json june.greet-nowak.07",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@june",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-nowak.08",
+   "situation": "greeting.nowak",
+   "text": "Evening, Nowak. I can't stop.",
+   "src": "production/cloud-week/lines/lines.json june.greet-nowak.08",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ],
+    "time": [
+     "evening"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@june",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-nowak.09",
+   "situation": "greeting.nowak",
+   "text": "Nowak. I'll be gone by the weekend, I expect.",
+   "src": "production/cloud-week/lines/lines.json june.greet-nowak.09",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@june",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-frank.01",
+   "situation": "greeting.frank",
+   "text": "Frank. I wasn't sure you'd come this way.",
+   "src": "production/cloud-week/lines/lines.json june.greet-tom.01",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@june",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-frank.02",
+   "situation": "greeting.frank",
+   "text": "Morning, Frank. Neither of us slept, by the look.",
+   "src": "production/cloud-week/lines/lines.json june.greet-tom.02",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ],
+    "time": [
+     "morning"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@june",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-frank.03",
+   "situation": "greeting.frank",
+   "text": "Frank. If you want to talk, I've ten minutes.",
+   "src": "production/cloud-week/lines/lines.json june.greet-tom.03",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@june",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-frank.04",
+   "situation": "greeting.frank",
+   "text": "Hello, Frank. I'm still here. Don't read into it.",
+   "src": "production/cloud-week/lines/lines.json june.greet-tom.04",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@june",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-frank.05",
+   "situation": "greeting.frank",
+   "text": "Frank. Don't get yourself talked about.",
+   "src": "production/cloud-week/lines/lines.json june.greet-tom.05",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-frank.06",
+   "situation": "greeting.frank",
+   "text": "Evening, Frank. I should be on the train by now.",
+   "src": "production/cloud-week/lines/lines.json june.greet-tom.06",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ],
+    "time": [
+     "evening"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@june",
+   "delivery": "normal",
+   "words": 10
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-frank.07",
+   "situation": "greeting.frank",
+   "text": "Frank. You're not what I expected.",
+   "src": "production/cloud-week/lines/lines.json june.greet-tom.07",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-frank.08",
+   "situation": "greeting.frank",
+   "text": "Frank, you're wet. Stand under here.",
+   "src": "production/cloud-week/lines/lines.json june.greet-tom.08",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ],
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.greet-frank.09",
+   "situation": "greeting.frank",
+   "text": "Frank. I didn't think you'd stay this long.",
+   "src": "production/cloud-week/lines/lines.json june.greet-tom.09",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@june",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.bumped.01",
+   "situation": "bumped",
+   "text": "Careful! I've a bag.",
+   "src": "production/cloud-week/lines/lines.json june.bumped.01",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@june",
+   "delivery": "normal",
+   "words": 4
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.bumped.02",
+   "situation": "bumped",
+   "text": "Watch it. I've enough on today.",
+   "src": "production/cloud-week/lines/lines.json june.bumped.02",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.bumped.03",
+   "situation": "bumped",
+   "text": "Do be careful.",
+   "src": "production/cloud-week/lines/lines.json june.bumped.03",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@june",
+   "delivery": "normal",
+   "words": 3
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.bumped.04",
+   "situation": "bumped",
+   "text": "Don't. I'm not in the mood.",
+   "src": "production/cloud-week/lines/lines.json june.bumped.04",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.bumped.05",
+   "situation": "bumped",
+   "text": "Oh, for God's sake.",
+   "src": "production/cloud-week/lines/lines.json june.bumped.05",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@june",
+   "delivery": "normal",
+   "words": 4
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.bumped.06",
+   "situation": "bumped",
+   "text": "Excuse me, please.",
+   "src": "production/cloud-week/lines/lines.json june.bumped.06",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@june",
+   "delivery": "normal",
+   "words": 3
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.bumped.07",
+   "situation": "bumped",
+   "text": "Excuse me? Is there a rush?",
+   "src": "production/cloud-week/lines/lines.json june.bumped.07",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.bumped.08",
+   "situation": "bumped",
+   "text": "Oh. It's you. Fine.",
+   "src": "production/cloud-week/lines/lines.json june.bumped.08",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {
+    "standing": [
+     "owner",
+     "nowak",
+     "frank",
+     "frankie"
+    ]
+   },
+   "weight": 2,
+   "group": "bumped@june",
+   "delivery": "normal",
+   "words": 4
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.bumped.09",
+   "situation": "bumped",
+   "text": "Careful. I bruise.",
+   "src": "production/cloud-week/lines/lines.json june.bumped.09",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {
+    "standing": [
+     "owner",
+     "nowak",
+     "frank",
+     "frankie"
+    ]
+   },
+   "weight": 2,
+   "group": "bumped@june",
+   "delivery": "normal",
+   "words": 3
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.rain-starts.01",
+   "situation": "rain_starts",
+   "text": "Of course it's raining. It always did.",
+   "src": "production/cloud-week/lines/lines.json june.rain-starts.01",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@june",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.rain-starts.02",
+   "situation": "rain_starts",
+   "text": "Rain. That's the train delayed.",
+   "src": "production/cloud-week/lines/lines.json june.rain-starts.02",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@june",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.rain-starts.03",
+   "situation": "rain_starts",
+   "text": "Typical. I came without an umbrella.",
+   "src": "production/cloud-week/lines/lines.json june.rain-starts.03",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.rain-starts.04",
+   "situation": "rain_starts",
+   "text": "There it goes.",
+   "src": "production/cloud-week/lines/lines.json june.rain-starts.04",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@june",
+   "delivery": "normal",
+   "words": 3
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.rain-starts.05",
+   "situation": "rain_starts",
+   "text": "That's welcome home, then.",
+   "src": "production/cloud-week/lines/lines.json june.rain-starts.05",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@june",
+   "delivery": "normal",
+   "words": 4
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.rain-starts.06",
+   "situation": "rain_starts",
+   "text": "Drizzle. I grew up in worse.",
+   "src": "production/cloud-week/lines/lines.json june.rain-starts.06",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.rain-starts.07",
+   "situation": "rain_starts",
+   "text": "A fine rain. Hook weather.",
+   "src": "production/cloud-week/lines/lines.json june.rain-starts.07",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@june",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.rain-starts.08",
+   "situation": "rain_starts",
+   "text": "Now it pours. Naturally.",
+   "src": "production/cloud-week/lines/lines.json june.rain-starts.08",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@june",
+   "delivery": "normal",
+   "words": 4
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.rain-starts.09",
+   "situation": "rain_starts",
+   "text": "Right, I'm getting out of this.",
+   "src": "production/cloud-week/lines/lines.json june.rain-starts.09",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.in-rain.01",
+   "situation": "in_rain",
+   "text": "Wet pavements and wet faces. That's the Hook.",
+   "src": "production/cloud-week/lines/lines.json june.in-rain.01",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@june",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.in-rain.02",
+   "situation": "in_rain",
+   "text": "I'd forgotten how it never stops raining here.",
+   "src": "production/cloud-week/lines/lines.json june.in-rain.02",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@june",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.in-rain.03",
+   "situation": "in_rain",
+   "text": "My coat's ruined. It was my good one.",
+   "src": "production/cloud-week/lines/lines.json june.in-rain.03",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@june",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.in-rain.04",
+   "situation": "in_rain",
+   "text": "Nobody walks in this. I'm walking.",
+   "src": "production/cloud-week/lines/lines.json june.in-rain.04",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.in-rain.05",
+   "situation": "in_rain",
+   "text": "Every gutter on this street was always blocked.",
+   "src": "production/cloud-week/lines/lines.json june.in-rain.05",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@june",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.in-rain.06",
+   "situation": "in_rain",
+   "text": "Drizzle. Doesn't even count as weather.",
+   "src": "production/cloud-week/lines/lines.json june.in-rain.06",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.in-rain.07",
+   "situation": "in_rain",
+   "text": "It gets in your hair. I remember.",
+   "src": "production/cloud-week/lines/lines.json june.in-rain.07",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@june",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.in-rain.08",
+   "situation": "in_rain",
+   "text": "I'll wait it out under here.",
+   "src": "production/cloud-week/lines/lines.json june.in-rain.08",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.in-rain.09",
+   "situation": "in_rain",
+   "text": "Rain like that, nothing moves. Not even me.",
+   "src": "production/cloud-week/lines/lines.json june.in-rain.09",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@june",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-noise.01",
+   "situation": "crime_noise",
+   "text": "That's a window gone. I know the sound.",
+   "src": "production/cloud-week/lines/lines.json june.crime-noise.01",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@june",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-noise.02",
+   "situation": "crime_noise",
+   "text": "Glass. I'd know it anywhere.",
+   "src": "production/cloud-week/lines/lines.json june.crime-noise.02",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@june",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-noise.03",
+   "situation": "crime_noise",
+   "text": "Somebody's been broken into.",
+   "src": "production/cloud-week/lines/lines.json june.crime-noise.03",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@june",
+   "delivery": "normal",
+   "words": 4
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-noise.04",
+   "situation": "crime_noise",
+   "text": "Not my business. Not any more.",
+   "src": "production/cloud-week/lines/lines.json june.crime-noise.04",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-noise.05",
+   "situation": "crime_noise",
+   "text": "Who does that? Who does that here?",
+   "src": "production/cloud-week/lines/lines.json june.crime-noise.05",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@june",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-noise.06",
+   "situation": "crime_noise",
+   "text": "Typical. The one week I'm back.",
+   "src": "production/cloud-week/lines/lines.json june.crime-noise.06",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-noise.07",
+   "situation": "crime_noise",
+   "text": "Somebody ought to ring the police.",
+   "src": "production/cloud-week/lines/lines.json june.crime-noise.07",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-noise.08",
+   "situation": "crime_noise",
+   "text": "Stay inside, whoever you are.",
+   "src": "production/cloud-week/lines/lines.json june.crime-noise.08",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@june",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-shape.01",
+   "situation": "crime_shape",
+   "text": "Somebody ran. I didn't see who.",
+   "src": "production/cloud-week/lines/lines.json june.crime-shape.01",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-shape.02",
+   "situation": "crime_shape",
+   "text": "A shape. I was checking the time.",
+   "src": "production/cloud-week/lines/lines.json june.crime-shape.02",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@june",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-shape.03",
+   "situation": "crime_shape",
+   "text": "Somebody passed. I couldn't see who.",
+   "src": "production/cloud-week/lines/lines.json june.crime-shape.03",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-shape.04",
+   "situation": "crime_shape",
+   "text": "I'm not a witness. I saw a shape.",
+   "src": "production/cloud-week/lines/lines.json june.crime-shape.04",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@june",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-shape.05",
+   "situation": "crime_shape",
+   "text": "Somebody. In a hurry. That's all.",
+   "src": "production/cloud-week/lines/lines.json june.crime-shape.05",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-shape.06",
+   "situation": "crime_shape",
+   "text": "Something moved. I looked away.",
+   "src": "production/cloud-week/lines/lines.json june.crime-shape.06",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@june",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-shape.07",
+   "situation": "crime_shape",
+   "text": "I'd not like to say. I wasn't looking properly.",
+   "src": "production/cloud-week/lines/lines.json june.crime-shape.07",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@june",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-shape.08",
+   "situation": "crime_shape",
+   "text": "A figure by the wall. Gone.",
+   "src": "production/cloud-week/lines/lines.json june.crime-shape.08",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-face.01",
+   "situation": "crime_face",
+   "text": "I got a clear look. I won't pretend otherwise.",
+   "src": "production/cloud-week/lines/lines.json june.crime-face.01",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@june",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-face.02",
+   "situation": "crime_face",
+   "text": "I had a good look. Then it was gone.",
+   "src": "production/cloud-week/lines/lines.json june.crime-face.02",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@june",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-face.03",
+   "situation": "crime_face",
+   "text": "Hey! I saw you! Stop!",
+   "src": "production/cloud-week/lines/lines.json june.crime-face.03",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@june",
+   "delivery": "raised",
+   "words": 5
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-face.04",
+   "situation": "crime_face",
+   "text": "I couldn't say who. I'd know the face.",
+   "src": "production/cloud-week/lines/lines.json june.crime-face.04",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@june",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-face.05",
+   "situation": "crime_face",
+   "text": "That face. I'm keeping it.",
+   "src": "production/cloud-week/lines/lines.json june.crime-face.05",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@june",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-face.06",
+   "situation": "crime_face",
+   "text": "They saw me looking. I didn't look away.",
+   "src": "production/cloud-week/lines/lines.json june.crime-face.06",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@june",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-face.07",
+   "situation": "crime_face",
+   "text": "I'll remember that face. I've a memory.",
+   "src": "production/cloud-week/lines/lines.json june.crime-face.07",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@june",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.crime-face.08",
+   "situation": "crime_face",
+   "text": "No name. But I'll know the face again.",
+   "src": "production/cloud-week/lines/lines.json june.crime-face.08",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@june",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.after-deed.01",
+   "situation": "after_deed",
+   "text": "Not here. Not now.",
+   "src": "production/cloud-week/lines/lines.json june.after-deed.01",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@june",
+   "delivery": "hushed",
+   "words": 4
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.after-deed.02",
+   "situation": "after_deed",
+   "text": "I saw nothing. I was elsewhere.",
+   "src": "production/cloud-week/lines/lines.json june.after-deed.02",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@june",
+   "delivery": "hushed",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.after-deed.03",
+   "situation": "after_deed",
+   "text": "I'm leaving soon. I want no part.",
+   "src": "production/cloud-week/lines/lines.json june.after-deed.03",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@june",
+   "delivery": "hushed",
+   "words": 7
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.after-deed.04",
+   "situation": "after_deed",
+   "text": "Lower your voice. Please.",
+   "src": "production/cloud-week/lines/lines.json june.after-deed.04",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@june",
+   "delivery": "hushed",
+   "words": 4
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.after-deed.05",
+   "situation": "after_deed",
+   "text": "People are looking. Walk.",
+   "src": "production/cloud-week/lines/lines.json june.after-deed.05",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@june",
+   "delivery": "hushed",
+   "words": 4
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.after-deed.06",
+   "situation": "after_deed",
+   "text": "The less I know, the better.",
+   "src": "production/cloud-week/lines/lines.json june.after-deed.06",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@june",
+   "delivery": "hushed",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.after-deed.07",
+   "situation": "after_deed",
+   "text": "I'm saying nothing. I'm not stopping.",
+   "src": "production/cloud-week/lines/lines.json june.after-deed.07",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@june",
+   "delivery": "hushed",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.after-deed.08",
+   "situation": "after_deed",
+   "text": "It's always the same round here. Eyes everywhere.",
+   "src": "production/cloud-week/lines/lines.json june.after-deed.08",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@june",
+   "delivery": "hushed",
+   "words": 8
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.way.01",
+   "situation": "asked_way",
+   "text": "Sorry. I've been away too long.",
+   "src": "production/cloud-week/lines/lines.json june.way.01",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.way.02",
+   "situation": "asked_way",
+   "text": "I used to know. It's changed.",
+   "src": "production/cloud-week/lines/lines.json june.way.02",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.way.03",
+   "situation": "asked_way",
+   "text": "The cab office would know. I wouldn't.",
+   "src": "production/cloud-week/lines/lines.json june.way.03",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@june",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.way.04",
+   "situation": "asked_way",
+   "text": "That way, maybe. Don't hold me to it.",
+   "src": "production/cloud-week/lines/lines.json june.way.04",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@june",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.way.05",
+   "situation": "asked_way",
+   "text": "I'm not stopping. Ask somebody local.",
+   "src": "production/cloud-week/lines/lines.json june.way.05",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.way.06",
+   "situation": "asked_way",
+   "text": "I'm not from round here any more.",
+   "src": "production/cloud-week/lines/lines.json june.way.06",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@june",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.way.07",
+   "situation": "asked_way",
+   "text": "Ask at the chapel. Father Walsh knows every street.",
+   "src": "production/cloud-week/lines/lines.json june.way.07",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@june",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.way.08",
+   "situation": "asked_way",
+   "text": "Ask the dispatcher. She'll know.",
+   "src": "production/cloud-week/lines/lines.json june.way.08",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@june",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.farewell.01",
+   "situation": "farewell",
+   "text": "I must go.",
+   "src": "production/cloud-week/lines/lines.json june.farewell.01",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@june",
+   "delivery": "normal",
+   "words": 3
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.farewell.02",
+   "situation": "farewell",
+   "text": "I've a train to catch.",
+   "src": "production/cloud-week/lines/lines.json june.farewell.02",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@june",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.farewell.03",
+   "situation": "farewell",
+   "text": "Be careful.",
+   "src": "production/cloud-week/lines/lines.json june.farewell.03",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@june",
+   "delivery": "normal",
+   "words": 2
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.farewell.04",
+   "situation": "farewell",
+   "text": "Take it easy. I mean that.",
+   "src": "production/cloud-week/lines/lines.json june.farewell.04",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@june",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.farewell.05",
+   "situation": "farewell",
+   "text": "Right. I'm off.",
+   "src": "production/cloud-week/lines/lines.json june.farewell.05",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@june",
+   "delivery": "normal",
+   "words": 3
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.farewell.06",
+   "situation": "farewell",
+   "text": "Goodbye.",
+   "src": "production/cloud-week/lines/lines.json june.farewell.06",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@june",
+   "delivery": "normal",
+   "words": 1
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.farewell.07",
+   "situation": "farewell",
+   "text": "It's slick out there. Careful.",
+   "src": "production/cloud-week/lines/lines.json june.farewell.07",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "farewell@june",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "june_suddaby",
+   "once": "day",
+   "id": "june.farewell.08",
+   "situation": "farewell",
+   "text": "Go home. It's late.",
+   "src": "production/cloud-week/lines/lines.json june.farewell.08",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {
+    "time": [
+     "night"
+    ]
+   },
+   "weight": 2,
+   "group": "farewell@june",
+   "delivery": "normal",
+   "words": 4
+  }
+ ]
+}

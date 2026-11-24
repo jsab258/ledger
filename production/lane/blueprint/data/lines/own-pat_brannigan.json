@@ -1,0 +1,23 @@
+{
+ "file": "lines/own-pat_brannigan.json",
+ "version": "wave2-2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "people/pat_brannigan.json (card: who, speak)"
+ ],
+ "open_points": [],
+ "note": "Pat Brannigan's own street lines: once a day each (3.6.3). 30 needed, 0 written.",
+ "lines": [
+  {
+   "id": "pat_brannigan.own.to_write",
+   "who": "pat_brannigan",
+   "situation": "own",
+   "once": "day",
+   "text": "TO WRITE (story lane): 30 own street lines, about 7 words each, in the voice of the card (people/pat_brannigan.json), spread over greet, comment, weather, work, about_frank, about_the_street, close; at least three closing lines.",
+   "src": "BLUEPRINT-03 3.2.3, 3.6.3; FIT-L01 (30 for a regular)",
+   "words": 37
+  }
+ ]
+}

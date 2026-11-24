@@ -1,0 +1,1907 @@
+{
+ "file": "lines/own-ron_kirby.json",
+ "version": "wave2-2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "people/ron_kirby.json (card: who, speak)",
+  "production/cloud-week/lines/lines.json (the bank's own lines for this person)"
+ ],
+ "open_points": [],
+ "note": "Ron Kirby's own street lines: once a day each (3.6.3). 60 needed, 94 written.",
+ "lines": [
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.greet-nowak.01",
+   "situation": "greeting.nowak",
+   "text": "Boss. The rank's yours when you want it.",
+   "src": "production/cloud-week/lines/lines.json ron.greet-nowak.01",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@ron",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.greet-nowak.02",
+   "situation": "greeting.nowak",
+   "text": "Morning, boss. Gate's locked, rank's ready.",
+   "src": "production/cloud-week/lines/lines.json ron.greet-nowak.02",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ],
+    "time": [
+     "morning"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@ron",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.greet-nowak.03",
+   "situation": "greeting.nowak",
+   "text": "Boss. Anything wants doing, say.",
+   "src": "production/cloud-week/lines/lines.json ron.greet-nowak.03",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@ron",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.greet-nowak.04",
+   "situation": "greeting.nowak",
+   "text": "Afternoon, boss. Not much on the rank.",
+   "src": "production/cloud-week/lines/lines.json ron.greet-nowak.04",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ],
+    "time": [
+     "afternoon"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@ron",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.greet-nowak.05",
+   "situation": "greeting.nowak",
+   "text": "Evening, boss. I'll lock the yard.",
+   "src": "production/cloud-week/lines/lines.json ron.greet-nowak.05",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ],
+    "time": [
+     "evening"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@ron",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.greet-nowak.06",
+   "situation": "greeting.nowak",
+   "text": "Boss. You've the look of a man who's not eaten.",
+   "src": "production/cloud-week/lines/lines.json ron.greet-nowak.06",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@ron",
+   "delivery": "normal",
+   "words": 10
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.greet-nowak.07",
+   "situation": "greeting.nowak",
+   "text": "Boss. Mind the step at the back. It's greasy.",
+   "src": "production/cloud-week/lines/lines.json ron.greet-nowak.07",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ],
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@ron",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.greet-nowak.08",
+   "situation": "greeting.nowak",
+   "text": "Boss. I'm about if you want me.",
+   "src": "production/cloud-week/lines/lines.json ron.greet-nowak.08",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@ron",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.greet-nowak.09",
+   "situation": "greeting.nowak",
+   "text": "Boss. I'll see the yard's shut tonight.",
+   "src": "production/cloud-week/lines/lines.json ron.greet-nowak.09",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@ron",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.greet-nowak.10",
+   "situation": "greeting.nowak",
+   "text": "Boss. Anything the rank can do for you?",
+   "src": "production/cloud-week/lines/lines.json ron.greet-nowak.10",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@ron",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.greet-frank.01",
+   "situation": "greeting.frank",
+   "text": "Frank. Sit down a minute.",
+   "src": "production/cloud-week/lines/lines.json ron.greet-tom.01",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@ron",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.greet-frank.02",
+   "situation": "greeting.frank",
+   "text": "Morning, Frank. Still here, as you see.",
+   "src": "production/cloud-week/lines/lines.json ron.greet-tom.02",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ],
+    "time": [
+     "morning"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@ron",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.greet-frank.03",
+   "situation": "greeting.frank",
+   "text": "Frank. You're getting the hang of it.",
+   "src": "production/cloud-week/lines/lines.json ron.greet-tom.03",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@ron",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.greet-frank.04",
+   "situation": "greeting.frank",
+   "text": "Evening, Frank. Rank's put to bed.",
+   "src": "production/cloud-week/lines/lines.json ron.greet-tom.04",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ],
+    "time": [
+     "evening"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@ron",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.greet-frank.05",
+   "situation": "greeting.frank",
+   "text": "All right, Frank? Soles holding out?",
+   "src": "production/cloud-week/lines/lines.json ron.greet-tom.05",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@ron",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.greet-frank.06",
+   "situation": "greeting.frank",
+   "text": "Frank. You've the walk of a man who's lost his keys.",
+   "src": "production/cloud-week/lines/lines.json ron.greet-tom.06",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@ron",
+   "delivery": "normal",
+   "words": 11
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.greet-frank.07",
+   "situation": "greeting.frank",
+   "text": "Afternoon, Frank. Tea's on, if you want it.",
+   "src": "production/cloud-week/lines/lines.json ron.greet-tom.07",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ],
+    "time": [
+     "afternoon"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@ron",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.greet-frank.08",
+   "situation": "greeting.frank",
+   "text": "Frank. Do that coat up.",
+   "src": "production/cloud-week/lines/lines.json ron.greet-tom.08",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ],
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@ron",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.greet-frank.09",
+   "situation": "greeting.frank",
+   "text": "Frank. I'll walk you to the gate.",
+   "src": "production/cloud-week/lines/lines.json ron.greet-tom.09",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@ron",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.greet-frank.10",
+   "situation": "greeting.frank",
+   "text": "Frank. You've a face like a closed door.",
+   "src": "production/cloud-week/lines/lines.json ron.greet-tom.10",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@ron",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.bumped.01",
+   "situation": "bumped",
+   "text": "Easy, boss.",
+   "src": "production/cloud-week/lines/lines.json ron.bumped.01",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@ron",
+   "delivery": "normal",
+   "words": 2
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.bumped.02",
+   "situation": "bumped",
+   "text": "Whoa. Steady, friend.",
+   "src": "production/cloud-week/lines/lines.json ron.bumped.02",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@ron",
+   "delivery": "normal",
+   "words": 3
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.bumped.03",
+   "situation": "bumped",
+   "text": "Mind, boss. My back.",
+   "src": "production/cloud-week/lines/lines.json ron.bumped.03",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@ron",
+   "delivery": "normal",
+   "words": 4
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.bumped.04",
+   "situation": "bumped",
+   "text": "My toes, boss. Mind my toes.",
+   "src": "production/cloud-week/lines/lines.json ron.bumped.04",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@ron",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.bumped.05",
+   "situation": "bumped",
+   "text": "You walk like the tide, boss. No warning.",
+   "src": "production/cloud-week/lines/lines.json ron.bumped.05",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@ron",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.bumped.06",
+   "situation": "bumped",
+   "text": "Careful, friend. I'm not as nimble.",
+   "src": "production/cloud-week/lines/lines.json ron.bumped.06",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@ron",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.bumped.07",
+   "situation": "bumped",
+   "text": "Watch the kerb, boss. It's still there.",
+   "src": "production/cloud-week/lines/lines.json ron.bumped.07",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@ron",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.bumped.08",
+   "situation": "bumped",
+   "text": "There's a kerb there, you know.",
+   "src": "production/cloud-week/lines/lines.json ron.bumped.08",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@ron",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.rain-starts.01",
+   "situation": "rain_starts",
+   "text": "Rain's here, boss.",
+   "src": "production/cloud-week/lines/lines.json ron.rain-starts.01",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@ron",
+   "delivery": "normal",
+   "words": 3
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.rain-starts.02",
+   "situation": "rain_starts",
+   "text": "Told you. My back said so.",
+   "src": "production/cloud-week/lines/lines.json ron.rain-starts.02",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@ron",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.rain-starts.03",
+   "situation": "rain_starts",
+   "text": "Gulls went quiet. I knew.",
+   "src": "production/cloud-week/lines/lines.json ron.rain-starts.03",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@ron",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.rain-starts.04",
+   "situation": "rain_starts",
+   "text": "That's the quay gone slippy.",
+   "src": "production/cloud-week/lines/lines.json ron.rain-starts.04",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@ron",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.rain-starts.05",
+   "situation": "rain_starts",
+   "text": "Get your collar up, friend.",
+   "src": "production/cloud-week/lines/lines.json ron.rain-starts.05",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@ron",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.rain-starts.06",
+   "situation": "rain_starts",
+   "text": "Only spitting. I've stood in worse.",
+   "src": "production/cloud-week/lines/lines.json ron.rain-starts.06",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@ron",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.rain-starts.07",
+   "situation": "rain_starts",
+   "text": "Soft stuff, this. Soaks you slow.",
+   "src": "production/cloud-week/lines/lines.json ron.rain-starts.07",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@ron",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.rain-starts.08",
+   "situation": "rain_starts",
+   "text": "That's proper rain. Get inside, boss.",
+   "src": "production/cloud-week/lines/lines.json ron.rain-starts.08",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@ron",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.rain-starts.09",
+   "situation": "rain_starts",
+   "text": "Down it comes. Rank's empty now.",
+   "src": "production/cloud-week/lines/lines.json ron.rain-starts.09",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@ron",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.in-rain.01",
+   "situation": "in_rain",
+   "text": "Cab windows all steamed up. Bit of peace.",
+   "src": "production/cloud-week/lines/lines.json ron.in-rain.01",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@ron",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.in-rain.02",
+   "situation": "in_rain",
+   "text": "Rank's a pond. Mind your boots, boss.",
+   "src": "production/cloud-week/lines/lines.json ron.in-rain.02",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@ron",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.in-rain.03",
+   "situation": "in_rain",
+   "text": "Wet's gone through to my socks. That's me.",
+   "src": "production/cloud-week/lines/lines.json ron.in-rain.03",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@ron",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.in-rain.04",
+   "situation": "in_rain",
+   "text": "Drains can't keep up. Never could.",
+   "src": "production/cloud-week/lines/lines.json ron.in-rain.04",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@ron",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.in-rain.05",
+   "situation": "in_rain",
+   "text": "Nobody wants a cab till it rains. Then everybody does.",
+   "src": "production/cloud-week/lines/lines.json ron.in-rain.05",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@ron",
+   "delivery": "normal",
+   "words": 10
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.in-rain.06",
+   "situation": "in_rain",
+   "text": "Fine stuff. Gets in the bones, that.",
+   "src": "production/cloud-week/lines/lines.json ron.in-rain.06",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@ron",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.in-rain.07",
+   "situation": "in_rain",
+   "text": "A soft old drizzle. I'll stand in it.",
+   "src": "production/cloud-week/lines/lines.json ron.in-rain.07",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@ron",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.in-rain.08",
+   "situation": "in_rain",
+   "text": "Rain like nails on the roof, listen.",
+   "src": "production/cloud-week/lines/lines.json ron.in-rain.08",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@ron",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.in-rain.09",
+   "situation": "in_rain",
+   "text": "Rank's a river, boss.",
+   "src": "production/cloud-week/lines/lines.json ron.in-rain.09",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@ron",
+   "delivery": "normal",
+   "words": 4
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-noise.01",
+   "situation": "crime_noise",
+   "text": "Not a bin lid, that.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-noise.01",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@ron",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-noise.02",
+   "situation": "crime_noise",
+   "text": "Heavy, that. Down the road somewhere.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-noise.02",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@ron",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-noise.03",
+   "situation": "crime_noise",
+   "text": "Leave it, boss. Let it settle.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-noise.03",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@ron",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-noise.04",
+   "situation": "crime_noise",
+   "text": "That's not ours. Not today.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-noise.04",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@ron",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-noise.05",
+   "situation": "crime_noise",
+   "text": "Didn't like the sound of that.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-noise.05",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@ron",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-noise.06",
+   "situation": "crime_noise",
+   "text": "I'll stand at the gate. See who comes.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-noise.06",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@ron",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-noise.07",
+   "situation": "crime_noise",
+   "text": "Not a lorry. Not a van. People.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-noise.07",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@ron",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-noise.08",
+   "situation": "crime_noise",
+   "text": "That was somebody's door.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-noise.08",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@ron",
+   "delivery": "normal",
+   "words": 4
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-shape.01",
+   "situation": "crime_shape",
+   "text": "Saw somebody go. Didn't see who.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-shape.01",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@ron",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-shape.02",
+   "situation": "crime_shape",
+   "text": "Something went by the gate, boss. Fast.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-shape.02",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@ron",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-shape.03",
+   "situation": "crime_shape",
+   "text": "Somebody ran. I'll not guess who.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-shape.03",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@ron",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-shape.04",
+   "situation": "crime_shape",
+   "text": "Caught the end of it. A shape, no more.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-shape.04",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@ron",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-shape.05",
+   "situation": "crime_shape",
+   "text": "I'd not say. I'd not like to be wrong.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-shape.05",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@ron",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-shape.06",
+   "situation": "crime_shape",
+   "text": "A flicker at the yard mouth. Gone.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-shape.06",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@ron",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-shape.07",
+   "situation": "crime_shape",
+   "text": "Don't ask me, boss. A shape, then none.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-shape.07",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@ron",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-shape.08",
+   "situation": "crime_shape",
+   "text": "A back going away. That's all.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-shape.08",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@ron",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-face.01",
+   "situation": "crime_face",
+   "text": "I saw the face. I'll not forget it.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-face.01",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@ron",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-face.02",
+   "situation": "crime_face",
+   "text": "I'd know that face, boss. I'll keep it to myself.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-face.02",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@ron",
+   "delivery": "normal",
+   "words": 10
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-face.03",
+   "situation": "crime_face",
+   "text": "Oi! You! Stop!",
+   "src": "production/cloud-week/lines/lines.json ron.crime-face.03",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@ron",
+   "delivery": "raised",
+   "words": 3
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-face.04",
+   "situation": "crime_face",
+   "text": "That face'll keep. It's not going anywhere.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-face.04",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@ron",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-face.05",
+   "situation": "crime_face",
+   "text": "Plain as day, that face.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-face.05",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@ron",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-face.06",
+   "situation": "crime_face",
+   "text": "I've kept worse to myself than a face, boss.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-face.06",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@ron",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-face.07",
+   "situation": "crime_face",
+   "text": "Looked right at me, they did.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-face.07",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@ron",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.crime-face.08",
+   "situation": "crime_face",
+   "text": "I saw a face, friend. I'm saying nowt more.",
+   "src": "production/cloud-week/lines/lines.json ron.crime-face.08",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@ron",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.after-deed.01",
+   "situation": "after_deed",
+   "text": "Quiet, boss. Say nowt.",
+   "src": "production/cloud-week/lines/lines.json ron.after-deed.01",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@ron",
+   "delivery": "hushed",
+   "words": 4
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.after-deed.02",
+   "situation": "after_deed",
+   "text": "Best go in. Walls have ears.",
+   "src": "production/cloud-week/lines/lines.json ron.after-deed.02",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@ron",
+   "delivery": "hushed",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.after-deed.03",
+   "situation": "after_deed",
+   "text": "We saw nowt, friend.",
+   "src": "production/cloud-week/lines/lines.json ron.after-deed.03",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@ron",
+   "delivery": "hushed",
+   "words": 4
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.after-deed.04",
+   "situation": "after_deed",
+   "text": "Keep the rank going. Look normal.",
+   "src": "production/cloud-week/lines/lines.json ron.after-deed.04",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@ron",
+   "delivery": "hushed",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.after-deed.05",
+   "situation": "after_deed",
+   "text": "Folk are watching, boss. Stand easy.",
+   "src": "production/cloud-week/lines/lines.json ron.after-deed.05",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@ron",
+   "delivery": "hushed",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.after-deed.06",
+   "situation": "after_deed",
+   "text": "It'll come out. It always does.",
+   "src": "production/cloud-week/lines/lines.json ron.after-deed.06",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@ron",
+   "delivery": "hushed",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.after-deed.07",
+   "situation": "after_deed",
+   "text": "Not in the street, friend.",
+   "src": "production/cloud-week/lines/lines.json ron.after-deed.07",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@ron",
+   "delivery": "hushed",
+   "words": 5
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.after-deed.08",
+   "situation": "after_deed",
+   "text": "Eyes front, boss. Easy.",
+   "src": "production/cloud-week/lines/lines.json ron.after-deed.08",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@ron",
+   "delivery": "hushed",
+   "words": 4
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.way.01",
+   "situation": "asked_way",
+   "text": "Don't know it, friend. Never had the need.",
+   "src": "production/cloud-week/lines/lines.json ron.way.01",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@ron",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.way.02",
+   "situation": "asked_way",
+   "text": "That way, I think. I've bad knees.",
+   "src": "production/cloud-week/lines/lines.json ron.way.02",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@ron",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.way.03",
+   "situation": "asked_way",
+   "text": "Ask the dispatcher. She knows every road.",
+   "src": "production/cloud-week/lines/lines.json ron.way.03",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@ron",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.way.04",
+   "situation": "asked_way",
+   "text": "Never been. I stay on the rank.",
+   "src": "production/cloud-week/lines/lines.json ron.way.04",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@ron",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.way.05",
+   "situation": "asked_way",
+   "text": "Haven't left the quay in years, friend.",
+   "src": "production/cloud-week/lines/lines.json ron.way.05",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@ron",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.way.06",
+   "situation": "asked_way",
+   "text": "Ask Sheila in the office, friend. She knows.",
+   "src": "production/cloud-week/lines/lines.json ron.way.06",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@ron",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.way.07",
+   "situation": "asked_way",
+   "text": "It's that way, up or down. I forget.",
+   "src": "production/cloud-week/lines/lines.json ron.way.07",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@ron",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.way.08",
+   "situation": "asked_way",
+   "text": "Ask a driver. They're paid to know.",
+   "src": "production/cloud-week/lines/lines.json ron.way.08",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@ron",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.farewell.01",
+   "situation": "farewell",
+   "text": "Right then, boss.",
+   "src": "production/cloud-week/lines/lines.json ron.farewell.01",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@ron",
+   "delivery": "normal",
+   "words": 3
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.farewell.02",
+   "situation": "farewell",
+   "text": "Aye, boss. Go on.",
+   "src": "production/cloud-week/lines/lines.json ron.farewell.02",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@ron",
+   "delivery": "normal",
+   "words": 4
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.farewell.03",
+   "situation": "farewell",
+   "text": "Mind the step, friend.",
+   "src": "production/cloud-week/lines/lines.json ron.farewell.03",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@ron",
+   "delivery": "normal",
+   "words": 4
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.farewell.04",
+   "situation": "farewell",
+   "text": "Keep your head down, boss.",
+   "src": "production/cloud-week/lines/lines.json ron.farewell.04",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@ron",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.farewell.05",
+   "situation": "farewell",
+   "text": "I'll be on the rank.",
+   "src": "production/cloud-week/lines/lines.json ron.farewell.05",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@ron",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.farewell.06",
+   "situation": "farewell",
+   "text": "Off to put the kettle on.",
+   "src": "production/cloud-week/lines/lines.json ron.farewell.06",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@ron",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.farewell.07",
+   "situation": "farewell",
+   "text": "Coat up, boss. It's lashing.",
+   "src": "production/cloud-week/lines/lines.json ron.farewell.07",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "farewell@ron",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "ron_kirby",
+   "once": "day",
+   "id": "ron.farewell.08",
+   "situation": "farewell",
+   "text": "Don't stay out, boss. It's black.",
+   "src": "production/cloud-week/lines/lines.json ron.farewell.08",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {
+    "time": [
+     "night"
+    ]
+   },
+   "weight": 2,
+   "group": "farewell@ron",
+   "delivery": "normal",
+   "words": 6
+  }
+ ]
+}

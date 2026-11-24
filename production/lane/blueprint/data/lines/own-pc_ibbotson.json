@@ -1,0 +1,23 @@
+{
+ "file": "lines/own-pc_ibbotson.json",
+ "version": "wave2-2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "people/pc_ibbotson.json (card: who, speak)"
+ ],
+ "open_points": [],
+ "note": "Ian Ibbotson's own street lines: once a day each (3.6.3). 60 needed, 0 written.",
+ "lines": [
+  {
+   "id": "pc_ibbotson.own.to_write",
+   "who": "pc_ibbotson",
+   "situation": "own",
+   "once": "day",
+   "text": "TO WRITE (story lane): 60 own street lines, about 7 words each, in the voice of the card (people/pc_ibbotson.json), spread over greet, comment, weather, work, about_frank, about_the_street, close; at least three closing lines.",
+   "src": "BLUEPRINT-03 3.2.3, 3.6.3; FIT-L01 (60 for the twelve most seen)",
+   "words": 37
+  }
+ ]
+}

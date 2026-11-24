@@ -1,0 +1,2312 @@
+{
+ "file": "lines/own-brendan_walsh.json",
+ "version": "wave2-2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "people/brendan_walsh.json (card: who, speak)",
+  "production/cloud-week/lines/lines.json (the bank's own lines for this person)"
+ ],
+ "open_points": [],
+ "note": "Brendan Walsh's own street lines: once a day each (3.6.3). 60 needed, 112 written.",
+ "lines": [
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-owner.01",
+   "situation": "greeting.owner",
+   "text": "You'll be the new owner. God bless you, son.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-owner.01",
+   "tokens": [],
+   "bank": "greeting/owner",
+   "context": "greeting",
+   "rung": "owner",
+   "conditions": {
+    "standing": [
+     "owner"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/owner@father_walsh",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-owner.02",
+   "situation": "greeting.owner",
+   "text": "Ah, the new owner. You're very welcome.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-owner.02",
+   "tokens": [],
+   "bank": "greeting/owner",
+   "context": "greeting",
+   "rung": "owner",
+   "conditions": {
+    "standing": [
+     "owner"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/owner@father_walsh",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-owner.03",
+   "situation": "greeting.owner",
+   "text": "Morning to you, new owner. I'm Father Walsh.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-owner.03",
+   "tokens": [],
+   "bank": "greeting/owner",
+   "context": "greeting",
+   "rung": "owner",
+   "conditions": {
+    "standing": [
+     "owner"
+    ],
+    "time": [
+     "morning"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/owner@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-owner.04",
+   "situation": "greeting.owner",
+   "text": "The new owner. My door's open, any hour.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-owner.04",
+   "tokens": [],
+   "bank": "greeting/owner",
+   "context": "greeting",
+   "rung": "owner",
+   "conditions": {
+    "standing": [
+     "owner"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/owner@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-owner.05",
+   "situation": "greeting.owner",
+   "text": "Welcome to the Hook, new owner. It grows on a man.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-owner.05",
+   "tokens": [],
+   "bank": "greeting/owner",
+   "context": "greeting",
+   "rung": "owner",
+   "conditions": {
+    "standing": [
+     "owner"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/owner@father_walsh",
+   "delivery": "normal",
+   "words": 11
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-owner.06",
+   "situation": "greeting.owner",
+   "text": "Good evening, new owner. You've had a long road.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-owner.06",
+   "tokens": [],
+   "bank": "greeting/owner",
+   "context": "greeting",
+   "rung": "owner",
+   "conditions": {
+    "standing": [
+     "owner"
+    ],
+    "time": [
+     "evening"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/owner@father_walsh",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-owner.07",
+   "situation": "greeting.owner",
+   "text": "The new owner, is it? Come in out of the cold.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-owner.07",
+   "tokens": [],
+   "bank": "greeting/owner",
+   "context": "greeting",
+   "rung": "owner",
+   "conditions": {
+    "standing": [
+     "owner"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/owner@father_walsh",
+   "delivery": "normal",
+   "words": 11
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-owner.08",
+   "situation": "greeting.owner",
+   "text": "New owner, you're soaked. Come under my umbrella.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-owner.08",
+   "tokens": [],
+   "bank": "greeting/owner",
+   "context": "greeting",
+   "rung": "owner",
+   "conditions": {
+    "standing": [
+     "owner"
+    ],
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/owner@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-owner.09",
+   "situation": "greeting.owner",
+   "text": "Ah, the new owner. I'm glad you've come.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-owner.09",
+   "tokens": [],
+   "bank": "greeting/owner",
+   "context": "greeting",
+   "rung": "owner",
+   "conditions": {
+    "standing": [
+     "owner"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/owner@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-nowak.01",
+   "situation": "greeting.nowak",
+   "text": "Mr Nowak. God bless you.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-nowak.01",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@father_walsh",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-nowak.02",
+   "situation": "greeting.nowak",
+   "text": "Good morning, Mr Nowak. I hope you slept.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-nowak.02",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ],
+    "time": [
+     "morning"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-nowak.03",
+   "situation": "greeting.nowak",
+   "text": "Mr Nowak. If you've a minute, I've a kettle.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-nowak.03",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@father_walsh",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-nowak.04",
+   "situation": "greeting.nowak",
+   "text": "Mr Nowak. How are you settling, son?",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-nowak.04",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@father_walsh",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-nowak.05",
+   "situation": "greeting.nowak",
+   "text": "Afternoon, Mr Nowak. The chapel's open, if you've need.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-nowak.05",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ],
+    "time": [
+     "afternoon"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@father_walsh",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-nowak.06",
+   "situation": "greeting.nowak",
+   "text": "Mr Nowak. I've said a prayer for the office.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-nowak.06",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@father_walsh",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-nowak.07",
+   "situation": "greeting.nowak",
+   "text": "Evening, Mr Nowak. Home before the damp sets in.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-nowak.07",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ],
+    "time": [
+     "evening"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@father_walsh",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-nowak.08",
+   "situation": "greeting.nowak",
+   "text": "Mr Nowak. Come in under the umbrella.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-nowak.08",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ],
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@father_walsh",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-nowak.09",
+   "situation": "greeting.nowak",
+   "text": "Mr Nowak, you're welcome here any hour.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-nowak.09",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@father_walsh",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-nowak.10",
+   "situation": "greeting.nowak",
+   "text": "Mr Nowak. Come to the chapel hall for tea.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-nowak.10",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@father_walsh",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-frank.01",
+   "situation": "greeting.frank",
+   "text": "Frank. God keep you.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-tom.01",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@father_walsh",
+   "delivery": "normal",
+   "words": 4
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-frank.02",
+   "situation": "greeting.frank",
+   "text": "Morning, Frank. I hope you slept.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-tom.02",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ],
+    "time": [
+     "morning"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@father_walsh",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-frank.03",
+   "situation": "greeting.frank",
+   "text": "Frank, son. Are you all right? Truly?",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-tom.03",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@father_walsh",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-frank.04",
+   "situation": "greeting.frank",
+   "text": "Frank. You needn't tell me where you've been.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-tom.04",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-frank.05",
+   "situation": "greeting.frank",
+   "text": "Evening, Frank. The dark's no friend, son.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-tom.05",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ],
+    "time": [
+     "evening"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@father_walsh",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-frank.06",
+   "situation": "greeting.frank",
+   "text": "Frank. I'll light a candle for you, if you'd not mind.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-tom.06",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@father_walsh",
+   "delivery": "normal",
+   "words": 11
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-frank.07",
+   "situation": "greeting.frank",
+   "text": "Afternoon, Frank. A quiet hour. A good one.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-tom.07",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ],
+    "time": [
+     "afternoon"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-frank.08",
+   "situation": "greeting.frank",
+   "text": "Frank, you're drenched, son. Take the umbrella.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-tom.08",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ],
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@father_walsh",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-frank.09",
+   "situation": "greeting.frank",
+   "text": "Frank, son. Is there anything I can do?",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-tom.09",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-frank.10",
+   "situation": "greeting.frank",
+   "text": "Frank. It's good to see you walking about.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-tom.10",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-frankie.01",
+   "situation": "greeting.frankie",
+   "text": "Frankie, son. It's good to see you.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-tommy.01",
+   "tokens": [],
+   "bank": "greeting/tommy",
+   "context": "greeting",
+   "rung": "frankie",
+   "conditions": {
+    "standing": [
+     "frankie"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tommy@father_walsh",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-frankie.02",
+   "situation": "greeting.frankie",
+   "text": "Frankie. You'd tell me if it was heavy, would you?",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-tommy.02",
+   "tokens": [],
+   "bank": "greeting/tommy",
+   "context": "greeting",
+   "rung": "frankie",
+   "conditions": {
+    "standing": [
+     "frankie"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tommy@father_walsh",
+   "delivery": "normal",
+   "words": 10
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-frankie.03",
+   "situation": "greeting.frankie",
+   "text": "Morning, Frankie. God bless the day.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-tommy.03",
+   "tokens": [],
+   "bank": "greeting/tommy",
+   "context": "greeting",
+   "rung": "frankie",
+   "conditions": {
+    "standing": [
+     "frankie"
+    ],
+    "time": [
+     "morning"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tommy@father_walsh",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-frankie.04",
+   "situation": "greeting.frankie",
+   "text": "Frankie, son. Come and take the weight off.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-tommy.04",
+   "tokens": [],
+   "bank": "greeting/tommy",
+   "context": "greeting",
+   "rung": "frankie",
+   "conditions": {
+    "standing": [
+     "frankie"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tommy@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-frankie.05",
+   "situation": "greeting.frankie",
+   "text": "Evening, Frankie. I've kept a chair for you.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-tommy.05",
+   "tokens": [],
+   "bank": "greeting/tommy",
+   "context": "greeting",
+   "rung": "frankie",
+   "conditions": {
+    "standing": [
+     "frankie"
+    ],
+    "time": [
+     "evening"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tommy@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-frankie.06",
+   "situation": "greeting.frankie",
+   "text": "Frankie. It keeps till morning, whatever it is.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-tommy.06",
+   "tokens": [],
+   "bank": "greeting/tommy",
+   "context": "greeting",
+   "rung": "frankie",
+   "conditions": {
+    "standing": [
+     "frankie"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tommy@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-frankie.07",
+   "situation": "greeting.frankie",
+   "text": "Frankie. You're always welcome. That never changes.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-tommy.07",
+   "tokens": [],
+   "bank": "greeting/tommy",
+   "context": "greeting",
+   "rung": "frankie",
+   "conditions": {
+    "standing": [
+     "frankie"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tommy@father_walsh",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-frankie.08",
+   "situation": "greeting.frankie",
+   "text": "Frankie, mind the damp, now.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-tommy.08",
+   "tokens": [],
+   "bank": "greeting/tommy",
+   "context": "greeting",
+   "rung": "frankie",
+   "conditions": {
+    "standing": [
+     "frankie"
+    ],
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tommy@father_walsh",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.greet-frankie.09",
+   "situation": "greeting.frankie",
+   "text": "Frankie, son. You've been in my prayers.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.greet-tommy.09",
+   "tokens": [],
+   "bank": "greeting/tommy",
+   "context": "greeting",
+   "rung": "frankie",
+   "conditions": {
+    "standing": [
+     "frankie"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tommy@father_walsh",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.bumped.01",
+   "situation": "bumped",
+   "text": "Ah! God help us. Mind the old bones.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.bumped.01",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.bumped.02",
+   "situation": "bumped",
+   "text": "Easy, son. These old legs go from under me.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.bumped.02",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@father_walsh",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.bumped.03",
+   "situation": "bumped",
+   "text": "Dear me. That's my glasses gone.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.bumped.03",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@father_walsh",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.bumped.04",
+   "situation": "bumped",
+   "text": "Sorry, sorry. Whose fault was that?",
+   "src": "production/cloud-week/lines/lines.json father_walsh.bumped.04",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@father_walsh",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.bumped.05",
+   "situation": "bumped",
+   "text": "Careful, son. The pavement's older than both of us.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.bumped.05",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@father_walsh",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.bumped.06",
+   "situation": "bumped",
+   "text": "Steady, steady. Nobody's hurt.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.bumped.06",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@father_walsh",
+   "delivery": "normal",
+   "words": 4
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.bumped.07",
+   "situation": "bumped",
+   "text": "Excuse me, son. We'd best both look up.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.bumped.07",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.bumped.08",
+   "situation": "bumped",
+   "text": "Ah, it's yourself. No harm done.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.bumped.08",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {
+    "standing": [
+     "owner",
+     "nowak",
+     "frank",
+     "frankie"
+    ]
+   },
+   "weight": 2,
+   "group": "bumped@father_walsh",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.rain-starts.01",
+   "situation": "rain_starts",
+   "text": "A soft day, thank God. A soft day.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.rain-starts.01",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.rain-starts.02",
+   "situation": "rain_starts",
+   "text": "Ah, here's the rain. It's only water.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.rain-starts.02",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@father_walsh",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.rain-starts.03",
+   "situation": "rain_starts",
+   "text": "And me with no umbrella. God help me.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.rain-starts.03",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.rain-starts.04",
+   "situation": "rain_starts",
+   "text": "There now. The sky's had enough.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.rain-starts.04",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@father_walsh",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.rain-starts.05",
+   "situation": "rain_starts",
+   "text": "God send it's not heavy.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.rain-starts.05",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@father_walsh",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.rain-starts.06",
+   "situation": "rain_starts",
+   "text": "Only a mist, now. It'll not trouble us.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.rain-starts.06",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.rain-starts.07",
+   "situation": "rain_starts",
+   "text": "A fine soft rain. The kind that feeds the grass.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.rain-starts.07",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@father_walsh",
+   "delivery": "normal",
+   "words": 10
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.rain-starts.08",
+   "situation": "rain_starts",
+   "text": "Ah, that's a downpour. In we go.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.rain-starts.08",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@father_walsh",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.rain-starts.09",
+   "situation": "rain_starts",
+   "text": "Lord, listen to that.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.rain-starts.09",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@father_walsh",
+   "delivery": "normal",
+   "words": 4
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.in-rain.01",
+   "situation": "in_rain",
+   "text": "Rain on the chapel roof. It's the sound of the place.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.in-rain.01",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@father_walsh",
+   "delivery": "normal",
+   "words": 11
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.in-rain.02",
+   "situation": "in_rain",
+   "text": "The old gutters are singing again.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.in-rain.02",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@father_walsh",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.in-rain.03",
+   "situation": "in_rain",
+   "text": "It rains on the just and the unjust, they say.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.in-rain.03",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@father_walsh",
+   "delivery": "normal",
+   "words": 10
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.in-rain.04",
+   "situation": "in_rain",
+   "text": "Mind the puddles, son. They hide the deep ones.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.in-rain.04",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@father_walsh",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.in-rain.05",
+   "situation": "in_rain",
+   "text": "Ah, the damp. It gets into the old hymn books.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.in-rain.05",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@father_walsh",
+   "delivery": "normal",
+   "words": 10
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.in-rain.06",
+   "situation": "in_rain",
+   "text": "A soft day, this. A good day for thinking.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.in-rain.06",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@father_walsh",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.in-rain.07",
+   "situation": "in_rain",
+   "text": "Misty and mild. I'll not complain.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.in-rain.07",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@father_walsh",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.in-rain.08",
+   "situation": "in_rain",
+   "text": "It's a hard rain. We'll be glad of a dry floor.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.in-rain.08",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@father_walsh",
+   "delivery": "normal",
+   "words": 11
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.in-rain.09",
+   "situation": "in_rain",
+   "text": "The streets will be rivers by evening.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.in-rain.09",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@father_walsh",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-noise.01",
+   "situation": "crime_noise",
+   "text": "What in the name of God was that?",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-noise.01",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-noise.02",
+   "situation": "crime_noise",
+   "text": "That didn't sound like a lorry, son.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-noise.02",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@father_walsh",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-noise.03",
+   "situation": "crime_noise",
+   "text": "Lord, somebody's in trouble.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-noise.03",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@father_walsh",
+   "delivery": "normal",
+   "words": 4
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-noise.04",
+   "situation": "crime_noise",
+   "text": "I'll go and see. Slowly, mind.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-noise.04",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@father_walsh",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-noise.05",
+   "situation": "crime_noise",
+   "text": "That's glass, I fear. And a good deal of it.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-noise.05",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@father_walsh",
+   "delivery": "normal",
+   "words": 10
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-noise.06",
+   "situation": "crime_noise",
+   "text": "Stay where you are, son. Let it quieten.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-noise.06",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-noise.07",
+   "situation": "crime_noise",
+   "text": "I'll say a prayer. And then I'll telephone.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-noise.07",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-noise.08",
+   "situation": "crime_noise",
+   "text": "I'll tell the guards. Somebody should.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-noise.08",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@father_walsh",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-shape.01",
+   "situation": "crime_shape",
+   "text": "Somebody hurried past, God forgive me. I couldn't say who.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-shape.01",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@father_walsh",
+   "delivery": "normal",
+   "words": 10
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-shape.02",
+   "situation": "crime_shape",
+   "text": "A shape by the wall, son. That's all I'd swear to.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-shape.02",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@father_walsh",
+   "delivery": "normal",
+   "words": 11
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-shape.03",
+   "situation": "crime_shape",
+   "text": "Somebody ran. I'd not like to guess.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-shape.03",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@father_walsh",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-shape.04",
+   "situation": "crime_shape",
+   "text": "My eyes are tired. A figure, and then none.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-shape.04",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@father_walsh",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-shape.05",
+   "situation": "crime_shape",
+   "text": "Something moved. A person, I'd say. No more.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-shape.05",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-shape.06",
+   "situation": "crime_shape",
+   "text": "I'll not guess at what I didn't see.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-shape.06",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-shape.07",
+   "situation": "crime_shape",
+   "text": "A figure. In a hurry. God keep them.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-shape.07",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-shape.08",
+   "situation": "crime_shape",
+   "text": "A back, son, going away from me. No more.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-shape.08",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@father_walsh",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-face.01",
+   "situation": "crime_face",
+   "text": "God gave me a good look at that face, son.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-face.01",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@father_walsh",
+   "delivery": "normal",
+   "words": 10
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-face.02",
+   "situation": "crime_face",
+   "text": "A face I'll remember, God forgive me.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-face.02",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@father_walsh",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-face.03",
+   "situation": "crime_face",
+   "text": "Stop, now! I saw you! God sees you too!",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-face.03",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@father_walsh",
+   "delivery": "raised",
+   "words": 9
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-face.04",
+   "situation": "crime_face",
+   "text": "I've no name. I've the face, and a prayer.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-face.04",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@father_walsh",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-face.05",
+   "situation": "crime_face",
+   "text": "I looked into that face, son. It looked back.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-face.05",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@father_walsh",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-face.06",
+   "situation": "crime_face",
+   "text": "I'll not forget that face. I'll say a prayer for it.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-face.06",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@father_walsh",
+   "delivery": "normal",
+   "words": 11
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-face.07",
+   "situation": "crime_face",
+   "text": "That's a face I'll carry, son. I'll say no more.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-face.07",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@father_walsh",
+   "delivery": "normal",
+   "words": 10
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.crime-face.08",
+   "situation": "crime_face",
+   "text": "That face was frightened, or angry. I couldn't tell.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.crime-face.08",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@father_walsh",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.after-deed.01",
+   "situation": "after_deed",
+   "text": "Quietly, now, son. Quietly.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.after-deed.01",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@father_walsh",
+   "delivery": "hushed",
+   "words": 4
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.after-deed.02",
+   "situation": "after_deed",
+   "text": "I'll say nothing till I know more.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.after-deed.02",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@father_walsh",
+   "delivery": "hushed",
+   "words": 7
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.after-deed.03",
+   "situation": "after_deed",
+   "text": "Come away. There's nothing for us here.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.after-deed.03",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@father_walsh",
+   "delivery": "hushed",
+   "words": 7
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.after-deed.04",
+   "situation": "after_deed",
+   "text": "Whoever it was, God help them.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.after-deed.04",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@father_walsh",
+   "delivery": "hushed",
+   "words": 6
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.after-deed.05",
+   "situation": "after_deed",
+   "text": "A quiet tongue never started a quarrel.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.after-deed.05",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@father_walsh",
+   "delivery": "hushed",
+   "words": 7
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.after-deed.06",
+   "situation": "after_deed",
+   "text": "I'll not carry this about. Not here.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.after-deed.06",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@father_walsh",
+   "delivery": "hushed",
+   "words": 7
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.after-deed.07",
+   "situation": "after_deed",
+   "text": "We'll pray on it, and then we'll see.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.after-deed.07",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@father_walsh",
+   "delivery": "hushed",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.after-deed.08",
+   "situation": "after_deed",
+   "text": "Speak low. The street has ears.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.after-deed.08",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@father_walsh",
+   "delivery": "hushed",
+   "words": 6
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.way.01",
+   "situation": "asked_way",
+   "text": "I'm sorry, son. I've only ever walked the parish.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.way.01",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@father_walsh",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.way.02",
+   "situation": "asked_way",
+   "text": "Try the cab office, son. A map on every wall.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.way.02",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@father_walsh",
+   "delivery": "normal",
+   "words": 10
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.way.03",
+   "situation": "asked_way",
+   "text": "It's beyond my parish, I'm afraid.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.way.03",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@father_walsh",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.way.04",
+   "situation": "asked_way",
+   "text": "I'd take you myself, but I've a call to make.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.way.04",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@father_walsh",
+   "delivery": "normal",
+   "words": 10
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.way.05",
+   "situation": "asked_way",
+   "text": "Try the newsagent's. They know everyone's road.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.way.05",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@father_walsh",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.way.06",
+   "situation": "asked_way",
+   "text": "God forgive me, I'd only send you wrong.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.way.06",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.way.07",
+   "situation": "asked_way",
+   "text": "Is it near the chapel? Then I know.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.way.07",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@father_walsh",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.way.08",
+   "situation": "asked_way",
+   "text": "The woman on the radio at Mickey's knows every road.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.way.08",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@father_walsh",
+   "delivery": "normal",
+   "words": 10
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.farewell.01",
+   "situation": "farewell",
+   "text": "God keep you.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.farewell.01",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@father_walsh",
+   "delivery": "normal",
+   "words": 3
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.farewell.02",
+   "situation": "farewell",
+   "text": "Go in peace, son.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.farewell.02",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@father_walsh",
+   "delivery": "normal",
+   "words": 4
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.farewell.03",
+   "situation": "farewell",
+   "text": "Go carefully.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.farewell.03",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@father_walsh",
+   "delivery": "normal",
+   "words": 2
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.farewell.04",
+   "situation": "farewell",
+   "text": "My door's open. Remember that.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.farewell.04",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@father_walsh",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.farewell.05",
+   "situation": "farewell",
+   "text": "God bless, now.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.farewell.05",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@father_walsh",
+   "delivery": "normal",
+   "words": 3
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.farewell.06",
+   "situation": "farewell",
+   "text": "Walk safe, son.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.farewell.06",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@father_walsh",
+   "delivery": "normal",
+   "words": 3
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.farewell.07",
+   "situation": "farewell",
+   "text": "Mind the wet, now.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.farewell.07",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "farewell@father_walsh",
+   "delivery": "normal",
+   "words": 4
+  },
+  {
+   "who": "brendan_walsh",
+   "once": "day",
+   "id": "father_walsh.farewell.08",
+   "situation": "farewell",
+   "text": "Mind the dark, son. God keep you.",
+   "src": "production/cloud-week/lines/lines.json father_walsh.farewell.08",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {
+    "time": [
+     "night"
+    ]
+   },
+   "weight": 2,
+   "group": "farewell@father_walsh",
+   "delivery": "normal",
+   "words": 7
+  }
+ ]
+}

@@ -1,0 +1,1883 @@
+{
+ "file": "lines/own-darren_milner.json",
+ "version": "wave2-2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "people/darren_milner.json (card: who, speak)",
+  "production/cloud-week/lines/lines.json (the bank's own lines for this person)"
+ ],
+ "open_points": [],
+ "note": "Darren Milner's own street lines: once a day each (3.6.3). 60 needed, 93 written.",
+ "lines": [
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.greet-nowak.01",
+   "situation": "greeting.nowak",
+   "text": "Nowak, mate! Need anything? Anything at all?",
+   "src": "production/cloud-week/lines/lines.json darren.greet-nowak.01",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@darren",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.greet-nowak.02",
+   "situation": "greeting.nowak",
+   "text": "Morning, Mr Nowak. Tell me it's a good one.",
+   "src": "production/cloud-week/lines/lines.json darren.greet-nowak.02",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ],
+    "time": [
+     "morning"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@darren",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.greet-nowak.03",
+   "situation": "greeting.nowak",
+   "text": "Nowak. I've a mate who does cheap radios. Interested?",
+   "src": "production/cloud-week/lines/lines.json darren.greet-nowak.03",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@darren",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.greet-nowak.04",
+   "situation": "greeting.nowak",
+   "text": "Mr Nowak. Want a guide? I know every doorway.",
+   "src": "production/cloud-week/lines/lines.json darren.greet-nowak.04",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@darren",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.greet-nowak.05",
+   "situation": "greeting.nowak",
+   "text": "Nowak! Ask me who lives where. Go on.",
+   "src": "production/cloud-week/lines/lines.json darren.greet-nowak.05",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@darren",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.greet-nowak.06",
+   "situation": "greeting.nowak",
+   "text": "Afternoon, Nowak. Anything you're after, I'm your man.",
+   "src": "production/cloud-week/lines/lines.json darren.greet-nowak.06",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ],
+    "time": [
+     "afternoon"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@darren",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.greet-nowak.07",
+   "situation": "greeting.nowak",
+   "text": "Evening, Mr Nowak. My pager's quiet, which worries me.",
+   "src": "production/cloud-week/lines/lines.json darren.greet-nowak.07",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ],
+    "time": [
+     "evening"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@darren",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.greet-nowak.08",
+   "situation": "greeting.nowak",
+   "text": "Nowak, you'll drown. Get in here.",
+   "src": "production/cloud-week/lines/lines.json darren.greet-nowak.08",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ],
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@darren",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.greet-nowak.09",
+   "situation": "greeting.nowak",
+   "text": "Nowak, mate! Walk with me. I've news.",
+   "src": "production/cloud-week/lines/lines.json darren.greet-nowak.09",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@darren",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.greet-nowak.10",
+   "situation": "greeting.nowak",
+   "text": "Nowak. Whatever you need, I know a bloke.",
+   "src": "production/cloud-week/lines/lines.json darren.greet-nowak.10",
+   "tokens": [],
+   "bank": "greeting/nowak",
+   "context": "greeting",
+   "rung": "nowak",
+   "conditions": {
+    "standing": [
+     "nowak"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/nowak@darren",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.greet-frank.01",
+   "situation": "greeting.frank",
+   "text": "Frank! Brilliant. Walk with me.",
+   "src": "production/cloud-week/lines/lines.json darren.greet-tom.01",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@darren",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.greet-frank.02",
+   "situation": "greeting.frank",
+   "text": "Morning, Frank. Don't ask where I've been.",
+   "src": "production/cloud-week/lines/lines.json darren.greet-tom.02",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ],
+    "time": [
+     "morning"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@darren",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.greet-frank.03",
+   "situation": "greeting.frank",
+   "text": "Frank, mate. I've news. Well, a rumour.",
+   "src": "production/cloud-week/lines/lines.json darren.greet-tom.03",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@darren",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.greet-frank.04",
+   "situation": "greeting.frank",
+   "text": "Frank. You owe me nothing. Yet.",
+   "src": "production/cloud-week/lines/lines.json darren.greet-tom.04",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@darren",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.greet-frank.05",
+   "situation": "greeting.frank",
+   "text": "Evening, Frank. If it's said round here, I've heard it.",
+   "src": "production/cloud-week/lines/lines.json darren.greet-tom.05",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ],
+    "time": [
+     "evening"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@darren",
+   "delivery": "normal",
+   "words": 10
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.greet-frank.06",
+   "situation": "greeting.frank",
+   "text": "Frank! Spare a minute? I've three things.",
+   "src": "production/cloud-week/lines/lines.json darren.greet-tom.06",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@darren",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.greet-frank.07",
+   "situation": "greeting.frank",
+   "text": "Frank, mate. You look like you need cheering up.",
+   "src": "production/cloud-week/lines/lines.json darren.greet-tom.07",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@darren",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.greet-frank.08",
+   "situation": "greeting.frank",
+   "text": "Frank, get in the phone box with me.",
+   "src": "production/cloud-week/lines/lines.json darren.greet-tom.08",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ],
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@darren",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.greet-frank.09",
+   "situation": "greeting.frank",
+   "text": "Frank! There he is. Got a minute for me?",
+   "src": "production/cloud-week/lines/lines.json darren.greet-tom.09",
+   "tokens": [],
+   "bank": "greeting/tom",
+   "context": "greeting",
+   "rung": "frank",
+   "conditions": {
+    "standing": [
+     "frank"
+    ]
+   },
+   "weight": 2,
+   "group": "greeting/tom@darren",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.bumped.01",
+   "situation": "bumped",
+   "text": "Oi, mate! Mind the jacket.",
+   "src": "production/cloud-week/lines/lines.json darren.bumped.01",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@darren",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.bumped.02",
+   "situation": "bumped",
+   "text": "Steady! I'm only five foot nine.",
+   "src": "production/cloud-week/lines/lines.json darren.bumped.02",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@darren",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.bumped.03",
+   "situation": "bumped",
+   "text": "Hey, hey. Mind the nylon. It's my best.",
+   "src": "production/cloud-week/lines/lines.json darren.bumped.03",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@darren",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.bumped.04",
+   "situation": "bumped",
+   "text": "Sorry, sorry. My fault. Probably.",
+   "src": "production/cloud-week/lines/lines.json darren.bumped.04",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@darren",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.bumped.05",
+   "situation": "bumped",
+   "text": "You'll be the death of me, mate.",
+   "src": "production/cloud-week/lines/lines.json darren.bumped.05",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@darren",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.bumped.06",
+   "situation": "bumped",
+   "text": "Mind out. I'd pay for that, if I'd any money.",
+   "src": "production/cloud-week/lines/lines.json darren.bumped.06",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@darren",
+   "delivery": "normal",
+   "words": 10
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.bumped.07",
+   "situation": "bumped",
+   "text": "Whoa. Nearly lost the pager.",
+   "src": "production/cloud-week/lines/lines.json darren.bumped.07",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@darren",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.bumped.08",
+   "situation": "bumped",
+   "text": "That's my toe, mate. Not for sale.",
+   "src": "production/cloud-week/lines/lines.json darren.bumped.08",
+   "tokens": [],
+   "bank": "bumped",
+   "context": "bump",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "bumped@darren",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.rain-starts.01",
+   "situation": "rain_starts",
+   "text": "Rain! Best get in a doorway. Mine's free.",
+   "src": "production/cloud-week/lines/lines.json darren.rain-starts.01",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@darren",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.rain-starts.02",
+   "situation": "rain_starts",
+   "text": "That's my cue to find a roof.",
+   "src": "production/cloud-week/lines/lines.json darren.rain-starts.02",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@darren",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.rain-starts.03",
+   "situation": "rain_starts",
+   "text": "Rain. Great. My hair will never recover.",
+   "src": "production/cloud-week/lines/lines.json darren.rain-starts.03",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@darren",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.rain-starts.04",
+   "situation": "rain_starts",
+   "text": "Here we go. Everybody's friends in the rain.",
+   "src": "production/cloud-week/lines/lines.json darren.rain-starts.04",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@darren",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.rain-starts.05",
+   "situation": "rain_starts",
+   "text": "Sky's gone and done it. I knew it would.",
+   "src": "production/cloud-week/lines/lines.json darren.rain-starts.05",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@darren",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.rain-starts.06",
+   "situation": "rain_starts",
+   "text": "Only a drizzle. My hair's a fortress.",
+   "src": "production/cloud-week/lines/lines.json darren.rain-starts.06",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@darren",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.rain-starts.07",
+   "situation": "rain_starts",
+   "text": "Spitting. Still counts as rain.",
+   "src": "production/cloud-week/lines/lines.json darren.rain-starts.07",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@darren",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.rain-starts.08",
+   "situation": "rain_starts",
+   "text": "That's me for the phone box.",
+   "src": "production/cloud-week/lines/lines.json darren.rain-starts.08",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@darren",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.rain-starts.09",
+   "situation": "rain_starts",
+   "text": "Right, everybody under cover. Not me, I've a plan.",
+   "src": "production/cloud-week/lines/lines.json darren.rain-starts.09",
+   "tokens": [],
+   "bank": "rain/starts",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "rain"
+    ],
+    "rain_began_within_s": 40
+   },
+   "weight": 2,
+   "group": "rain/starts@darren",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.in-rain.01",
+   "situation": "in_rain",
+   "text": "The phone box is the busiest place in town.",
+   "src": "production/cloud-week/lines/lines.json darren.in-rain.01",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@darren",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.in-rain.02",
+   "situation": "in_rain",
+   "text": "Everyone's got a story in the rain.",
+   "src": "production/cloud-week/lines/lines.json darren.in-rain.02",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@darren",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.in-rain.03",
+   "situation": "in_rain",
+   "text": "Nothing sells in this. Except brollies. I know a bloke.",
+   "src": "production/cloud-week/lines/lines.json darren.in-rain.03",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@darren",
+   "delivery": "normal",
+   "words": 10
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.in-rain.04",
+   "situation": "in_rain",
+   "text": "My pager's wet. I'm wet. We're both useless.",
+   "src": "production/cloud-week/lines/lines.json darren.in-rain.04",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@darren",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.in-rain.05",
+   "situation": "in_rain",
+   "text": "Look at the road. It's a mirror.",
+   "src": "production/cloud-week/lines/lines.json darren.in-rain.05",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@darren",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.in-rain.06",
+   "situation": "in_rain",
+   "text": "Drizzle. Everyone pretends it isn't raining.",
+   "src": "production/cloud-week/lines/lines.json darren.in-rain.06",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@darren",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.in-rain.07",
+   "situation": "in_rain",
+   "text": "Gets into everything, drizzle. Even deals.",
+   "src": "production/cloud-week/lines/lines.json darren.in-rain.07",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@darren",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.in-rain.08",
+   "situation": "in_rain",
+   "text": "Rain like this, everybody's got a sudden errand indoors.",
+   "src": "production/cloud-week/lines/lines.json darren.in-rain.08",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@darren",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.in-rain.09",
+   "situation": "in_rain",
+   "text": "Doorways full of men with plans.",
+   "src": "production/cloud-week/lines/lines.json darren.in-rain.09",
+   "tokens": [],
+   "bank": "rain/in",
+   "context": "rain",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "rain/in@darren",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-noise.01",
+   "situation": "crime_noise",
+   "text": "Was that glass? That was glass.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-noise.01",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@darren",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-noise.02",
+   "situation": "crime_noise",
+   "text": "That's somebody having a bad day, that.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-noise.02",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@darren",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-noise.03",
+   "situation": "crime_noise",
+   "text": "I didn't hear that. Who did?",
+   "src": "production/cloud-week/lines/lines.json darren.crime-noise.03",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@darren",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-noise.04",
+   "situation": "crime_noise",
+   "text": "Don't look at me. I was here the whole time.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-noise.04",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@darren",
+   "delivery": "normal",
+   "words": 10
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-noise.05",
+   "situation": "crime_noise",
+   "text": "That echoed. Somebody's made an entrance.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-noise.05",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@darren",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-noise.06",
+   "situation": "crime_noise",
+   "text": "I'll find out. I always find out.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-noise.06",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@darren",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-noise.07",
+   "situation": "crime_noise",
+   "text": "Too heavy for a van. That's a window.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-noise.07",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@darren",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-noise.08",
+   "situation": "crime_noise",
+   "text": "Somebody's in trouble. Not me. Hopefully.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-noise.08",
+   "tokens": [],
+   "bank": "crime/noise",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "noise"
+   },
+   "weight": 2,
+   "group": "crime/noise@darren",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-shape.01",
+   "situation": "crime_shape",
+   "text": "Somebody did a runner. Didn't catch who.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-shape.01",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@darren",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-shape.02",
+   "situation": "crime_shape",
+   "text": "A shape went past. I was looking at my pager.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-shape.02",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@darren",
+   "delivery": "normal",
+   "words": 10
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-shape.03",
+   "situation": "crime_shape",
+   "text": "I saw something. I'd not say what.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-shape.03",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@darren",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-shape.04",
+   "situation": "crime_shape",
+   "text": "Somebody ran. Quick, too. Quicker than me.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-shape.04",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@darren",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-shape.05",
+   "situation": "crime_shape",
+   "text": "A figure, mate. That's all. Honest.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-shape.05",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@darren",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-shape.06",
+   "situation": "crime_shape",
+   "text": "Something shot past the phone box.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-shape.06",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@darren",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-shape.07",
+   "situation": "crime_shape",
+   "text": "I might have seen. I might not.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-shape.07",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@darren",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-shape.08",
+   "situation": "crime_shape",
+   "text": "A blur and a draught. Nothing you could frame.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-shape.08",
+   "tokens": [],
+   "bank": "crime/shape",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "shape"
+   },
+   "weight": 2,
+   "group": "crime/shape@darren",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-face.01",
+   "situation": "crime_face",
+   "text": "I'd a front-row seat, mate. Saw the face.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-face.01",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@darren",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-face.02",
+   "situation": "crime_face",
+   "text": "Oi, you! Nice face. I'll remember it!",
+   "src": "production/cloud-week/lines/lines.json darren.crime-face.02",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@darren",
+   "delivery": "raised",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-face.03",
+   "situation": "crime_face",
+   "text": "Name? No. Face? Filed under later.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-face.03",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@darren",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-face.04",
+   "situation": "crime_face",
+   "text": "I'd know that face in the dark. Handy.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-face.04",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@darren",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-face.05",
+   "situation": "crime_face",
+   "text": "We looked right at each other. Neither of us liked it.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-face.05",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@darren",
+   "delivery": "normal",
+   "words": 11
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-face.06",
+   "situation": "crime_face",
+   "text": "That face is worth something. I'm not saying what.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-face.06",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@darren",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-face.07",
+   "situation": "crime_face",
+   "text": "Seen the face. Keeping it for now.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-face.07",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@darren",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.crime-face.08",
+   "situation": "crime_face",
+   "text": "Face I'll not forget. Not for a price.",
+   "src": "production/cloud-week/lines/lines.json darren.crime-face.08",
+   "tokens": [],
+   "bank": "crime/face",
+   "context": "crime",
+   "rung": "any",
+   "conditions": {
+    "sure": "face"
+   },
+   "weight": 2,
+   "group": "crime/face@darren",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.after-deed.01",
+   "situation": "after_deed",
+   "text": "Quiet, mate. Ears everywhere.",
+   "src": "production/cloud-week/lines/lines.json darren.after-deed.01",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@darren",
+   "delivery": "hushed",
+   "words": 4
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.after-deed.02",
+   "situation": "after_deed",
+   "text": "I'm not saying a word. Not for free, anyway.",
+   "src": "production/cloud-week/lines/lines.json darren.after-deed.02",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@darren",
+   "delivery": "hushed",
+   "words": 9
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.after-deed.03",
+   "situation": "after_deed",
+   "text": "Come away. Nothing to see here.",
+   "src": "production/cloud-week/lines/lines.json darren.after-deed.03",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@darren",
+   "delivery": "hushed",
+   "words": 6
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.after-deed.04",
+   "situation": "after_deed",
+   "text": "Best walk. Casual. Don't look back.",
+   "src": "production/cloud-week/lines/lines.json darren.after-deed.04",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@darren",
+   "delivery": "hushed",
+   "words": 6
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.after-deed.05",
+   "situation": "after_deed",
+   "text": "I'll ask around. Quietly.",
+   "src": "production/cloud-week/lines/lines.json darren.after-deed.05",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@darren",
+   "delivery": "hushed",
+   "words": 4
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.after-deed.06",
+   "situation": "after_deed",
+   "text": "Somebody'll sell it. Not me. Not today.",
+   "src": "production/cloud-week/lines/lines.json darren.after-deed.06",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@darren",
+   "delivery": "hushed",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.after-deed.07",
+   "situation": "after_deed",
+   "text": "Say nothing, hear everything. That's me.",
+   "src": "production/cloud-week/lines/lines.json darren.after-deed.07",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@darren",
+   "delivery": "hushed",
+   "words": 6
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.after-deed.08",
+   "situation": "after_deed",
+   "text": "Hush. Even the lamp posts are listening.",
+   "src": "production/cloud-week/lines/lines.json darren.after-deed.08",
+   "tokens": [],
+   "bank": "deed/after",
+   "context": "deed",
+   "rung": "any",
+   "conditions": {
+    "since_deed_s": [
+     0,
+     3600
+    ]
+   },
+   "weight": 2,
+   "group": "deed/after@darren",
+   "delivery": "hushed",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.way.01",
+   "situation": "asked_way",
+   "text": "Don't know it, mate. But I know a bloke who does.",
+   "src": "production/cloud-week/lines/lines.json darren.way.01",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@darren",
+   "delivery": "normal",
+   "words": 11
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.way.02",
+   "situation": "asked_way",
+   "text": "Try the phone box. It's got a directory. Probably.",
+   "src": "production/cloud-week/lines/lines.json darren.way.02",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@darren",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.way.03",
+   "situation": "asked_way",
+   "text": "I could find it. It'd cost a tenner.",
+   "src": "production/cloud-week/lines/lines.json darren.way.03",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@darren",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.way.04",
+   "situation": "asked_way",
+   "text": "Nobody goes that way. Nothing to buy.",
+   "src": "production/cloud-week/lines/lines.json darren.way.04",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@darren",
+   "delivery": "normal",
+   "words": 7
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.way.05",
+   "situation": "asked_way",
+   "text": "Left, right, left. Or don't.",
+   "src": "production/cloud-week/lines/lines.json darren.way.05",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@darren",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.way.06",
+   "situation": "asked_way",
+   "text": "I'd show you, but my pager's gone off. Probably.",
+   "src": "production/cloud-week/lines/lines.json darren.way.06",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@darren",
+   "delivery": "normal",
+   "words": 9
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.way.07",
+   "situation": "asked_way",
+   "text": "Honestly, I'd only guess. I'm good at guessing.",
+   "src": "production/cloud-week/lines/lines.json darren.way.07",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@darren",
+   "delivery": "normal",
+   "words": 8
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.way.08",
+   "situation": "asked_way",
+   "text": "Ask the cab office. They know. Say Darren sent you.",
+   "src": "production/cloud-week/lines/lines.json darren.way.08",
+   "tokens": [],
+   "bank": "way/ask",
+   "context": "way",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "way/ask@darren",
+   "delivery": "normal",
+   "words": 10
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.farewell.01",
+   "situation": "farewell",
+   "text": "Catch you later, mate.",
+   "src": "production/cloud-week/lines/lines.json darren.farewell.01",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@darren",
+   "delivery": "normal",
+   "words": 4
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.farewell.02",
+   "situation": "farewell",
+   "text": "Don't do anything I wouldn't.",
+   "src": "production/cloud-week/lines/lines.json darren.farewell.02",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@darren",
+   "delivery": "normal",
+   "words": 5
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.farewell.03",
+   "situation": "farewell",
+   "text": "Stay lucky.",
+   "src": "production/cloud-week/lines/lines.json darren.farewell.03",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@darren",
+   "delivery": "normal",
+   "words": 2
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.farewell.04",
+   "situation": "farewell",
+   "text": "I'll be around. I'm always around.",
+   "src": "production/cloud-week/lines/lines.json darren.farewell.04",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@darren",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.farewell.05",
+   "situation": "farewell",
+   "text": "Right, I'm off. Somebody owes me.",
+   "src": "production/cloud-week/lines/lines.json darren.farewell.05",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@darren",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.farewell.06",
+   "situation": "farewell",
+   "text": "Stay dry, mate.",
+   "src": "production/cloud-week/lines/lines.json darren.farewell.06",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {
+    "weather": [
+     "drizzle",
+     "rain"
+    ]
+   },
+   "weight": 2,
+   "group": "farewell@darren",
+   "delivery": "normal",
+   "words": 3
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.farewell.07",
+   "situation": "farewell",
+   "text": "Don't hang about in the dark.",
+   "src": "production/cloud-week/lines/lines.json darren.farewell.07",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {
+    "time": [
+     "night"
+    ]
+   },
+   "weight": 2,
+   "group": "farewell@darren",
+   "delivery": "normal",
+   "words": 6
+  },
+  {
+   "who": "darren_milner",
+   "once": "day",
+   "id": "darren.farewell.08",
+   "situation": "farewell",
+   "text": "You'll see me. Everybody does.",
+   "src": "production/cloud-week/lines/lines.json darren.farewell.08",
+   "tokens": [],
+   "bank": "farewell",
+   "context": "farewell",
+   "rung": "any",
+   "conditions": {},
+   "weight": 2,
+   "group": "farewell@darren",
+   "delivery": "normal",
+   "words": 5
+  }
+ ]
+}

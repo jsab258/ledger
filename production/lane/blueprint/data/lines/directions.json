@@ -1,0 +1,1840 @@
+{
+ "file": "lines/directions.json",
+ "version": "wave2-2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "map.json landmarks (16) and foot-only ways",
+  "BLUEPRINT-01 GV-03"
+ ],
+ "open_points": [
+  "The chase picker that chooses the landmark on the route ahead is the one-shot's (the route is map.json's driving graph); these are the words only.",
+  "Ron's three-beat lines are written once per landmark here; his own-line voice for the rest is TO WRITE in own-ron_kirby.json."
+ ],
+ "note": "Landmark direction lines: whoever rides with Frank says the way by landmark (no marker). 'passenger' means Ron, a crewman or a fare who knows the town; Ron's own form is the three-beat one. once never: these repeat by design and are chosen so the landmark named is on the route ahead. At least one a 20 s of chase (GV-03).",
+ "lines": [
+  {
+   "id": "way.mickeys.01",
+   "who": "ron_kirby",
+   "situation": "direction.way",
+   "text": "Coming up on Mickey's. That's Mickey's. Leaving Mickey's.",
+   "once": "never",
+   "tokens": [
+    "lm_mickeys"
+   ],
+   "landmark": "lm_mickeys",
+   "said_as": "the cab office at the bottom of Quay Street",
+   "src": "GV-03; map.json landmarks lm_mickeys (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.mickeys.02",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Left after Mickey's.",
+   "once": "never",
+   "tokens": [
+    "lm_mickeys"
+   ],
+   "landmark": "lm_mickeys",
+   "said_as": "the cab office at the bottom of Quay Street",
+   "src": "GV-03; map.json landmarks lm_mickeys (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 3
+  },
+  {
+   "id": "way.mickeys.03",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Right at Mickey's.",
+   "once": "never",
+   "tokens": [
+    "lm_mickeys"
+   ],
+   "landmark": "lm_mickeys",
+   "said_as": "the cab office at the bottom of Quay Street",
+   "src": "GV-03; map.json landmarks lm_mickeys (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 3
+  },
+  {
+   "id": "way.mickeys.04",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Straight on past Mickey's.",
+   "once": "never",
+   "tokens": [
+    "lm_mickeys"
+   ],
+   "landmark": "lm_mickeys",
+   "said_as": "the cab office at the bottom of Quay Street",
+   "src": "GV-03; map.json landmarks lm_mickeys (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 4
+  },
+  {
+   "id": "way.mickeys.05",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Mickey's on your left. Keep going.",
+   "once": "never",
+   "tokens": [
+    "lm_mickeys"
+   ],
+   "landmark": "lm_mickeys",
+   "said_as": "the cab office at the bottom of Quay Street",
+   "src": "GV-03; map.json landmarks lm_mickeys (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.mickeys.06",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Next one after Mickey's, sharp left.",
+   "once": "never",
+   "tokens": [
+    "lm_mickeys"
+   ],
+   "landmark": "lm_mickeys",
+   "said_as": "the cab office at the bottom of Quay Street",
+   "src": "GV-03; map.json landmarks lm_mickeys (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.mickeys.07",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Down by Mickey's. He'll lose you there.",
+   "once": "never",
+   "tokens": [
+    "lm_mickeys"
+   ],
+   "landmark": "lm_mickeys",
+   "said_as": "the cab office at the bottom of Quay Street",
+   "src": "GV-03; map.json landmarks lm_mickeys (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 7
+  },
+  {
+   "id": "way.mickeys.08",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Turn here, before Mickey's.",
+   "once": "never",
+   "tokens": [
+    "lm_mickeys"
+   ],
+   "landmark": "lm_mickeys",
+   "said_as": "the cab office at the bottom of Quay Street",
+   "src": "GV-03; map.json landmarks lm_mickeys (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 4
+  },
+  {
+   "id": "way.chapel.01",
+   "who": "ron_kirby",
+   "situation": "direction.way",
+   "text": "Coming up on the chapel. That's the chapel. Leaving the chapel.",
+   "once": "never",
+   "tokens": [
+    "lm_chapel"
+   ],
+   "landmark": "lm_chapel",
+   "said_as": "the chapel on Chapel Lane, the green door",
+   "src": "GV-03; map.json landmarks lm_chapel (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 11
+  },
+  {
+   "id": "way.chapel.02",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Left after the chapel.",
+   "once": "never",
+   "tokens": [
+    "lm_chapel"
+   ],
+   "landmark": "lm_chapel",
+   "said_as": "the chapel on Chapel Lane, the green door",
+   "src": "GV-03; map.json landmarks lm_chapel (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 4
+  },
+  {
+   "id": "way.chapel.03",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Right at the chapel.",
+   "once": "never",
+   "tokens": [
+    "lm_chapel"
+   ],
+   "landmark": "lm_chapel",
+   "said_as": "the chapel on Chapel Lane, the green door",
+   "src": "GV-03; map.json landmarks lm_chapel (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 4
+  },
+  {
+   "id": "way.chapel.04",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Straight on past the chapel.",
+   "once": "never",
+   "tokens": [
+    "lm_chapel"
+   ],
+   "landmark": "lm_chapel",
+   "said_as": "the chapel on Chapel Lane, the green door",
+   "src": "GV-03; map.json landmarks lm_chapel (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.chapel.05",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "The chapel on your left. Keep going.",
+   "once": "never",
+   "tokens": [
+    "lm_chapel"
+   ],
+   "landmark": "lm_chapel",
+   "said_as": "the chapel on Chapel Lane, the green door",
+   "src": "GV-03; map.json landmarks lm_chapel (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 7
+  },
+  {
+   "id": "way.chapel.06",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Next one after the chapel, sharp left.",
+   "once": "never",
+   "tokens": [
+    "lm_chapel"
+   ],
+   "landmark": "lm_chapel",
+   "said_as": "the chapel on Chapel Lane, the green door",
+   "src": "GV-03; map.json landmarks lm_chapel (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 7
+  },
+  {
+   "id": "way.chapel.07",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Down by the chapel. He'll lose you there.",
+   "once": "never",
+   "tokens": [
+    "lm_chapel"
+   ],
+   "landmark": "lm_chapel",
+   "said_as": "the chapel on Chapel Lane, the green door",
+   "src": "GV-03; map.json landmarks lm_chapel (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.chapel.08",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Turn here, before the chapel.",
+   "once": "never",
+   "tokens": [
+    "lm_chapel"
+   ],
+   "landmark": "lm_chapel",
+   "said_as": "the chapel on Chapel Lane, the green door",
+   "src": "GV-03; map.json landmarks lm_chapel (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.caff.01",
+   "who": "ron_kirby",
+   "situation": "direction.way",
+   "text": "Coming up on Rinaldi's. That's Rinaldi's. Leaving Rinaldi's.",
+   "once": "never",
+   "tokens": [
+    "lm_caff"
+   ],
+   "landmark": "lm_caff",
+   "said_as": "the caff on the quay by the ginnel, steam on the glass",
+   "src": "GV-03; map.json landmarks lm_caff (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.caff.02",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Left after Rinaldi's.",
+   "once": "never",
+   "tokens": [
+    "lm_caff"
+   ],
+   "landmark": "lm_caff",
+   "said_as": "the caff on the quay by the ginnel, steam on the glass",
+   "src": "GV-03; map.json landmarks lm_caff (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 3
+  },
+  {
+   "id": "way.caff.03",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Right at Rinaldi's.",
+   "once": "never",
+   "tokens": [
+    "lm_caff"
+   ],
+   "landmark": "lm_caff",
+   "said_as": "the caff on the quay by the ginnel, steam on the glass",
+   "src": "GV-03; map.json landmarks lm_caff (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 3
+  },
+  {
+   "id": "way.caff.04",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Straight on past Rinaldi's.",
+   "once": "never",
+   "tokens": [
+    "lm_caff"
+   ],
+   "landmark": "lm_caff",
+   "said_as": "the caff on the quay by the ginnel, steam on the glass",
+   "src": "GV-03; map.json landmarks lm_caff (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 4
+  },
+  {
+   "id": "way.caff.05",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Rinaldi's on your left. Keep going.",
+   "once": "never",
+   "tokens": [
+    "lm_caff"
+   ],
+   "landmark": "lm_caff",
+   "said_as": "the caff on the quay by the ginnel, steam on the glass",
+   "src": "GV-03; map.json landmarks lm_caff (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.caff.06",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Next one after Rinaldi's, sharp left.",
+   "once": "never",
+   "tokens": [
+    "lm_caff"
+   ],
+   "landmark": "lm_caff",
+   "said_as": "the caff on the quay by the ginnel, steam on the glass",
+   "src": "GV-03; map.json landmarks lm_caff (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.caff.07",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Down by Rinaldi's. He'll lose you there.",
+   "once": "never",
+   "tokens": [
+    "lm_caff"
+   ],
+   "landmark": "lm_caff",
+   "said_as": "the caff on the quay by the ginnel, steam on the glass",
+   "src": "GV-03; map.json landmarks lm_caff (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 7
+  },
+  {
+   "id": "way.caff.08",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Turn here, before Rinaldi's.",
+   "once": "never",
+   "tokens": [
+    "lm_caff"
+   ],
+   "landmark": "lm_caff",
+   "said_as": "the caff on the quay by the ginnel, steam on the glass",
+   "src": "GV-03; map.json landmarks lm_caff (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 4
+  },
+  {
+   "id": "way.cold_stores.01",
+   "who": "ron_kirby",
+   "situation": "direction.way",
+   "text": "Coming up on the cold stores. That's the cold stores. Leaving the cold stores.",
+   "once": "never",
+   "tokens": [
+    "lm_cold_stores"
+   ],
+   "landmark": "lm_cold_stores",
+   "said_as": "the big grey shed on Cold Store Road",
+   "src": "GV-03; map.json landmarks lm_cold_stores (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 14
+  },
+  {
+   "id": "way.cold_stores.02",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Left after the cold stores.",
+   "once": "never",
+   "tokens": [
+    "lm_cold_stores"
+   ],
+   "landmark": "lm_cold_stores",
+   "said_as": "the big grey shed on Cold Store Road",
+   "src": "GV-03; map.json landmarks lm_cold_stores (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.cold_stores.03",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Right at the cold stores.",
+   "once": "never",
+   "tokens": [
+    "lm_cold_stores"
+   ],
+   "landmark": "lm_cold_stores",
+   "said_as": "the big grey shed on Cold Store Road",
+   "src": "GV-03; map.json landmarks lm_cold_stores (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.cold_stores.04",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Straight on past the cold stores.",
+   "once": "never",
+   "tokens": [
+    "lm_cold_stores"
+   ],
+   "landmark": "lm_cold_stores",
+   "said_as": "the big grey shed on Cold Store Road",
+   "src": "GV-03; map.json landmarks lm_cold_stores (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.cold_stores.05",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "The cold stores on your left. Keep going.",
+   "once": "never",
+   "tokens": [
+    "lm_cold_stores"
+   ],
+   "landmark": "lm_cold_stores",
+   "said_as": "the big grey shed on Cold Store Road",
+   "src": "GV-03; map.json landmarks lm_cold_stores (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.cold_stores.06",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Next one after the cold stores, sharp left.",
+   "once": "never",
+   "tokens": [
+    "lm_cold_stores"
+   ],
+   "landmark": "lm_cold_stores",
+   "said_as": "the big grey shed on Cold Store Road",
+   "src": "GV-03; map.json landmarks lm_cold_stores (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.cold_stores.07",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Down by the cold stores. He'll lose you there.",
+   "once": "never",
+   "tokens": [
+    "lm_cold_stores"
+   ],
+   "landmark": "lm_cold_stores",
+   "said_as": "the big grey shed on Cold Store Road",
+   "src": "GV-03; map.json landmarks lm_cold_stores (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 9
+  },
+  {
+   "id": "way.cold_stores.08",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Turn here, before the cold stores.",
+   "once": "never",
+   "tokens": [
+    "lm_cold_stores"
+   ],
+   "landmark": "lm_cold_stores",
+   "said_as": "the big grey shed on Cold Store Road",
+   "src": "GV-03; map.json landmarks lm_cold_stores (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.dock_gate.01",
+   "who": "ron_kirby",
+   "situation": "direction.way",
+   "text": "Coming up on the dock gate. That's the dock gate. Leaving the dock gate.",
+   "once": "never",
+   "tokens": [
+    "lm_dock_gate"
+   ],
+   "landmark": "lm_dock_gate",
+   "said_as": "the gate with the hut and the striped pole",
+   "src": "GV-03; map.json landmarks lm_dock_gate (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 14
+  },
+  {
+   "id": "way.dock_gate.02",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Left after the dock gate.",
+   "once": "never",
+   "tokens": [
+    "lm_dock_gate"
+   ],
+   "landmark": "lm_dock_gate",
+   "said_as": "the gate with the hut and the striped pole",
+   "src": "GV-03; map.json landmarks lm_dock_gate (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.dock_gate.03",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Right at the dock gate.",
+   "once": "never",
+   "tokens": [
+    "lm_dock_gate"
+   ],
+   "landmark": "lm_dock_gate",
+   "said_as": "the gate with the hut and the striped pole",
+   "src": "GV-03; map.json landmarks lm_dock_gate (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.dock_gate.04",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Straight on past the dock gate.",
+   "once": "never",
+   "tokens": [
+    "lm_dock_gate"
+   ],
+   "landmark": "lm_dock_gate",
+   "said_as": "the gate with the hut and the striped pole",
+   "src": "GV-03; map.json landmarks lm_dock_gate (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.dock_gate.05",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "The dock gate on your left. Keep going.",
+   "once": "never",
+   "tokens": [
+    "lm_dock_gate"
+   ],
+   "landmark": "lm_dock_gate",
+   "said_as": "the gate with the hut and the striped pole",
+   "src": "GV-03; map.json landmarks lm_dock_gate (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.dock_gate.06",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Next one after the dock gate, sharp left.",
+   "once": "never",
+   "tokens": [
+    "lm_dock_gate"
+   ],
+   "landmark": "lm_dock_gate",
+   "said_as": "the gate with the hut and the striped pole",
+   "src": "GV-03; map.json landmarks lm_dock_gate (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.dock_gate.07",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Down by the dock gate. He'll lose you there.",
+   "once": "never",
+   "tokens": [
+    "lm_dock_gate"
+   ],
+   "landmark": "lm_dock_gate",
+   "said_as": "the gate with the hut and the striped pole",
+   "src": "GV-03; map.json landmarks lm_dock_gate (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 9
+  },
+  {
+   "id": "way.dock_gate.08",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Turn here, before the dock gate.",
+   "once": "never",
+   "tokens": [
+    "lm_dock_gate"
+   ],
+   "landmark": "lm_dock_gate",
+   "said_as": "the gate with the hut and the striped pole",
+   "src": "GV-03; map.json landmarks lm_dock_gate (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.ferry_landing.01",
+   "who": "ron_kirby",
+   "situation": "direction.way",
+   "text": "Coming up on the ferry landing. That's the ferry landing. Leaving the ferry landing.",
+   "once": "never",
+   "tokens": [
+    "lm_ferry_landing"
+   ],
+   "landmark": "lm_ferry_landing",
+   "said_as": "the landing at the west end of the quay",
+   "src": "GV-03; map.json landmarks lm_ferry_landing (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 14
+  },
+  {
+   "id": "way.ferry_landing.02",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Left after the ferry landing.",
+   "once": "never",
+   "tokens": [
+    "lm_ferry_landing"
+   ],
+   "landmark": "lm_ferry_landing",
+   "said_as": "the landing at the west end of the quay",
+   "src": "GV-03; map.json landmarks lm_ferry_landing (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.ferry_landing.03",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Right at the ferry landing.",
+   "once": "never",
+   "tokens": [
+    "lm_ferry_landing"
+   ],
+   "landmark": "lm_ferry_landing",
+   "said_as": "the landing at the west end of the quay",
+   "src": "GV-03; map.json landmarks lm_ferry_landing (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.ferry_landing.04",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Straight on past the ferry landing.",
+   "once": "never",
+   "tokens": [
+    "lm_ferry_landing"
+   ],
+   "landmark": "lm_ferry_landing",
+   "said_as": "the landing at the west end of the quay",
+   "src": "GV-03; map.json landmarks lm_ferry_landing (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.ferry_landing.05",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "The ferry landing on your left. Keep going.",
+   "once": "never",
+   "tokens": [
+    "lm_ferry_landing"
+   ],
+   "landmark": "lm_ferry_landing",
+   "said_as": "the landing at the west end of the quay",
+   "src": "GV-03; map.json landmarks lm_ferry_landing (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.ferry_landing.06",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Next one after the ferry landing, sharp left.",
+   "once": "never",
+   "tokens": [
+    "lm_ferry_landing"
+   ],
+   "landmark": "lm_ferry_landing",
+   "said_as": "the landing at the west end of the quay",
+   "src": "GV-03; map.json landmarks lm_ferry_landing (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.ferry_landing.07",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Down by the ferry landing. He'll lose you there.",
+   "once": "never",
+   "tokens": [
+    "lm_ferry_landing"
+   ],
+   "landmark": "lm_ferry_landing",
+   "said_as": "the landing at the west end of the quay",
+   "src": "GV-03; map.json landmarks lm_ferry_landing (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 9
+  },
+  {
+   "id": "way.ferry_landing.08",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Turn here, before the ferry landing.",
+   "once": "never",
+   "tokens": [
+    "lm_ferry_landing"
+   ],
+   "landmark": "lm_ferry_landing",
+   "said_as": "the landing at the west end of the quay",
+   "src": "GV-03; map.json landmarks lm_ferry_landing (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.basin_bridge.01",
+   "who": "ron_kirby",
+   "situation": "direction.way",
+   "text": "Coming up on the basin bridge. That's the basin bridge. Leaving the basin bridge.",
+   "once": "never",
+   "tokens": [
+    "lm_basin_bridge"
+   ],
+   "landmark": "lm_basin_bridge",
+   "said_as": "the bridge over the Old Basin",
+   "src": "GV-03; map.json landmarks lm_basin_bridge (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 14
+  },
+  {
+   "id": "way.basin_bridge.02",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Left after the basin bridge.",
+   "once": "never",
+   "tokens": [
+    "lm_basin_bridge"
+   ],
+   "landmark": "lm_basin_bridge",
+   "said_as": "the bridge over the Old Basin",
+   "src": "GV-03; map.json landmarks lm_basin_bridge (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.basin_bridge.03",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Right at the basin bridge.",
+   "once": "never",
+   "tokens": [
+    "lm_basin_bridge"
+   ],
+   "landmark": "lm_basin_bridge",
+   "said_as": "the bridge over the Old Basin",
+   "src": "GV-03; map.json landmarks lm_basin_bridge (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.basin_bridge.04",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Straight on past the basin bridge.",
+   "once": "never",
+   "tokens": [
+    "lm_basin_bridge"
+   ],
+   "landmark": "lm_basin_bridge",
+   "said_as": "the bridge over the Old Basin",
+   "src": "GV-03; map.json landmarks lm_basin_bridge (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.basin_bridge.05",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "The basin bridge on your left. Keep going.",
+   "once": "never",
+   "tokens": [
+    "lm_basin_bridge"
+   ],
+   "landmark": "lm_basin_bridge",
+   "said_as": "the bridge over the Old Basin",
+   "src": "GV-03; map.json landmarks lm_basin_bridge (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.basin_bridge.06",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Next one after the basin bridge, sharp left.",
+   "once": "never",
+   "tokens": [
+    "lm_basin_bridge"
+   ],
+   "landmark": "lm_basin_bridge",
+   "said_as": "the bridge over the Old Basin",
+   "src": "GV-03; map.json landmarks lm_basin_bridge (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.basin_bridge.07",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Down by the basin bridge. He'll lose you there.",
+   "once": "never",
+   "tokens": [
+    "lm_basin_bridge"
+   ],
+   "landmark": "lm_basin_bridge",
+   "said_as": "the bridge over the Old Basin",
+   "src": "GV-03; map.json landmarks lm_basin_bridge (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 9
+  },
+  {
+   "id": "way.basin_bridge.08",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Turn here, before the basin bridge.",
+   "once": "never",
+   "tokens": [
+    "lm_basin_bridge"
+   ],
+   "landmark": "lm_basin_bridge",
+   "said_as": "the bridge over the Old Basin",
+   "src": "GV-03; map.json landmarks lm_basin_bridge (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.burned_warehouse.01",
+   "who": "ron_kirby",
+   "situation": "direction.way",
+   "text": "Coming up on the burned warehouse. That's the burned warehouse. Leaving the burned warehouse.",
+   "once": "never",
+   "tokens": [
+    "lm_burned_warehouse"
+   ],
+   "landmark": "lm_burned_warehouse",
+   "said_as": "the black shell on Basin Top",
+   "src": "GV-03; map.json landmarks lm_burned_warehouse (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 14
+  },
+  {
+   "id": "way.burned_warehouse.02",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Left after the burned warehouse.",
+   "once": "never",
+   "tokens": [
+    "lm_burned_warehouse"
+   ],
+   "landmark": "lm_burned_warehouse",
+   "said_as": "the black shell on Basin Top",
+   "src": "GV-03; map.json landmarks lm_burned_warehouse (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.burned_warehouse.03",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Right at the burned warehouse.",
+   "once": "never",
+   "tokens": [
+    "lm_burned_warehouse"
+   ],
+   "landmark": "lm_burned_warehouse",
+   "said_as": "the black shell on Basin Top",
+   "src": "GV-03; map.json landmarks lm_burned_warehouse (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.burned_warehouse.04",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Straight on past the burned warehouse.",
+   "once": "never",
+   "tokens": [
+    "lm_burned_warehouse"
+   ],
+   "landmark": "lm_burned_warehouse",
+   "said_as": "the black shell on Basin Top",
+   "src": "GV-03; map.json landmarks lm_burned_warehouse (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.burned_warehouse.05",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "The burned warehouse on your left. Keep going.",
+   "once": "never",
+   "tokens": [
+    "lm_burned_warehouse"
+   ],
+   "landmark": "lm_burned_warehouse",
+   "said_as": "the black shell on Basin Top",
+   "src": "GV-03; map.json landmarks lm_burned_warehouse (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.burned_warehouse.06",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Next one after the burned warehouse, sharp left.",
+   "once": "never",
+   "tokens": [
+    "lm_burned_warehouse"
+   ],
+   "landmark": "lm_burned_warehouse",
+   "said_as": "the black shell on Basin Top",
+   "src": "GV-03; map.json landmarks lm_burned_warehouse (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.burned_warehouse.07",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Down by the burned warehouse. He'll lose you there.",
+   "once": "never",
+   "tokens": [
+    "lm_burned_warehouse"
+   ],
+   "landmark": "lm_burned_warehouse",
+   "said_as": "the black shell on Basin Top",
+   "src": "GV-03; map.json landmarks lm_burned_warehouse (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 9
+  },
+  {
+   "id": "way.burned_warehouse.08",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Turn here, before the burned warehouse.",
+   "once": "never",
+   "tokens": [
+    "lm_burned_warehouse"
+   ],
+   "landmark": "lm_burned_warehouse",
+   "said_as": "the black shell on Basin Top",
+   "src": "GV-03; map.json landmarks lm_burned_warehouse (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.fish_dock.01",
+   "who": "ron_kirby",
+   "situation": "direction.way",
+   "text": "Coming up on the fish dock. That's the fish dock. Leaving the fish dock.",
+   "once": "never",
+   "tokens": [
+    "lm_fish_dock"
+   ],
+   "landmark": "lm_fish_dock",
+   "said_as": "the fish boxes and the ice hut at the east end of the quay",
+   "src": "GV-03; map.json landmarks lm_fish_dock (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 14
+  },
+  {
+   "id": "way.fish_dock.02",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Left after the fish dock.",
+   "once": "never",
+   "tokens": [
+    "lm_fish_dock"
+   ],
+   "landmark": "lm_fish_dock",
+   "said_as": "the fish boxes and the ice hut at the east end of the quay",
+   "src": "GV-03; map.json landmarks lm_fish_dock (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.fish_dock.03",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Right at the fish dock.",
+   "once": "never",
+   "tokens": [
+    "lm_fish_dock"
+   ],
+   "landmark": "lm_fish_dock",
+   "said_as": "the fish boxes and the ice hut at the east end of the quay",
+   "src": "GV-03; map.json landmarks lm_fish_dock (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.fish_dock.04",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Straight on past the fish dock.",
+   "once": "never",
+   "tokens": [
+    "lm_fish_dock"
+   ],
+   "landmark": "lm_fish_dock",
+   "said_as": "the fish boxes and the ice hut at the east end of the quay",
+   "src": "GV-03; map.json landmarks lm_fish_dock (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.fish_dock.05",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "The fish dock on your left. Keep going.",
+   "once": "never",
+   "tokens": [
+    "lm_fish_dock"
+   ],
+   "landmark": "lm_fish_dock",
+   "said_as": "the fish boxes and the ice hut at the east end of the quay",
+   "src": "GV-03; map.json landmarks lm_fish_dock (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.fish_dock.06",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Next one after the fish dock, sharp left.",
+   "once": "never",
+   "tokens": [
+    "lm_fish_dock"
+   ],
+   "landmark": "lm_fish_dock",
+   "said_as": "the fish boxes and the ice hut at the east end of the quay",
+   "src": "GV-03; map.json landmarks lm_fish_dock (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.fish_dock.07",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Down by the fish dock. He'll lose you there.",
+   "once": "never",
+   "tokens": [
+    "lm_fish_dock"
+   ],
+   "landmark": "lm_fish_dock",
+   "said_as": "the fish boxes and the ice hut at the east end of the quay",
+   "src": "GV-03; map.json landmarks lm_fish_dock (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 9
+  },
+  {
+   "id": "way.fish_dock.08",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Turn here, before the fish dock.",
+   "once": "never",
+   "tokens": [
+    "lm_fish_dock"
+   ],
+   "landmark": "lm_fish_dock",
+   "said_as": "the fish boxes and the ice hut at the east end of the quay",
+   "src": "GV-03; map.json landmarks lm_fish_dock (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.boxing_club.01",
+   "who": "ron_kirby",
+   "situation": "direction.way",
+   "text": "Coming up on the boxing club. That's the boxing club. Leaving the boxing club.",
+   "once": "never",
+   "tokens": [
+    "lm_boxing_club"
+   ],
+   "landmark": "lm_boxing_club",
+   "said_as": "the old hall behind the chandler's store, a bare bulb over the door",
+   "src": "GV-03; map.json landmarks lm_boxing_club (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 14
+  },
+  {
+   "id": "way.boxing_club.02",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Left after the boxing club.",
+   "once": "never",
+   "tokens": [
+    "lm_boxing_club"
+   ],
+   "landmark": "lm_boxing_club",
+   "said_as": "the old hall behind the chandler's store, a bare bulb over the door",
+   "src": "GV-03; map.json landmarks lm_boxing_club (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.boxing_club.03",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Right at the boxing club.",
+   "once": "never",
+   "tokens": [
+    "lm_boxing_club"
+   ],
+   "landmark": "lm_boxing_club",
+   "said_as": "the old hall behind the chandler's store, a bare bulb over the door",
+   "src": "GV-03; map.json landmarks lm_boxing_club (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.boxing_club.04",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Straight on past the boxing club.",
+   "once": "never",
+   "tokens": [
+    "lm_boxing_club"
+   ],
+   "landmark": "lm_boxing_club",
+   "said_as": "the old hall behind the chandler's store, a bare bulb over the door",
+   "src": "GV-03; map.json landmarks lm_boxing_club (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.boxing_club.05",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "The boxing club on your left. Keep going.",
+   "once": "never",
+   "tokens": [
+    "lm_boxing_club"
+   ],
+   "landmark": "lm_boxing_club",
+   "said_as": "the old hall behind the chandler's store, a bare bulb over the door",
+   "src": "GV-03; map.json landmarks lm_boxing_club (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.boxing_club.06",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Next one after the boxing club, sharp left.",
+   "once": "never",
+   "tokens": [
+    "lm_boxing_club"
+   ],
+   "landmark": "lm_boxing_club",
+   "said_as": "the old hall behind the chandler's store, a bare bulb over the door",
+   "src": "GV-03; map.json landmarks lm_boxing_club (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.boxing_club.07",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Down by the boxing club. He'll lose you there.",
+   "once": "never",
+   "tokens": [
+    "lm_boxing_club"
+   ],
+   "landmark": "lm_boxing_club",
+   "said_as": "the old hall behind the chandler's store, a bare bulb over the door",
+   "src": "GV-03; map.json landmarks lm_boxing_club (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 9
+  },
+  {
+   "id": "way.boxing_club.08",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Turn here, before the boxing club.",
+   "once": "never",
+   "tokens": [
+    "lm_boxing_club"
+   ],
+   "landmark": "lm_boxing_club",
+   "said_as": "the old hall behind the chandler's store, a bare bulb over the door",
+   "src": "GV-03; map.json landmarks lm_boxing_club (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.car_lot.01",
+   "who": "ron_kirby",
+   "situation": "direction.way",
+   "text": "Coming up on the car lot. That's the car lot. Leaving the car lot.",
+   "once": "never",
+   "tokens": [
+    "lm_car_lot"
+   ],
+   "landmark": "lm_car_lot",
+   "said_as": "the bunting at the top of North Road",
+   "src": "GV-03; map.json landmarks lm_car_lot (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 14
+  },
+  {
+   "id": "way.car_lot.02",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Left after the car lot.",
+   "once": "never",
+   "tokens": [
+    "lm_car_lot"
+   ],
+   "landmark": "lm_car_lot",
+   "said_as": "the bunting at the top of North Road",
+   "src": "GV-03; map.json landmarks lm_car_lot (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.car_lot.03",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Right at the car lot.",
+   "once": "never",
+   "tokens": [
+    "lm_car_lot"
+   ],
+   "landmark": "lm_car_lot",
+   "said_as": "the bunting at the top of North Road",
+   "src": "GV-03; map.json landmarks lm_car_lot (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.car_lot.04",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Straight on past the car lot.",
+   "once": "never",
+   "tokens": [
+    "lm_car_lot"
+   ],
+   "landmark": "lm_car_lot",
+   "said_as": "the bunting at the top of North Road",
+   "src": "GV-03; map.json landmarks lm_car_lot (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.car_lot.05",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "The car lot on your left. Keep going.",
+   "once": "never",
+   "tokens": [
+    "lm_car_lot"
+   ],
+   "landmark": "lm_car_lot",
+   "said_as": "the bunting at the top of North Road",
+   "src": "GV-03; map.json landmarks lm_car_lot (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.car_lot.06",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Next one after the car lot, sharp left.",
+   "once": "never",
+   "tokens": [
+    "lm_car_lot"
+   ],
+   "landmark": "lm_car_lot",
+   "said_as": "the bunting at the top of North Road",
+   "src": "GV-03; map.json landmarks lm_car_lot (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.car_lot.07",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Down by the car lot. He'll lose you there.",
+   "once": "never",
+   "tokens": [
+    "lm_car_lot"
+   ],
+   "landmark": "lm_car_lot",
+   "said_as": "the bunting at the top of North Road",
+   "src": "GV-03; map.json landmarks lm_car_lot (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 9
+  },
+  {
+   "id": "way.car_lot.08",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Turn here, before the car lot.",
+   "once": "never",
+   "tokens": [
+    "lm_car_lot"
+   ],
+   "landmark": "lm_car_lot",
+   "said_as": "the bunting at the top of North Road",
+   "src": "GV-03; map.json landmarks lm_car_lot (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.harbour_board.01",
+   "who": "ron_kirby",
+   "situation": "direction.way",
+   "text": "Coming up on the Harbour Board. That's the Harbour Board. Leaving the Harbour Board.",
+   "once": "never",
+   "tokens": [
+    "lm_harbour_board"
+   ],
+   "landmark": "lm_harbour_board",
+   "said_as": "the stone office with the clock over the door",
+   "src": "GV-03; map.json landmarks lm_harbour_board (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 14
+  },
+  {
+   "id": "way.harbour_board.02",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Left after the Harbour Board.",
+   "once": "never",
+   "tokens": [
+    "lm_harbour_board"
+   ],
+   "landmark": "lm_harbour_board",
+   "said_as": "the stone office with the clock over the door",
+   "src": "GV-03; map.json landmarks lm_harbour_board (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.harbour_board.03",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Right at the Harbour Board.",
+   "once": "never",
+   "tokens": [
+    "lm_harbour_board"
+   ],
+   "landmark": "lm_harbour_board",
+   "said_as": "the stone office with the clock over the door",
+   "src": "GV-03; map.json landmarks lm_harbour_board (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.harbour_board.04",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Straight on past the Harbour Board.",
+   "once": "never",
+   "tokens": [
+    "lm_harbour_board"
+   ],
+   "landmark": "lm_harbour_board",
+   "said_as": "the stone office with the clock over the door",
+   "src": "GV-03; map.json landmarks lm_harbour_board (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.harbour_board.05",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "The Harbour Board on your left. Keep going.",
+   "once": "never",
+   "tokens": [
+    "lm_harbour_board"
+   ],
+   "landmark": "lm_harbour_board",
+   "said_as": "the stone office with the clock over the door",
+   "src": "GV-03; map.json landmarks lm_harbour_board (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.harbour_board.06",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Next one after the Harbour Board, sharp left.",
+   "once": "never",
+   "tokens": [
+    "lm_harbour_board"
+   ],
+   "landmark": "lm_harbour_board",
+   "said_as": "the stone office with the clock over the door",
+   "src": "GV-03; map.json landmarks lm_harbour_board (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.harbour_board.07",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Down by the Harbour Board. He'll lose you there.",
+   "once": "never",
+   "tokens": [
+    "lm_harbour_board"
+   ],
+   "landmark": "lm_harbour_board",
+   "said_as": "the stone office with the clock over the door",
+   "src": "GV-03; map.json landmarks lm_harbour_board (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 9
+  },
+  {
+   "id": "way.harbour_board.08",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Turn here, before the Harbour Board.",
+   "once": "never",
+   "tokens": [
+    "lm_harbour_board"
+   ],
+   "landmark": "lm_harbour_board",
+   "said_as": "the stone office with the clock over the door",
+   "src": "GV-03; map.json landmarks lm_harbour_board (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.snooker_hall.01",
+   "who": "ron_kirby",
+   "situation": "direction.way",
+   "text": "Coming up on the snooker hall. That's the snooker hall. Leaving the snooker hall.",
+   "once": "never",
+   "tokens": [
+    "lm_snooker_hall"
+   ],
+   "landmark": "lm_snooker_hall",
+   "said_as": "upstairs on the quay, by the landing",
+   "src": "GV-03; map.json landmarks lm_snooker_hall (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 14
+  },
+  {
+   "id": "way.snooker_hall.02",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Left after the snooker hall.",
+   "once": "never",
+   "tokens": [
+    "lm_snooker_hall"
+   ],
+   "landmark": "lm_snooker_hall",
+   "said_as": "upstairs on the quay, by the landing",
+   "src": "GV-03; map.json landmarks lm_snooker_hall (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.snooker_hall.03",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Right at the snooker hall.",
+   "once": "never",
+   "tokens": [
+    "lm_snooker_hall"
+   ],
+   "landmark": "lm_snooker_hall",
+   "said_as": "upstairs on the quay, by the landing",
+   "src": "GV-03; map.json landmarks lm_snooker_hall (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.snooker_hall.04",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Straight on past the snooker hall.",
+   "once": "never",
+   "tokens": [
+    "lm_snooker_hall"
+   ],
+   "landmark": "lm_snooker_hall",
+   "said_as": "upstairs on the quay, by the landing",
+   "src": "GV-03; map.json landmarks lm_snooker_hall (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.snooker_hall.05",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "The snooker hall on your left. Keep going.",
+   "once": "never",
+   "tokens": [
+    "lm_snooker_hall"
+   ],
+   "landmark": "lm_snooker_hall",
+   "said_as": "upstairs on the quay, by the landing",
+   "src": "GV-03; map.json landmarks lm_snooker_hall (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.snooker_hall.06",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Next one after the snooker hall, sharp left.",
+   "once": "never",
+   "tokens": [
+    "lm_snooker_hall"
+   ],
+   "landmark": "lm_snooker_hall",
+   "said_as": "upstairs on the quay, by the landing",
+   "src": "GV-03; map.json landmarks lm_snooker_hall (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.snooker_hall.07",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Down by the snooker hall. He'll lose you there.",
+   "once": "never",
+   "tokens": [
+    "lm_snooker_hall"
+   ],
+   "landmark": "lm_snooker_hall",
+   "said_as": "upstairs on the quay, by the landing",
+   "src": "GV-03; map.json landmarks lm_snooker_hall (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 9
+  },
+  {
+   "id": "way.snooker_hall.08",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Turn here, before the snooker hall.",
+   "once": "never",
+   "tokens": [
+    "lm_snooker_hall"
+   ],
+   "landmark": "lm_snooker_hall",
+   "said_as": "upstairs on the quay, by the landing",
+   "src": "GV-03; map.json landmarks lm_snooker_hall (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.school.01",
+   "who": "ron_kirby",
+   "situation": "direction.way",
+   "text": "Coming up on the old school. That's the old school. Leaving the old school.",
+   "once": "never",
+   "tokens": [
+    "lm_school"
+   ],
+   "landmark": "lm_school",
+   "said_as": "the closed school on Chapel Lane, boarded",
+   "src": "GV-03; map.json landmarks lm_school (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 14
+  },
+  {
+   "id": "way.school.02",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Left after the old school.",
+   "once": "never",
+   "tokens": [
+    "lm_school"
+   ],
+   "landmark": "lm_school",
+   "said_as": "the closed school on Chapel Lane, boarded",
+   "src": "GV-03; map.json landmarks lm_school (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.school.03",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Right at the old school.",
+   "once": "never",
+   "tokens": [
+    "lm_school"
+   ],
+   "landmark": "lm_school",
+   "said_as": "the closed school on Chapel Lane, boarded",
+   "src": "GV-03; map.json landmarks lm_school (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.school.04",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Straight on past the old school.",
+   "once": "never",
+   "tokens": [
+    "lm_school"
+   ],
+   "landmark": "lm_school",
+   "said_as": "the closed school on Chapel Lane, boarded",
+   "src": "GV-03; map.json landmarks lm_school (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.school.05",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "The old school on your left. Keep going.",
+   "once": "never",
+   "tokens": [
+    "lm_school"
+   ],
+   "landmark": "lm_school",
+   "said_as": "the closed school on Chapel Lane, boarded",
+   "src": "GV-03; map.json landmarks lm_school (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.school.06",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Next one after the old school, sharp left.",
+   "once": "never",
+   "tokens": [
+    "lm_school"
+   ],
+   "landmark": "lm_school",
+   "said_as": "the closed school on Chapel Lane, boarded",
+   "src": "GV-03; map.json landmarks lm_school (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.school.07",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Down by the old school. He'll lose you there.",
+   "once": "never",
+   "tokens": [
+    "lm_school"
+   ],
+   "landmark": "lm_school",
+   "said_as": "the closed school on Chapel Lane, boarded",
+   "src": "GV-03; map.json landmarks lm_school (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 9
+  },
+  {
+   "id": "way.school.08",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Turn here, before the old school.",
+   "once": "never",
+   "tokens": [
+    "lm_school"
+   ],
+   "landmark": "lm_school",
+   "said_as": "the closed school on Chapel Lane, boarded",
+   "src": "GV-03; map.json landmarks lm_school (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.old_pub.01",
+   "who": "ron_kirby",
+   "situation": "direction.way",
+   "text": "Coming up on the boarded pub. That's the boarded pub. Leaving the boarded pub.",
+   "once": "never",
+   "tokens": [
+    "lm_old_pub"
+   ],
+   "landmark": "lm_old_pub",
+   "said_as": "the boarded-up Mariner on North Road",
+   "src": "GV-03; map.json landmarks lm_old_pub (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 14
+  },
+  {
+   "id": "way.old_pub.02",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Left after the boarded pub.",
+   "once": "never",
+   "tokens": [
+    "lm_old_pub"
+   ],
+   "landmark": "lm_old_pub",
+   "said_as": "the boarded-up Mariner on North Road",
+   "src": "GV-03; map.json landmarks lm_old_pub (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.old_pub.03",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Right at the boarded pub.",
+   "once": "never",
+   "tokens": [
+    "lm_old_pub"
+   ],
+   "landmark": "lm_old_pub",
+   "said_as": "the boarded-up Mariner on North Road",
+   "src": "GV-03; map.json landmarks lm_old_pub (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.old_pub.04",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Straight on past the boarded pub.",
+   "once": "never",
+   "tokens": [
+    "lm_old_pub"
+   ],
+   "landmark": "lm_old_pub",
+   "said_as": "the boarded-up Mariner on North Road",
+   "src": "GV-03; map.json landmarks lm_old_pub (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.old_pub.05",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "The boarded pub on your left. Keep going.",
+   "once": "never",
+   "tokens": [
+    "lm_old_pub"
+   ],
+   "landmark": "lm_old_pub",
+   "said_as": "the boarded-up Mariner on North Road",
+   "src": "GV-03; map.json landmarks lm_old_pub (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.old_pub.06",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Next one after the boarded pub, sharp left.",
+   "once": "never",
+   "tokens": [
+    "lm_old_pub"
+   ],
+   "landmark": "lm_old_pub",
+   "said_as": "the boarded-up Mariner on North Road",
+   "src": "GV-03; map.json landmarks lm_old_pub (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.old_pub.07",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Down by the boarded pub. He'll lose you there.",
+   "once": "never",
+   "tokens": [
+    "lm_old_pub"
+   ],
+   "landmark": "lm_old_pub",
+   "said_as": "the boarded-up Mariner on North Road",
+   "src": "GV-03; map.json landmarks lm_old_pub (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 9
+  },
+  {
+   "id": "way.old_pub.08",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Turn here, before the boarded pub.",
+   "once": "never",
+   "tokens": [
+    "lm_old_pub"
+   ],
+   "landmark": "lm_old_pub",
+   "said_as": "the boarded-up Mariner on North Road",
+   "src": "GV-03; map.json landmarks lm_old_pub (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.basin.01",
+   "who": "ron_kirby",
+   "situation": "direction.way",
+   "text": "Coming up on the Old Basin. That's the Old Basin. Leaving the Old Basin.",
+   "once": "never",
+   "tokens": [
+    "lm_basin"
+   ],
+   "landmark": "lm_basin",
+   "said_as": "the old dock behind the quay",
+   "src": "GV-03; map.json landmarks lm_basin (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 14
+  },
+  {
+   "id": "way.basin.02",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Left after the Old Basin.",
+   "once": "never",
+   "tokens": [
+    "lm_basin"
+   ],
+   "landmark": "lm_basin",
+   "said_as": "the old dock behind the quay",
+   "src": "GV-03; map.json landmarks lm_basin (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.basin.03",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Right at the Old Basin.",
+   "once": "never",
+   "tokens": [
+    "lm_basin"
+   ],
+   "landmark": "lm_basin",
+   "said_as": "the old dock behind the quay",
+   "src": "GV-03; map.json landmarks lm_basin (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 5
+  },
+  {
+   "id": "way.basin.04",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "Straight on past the Old Basin.",
+   "once": "never",
+   "tokens": [
+    "lm_basin"
+   ],
+   "landmark": "lm_basin",
+   "said_as": "the old dock behind the quay",
+   "src": "GV-03; map.json landmarks lm_basin (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.basin.05",
+   "who": "passenger",
+   "situation": "direction.way",
+   "text": "The Old Basin on your left. Keep going.",
+   "once": "never",
+   "tokens": [
+    "lm_basin"
+   ],
+   "landmark": "lm_basin",
+   "said_as": "the old dock behind the quay",
+   "src": "GV-03; map.json landmarks lm_basin (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.basin.06",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Next one after the Old Basin, sharp left.",
+   "once": "never",
+   "tokens": [
+    "lm_basin"
+   ],
+   "landmark": "lm_basin",
+   "said_as": "the old dock behind the quay",
+   "src": "GV-03; map.json landmarks lm_basin (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 8
+  },
+  {
+   "id": "way.basin.07",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Down by the Old Basin. He'll lose you there.",
+   "once": "never",
+   "tokens": [
+    "lm_basin"
+   ],
+   "landmark": "lm_basin",
+   "said_as": "the old dock behind the quay",
+   "src": "GV-03; map.json landmarks lm_basin (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 9
+  },
+  {
+   "id": "way.basin.08",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Turn here, before the Old Basin.",
+   "once": "never",
+   "tokens": [
+    "lm_basin"
+   ],
+   "landmark": "lm_basin",
+   "said_as": "the old dock behind the quay",
+   "src": "GV-03; map.json landmarks lm_basin (written here from the landmark's name; Ron's three-beat form is the frame's: \"Coming up on the ice house...\")",
+   "words": 6
+  },
+  {
+   "id": "way.footonly.01",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "He cannot follow you down the yards' lane in a car.",
+   "once": "never",
+   "tokens": [],
+   "src": "GV-03 (he cannot follow you through the yard); map.json foot-only ways",
+   "words": 11
+  },
+  {
+   "id": "way.footonly.02",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "The ginnel, nothing on four wheels gets through there.",
+   "once": "never",
+   "tokens": [],
+   "src": "GV-03 (he cannot follow you through the yard); map.json foot-only ways",
+   "words": 9
+  },
+  {
+   "id": "way.footonly.03",
+   "who": "passenger",
+   "situation": "direction.chase",
+   "text": "Through the gap by the quay, a car will not fit.",
+   "once": "never",
+   "tokens": [],
+   "src": "GV-03 (he cannot follow you through the yard); map.json foot-only ways",
+   "words": 11
+  }
+ ]
+}

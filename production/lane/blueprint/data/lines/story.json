@@ -1,0 +1,296 @@
+{
+ "file": "lines/story.json",
+ "version": "wave2-2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "STORY-FRAME-2026-11-26 sample lines",
+  "production/lane/story/paper/ (being written in parallel)"
+ ],
+ "open_points": [
+  "The story lane's paper (production/lane/story/paper/) had not landed when this file was made: every line here is replaced by its scenes when it does."
+ ],
+ "note": "Story-carrying lines. The words given are the frame's sample lines (not final script), kept so the one-shot has them; every bank the story needs is listed as TO WRITE for the story lane, whose scenes outrank these.",
+ "lines": [
+  {
+   "id": "story.ron.icehouse",
+   "who": "ron_kirby",
+   "situation": "story.voice",
+   "text": "Coming up on the ice house. That's the ice house. Leaving the ice house.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 (sample line, not final script: the story lane owns it)",
+   "words": 14
+  },
+  {
+   "id": "story.ron.not_you",
+   "who": "ron_kirby",
+   "situation": "story.voice",
+   "text": "I've told her nowt that isn't so. I've just not told her you.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 (sample line, not final script: the story lane owns it)",
+   "words": 13
+  },
+  {
+   "id": "story.ron.envelope",
+   "who": "ron_kirby",
+   "situation": "story.night_one",
+   "text": "Aye. Well. Envelope still wants carrying.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 (sample line, not final script: the story lane owns it)",
+   "words": 6
+  },
+  {
+   "id": "story.sheila.reference",
+   "who": "sheila_dunn",
+   "situation": "story.voice",
+   "text": "The book will hide ten pounds and four fifths of what the cars really drove. Past that I'm not keeping accounts, love, I'm writing you a reference.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 (sample line, not final script: the story lane owns it)",
+   "words": 27
+  },
+  {
+   "id": "story.sheila.you_write",
+   "who": "sheila_dunn",
+   "situation": "story.voice",
+   "text": "Thirty-one years I've written what I was told. You write this one.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 (sample line, not final script: the story lane owns it)",
+   "words": 13
+  },
+  {
+   "id": "story.sheila.the_line",
+   "who": "sheila_dunn",
+   "situation": "story.the_line",
+   "text": "Every fare goes in the book. That was Mickey's rule, and it's mine now. So. What was last night?",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 (sample line, not final script: the story lane owns it)",
+   "words": 19
+  },
+  {
+   "id": "story.sheila.habit",
+   "who": "sheila_dunn",
+   "situation": "story.the_habit",
+   "text": "Same as your first night?",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 (sample line, not final script: the story lane owns it)",
+   "words": 5
+  },
+  {
+   "id": "story.danny.motor",
+   "who": "danny_cammack",
+   "situation": "story.voice",
+   "text": "He's moved my motor. Mickey would've asked nicely for a fortnight and then said sorry.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 (sample line, not final script: the story lane owns it)",
+   "words": 15
+  },
+  {
+   "id": "story.danny.book",
+   "who": "danny_cammack",
+   "situation": "story.voice",
+   "text": "You've got the book, nephew. I am the book.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 (sample line, not final script: the story lane owns it)",
+   "words": 9
+  },
+  {
+   "id": "story.danny.park",
+   "who": "danny_cammack",
+   "situation": "story.car_two",
+   "text": "That's how you park it.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 (sample line, not final script: the story lane owns it)",
+   "words": 5
+  },
+  {
+   "id": "story.widow.short",
+   "who": "maureen_jensen",
+   "situation": "story.voice",
+   "text": "I never ask anybody for anything, Mr Nowak. I find out what they're short of.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 (sample line, not final script: the story lane owns it)",
+   "words": 15
+  },
+  {
+   "id": "story.widow.oven",
+   "who": "maureen_jensen",
+   "situation": "story.voice",
+   "text": "Sit down. It's been in the oven twice.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 (sample line, not final script: the story lane owns it)",
+   "words": 8
+  },
+  {
+   "id": "story.ellis.twice",
+   "who": "carol_ellis",
+   "situation": "story.voice",
+   "text": "I'm not asking you to remember everything. I'm asking you to remember it the same way twice.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 (sample line, not final script: the story lane owns it)",
+   "words": 17
+  },
+  {
+   "id": "story.ellis.sign",
+   "who": "carol_ellis",
+   "situation": "story.voice",
+   "text": "Somebody always saw, Mr Nowak. My trouble is finding the one who'll sign.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 (sample line, not final script: the story lane owns it)",
+   "words": 13
+  },
+  {
+   "id": "story.ellis.again",
+   "who": "carol_ellis",
+   "situation": "story.the_turn",
+   "text": "Write it again. Underneath. Same words.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 (sample line, not final script: the story lane owns it)",
+   "words": 6
+  },
+  {
+   "id": "story.ron.cells",
+   "who": "ron_kirby",
+   "situation": "story.the_night_between",
+   "text": "That you, boss? Say nowt.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 (sample line, not final script: the story lane owns it)",
+   "words": 5
+  },
+  {
+   "id": "story.ron.saying",
+   "who": "ron_kirby",
+   "situation": "story.the_night_between",
+   "text": "Saying's nowt, boss. You've a firm to stand in. I've a door.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 (sample line, not final script: the story lane owns it)",
+   "words": 12
+  },
+  {
+   "id": "story.ron.watch",
+   "who": "ron_kirby",
+   "situation": "story.the_watch",
+   "text": "Tell him it's five minutes fast. Mickey liked to be early.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 (sample line, not final script: the story lane owns it)",
+   "words": 11
+  },
+  {
+   "id": "story.ron.visit",
+   "who": "ron_kirby",
+   "situation": "story.the_visit",
+   "text": "You keep that rank going, boss. I've not sat in here for you to finish with nowt.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 (sample line, not final script: the story lane owns it)",
+   "words": 17
+  },
+  {
+   "id": "story.screeton.change",
+   "who": "neil_screeton",
+   "situation": "story.the_yard",
+   "text": "Eighty pound, Mr Nowak. I've your change here.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 (sample line, not final script: the story lane owns it)",
+   "words": 8
+  },
+  {
+   "id": "story.billany.straight",
+   "who": "mark_billany",
+   "situation": "story.the_landing",
+   "text": "That's us straight.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 (sample line, not final script: the story lane owns it)",
+   "words": 3
+  },
+  {
+   "id": "story.name_said.to_write",
+   "who": "any",
+   "situation": "story.name_said",
+   "text": "TO WRITE (story lane): Each named person's first saying of the next rung's name (the new owner, Nowak, Frank, Frankie), said to his face (7.7); the three who say Frankie: the Widow, Danny, Ron once.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26; BLUEPRINT-03",
+   "words": 34
+  },
+  {
+   "id": "story.next_want.to_write",
+   "who": "any",
+   "situation": "story.next_want",
+   "text": "TO WRITE (story lane): The Ledger's next named want in a person's own words, one per beat (STORY-FRAME 6, the next want).",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26; BLUEPRINT-03",
+   "words": 22
+  },
+  {
+   "id": "story.pauline_air.to_write",
+   "who": "pauline_kitching",
+   "situation": "story.pauline_air",
+   "text": "TO WRITE (story lane): Pauline on the air, one set per rung and per week (STORY-FRAME 1 table), and the last day's calls.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26; BLUEPRINT-03",
+   "words": 23
+  },
+  {
+   "id": "story.said_to_face.to_write",
+   "who": "any",
+   "situation": "story.said_to_face",
+   "text": "TO WRITE (story lane): A named witness's remark returning each deed of weight within a game day (STORY-FRAME 7): one per kind of deed per witness kind.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26; BLUEPRINT-03",
+   "words": 27
+  },
+  {
+   "id": "story.rival_rungs.to_write",
+   "who": "maureen_jensen, geoffrey_agar, danny_cammack",
+   "situation": "story.rival_rungs",
+   "text": "TO WRITE (story lane): Each rival's noticed, visit, pressure, threat and sit-down lines (2.10.1 to 2.10.3, RT-06).",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26; BLUEPRINT-03",
+   "words": 16
+  },
+  {
+   "id": "story.fares.to_write",
+   "who": "fare people",
+   "situation": "story.fares",
+   "text": "TO WRITE (story lane): Two rides' lines for each of the 40 fare people (fares.json TO WRITE fields).",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26; BLUEPRINT-03",
+   "words": 18
+  },
+  {
+   "id": "story.side_stories.to_write",
+   "who": "givers",
+   "situation": "story.side_stories",
+   "text": "TO WRITE (story lane): Step lines for every side story (about 30 a story; side-stories/ TO WRITE fields).",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26; BLUEPRINT-03",
+   "words": 18
+  },
+  {
+   "id": "story.happenings.to_write",
+   "who": "any",
+   "situation": "story.happenings",
+   "text": "TO WRITE (story lane): Lines for the happenings (happenings.json TO WRITE fields).",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26; BLUEPRINT-03",
+   "words": 13
+  },
+  {
+   "id": "story.endings.to_write",
+   "who": "any",
+   "situation": "story.endings",
+   "text": "TO WRITE (story lane): The close's voices per ending, up to about five lines (STORY-FRAME 8).",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26; BLUEPRINT-03",
+   "words": 16
+  },
+  {
+   "id": "story.decisions.to_write",
+   "who": "any",
+   "situation": "story.decisions",
+   "text": "TO WRITE (story lane): Decision lines: a yes, a no and a line that keeps talking for every decision (3.6.5); the 170 not-a-plain-yes test lines.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26; BLUEPRINT-03",
+   "words": 26
+  }
+ ]
+}

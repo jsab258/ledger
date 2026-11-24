@@ -1,0 +1,23 @@
+{
+ "file": "lines/own-julie_kettlewell.json",
+ "version": "wave2-2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "people/julie_kettlewell.json (card: who, speak)"
+ ],
+ "open_points": [],
+ "note": "Julie Kettlewell's own street lines: once a day each (3.6.3). 30 needed, 0 written.",
+ "lines": [
+  {
+   "id": "julie_kettlewell.own.to_write",
+   "who": "julie_kettlewell",
+   "situation": "own",
+   "once": "day",
+   "text": "TO WRITE (story lane): 30 own street lines, about 7 words each, in the voice of the card (people/julie_kettlewell.json), spread over greet, comment, weather, work, about_frank, about_the_street, close; at least three closing lines.",
+   "src": "BLUEPRINT-03 3.2.3, 3.6.3; FIT-L01 (30 for a regular)",
+   "words": 37
+  }
+ ]
+}

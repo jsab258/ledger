@@ -1,0 +1,23 @@
+{
+ "file": "lines/own-lee_drewery.json",
+ "version": "wave2-2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "people/lee_drewery.json (card: who, speak)"
+ ],
+ "open_points": [],
+ "note": "Lee Drewery's own street lines: once a day each (3.6.3). 60 needed, 0 written.",
+ "lines": [
+  {
+   "id": "lee_drewery.own.to_write",
+   "who": "lee_drewery",
+   "situation": "own",
+   "once": "day",
+   "text": "TO WRITE (story lane): 60 own street lines, about 7 words each, in the voice of the card (people/lee_drewery.json), spread over greet, comment, weather, work, about_frank, about_the_street, close; at least three closing lines.",
+   "src": "BLUEPRINT-03 3.2.3, 3.6.3; FIT-L01 (60 for the twelve most seen)",
+   "words": 37
+  }
+ ]
+}

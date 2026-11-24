@@ -1,0 +1,537 @@
+{
+ "file": "lines/frank.json",
+ "version": "wave2-2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "production/specs/suggested-lines.json (approved 1 Oct)",
+  "STORY-FRAME-2026-11-26 sections 1 and 3"
+ ],
+ "open_points": [],
+ "note": "Frank's written lines: the suggested lines (about 4 words; hellos, goodbyes, decisions: 3.6.6) and the fixed lines at authored beats. The rest of his talk is the player's.",
+ "lines": [
+  {
+   "id": "frank.suggest.greet.01",
+   "who": "frank_nowak",
+   "situation": "suggest.greet",
+   "text": "Hello. Have you got a minute?",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json greet (approved 1 Oct)",
+   "words": 6
+  },
+  {
+   "id": "frank.suggest.greet.02",
+   "who": "frank_nowak",
+   "situation": "suggest.greet",
+   "text": "Sorry to bother you.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json greet (approved 1 Oct)",
+   "words": 4
+  },
+  {
+   "id": "frank.suggest.greet.03",
+   "who": "frank_nowak",
+   "situation": "suggest.greet",
+   "text": "All right? Can I have a word?",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json greet (approved 1 Oct)",
+   "words": 7
+  },
+  {
+   "id": "frank.suggest.greet.04",
+   "who": "frank_nowak",
+   "situation": "suggest.greet",
+   "text": "Hello there.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json greet (approved 1 Oct)",
+   "words": 2
+  },
+  {
+   "id": "frank.suggest.greet.05",
+   "who": "frank_nowak",
+   "situation": "suggest.greet",
+   "text": "Mind if I stop a minute?",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json greet (approved 1 Oct)",
+   "words": 6
+  },
+  {
+   "id": "frank.suggest.greet.06",
+   "who": "frank_nowak",
+   "situation": "suggest.greet",
+   "text": "Hello. Is now a good time?",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json greet (approved 1 Oct)",
+   "words": 6
+  },
+  {
+   "id": "frank.suggest.leave.01",
+   "who": "frank_nowak",
+   "situation": "suggest.leave",
+   "text": "I'll let you get on.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json leave (approved 1 Oct)",
+   "words": 5
+  },
+  {
+   "id": "frank.suggest.leave.02",
+   "who": "frank_nowak",
+   "situation": "suggest.leave",
+   "text": "I won't keep you.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json leave (approved 1 Oct)",
+   "words": 4
+  },
+  {
+   "id": "frank.suggest.leave.03",
+   "who": "frank_nowak",
+   "situation": "suggest.leave",
+   "text": "Right. I'd best be off.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json leave (approved 1 Oct)",
+   "words": 5
+  },
+  {
+   "id": "frank.suggest.leave.04",
+   "who": "frank_nowak",
+   "situation": "suggest.leave",
+   "text": "I'll leave you to it.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json leave (approved 1 Oct)",
+   "words": 5
+  },
+  {
+   "id": "frank.suggest.leave.05",
+   "who": "frank_nowak",
+   "situation": "suggest.leave",
+   "text": "Another time, then.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json leave (approved 1 Oct)",
+   "words": 3
+  },
+  {
+   "id": "frank.suggest.leave.06",
+   "who": "frank_nowak",
+   "situation": "suggest.leave",
+   "text": "I won't stop, then.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json leave (approved 1 Oct)",
+   "words": 4
+  },
+  {
+   "id": "frank.suggest.leave.07",
+   "who": "frank_nowak",
+   "situation": "suggest.leave",
+   "text": "I'll not hold you up.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json leave (approved 1 Oct)",
+   "words": 5
+  },
+  {
+   "id": "frank.suggest.personal.01",
+   "who": "frank_nowak",
+   "situation": "suggest.personal",
+   "text": "Have you always lived round here?",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json personal (approved 1 Oct)",
+   "words": 6
+  },
+  {
+   "id": "frank.suggest.personal.02",
+   "who": "frank_nowak",
+   "situation": "suggest.personal",
+   "text": "What was Mickey like?",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json personal (approved 1 Oct)",
+   "words": 4
+  },
+  {
+   "id": "frank.suggest.personal.03",
+   "who": "frank_nowak",
+   "situation": "suggest.personal",
+   "text": "Where's good for a cup of tea round here?",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json personal (approved 1 Oct)",
+   "words": 9
+  },
+  {
+   "id": "frank.suggest.personal.04",
+   "who": "frank_nowak",
+   "situation": "suggest.personal",
+   "text": "What do you make of the street these days?",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json personal (approved 1 Oct)",
+   "words": 9
+  },
+  {
+   "id": "frank.suggest.personal.05",
+   "who": "frank_nowak",
+   "situation": "suggest.personal",
+   "text": "I'm still finding my feet here.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json personal (approved 1 Oct)",
+   "words": 6
+  },
+  {
+   "id": "frank.suggest.personal.06",
+   "who": "frank_nowak",
+   "situation": "suggest.personal",
+   "text": "It's all new to me, this.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json personal (approved 1 Oct)",
+   "words": 6
+  },
+  {
+   "id": "frank.suggest.personal.07",
+   "who": "frank_nowak",
+   "situation": "suggest.personal",
+   "text": "What do people do round here of a Sunday?",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json personal (approved 1 Oct)",
+   "words": 9
+  },
+  {
+   "id": "frank.suggest.personal.08",
+   "who": "frank_nowak",
+   "situation": "suggest.personal",
+   "text": "Who should I get to know round here?",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json personal (approved 1 Oct)",
+   "words": 8
+  },
+  {
+   "id": "frank.suggest.personal.09",
+   "who": "frank_nowak",
+   "situation": "suggest.personal",
+   "text": "Do you get many strangers down here?",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json personal (approved 1 Oct)",
+   "words": 7
+  },
+  {
+   "id": "frank.suggest.personal.10",
+   "who": "frank_nowak",
+   "situation": "suggest.personal",
+   "text": "What's the best thing about this street?",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json personal (approved 1 Oct)",
+   "words": 7
+  },
+  {
+   "id": "frank.deal.ron-ask.refuse.01",
+   "who": "frank_nowak",
+   "situation": "decision.ron-ask",
+   "text": "Tell them no. I'm not doing it.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.ron-ask.refuse (approved 1 Oct)",
+   "words": 7
+  },
+  {
+   "id": "frank.deal.ron-ask.refuse.02",
+   "who": "frank_nowak",
+   "situation": "decision.ron-ask",
+   "text": "I'm not carrying it. Count me out.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.ron-ask.refuse (approved 1 Oct)",
+   "words": 7
+  },
+  {
+   "id": "frank.deal.ron-tell-them-no.yes.01",
+   "who": "frank_nowak",
+   "situation": "decision.ron-tell-them-no",
+   "text": "Yes. Tell them no.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.ron-tell-them-no.yes (approved 1 Oct)",
+   "words": 4
+  },
+  {
+   "id": "frank.deal.ron-tell-them-no.yes.02",
+   "who": "frank_nowak",
+   "situation": "decision.ron-tell-them-no",
+   "text": "Yes, I'm sure.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.ron-tell-them-no.yes (approved 1 Oct)",
+   "words": 3
+  },
+  {
+   "id": "frank.deal.ron-tell-them-no.no.01",
+   "who": "frank_nowak",
+   "situation": "decision.ron-tell-them-no",
+   "text": "No, hold off for now.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.ron-tell-them-no.no (approved 1 Oct)",
+   "words": 5
+  },
+  {
+   "id": "frank.deal.ron-tell-them-no.no.02",
+   "who": "frank_nowak",
+   "situation": "decision.ron-tell-them-no",
+   "text": "No. I'll think on it.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.ron-tell-them-no.no (approved 1 Oct)",
+   "words": 5
+  },
+  {
+   "id": "frank.deal.ron-tell-them-no.keep.01",
+   "who": "frank_nowak",
+   "situation": "decision.ron-tell-them-no",
+   "text": "What happens if I don't?",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.ron-tell-them-no.keep (approved 1 Oct)",
+   "words": 5
+  },
+  {
+   "id": "frank.deal.ron-tell-them-no.keep.02",
+   "who": "frank_nowak",
+   "situation": "decision.ron-tell-them-no",
+   "text": "What would Mickey have done?",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.ron-tell-them-no.keep (approved 1 Oct)",
+   "words": 5
+  },
+  {
+   "id": "frank.deal.sheila-week.winddown.01",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week",
+   "text": "Wind it down. Just the cabs.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week.winddown (approved 1 Oct)",
+   "words": 6
+  },
+  {
+   "id": "frank.deal.sheila-week.winddown.02",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week",
+   "text": "I'm getting out of Mickey's business.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week.winddown (approved 1 Oct)",
+   "words": 6
+  },
+  {
+   "id": "frank.deal.sheila-week.takeover.01",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week",
+   "text": "I'm taking it on. All of it.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week.takeover (approved 1 Oct)",
+   "words": 7
+  },
+  {
+   "id": "frank.deal.sheila-week.takeover.02",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week",
+   "text": "I'll keep it going. All of it.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week.takeover (approved 1 Oct)",
+   "words": 7
+  },
+  {
+   "id": "frank.deal.sheila-week.wontsay.01",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week",
+   "text": "I'm not saying. That's my answer.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week.wontsay (approved 1 Oct)",
+   "words": 6
+  },
+  {
+   "id": "frank.deal.sheila-week.wontsay.02",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week",
+   "text": "That's my business, Sheila.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week.wontsay (approved 1 Oct)",
+   "words": 4
+  },
+  {
+   "id": "frank.deal.sheila-week-winddown.yes.01",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week-winddown",
+   "text": "Yes. Wind it down.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week-winddown.yes (approved 1 Oct)",
+   "words": 4
+  },
+  {
+   "id": "frank.deal.sheila-week-winddown.yes.02",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week-winddown",
+   "text": "Yes. Just the cabs.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week-winddown.yes (approved 1 Oct)",
+   "words": 4
+  },
+  {
+   "id": "frank.deal.sheila-week-winddown.no.01",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week-winddown",
+   "text": "No. Give me a bit longer.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week-winddown.no (approved 1 Oct)",
+   "words": 6
+  },
+  {
+   "id": "frank.deal.sheila-week-winddown.no.02",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week-winddown",
+   "text": "No. Let me think.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week-winddown.no (approved 1 Oct)",
+   "words": 4
+  },
+  {
+   "id": "frank.deal.sheila-week-winddown.keep.01",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week-winddown",
+   "text": "What would that mean for you?",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week-winddown.keep (approved 1 Oct)",
+   "words": 6
+  },
+  {
+   "id": "frank.deal.sheila-week-winddown.keep.02",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week-winddown",
+   "text": "What happens to Ron, then?",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week-winddown.keep (approved 1 Oct)",
+   "words": 5
+  },
+  {
+   "id": "frank.deal.sheila-week-takeover.yes.01",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week-takeover",
+   "text": "Yes. It's mine now.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week-takeover.yes (approved 1 Oct)",
+   "words": 4
+  },
+  {
+   "id": "frank.deal.sheila-week-takeover.yes.02",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week-takeover",
+   "text": "Yes. I'm keeping it going.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week-takeover.yes (approved 1 Oct)",
+   "words": 5
+  },
+  {
+   "id": "frank.deal.sheila-week-takeover.no.01",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week-takeover",
+   "text": "No. Not yet.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week-takeover.no (approved 1 Oct)",
+   "words": 3
+  },
+  {
+   "id": "frank.deal.sheila-week-takeover.no.02",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week-takeover",
+   "text": "No. I need longer.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week-takeover.no (approved 1 Oct)",
+   "words": 4
+  },
+  {
+   "id": "frank.deal.sheila-week-takeover.keep.01",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week-takeover",
+   "text": "What comes with it, exactly?",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week-takeover.keep (approved 1 Oct)",
+   "words": 5
+  },
+  {
+   "id": "frank.deal.sheila-week-takeover.keep.02",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week-takeover",
+   "text": "Who else knows about it?",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week-takeover.keep (approved 1 Oct)",
+   "words": 5
+  },
+  {
+   "id": "frank.deal.sheila-week-wontsay.yes.01",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week-wontsay",
+   "text": "Yes. I'm saying nothing.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week-wontsay.yes (approved 1 Oct)",
+   "words": 4
+  },
+  {
+   "id": "frank.deal.sheila-week-wontsay.yes.02",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week-wontsay",
+   "text": "Yes. That's for me to know.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week-wontsay.yes (approved 1 Oct)",
+   "words": 6
+  },
+  {
+   "id": "frank.deal.sheila-week-wontsay.no.01",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week-wontsay",
+   "text": "No. Give me a minute.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week-wontsay.no (approved 1 Oct)",
+   "words": 5
+  },
+  {
+   "id": "frank.deal.sheila-week-wontsay.no.02",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week-wontsay",
+   "text": "No. Ask me again later.",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week-wontsay.no (approved 1 Oct)",
+   "words": 5
+  },
+  {
+   "id": "frank.deal.sheila-week-wontsay.keep.01",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week-wontsay",
+   "text": "Why does it matter so much?",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week-wontsay.keep (approved 1 Oct)",
+   "words": 6
+  },
+  {
+   "id": "frank.deal.sheila-week-wontsay.keep.02",
+   "who": "frank_nowak",
+   "situation": "decision.sheila-week-wontsay",
+   "text": "What would you do?",
+   "once": "never",
+   "src": "production/specs/suggested-lines.json deals.sheila-week-wontsay.keep (approved 1 Oct)",
+   "words": 4
+  },
+  {
+   "id": "frank.fixed.want",
+   "who": "frank_nowak",
+   "situation": "fixed",
+   "text": "Thirty years, and that's the firm? An old man walking an envelope down to the water? Not for me. Every fare after dark, every door on this street, every quay with a rope on it: it goes through this office or it doesn't go. By Christmas, Ron. Mickey's runs the Hook. And when they say Mickey's, they'll mean me.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 the want, night one (STORY-FRAME 1); the lead renamed Frank (decision of 24 Nov); TO CHECK against the story lane's scenes",
+   "words": 59
+  },
+  {
+   "id": "frank.fixed.car_three",
+   "who": "frank_nowak",
+   "situation": "fixed",
+   "text": "It's on my rank, so it's on my board. Car three. Two pound forty to the quay. Sheila, put it in the book.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 car three (STORY-FRAME 3); the lead renamed Frank (decision of 24 Nov); TO CHECK against the story lane's scenes",
+   "words": 23
+  },
+  {
+   "id": "frank.fixed.spelling",
+   "who": "frank_nowak",
+   "situation": "fixed",
+   "text": "Nowak. N, O, W, A, K.",
+   "once": "game",
+   "src": "STORY-FRAME-2026-11-26 the spelling (STORY-FRAME 3); the lead renamed Frank (decision of 24 Nov); TO CHECK against the story lane's scenes",
+   "words": 6
+  }
+ ]
+}
