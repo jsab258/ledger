@@ -34,3 +34,6 @@ Read from YouTube's own pages (in-page fetch): P16 oXdKoU7GJ8M uploaded 2015-08-
 ## Built on
 
 foot-chase-candidates-2026-11-24.md (same folder). Confirms: Meet the New Boss holds an on-foot police escape (GamePressure). Adds: Santosx07 part ids and part length; the two mission numberings differ. Contradicts: nothing.
+
+## First look, Part 2 PEOpoohAzWg (25 Nov about 00:28 Swiss, the session)
+649 s, uploaded 9 Aug 2015 (page's uploadDate), PS4 Definitive Edition, no commentary. Coarse sheet every 52 s (20-592 s): a market and its stalls, fist fights with several men from about 280 to 540 s, Wei running at about 228 s (perhaps a chase; not read finer). Next: a 2 s sheet over 200-280 s to see whether it is a chase, its start and end; then Parts 1 and 3 for the night-market chase.

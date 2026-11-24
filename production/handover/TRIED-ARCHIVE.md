@@ -203,3 +203,12 @@ hair colour 2 of 2; worn paint 2 of 2; the office and sit on by default 2 of 2; 
 - 24 Nov 19:55: a hidden browser pane unloads the YouTube video mid-scan (duration null) and long waits close the call: re-query the video each step, a 5 s watchdog (movie_player.seekTo, playVideo), polls under 35 s; a quality change mid-scan changes the frame size (compute the box each step).
 - 24 Nov 19:55: two scans in one page fight over the video; reload the page before starting another.
 
+
+
+## Moved from the handover, 25 Nov 00:28
+- 22:37 run: **advisor 367** done: his answers 1-3 applied in RULINGS; the 14 lines whose every enforcer is a check tool moved word for word to RULINGS-ENFORCED.md (cap 900, 765 words; RULINGS then 4,275); Checks read both. **Advisor 368**: fresh Opus recheck (DECIDES-RECHECK-2026-11-24.md): crowd counts a lead, headlamps and frame times not needed, being seen no longer sets lamp spacing; new order in STATUS. **Advisor 369**: killing a constable recorded in RULINGS (4,380 words); the keeper told RT2-02 is the lane's. **366** acked; pace clause dropped from rows this week. KCD2 thief Part 1 scanned: no witnessed crime (all 75 hits menus; parchment filter in frame_sheet.js). GTA V walk first look (ON-FOOT-METHOD, last section): unsure.
+- 24 Nov 23:15: web readers cannot see enough dated 1988-1992 street photographs or the period standards (403s, paywalls): use captioned archives.
+- 24 Nov 23:00: automatic walk cadence from frame differences (GTA V, behind camera): a wide box reads only camera drift; a tight leg box with drift removed gives weak peaks. Two tries: set aside; read by eye on leg crops.
+- 24 Nov 22:55: a hare scan on a thief run hits only menus (75 of 75); filter by parchment share before looking.
+- 24 Nov 23:04: my own times ran up to 30 min ahead again (acks and records corrected from the clock and commit times): Get-Date before every written time.
+- 24 Nov 21:55: web fetch cannot read YouTube; search in the browser pane (in-page fetch of /results, ytInitialData).

@@ -2,11 +2,11 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed, the next steps and the tries used.
 
-**Started:** 2026-11-24 22:37 (the hourly run)
+**Started:** 2026-11-24 23:51 (the hourly run)
 
-**Row due:** 00:20 (last row 23:20; page read 23:10; filter verdicts after 2026-11-24T21:58 UTC, advisor after 2026-11-24T23:15:00+01:00; last ack 370 at 23:09).
+**Row due:** 00:58 (last row 23:58; page read 00:26; filter verdicts after 2026-11-24T21:58 UTC, advisor after 2026-11-24T23:45:00+01:00; last acks 371-373 at 23:54-23:55).
 **Uncommitted:** nothing; work pushed with this file.
-**Stopped:** 2026-11-24 23:18 (the 22:37 run: advisors 366-370 done or started; history at 230k, short of the point but too little room left for a footage item; two readers finished, nothing running)
+**Stopped:** 2026-11-25 00:28 (the 23:51 run: advisors 371-373 recorded; walk upload speed settled; RDR2 ladder solid; two tries each on photo counts and the GTA V star scan; history at 225k, short of the point but too little room left for a footage item; both helpers finished, nothing running)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -34,31 +34,29 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- 22:37 run: **advisor 367** done: his answers 1-3 applied in RULINGS; the 14 lines whose every enforcer is a check tool moved word for word to RULINGS-ENFORCED.md (cap 900, 765 words; RULINGS then 4,275); Checks read both. **Advisor 368**: fresh Opus recheck (DECIDES-RECHECK-2026-11-24.md): crowd counts a lead, headlamps and frame times not needed, being seen no longer sets lamp spacing; new order in STATUS. **Advisor 369**: killing a constable recorded in RULINGS (4,380 words); the keeper told RT2-02 is the lane's. **366** acked; pace clause dropped from rows this week. KCD2 thief Part 1 scanned: no witnessed crime (all 75 hits menus; parchment filter in frame_sheet.js). GTA V walk first look (ON-FOOT-METHOD, last section): unsure.
+- 23:51 run: **advisors 371-373** in RULINGS (gossip on rules; Quay Street lamps two at ~34 m; Monday's paper playthrough first; fares at the late-1991 tariff; brain re-run V1-V4 plus hybrid, V5 dropped; only build-shaping gaps before the one-shot) and acked; the keeper reads RULINGS. **GTA V walk:** the upload plays at real time (brightness scan: one game day in ~2,900 s against 2,880 s); Franklin and a townsperson at the same pace both ~2.5 steps/s at 1,652 s (lead; the 3.3 at 360 s likely a mis-read). **RDR2 ladder:** witness to wanted SOLID as a spread 2-106 s, median ~33.5 s (eight uncut, four players; fresh review applied); deed to flag 1-5 s and wanted to lawmen 7-10 s leads. **Braking flag:** our C# traffic stops in 15-22 m at 30 mph (longer than 14 m); the prototype car's distance is emergent, needs a run (cloud lane's). **Photo counts try 2:** four Hull photos, no lamp spacing; method questioned (OS plans draw lamps; NLS behind a human check). **Chases on foot:** GTA V star scan set aside after two tries; Sleeping Dogs Part 2 holds no chase.
 
 ## In flight
-- Nothing running. Browser pane on rzz5BOoJ9Rc (viewport reset to desktop).
+- Nothing running. Browser pane on Sleeping Dogs Part 2 (viewport desktop).
 
 ## Next, in order
-00. Pace: 77% at 22:37; **the weekly stop is 90%** (advisor 352): at the newest reading of 90% finish the step, commit, push, one row, write production/weekly-stop.json {"until": "2026-11-30T13:00", "reading": N}, set "**Next due:** 2026-11-30 13:00", one page item (switch off the scheduled task ledger-daily-fresh-session, Code tab, Scheduled; on after Monday 13:00), stop all work. Full pace until then (advisors 359, 366: no pace-line holds).
+00. Pace: 79% at 23:51; **the weekly stop is 90%** (advisor 352): at the newest reading of 90% finish the step, commit, push, one row, write production/weekly-stop.json {"until": "2026-11-30T13:00", "reading": N}, set "**Next due:** 2026-11-30 13:00", one page item (switch off the scheduled task ledger-daily-fresh-session, Code tab, Scheduled; on after Monday 13:00), stop all work. Full pace until then (advisors 359, 366: no pace-line holds).
 0. If he types "RDR2 drill starting": `python tools/drills/rdr2_record.py start` in the background; on "RDR2 drill done": the same with stop; read the frames by his card (advisor 361).
-1. **On foot, the walk (GTA V, rzz5BOoJ9Rc):** leg crop x 42-50%, y 58-80% (at 360 s; move it with Franklin), 12 cells of 260x440, at 0.05 s; re-read 360-362.3 and three more stretches (about 1,260, 2,460, 3,060 s); two sheets show the same pose every 0.6-0.65 s (about 3.3 steps a second, a jog's rate): the whole-body sheet reads as a walk (upright, no flight), so first check whether this upload runs faster than real time (a townsperson's walk in the same clip, or a second channel's clip). Then a fresh small-reviewer on the sheets. Step length: find a side-on stretch, heel gap over height.
-2. **RDR2 being seen, ladder timings** (witness to wanted, wanted to pursuit) from the clips already read (being-seen-readings-2026-11-24.md).
-3. **Chases on foot:** GTA V wanted-star scan (asdZoAycD1o, calibrate first); Sleeping Dogs parts 20-28; L.A. Noire length leads.
+1. **On foot, the walk (GTA V, rzz5BOoJ9Rc, real-time upload):** four more stretches at 0.1 s by which sole shows (re-read 360 s beside 1,652 s; then about 1,260, 2,460, 3,060 s) for five samples; the pane's viewport is 1024 wide (canvas sheets 4 cells of 256). Then a fresh small-reviewer. Step length: a side-on stretch, heel gap over height.
+3. **Chases on foot:** Sleeping Dogs Santosx07 Parts 1 and 3 (night-market chase; ids in sleeping-dogs-foot-chase-clips), then L.A. Noire's scripted chases; the GTA V star scan only by a shape or template method (third try needs the 7 Nov rule's researched method).
 4. **KCD2 being seen with crowd reactions** (one town crime clip serves both): ibyJamin Part 4 (wMk2tFAd26E) or 5 (AK8xLkS1Cfs), hare scan with the parchment filter (drop hits above 12% beige); first check by eye that this player shows the behaviour icon at a known alarm. If none by the week's end, say so in STATUS.
-4a. **Advisor 370 photo counts (asked first):** 2 dated Hull photos only (street-photo-counts-2026-11-24.md; not reliable, no lamp spacing). Next: captioned archives (Hull History Centre, Tyne and Wear, Liverpool, dated Flickr groups), eight photos from three towns; counts in a row. 5. 1990 sources the recheck moved (period-braking-lamps-2026-11-24.md: 30 mph 23 m, 1987 edition unverified; beam reach and BS 5489-3:1989 not reached): crowd counts (period footage, footfall records), headlamp reach (period lighting regulations), car braking against the Highway Code (flag: ours 8-11 m at 30 mph against its 14 m, unchecked).
+4a. **Photo counts (advisor 370):** two tries used (4 Hull photos, no lamp spacing); the different method: the OS legend first (does 1:2,500 draw lamps?), then NLS plans if reachable without the human check, else period footage of northern side streets by eye. Quay Street stays at 34 m by his ruling. 5. 1990 sources the recheck moved (period-braking-lamps-2026-11-24.md: 30 mph 23 m, 1987 edition unverified; beam reach and BS 5489-3:1989 not reached): crowd counts (period footage, footfall records), headlamp reach (period lighting regulations), car braking against the Highway Code (flag: ours 8-11 m at 30 mph against its 14 m, unchecked).
 6. n23-3 Q2-Q3 need a free machine with him away; n23-4 voice scan; n23-7 DAILY-2026-11-25 by 19:00.
-0a. Advisor 277: Kiln, hair and the crowd paused. 0b. Next night walk Mon 30 Nov 01:30 (held while the stop file holds). 4p. Marvelous stays open. No Unreal work until the browser prototype is done (advisor 288). 5p. History rewrite HELD for his word. Progress page daily (progress.json only).
+0b. Next night walk Mon 30 Nov 01:30 (held while the stop file holds). 4p. Marvelous stays open. No Unreal work until the browser prototype is done (advisor 288). 5p. History rewrite HELD for his word. Progress page daily (progress.json only).
 
 ## Footage tools
 All in tools/drills/frame_sheet.js (each with its known faults): sheet, SAVED EVIDENCE (pane screenshots copied to F:/LedgerTools/game-inputs/footage/<id>/ with index.json and upload date), RED SCAN (RDR2 flag), HARE BOX SCAN (KCD2). Stamp every time from Get-Date: guesses ran 10-25 min ahead today too. NEW: YouTube's storyboard sprites (in-page fetch of /watch?v=ID, "playerStoryboardSpecRenderer"; L1 80x45, one frame per 5 s; URL storyboard3_L<n>/M<k>.jpg?sqp=...&sigh=<that level's rs$ token>) show a whole video in a few images: too small to tell missions; use for colour cues before seeking.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
-- 24 Nov 23:15: web readers cannot see enough dated 1988-1992 street photographs or the period standards (403s, paywalls): use captioned archives.
-- 24 Nov 23:00: automatic walk cadence from frame differences (GTA V, behind camera): a wide box reads only camera drift; a tight leg box with drift removed gives weak peaks. Two tries: set aside; read by eye on leg crops.
-- 24 Nov 22:55: a hare scan on a thief run hits only menus (75 of 75); filter by parchment share before looking.
-- 24 Nov 23:04: my own times ran up to 30 min ahead again (acks and records corrected from the clock and commit times): Get-Date before every written time.
-- 24 Nov 21:55: web fetch cannot read YouTube; search in the browser pane (in-page fetch of /results, ytInitialData).
+- 25 Nov 00:22: GTA V wanted-star pixel test (two boxes, white counts, blob widths): the ammo count moves into the stars' slot when no stars show; set aside after two tries.
+- 25 Nov 00:19: maps.nls.uk answers with a human check (HTTP 405): not passable by the session.
+- 25 Nov 00:15: photo counts try 2 (captioned archives): 4 dated photos, all Hull; text readers cannot look at an image they have not fetched.
+- 25 Nov 00:15: my record times ran up to 25 min ahead again (corrected): Get-Date before every written time.
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3.
