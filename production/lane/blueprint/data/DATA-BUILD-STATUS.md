@@ -19,6 +19,15 @@ Thirteen of the sweep's nineteen data files (DATA-SWEEP-2026-11-25.md section 3)
 | 17 | sounds.json | yes: 97 manifest files and 16 step files, 117 sounds, mixes, footsteps, reverb for eight room kinds, the radio (Cutter FM) | every file CC0, files exist, no thinking cue | yes (twice: 9 points) | tune titles checked from memory only: a title search before shipping |
 | 19 | schemas.json, tools/validate_data.py | yes: formats for the 13 files (every section held) and the six still to come | eight deliberate breaks of copies: seven caught outside the repository, the eighth (a changed gate pattern) caught inside it | yes (the reviewer's 31 breaks led to the hand rules) | the formats of the six to come are by hand from TECH-PLAN section 3; the line table's situations list does not exist yet |
 
-Not made here (waiting on the story, as the brief says): people and ties (3), routines (4), line banks (10), jobs, fares, happenings and side stories (11), scenes (18). A second job began wave 2 at 12:32.
+Wave 2 (24 Nov 2026, files 3, 4, 10 and 11; made from tools/wave2/, checked by tools/wave2/check_wave2.py inside validate_data.py, four fresh Opus reviews fixed once: wave2/FIXES.md):
+
+| # | File | Made | Checked | Reviewed and fixed | Open points left (the main ones) |
+|---|---|---|---|---|---|
+| 3 | people/ (119), ties.json (147), cast.json | yes: canon's cast, the frame's names, the rivals' lieutenants and men, the bought officers, the minor roles, fare people; 63 invented, 11 the frame's | ages 18 and over, can_die by Frank's line, every tie meets or is carried by message | yes (15 points) | CAST-CHANGES.md from the story lane not yet applied; Vic Stathers renamed from the frame's Frank Stathers |
+| 4 | routines.json (118) | yes: a week each, homes on map.json doors | foot cap 250 m with bike, car and cab; presence; no starts before 05:00; whole-stay hours; finders | yes (13 points) | the Tangs' takeaway has no place (tangs_takeaway, provisional) |
+| 10 | lines/ (59 files, 2,015 records), line-situations.json | yes: the shared bank converted, landmark directions, Frank's lines | content gate, who resolves, no Tom, own files exist | yes (15 points) | 1,800 own lines and the story banks TO WRITE; the old bank's way lines to read once against map.json |
+| 11 | jobs/ (54), fares.json (40 people, 80 rides), happenings.json (63, 9 rival moves), side-stories/ (32) | yes: structures with the given words | places resolve, three keys, one teaching fare, counts | yes (15 points) | most words TO WRITE; the story lane cuts the side stories to 22 to 28 |
+
+Still waiting on the story: scenes (18).
 
 Cost. The weekly reading was 44% at 10:41 (job start 11:14) and 52% at 12:40, with three other jobs running in the same hours (the story frame's end, the story on paper from 12:21, wave 2 from 12:32), so this job's share cannot be read off the meter. Estimate, not measured: the map file on its own about 1 point (one session, no helpers, 11:14 to 11:34); the whole job about 6 points (12 Sonnet builder runs, 6 Opus reviews, the session).
