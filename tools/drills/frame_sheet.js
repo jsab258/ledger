@@ -105,6 +105,9 @@ window.scanHare = async (t0, t1, step) => {
   window.hscan.done = true;
 };
 
+// MENU FILTER (24 Nov 2026, 23:20): KCD2 menus fill the frame's centre with parchment; share of beige pixels
+// (R>150, G>130, B>90, 20<R-B<90, sampled every 4th pixel) in x 40-80%, y 30-70% reads 17-62% on menus, 0-6% in play;
+// drop hare hits above 12% before looking (q6qsCaxOciw: 75 of 75 hits were menus).
 // HARE BOX SCAN (KCD2, 24 Nov 2026, 20:30): scanHare(t0, t1, step) like scanRed, but counts pixels in the
 // behaviour indicator's own box (top centre: x 42-58%, y 0-14%): yellow (R>170, G>130, B<90, R-G<70),
 // orange (R>180, 70<=G<=130, B<70), red (R>170, G<70, B<70), white (all >215; the sky fills it, so unused).
