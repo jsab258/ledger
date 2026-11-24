@@ -1,5 +1,7 @@
 # Being seen in KCD2 and RDR2: questions (24 Nov 2026, 09:05 Swiss)
 
+Built on: STATUS.md (rows 62 and 104), gtavi-being-seen-builder-2026-11-21.md, g5-heat-samples-m_2RP-2026-11-22.md, street-life-sheet-2026-11-21.md.
+
 Deciding row (advisor 339): the constable's ladder, seen to alarm to pursuit. Strict: five uncut samples a number per game, from footage. Built on: STATUS.md (rows 62 and 104), gtavi-being-seen-builder-2026-11-21.md and g5-heat-samples-m_2RP-2026-11-22.md (the reading method), street-life-sheet-2026-11-21.md.
 
 Method researched: g5-heat-samples-m_2RP-2026-11-22.md (whole spells read lit to cleared, edges at 1-2 s, uncut judged on frames); the mechanics half by the research reader.

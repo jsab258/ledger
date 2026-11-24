@@ -1,5 +1,7 @@
 # On-foot speeds from footage: questions (24 Nov 2026, 09:00 Swiss)
 
+Built on: STATUS.md, FILM-RULER-2026-11-23.md, SLEEPING-DOGS-DRILL-2026-11-23.md, g5-heat-samples-m_2RP-2026-11-22.md.
+
 Deciding row (advisor 339, his Ok 08:21): Tom's walk and run speeds, start and stop. Strict: five uncut samples a number per game. Games: GTA V, RDR2, KCD2 (GTA IV if a second open-world 3rd-person figure is needed). Sleeping Dogs is solid (sprint 5.5 m/s, jog 4.5 m/s, SLEEPING-DOGS-DRILL-2026-11-23.md). Built on: STATUS.md, FILM-RULER-2026-11-23.md, g5-heat-samples-m_2RP-2026-11-22.md (the footage reading method: browser pane, frame sheets by video time, edges at fine steps).
 
 Method researched: FILM-RULER-2026-11-23.md and g5-heat-samples-m_2RP-2026-11-22.md; the published-figure half by the research reader below.

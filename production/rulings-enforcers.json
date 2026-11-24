@@ -327,7 +327,7 @@
    ]
   },
   {
-   "line": "8 Oct: Kit pieces period books draw (windows",
+   "line": "8 Oct: Kit pieces period books draw: a fre",
    "by": [
     "tools/facade-pair.py::every drawn edge measured on the frame",
     "monday-audit"
@@ -437,7 +437,7 @@
    ]
   },
   {
-   "line": "30 Oct: Tom wears lace-up boots like Ron's",
+   "line": "30 Oct: the lead wears black lace-up boo",
    "by": [
     "monday-audit"
    ]
@@ -636,6 +636,13 @@
     "monday-audit"
    ],
    "note": "advisor 257: tools/lane/parts-tree/check.py, run by the cloud lane at every loop (on lane-2026-11 until merged), and the Monday audit."
+  },
+  {
+   "line": "24 Nov (advisor 351): printed things rea",
+   "by": [
+    "monday-audit"
+   ],
+   "note": "advisor 351, 24 Nov: printed things get their final 2D look before Unreal; the paper map is one sample for his judgement after the reset; the Monday audit checks no other printed piece is finalised before it passes"
   }
  ]
 }

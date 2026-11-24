@@ -2983,3 +2983,12 @@ Cost of this entry about 0.1 h.
 - Cost: about 0.1 h (11:42 to 11:48 on 24 Nov).
 - Failed and why: runs have a flight phase, so "heel gap with both feet down" does not exist; a following camera never shows side-on landings with the ground still; an automatic white-pixel count read the pavement. Lesson: speeds need the game's own distances (scripted runs), footage gives cadence and gait shape only.
 - Evidence: production/research/lane/measurements/ON-FOOT-METHOD-2026-11-24.md (Try 1, Try 2).
+
+## Being seen from a long uncut stream (set aside for now, 24 Nov 2026)
+- What was made: one incident's notice, alarm, hostile and search times read from an uncut live stream; the plan to stage incidents in an installed copy withdrawn before it started.
+- Method: coarse sheets across the stream, then a 3 x 3 sheet cropped to the frame's top centre so the compass icons read at 1 s steps; times from the video clock.
+- Tools: browser pane, seek-and-draw sheet in the page.
+- Target and check: five uncut incidents with deed to reaction timed. Not reached: one incident, deed unseen, icon colours unverified.
+- Cost: about 0.15 h (12:43 to 12:47 on 24 Nov).
+- Failed and why: a plan was priced against a copy the project had already ruled out (replaced, unsigned program files); lesson: before pricing a run in an installed program, search the decisions for that program's name. Icon colours read by eye need a published key first.
+- Evidence: production/research/lane/measurements/being-seen-readings-2026-11-24.md (vyA2Nm1BHyw sections).

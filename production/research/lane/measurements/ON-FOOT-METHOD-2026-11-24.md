@@ -42,3 +42,6 @@ The question for the method: a following third-person camera never shows the gro
 
 ## Priced (24 Nov 2026, 11:53 Swiss; estimates, marked)
 The Sleeping Dogs drill cost about 0.85 h logged and about 2.75 h of wall time (22:05 to 00:50, three runs lost) once its launch script existed. Scripted runs give speed only where the game shows a distance or a ruler sits in view: Sleeping Dogs' marker readout did; KCD2 and GTA V show none found so far (GTA V's first-person view and its road dashes are a candidate ruler, size unverified; KCD2 none). So (a) costs per game about 0.5 h to find and check a ruler, then about 3 h for the harness and five runs a gait; without a ruler it fails as footage did. Being seen in KCD2 needs no ruler (times only): about 3 h harness plus 1.5 h for five staged incidents a kind. Order: KCD2 being seen first (no ruler risk), then GTA V's ruler check, then on-foot runs.
+
+## Withdrawn (2026-11-24 12:41 Swiss)
+The order above is withdrawn: the GTA V and KCD2 copies on this PC are not run (DECISIONS 23 Nov 15:26 and 20:30, replaced unsigned program files). On-foot speeds for KCD2 and GTA V stay cadence leads from footage; KCD2 being seen goes back to long uncut footage. Sleeping Dogs and our own build stay the only drill games.

@@ -493,6 +493,8 @@ OURS = {
     # lane; three.js (MIT) arrives only through npm into the built bundle, never copied into these folders.
     "tools/lane/prototype/project/src": "the loop prototype's own source code, written by the cloud lane (three.js comes from npm into the built page, not copied here); a browser prototype, never in the game",
     "tools/lane/driving-gate": "the cloud lane's clumsy-player test driver for the browser prototype, its own code, no fetched input",
+    # 24 Nov: the measuring drills' own scripts (frame sheets pasted into a video page in the browser pane), written here
+    "tools/drills": "the measuring drills' own scripts (contact sheets and frame grabs for footage reading), written by the session, no fetched input",
     "production/previews": "reduced copies (about 1600 px, JPEG) of this project's own frames, each proof-view step's and each picture on Jafar's pages, made by tools/make_preview.py from the Unreal probe's renders of this project's own piece list, carrying the ambientCG and CityPack textures this file attributes separately; no other game's frame",
     # His one page's pictures, 4 November (the corner's midweek page, the first): the packaged game's own frames at full
     # size, ignored by git, published beside the page and gone once the item closes (tools/needs_you_page.py PICTURES_REL).

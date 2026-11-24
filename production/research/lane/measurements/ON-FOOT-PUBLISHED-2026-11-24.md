@@ -1,5 +1,7 @@
 # On-foot speeds: published figures (24 Nov 2026)
 
+Built on: ON-FOOT-FOOTAGE-QUESTIONS-2026-11-24.md (its questions) and STATUS.md (the sampling rule).
+
 Reader's notes for ON-FOOT-FOOTAGE-QUESTIONS-2026-11-24.md, questions 1, 2, 3, 5 (question 4 only as a short list at the end). All pages read on 24 Nov 2026. Facts and sources only; no synthesis. Marking: CONFIRMED = read on the page itself; UNVERIFIED = seen only in a search result summary, or a player's own claim, or an inference.
 
 Overall result: no published walk, run or sprint speed in m/s was found for RDR2, KCD2 or GTA IV. For GTA V one documented value (a native's description, second-hand through a forum post) and one listicle figure (not read on its page). Almost every page that was reached holds mod settings (multipliers), not speeds.

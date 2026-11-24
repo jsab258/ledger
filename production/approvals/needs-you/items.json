@@ -142,7 +142,8 @@
    ],
    "recommendation": "Nothing to decide today.",
    "options": [],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-24 13:00, a report, nothing to decide; taken off (advisor 349)"
   },
   {
    "id": "store-copies-for-measuring-2026-11-23",
@@ -257,7 +258,8 @@
      "No, footage only"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-24 13:00, closed by advisor 349: fists and driving are leads; the session's own grabber covers the deciding rows"
   },
   {
    "id": "page-read-back-2026-11-24",
@@ -292,7 +294,8 @@
      "Done (recommended)"
     ]
    ],
-   "state": "open"
+   "state": "done",
+   "closed": "2026-11-24 13:00, he tapped done 10:39; his run stopped at a permission prompt and was interrupted, the task is still off; the session handles it (advisor 349)"
   }
  ]
 }

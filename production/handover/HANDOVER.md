@@ -2,11 +2,11 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed, the next steps and the tries used.
 
-**Started:** 2026-11-24 11:37 (the hourly run)
+**Started:** 2026-11-24 12:37 (the hourly run)
 
-**Row due:** 12:42 (last row 11:42; page read 11:55; filter verdicts after 2026-11-24T10:55 UTC, advisor after 2026-11-24T11:20:00+01:00; last ack 347 at 11:39).
-**Uncommitted:** nothing (commits 0fd2de7fd, 369151fc4 and this one). Local commits since da1cb7941 NOT pushed: ci fails page-answers-fresh (next step 0).
-**Stopped:** 2026-11-24 11:55 (the 11:37 run: advisor 347 in RULINGS and acked; on-foot check tries 1 and 2, step length set aside, method moved to scripted runs; being seen RDR2 step and a KCD2 short; history about 215k of 250k, the KCD2 harness would cross it mid-piece)
+**Row due:** 13:42 (last row 12:42; page read 13:30; filter verdicts after 2026-11-24T12:30 UTC, advisor after 2026-11-24T13:35:00+01:00; last ack 351 at 13:32).
+**Uncommitted:** nothing (this stop's commit). Local commits since da1cb7941 NOT pushed: ci fails only page-answers-fresh (next step 0).
+**Stopped:** 2026-11-24 13:34 (the 12:37 run: advisors 348-351 done and acked; the lead renamed Frank Nowak in canon and RULINGS; Needs you republished empty; the KCD2 scripted plan withdrawn (copy not run); one KCD2 stream incident read as leads; history 233k of 250k, the next item would cross it)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -34,24 +34,20 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- 11:37 run: **advisor 347** (economy picks, Ellis's price, rung 2, all 19 data files first) in RULINGS within 4,900, three enforcer openings repointed; acked 11:39; DECISIONS 11:39. Keeper's Q19/Q20 stand answered by 342. Row 11:42.
-- **On-foot check, tries 1 and 2** (ON-FOOT-METHOD: Try 1, Try 2, Priced): cadence from behind works: Sleeping Dogs about 2.8 steps a second at 557 to 560 s of CGho8_UOzSk (lead). Step length unreadable: runs have no double support; no side-on, still-camera landings in CGho8_UOzSk or nDThIiEgyDA 300 to 2,000 s. Set aside; NOTEBOOK entry. **Decided (DECISIONS 11:53):** on-foot speeds and KCD2 being seen move to scripted offline runs of the installed games; KCD2 being seen first (no ruler needed; about 3 h harness plus 1.5 h, estimate), then the GTA V ruler check, then on-foot runs.
-- **Being seen**: IBsRlI5GfWs at 0.5 s: investigating to seen about 27.5 s; the red flag ends as Arthur turns on the witness (not a clearing time; the 'under 4 s' clearing withdrawn). KCD2 short 9AvBB12w7q0 edited (lead). KCD2 walkthroughs are story-led: no systemic crimes to time.
-- **Page copy**: he tapped 'done' on page-read-back at 10:39 and started the nightly task once by hand; that run (local_075af6d2...) has shown no activity since 10:39:57 (likely waiting on an approval in its own window); the task itself is still switched OFF. Told him in chat (NEEDS YOU).
-- Earlier today (10:37 run: advisors 342-346, KCD2 first lead, on-foot method; 09:36 and 08:51 runs, crowd counts solid, first being-seen readings, readers) and 23 Nov: TRIED-ARCHIVE.md, 'Moved 24 Nov 10:57' and 'Moved 24 Nov 11:56'.
+- 12:37 run: **advisor 348** (his canon picks): the lead is **Frank Nowak** (ladder new owner, Nowak, Frank, Frankie; Tom and Tommy gone where seen or heard, internal id may stay); story frame: Danny Cammack the opponent, Ron inside unless Frank pays, Ron and Sheila count at the end, Mickey's envelope holds the night's fares. canon.md cast, ladder, NAMES and OPEN 2 lines; RULINGS one line. **349**: Needs you republished 13:02 with nothing open (audit, recorder, nightly-copy items closed). **350**: measuring may run to the 95% stop; cloud jobs stop at 80%. **351**: printed things finished as 2D before Unreal; the paper map his sample after Monday (order's waiting item 6). All acked (times corrected to 13:32 from Get-Date; guessed 13:03 and 13:12 first). Row 12:42.
+- **The 11:53 plan withdrawn (DECISIONS 12:41):** the KCD2 and GTA V copies are never run (23 Nov 15:26 and 20:30: replaced unsigned program files). Being seen stays footage; on-foot for KCD2 and GTA V stays cadence leads; Sleeping Dogs and our build are the only drill games.
+- **KCD2 being seen, vyA2Nm1BHyw** (uncut live stream, 11 Jan 2026): one incident at 1,014 to 1,060 s (likely after taking a horse, deed unseen): notice to alarm about 8 s, alarm to hostile about 3 s, search about 21 to 25 s to a guard on him. Compass colours UNVERIFIED. Notes in being-seen-readings-2026-11-24.md; STATUS row 62.
+- Earlier today: the 11:37 run (advisor 347, on-foot tries 1 and 2, RDR2 step) and before: TRIED-ARCHIVE.md.
 
 ## In flight
 - Nothing of this session runs. His page-copy run (scheduled task 'LEDGER: read back page answers (nightly)') stalled since 10:39; it is his window, never approve for him.
 
 ## Next, in order
-00. Pace: this week measuring may run to about 70% (advisor 339), story about 10 more; full pace on the deciding rows with up to four helpers; footage reading is the session's own (helpers never click). Finish target Sat 28 Nov. Allowance 44% at 10:41.
-0. **Push blocked: page-answers-fresh fails.** The nightly task "LEDGER: read back page answers (nightly)" is off since 12 Nov; the session's copy is refused by the safety check (two tries). His page item page-read-back-2026-11-24 asks one switch. Never add an allow rule, never copy round the refusal. When the task has run (answers folder dated today): `python tools/page_answers.py --index` if needed, ci to failed=none, push wip, close the item.
-1b. **KCD2 being seen by scripted offline run** (decided 11:53; Priced in ON-FOOT-METHOD): research what to stage first, then read the drill launch scripts (tools/drills/watch_opening.py, marker_read.py, SLEEPING-DOGS-DRILL-2026-11-23.md) and KCD2 in C:/Games; the recorder item on his page is open (use what the Sleeping Dogs drill used meanwhile). Stage theft seen and assault seen, five each; time deed to reaction, to guard, to challenge.
-1c. **GTA V ruler check** for on-foot runs (first-person view, road dash length: research its size first), then scripted on-foot runs (five a gait) for GTA V and KCD2; footage gives cadence leads only. RDR2 being seen from footage stays leads (three clips read).
-1d. Chases on foot (L.A. Noire, GTA V); crowd reactions Q3. Fists and driving as leads on two games each (advisor 341).
-
-2. Fists (if kept deciding) need about 60 fps: the recorder item or footage.
-3. n23-3: order-swapped repeat pair (B then C) on measure-2026-11-24's dollar; the voice beside the game goes with question 3's packaged run (him away); cost per hour. Due Fri 27 Nov.
+00. Pace: 52% at 12:40; measuring may run to the 95% stop by Mon 30 Nov 07:00 (advisor 350); full pace on deciding rows, up to four helpers; footage reading is the session's own (helpers never click).
+0. **Push blocked: page-answers-fresh.** His 10:39 run of 'LEDGER: read back page answers (nightly)' stopped at a permission prompt in its own window and was interrupted (session local_075af6d2, error_during_execution); the task is still switched OFF. He tapped Done; never ask him the same again (advisor 349). Find a route needing no approval in another window; never add an allow rule or copy round the safety check. When fresh: `python tools/page_answers.py --index`, ci to failed=none, push wip.
+1b. **KCD2 being seen from footage:** first verify the compass icon colours (the game's help or a guide read in full, by a research-reader); then vyA2Nm1BHyw 2,100 to 12,600 s at 75 s steps for incidents (a console appears at 12,600 s). Sheet: crop the frame's top-centre 640x360 into a 3x3 grid on a 1600x900 canvas (method in the being-seen notes), compass readable at 1 s steps; start the call unawaited into window.sres and poll. Then more uncut streams; five incidents owed per game (RDR2 too).
+1c. On-foot: cadence leads only for GTA V, KCD2, RDR2 (footage); Sleeping Dogs solid. Then chases on foot (L.A. Noire, GTA V footage); crowd reactions Q3. Fists and driving as leads on two games (advisor 341).
+3. n23-3: order-swapped repeat pair (B then C) on measure-2026-11-24's dollar; the voice beside the game with question 3's packaged run (him away); cost per hour. Due Fri 27 Nov.
 4. n23-4 voice scan; n23-7 (DAILY file each day with the measuring-hours line; credit row).
 6. Advisor 320 (the backup's 28 GB on C:): two tries used; research before a third.
 0a. Advisor 277: Kiln, hair and the crowd paused. 0b. Next night walk Mon 30 Nov 01:30.
@@ -59,6 +55,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 5p. History rewrite HELD for his word at the PC. Progress page daily (progress.json only); DAILY token file 19:00.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
+- 24 Nov 12:41: the 11:53 plan priced a scripted KCD2 run against a copy already ruled out; search DECISIONS for a program's name before pricing any run in it. Ack times guessed again (13:03, 13:12): Get-Date before every timestamp.
 - 24 Nov 11:46: step length from following-camera footage (tries 1 and 2 of the on-foot check, both used): runs have no double support; side-on stretches swing the camera and the foot leaves the picture at landing. Guessed clock times (12:00 to 12:16) corrected from Get-Date: always Get-Date.
 - 24 Nov 10:43: an awaited sheet() call in javascript_tool failed 'target closed' (the call outlasted the tool); running it unawaited into window.sres and polling works.
 - 24 Nov 09:40: full-size screenshots cropped the frame's right third until the viewport was set again (the pane drops it when its width changes): set it before each screenshot.

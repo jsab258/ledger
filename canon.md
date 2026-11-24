@@ -69,10 +69,13 @@ canon lines it changes, and canon cites the record at those lines.
   retired as a reference bar.
 
 ## Premise and cast (the baseline: Jafar, 2026-09-28, OPEN 2)
-- Player: Tom Nowak, 32, son of a Polish post-war settler and Mickey's sister,
+- Player: Frank Nowak, 32, son of a Polish post-war settler and a British
+  mother, Mickey's sister (renamed from Tom by Jafar, 24 November 2026, his pick
+  relayed by advisor 348: Tom and Tommy echoed another crime game's hero; the
+  internal id may stay tom, never seen or heard),
   arriving with one suitcase and a letter. His uncle Mickey (Michael Suddaby)
   has died and left him Mickey's, a minicab office in the Hook (D19), plus a half-dead criminal
-  outfit and a book of uncollectable debts. Tom has never been to the Hook: he is a stranger
+  outfit and a book of uncollectable debts. Frank has never been to the Hook: he is a stranger
   to everyone there, known only as Mickey's nephew by name (Jafar, 2026-09-23).
   His life before the Hook is left unsaid: nobody in the game asks and he never
   tells (Jafar, 2026-09-28).
@@ -87,8 +90,13 @@ canon lines it changes, and canon cites the record at those lines.
   Irish-born parish priest), Alison Sedman (journalist love interest), Philip
   Danby (teacher love interest), the Fixer, Keith Garbutt (broker between all
   three rivals). Ada was never a teacher (Jafar, 2026-09-28).
+- The story frame (Jafar, 24 November 2026, advisor 348): the main opponent is
+  Danny Cammack, who once drove Mickey's own car (car two, the key he never
+  gave back); the big loss is Ron going inside unless Frank pays to stop it;
+  the ending counts Ron and Sheila as friends too; Mickey's envelope holds a
+  copy of the night's fares.
 - What the town calls you reads out your standing: the new owner, then Nowak, then
-  Tom, then Tommy. The gate is knowing, not liking. Sheila is the one exception
+  Frank, then Frankie (Jafar, 24 November 2026; was Tom, then Tommy). The gate is knowing, not liking. Sheila is the one exception
   (Jafar, 2026-09-29): she withholds his name until she trusts him, as she
   promised Mickey she would size up whoever inherited.
 - NAMES, ruled by Jafar 2026-09-24 (DECISIONS, the casting research's renames):
@@ -97,7 +105,10 @@ canon lines it changes, and canon cites the record at those lines.
   Philip Danby, Danny Ro Danny Cammack, Tom Novak Tom Nowak, and the last rung
   Toma Tommy. Mickey's, Ada and June are kept. Ruled 2026-09-28 on the town
   page: Father Emil became Father Brendan Walsh (Father Walsh to the street),
-  the Fixer is Keith Garbutt, and June's surname is her father's, Suddaby. The old names survive only as
+  the Fixer is Keith Garbutt, and June's surname is her father's, Suddaby.
+  Ruled 2026-11-24 (advisor 348): Tom Nowak became Frank Nowak and the last
+  rung Tommy became Frankie; Tom and Tommy are gone everywhere players see or
+  hear. The old names survive only as
   internal ids (lena, rocco, sam and the rest), like the east_parade_* asset
   names: identifiers, never what the player sees or hears.
 
@@ -199,7 +210,7 @@ which clauses the gate checks and which it does not claim to.
    legacy reference build; the C# Core stays the source of truth the C++
    port is checked against. Kept as item 1 so that "OPEN 2" above keeps
    its meaning; it is not open.
-2. Narrative survival: DECIDED 2026-09-28 by Jafar. Tom Nowak, the three acts,
+2. Narrative survival: DECIDED 2026-09-28 by Jafar. Tom Nowak (Frank Nowak since 2026-11-24), the three acts,
    the three rivals and the empire roster are the baseline, as the story outline
    he approved that day tells them (game-design/story-outline-2026-09-28.md).
    Kept as item 2 so that "OPEN 2" above keeps its meaning. What stays open of
