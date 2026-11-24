@@ -1,0 +1,102 @@
+{
+ "id": "albert_suggitt",
+ "cast_id": "fabjan",
+ "called": "Albert",
+ "name": "Albert Suggitt",
+ "age": 78,
+ "sex": "m",
+ "role": "A retired trawlerman who mends nets on the docks some mornings",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.68,
+  "b": 0.5,
+  "skin": 3,
+  "hair": [
+   "flatcap",
+   "#5a5a52"
+  ],
+  "top": [
+   "jumper",
+   "#27354a",
+   "#27354a"
+  ],
+  "bot": [
+   "trousers",
+   "#3a3a34"
+  ],
+  "x": [
+   "beard"
+  ]
+ },
+ "nerve": 0.3,
+ "venal": 0.4,
+ "talk": 0.6,
+ "discretion": 0.3,
+ "temperament": {
+  "nerve": 0.3,
+  "dutiful": 0.3,
+  "willingness": 0.4,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "boarding_house",
+ "sched": [
+  [
+   0.0,
+   "boarding_house",
+   "asleep",
+   "mon-fri"
+  ],
+  [
+   6.5,
+   "fish_dock",
+   "the nets",
+   "mon-fri"
+  ],
+  [
+   12.0,
+   "caff",
+   "his dinner",
+   "mon-fri"
+  ],
+  [
+   12.75,
+   "boarding_house",
+   "his room",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "boarding_house",
+   "asleep",
+   "sat-sun"
+  ],
+  [
+   11.0,
+   "fishing_quay_east",
+   "watching the water",
+   "sat-sun"
+  ],
+  [
+   13.0,
+   "boarding_house",
+   "his room",
+   "sat-sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-albert_suggitt.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "A retired trawlerman who mends nets on the quay for the few boats left. He sailed with Mickey Suddaby in the sixties.",
+  "speak": "Slow, salt-dry, says a thing once. Measures time in trips and weather.",
+  "life": "Lives two doors from Ada. Up at five from habit. Nets in the morning, the bench in the afternoon.",
+  "fire": "He smelled paraffin on the wind that night, before the glow.",
+  "rivals": "Fished for Jensen's father. Says the Widow is the only one of the three who ever gutted a fish."
+ },
+ "can_die": false,
+ "invented": false,
+ "src": "canon; side story 16"
+}

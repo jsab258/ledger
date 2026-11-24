@@ -1,0 +1,114 @@
+{
+ "id": "pauline_kitching",
+ "cast_id": "zlata",
+ "called": "Pauline",
+ "name": "Pauline Kitching",
+ "age": 44,
+ "sex": "f",
+ "role": "Mickey's dispatcher: the radio and the phone",
+ "kind": "firm",
+ "voice": "p280",
+ "look": {
+  "h": 1.6,
+  "b": 0.6,
+  "skin": 0,
+  "hair": [
+   "perm",
+   "#8a5a2a"
+  ],
+  "top": [
+   "jumper",
+   "#b3476a",
+   "#f0e0c8"
+  ],
+  "bot": [
+   "trousers",
+   "#2e2e3a"
+  ],
+  "x": [
+   "earrings"
+  ]
+ },
+ "nerve": 0.5,
+ "venal": 0.3,
+ "talk": 0.8,
+ "discretion": 0.3,
+ "temperament": {
+  "nerve": 0.5,
+  "dutiful": 0.6,
+  "willingness": 0.4,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": true,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "home",
+   "mon-sat"
+  ],
+  [
+   6.75,
+   "mickeys",
+   "the radio",
+   "mon-sat"
+  ],
+  [
+   12.0,
+   "rank_mickeys",
+   "a cigarette by the rank",
+   "mon-sat"
+  ],
+  [
+   12.33,
+   "mickeys",
+   "the radio",
+   "mon-sat"
+  ],
+  [
+   19.0,
+   "bus_stop_qs",
+   "the bus home",
+   "mon-sat"
+  ],
+  [
+   19.5,
+   "edge_north",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home",
+   "sun"
+  ],
+  [
+   9.0,
+   "mickeys",
+   "the radio, Sunday hours",
+   "sun"
+  ],
+  [
+   16.0,
+   "edge_north",
+   "home",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-pauline_kitching.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Mickey's dispatcher. She runs the radio and the phone in the front office and every fare goes through her.",
+  "speak": "Warm, brisk, calls everyone love. Talks to the radio and the room at once.",
+  "life": "Eleven years on Mickey's radio. Knows every regular fare by voice.",
+  "fire": "The radio log for that night has Terry down to the ferry at one, and nothing else. She did not work nights.",
+  "rivals": "The Widow's office books cars on account and pays monthly. Agar's clerk wants a receipt for everything."
+ },
+ "can_die": false,
+ "invented": false,
+ "src": "canon; 3.2.2"
+}

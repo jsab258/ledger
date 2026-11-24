@@ -1,0 +1,83 @@
+{
+ "id": "gordon_leckenby",
+ "cast_id": "dario",
+ "called": "Gordon",
+ "name": "Gordon Leckenby",
+ "age": 55,
+ "sex": "m",
+ "role": "A ferryman; holds the parcel that came back",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.78,
+  "b": 0.6,
+  "skin": 0,
+  "hair": [
+   "flatcap",
+   "#5a5048"
+  ],
+  "top": [
+   "jersey",
+   "#1c2a40",
+   "#1c2a40"
+  ],
+  "bot": [
+   "trousers",
+   "#2a2a2a"
+  ],
+  "x": [
+   "beard"
+  ]
+ },
+ "nerve": 0.4,
+ "venal": 0.4,
+ "talk": 0.6,
+ "discretion": 0.52,
+ "temperament": {
+  "nerve": 0.4,
+  "dutiful": 0.3,
+  "willingness": 0.6,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "d_nr_42",
+ "sched": [
+  [
+   0.0,
+   "d_nr_42",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   6.0,
+   "ferry_landing",
+   "the first boat",
+   "mon-sat"
+  ],
+  [
+   17.25,
+   "d_nr_42",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_nr_42",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-gordon_leckenby.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Gordon Leckenby, 55, crews the Meridian Ferry. Talks only about the weather.",
+  "speak": "The weather, at length.",
+  "life": "42 North Road. The first boat at twenty to seven.",
+  "rivals": "Sees the last boat's cargo and the men who meet it."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon regular; side story 18"
+}

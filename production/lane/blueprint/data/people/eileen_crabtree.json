@@ -1,0 +1,95 @@
+{
+ "id": "eileen_crabtree",
+ "cast_id": null,
+ "called": "Eileen",
+ "name": "Eileen Crabtree",
+ "age": 39,
+ "sex": "f",
+ "role": "A hairdresser from town who does Sylvia's and Ada's hair at home on Fridays",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.62,
+  "b": 0.4,
+  "skin": 0,
+  "hair": [
+   "big_perm",
+   "#c0802a"
+  ],
+  "top": [
+   "jacket",
+   "#c03a6a",
+   "#f0e0e0"
+  ],
+  "bot": [
+   "skirt",
+   "#2a2a30"
+  ],
+  "x": [
+   "case"
+  ]
+ },
+ "nerve": 0.45,
+ "venal": 0.58,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.45,
+  "dutiful": 0.4,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "fri"
+  ],
+  [
+   9.5,
+   "boarding_house",
+   "Sylvia's set",
+   "fri"
+  ],
+  [
+   11.0,
+   "adas",
+   "Ada's set",
+   "fri"
+  ],
+  [
+   12.5,
+   "rank_mickeys",
+   "waiting for a car",
+   "fri"
+  ],
+  [
+   13.0,
+   "edge_north",
+   "home in town",
+   "fri"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "mon-thu,sat,sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-eileen_crabtree.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Eileen Crabtree, 39, does home perms. Carries the Hook's gossip into town and back.",
+  "speak": "Chatty, salon voice.",
+  "life": "A hairdresser from town who does Sylvia's and Ada's hair at home on Fridays",
+  "rivals": "None of the three."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: 3.4.1 (40 fare people)"
+}

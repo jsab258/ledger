@@ -1,0 +1,95 @@
+{
+ "id": "mandy_calvert",
+ "cast_id": "marta",
+ "called": "Mandy",
+ "name": "Mandy Calvert",
+ "age": 24,
+ "sex": "f",
+ "role": "Rita's clerk: the tickets and the book",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.63,
+  "b": 0.35,
+  "skin": 0,
+  "hair": [
+   "permed_long",
+   "#c09060"
+  ],
+  "top": [
+   "jumper",
+   "#4a8aa0",
+   "#f0e8d8"
+  ],
+  "bot": [
+   "skirt",
+   "#2a2a30"
+  ],
+  "x": [
+   "earrings"
+  ]
+ },
+ "nerve": 0.3,
+ "venal": 0.5,
+ "talk": 0.4,
+ "discretion": 0.68,
+ "temperament": {
+  "nerve": 0.3,
+  "dutiful": 0.3,
+  "willingness": 0.4,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "d_nr_37",
+ "sched": [
+  [
+   0.0,
+   "d_nr_37",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   9.0,
+   "ritas",
+   "the tickets",
+   "mon-sat"
+  ],
+  [
+   11.0,
+   "ritas",
+   "the step",
+   "mon-sat"
+  ],
+  [
+   11.25,
+   "ritas",
+   "the tickets",
+   "mon-sat"
+  ],
+  [
+   17.25,
+   "d_nr_37",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_nr_37",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-mandy_calvert.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Mandy Calvert, 24, writes the pawn tickets at Rita's. Knows whose watch came in when.",
+  "speak": "Bored, chatty once started.",
+  "life": "37 North Road, with her nan.",
+  "rivals": "Fancies one of Danny's lads and will not say which."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "hook-cast.json marta (unnamed; named here)"
+}

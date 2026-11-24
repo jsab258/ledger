@@ -1,0 +1,184 @@
+{
+ "id": "brendan_walsh",
+ "cast_id": "emil",
+ "called": "Father Walsh",
+ "name": "Brendan Walsh",
+ "age": 61,
+ "sex": "m",
+ "role": "The Irish-born parish priest; keeps Mickey's confession",
+ "kind": "principal",
+ "voice": null,
+ "look": {
+  "h": 1.76,
+  "b": 0.55,
+  "skin": 2,
+  "hair": [
+   "balding",
+   "#b9b4aa"
+  ],
+  "top": [
+   "cassock",
+   "#17171a",
+   "#f2f2f2"
+  ],
+  "bot": [
+   "trousers",
+   "#17171a"
+  ],
+  "x": []
+ },
+ "nerve": 0.7,
+ "venal": 0.1,
+ "talk": 0.4,
+ "discretion": 0.85,
+ "temperament": {
+  "nerve": 0.7,
+  "dutiful": 0.35,
+  "willingness": 0.6,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "priests_house",
+ "sched": [
+  [
+   0.0,
+   "priests_house",
+   "asleep",
+   "mon,wed-sat"
+  ],
+  [
+   7.5,
+   "chapel",
+   "morning Mass",
+   "mon,wed-sat"
+  ],
+  [
+   9.0,
+   "priests_house",
+   "his desk",
+   "mon,wed-sat"
+  ],
+  [
+   13.0,
+   "adas",
+   "a call on Ada",
+   "mon,wed-sat"
+  ],
+  [
+   17.0,
+   "chapel",
+   "the church open",
+   "mon,wed-sat"
+  ],
+  [
+   18.0,
+   "priests_house",
+   "supper",
+   "mon,wed-sat"
+  ],
+  [
+   20.5,
+   "edge_north",
+   "sick calls on foot",
+   "mon,wed-sat"
+  ],
+  [
+   22.5,
+   "priests_house",
+   "asleep",
+   "mon,wed-sat"
+  ],
+  [
+   0.0,
+   "priests_house",
+   "asleep",
+   "tue"
+  ],
+  [
+   7.5,
+   "chapel",
+   "morning Mass",
+   "tue"
+  ],
+  [
+   9.0,
+   "priests_house",
+   "his desk",
+   "tue"
+  ],
+  [
+   13.0,
+   "adas",
+   "a call on Ada",
+   "tue"
+  ],
+  [
+   17.0,
+   "chapel",
+   "the church open",
+   "tue"
+  ],
+  [
+   18.0,
+   "priests_house",
+   "supper",
+   "tue"
+  ],
+  [
+   19.0,
+   "chapel_hall",
+   "the Tuesday tea and talk",
+   "tue"
+  ],
+  [
+   21.5,
+   "priests_house",
+   "asleep",
+   "tue"
+  ],
+  [
+   0.0,
+   "priests_house",
+   "asleep",
+   "sun"
+  ],
+  [
+   8.5,
+   "chapel",
+   "Masses",
+   "sun"
+  ],
+  [
+   13.0,
+   "priests_house",
+   "the afternoon",
+   "sun"
+  ],
+  [
+   18.0,
+   "chapel",
+   "evening Mass",
+   "sun"
+  ],
+  [
+   19.0,
+   "priests_house",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-brendan_walsh.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Father Brendan Walsh, the Irish-born parish priest of the chapel on Quay Street. He buried Mickey Suddaby three weeks ago.",
+  "speak": "Soft Irish cadence, unhurried, kind. Listens more than he speaks. Never preaches at a man on the pavement.",
+  "life": "Thirty years in the parish. Knows who has work and who has none. Mrs Cronin keeps his house.",
+  "fire": "He prayed with the firemen at the gate. He knows nothing of how it started and will not guess.",
+  "rivals": "He will say nothing against any parishioner by name."
+ },
+ "can_die": false,
+ "invented": false,
+ "src": "canon; RT2-05"
+}

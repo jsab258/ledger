@@ -1,0 +1,81 @@
+{
+ "id": "arthur_brigham",
+ "cast_id": null,
+ "called": "the grocer",
+ "name": "Arthur Brigham",
+ "age": 58,
+ "sex": "m",
+ "role": "Keeps Hook Stores, the grocer",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.72,
+  "b": 0.65,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#8a8078"
+  ],
+  "top": [
+   "brown_coat",
+   "#6a5038",
+   "#e0d8c8"
+  ],
+  "bot": [
+   "trousers",
+   "#3a3630"
+  ],
+  "x": []
+ },
+ "nerve": 0.4,
+ "venal": 0.58,
+ "talk": 0.6,
+ "discretion": 0.52,
+ "temperament": {
+  "nerve": 0.4,
+  "dutiful": 0.4,
+  "willingness": 0.6,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_nr_6",
+ "sched": [
+  [
+   0.0,
+   "d_nr_6",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   8.5,
+   "grocer",
+   "opening up",
+   "mon-sat"
+  ],
+  [
+   17.75,
+   "d_nr_6",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_nr_6",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-arthur_brigham.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Arthur Brigham, 58, keeps Hook Stores. Knows every shoplifter by sight.",
+  "speak": "Fussy, polite, counts change twice.",
+  "life": "6 North Road.",
+  "rivals": "None."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: places.json grocer (unnamed keeper)"
+}

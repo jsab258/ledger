@@ -1,0 +1,99 @@
+{
+ "id": "malcolm_ruddock",
+ "cast_id": null,
+ "called": "Ruddock",
+ "name": "Malcolm Ruddock",
+ "age": 39,
+ "sex": "m",
+ "role": "The cold-store manager's deputy; holds the contract if Tharratt is gone; sells a key",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.75,
+  "b": 0.55,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#4a3a2a"
+  ],
+  "top": [
+   "warehouse_coat",
+   "#e0dcd0",
+   "#3a3a3a"
+  ],
+  "bot": [
+   "trousers",
+   "#2a2a2a"
+  ],
+  "x": []
+ },
+ "nerve": 0.35,
+ "venal": 0.66,
+ "talk": 0.7,
+ "discretion": 0.44,
+ "temperament": {
+  "nerve": 0.35,
+  "dutiful": 0.3,
+  "willingness": 0.7,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_cs_5",
+ "sched": [
+  [
+   0.0,
+   "d_cs_5",
+   "asleep",
+   "mon-fri"
+  ],
+  [
+   5.5,
+   "cold_stores",
+   "the yard",
+   "mon-fri"
+  ],
+  [
+   14.0,
+   "d_cs_5",
+   "home",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "d_cs_5",
+   "asleep",
+   "sat"
+  ],
+  [
+   5.5,
+   "cold_stores",
+   "Saturday shift",
+   "sat"
+  ],
+  [
+   13.25,
+   "d_cs_5",
+   "home",
+   "sat"
+  ],
+  [
+   0.0,
+   "d_cs_5",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-malcolm_ruddock.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Malcolm Ruddock, 39, deputy at the cold stores. Has the keys and money troubles.",
+  "speak": "Shifty, ingratiating.",
+  "life": "5 Cold Store Road.",
+  "rivals": "Will sell a key to anybody (STORY-FRAME 5)."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: RT2-05 (the cold-store manager's deputy); STORY-FRAME 5"
+}

@@ -1,0 +1,81 @@
+{
+ "id": "len_ackroyd",
+ "cast_id": null,
+ "called": "Len",
+ "name": "Len Ackroyd",
+ "age": 48,
+ "sex": "m",
+ "role": "Owner of Portside Cars, the other minicab firm on the north rank (two cars); a business, never a rival",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.74,
+  "b": 0.65,
+  "skin": 0,
+  "hair": [
+   "balding",
+   "#6a6058"
+  ],
+  "top": [
+   "car_coat",
+   "#5a4a36",
+   "#2a2a2a"
+  ],
+  "bot": [
+   "trousers",
+   "#30302e"
+  ],
+  "x": []
+ },
+ "nerve": 0.4,
+ "venal": 0.5,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.4,
+  "dutiful": 0.5,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "home",
+   "mon-sat"
+  ],
+  [
+   7.0,
+   "rank_north",
+   "his cars",
+   "mon-sat"
+  ],
+  [
+   19.0,
+   "edge_north",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-len_ackroyd.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Len Ackroyd, 48, runs Portside Cars from the north rank with two cars. Takes the fares Mickey's loses and gives them back as the talk fades.",
+  "speak": "Grumbling, businesslike.",
+  "life": "Up in town; the north rank by day.",
+  "rivals": "None: a business (2.15.3)."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: 2.15.3; vehicles.json portside_cars (the prototype's hint Len Wardle: surname changed so it is not mistaken for DC Wardell)"
+}

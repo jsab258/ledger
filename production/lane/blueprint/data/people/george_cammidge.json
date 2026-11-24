@@ -1,0 +1,81 @@
+{
+ "id": "george_cammidge",
+ "cast_id": null,
+ "called": "the chandler",
+ "name": "George Cammidge",
+ "age": 67,
+ "sex": "m",
+ "role": "Keeps the ship's chandlery on Quay Street; owns the radios Darren is selling",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.72,
+  "b": 0.5,
+  "skin": 0,
+  "hair": [
+   "beard",
+   "#d0ccc4"
+  ],
+  "top": [
+   "jersey",
+   "#1c2a40",
+   "#1c2a40"
+  ],
+  "bot": [
+   "trousers",
+   "#2a2a2a"
+  ],
+  "x": []
+ },
+ "nerve": 0.5,
+ "venal": 0.5,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.5,
+  "dutiful": 0.5,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_cl_8",
+ "sched": [
+  [
+   0.0,
+   "d_cl_8",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   8.75,
+   "chandlery",
+   "the shop",
+   "mon-sat"
+  ],
+  [
+   17.75,
+   "d_cl_8",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_cl_8",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-george_cammidge.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "George Cammidge, 67, the chandler. Rope, paraffin and tinned goods for boats that rarely come.",
+  "speak": "Salty, slow.",
+  "life": "8 Chapel Lane.",
+  "rivals": "None."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: places.json chandlery (unnamed keeper); side story 13"
+}

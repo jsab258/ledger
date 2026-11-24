@@ -1,0 +1,107 @@
+{
+ "id": "craig_fewson",
+ "cast_id": null,
+ "called": "Fewson",
+ "name": "Craig Fewson",
+ "age": 25,
+ "sex": "m",
+ "role": "Danny's lieutenant, who wants Danny's seat",
+ "kind": "rival_man",
+ "voice": null,
+ "look": {
+  "h": 1.83,
+  "b": 0.6,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#1a1a1a"
+  ],
+  "top": [
+   "bomber",
+   "#1a2a1a",
+   "#c85a1a"
+  ],
+  "bot": [
+   "jeans",
+   "#2a3550"
+  ],
+  "x": []
+ },
+ "nerve": 0.65,
+ "venal": 0.58,
+ "talk": 0.3,
+ "discretion": 0.76,
+ "temperament": {
+  "nerve": 0.65,
+  "dutiful": 0.4,
+  "willingness": 0.3,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "d_nr_39",
+ "sched": [
+  [
+   0.0,
+   "d_nr_39",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   11.0,
+   "cammack_base",
+   "the lock-ups",
+   "mon-sat"
+  ],
+  [
+   15.0,
+   "rank_ferry",
+   "watching the ferry rank",
+   "mon-sat"
+  ],
+  [
+   20.0,
+   "snooker_hall",
+   "with Danny",
+   "mon-sat"
+  ],
+  [
+   23.0,
+   "d_nr_39",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_nr_39",
+   "asleep",
+   "sun"
+  ],
+  [
+   13.0,
+   "cammack_base",
+   "the lock-ups",
+   "sun"
+  ],
+  [
+   18.0,
+   "d_nr_39",
+   "home",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-craig_fewson.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Craig Fewson, 25, Danny's lieutenant. Wants Danny's seat and his key.",
+  "speak": "Few words, a stare.",
+  "life": "39 North Road; the lock-ups.",
+  "rivals": "If Danny is dead or gone, the man on the quay (STORY-FRAME 6)."
+ },
+ "can_die": true,
+ "invented": "proposed by the story frame",
+ "src": "STORY-FRAME 4 item 18 (proposed)",
+ "fallback_role": "the oldest of Danny's men takes the ladder",
+ "fight_kind": "brawler"
+}

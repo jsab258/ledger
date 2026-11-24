@@ -1,0 +1,88 @@
+{
+ "id": "brenda_laverack",
+ "cast_id": "marla",
+ "called": "Brenda",
+ "name": "Brenda Laverack",
+ "age": 50,
+ "sex": "f",
+ "role": "Keeps Laverack's fish shop; buys on the fish dock at dawn",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.63,
+  "b": 0.7,
+  "skin": 0,
+  "hair": [
+   "perm",
+   "#a8702a"
+  ],
+  "top": [
+   "apron",
+   "#3a6a8a",
+   "#f4f4f0"
+  ],
+  "bot": [
+   "trousers",
+   "#2a2a30"
+  ],
+  "x": []
+ },
+ "nerve": 0.5,
+ "venal": 0.5,
+ "talk": 0.9,
+ "discretion": 0.1,
+ "temperament": {
+  "nerve": 0.5,
+  "dutiful": 0.3,
+  "willingness": 0.6,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "d_nr_5",
+ "sched": [
+  [
+   0.0,
+   "d_nr_5",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   5.0,
+   "fish_dock",
+   "buying at the boxes",
+   "mon-sat"
+  ],
+  [
+   8.25,
+   "laveracks",
+   "gutting and the counter",
+   "mon-sat"
+  ],
+  [
+   17.75,
+   "d_nr_5",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_nr_5",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-brenda_laverack.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "She serves at Laverack's, the wet fish shop next door to Mickey's, and lives over it. The queue at her counter is where the street trades news.",
+  "speak": "Loud, warm, never stops working while she talks. A tease, seaside-postcard broad, never crude.",
+  "life": "Buys off the fish dock at six. Her dad had the shop before her. Ron Kirby is in every dinner time.",
+  "fire": "The smoke was in the shop for a week. She lost a day's fish to it.",
+  "rivals": "She buys from Jensen's shed like everyone and pays what the Widow says."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon; 3.4.1; side story 8"
+}

@@ -1,0 +1,75 @@
+{
+ "id": "len_garside",
+ "cast_id": null,
+ "called": "the ship's cook",
+ "name": "Len Garside",
+ "age": 61,
+ "sex": "m",
+ "role": "The dock gun seller: an old ship's cook ashore who has things from abroad",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.7,
+  "b": 0.7,
+  "skin": 0,
+  "hair": [
+   "flatcap",
+   "#5a5048"
+  ],
+  "top": [
+   "jersey",
+   "#3a3a3a",
+   "#3a3a3a"
+  ],
+  "bot": [
+   "trousers",
+   "#2a2a2a"
+  ],
+  "x": [
+   "tattoos"
+  ]
+ },
+ "nerve": 0.5,
+ "venal": 0.74,
+ "talk": 0.8,
+ "discretion": 0.36,
+ "temperament": {
+  "nerve": 0.5,
+  "dutiful": 0.2,
+  "willingness": 0.8,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "chandlery",
+ "sched": [
+  [
+   0.0,
+   "chandlery",
+   "asleep upstairs"
+  ],
+  [
+   8.0,
+   "chandlery",
+   "the back room"
+  ],
+  [
+   21.0,
+   "chandlery",
+   "asleep upstairs"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-len_garside.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Len Garside, 61, a ship's cook ashore. Has had things from abroad in a biscuit tin under the stove for thirty years.",
+  "speak": "Gruff, coded, 'I might know a man'.",
+  "life": "Lives over the chandler's store; the fish dock at dawn for scraps.",
+  "rivals": "Sells to anybody, tells nobody."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: RT2-05 (the dock gun seller)",
+ "fallback_role": "guns come the other three ways (RT2-05)"
+}

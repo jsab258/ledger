@@ -1,0 +1,102 @@
+{
+ "id": "leonard_askew",
+ "cast_id": null,
+ "called": "Mr Askew",
+ "name": "Leonard Askew",
+ "age": 58,
+ "sex": "m",
+ "role": "The landlord's agent (Agar & Co's agents): Mickey's rent at the counter on Fridays, Ada's rent",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.72,
+  "b": 0.5,
+  "skin": 0,
+  "hair": [
+   "parted",
+   "#9a9088"
+  ],
+  "top": [
+   "overcoat",
+   "#4a4a40",
+   "#2a2a2a"
+  ],
+  "bot": [
+   "trousers",
+   "#3a3a40"
+  ],
+  "x": [
+   "rent_book"
+  ]
+ },
+ "nerve": 0.4,
+ "venal": 0.42,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.4,
+  "dutiful": 0.6,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "home",
+   "mon-thu"
+  ],
+  [
+   9.5,
+   "agar_base",
+   "the agents' office",
+   "mon-thu"
+  ],
+  [
+   17.0,
+   "edge_north",
+   "home",
+   "mon-thu"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home",
+   "fri"
+  ],
+  [
+   11.0,
+   "mickeys",
+   "the rent at the counter",
+   "fri"
+  ],
+  [
+   12.0,
+   "edge_north",
+   "back to the agents",
+   "fri"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home",
+   "sat-sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-leonard_askew.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Leonard Askew, 58, Agar & Co's agent. Calls at Mickey's counter every Friday at eleven for the flat's eighteen pounds.",
+  "speak": "Dry, punctual, 'I only collect it'.",
+  "life": "The agents' office.",
+  "rivals": "Agar's agent."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "timetables.json weekly rent (Mr Leonard Askew, chosen there from letters-and-print.json); RT2-05 (the landlord's agent)",
+ "fallback_role": "letters by post (RT2-05)"
+}

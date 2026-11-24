@@ -1,0 +1,95 @@
+{
+ "id": "maureen_jensen",
+ "cast_id": "sera",
+ "called": "the Widow",
+ "name": "Maureen Jensen",
+ "age": 57,
+ "sex": "f",
+ "role": "Head of the dockside syndicate; the dock gate and the men at it",
+ "kind": "principal",
+ "voice": null,
+ "look": {
+  "h": 1.66,
+  "b": 0.55,
+  "skin": 0,
+  "hair": [
+   "set",
+   "#8a8078"
+  ],
+  "top": [
+   "overcoat",
+   "#2a2a2e",
+   "#6a5a48"
+  ],
+  "bot": [
+   "skirt",
+   "#2a2a2e"
+  ],
+  "x": [
+   "fur_collar"
+  ]
+ },
+ "nerve": 0.85,
+ "venal": 0.42,
+ "talk": 0.05,
+ "discretion": 0.96,
+ "temperament": {
+  "nerve": 0.85,
+  "dutiful": 0.6,
+  "willingness": 0.05,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "d_cs_19",
+ "sched": [
+  [
+   0.0,
+   "d_cs_19",
+   "home",
+   "mon-sat"
+  ],
+  [
+   8.0,
+   "widow_base",
+   "the office over the net store",
+   "mon-sat"
+  ],
+  [
+   18.0,
+   "d_cs_19",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_cs_19",
+   "home",
+   "sun"
+  ],
+  [
+   10.0,
+   "chapel",
+   "Mass",
+   "sun"
+  ],
+  [
+   13.25,
+   "d_cs_19",
+   "home",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-maureen_jensen.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Maureen Jensen, 57, the Widow: runs the dockside syndicate from the office over the net store. Taxes the cabs at the dock gate. Has not walked up Quay Street in years.",
+  "speak": "Low, slow, never asks. Calls men Mister until she owns them, then by their first name.",
+  "life": "A house at the top of Cold Store Road. The net store office by day; home by six.",
+  "rivals": "Wants the dock gate and the men at it; fears a gate with nobody at it."
+ },
+ "can_die": false,
+ "invented": false,
+ "src": "canon; STORY-FRAME 3; casting maureen-jensen; RT2-05 (Frank's line keeps her from his hands)"
+}

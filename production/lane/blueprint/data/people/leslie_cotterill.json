@@ -1,0 +1,105 @@
+{
+ "id": "leslie_cotterill",
+ "cast_id": "jelena",
+ "called": "Les",
+ "name": "Leslie Cotterill",
+ "age": 50,
+ "sex": "m",
+ "role": "A locksmith who works the pawn's counter in the mornings and the yard in the afternoons",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.72,
+  "b": 0.55,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#6a6058"
+  ],
+  "top": [
+   "overall",
+   "#3a4a5a",
+   "#2a2a2a"
+  ],
+  "bot": [
+   "trousers",
+   "#2a2a2a"
+  ],
+  "x": []
+ },
+ "nerve": 0.35,
+ "venal": 0.5,
+ "talk": 0.4,
+ "discretion": 0.68,
+ "temperament": {
+  "nerve": 0.35,
+  "dutiful": 0.3,
+  "willingness": 0.4,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "d_nr_38",
+ "sched": [
+  [
+   0.0,
+   "d_nr_38",
+   "asleep",
+   "mon-fri"
+  ],
+  [
+   8.75,
+   "ritas",
+   "key cutting",
+   "mon-fri"
+  ],
+  [
+   13.0,
+   "iveson_yard",
+   "odd jobs at the yard",
+   "mon-fri"
+  ],
+  [
+   17.0,
+   "d_nr_38",
+   "home",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "d_nr_38",
+   "asleep",
+   "sat"
+  ],
+  [
+   8.75,
+   "ritas",
+   "key cutting",
+   "sat"
+  ],
+  [
+   12.0,
+   "d_nr_38",
+   "home",
+   "sat"
+  ],
+  [
+   0.0,
+   "d_nr_38",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-leslie_cotterill.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Les Cotterill, 50, cuts keys at Rita's counter mornings and works with Ian at the yard afternoons. Older and slower than Ian, and more careful whose keys he cuts.",
+  "speak": "Slow, cautious, 'depends whose door'.",
+  "life": "38 North Road.",
+  "rivals": "Has cut a key for Danny once and regrets it."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "hook-cast.json jelena (unnamed; named here)"
+}

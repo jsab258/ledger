@@ -1,0 +1,81 @@
+{
+ "id": "irene_lowther",
+ "cast_id": "selma",
+ "called": "Irene",
+ "name": "Irene Lowther",
+ "age": 52,
+ "sex": "f",
+ "role": "A laundress at the laundry",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.6,
+  "b": 0.5,
+  "skin": 0,
+  "hair": [
+   "set",
+   "#6a5a4a"
+  ],
+  "top": [
+   "overall",
+   "#7a9aa8",
+   "#e8e4dc"
+  ],
+  "bot": [
+   "skirt",
+   "#30303a"
+  ],
+  "x": []
+ },
+ "nerve": 0.35,
+ "venal": 0.4,
+ "talk": 0.4,
+ "discretion": 0.68,
+ "temperament": {
+  "nerve": 0.35,
+  "dutiful": 0.3,
+  "willingness": 0.4,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "d_nr_33",
+ "sched": [
+  [
+   0.0,
+   "d_nr_33",
+   "asleep",
+   "mon-fri"
+  ],
+  [
+   7.75,
+   "launderette",
+   "the sorting room",
+   "mon-fri"
+  ],
+  [
+   16.0,
+   "d_nr_33",
+   "home",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "d_nr_33",
+   "asleep",
+   "sat-sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-irene_lowther.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Irene Lowther, 52, a laundress. Knows whose sheets come in with what on them, and says nothing.",
+  "speak": "Few words, pursed lips, 'I couldn't say, love.'",
+  "life": "33 North Road.",
+  "rivals": "Keeps out of it."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "hook-cast.json selma (unnamed; named here)"
+}

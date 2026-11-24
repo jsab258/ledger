@@ -1,0 +1,65 @@
+{
+ "id": "frank_nowak",
+ "cast_id": "tom",
+ "called": "the new owner",
+ "name": "Frank Nowak",
+ "age": 32,
+ "sex": "m",
+ "role": "Mickey Suddaby's nephew, who inherits the cab office; Polish father, British mother",
+ "kind": "principal",
+ "voice": null,
+ "look": {
+  "h": 1.8,
+  "b": 0.55,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#2a2018"
+  ],
+  "top": [
+   "jacket",
+   "#3a3a40",
+   "#c8c0b0"
+  ],
+  "bot": [
+   "trousers",
+   "#2a2a30"
+  ],
+  "x": []
+ },
+ "nerve": 0.7,
+ "venal": 0.5,
+ "talk": 0.3,
+ "discretion": 0.76,
+ "temperament": {
+  "nerve": 0.7,
+  "dutiful": 0.5,
+  "willingness": 0.3,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "toms_flat",
+ "sched": [],
+ "lines": {
+  "own": "the player's; fixed lines at authored beats only (lines/frank.json)"
+ },
+ "card": {
+  "who": "Frank Nowak, 32, Mickey Suddaby's nephew: a Polish father, a British mother, Mickey his mother's brother. Steps off the ferry with one suitcase, a letter and 23.50 pounds to a dead uncle's cab office. Wants to be the Hook's name by Christmas.",
+  "speak": "The player's. Fixed lines only at authored beats. Gives everybody his whole name and spells it.",
+  "life": "Sleeps in the flat over the office. Good at the wheel; never asks the way.",
+  "rivals": "All three are looking at the office from his first week."
+ },
+ "can_die": false,
+ "invented": false,
+ "src": "decision of 24 Nov (the lead is Frank Nowak); STORY-FRAME 3; canon",
+ "name_ladder": [
+  "the new owner",
+  "Nowak",
+  "Frank",
+  "Frankie"
+ ],
+ "never_called": [
+  "Tom",
+  "Tommy"
+ ]
+}

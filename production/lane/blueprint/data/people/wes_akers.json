@@ -1,0 +1,106 @@
+{
+ "id": "wes_akers",
+ "cast_id": null,
+ "called": "Wes",
+ "name": "Wes Akers",
+ "age": 26,
+ "sex": "m",
+ "role": "One of Danny's crew; the car radios in the empty warehouse",
+ "kind": "rival_man",
+ "voice": null,
+ "look": {
+  "h": 1.76,
+  "b": 0.4,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#2a2018"
+  ],
+  "top": [
+   "leather",
+   "#1a1a1e",
+   "#1a1a1e"
+  ],
+  "bot": [
+   "jeans",
+   "#2a3550"
+  ],
+  "x": []
+ },
+ "nerve": 0.55,
+ "venal": 0.5,
+ "talk": 0.3,
+ "discretion": 0.76,
+ "temperament": {
+  "nerve": 0.55,
+  "dutiful": 0.5,
+  "willingness": 0.3,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "d_nr_32",
+ "sched": [
+  [
+   0.0,
+   "net_loft",
+   "the crates",
+   "mon-sat"
+  ],
+  [
+   2.5,
+   "d_nr_32",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   13.0,
+   "cammack_base",
+   "the lock-ups",
+   "mon-sat"
+  ],
+  [
+   22.5,
+   "net_loft",
+   "the crates",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "net_loft",
+   "the crates",
+   "sun"
+  ],
+  [
+   2.5,
+   "d_nr_32",
+   "asleep",
+   "sun"
+  ],
+  [
+   14.0,
+   "cammack_base",
+   "the lock-ups",
+   "sun"
+  ],
+  [
+   18.0,
+   "d_nr_32",
+   "home",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-wes_akers.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Wes Akers, 26, Danny's crew. Keeps the car radios in the empty warehouse on the row.",
+  "speak": "Quiet, flat, carries a blade he never shows first.",
+  "life": "32 North Road.",
+  "rivals": "Danny's man."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: 2.10.2; side stories 23, 31",
+ "fight_kind": "knife_man"
+}

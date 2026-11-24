@@ -1,0 +1,88 @@
+{
+ "id": "eddie_birtwhistle",
+ "cast_id": null,
+ "called": "the porter",
+ "name": "Eddie Birtwhistle",
+ "age": 46,
+ "sex": "m",
+ "role": "The fish-dock porter who signs for Brenda's boxes and takes them under her name",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.72,
+  "b": 0.45,
+  "skin": 0,
+  "hair": [
+   "woolly",
+   "#2a2a30"
+  ],
+  "top": [
+   "smock",
+   "#3a6a8a",
+   "#e8e8e8"
+  ],
+  "bot": [
+   "waders",
+   "#2a2a2a"
+  ],
+  "x": []
+ },
+ "nerve": 0.35,
+ "venal": 0.66,
+ "talk": 0.7,
+ "discretion": 0.44,
+ "temperament": {
+  "nerve": 0.35,
+  "dutiful": 0.3,
+  "willingness": 0.7,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "d_nr_4",
+ "sched": [
+  [
+   0.0,
+   "d_nr_4",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   4.75,
+   "fish_dock",
+   "the boxes",
+   "mon-sat"
+  ],
+  [
+   11.0,
+   "caff",
+   "his dinner",
+   "mon-sat"
+  ],
+  [
+   12.75,
+   "d_nr_4",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_nr_4",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-eddie_birtwhistle.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Eddie Birtwhistle, 46, porter on the fish dock. Signs for boxes, and lately signs for some twice.",
+  "speak": "Wheedling, 'more than my job's worth'.",
+  "life": "4 North Road.",
+  "rivals": "Pays Dougie Saltmarsh the porters' cut."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: side story 8 (the porter)",
+ "fight_kind": "wiry"
+}

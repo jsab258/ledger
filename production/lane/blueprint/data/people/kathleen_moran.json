@@ -1,0 +1,89 @@
+{
+ "id": "kathleen_moran",
+ "cast_id": null,
+ "called": "Kathleen",
+ "name": "Kathleen Moran",
+ "age": 58,
+ "sex": "f",
+ "role": "An Irish cook at the priests' house in town who comes to the Hook's chapel on Sundays",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.6,
+  "b": 0.6,
+  "skin": 0,
+  "hair": [
+   "set",
+   "#9a8a7a"
+  ],
+  "top": [
+   "coat",
+   "#4a5a4a",
+   "#d0c8b8"
+  ],
+  "bot": [
+   "skirt",
+   "#3a3a40"
+  ],
+  "x": [
+   "headscarf"
+  ]
+ },
+ "nerve": 0.45,
+ "venal": 0.58,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.45,
+  "dutiful": 0.4,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "sun"
+  ],
+  [
+   9.0,
+   "chapel",
+   "Mass",
+   "sun"
+  ],
+  [
+   12.0,
+   "chapel",
+   "waiting for a car",
+   "sun"
+  ],
+  [
+   12.5,
+   "edge_north",
+   "by cab: home in town",
+   "sun"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "mon-sat"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-kathleen_moran.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Kathleen Moran, 58, from Mayo, cooks for the priests in town and comes back to the Hook's chapel where she was married.",
+  "speak": "Warm, quick, a blessing for a tip.",
+  "life": "An Irish cook at the priests' house in town who comes to the Hook's chapel on Sundays",
+  "rivals": "None of the three."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: 3.4.1 (40 fare people)"
+}

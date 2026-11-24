@@ -1,0 +1,84 @@
+{
+ "id": "geoffrey_agar",
+ "cast_id": "aldous",
+ "called": "Mr Agar",
+ "name": "Geoffrey Agar",
+ "age": 62,
+ "sex": "m",
+ "role": "Solicitor and honorary alderman; the old-money machine; Agar & Co, the letting agents",
+ "kind": "principal",
+ "voice": "p226",
+ "look": {
+  "h": 1.76,
+  "b": 0.6,
+  "skin": 0,
+  "hair": [
+   "swept",
+   "#c0bab0"
+  ],
+  "top": [
+   "suit",
+   "#2a2a34",
+   "#e8e4dc"
+  ],
+  "bot": [
+   "trousers",
+   "#2a2a34"
+  ],
+  "x": [
+   "glasses"
+  ]
+ },
+ "nerve": 0.5,
+ "venal": 0.58,
+ "talk": 0.7,
+ "discretion": 0.44,
+ "temperament": {
+  "nerve": 0.5,
+  "dutiful": 0.4,
+  "willingness": 0.7,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "tue,fri"
+  ],
+  [
+   10.0,
+   "agar_base",
+   "the agents' back room",
+   "tue,fri"
+  ],
+  [
+   12.5,
+   "edge_north",
+   "back to town",
+   "tue,fri"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "mon,wed,thu,sat,sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-geoffrey_agar.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Geoffrey Agar, 62, solicitor and honorary alderman. Agar & Co let half the Hook. Wants the cold-store road quiet and bought before the docks are redeveloped.",
+  "speak": "Courteous, slow, every sentence a letter. Never raises his voice; sends paper instead.",
+  "life": "Lives up in town. Calls at the agents' office on Cold Store Road on Tuesdays and Fridays.",
+  "rivals": "Fears his name in print."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon; STORY-FRAME 2 and 4; casting geoffrey-agar",
+ "fallback_role": "Simon Ombler takes his ladder at the same rung"
+}

@@ -1,0 +1,98 @@
+{
+ "id": "dennis_iveson",
+ "cast_id": "drago",
+ "called": "Dennis",
+ "name": "Dennis Iveson",
+ "age": 62,
+ "sex": "m",
+ "role": "A scrap dealer on the old warehouse row; owes 80 pounds and has it; bought out of the burned warehouse",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.75,
+  "b": 0.85,
+  "skin": 3,
+  "hair": [
+   "balding",
+   "#6a655a"
+  ],
+  "top": [
+   "overcoat",
+   "#4a3f30",
+   "#2a2a2a"
+  ],
+  "bot": [
+   "trousers",
+   "#2e2a26"
+  ],
+  "x": [
+   "tash"
+  ]
+ },
+ "nerve": 0.3,
+ "venal": 0.8,
+ "talk": 0.5,
+ "discretion": 0.4,
+ "temperament": {
+  "nerve": 0.3,
+  "dutiful": 0.3,
+  "willingness": 0.1,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": true,
+ "home": "d_nr_44",
+ "sched": [
+  [
+   0.0,
+   "d_nr_44",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   7.5,
+   "iveson_yard",
+   "the yard",
+   "mon-sat"
+  ],
+  [
+   12.0,
+   "iveson_hut",
+   "his dinner in the hut",
+   "mon-sat"
+  ],
+  [
+   13.0,
+   "iveson_yard",
+   "the yard",
+   "mon-sat"
+  ],
+  [
+   17.25,
+   "d_nr_44",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_nr_44",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-dennis_iveson.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "A scrap dealer with a yard at the west end of the quay. He owes Mickey's book eighty pounds and laughs about it.",
+  "speak": "Blunt, bluff, enjoys an argument. Laughs before he answers.",
+  "life": "Forty years in scrap. Buys what the docks throw away, which lately is the docks. Has a yard lad for the heavy work.",
+  "fire": "He bought ironwork out of the ruin of No. 4, cheap, from Agar's clerk, the same week.",
+  "rivals": "Sells to anyone. Thinks Cammack is a boy playing at it."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon; 2.8.1; RT2-05",
+ "fallback_role": "the fire thread runs on through Alison and Ellis, his debt closed",
+ "fight_kind": "big_man"
+}

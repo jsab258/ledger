@@ -1,0 +1,83 @@
+{
+ "id": "old_firm_man",
+ "cast_id": "outfit_man",
+ "called": "the old firm's man",
+ "name": "(never named: canon)",
+ "age": 60,
+ "sex": "m",
+ "role": "One of the old firm Mickey's arrangement was with; at the ferry landing after ten; the one old hand who stays on",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.74,
+  "b": 0.5,
+  "skin": 0,
+  "hair": [
+   "flatcap",
+   "#4a4a48"
+  ],
+  "top": [
+   "overcoat",
+   "#22242a",
+   "#3a3a3a"
+  ],
+  "bot": [
+   "trousers",
+   "#22242a"
+  ],
+  "x": []
+ },
+ "nerve": 0.7,
+ "venal": 0.6,
+ "talk": 0.1,
+ "discretion": 0.92,
+ "temperament": {
+  "nerve": 0.7,
+  "dutiful": 0.2,
+  "willingness": 0.1,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": true,
+ "home": "edge_west",
+ "sched": [
+  [
+   0.0,
+   "ferry_landing",
+   "the landing"
+  ],
+  [
+   1.25,
+   "edge_west",
+   "gone along the quay"
+  ],
+  [
+   9.0,
+   "caff",
+   "a tea in the corner"
+  ],
+  [
+   9.75,
+   "edge_west",
+   "gone"
+  ],
+  [
+   21.75,
+   "ferry_landing",
+   "the landing"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-old_firm_man.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "A man of the old firm that worked the landing before the three rivals were anybody. Says 'Mickey's?' and nothing more.",
+  "speak": "Two words at a time.",
+  "life": "Comes and goes by the landing.",
+  "rivals": "The old firm needs its envelope and no talk; fears daylight."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon (never named); STORY-FRAME 2; hook-cast.json outfit_man",
+ "fallback_role": "Ron's asks come by the outfit's man at the office door (this is that man)"
+}

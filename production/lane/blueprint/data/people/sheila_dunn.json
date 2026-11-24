@@ -1,0 +1,169 @@
+{
+ "id": "sheila_dunn",
+ "cast_id": "lena",
+ "called": "Sheila",
+ "name": "Sheila Dunn",
+ "age": 53,
+ "sex": "f",
+ "role": "Mickey's bookkeeper for thirty-one years; the book",
+ "kind": "principal",
+ "voice": "p267",
+ "look": {
+  "h": 1.62,
+  "b": 0.45,
+  "skin": 0,
+  "hair": [
+   "set",
+   "#6b6258"
+  ],
+  "top": [
+   "cardigan",
+   "#5b4a57",
+   "#d8d2c2"
+  ],
+  "bot": [
+   "skirt",
+   "#3b3a40"
+  ],
+  "x": [
+   "glasses"
+  ]
+ },
+ "nerve": 0.6,
+ "venal": 0.2,
+ "talk": 0.15,
+ "discretion": 0.92,
+ "temperament": {
+  "nerve": 0.6,
+  "dutiful": 0.6,
+  "willingness": 0.4,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": true,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "home across the river",
+   "mon-wed,fri"
+  ],
+  [
+   8.5,
+   "mickeys",
+   "the counter and the book",
+   "mon-wed,fri"
+  ],
+  [
+   12.5,
+   "caff",
+   "her dinner",
+   "mon-wed,fri"
+  ],
+  [
+   13.25,
+   "mickeys",
+   "the counter and the book",
+   "mon-wed,fri"
+  ],
+  [
+   17.5,
+   "bus_stop_qs",
+   "the bus home",
+   "mon-wed,fri"
+  ],
+  [
+   18.0,
+   "edge_north",
+   "home",
+   "mon-wed,fri"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home across the river",
+   "thu"
+  ],
+  [
+   8.5,
+   "newsagent",
+   "the pension counter",
+   "thu"
+  ],
+  [
+   9.25,
+   "mickeys",
+   "the counter and the book",
+   "thu"
+  ],
+  [
+   12.5,
+   "caff",
+   "her dinner",
+   "thu"
+  ],
+  [
+   13.25,
+   "mickeys",
+   "the counter and the book",
+   "thu"
+  ],
+  [
+   17.5,
+   "bus_stop_qs",
+   "the bus home",
+   "thu"
+  ],
+  [
+   18.0,
+   "edge_north",
+   "home",
+   "thu"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home across the river",
+   "sat"
+  ],
+  [
+   8.5,
+   "mickeys",
+   "the counter and the book",
+   "sat"
+  ],
+  [
+   13.0,
+   "bus_stop_qs",
+   "the bus home",
+   "sat"
+  ],
+  [
+   13.5,
+   "edge_north",
+   "home",
+   "sat"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home across the river",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-sheila_dunn.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Mickey Suddaby's bookkeeper for 31 years, a widow. She kept his boat's settling sheets, then the cab office books. She promised Mickey she would size up whoever inherited.",
+  "speak": "Dry, watchful, short sentences, deadpan. Never raises her voice. Never explains herself twice.",
+  "life": "Lives over the river, comes in on the bus. Widowed nine years. Has her dinner at Rinaldi's caff at half twelve. Trusts Pauline on the radio and nobody else much.",
+  "fire": "Says only that the fare book shows nothing for that night.",
+  "rivals": "Agar holds the freehold on the parade and sends a clerk for the rent. The Widow Jensen runs the fish dock. Cammack's lot are new and loud. Keith Garbutt carries messages between them; Mickey's arrangement was with Garbutt.",
+  "secret": "Mickey's real book is behind the back room door she will not open yet. One of Mickey's cars was on the warehouse row the night No. 4 burned; it is in the real book. She will not speak of either until she decides he has earned it."
+ },
+ "can_die": false,
+ "invented": false,
+ "src": "canon; casting sheila-dunn SHEET; STORY-FRAME 3"
+}

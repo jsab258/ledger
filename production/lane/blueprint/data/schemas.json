@@ -4468,6 +4468,9 @@
      "items": {
       "type": "object",
       "properties": {
+       "alias_of": {
+        "type": "string"
+       },
        "band_max": {
         "type": "number"
        },
@@ -18587,7 +18590,7 @@
      "items": {
       "type": "array"
      },
-     "x-note": "[fromHour, where (a places.json id), act, days?]"
+     "x-note": "[fromHour, where (a places.json id or a map.json door id for a home), act, days?]; derived from routines.json, which is the home of the routine"
     },
     "lines": {
      "type": "object"
@@ -18612,9 +18615,84 @@
    },
    "x-rules": [
     "age 18 or over: no children anywhere (canon)",
-    "every sched place is a places.json id",
-    "Tom has can_die false"
+    "every sched place is a places.json id or a map.json door id",
+    "Frank (frank_nowak) has can_die false",
+    "name_ladder on frank_nowak: the new owner, Nowak, Frank, Frankie; nobody says Tom or Tommy (decision of 24 Nov)"
    ]
+  },
+  "cast.json": {
+   "x-made": "wave 2 (24 Nov 2026): the index of people/, the fighter kinds (1.3.12) and the rule that will make the residents",
+   "type": "object",
+   "required": [
+    "file",
+    "version",
+    "clock",
+    "people",
+    "fighter_kinds",
+    "residents_rule"
+   ],
+   "properties": {
+    "file": {
+     "type": "string"
+    },
+    "version": {
+     "type": "string"
+    },
+    "clock": {
+     "type": "object",
+     "required": [
+      "realSecondsPerGameHour"
+     ],
+     "properties": {
+      "realSecondsPerGameHour": {
+       "type": "integer",
+       "minimum": 120,
+       "maximum": 120
+      }
+     }
+    },
+    "sources": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "open_points": {
+     "type": "array"
+    },
+    "people": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "required": [
+       "id",
+       "name",
+       "kind"
+      ],
+      "properties": {
+       "id": {
+        "type": "string",
+        "pattern": "^[a-z0-9_.:-]+$"
+       },
+       "name": {
+        "type": "string"
+       },
+       "kind": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    "fighter_kinds": {
+     "type": "object"
+    },
+    "residents_rule": {
+     "type": "object"
+    },
+    "name_ladder": {
+     "type": "array"
+    }
+   }
   },
   "ties.json": {
    "x-made": "by hand from TECH-PLAN section 3 (ties, the real town's form)",
@@ -18740,7 +18818,7 @@
           },
           "days": {
            "type": "string",
-           "pattern": "^(mon|tue|wed|thu|fri|sat|sun)(-(mon|tue|wed|thu|fri|sat|sun))?(,(mon|tue|wed|thu|fri|sat|sun))*$|^daily$"
+           "pattern": "^(mon|tue|wed|thu|fri|sat|sun)(-(mon|tue|wed|thu|fri|sat|sun))?(,(mon|tue|wed|thu|fri|sat|sun)(-(mon|tue|wed|thu|fri|sat|sun))?)*$|^daily$"
           }
          }
         }
@@ -18750,7 +18828,7 @@
     }
    },
    "x-rules": [
-    "every place is a places.json id",
+    "every place is a places.json id, a map.json door id (a home) or a routines.json provisional_places id",
     "a move between consecutive rows is reachable on the map graph at walking pace in the game time between them (the 200 m walking-reach rule checked on the 120 s hour)"
    ]
   },

@@ -1,0 +1,162 @@
+{
+ "id": "julie_kettlewell",
+ "cast_id": "tanja",
+ "called": "Julie",
+ "name": "Julie Kettlewell",
+ "age": 29,
+ "sex": "f",
+ "role": "Laid off from the laundry's presses; owes 9 pounds she cannot pay; can drive; the likeliest night desk",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.64,
+  "b": 0.35,
+  "skin": 2,
+  "hair": [
+   "perm",
+   "#c9a05a"
+  ],
+  "top": [
+   "denim",
+   "#4a6a9a",
+   "#e8e0d0"
+  ],
+  "bot": [
+   "jeans",
+   "#30405a"
+  ],
+  "x": [
+   "bag"
+  ]
+ },
+ "nerve": 0.3,
+ "venal": 0.4,
+ "talk": 0.7,
+ "discretion": 0.2,
+ "temperament": {
+  "nerve": 0.3,
+  "dutiful": 0.3,
+  "willingness": 0.4,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "d_cl_9",
+ "sched": [
+  [
+   0.0,
+   "d_cl_9",
+   "asleep",
+   "mon,wed,fri"
+  ],
+  [
+   8.5,
+   "newsagent",
+   "the cards in the window",
+   "mon,wed,fri"
+  ],
+  [
+   9.5,
+   "launderette",
+   "asking after work",
+   "mon,wed,fri"
+  ],
+  [
+   11.0,
+   "caff",
+   "a tea she makes last",
+   "mon,wed,fri"
+  ],
+  [
+   14.5,
+   "d_cl_9",
+   "home",
+   "mon,wed,fri"
+  ],
+  [
+   18.0,
+   "d_cl_9",
+   "the rent man at six",
+   "mon,wed,fri"
+  ],
+  [
+   0.0,
+   "d_cl_9",
+   "asleep",
+   "thu"
+  ],
+  [
+   8.5,
+   "newsagent",
+   "the cards in the window",
+   "thu"
+  ],
+  [
+   9.5,
+   "market_stalls_quay",
+   "looking",
+   "thu"
+  ],
+  [
+   13.0,
+   "d_cl_9",
+   "home",
+   "thu"
+  ],
+  [
+   0.0,
+   "d_cl_9",
+   "asleep",
+   "tue,sat"
+  ],
+  [
+   8.5,
+   "newsagent",
+   "the cards in the window",
+   "tue,sat"
+  ],
+  [
+   9.5,
+   "edge_north",
+   "into town for work",
+   "tue,sat"
+  ],
+  [
+   15.0,
+   "d_cl_9",
+   "home",
+   "tue,sat"
+  ],
+  [
+   0.0,
+   "d_cl_9",
+   "asleep",
+   "sun"
+  ],
+  [
+   9.5,
+   "caff",
+   "a tea with Pat",
+   "sun"
+  ],
+  [
+   12.75,
+   "d_cl_9",
+   "home",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-julie_kettlewell.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Laid off when the Meridian Steam Laundry shut in the summer. She lives on Quay Street and has nine pounds of cab fares on Mickey's slate from getting to interviews.",
+  "speak": "Friendly, tired, proud about money. Makes a joke of being skint.",
+  "life": "Eight years on the presses at the laundry. Stands at the bus stop for the job centre most days.",
+  "fire": "The laundry shut the same month. She says the Hook is being emptied one building at a time.",
+  "rivals": "Agar's firm handled the laundry's closing. Nobody got what they were owed."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon; 2.8.1; 2.11.1; STORY-FRAME 4"
+}

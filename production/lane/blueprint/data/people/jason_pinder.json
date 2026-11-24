@@ -1,0 +1,94 @@
+{
+ "id": "jason_pinder",
+ "cast_id": null,
+ "called": "the lad",
+ "name": "Jason Pinder",
+ "age": 20,
+ "sex": "m",
+ "role": "The newest of Danny's crew; put the caff's window in",
+ "kind": "rival_man",
+ "voice": null,
+ "look": {
+  "h": 1.74,
+  "b": 0.3,
+  "skin": 0,
+  "hair": [
+   "curtains",
+   "#8a6a4a"
+  ],
+  "top": [
+   "shell",
+   "#6a2a6a",
+   "#2ab3a6"
+  ],
+  "bot": [
+   "trackies",
+   "#2a2a40"
+  ],
+  "x": []
+ },
+ "nerve": 0.35,
+ "venal": 0.66,
+ "talk": 0.6,
+ "discretion": 0.52,
+ "temperament": {
+  "nerve": 0.35,
+  "dutiful": 0.3,
+  "willingness": 0.6,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_nr_28",
+ "sched": [
+  [
+   0.0,
+   "d_nr_28",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   11.5,
+   "cammack_base",
+   "the lock-ups",
+   "mon-sat"
+  ],
+  [
+   17.0,
+   "phone_parade",
+   "the corner",
+   "mon-sat"
+  ],
+  [
+   21.0,
+   "tangs_takeaway",
+   "outside at closing",
+   "mon-sat"
+  ],
+  [
+   23.0,
+   "d_nr_28",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_nr_28",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-jason_pinder.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Jason Pinder, 20, the newest of Danny's crew. Put Grace's window in for a dare. The one Frank can turn.",
+  "speak": "Nervous bravado, 'I never'.",
+  "life": "28 North Road with his gran.",
+  "rivals": "Danny's newest; low loyalty (STORY-FRAME 4 item 15)."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: side story 11 (a young man of about twenty); STORY-FRAME 4 item 15",
+ "fight_kind": "wiry"
+}

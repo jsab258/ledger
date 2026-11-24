@@ -1,0 +1,95 @@
+{
+ "id": "wayne_harrison",
+ "cast_id": "victor",
+ "called": "Wayne",
+ "name": "Wayne Harrison",
+ "age": 27,
+ "sex": "m",
+ "role": "Rita's back-room hand; owes 30 pounds in goods",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.8,
+  "b": 0.6,
+  "skin": 1,
+  "hair": [
+   "short",
+   "#1a1a1a"
+  ],
+  "top": [
+   "bomber",
+   "#2a3a2a",
+   "#c85a1a"
+  ],
+  "bot": [
+   "jeans",
+   "#2a3550"
+  ],
+  "x": []
+ },
+ "nerve": 0.3,
+ "venal": 0.6,
+ "talk": 0.6,
+ "discretion": 0.3,
+ "temperament": {
+  "nerve": 0.3,
+  "dutiful": 0.3,
+  "willingness": 0.1,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": true,
+ "home": "d_nr_27",
+ "sched": [
+  [
+   0.0,
+   "d_nr_27",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   10.0,
+   "ritas",
+   "the back room",
+   "mon-sat"
+  ],
+  [
+   16.0,
+   "ritas",
+   "the step",
+   "mon-sat"
+  ],
+  [
+   17.75,
+   "snooker_hall",
+   "the tables",
+   "mon-sat"
+  ],
+  [
+   22.0,
+   "d_nr_27",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_nr_27",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-wayne_harrison.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Rita's back-room hand. He lifts, carries, fixes radios and sells what does not go in the window. He owes Mickey's book thirty pounds.",
+  "speak": "Cocky, quick, salesman's patter.",
+  "life": "Fixes sets and stereos in the back. Will find a man a cosh or a flick knife for cash and no receipt.",
+  "fire": "Reckons it was the insurance. Reckons everyone reckons that.",
+  "rivals": "Would work for Cammack if Rita ever let him go."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon; 2.8.1",
+ "fight_kind": "knife_man"
+}

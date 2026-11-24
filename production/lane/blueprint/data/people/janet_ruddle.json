@@ -1,0 +1,87 @@
+{
+ "id": "janet_ruddle",
+ "cast_id": null,
+ "called": "Janet",
+ "name": "Janet Ruddle",
+ "age": 43,
+ "sex": "f",
+ "role": "A school secretary with the school shut, cleaning offices in town at night",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.62,
+  "b": 0.4,
+  "skin": 0,
+  "hair": [
+   "bob",
+   "#7a5a3a"
+  ],
+  "top": [
+   "mac",
+   "#8a7a5a",
+   "#2a2a2a"
+  ],
+  "bot": [
+   "skirt",
+   "#3a3a40"
+  ],
+  "x": []
+ },
+ "nerve": 0.45,
+ "venal": 0.58,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.45,
+  "dutiful": 0.4,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_cl_21",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "the offices in town",
+   "mon-fri"
+  ],
+  [
+   1.5,
+   "d_cl_21",
+   "asleep",
+   "mon-fri"
+  ],
+  [
+   17.5,
+   "d_cl_21",
+   "waiting for a car",
+   "mon-fri"
+  ],
+  [
+   18.0,
+   "edge_north",
+   "the offices in town",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "d_cl_21",
+   "asleep",
+   "sat-sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-janet_ruddle.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Janet Ruddle, 43, the comprehensive's secretary, cleaning offices in town until it reopens. Knows Mr Danby.",
+  "speak": "Prim, then funny.",
+  "life": "A school secretary with the school shut, cleaning offices in town at night",
+  "rivals": "None of the three."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: 3.4.1 (40 fare people)"
+}

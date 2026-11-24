@@ -1,0 +1,132 @@
+{
+ "id": "ada_vane",
+ "cast_id": "ada",
+ "called": "Ada",
+ "name": "Ada Vane",
+ "age": 78,
+ "sex": "f",
+ "role": "The old woman at her window opposite Mickey's",
+ "kind": "principal",
+ "voice": null,
+ "look": {
+  "h": 1.52,
+  "b": 0.4,
+  "skin": 0,
+  "hair": [
+   "bun",
+   "#d9d6d0"
+  ],
+  "top": [
+   "cardigan",
+   "#7a8f9a",
+   "#e9e2d0"
+  ],
+  "bot": [
+   "skirt",
+   "#4a4a52"
+  ],
+  "x": [
+   "glasses"
+  ]
+ },
+ "nerve": 0.6,
+ "venal": 0.2,
+ "talk": 0.75,
+ "discretion": 0.2,
+ "temperament": {
+  "nerve": 0.6,
+  "dutiful": 0.35,
+  "willingness": 0.6,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "adas",
+ "sched": [
+  [
+   0.0,
+   "adas",
+   "asleep",
+   "mon-wed,fri-sat"
+  ],
+  [
+   8.0,
+   "adas",
+   "at her window",
+   "mon-wed,fri-sat"
+  ],
+  [
+   10.0,
+   "grocer",
+   "her shopping",
+   "mon-wed,fri-sat"
+  ],
+  [
+   10.75,
+   "laveracks",
+   "a bit of fish",
+   "mon-wed,fri-sat"
+  ],
+  [
+   11.25,
+   "adas",
+   "at her window",
+   "mon-wed,fri-sat"
+  ],
+  [
+   0.0,
+   "adas",
+   "asleep",
+   "thu"
+  ],
+  [
+   8.0,
+   "adas",
+   "at her window",
+   "thu"
+  ],
+  [
+   9.5,
+   "newsagent",
+   "her pension",
+   "thu"
+  ],
+  [
+   10.25,
+   "grocer",
+   "her shopping",
+   "thu"
+  ],
+  [
+   11.0,
+   "adas",
+   "at her window",
+   "thu"
+  ],
+  [
+   0.0,
+   "adas",
+   "asleep",
+   "sun"
+  ],
+  [
+   8.0,
+   "adas",
+   "at her window (Father Walsh brings her communion)",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-ada_vane.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "An old widow who keeps a window on Quay Street, opposite Mickey's, and sees everything. She knew Mickey Suddaby forty years. Her invitation to tea is not given twice.",
+  "speak": "Plain, sharp, unhurried. Says what she saw and when. Kind underneath, and not to be fooled.",
+  "life": "Her husband was lost off a trawler in 1968. She goes to the chapel on a Wednesday and to Laverack's for fish on a Friday. The rest of the time she is at the window.",
+  "fire": "Saw the sky go orange over the row from her window at two in the morning, and a car come down Quay Street after with no lights on.",
+  "rivals": "Remembers Agar's father, who was worse. Has no time for Cammack's lot. Says Maureen Jensen earned every boat she has."
+ },
+ "can_die": false,
+ "invented": false,
+ "src": "canon; STORY-FRAME 4 (surname)"
+}

@@ -1,0 +1,114 @@
+{
+ "id": "nora_cronin",
+ "cast_id": "vesna",
+ "called": "Mrs Cronin",
+ "name": "Nora Cronin",
+ "age": 67,
+ "sex": "f",
+ "role": "Keeps Father Walsh's house and buys for his table",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.56,
+  "b": 0.5,
+  "skin": 2,
+  "hair": [
+   "headscarf",
+   "#7a3a4a"
+  ],
+  "top": [
+   "overcoat",
+   "#4a5a4a",
+   "#3a3a3a"
+  ],
+  "bot": [
+   "skirt",
+   "#3a3a3a"
+  ],
+  "x": [
+   "bag"
+  ]
+ },
+ "nerve": 0.4,
+ "venal": 0.3,
+ "talk": 0.8,
+ "discretion": 0.3,
+ "temperament": {
+  "nerve": 0.4,
+  "dutiful": 0.3,
+  "willingness": 0.6,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "d_cl_6",
+ "sched": [
+  [
+   0.0,
+   "d_cl_6",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   7.25,
+   "priests_house",
+   "his breakfast",
+   "mon-sat"
+  ],
+  [
+   13.0,
+   "grocer",
+   "his table",
+   "mon-sat"
+  ],
+  [
+   14.0,
+   "laveracks",
+   "his fish",
+   "mon-sat"
+  ],
+  [
+   17.5,
+   "priests_house",
+   "his supper",
+   "mon-sat"
+  ],
+  [
+   19.5,
+   "d_cl_6",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_cl_6",
+   "asleep",
+   "sun"
+  ],
+  [
+   9.5,
+   "chapel",
+   "Mass",
+   "sun"
+  ],
+  [
+   13.0,
+   "d_cl_6",
+   "home",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-nora_cronin.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Father Walsh's housekeeper. She shops the market, queues at Laverack's and takes tea at the Copper Kettle, and brings home every word.",
+  "speak": "Chatty, pious in passing, fond of a \"God love him\". Never unkind to a face.",
+  "life": "Kept the presbytery twenty-two years. Knows who was at Mass and who was not.",
+  "fire": "She lit a candle for whoever did it, which Father says is the right way round.",
+  "rivals": "Mrs Jensen gives to the roof fund. Mr Agar gives more and wants it read out."
+ },
+ "can_die": false,
+ "invented": false,
+ "src": "canon; side story 22"
+}

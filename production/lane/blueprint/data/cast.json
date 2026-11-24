@@ -1,0 +1,1043 @@
+{
+ "file": "cast.json",
+ "version": "wave2-2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "tools/wave2/cast_src.py",
+  "STORY-FRAME-2026-11-26 sections 3 and 4",
+  "production/cloud-week/town/people.json (44)",
+  "production/specs/hook-cast.json (41)",
+  "tools/lane/prototype/project/src/cast.js (28 looks and cards)",
+  "game-design/town-traits-draft-2026-09-29.md (temper figures)",
+  "tools/lane/prototype/project/src/game/tune/fightx.js (fighter kinds)"
+ ],
+ "counts": {
+  "people": 118,
+  "by_kind": {
+   "principal": 13,
+   "firm": 3,
+   "officer": 8,
+   "regular": 33,
+   "minor": 49,
+   "rival_man": 12
+  },
+  "by_origin": {
+   "canon or earlier cast files": 45,
+   "invented here": 62,
+   "proposed by the frame": 11
+  }
+ },
+ "name_ladder": [
+  "the new owner",
+  "Nowak",
+  "Frank",
+  "Frankie"
+ ],
+ "name_ladder_note": "Decision of 24 Nov: the lead is Frank Nowak (Polish father, British mother, Mickey Suddaby's nephew). Nobody says Tom or Tommy. The frame's 'three people say Tommy at the fourth rung' becomes Frankie: the Widow to own him, Danny to needle him, Ron once, if ever. Danny's own needle is 'nephew', outside the ladder.",
+ "fighter_kinds": {
+  "rule": "1.3.12: every fight's men are one of five kinds; a big man has the most hidden capacity and a knife man the least; no two fights in a row use the same mix. guards and rushes are shares of the time; takes is hidden capacity against an average man's 1.0.",
+  "boxer": {
+   "guards": 0.7,
+   "rushes": 0.2,
+   "takes": 1.0,
+   "keeps_distance": false,
+   "src": "prototype fightx.js"
+  },
+  "brawler": {
+   "guards": 0.1,
+   "rushes": 0.8,
+   "takes": 1.0,
+   "keeps_distance": false,
+   "src": "prototype fightx.js"
+  },
+  "big_man": {
+   "guards": 0.3,
+   "rushes": 0.3,
+   "takes": 1.6,
+   "keeps_distance": false,
+   "src": "prototype fightx.js ('big man')"
+  },
+  "knife_man": {
+   "guards": 0.2,
+   "rushes": 0.55,
+   "takes": 0.75,
+   "keeps_distance": true,
+   "src": "prototype fightx.js 'knife' (takes 0.9 there); lowered to 0.75 so a knife man has the least capacity, as 1.3.12 says (chosen)"
+  },
+  "wiry": {
+   "guards": 0.4,
+   "rushes": 0.3,
+   "takes": 0.85,
+   "keeps_distance": false,
+   "slips_and_runs": true,
+   "src": "1.3.12 (from the fit check: a wiry one who slips and runs); figures chosen here"
+  },
+  "note": "Each person who fights carries fight_kind in people/<id>.json. Capacities are working values until the fights are measured (1.3.12 is pending a reference-game study)."
+ },
+ "residents_rule": {
+  "ruling": "His ruling: the 200 to 300 residents beyond the named cast are added after the first loops. Not made now; this is the rule that will make them.",
+  "count": "200 to 300 in all, made in one seeded pass (seed written into the file) so the same town comes out every time.",
+  "homes": "One to three adults to each map.json plot whose use is home and which no named person holds (people/<id>.json home), no plot over its storeys times two.",
+  "ages": "18 to 90 only (no children anywhere). Spread for a 1990 northern port with the docks run down: about a third 60 and over, a fifth 18 to 29.",
+  "names": "First names and surnames drawn from a list of 1990 northern English port names with Irish (about one in eight), Polish (about one in twenty-five, mostly 60 and over: the post-war settlers and their children) and other origins as production/casting research gives; never a name already in people/; never a real public figure.",
+  "work": "From the places.json staff each place needs and the crowd.json bands: dock and cold-store shifts, shop staff, retired. Every resident's routine follows routines.json's rules and is checked by tools/wave2/build_people.py's reach and hours check.",
+  "kind": "passer; temperament drawn from a small table by age and work (the traits draft's figures for an unnamed worker: nerve 0.3 to 0.5, loyalty 0.3, a wounding seen yes or no); keepsQuiet false unless loyalty 0.6 or more.",
+  "lines": "Shared street lines by speaker kind only (lines/shared-street.json); no own lines.",
+  "look": "crowd.json's 1990 look tables.",
+  "content": "No alcohol or gambling in any routine or line, no children, every brand fictional (the content rule)."
+ },
+ "people": [
+  {
+   "id": "frank_nowak",
+   "name": "Frank Nowak",
+   "called": "the new owner",
+   "kind": "principal",
+   "age": 32,
+   "invented": false
+  },
+  {
+   "id": "ron_kirby",
+   "name": "Ron Kirby",
+   "called": "Ron",
+   "kind": "principal",
+   "age": 58,
+   "invented": false
+  },
+  {
+   "id": "sheila_dunn",
+   "name": "Sheila Dunn",
+   "called": "Sheila",
+   "kind": "principal",
+   "age": 53,
+   "invented": false
+  },
+  {
+   "id": "pauline_kitching",
+   "name": "Pauline Kitching",
+   "called": "Pauline",
+   "kind": "firm",
+   "age": 44,
+   "invented": false
+  },
+  {
+   "id": "kevin_needham",
+   "name": "Kevin Needham",
+   "called": "Kevin",
+   "kind": "firm",
+   "age": 36,
+   "invented": false
+  },
+  {
+   "id": "terry_hodgson",
+   "name": "Terry Hodgson",
+   "called": "Terry",
+   "kind": "firm",
+   "age": 52,
+   "invented": false
+  },
+  {
+   "id": "darren_milner",
+   "name": "Darren Milner",
+   "called": "Darren",
+   "kind": "principal",
+   "age": 25,
+   "invented": false
+  },
+  {
+   "id": "danny_cammack",
+   "name": "Danny Cammack",
+   "called": "Danny",
+   "kind": "principal",
+   "age": 27,
+   "invented": false
+  },
+  {
+   "id": "maureen_jensen",
+   "name": "Maureen Jensen",
+   "called": "the Widow",
+   "kind": "principal",
+   "age": 57,
+   "invented": false
+  },
+  {
+   "id": "carol_ellis",
+   "name": "Carol Ellis",
+   "called": "DS Ellis",
+   "kind": "officer",
+   "age": 40,
+   "invented": false
+  },
+  {
+   "id": "geoffrey_agar",
+   "name": "Geoffrey Agar",
+   "called": "Mr Agar",
+   "kind": "principal",
+   "age": 62,
+   "invented": false
+  },
+  {
+   "id": "keith_garbutt",
+   "name": "Keith Garbutt",
+   "called": "the Fixer",
+   "kind": "principal",
+   "age": 48,
+   "invented": false
+  },
+  {
+   "id": "ada_vane",
+   "name": "Ada Vane",
+   "called": "Ada",
+   "kind": "principal",
+   "age": 78,
+   "invented": false
+  },
+  {
+   "id": "june_suddaby",
+   "name": "June Suddaby",
+   "called": "June",
+   "kind": "principal",
+   "age": 38,
+   "invented": false
+  },
+  {
+   "id": "brendan_walsh",
+   "name": "Brendan Walsh",
+   "called": "Father Walsh",
+   "kind": "principal",
+   "age": 61,
+   "invented": false
+  },
+  {
+   "id": "alison_sedman",
+   "name": "Alison Sedman",
+   "called": "Alison",
+   "kind": "principal",
+   "age": 30,
+   "invented": false
+  },
+  {
+   "id": "philip_danby",
+   "name": "Philip Danby",
+   "called": "Mr Danby",
+   "kind": "principal",
+   "age": 33,
+   "invented": false
+  },
+  {
+   "id": "brenda_laverack",
+   "name": "Brenda Laverack",
+   "called": "Brenda",
+   "kind": "regular",
+   "age": 50,
+   "invented": false
+  },
+  {
+   "id": "lee_drewery",
+   "name": "Lee Drewery",
+   "called": "Lee",
+   "kind": "regular",
+   "age": 24,
+   "invented": false
+  },
+  {
+   "id": "rita_welburn",
+   "name": "Rita Welburn",
+   "called": "Rita",
+   "kind": "regular",
+   "age": 56,
+   "invented": false
+  },
+  {
+   "id": "wayne_harrison",
+   "name": "Wayne Harrison",
+   "called": "Wayne",
+   "kind": "regular",
+   "age": 27,
+   "invented": false
+  },
+  {
+   "id": "hal_metcalfe",
+   "name": "Henry Metcalfe",
+   "called": "Hal",
+   "kind": "regular",
+   "age": 66,
+   "invented": false
+  },
+  {
+   "id": "susan_coverdale",
+   "name": "Susan Coverdale",
+   "called": "Miss Coverdale",
+   "kind": "regular",
+   "age": 38,
+   "invented": false
+  },
+  {
+   "id": "nora_cronin",
+   "name": "Nora Cronin",
+   "called": "Mrs Cronin",
+   "kind": "regular",
+   "age": 67,
+   "invented": false
+  },
+  {
+   "id": "winifred_duggleby",
+   "name": "Winifred Duggleby",
+   "called": "Mrs Duggleby",
+   "kind": "regular",
+   "age": 76,
+   "invented": false
+  },
+  {
+   "id": "doreen_harland",
+   "name": "Doreen Harland",
+   "called": "Doreen",
+   "kind": "regular",
+   "age": 61,
+   "invented": false
+  },
+  {
+   "id": "pat_stainton",
+   "name": "Pat Stainton",
+   "called": "Pat",
+   "kind": "regular",
+   "age": 45,
+   "invented": true
+  },
+  {
+   "id": "irene_lowther",
+   "name": "Irene Lowther",
+   "called": "Irene",
+   "kind": "regular",
+   "age": 52,
+   "invented": true
+  },
+  {
+   "id": "julie_kettlewell",
+   "name": "Julie Kettlewell",
+   "called": "Julie",
+   "kind": "regular",
+   "age": 29,
+   "invented": false
+  },
+  {
+   "id": "tracey_scarth",
+   "name": "Tracey Scarth",
+   "called": "Tracey",
+   "kind": "regular",
+   "age": 28,
+   "invented": false
+  },
+  {
+   "id": "stanley_hirst",
+   "name": "Stanley Hirst",
+   "called": "Mr Hirst",
+   "kind": "regular",
+   "age": 63,
+   "invented": true
+  },
+  {
+   "id": "mandy_calvert",
+   "name": "Mandy Calvert",
+   "called": "Mandy",
+   "kind": "regular",
+   "age": 24,
+   "invented": true
+  },
+  {
+   "id": "leslie_cotterill",
+   "name": "Leslie Cotterill",
+   "called": "Les",
+   "kind": "regular",
+   "age": 50,
+   "invented": true
+  },
+  {
+   "id": "colin_mastin",
+   "name": "Colin Mastin",
+   "called": "Colin",
+   "kind": "regular",
+   "age": 41,
+   "invented": false
+  },
+  {
+   "id": "albert_suggitt",
+   "name": "Albert Suggitt",
+   "called": "Albert",
+   "kind": "regular",
+   "age": 78,
+   "invented": false
+  },
+  {
+   "id": "paddy_rourke",
+   "name": "Paddy Rourke",
+   "called": "Paddy",
+   "kind": "regular",
+   "age": 44,
+   "invented": true
+  },
+  {
+   "id": "gary_mawer",
+   "name": "Gary Mawer",
+   "called": "Gary",
+   "kind": "regular",
+   "age": 29,
+   "invented": false
+  },
+  {
+   "id": "ian_megginson",
+   "name": "Ian Megginson",
+   "called": "Ian",
+   "kind": "regular",
+   "age": 34,
+   "invented": false
+  },
+  {
+   "id": "christine_pickering",
+   "name": "Christine Pickering",
+   "called": "Mrs Pickering",
+   "kind": "regular",
+   "age": 39,
+   "invented": false
+  },
+  {
+   "id": "karen_grummitt",
+   "name": "Karen Grummitt",
+   "called": "Karen",
+   "kind": "regular",
+   "age": 25,
+   "invented": false
+  },
+  {
+   "id": "gordon_leckenby",
+   "name": "Gordon Leckenby",
+   "called": "Gordon",
+   "kind": "regular",
+   "age": 55,
+   "invented": false
+  },
+  {
+   "id": "sylvia_rennison",
+   "name": "Sylvia Rennison",
+   "called": "Mrs Rennison",
+   "kind": "regular",
+   "age": 64,
+   "invented": false
+  },
+  {
+   "id": "edith_stockill",
+   "name": "Edith Stockill",
+   "called": "Mrs Stockill",
+   "kind": "regular",
+   "age": 79,
+   "invented": false
+  },
+  {
+   "id": "shaun_hewson",
+   "name": "Shaun Hewson",
+   "called": "Shaun",
+   "kind": "regular",
+   "age": 26,
+   "invented": false
+  },
+  {
+   "id": "dawn_pybus",
+   "name": "Dawn Pybus",
+   "called": "Dawn",
+   "kind": "regular",
+   "age": 27,
+   "invented": false
+  },
+  {
+   "id": "dennis_iveson",
+   "name": "Dennis Iveson",
+   "called": "Dennis",
+   "kind": "regular",
+   "age": 62,
+   "invented": false
+  },
+  {
+   "id": "norman_dent",
+   "name": "Norman Dent",
+   "called": "Norman",
+   "kind": "regular",
+   "age": 57,
+   "invented": false
+  },
+  {
+   "id": "grace_rinaldi",
+   "name": "Grace Rinaldi",
+   "called": "Grace",
+   "kind": "regular",
+   "age": 58,
+   "invented": false
+  },
+  {
+   "id": "peter_tang",
+   "name": "Peter Tang",
+   "called": "Mr Tang",
+   "kind": "regular",
+   "age": 44,
+   "invented": false
+  },
+  {
+   "id": "lily_tang",
+   "name": "Lily Tang",
+   "called": "Mrs Tang",
+   "kind": "regular",
+   "age": 41,
+   "invented": false
+  },
+  {
+   "id": "old_firm_man",
+   "name": "(never named: canon)",
+   "called": "the old firm's man",
+   "kind": "minor",
+   "age": 60,
+   "invented": false
+  },
+  {
+   "id": "simon_ombler",
+   "name": "Simon Ombler",
+   "called": "Mr Ombler",
+   "kind": "rival_man",
+   "age": 44,
+   "invented": "proposed by the story frame"
+  },
+  {
+   "id": "alan_sowerby",
+   "name": "Alan Sowerby",
+   "called": "Mr Sowerby",
+   "kind": "minor",
+   "age": 51,
+   "invented": "proposed by the story frame"
+  },
+  {
+   "id": "cyril_pashby",
+   "name": "Cyril Pashby",
+   "called": "the Man in Black",
+   "kind": "minor",
+   "age": 71,
+   "invented": true
+  },
+  {
+   "id": "arvids_ozols",
+   "name": "Arvids Ozols",
+   "called": "Captain Ozols",
+   "kind": "minor",
+   "age": 58,
+   "invented": "proposed by the story frame"
+  },
+  {
+   "id": "stathers",
+   "name": "Vic Stathers",
+   "called": "Stathers",
+   "kind": "rival_man",
+   "age": 46,
+   "invented": "proposed by the story frame"
+  },
+  {
+   "id": "mark_billany",
+   "name": "Mark Billany",
+   "called": "Billany",
+   "kind": "rival_man",
+   "age": 31,
+   "invented": "proposed by the story frame"
+  },
+  {
+   "id": "pat_brannigan",
+   "name": "Pat Brannigan",
+   "called": "Brannigan",
+   "kind": "rival_man",
+   "age": 38,
+   "invented": true
+  },
+  {
+   "id": "dougie_saltmarsh",
+   "name": "Dougie Saltmarsh",
+   "called": "Dougie",
+   "kind": "rival_man",
+   "age": 29,
+   "invented": true
+  },
+  {
+   "id": "craig_fewson",
+   "name": "Craig Fewson",
+   "called": "Fewson",
+   "kind": "rival_man",
+   "age": 25,
+   "invented": "proposed by the story frame"
+  },
+  {
+   "id": "shane_boddy",
+   "name": "Shane Boddy",
+   "called": "Shane",
+   "kind": "rival_man",
+   "age": 23,
+   "invented": true
+  },
+  {
+   "id": "wes_akers",
+   "name": "Wes Akers",
+   "called": "Wes",
+   "kind": "rival_man",
+   "age": 26,
+   "invented": true
+  },
+  {
+   "id": "jason_pinder",
+   "name": "Jason Pinder",
+   "called": "the lad",
+   "kind": "rival_man",
+   "age": 20,
+   "invented": true
+  },
+  {
+   "id": "barry_coult",
+   "name": "Barry Coult",
+   "called": "Coult",
+   "kind": "rival_man",
+   "age": 42,
+   "invented": true
+  },
+  {
+   "id": "ray_spink",
+   "name": "Ray Spink",
+   "called": "Spink",
+   "kind": "rival_man",
+   "age": 37,
+   "invented": true
+  },
+  {
+   "id": "kenny_varley",
+   "name": "Kenny Varley",
+   "called": "Varley",
+   "kind": "rival_man",
+   "age": 33,
+   "invented": true
+  },
+  {
+   "id": "eric_tharratt",
+   "name": "Eric Tharratt",
+   "called": "Mr Tharratt",
+   "kind": "minor",
+   "age": 54,
+   "invented": "proposed by the story frame"
+  },
+  {
+   "id": "derek_hebblewhite",
+   "name": "Derek Hebblewhite",
+   "called": "Mr Hebblewhite",
+   "kind": "officer",
+   "age": 49,
+   "invented": "proposed by the story frame"
+  },
+  {
+   "id": "trevor_garton",
+   "name": "Trevor Garton",
+   "called": "PC Garton",
+   "kind": "officer",
+   "age": 34,
+   "invented": "proposed by the story frame"
+  },
+  {
+   "id": "graham_wardell",
+   "name": "Graham Wardell",
+   "called": "DC Wardell",
+   "kind": "officer",
+   "age": 37,
+   "invented": "proposed by the story frame"
+  },
+  {
+   "id": "neil_screeton",
+   "name": "Neil Screeton",
+   "called": "Iveson's lad",
+   "kind": "minor",
+   "age": 26,
+   "invented": "proposed by the story frame"
+  },
+  {
+   "id": "pc_ibbotson",
+   "name": "Ian Ibbotson",
+   "called": "the constable",
+   "kind": "officer",
+   "age": 29,
+   "invented": true
+  },
+  {
+   "id": "pc_haigh",
+   "name": "Brian Haigh",
+   "called": "the other constable",
+   "kind": "officer",
+   "age": 45,
+   "invented": true
+  },
+  {
+   "id": "sgt_kitson",
+   "name": "Ray Kitson",
+   "called": "the custody sergeant",
+   "kind": "officer",
+   "age": 52,
+   "invented": true
+  },
+  {
+   "id": "len_ackroyd",
+   "name": "Len Ackroyd",
+   "called": "Len",
+   "kind": "minor",
+   "age": 48,
+   "invented": true
+  },
+  {
+   "id": "malcolm_ruddock",
+   "name": "Malcolm Ruddock",
+   "called": "Ruddock",
+   "kind": "minor",
+   "age": 39,
+   "invented": true
+  },
+  {
+   "id": "len_garside",
+   "name": "Len Garside",
+   "called": "the ship's cook",
+   "kind": "minor",
+   "age": 61,
+   "invented": true
+  },
+  {
+   "id": "bernard_gill",
+   "name": "Bernard Gill",
+   "called": "the car-lot man",
+   "kind": "minor",
+   "age": 55,
+   "invented": true
+  },
+  {
+   "id": "leonard_askew",
+   "name": "Leonard Askew",
+   "called": "Mr Askew",
+   "kind": "minor",
+   "age": 58,
+   "invented": true
+  },
+  {
+   "id": "aidan_keogh",
+   "name": "Aidan Keogh",
+   "called": "the old doctor",
+   "kind": "minor",
+   "age": 69,
+   "invented": true
+  },
+  {
+   "id": "harry_holt",
+   "name": "Harry Holt",
+   "called": "Holt",
+   "kind": "minor",
+   "age": 50,
+   "invented": true
+  },
+  {
+   "id": "phil_rawling",
+   "name": "Phil Rawling",
+   "called": "the glazier",
+   "kind": "minor",
+   "age": 44,
+   "invented": true
+  },
+  {
+   "id": "wilf_hardcastle",
+   "name": "Wilf Hardcastle",
+   "called": "the bird man",
+   "kind": "minor",
+   "age": 72,
+   "invented": true
+  },
+  {
+   "id": "edna_coulson",
+   "name": "Edna Coulson",
+   "called": "the cleaner",
+   "kind": "minor",
+   "age": 59,
+   "invented": true
+  },
+  {
+   "id": "bill_huxtable",
+   "name": "Bill Huxtable",
+   "called": "Bill",
+   "kind": "minor",
+   "age": 48,
+   "invented": true
+  },
+  {
+   "id": "jimmy_raw",
+   "name": "Jimmy Raw",
+   "called": "a docker",
+   "kind": "minor",
+   "age": 35,
+   "invented": true
+  },
+  {
+   "id": "ken_dobbin",
+   "name": "Ken Dobbin",
+   "called": "a docker",
+   "kind": "minor",
+   "age": 40,
+   "invented": true
+  },
+  {
+   "id": "eddie_birtwhistle",
+   "name": "Eddie Birtwhistle",
+   "called": "the porter",
+   "kind": "minor",
+   "age": 46,
+   "invented": true
+  },
+  {
+   "id": "leonard_tasker",
+   "name": "Leonard Tasker",
+   "called": "the laundry's owner",
+   "kind": "minor",
+   "age": 60,
+   "invented": true
+  },
+  {
+   "id": "margaret_lofthouse",
+   "name": "Margaret Lofthouse",
+   "called": "the poster woman",
+   "kind": "minor",
+   "age": 47,
+   "invented": true
+  },
+  {
+   "id": "stan_pickles",
+   "name": "Stan Pickles",
+   "called": "the works man",
+   "kind": "minor",
+   "age": 57,
+   "invented": true
+  },
+  {
+   "id": "rodney_usher",
+   "name": "Rodney Usher",
+   "called": "the shipping clerk",
+   "kind": "minor",
+   "age": 33,
+   "invented": true
+  },
+  {
+   "id": "douglas_fenwick",
+   "name": "Douglas Fenwick",
+   "called": "the officer who never reports",
+   "kind": "officer",
+   "age": 56,
+   "invented": true
+  },
+  {
+   "id": "anthony_raine",
+   "name": "Anthony Raine",
+   "called": "the brief",
+   "kind": "minor",
+   "age": 45,
+   "invented": true
+  },
+  {
+   "id": "dobson",
+   "name": "Walter Dobson",
+   "called": "Mr Dobson",
+   "kind": "minor",
+   "age": 53,
+   "invented": true
+  },
+  {
+   "id": "peart",
+   "name": "Ronald Peart",
+   "called": "Mr Peart",
+   "kind": "minor",
+   "age": 62,
+   "invented": true
+  },
+  {
+   "id": "arthur_brigham",
+   "name": "Arthur Brigham",
+   "called": "the grocer",
+   "kind": "minor",
+   "age": 58,
+   "invented": true
+  },
+  {
+   "id": "tadeusz_nowicki",
+   "name": "Tadeusz Nowicki",
+   "called": "Mr Nowicki",
+   "kind": "minor",
+   "age": 64,
+   "invented": true
+  },
+  {
+   "id": "joyce_ellerby",
+   "name": "Joyce Ellerby",
+   "called": "Mrs Ellerby",
+   "kind": "minor",
+   "age": 55,
+   "invented": true
+  },
+  {
+   "id": "george_cammidge",
+   "name": "George Cammidge",
+   "called": "the chandler",
+   "kind": "minor",
+   "age": 67,
+   "invented": true
+  },
+  {
+   "id": "vince_lazenby",
+   "name": "Vince Lazenby",
+   "called": "the snooker man",
+   "kind": "minor",
+   "age": 49,
+   "invented": true
+  },
+  {
+   "id": "sid_bulmer",
+   "name": "Sid Bulmer",
+   "called": "the trainer",
+   "kind": "minor",
+   "age": 61,
+   "invented": true
+  },
+  {
+   "id": "maggie_firth",
+   "name": "Maggie Firth",
+   "called": "the tea-stall woman",
+   "kind": "minor",
+   "age": 50,
+   "invented": true
+  },
+  {
+   "id": "norman_shillito",
+   "name": "Norman Shillito",
+   "called": "the barber",
+   "kind": "minor",
+   "age": 63,
+   "invented": true
+  },
+  {
+   "id": "beryl_wood",
+   "name": "Beryl Wood",
+   "called": "the launderette woman",
+   "kind": "minor",
+   "age": 48,
+   "invented": true
+  },
+  {
+   "id": "joe_cairns",
+   "name": "Joe Cairns",
+   "called": "the second-hand man",
+   "kind": "minor",
+   "age": 70,
+   "invented": true
+  },
+  {
+   "id": "harold_stead",
+   "name": "Harold Stead",
+   "called": "Harold",
+   "kind": "minor",
+   "age": 74,
+   "invented": true
+  },
+  {
+   "id": "dorothy_garbett",
+   "name": "Dorothy Garbett",
+   "called": "Dorothy",
+   "kind": "minor",
+   "age": 69,
+   "invented": true
+  },
+  {
+   "id": "raymond_kaye",
+   "name": "Raymond Kaye",
+   "called": "Raymond",
+   "kind": "minor",
+   "age": 41,
+   "invented": true
+  },
+  {
+   "id": "sandra_newbould",
+   "name": "Sandra Newbould",
+   "called": "Sandra",
+   "kind": "minor",
+   "age": 34,
+   "invented": true
+  },
+  {
+   "id": "tony_marsden",
+   "name": "Tony Marsden",
+   "called": "Tony",
+   "kind": "minor",
+   "age": 38,
+   "invented": true
+  },
+  {
+   "id": "janet_ruddle",
+   "name": "Janet Ruddle",
+   "called": "Janet",
+   "kind": "minor",
+   "age": 43,
+   "invented": true
+  },
+  {
+   "id": "gerald_pashley",
+   "name": "Gerald Pashley",
+   "called": "Gerald",
+   "kind": "minor",
+   "age": 66,
+   "invented": true
+  },
+  {
+   "id": "kathleen_moran",
+   "name": "Kathleen Moran",
+   "called": "Kathleen",
+   "kind": "minor",
+   "age": 58,
+   "invented": true
+  },
+  {
+   "id": "ahmed_rashid",
+   "name": "Ahmed Rashid",
+   "called": "Ahmed",
+   "kind": "minor",
+   "age": 46,
+   "invented": true
+  },
+  {
+   "id": "brian_tindall",
+   "name": "Brian Tindall",
+   "called": "Brian",
+   "kind": "minor",
+   "age": 52,
+   "invented": true
+  },
+  {
+   "id": "eileen_crabtree",
+   "name": "Eileen Crabtree",
+   "called": "Eileen",
+   "kind": "minor",
+   "age": 39,
+   "invented": true
+  },
+  {
+   "id": "terence_bould",
+   "name": "Terence Bould",
+   "called": "Terence",
+   "kind": "minor",
+   "age": 29,
+   "invented": true
+  }
+ ],
+ "open_points": [
+  "The story lane's CAST.md and CAST-CHANGES.md had not landed when this file was made; every name marked proposed by the frame, and every invented one, is open to them.",
+  "Frank Stathers (frame, proposed) is renamed Vic Stathers here so that the lead is the only Frank; the story lane should confirm or choose another.",
+  "Wave 1 placeholders replaced here: the cold-store manager 'Norman' becomes Eric Tharratt (frame); the Harbour Board 'clerk Susan' is Christine Pickering (canon regular, side story 20; Susan Coverdale is the customs officer); the bought officers' prototype hints PC Harker and DC Pollitt become the frame's PC Trevor Garton and DC Graham Wardell; Portside Cars' owner Len Wardle becomes Len Ackroyd so he is not mistaken for DC Wardell.",
+  "Prototype card texts that named a real police force or city (Humberside CID, Hull vowels) are scrubbed to CID and northern vowels."
+ ]
+}

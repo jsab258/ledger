@@ -1,0 +1,99 @@
+{
+ "id": "paddy_rourke",
+ "cast_id": "goran",
+ "called": "Paddy",
+ "name": "Paddy Rourke",
+ "age": 44,
+ "sex": "m",
+ "role": "A customs assistant on the docks; knows the bonded store",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.76,
+  "b": 0.6,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#5a3a28"
+  ],
+  "top": [
+   "tunic",
+   "#1c2540",
+   "#c9b04a"
+  ],
+  "bot": [
+   "trousers",
+   "#1c2540"
+  ],
+  "x": []
+ },
+ "nerve": 0.45,
+ "venal": 0.4,
+ "talk": 0.6,
+ "discretion": 0.52,
+ "temperament": {
+  "nerve": 0.45,
+  "dutiful": 0.3,
+  "willingness": 0.6,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "d_nr_41",
+ "sched": [
+  [
+   0.0,
+   "d_nr_41",
+   "asleep",
+   "mon-fri"
+  ],
+  [
+   7.75,
+   "customs",
+   "the docks",
+   "mon-fri"
+  ],
+  [
+   17.0,
+   "d_nr_41",
+   "home",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "d_nr_41",
+   "asleep",
+   "sat"
+  ],
+  [
+   0.0,
+   "d_nr_41",
+   "asleep",
+   "sun"
+  ],
+  [
+   9.5,
+   "chapel",
+   "Mass",
+   "sun"
+  ],
+  [
+   13.0,
+   "d_nr_41",
+   "home",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-paddy_rourke.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Paddy Rourke, 44, born in Wexford, a customs assistant on the docks for twenty years. Counts the bonded store's tobacco.",
+  "speak": "Easy, Irish, a story for every question and an answer for none.",
+  "life": "41 North Road; the caff two evenings.",
+  "rivals": "Has watched the Widow's loads come through for years."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "hook-cast.json goran (unnamed; named here)"
+}

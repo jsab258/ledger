@@ -1,0 +1,96 @@
+{
+ "id": "keith_garbutt",
+ "cast_id": "fixer",
+ "called": "the Fixer",
+ "name": "Keith Garbutt",
+ "age": 48,
+ "sex": "m",
+ "role": "The Fixer: brokers between all three rivals; carries a pager",
+ "kind": "principal",
+ "voice": null,
+ "look": {
+  "h": 1.74,
+  "b": 0.6,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#5a5048"
+  ],
+  "top": [
+   "car_coat",
+   "#4a4038",
+   "#2a2a2a"
+  ],
+  "bot": [
+   "trousers",
+   "#30302e"
+  ],
+  "x": [
+   "pager"
+  ]
+ },
+ "nerve": 0.6,
+ "venal": 0.66,
+ "talk": 0.6,
+ "discretion": 0.52,
+ "temperament": {
+  "nerve": 0.6,
+  "dutiful": 0.3,
+  "willingness": 0.6,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "mon-sat"
+  ],
+  [
+   10.5,
+   "caff",
+   "his table",
+   "mon-sat"
+  ],
+  [
+   12.0,
+   "edge_north",
+   "about town",
+   "mon-sat"
+  ],
+  [
+   19.0,
+   "snooker_hall",
+   "a corner table",
+   "mon-sat"
+  ],
+  [
+   22.0,
+   "edge_north",
+   "home in town",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-keith_garbutt.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Keith Garbutt, 48, the Fixer. Sells true reads of a rival, a meeting that then happens, and one truce a game. Paged from a box, rings that box back within half a game hour.",
+  "speak": "Friendly, careful, never says a name he has not been paid to say.",
+  "life": "Lives up in town; a table at the caff mid-morning, the snooker hall in the evening.",
+  "rivals": "Wants everybody still at the table; fears a winner."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon; 2.10.4; STORY-FRAME 2",
+ "fallback_role": "no reads and no truce"
+}

@@ -1,0 +1,99 @@
+{
+ "id": "christine_pickering",
+ "cast_id": "bruno",
+ "called": "Mrs Pickering",
+ "name": "Christine Pickering",
+ "age": 39,
+ "sex": "f",
+ "role": "A clerk at the Harbour Board's counter",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.66,
+  "b": 0.4,
+  "skin": 0,
+  "hair": [
+   "bob",
+   "#6a4a30"
+  ],
+  "top": [
+   "blouse",
+   "#e0d8c8",
+   "#2a3a5a"
+  ],
+  "bot": [
+   "skirt",
+   "#2a3a5a"
+  ],
+  "x": []
+ },
+ "nerve": 0.35,
+ "venal": 0.3,
+ "talk": 0.4,
+ "discretion": 0.68,
+ "temperament": {
+  "nerve": 0.35,
+  "dutiful": 0.3,
+  "willingness": 0.4,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "d_nr_9",
+ "sched": [
+  [
+   0.0,
+   "d_nr_9",
+   "asleep",
+   "mon-fri"
+  ],
+  [
+   8.75,
+   "harbour_board",
+   "the counter, sandwiches at her desk",
+   "mon-fri"
+  ],
+  [
+   16.75,
+   "d_nr_9",
+   "home",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "d_nr_9",
+   "asleep",
+   "sat"
+  ],
+  [
+   10.0,
+   "newsagent",
+   "the Saturday paper and a chat",
+   "sat"
+  ],
+  [
+   11.5,
+   "d_nr_9",
+   "home",
+   "sat"
+  ],
+  [
+   0.0,
+   "d_nr_9",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-christine_pickering.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Christine Pickering, 39, clerk at the Harbour Board's counter. Noticed a stranger asking who holds the yard's lease.",
+  "speak": "Formal, kind, notices manners.",
+  "life": "9 North Road; the newsagent's at dinner.",
+  "rivals": "Types the Board's letters, some of them to Mr Agar."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon regular; side story 20"
+}

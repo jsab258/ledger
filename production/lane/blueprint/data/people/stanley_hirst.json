@@ -1,0 +1,83 @@
+{
+ "id": "stanley_hirst",
+ "cast_id": "ines",
+ "called": "Mr Hirst",
+ "name": "Stanley Hirst",
+ "age": 63,
+ "sex": "m",
+ "role": "Rita's appraiser; a loupe in his waistcoat",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.7,
+  "b": 0.4,
+  "skin": 0,
+  "hair": [
+   "balding",
+   "#b0aaa0"
+  ],
+  "top": [
+   "waistcoat",
+   "#4a4038",
+   "#e8e0d0"
+  ],
+  "bot": [
+   "trousers",
+   "#3a3630"
+  ],
+  "x": [
+   "glasses"
+  ]
+ },
+ "nerve": 0.35,
+ "venal": 0.6,
+ "talk": 0.4,
+ "discretion": 0.68,
+ "temperament": {
+  "nerve": 0.35,
+  "dutiful": 0.3,
+  "willingness": 0.4,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "d_nr_35",
+ "sched": [
+  [
+   0.0,
+   "d_nr_35",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   9.0,
+   "ritas",
+   "the appraising",
+   "mon-sat"
+  ],
+  [
+   17.25,
+   "d_nr_35",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_nr_35",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-stanley_hirst.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Stanley Hirst, 63, appraises for Rita. Thirty years a jeweller's man in town before that.",
+  "speak": "Dry, exact, prices aloud.",
+  "life": "35 North Road.",
+  "rivals": "Knows what Danny's lads bring in and what it is worth."
+ },
+ "can_die": false,
+ "invented": true,
+ "src": "hook-cast.json ines (unnamed; named here)"
+}

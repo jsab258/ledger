@@ -1,0 +1,90 @@
+{
+ "id": "edith_stockill",
+ "cast_id": "hana",
+ "called": "Mrs Stockill",
+ "name": "Edith Stockill",
+ "age": 79,
+ "sex": "f",
+ "role": "A retired shipping clerk who writes letters and fills in forms at the newsagent's pension counter",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.54,
+  "b": 0.4,
+  "skin": 0,
+  "hair": [
+   "bun",
+   "#e8e4dc"
+  ],
+  "top": [
+   "coat",
+   "#4a5a6a",
+   "#d0c8b8"
+  ],
+  "bot": [
+   "skirt",
+   "#3a3a40"
+  ],
+  "x": [
+   "glasses",
+   "handbag"
+  ]
+ },
+ "nerve": 0.3,
+ "venal": 0.3,
+ "talk": 0.4,
+ "discretion": 0.68,
+ "temperament": {
+  "nerve": 0.3,
+  "dutiful": 0.3,
+  "willingness": 0.4,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "d_cl_12",
+ "sched": [
+  [
+   0.0,
+   "d_cl_12",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   9.25,
+   "adas",
+   "a word at Ada's window",
+   "mon-sat"
+  ],
+  [
+   10.0,
+   "newsagent",
+   "the pension counter",
+   "mon-sat"
+  ],
+  [
+   14.0,
+   "d_cl_12",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_cl_12",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-edith_stockill.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Edith Stockill, 79, forty years a shipping clerk. Writes the street's letters at the pension counter for nothing.",
+  "speak": "Exact, dry, a clerk's sentences.",
+  "life": "12 Chapel Lane.",
+  "rivals": "'Everybody round here talks.'"
+ },
+ "can_die": false,
+ "invented": false,
+ "src": "canon regular; side story 24"
+}

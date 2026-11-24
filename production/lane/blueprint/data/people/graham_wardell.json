@@ -1,0 +1,93 @@
+{
+ "id": "graham_wardell",
+ "cast_id": null,
+ "called": "DC Wardell",
+ "name": "Graham Wardell",
+ "age": 37,
+ "sex": "m",
+ "role": "Detective constable; bought: loses a statement once (200 pounds); a possible source of the tip",
+ "kind": "officer",
+ "voice": null,
+ "look": {
+  "h": 1.78,
+  "b": 0.5,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#4a3a2a"
+  ],
+  "top": [
+   "suit",
+   "#3a3a40",
+   "#c8c0b0"
+  ],
+  "bot": [
+   "trousers",
+   "#3a3a40"
+  ],
+  "x": []
+ },
+ "nerve": 0.4,
+ "venal": 0.74,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.4,
+  "dutiful": 0.2,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "home",
+   "mon-fri"
+  ],
+  [
+   9.0,
+   "police_station",
+   "CID",
+   "mon-fri"
+  ],
+  [
+   13.0,
+   "caff",
+   "a bacon sandwich",
+   "mon-fri"
+  ],
+  [
+   13.75,
+   "police_station",
+   "CID",
+   "mon-fri"
+  ],
+  [
+   18.0,
+   "edge_north",
+   "home",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home",
+   "sat-sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-graham_wardell.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "DC Graham Wardell, 37, works under Ellis. Will lose a statement once, for two hundred pounds. Ellis notices.",
+  "speak": "Smooth, quick, never in writing.",
+  "life": "The station.",
+  "rivals": "Owes money in town; Ellis is his sergeant."
+ },
+ "can_die": true,
+ "invented": "proposed by the story frame",
+ "src": "STORY-FRAME 2 (proposed); 2.6.8; police.json bought_lose_statement (whose prototype hint was DC Pollitt)"
+}

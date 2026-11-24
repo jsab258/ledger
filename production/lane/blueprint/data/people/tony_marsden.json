@@ -1,0 +1,93 @@
+{
+ "id": "tony_marsden",
+ "cast_id": null,
+ "called": "Tony",
+ "name": "Tony Marsden",
+ "age": 38,
+ "sex": "m",
+ "role": "A fishing-boat skipper who wants the fish dock before dawn on landing days",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.8,
+  "b": 0.65,
+  "skin": 0,
+  "hair": [
+   "woolly",
+   "#2a2a30"
+  ],
+  "top": [
+   "smock",
+   "#c06a2a",
+   "#2a2a2a"
+  ],
+  "bot": [
+   "waders",
+   "#2a2a2a"
+  ],
+  "x": []
+ },
+ "nerve": 0.45,
+ "venal": 0.58,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.45,
+  "dutiful": 0.4,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_nr_20",
+ "sched": [
+  [
+   0.0,
+   "d_nr_20",
+   "asleep",
+   "mon,wed,fri"
+  ],
+  [
+   4.0,
+   "d_nr_20",
+   "waiting for a car",
+   "mon,wed,fri"
+  ],
+  [
+   4.5,
+   "fish_dock",
+   "by cab: his boat",
+   "mon,wed,fri"
+  ],
+  [
+   12.0,
+   "caff",
+   "dinner",
+   "mon,wed,fri"
+  ],
+  [
+   14.0,
+   "d_nr_20",
+   "home",
+   "mon,wed,fri"
+  ],
+  [
+   0.0,
+   "d_nr_20",
+   "asleep",
+   "tue,thu,sat,sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-tony_marsden.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Tony Marsden, 38, skippers one of the last three boats landing at the fish dock. Pays in cash and haddock.",
+  "speak": "Few words, all of them about quotas.",
+  "life": "A fishing-boat skipper who wants the fish dock before dawn on landing days",
+  "rivals": "None of the three."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: 3.4.1 (40 fare people)"
+}

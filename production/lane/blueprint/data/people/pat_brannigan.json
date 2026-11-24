@@ -1,0 +1,136 @@
+{
+ "id": "pat_brannigan",
+ "cast_id": null,
+ "called": "Brannigan",
+ "name": "Pat Brannigan",
+ "age": 38,
+ "sex": "m",
+ "role": "The Widow's man at the net store and the van",
+ "kind": "rival_man",
+ "voice": null,
+ "look": {
+  "h": 1.78,
+  "b": 0.65,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#2a2a2a"
+  ],
+  "top": [
+   "car_coat",
+   "#3a3028",
+   "#2a2a2a"
+  ],
+  "bot": [
+   "trousers",
+   "#2a2a2a"
+  ],
+  "x": []
+ },
+ "nerve": 0.6,
+ "venal": 0.38,
+ "talk": 0.2,
+ "discretion": 0.84,
+ "temperament": {
+  "nerve": 0.6,
+  "dutiful": 0.65,
+  "willingness": 0.2,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "boarding_house",
+ "sched": [
+  [
+   0.0,
+   "boarding_house",
+   "asleep",
+   "mon"
+  ],
+  [
+   11.0,
+   "widow_base",
+   "the net store",
+   "mon"
+  ],
+  [
+   16.0,
+   "boxing_club",
+   "the club",
+   "mon"
+  ],
+  [
+   18.0,
+   "boarding_house",
+   "his room",
+   "mon"
+  ],
+  [
+   22.0,
+   "widow_base",
+   "the van to the last boat",
+   "mon"
+  ],
+  [
+   0.0,
+   "widow_base",
+   "the van back from the last boat",
+   "tue-sat"
+  ],
+  [
+   4.0,
+   "boarding_house",
+   "asleep",
+   "tue-sat"
+  ],
+  [
+   11.0,
+   "widow_base",
+   "the net store",
+   "tue-sat"
+  ],
+  [
+   16.0,
+   "boxing_club",
+   "the club",
+   "tue-sat"
+  ],
+  [
+   18.0,
+   "boarding_house",
+   "his room",
+   "tue-sat"
+  ],
+  [
+   22.0,
+   "widow_base",
+   "the van to the last boat",
+   "tue-sat"
+  ],
+  [
+   0.0,
+   "widow_base",
+   "the van back from the last boat",
+   "sun"
+  ],
+  [
+   4.0,
+   "boarding_house",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-pat_brannigan.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Pat Brannigan, 38, Irish-born, boxed for the club once. Minds the net store and drives the Widow's van to the last boat.",
+  "speak": "Soft-spoken, Irish, polite to a fault before a fight.",
+  "life": "11 Cold Store Road.",
+  "rivals": "The Widow's man."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: 2.10.2 (three named men each)",
+ "fight_kind": "boxer"
+}

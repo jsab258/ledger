@@ -1,0 +1,94 @@
+{
+ "id": "jimmy_raw",
+ "cast_id": null,
+ "called": "a docker",
+ "name": "Jimmy Raw",
+ "age": 35,
+ "sex": "m",
+ "role": "A docker from the pen; one of the two dockers by car two who rob a beaten man (RT2-13)",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.8,
+  "b": 0.7,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#3a2a1a"
+  ],
+  "top": [
+   "donkey",
+   "#1c1f26",
+   "#e07a1a"
+  ],
+  "bot": [
+   "jeans",
+   "#30384a"
+  ],
+  "x": []
+ },
+ "nerve": 0.55,
+ "venal": 0.58,
+ "talk": 0.4,
+ "discretion": 0.68,
+ "temperament": {
+  "nerve": 0.55,
+  "dutiful": 0.4,
+  "willingness": 0.4,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "d_nr_2",
+ "sched": [
+  [
+   0.0,
+   "d_nr_2",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   5.75,
+   "dock_gate",
+   "the pen",
+   "mon-sat"
+  ],
+  [
+   14.0,
+   "rank_mickeys",
+   "by car two",
+   "mon-sat"
+  ],
+  [
+   15.5,
+   "snooker_hall",
+   "a frame",
+   "mon-sat"
+  ],
+  [
+   18.5,
+   "d_nr_2",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_nr_2",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-jimmy_raw.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Jimmy Raw, 35, picked at the pen three days in five. Drinks tea at the caff and fights for money.",
+  "speak": "Loud, jeering.",
+  "life": "2 North Road.",
+  "rivals": "Picks a fight for the Widow's men when told."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: RT2-13 (the dockers by car two); 1.3.12",
+ "fight_kind": "brawler"
+}

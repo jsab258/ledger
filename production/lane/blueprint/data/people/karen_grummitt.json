@@ -1,0 +1,93 @@
+{
+ "id": "karen_grummitt",
+ "cast_id": "petra",
+ "called": "Karen",
+ "name": "Karen Grummitt",
+ "age": 25,
+ "sex": "f",
+ "role": "The ferry's ticket clerk; lodges at Regent House and owes a fortnight",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.64,
+  "b": 0.35,
+  "skin": 0,
+  "hair": [
+   "permed_long",
+   "#b08050"
+  ],
+  "top": [
+   "uniform_jacket",
+   "#2a3a6a",
+   "#c0a040"
+  ],
+  "bot": [
+   "skirt",
+   "#2a3a6a"
+  ],
+  "x": []
+ },
+ "nerve": 0.3,
+ "venal": 0.3,
+ "talk": 0.4,
+ "discretion": 0.68,
+ "temperament": {
+  "nerve": 0.3,
+  "dutiful": 0.3,
+  "willingness": 0.4,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "boarding_house",
+ "sched": [
+  [
+   0.0,
+   "boarding_house",
+   "her room",
+   "mon-sat"
+  ],
+  [
+   6.5,
+   "ferry_landing",
+   "the ticket window",
+   "mon-sat"
+  ],
+  [
+   19.0,
+   "boarding_house",
+   "her room",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "boarding_house",
+   "her room",
+   "sun"
+  ],
+  [
+   10.5,
+   "caff",
+   "Sunday breakfast",
+   "sun"
+  ],
+  [
+   11.75,
+   "boarding_house",
+   "her room",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-karen_grummitt.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Karen Grummitt, 25, sells tickets at the ferry window and sees who goes over and who comes back.",
+  "speak": "Quiet, quick, wants out of the Hook.",
+  "life": "Lodges at Regent House.",
+  "rivals": "Has seen the Widow's men meet the last boat."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon regular; 2.11.1; side story 28"
+}

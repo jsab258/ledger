@@ -1,0 +1,64 @@
+{
+ "id": "sgt_kitson",
+ "cast_id": null,
+ "called": "the custody sergeant",
+ "name": "Ray Kitson",
+ "age": 52,
+ "sex": "m",
+ "role": "The custody sergeant: three goes at 'Nowak'",
+ "kind": "officer",
+ "voice": null,
+ "look": {
+  "h": 1.78,
+  "b": 0.75,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#a09a90"
+  ],
+  "top": [
+   "shirt",
+   "#e8e8f0",
+   "#14161c"
+  ],
+  "bot": [
+   "trousers",
+   "#14161c"
+  ],
+  "x": [
+   "stripes"
+  ]
+ },
+ "nerve": 0.6,
+ "venal": 0.26,
+ "talk": 0.6,
+ "discretion": 0.52,
+ "temperament": {
+  "nerve": 0.6,
+  "dutiful": 0.8,
+  "willingness": 0.6,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "police_station",
+   "the custody desk"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-sgt_kitson.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Sergeant Ray Kitson, 52, the custody desk. Cannot say Nowak; tries three times.",
+  "speak": "Weary, comic, by the book.",
+  "life": "The station's custody desk.",
+  "rivals": "Has seen every face on the Hook through the hatch."
+ },
+ "can_die": false,
+ "invented": true,
+ "src": "invented: STORY-FRAME 5 (the sergeant's three goes at Nowak)"
+}

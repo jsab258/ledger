@@ -1,0 +1,113 @@
+{
+ "id": "winifred_duggleby",
+ "cast_id": "magda",
+ "called": "Mrs Duggleby",
+ "name": "Winifred Duggleby",
+ "age": 76,
+ "sex": "f",
+ "role": "Retired; cleans the chapel and does its flowers",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.55,
+  "b": 0.45,
+  "skin": 0,
+  "hair": [
+   "set",
+   "#e0dcd4"
+  ],
+  "top": [
+   "coat",
+   "#6a5a6a",
+   "#d8d0c0"
+  ],
+  "bot": [
+   "skirt",
+   "#3a3640"
+  ],
+  "x": [
+   "headscarf"
+  ]
+ },
+ "nerve": 0.35,
+ "venal": 0.3,
+ "talk": 0.4,
+ "discretion": 0.68,
+ "temperament": {
+  "nerve": 0.35,
+  "dutiful": 0.3,
+  "willingness": 0.4,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "d_cl_16",
+ "sched": [
+  [
+   0.0,
+   "d_cl_16",
+   "asleep",
+   "mon-fri"
+  ],
+  [
+   8.0,
+   "chapel",
+   "the flowers and the brass",
+   "mon-fri"
+  ],
+  [
+   11.5,
+   "d_cl_16",
+   "home",
+   "mon-fri"
+  ],
+  [
+   15.0,
+   "adas",
+   "a cup with Ada",
+   "mon-fri"
+  ],
+  [
+   18.5,
+   "d_cl_16",
+   "home",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "d_cl_16",
+   "asleep",
+   "sat"
+  ],
+  [
+   0.0,
+   "d_cl_16",
+   "asleep",
+   "sun"
+  ],
+  [
+   9.5,
+   "chapel",
+   "Mass",
+   "sun"
+  ],
+  [
+   12.0,
+   "d_cl_16",
+   "home",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-winifred_duggleby.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Winifred Duggleby, 76, a widow who cleans the chapel and does its flowers. Her husband's anniversary falls this month.",
+  "speak": "Precise, proper, a little deaf on purpose. 'Nobody does that any more.'",
+  "life": "16 Chapel Lane. The chapel every weekday morning.",
+  "rivals": "Has heard of all three and approves of none."
+ },
+ "can_die": false,
+ "invented": false,
+ "src": "canon regular; side stories 21, 23"
+}

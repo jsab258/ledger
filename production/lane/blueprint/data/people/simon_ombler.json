@@ -1,0 +1,84 @@
+{
+ "id": "simon_ombler",
+ "cast_id": null,
+ "called": "Mr Ombler",
+ "name": "Simon Ombler",
+ "age": 44,
+ "sex": "m",
+ "role": "Agar's managing clerk; signs his letters; Agar's lieutenant on the ladder",
+ "kind": "rival_man",
+ "voice": null,
+ "look": {
+  "h": 1.75,
+  "b": 0.35,
+  "skin": 0,
+  "hair": [
+   "parted",
+   "#4a3a2a"
+  ],
+  "top": [
+   "suit",
+   "#3a3a40",
+   "#e8e4dc"
+  ],
+  "bot": [
+   "trousers",
+   "#3a3a40"
+  ],
+  "x": [
+   "glasses"
+  ]
+ },
+ "nerve": 0.35,
+ "venal": 0.42,
+ "talk": 0.4,
+ "discretion": 0.68,
+ "temperament": {
+  "nerve": 0.35,
+  "dutiful": 0.6,
+  "willingness": 0.4,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "mon-fri"
+  ],
+  [
+   9.25,
+   "agar_base",
+   "the front office",
+   "mon-fri"
+  ],
+  [
+   17.25,
+   "edge_north",
+   "home in town",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "sat-sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-simon_ombler.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Simon Ombler, 44, Mr Agar's managing clerk. Signs the letters. Keeps the cold-store book in the back room.",
+  "speak": "Thin, polite, 'I am instructed to say'.",
+  "life": "Up in town; the agents' office on Cold Store Road weekdays.",
+  "rivals": "Agar's lieutenant: takes his ladder at the same rung if Agar falls (RT2-05)."
+ },
+ "can_die": true,
+ "invented": "proposed by the story frame",
+ "src": "STORY-FRAME 4 (proposed); 2.10.2 (a named lieutenant)",
+ "fallback_role": "the agents' senior partner's letters come by post"
+}

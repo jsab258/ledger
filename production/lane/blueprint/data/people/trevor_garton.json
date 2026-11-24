@@ -1,0 +1,96 @@
+{
+ "id": "trevor_garton",
+ "cast_id": null,
+ "called": "PC Garton",
+ "name": "Trevor Garton",
+ "age": 34,
+ "sex": "m",
+ "role": "Patrol car constable; bought: looks away from a car once (50 pounds)",
+ "kind": "officer",
+ "voice": null,
+ "look": {
+  "h": 1.82,
+  "b": 0.6,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#3a2a1a"
+  ],
+  "top": [
+   "tunic",
+   "#14161c",
+   "#c9c9c9"
+  ],
+  "bot": [
+   "trousers",
+   "#14161c"
+  ],
+  "x": [
+   "cap"
+  ]
+ },
+ "nerve": 0.5,
+ "venal": 0.66,
+ "talk": 0.4,
+ "discretion": 0.68,
+ "temperament": {
+  "nerve": 0.5,
+  "dutiful": 0.3,
+  "willingness": 0.4,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "home",
+   "mon-fri"
+  ],
+  [
+   14.0,
+   "police_station",
+   "the late turn",
+   "mon-fri"
+  ],
+  [
+   15.0,
+   "rank_north",
+   "the patrol car's stop",
+   "mon-fri"
+  ],
+  [
+   15.5,
+   "police_station",
+   "the patrol car's round (police.json)",
+   "mon-fri"
+  ],
+  [
+   22.0,
+   "edge_north",
+   "home",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home",
+   "sat-sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-trevor_garton.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "PC Trevor Garton, 34, drives the patrol car. Will look away from a car once, for fifty pounds.",
+  "speak": "Bluff, matey, 'not my business, sir'.",
+  "life": "The station; the patrol car's round.",
+  "rivals": "Ellis would have his warrant card."
+ },
+ "can_die": true,
+ "invented": "proposed by the story frame",
+ "src": "STORY-FRAME 2 (proposed); 2.6.8; police.json bought_look_away (whose prototype hint was PC Harker)",
+ "fallback_role": "the second constable"
+}

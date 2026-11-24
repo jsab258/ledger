@@ -1,0 +1,87 @@
+{
+ "id": "ahmed_rashid",
+ "cast_id": null,
+ "called": "Ahmed",
+ "name": "Ahmed Rashid",
+ "age": 46,
+ "sex": "m",
+ "role": "Keeps a corner shop in town; buys stock at the Thursday market",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.74,
+  "b": 0.6,
+  "skin": 4,
+  "hair": [
+   "short",
+   "#1a1a1a"
+  ],
+  "top": [
+   "anorak",
+   "#3a4a3a",
+   "#2a2a2a"
+  ],
+  "bot": [
+   "trousers",
+   "#3a3630"
+  ],
+  "x": []
+ },
+ "nerve": 0.45,
+ "venal": 0.58,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.45,
+  "dutiful": 0.4,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "thu"
+  ],
+  [
+   7.5,
+   "market_stalls_quay",
+   "the barrows",
+   "thu"
+  ],
+  [
+   9.0,
+   "rank_mickeys",
+   "waiting for a car with boxes",
+   "thu"
+  ],
+  [
+   9.5,
+   "edge_north",
+   "back to his shop",
+   "thu"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "mon-wed,fri-sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-ahmed_rashid.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Ahmed Rashid, 46, came from Mirpur in 1966, keeps a corner shop in town. Buys at the barrows on Thursdays and takes a cab back with the boxes.",
+  "speak": "Dry, businesslike, haggles the fare for fun.",
+  "life": "Keeps a corner shop in town; buys stock at the Thursday market",
+  "rivals": "None of the three."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: 3.4.1 (40 fare people)"
+}

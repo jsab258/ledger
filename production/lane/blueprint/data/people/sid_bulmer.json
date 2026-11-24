@@ -1,0 +1,100 @@
+{
+ "id": "sid_bulmer",
+ "cast_id": null,
+ "called": "the trainer",
+ "name": "Sid Bulmer",
+ "age": 61,
+ "sex": "m",
+ "role": "The boxing club's head trainer; men who train there can be recruited",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.72,
+  "b": 0.65,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#a09a90"
+  ],
+  "top": [
+   "tracksuit",
+   "#2a2a4a",
+   "#e0e0e0"
+  ],
+  "bot": [
+   "trackies",
+   "#2a2a4a"
+  ],
+  "x": []
+ },
+ "nerve": 0.7,
+ "venal": 0.42,
+ "talk": 0.3,
+ "discretion": 0.76,
+ "temperament": {
+  "nerve": 0.7,
+  "dutiful": 0.6,
+  "willingness": 0.3,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "d_nr_15",
+ "sched": [
+  [
+   0.0,
+   "d_nr_15",
+   "asleep",
+   "mon,wed,fri"
+  ],
+  [
+   17.5,
+   "boxing_club",
+   "the club night",
+   "mon,wed,fri"
+  ],
+  [
+   22.0,
+   "d_nr_15",
+   "home",
+   "mon,wed,fri"
+  ],
+  [
+   0.0,
+   "d_nr_15",
+   "asleep",
+   "sat"
+  ],
+  [
+   9.5,
+   "boxing_club",
+   "Saturday morning",
+   "sat"
+  ],
+  [
+   13.25,
+   "d_nr_15",
+   "home",
+   "sat"
+  ],
+  [
+   0.0,
+   "d_nr_15",
+   "asleep",
+   "tue,thu,sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-sid_bulmer.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Sid Bulmer, 61, head trainer at the boxing club. Fought for the area title in 1952.",
+  "speak": "Gruff, short, 'hands up'.",
+  "life": "15 North Road.",
+  "rivals": "Keeps the club neutral ground."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: places.json boxing_club (head trainer); 2.11.1",
+ "fight_kind": "boxer"
+}

@@ -1,0 +1,82 @@
+{
+ "id": "bernard_gill",
+ "cast_id": null,
+ "called": "the car-lot man",
+ "name": "Bernard Gill",
+ "age": 55,
+ "sex": "m",
+ "role": "The used-car lot by the north road; cars at 600 to 1,200 pounds",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.76,
+  "b": 0.75,
+  "skin": 0,
+  "hair": [
+   "comb_over",
+   "#6a5a4a"
+  ],
+  "top": [
+   "sheepskin",
+   "#8a6a4a",
+   "#e0d0b0"
+  ],
+  "bot": [
+   "trousers",
+   "#3a3630"
+  ],
+  "x": []
+ },
+ "nerve": 0.4,
+ "venal": 0.66,
+ "talk": 0.7,
+ "discretion": 0.44,
+ "temperament": {
+  "nerve": 0.4,
+  "dutiful": 0.3,
+  "willingness": 0.7,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "home",
+   "mon-sat"
+  ],
+  [
+   8.75,
+   "car_lot",
+   "the lot's hut",
+   "mon-sat"
+  ],
+  [
+   17.25,
+   "edge_north",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-bernard_gill.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Bernard Gill, 55, sells used cars off the lot by the north road. Every car one careful owner.",
+  "speak": "Patter, 'I'll not lie to you'.",
+  "life": "The lot's hut.",
+  "rivals": "Sells to all three."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: 2.15.1; RT2-05 (the car-lot man)",
+ "fallback_role": "cars come from a man selling one (RT2-05)"
+}

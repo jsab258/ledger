@@ -1,0 +1,75 @@
+{
+ "id": "norman_dent",
+ "cast_id": "filip",
+ "called": "Norman",
+ "name": "Norman Dent",
+ "age": 57,
+ "sex": "m",
+ "role": "The night watchman on the warehouse row",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.71,
+  "b": 0.6,
+  "skin": 1,
+  "hair": [
+   "woolly",
+   "#2a2a30"
+  ],
+  "top": [
+   "duffel",
+   "#3a3a30",
+   "#2a2a2a"
+  ],
+  "bot": [
+   "trousers",
+   "#2a2a2a"
+  ],
+  "x": []
+ },
+ "nerve": 0.6,
+ "venal": 0.3,
+ "talk": 0.4,
+ "discretion": 0.5,
+ "temperament": {
+  "nerve": 0.6,
+  "dutiful": 0.3,
+  "willingness": 0.6,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "d_cl_20",
+ "sched": [
+  [
+   0.0,
+   "dents_warehouses",
+   "his round of the row"
+  ],
+  [
+   7.0,
+   "d_cl_20",
+   "home to bed"
+  ],
+  [
+   19.5,
+   "dents_warehouses",
+   "his round of the row"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-norman_dent.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "The night watchman on the warehouse row. He has a hut and a brazier on the quay and walks the row on the hour.",
+  "speak": "Nervous, mumbling, says \"I couldn't say\" a great deal.",
+  "life": "Ex-docker, kept on as watchman when the rest went. Terry Hodgson brings him a paper at night.",
+  "fire": "He was the watchman the night No. 4 burned. He says he was at the far end, by No. 1, and saw the glow.",
+  "rivals": "He is paid by the company that owns the row. The cheque is signed by Agar's office.",
+  "secret": "He saw one of Mickey's cars pull away from No. 4 with its lights off, and he had been told to be at the far end."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon; 2.11.1; side story 31",
+ "fight_kind": "big_man"
+}

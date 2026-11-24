@@ -1,0 +1,97 @@
+{
+ "id": "rita_welburn",
+ "cast_id": "rita",
+ "called": "Rita",
+ "name": "Rita Welburn",
+ "age": 56,
+ "sex": "f",
+ "role": "Keeps Rita's, the pawn; Danny's fence and eyes",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.64,
+  "b": 0.55,
+  "skin": 1,
+  "hair": [
+   "perm",
+   "#2a2020"
+  ],
+  "top": [
+   "blouse",
+   "#3a1f3a",
+   "#c9a84a"
+  ],
+  "bot": [
+   "skirt",
+   "#1f1f24"
+  ],
+  "x": [
+   "glasses",
+   "earrings"
+  ]
+ },
+ "nerve": 0.55,
+ "venal": 0.7,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.55,
+  "dutiful": 0.3,
+  "willingness": 0.6,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "d_qs_4",
+ "sched": [
+  [
+   0.0,
+   "d_qs_4",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   8.75,
+   "ritas",
+   "opening up",
+   "mon-sat"
+  ],
+  [
+   13.0,
+   "ritas",
+   "the step, a cigarette",
+   "mon-sat"
+  ],
+  [
+   13.5,
+   "ritas",
+   "the counter",
+   "mon-sat"
+  ],
+  [
+   17.75,
+   "d_qs_4",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_qs_4",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-rita_welburn.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "She keeps Rita's, the pawnshop on the corner of Chapel Lane. Its window is lit late; she does her books at night.",
+  "speak": "Hard, even, unhurried. Prices everything, people included.",
+  "life": "Thirty years behind the grille. Since the docks went she has taken in more wedding rings than she can sell.",
+  "fire": "Somebody pledged a warehouse padlock key with her the week after. She did not ask.",
+  "rivals": "She will lend to anyone and owes nobody, which is how she likes it. Cammack's lads tried to sell her car stereos and she sent them off."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon; 2.10.2; side story 25"
+}

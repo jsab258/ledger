@@ -1,0 +1,1104 @@
+{
+ "file": "ties.json",
+ "version": "wave2-2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "production/specs/hook-cast.json ties (81, ids mapped to people/ ids)",
+  "the story frame (STORY-FRAME-2026-11-26 sections 2 to 4), BLUEPRINT-02 2.10.2 (each rival a lieutenant and three named men), the regulars' work places",
+  "meetings computed from routines.json by tools/wave2/build_ties.py: same place, both there (or within 20 m of each other, hook-cast.json's talk range) 30 game minutes or more"
+ ],
+ "format": "[a, b, strength 0..1, 'place hh:mm Days; ...'] with at most three meetings, the most frequent first; an empty string means the two never meet in a week (listed in never_meet)",
+ "never_meet": [
+  [
+   "old_firm_man",
+   "darren_milner"
+  ],
+  [
+   "alison_sedman",
+   "darren_milner"
+  ],
+  [
+   "karen_grummitt",
+   "alison_sedman"
+  ],
+  [
+   "gary_mawer",
+   "ron_kirby"
+  ],
+  [
+   "christine_pickering",
+   "karen_grummitt"
+  ],
+  [
+   "paddy_rourke",
+   "darren_milner"
+  ],
+  [
+   "paddy_rourke",
+   "albert_suggitt"
+  ],
+  [
+   "colin_mastin",
+   "darren_milner"
+  ],
+  [
+   "colin_mastin",
+   "ron_kirby"
+  ],
+  [
+   "dennis_iveson",
+   "darren_milner"
+  ],
+  [
+   "dennis_iveson",
+   "ron_kirby"
+  ],
+  [
+   "gordon_leckenby",
+   "alison_sedman"
+  ],
+  [
+   "norman_dent",
+   "darren_milner"
+  ],
+  [
+   "ron_kirby",
+   "danny_cammack"
+  ],
+  [
+   "ron_kirby",
+   "lily_tang"
+  ],
+  [
+   "ron_kirby",
+   "stathers"
+  ],
+  [
+   "danny_cammack",
+   "rita_welburn"
+  ],
+  [
+   "shane_boddy",
+   "dennis_iveson"
+  ],
+  [
+   "maureen_jensen",
+   "kevin_needham"
+  ],
+  [
+   "geoffrey_agar",
+   "susan_coverdale"
+  ],
+  [
+   "geoffrey_agar",
+   "anthony_raine"
+  ],
+  [
+   "geoffrey_agar",
+   "alan_sowerby"
+  ],
+  [
+   "carol_ellis",
+   "alison_sedman"
+  ],
+  [
+   "pc_ibbotson",
+   "pc_haigh"
+  ],
+  [
+   "pc_haigh",
+   "maggie_firth"
+  ],
+  [
+   "keith_garbutt",
+   "maureen_jensen"
+  ],
+  [
+   "keith_garbutt",
+   "geoffrey_agar"
+  ],
+  [
+   "albert_suggitt",
+   "cyril_pashby"
+  ],
+  [
+   "albert_suggitt",
+   "wilf_hardcastle"
+  ],
+  [
+   "philip_danby",
+   "janet_ruddle"
+  ],
+  [
+   "philip_danby",
+   "alison_sedman"
+  ]
+ ],
+ "open_points": [
+  "Pairs in never_meet keep their tie (a rumour can still pass by a third person) but the real town's talk-range check will show them as friends who never meet; the keeper decides whether to add a shared hour or drop the tie."
+ ],
+ "ties": [
+  [
+   "old_firm_man",
+   "darren_milner",
+   0.45,
+   ""
+  ],
+  [
+   "ron_kirby",
+   "sheila_dunn",
+   0.7,
+   "laveracks 12:00 Mon,Tue,Wed,Thu,Fri,Sat; rank_mickeys 08:30 Mon,Tue,Wed,Fri,Sat; rank_mickeys 13:15 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "ron_kirby",
+   "darren_milner",
+   0.8,
+   "rank_mickeys 11:00 Mon,Wed,Fri; laveracks 12:00 Mon,Wed,Fri; rank_mickeys 12:30 Mon,Wed,Fri"
+  ],
+  [
+   "darren_milner",
+   "sheila_dunn",
+   0.6,
+   "ritas 11:00 Mon,Wed,Fri; phone_parade 15:00 Mon,Wed,Fri; rank_mickeys 16:00 Mon,Wed,Fri"
+  ],
+  [
+   "ada_vane",
+   "sheila_dunn",
+   0.6,
+   "adas 08:30 Mon,Tue,Wed,Fri,Sat; laveracks 10:45 Mon,Tue,Wed,Fri,Sat; adas 11:15 Mon,Tue,Wed,Fri,Sat"
+  ],
+  [
+   "ada_vane",
+   "darren_milner",
+   0.5,
+   "adas 11:15 Mon,Wed,Fri; adas 12:30 Mon,Wed,Fri; adas 15:00 Mon,Wed,Fri"
+  ],
+  [
+   "brenda_laverack",
+   "ada_vane",
+   0.5,
+   "laveracks 08:15 Mon,Tue,Wed,Thu,Fri,Sat; laveracks 10:45 Mon,Tue,Wed,Fri,Sat; laveracks 11:15 Mon,Tue,Wed,Fri,Sat"
+  ],
+  [
+   "brenda_laverack",
+   "darren_milner",
+   0.4,
+   "laveracks 11:00 Mon,Wed,Fri; laveracks 12:30 Mon,Wed,Fri; laveracks 15:00 Mon,Wed,Fri"
+  ],
+  [
+   "lee_drewery",
+   "ron_kirby",
+   0.6,
+   "rank_mickeys 12:00 Mon,Tue,Wed,Thu,Fri,Sat; rank_mickeys 12:30 Mon,Tue,Wed,Thu,Fri,Sat; ritas 18:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "lee_drewery",
+   "darren_milner",
+   0.3,
+   "rank_mickeys 12:00 Mon,Wed,Fri; rank_mickeys 12:30 Mon,Wed,Fri; ritas 18:00 Mon,Wed,Fri"
+  ],
+  [
+   "alison_sedman",
+   "ada_vane",
+   0.7,
+   "newsagent 10:00 Tue; rank_mickeys 10:45 Tue; newsagent 09:30 Thu"
+  ],
+  [
+   "alison_sedman",
+   "darren_milner",
+   0.6,
+   ""
+  ],
+  [
+   "alison_sedman",
+   "sheila_dunn",
+   0.5,
+   "rank_mickeys 10:30 Tue,Thu"
+  ],
+  [
+   "alison_sedman",
+   "ron_kirby",
+   0.5,
+   "rank_mickeys 10:30 Tue,Thu"
+  ],
+  [
+   "alison_sedman",
+   "brenda_laverack",
+   0.4,
+   "rank_mickeys 10:30 Tue,Thu"
+  ],
+  [
+   "wayne_harrison",
+   "sheila_dunn",
+   0.4,
+   "ritas 10:00 Mon,Tue,Wed,Thu,Fri,Sat; ritas 13:15 Mon,Tue,Wed,Thu,Fri; ritas 16:00 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "wayne_harrison",
+   "darren_milner",
+   0.5,
+   "d_nr_27 00:00 Mon,Tue,Wed,Thu,Fri,Sat,Sun; ritas 11:00 Mon,Wed,Fri; ritas 12:30 Mon,Wed,Fri"
+  ],
+  [
+   "kevin_needham",
+   "lee_drewery",
+   0.5,
+   "rank_mickeys 12:00 Mon,Tue,Wed,Thu,Fri,Sat; rank_mickeys 13:15 Mon,Tue,Wed,Thu,Fri,Sat; rank_mickeys 18:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "kevin_needham",
+   "darren_milner",
+   0.4,
+   "rank_mickeys 11:00 Mon,Wed,Fri; rank_mickeys 15:00 Mon,Wed,Fri; rank_mickeys 16:00 Mon,Wed,Fri"
+  ],
+  [
+   "rita_welburn",
+   "wayne_harrison",
+   0.6,
+   "ritas 10:00 Mon,Tue,Wed,Thu,Fri,Sat; ritas 13:00 Mon,Tue,Wed,Thu,Fri,Sat; ritas 13:30 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "rita_welburn",
+   "lee_drewery",
+   0.4,
+   "ritas 12:00 Mon,Tue,Wed,Thu,Fri,Sat; ritas 13:00 Mon,Tue,Wed,Thu,Fri,Sat; ritas 13:30 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "rita_welburn",
+   "susan_coverdale",
+   0.4,
+   "ritas 17:15 Mon,Tue,Wed,Thu,Fri; d_qs_4 17:45 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "nora_cronin",
+   "ada_vane",
+   0.5,
+   "laveracks 14:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "nora_cronin",
+   "brenda_laverack",
+   0.4,
+   "laveracks 14:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "susan_coverdale",
+   "lee_drewery",
+   0.4,
+   "d_nr_14 00:00 Mon,Tue,Wed,Thu,Fri,Sat,Sun; d_nr_14 19:15 Mon,Tue,Wed,Thu,Fri,Sat; ritas 18:00 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "june_suddaby",
+   "sheila_dunn",
+   0.5,
+   "mickeys 10:00 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "june_suddaby",
+   "brendan_walsh",
+   0.45,
+   "chapel 09:30 Sun"
+  ],
+  [
+   "brendan_walsh",
+   "nora_cronin",
+   0.7,
+   "priests_house 09:00 Mon,Tue,Wed,Thu,Fri,Sat; adas 14:00 Mon,Tue,Wed,Thu,Fri,Sat; priests_house 18:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "brendan_walsh",
+   "ada_vane",
+   0.6,
+   "adas 13:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "pauline_kitching",
+   "lee_drewery",
+   0.5,
+   "mickeys 12:20 Mon,Tue,Wed,Thu,Fri,Sat; mickeys 18:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "pauline_kitching",
+   "kevin_needham",
+   0.45,
+   "mickeys 07:00 Mon,Tue,Wed,Thu,Fri,Sat; mickeys 13:15 Mon,Tue,Wed,Thu,Fri,Sat; mickeys 12:00 Sun"
+  ],
+  [
+   "pauline_kitching",
+   "darren_milner",
+   0.4,
+   "mickeys 11:00 Mon,Wed,Fri; mickeys 12:30 Mon,Wed,Fri; mickeys 15:00 Mon,Wed,Fri"
+  ],
+  [
+   "hal_metcalfe",
+   "darren_milner",
+   0.3,
+   "d_qs_6 17:45 Mon,Wed,Fri; d_qs_6 18:30 Tue,Thu,Sat; ritas 11:00 Mon"
+  ],
+  [
+   "hal_metcalfe",
+   "rita_welburn",
+   0.3,
+   "d_qs_6 00:00 Mon,Tue,Wed,Thu,Fri,Sat,Sun; d_qs_6 08:45 Mon,Tue,Wed,Thu,Fri,Sat; d_qs_6 17:45 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "karen_grummitt",
+   "alison_sedman",
+   0.4,
+   ""
+  ],
+  [
+   "karen_grummitt",
+   "ron_kirby",
+   0.3,
+   "ferry_landing 17:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "gary_mawer",
+   "ron_kirby",
+   0.3,
+   ""
+  ],
+  [
+   "gary_mawer",
+   "darren_milner",
+   0.4,
+   "d_nr_30 00:00 Mon,Tue,Wed,Thu,Fri,Sat,Sun; d_nr_30 22:30 Mon,Wed,Fri; d_nr_30 21:00 Tue,Thu,Sat"
+  ],
+  [
+   "winifred_duggleby",
+   "ada_vane",
+   0.5,
+   "adas 15:00 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "christine_pickering",
+   "karen_grummitt",
+   0.3,
+   ""
+  ],
+  [
+   "sylvia_rennison",
+   "ada_vane",
+   0.4,
+   "laveracks 10:45 Mon,Tue,Wed,Fri; laveracks 11:00 Thu"
+  ],
+  [
+   "sylvia_rennison",
+   "alison_sedman",
+   0.5,
+   "laveracks 10:30 Tue,Thu; boarding_house 11:30 Tue,Thu"
+  ],
+  [
+   "sylvia_rennison",
+   "ron_kirby",
+   0.3,
+   "boarding_house 06:30 Mon,Tue,Wed,Thu,Fri,Sat; laveracks 10:30 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "paddy_rourke",
+   "darren_milner",
+   0.5,
+   ""
+  ],
+  [
+   "paddy_rourke",
+   "albert_suggitt",
+   0.3,
+   ""
+  ],
+  [
+   "tracey_scarth",
+   "ada_vane",
+   0.3,
+   "launderette 10:00 Mon,Tue,Wed,Fri,Sat"
+  ],
+  [
+   "tracey_scarth",
+   "darren_milner",
+   0.5,
+   "d_nr_19 00:00 Mon,Tue,Wed,Thu,Fri,Sat,Sun; launderette 11:00 Mon,Wed,Fri; launderette 13:30 Mon,Wed,Fri"
+  ],
+  [
+   "colin_mastin",
+   "darren_milner",
+   0.5,
+   ""
+  ],
+  [
+   "colin_mastin",
+   "ron_kirby",
+   0.3,
+   ""
+  ],
+  [
+   "dennis_iveson",
+   "darren_milner",
+   0.5,
+   ""
+  ],
+  [
+   "dennis_iveson",
+   "ron_kirby",
+   0.3,
+   ""
+  ],
+  [
+   "edith_stockill",
+   "ada_vane",
+   0.6,
+   "adas 09:15 Mon,Tue,Wed,Fri,Sat; newsagent 10:00 Mon,Tue,Wed,Fri,Sat; newsagent 10:15 Thu"
+  ],
+  [
+   "edith_stockill",
+   "alison_sedman",
+   0.4,
+   "newsagent 10:00 Tue,Thu"
+  ],
+  [
+   "edith_stockill",
+   "darren_milner",
+   0.3,
+   "newsagent 11:00 Mon,Wed,Fri; newsagent 13:30 Mon,Wed,Fri"
+  ],
+  [
+   "doreen_harland",
+   "alison_sedman",
+   0.4,
+   "launderette 09:30 Tue,Thu"
+  ],
+  [
+   "doreen_harland",
+   "ada_vane",
+   0.5,
+   "launderette 10:00 Mon,Tue,Wed,Fri,Sat; launderette 09:30 Thu; launderette 10:15 Thu"
+  ],
+  [
+   "doreen_harland",
+   "sheila_dunn",
+   0.3,
+   "launderette 08:30 Thu; launderette 13:00 Sat"
+  ],
+  [
+   "shaun_hewson",
+   "sheila_dunn",
+   0.5,
+   "caff 12:30 Mon,Tue,Wed,Thu,Fri; empty_unit 08:30 Mon,Tue,Wed,Thu; empty_unit 09:15 Thu"
+  ],
+  [
+   "shaun_hewson",
+   "ron_kirby",
+   0.4,
+   "boarding_house 06:30 Mon,Tue,Wed,Thu,Fri,Sat; caff 07:00 Mon,Tue,Wed,Thu,Fri; empty_unit 08:00 Mon,Tue,Wed,Thu"
+  ],
+  [
+   "dawn_pybus",
+   "darren_milner",
+   0.45,
+   "adas 11:00 Mon,Wed; mickeys 11:00 Fri; mickeys 12:30 Fri"
+  ],
+  [
+   "dawn_pybus",
+   "sheila_dunn",
+   0.4,
+   "adas 09:00 Mon,Tue,Wed,Fri; adas 09:15 Thu; mickeys 11:00 Fri"
+  ],
+  [
+   "dawn_pybus",
+   "shaun_hewson",
+   0.3,
+   "adas 09:00 Fri; mickeys 11:00 Fri"
+  ],
+  [
+   "ian_megginson",
+   "ron_kirby",
+   0.4,
+   "allotments 10:00 Sun"
+  ],
+  [
+   "terry_hodgson",
+   "ron_kirby",
+   0.5,
+   "rank_mickeys 18:00 Mon,Tue,Wed,Thu,Fri,Sat; rank_mickeys 19:00 Sun"
+  ],
+  [
+   "terry_hodgson",
+   "darren_milner",
+   0.6,
+   "rank_mickeys 18:00 Mon,Wed,Fri; rank_mickeys 18:30 Tue,Thu,Sat"
+  ],
+  [
+   "pat_stainton",
+   "alison_sedman",
+   0.5,
+   "launderette 09:30 Tue,Thu"
+  ],
+  [
+   "pat_stainton",
+   "darren_milner",
+   0.4,
+   "launderette 11:00 Mon,Wed,Fri; launderette 13:30 Mon,Wed,Fri; launderette 15:00 Mon,Wed,Fri"
+  ],
+  [
+   "albert_suggitt",
+   "darren_milner",
+   0.4,
+   "boarding_house 16:00 Tue,Thu,Sat; boarding_house 10:00 Sat"
+  ],
+  [
+   "albert_suggitt",
+   "ron_kirby",
+   0.3,
+   "boarding_house 06:30 Sat"
+  ],
+  [
+   "stanley_hirst",
+   "darren_milner",
+   0.5,
+   "ritas 11:00 Mon,Wed,Fri; ritas 12:30 Mon,Wed,Fri; ritas 13:30 Mon,Wed,Fri"
+  ],
+  [
+   "stanley_hirst",
+   "sheila_dunn",
+   0.3,
+   "ritas 09:00 Mon,Tue,Wed,Fri,Sat; ritas 13:15 Mon,Tue,Wed,Thu,Fri; ritas 09:15 Thu"
+  ],
+  [
+   "gordon_leckenby",
+   "darren_milner",
+   0.5,
+   "ferry_landing 11:00 Tue,Thu,Sat; ferry_landing 16:00 Tue,Thu,Sat"
+  ],
+  [
+   "gordon_leckenby",
+   "alison_sedman",
+   0.3,
+   ""
+  ],
+  [
+   "irene_lowther",
+   "ada_vane",
+   0.4,
+   "launderette 10:00 Mon,Tue,Wed,Fri; launderette 09:30 Thu; launderette 10:15 Thu"
+  ],
+  [
+   "irene_lowther",
+   "alison_sedman",
+   0.4,
+   "launderette 09:30 Tue,Thu"
+  ],
+  [
+   "norman_dent",
+   "darren_milner",
+   0.5,
+   ""
+  ],
+  [
+   "julie_kettlewell",
+   "ada_vane",
+   0.3,
+   "launderette 10:00 Mon,Wed,Fri"
+  ],
+  [
+   "mandy_calvert",
+   "darren_milner",
+   0.5,
+   "ritas 11:15 Mon,Wed,Fri; ritas 12:30 Mon,Wed,Fri; ritas 13:30 Mon,Wed,Fri"
+  ],
+  [
+   "mandy_calvert",
+   "alison_sedman",
+   0.3,
+   "ritas 09:30 Tue,Thu; ritas 10:30 Tue,Thu"
+  ],
+  [
+   "leslie_cotterill",
+   "darren_milner",
+   0.5,
+   "ritas 11:00 Mon,Wed,Fri; ritas 12:30 Mon,Wed,Fri"
+  ],
+  [
+   "leslie_cotterill",
+   "sheila_dunn",
+   0.4,
+   "ritas 08:45 Mon,Tue,Wed,Thu,Fri,Sat; ritas 09:15 Thu"
+  ],
+  [
+   "ron_kirby",
+   "pauline_kitching",
+   0.6,
+   "rank_mickeys 07:30 Mon,Tue,Wed,Thu,Fri,Sat; rank_mickeys 12:30 Mon,Tue,Wed,Thu,Fri,Sat; mickeys 18:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "ron_kirby",
+   "danny_cammack",
+   0.4,
+   ""
+  ],
+  [
+   "ron_kirby",
+   "brendan_walsh",
+   0.5,
+   "rank_mickeys 13:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "ron_kirby",
+   "kevin_needham",
+   0.5,
+   "caff 06:30 Mon,Tue,Wed,Thu,Fri,Sat; rank_mickeys 07:30 Mon,Tue,Wed,Thu,Fri,Sat; laveracks 12:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "ron_kirby",
+   "lily_tang",
+   0.4,
+   ""
+  ],
+  [
+   "ron_kirby",
+   "stathers",
+   0.3,
+   ""
+  ],
+  [
+   "danny_cammack",
+   "craig_fewson",
+   0.7,
+   "cammack_base 11:00 Mon,Tue,Wed,Thu,Fri,Sat; snooker_hall 20:00 Mon,Tue,Wed,Thu,Fri,Sat; cammack_base 13:00 Sun"
+  ],
+  [
+   "danny_cammack",
+   "shane_boddy",
+   0.5,
+   "cammack_base 12:00 Mon,Tue,Wed,Thu,Fri,Sat; cammack_base 16:00 Mon,Tue,Wed,Thu,Fri,Sat; snooker_hall 20:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "danny_cammack",
+   "wes_akers",
+   0.5,
+   "cammack_base 13:00 Mon,Tue,Wed,Thu,Fri,Sat; cammack_base 16:00 Mon,Tue,Wed,Thu,Fri,Sat; cammack_base 14:00 Sun"
+  ],
+  [
+   "danny_cammack",
+   "jason_pinder",
+   0.3,
+   "cammack_base 11:30 Mon,Tue,Wed,Thu,Fri,Sat; cammack_base 16:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "danny_cammack",
+   "rita_welburn",
+   0.6,
+   ""
+  ],
+  [
+   "danny_cammack",
+   "vince_lazenby",
+   0.4,
+   "snooker_hall 20:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "craig_fewson",
+   "shane_boddy",
+   0.5,
+   "cammack_base 12:00 Mon,Tue,Wed,Thu,Fri,Sat; snooker_hall 20:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "shane_boddy",
+   "wes_akers",
+   0.6,
+   "d_nr_34 02:30 Mon,Tue,Wed,Thu,Fri,Sat,Sun; cammack_base 13:00 Mon,Tue,Wed,Thu,Fri,Sat; d_nr_34 18:00 Sun"
+  ],
+  [
+   "shane_boddy",
+   "dennis_iveson",
+   0.3,
+   ""
+  ],
+  [
+   "maureen_jensen",
+   "stathers",
+   0.8,
+   "d_cs_19 00:00 Mon,Tue,Wed,Thu,Fri,Sat,Sun; widow_base 09:00 Mon,Tue,Wed,Thu,Fri,Sat; d_cs_19 18:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "maureen_jensen",
+   "mark_billany",
+   0.5,
+   "widow_base 17:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "maureen_jensen",
+   "pat_brannigan",
+   0.6,
+   "widow_base 11:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "maureen_jensen",
+   "dougie_saltmarsh",
+   0.5,
+   "widow_base 08:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "maureen_jensen",
+   "kevin_needham",
+   0.4,
+   ""
+  ],
+  [
+   "maureen_jensen",
+   "lee_drewery",
+   0.4,
+   "widow_base 08:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "stathers",
+   "mark_billany",
+   0.6,
+   "dock_gate 06:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "stathers",
+   "lee_drewery",
+   0.4,
+   "dock_gate 05:55 Mon,Tue,Wed,Thu,Fri,Sat; widow_base 09:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "dougie_saltmarsh",
+   "eddie_birtwhistle",
+   0.5,
+   "fish_dock 05:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "mark_billany",
+   "pat_brannigan",
+   0.5,
+   "boarding_house 21:00 Mon,Tue,Wed,Thu,Fri,Sat; boarding_house 04:00 Tue,Wed,Thu,Fri,Sat,Sun; boarding_house 00:00 Mon"
+  ],
+  [
+   "lee_drewery",
+   "colin_mastin",
+   0.4,
+   "dock_gate 05:55 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "bill_huxtable",
+   "colin_mastin",
+   0.5,
+   "dock_gate 05:45 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "bill_huxtable",
+   "jimmy_raw",
+   0.3,
+   "d_nr_1 00:00 Mon,Tue,Wed,Thu,Fri,Sat,Sun; dock_gate 05:45 Mon,Tue,Wed,Thu,Fri,Sat; d_nr_1 18:30 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "jimmy_raw",
+   "ken_dobbin",
+   0.7,
+   "d_nr_2 00:00 Mon,Tue,Wed,Thu,Fri,Sat,Sun; dock_gate 05:45 Mon,Tue,Wed,Thu,Fri,Sat; rank_mickeys 14:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "geoffrey_agar",
+   "simon_ombler",
+   0.8,
+   "agar_base 10:00 Tue,Fri"
+  ],
+  [
+   "geoffrey_agar",
+   "susan_coverdale",
+   0.5,
+   ""
+  ],
+  [
+   "geoffrey_agar",
+   "leonard_askew",
+   0.6,
+   "agar_base 10:00 Tue"
+  ],
+  [
+   "geoffrey_agar",
+   "anthony_raine",
+   0.5,
+   ""
+  ],
+  [
+   "geoffrey_agar",
+   "barry_coult",
+   0.4,
+   "agar_base 10:00 Tue,Fri"
+  ],
+  [
+   "geoffrey_agar",
+   "alan_sowerby",
+   0.4,
+   ""
+  ],
+  [
+   "simon_ombler",
+   "leonard_askew",
+   0.6,
+   "agar_base 09:30 Mon,Tue,Wed,Thu"
+  ],
+  [
+   "simon_ombler",
+   "barry_coult",
+   0.5,
+   "agar_base 10:00 Tue,Fri"
+  ],
+  [
+   "barry_coult",
+   "ray_spink",
+   0.7,
+   "agar_base 10:00 Tue,Fri; cold_stores 11:00 Tue,Fri"
+  ],
+  [
+   "barry_coult",
+   "kenny_varley",
+   0.6,
+   "agar_base 10:00 Tue,Fri; cold_stores 11:00 Tue,Fri"
+  ],
+  [
+   "leonard_askew",
+   "dawn_pybus",
+   0.6,
+   "agar_base 15:00 Mon,Tue,Wed,Thu; mickeys 11:00 Fri"
+  ],
+  [
+   "carol_ellis",
+   "graham_wardell",
+   0.5,
+   "police_station 09:00 Mon,Tue,Wed,Thu,Fri; police_station 13:45 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "carol_ellis",
+   "trevor_garton",
+   0.3,
+   "police_station 14:00 Mon,Tue,Wed,Thu,Fri; police_station 15:30 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "carol_ellis",
+   "sgt_kitson",
+   0.4,
+   "police_station 08:30 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "carol_ellis",
+   "alison_sedman",
+   0.3,
+   ""
+  ],
+  [
+   "pc_ibbotson",
+   "pc_haigh",
+   0.5,
+   ""
+  ],
+  [
+   "pc_ibbotson",
+   "grace_rinaldi",
+   0.3,
+   "caff 12:30 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "pc_haigh",
+   "maggie_firth",
+   0.4,
+   ""
+  ],
+  [
+   "keith_garbutt",
+   "maureen_jensen",
+   0.3,
+   ""
+  ],
+  [
+   "keith_garbutt",
+   "danny_cammack",
+   0.3,
+   "snooker_hall 20:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "keith_garbutt",
+   "geoffrey_agar",
+   0.3,
+   ""
+  ],
+  [
+   "keith_garbutt",
+   "vince_lazenby",
+   0.4,
+   "snooker_hall 19:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "dennis_iveson",
+   "neil_screeton",
+   0.7,
+   "iveson_yard 07:30 Mon,Tue,Wed,Thu,Fri,Sat; iveson_hut 12:00 Mon,Tue,Wed,Thu,Fri,Sat; iveson_yard 13:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "eric_tharratt",
+   "malcolm_ruddock",
+   0.6,
+   "cold_stores 05:30 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "malcolm_ruddock",
+   "dougie_saltmarsh",
+   0.3,
+   "cold_stores 09:30 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "peter_tang",
+   "lily_tang",
+   0.9,
+   "d_bp_5 00:00 Mon,Tue,Wed,Thu,Fri,Sat,Sun; d_bp_5 11:00 Mon,Tue,Wed,Thu,Fri,Sat; tangs_takeaway 16:30 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "karen_grummitt",
+   "sylvia_rennison",
+   0.4,
+   "boarding_house 00:00 Mon,Tue,Wed,Thu,Fri,Sat,Sun; boarding_house 19:00 Mon,Tue,Wed,Thu,Fri,Sat; boarding_house 22:00 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "julie_kettlewell",
+   "pat_stainton",
+   0.6,
+   "newsagent 08:30 Mon,Tue,Wed,Thu,Fri; launderette 09:30 Mon,Wed,Fri"
+  ],
+  [
+   "doreen_harland",
+   "irene_lowther",
+   0.5,
+   "launderette 07:45 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "doreen_harland",
+   "pat_stainton",
+   0.5,
+   "launderette 07:45 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "tracey_scarth",
+   "beryl_wood",
+   0.4,
+   "launderette 09:00 Mon,Tue,Wed,Fri,Sat"
+  ],
+  [
+   "rita_welburn",
+   "stanley_hirst",
+   0.6,
+   "ritas 09:00 Mon,Tue,Wed,Thu,Fri,Sat; ritas 13:00 Mon,Tue,Wed,Thu,Fri,Sat; ritas 13:30 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "rita_welburn",
+   "mandy_calvert",
+   0.5,
+   "ritas 09:00 Mon,Tue,Wed,Thu,Fri,Sat; ritas 11:15 Mon,Tue,Wed,Thu,Fri,Sat; ritas 13:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "rita_welburn",
+   "leslie_cotterill",
+   0.4,
+   "ritas 08:45 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "ian_megginson",
+   "leslie_cotterill",
+   0.5,
+   "iveson_yard 13:00 Mon,Tue,Wed,Thu,Fri; ironmonger 09:00 Sat"
+  ],
+  [
+   "ian_megginson",
+   "gary_mawer",
+   0.5,
+   "iveson_yard 07:30 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "albert_suggitt",
+   "cyril_pashby",
+   0.3,
+   ""
+  ],
+  [
+   "albert_suggitt",
+   "wilf_hardcastle",
+   0.3,
+   ""
+  ],
+  [
+   "len_garside",
+   "george_cammidge",
+   0.5,
+   "chandlery 08:45 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "nora_cronin",
+   "edna_coulson",
+   0.5,
+   "priests_house 17:30 Mon,Tue,Wed,Thu,Fri,Sat; priests_house 11:45 Mon,Tue,Wed,Thu,Fri; priests_house 09:30 Sat"
+  ],
+  [
+   "tadeusz_nowicki",
+   "brendan_walsh",
+   0.4,
+   "chapel 09:30 Sun"
+  ],
+  [
+   "aidan_keogh",
+   "brendan_walsh",
+   0.4,
+   "chapel 09:30 Sun"
+  ],
+  [
+   "philip_danby",
+   "janet_ruddle",
+   0.3,
+   ""
+  ],
+  [
+   "philip_danby",
+   "alison_sedman",
+   0.3,
+   ""
+  ],
+  [
+   "edith_stockill",
+   "peart",
+   0.5,
+   "newsagent 10:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "arthur_brigham",
+   "ada_vane",
+   0.3,
+   "grocer 10:00 Mon,Tue,Wed,Fri,Sat; grocer 09:30 Thu; grocer 10:15 Thu"
+  ],
+  [
+   "joyce_ellerby",
+   "june_suddaby",
+   0.2,
+   "tea_room 11:30 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "rodney_usher",
+   "dougie_saltmarsh",
+   0.4,
+   "snooker_hall 17:00 Mon,Tue,Wed,Thu,Fri; snooker_hall 14:30 Sat"
+  ],
+  [
+   "douglas_fenwick",
+   "paddy_rourke",
+   0.4,
+   "customs 08:30 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "susan_coverdale",
+   "paddy_rourke",
+   0.5,
+   "customs 08:30 Mon,Tue,Wed,Thu,Fri"
+  ]
+ ]
+}

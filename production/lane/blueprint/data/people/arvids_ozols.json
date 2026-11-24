@@ -1,0 +1,75 @@
+{
+ "id": "arvids_ozols",
+ "cast_id": null,
+ "called": "Captain Ozols",
+ "name": "Arvids Ozols",
+ "age": 58,
+ "sex": "m",
+ "role": "Master of the timber ship held at the wall; a cab to nowhere every night, paid in tinned fish",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.82,
+  "b": 0.6,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#c8c0b0"
+  ],
+  "top": [
+   "pea_coat",
+   "#1c2230",
+   "#c0a040"
+  ],
+  "bot": [
+   "trousers",
+   "#1c2230"
+  ],
+  "x": [
+   "peaked_cap",
+   "beard"
+  ]
+ },
+ "nerve": 0.6,
+ "venal": 0.58,
+ "talk": 0.2,
+ "discretion": 0.84,
+ "temperament": {
+  "nerve": 0.6,
+  "dutiful": 0.4,
+  "willingness": 0.2,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "fishing_basin_north",
+ "sched": [
+  [
+   0.0,
+   "fishing_basin_north",
+   "aboard"
+  ],
+  [
+   21.0,
+   "rank_mickeys",
+   "his cab to nowhere"
+  ],
+  [
+   22.0,
+   "fishing_basin_north",
+   "by cab: back aboard"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-arvids_ozols.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Captain Arvids Ozols, 58, Latvian master of the timber ship held at the basin wall over a debt not his own. Every night a cab 'to nowhere, please, one hour'.",
+  "speak": "Formal English, long pauses, a sailor's courtesy.",
+  "life": "Aboard his ship at the basin wall.",
+  "rivals": "None. He wants an hour of moving."
+ },
+ "can_die": true,
+ "invented": "proposed by the story frame",
+ "src": "STORY-FRAME 4 item 17 (proposed); ship's berth provisional (the map has no ship berth: fishing_basin_north stands in)"
+}

@@ -1,0 +1,65 @@
+{
+ "id": "derek_hebblewhite",
+ "cast_id": null,
+ "called": "Mr Hebblewhite",
+ "name": "Derek Hebblewhite",
+ "age": 49,
+ "sex": "m",
+ "role": "VAT officer, Customs and Excise; Act III's inspector; first met in week four as a fare who asks for a receipt",
+ "kind": "officer",
+ "voice": null,
+ "look": {
+  "h": 1.74,
+  "b": 0.45,
+  "skin": 0,
+  "hair": [
+   "parted",
+   "#6a6058"
+  ],
+  "top": [
+   "raincoat",
+   "#8a8070",
+   "#3a3a40"
+  ],
+  "bot": [
+   "trousers",
+   "#3a3a40"
+  ],
+  "x": [
+   "glasses",
+   "briefcase"
+  ]
+ },
+ "nerve": 0.5,
+ "venal": 0.18,
+ "talk": 0.7,
+ "discretion": 0.44,
+ "temperament": {
+  "nerve": 0.5,
+  "dutiful": 0.9,
+  "willingness": 0.7,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "up in town"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-derek_hebblewhite.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Derek Hebblewhite, 49, VAT officer. Reads dents and receipts. Spells Nowak right.",
+  "speak": "Polite, unhurried, 'produce it, or ask for it in writing'.",
+  "life": "Up in town; at the counter on the inspection mornings.",
+  "rivals": "Customs and Excise wants books that match."
+ },
+ "can_die": false,
+ "invented": "proposed by the story frame",
+ "src": "STORY-FRAME 4 item 19, 5 Act III (proposed)"
+}

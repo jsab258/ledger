@@ -1,0 +1,5542 @@
+{
+ "file": "routines.json",
+ "version": "wave2-2026-11-24",
+ "clock": {
+  "realSecondsPerGameHour": 120
+ },
+ "sources": [
+  "tools/wave2/cast_src.py (one routine a person, authored on map.json and places.json ids)",
+  "production/specs/hook-cast.json routines (older place ids, remapped by hand)",
+  "BLUEPRINT-02 2.1.1, 2.5.5; BLUEPRINT-07 CLK-03; places.json hours; timetables.json shifts, ferry, beat"
+ ],
+ "rules": {
+  "rows": "A row holds from its game time until the next row of the same day; every day starts at 00:00. days omitted means daily.",
+  "place": "A places.json id, or a map.json door id for a home. edge_north and edge_west mean off the Hook (home across town, the bus, the station).",
+  "walking_reach": "Between two rows on the Hook the walk on map.json's walking graph at 1.4 m/s (1.1 m/s at 70 and over) is taken out of the end of the stay before it (the person sets off early enough to arrive at the row's time) and uses no more than three quarters of that stay, counted in game minutes at 2 real seconds a game minute (120 s a game hour). Checked in code: tools/wave2/build_people.py.",
+  "from_off_the_hook": "Arriving from off the Hook (edge_north, edge_west, the police station, the Infirmary, licensing, the Copper Row market), the person is placed out of sight at the nearest soft edge, bus stop or door and is not reach-checked: the bus, a bike or a lift in town are not simulated (chosen).",
+  "hours": "A customer act (breakfast, dinner, shopping, a frame) falls inside the place's public hours; a keeper or worker may be there before opening and after closing.",
+  "finders": "2.5.5: whoever's routine next brings them past an unseen deed finds it; the named finders are listed in finders below."
+ },
+ "chosen_values": {
+  "walk_mps": 1.4,
+  "walk_mps_70_and_over": 1.1,
+  "reach_share_of_stay": 0.75
+ },
+ "finders": [
+  {
+   "person": "edna_coulson",
+   "from": "05:45",
+   "passes": [
+    "harbour_board",
+    "tea_room",
+    "agar_base"
+   ],
+   "finds": "a forced door, glass or anything missing at the Harbour Board, the Copper Kettle or the agents' office (the cleaner at six)"
+  },
+  {
+   "person": "bill_huxtable",
+   "from": "05:15",
+   "passes": [
+    "ferry_landing",
+    "fish_dock",
+    "dock_gate"
+   ],
+   "finds": "anything left on the quay overnight between the landing and the pen (the first dock worker)"
+  },
+  {
+   "person": "eddie_birtwhistle",
+   "from": "04:45",
+   "passes": [
+    "fish_dock"
+   ],
+   "finds": "the fish dock and the ice hut"
+  },
+  {
+   "person": "brenda_laverack",
+   "from": "05:00",
+   "passes": [
+    "fish_dock",
+    "laveracks"
+   ],
+   "finds": "the fish dock, then her own shop's back door"
+  },
+  {
+   "person": "gordon_leckenby",
+   "from": "06:00",
+   "passes": [
+    "ferry_landing"
+   ],
+   "finds": "the landing and the shelter before the first boat"
+  },
+  {
+   "person": "doreen_harland",
+   "from": "05:45",
+   "passes": [
+    "launderette"
+   ],
+   "finds": "the laundry's back door and the parade's foot"
+  },
+  {
+   "person": "grace_rinaldi",
+   "from": "05:30",
+   "passes": [
+    "caff"
+   ],
+   "finds": "the caff's window and the quay road outside"
+  },
+  {
+   "person": "peart",
+   "from": "05:45",
+   "passes": [
+    "newsagent"
+   ],
+   "finds": "Quay Street's shop fronts as the papers come in"
+  },
+  {
+   "person": "norman_dent",
+   "from": "19:30",
+   "passes": [
+    "dents_warehouses",
+    "net_loft",
+    "burned_warehouse"
+   ],
+   "finds": "the warehouse row, all night"
+  },
+  {
+   "person": "pc_haigh",
+   "from": "22:00",
+   "passes": [
+    "mickeys",
+    "mickeys_yard",
+    "ferry_landing"
+   ],
+   "finds": "Mickey's door, the yards' lane and the landing on the night beat"
+  },
+  {
+   "person": "maggie_firth",
+   "from": "21:30",
+   "passes": [
+    "tea_stall"
+   ],
+   "finds": "the quay by the tea stall, all night"
+  },
+  {
+   "person": "neil_screeton",
+   "from": "07:30",
+   "passes": [
+    "iveson_yard",
+    "iveson_hut"
+   ],
+   "finds": "Iveson's yard and hut (the owner's man on his return)"
+  },
+  {
+   "person": "nora_cronin",
+   "from": "07:15",
+   "passes": [
+    "priests_house",
+    "chapel"
+   ],
+   "finds": "the priest's house and the chapel"
+  },
+  {
+   "person": "winifred_duggleby",
+   "from": "08:00",
+   "passes": [
+    "chapel"
+   ],
+   "finds": "the chapel, its roof and its flowers"
+  },
+  {
+   "person": "owners",
+   "from": "the opening time",
+   "passes": [
+    "their own place"
+   ],
+   "finds": "every shop's keeper finds his own shop on his return (2.5.5: the owner on his return); see each keeper's first row"
+  }
+ ],
+ "provisional_places": {
+  "tangs_takeaway": "the Tangs' takeaway on the parade: not in places.json or map.json (wave 1 gap)"
+ },
+ "open_points": [
+  "The Tangs' takeaway is in canon and the side stories but not on wave 1's map or places; its rows use the provisional id tangs_takeaway until the keeper adds it (likely Back Parade).",
+  "Wayne Harrison works Rita's back room here (canon: her back-room hand); places.json also gives him a pawn of his own on North Road (waynes_pawn), which no routine uses: the keeper should reconcile.",
+  "The steam laundry of canon and the Washeteria are one place (launderette) on wave 1's map; laundry workers' rows use it.",
+  "Captain Ozols's ship has no berth on the map; fishing_basin_north stands in.",
+  "Beat routes in detail are police.json's; the constables' rows name the beat's start place only."
+ ],
+ "routines": [
+  {
+   "person": "ron_kirby",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cl_14",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "06:30",
+     "place": "caff",
+     "act": "breakfast",
+     "days": "mon-sat"
+    },
+    {
+     "from": "07:30",
+     "place": "rank_mickeys",
+     "act": "on the rank",
+     "days": "mon-sat"
+    },
+    {
+     "from": "12:00",
+     "place": "laveracks",
+     "act": "dinner from the fish shop",
+     "days": "mon-sat"
+    },
+    {
+     "from": "12:30",
+     "place": "rank_mickeys",
+     "act": "on the rank",
+     "days": "mon-sat"
+    },
+    {
+     "from": "17:00",
+     "place": "rank_ferry",
+     "act": "the boat queue",
+     "days": "mon-sat"
+    },
+    {
+     "from": "18:00",
+     "place": "mickeys",
+     "act": "the door",
+     "days": "mon-sat"
+    },
+    {
+     "from": "23:00",
+     "place": "d_cl_14",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_14",
+     "act": "asleep",
+     "days": "sun"
+    },
+    {
+     "from": "09:30",
+     "place": "allotments",
+     "act": "his plot",
+     "days": "sun"
+    },
+    {
+     "from": "13:00",
+     "place": "d_cl_14",
+     "act": "home",
+     "days": "sun"
+    },
+    {
+     "from": "18:00",
+     "place": "mickeys",
+     "act": "the door",
+     "days": "sun"
+    },
+    {
+     "from": "23:00",
+     "place": "d_cl_14",
+     "act": "home",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 347,
+   "src": "canon; casting ron-kirby SHEET; STORY-FRAME 3"
+  },
+  {
+   "person": "sheila_dunn",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home across the river",
+     "days": "mon-wed,fri"
+    },
+    {
+     "from": "08:30",
+     "place": "mickeys",
+     "act": "the counter and the book",
+     "days": "mon-wed,fri"
+    },
+    {
+     "from": "12:30",
+     "place": "caff",
+     "act": "her dinner",
+     "days": "mon-wed,fri"
+    },
+    {
+     "from": "13:15",
+     "place": "mickeys",
+     "act": "the counter and the book",
+     "days": "mon-wed,fri"
+    },
+    {
+     "from": "17:30",
+     "place": "bus_stop_qs",
+     "act": "the bus home",
+     "days": "mon-wed,fri"
+    },
+    {
+     "from": "18:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "mon-wed,fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home across the river",
+     "days": "thu"
+    },
+    {
+     "from": "08:30",
+     "place": "newsagent",
+     "act": "the pension counter",
+     "days": "thu"
+    },
+    {
+     "from": "09:15",
+     "place": "mickeys",
+     "act": "the counter and the book",
+     "days": "thu"
+    },
+    {
+     "from": "12:30",
+     "place": "caff",
+     "act": "her dinner",
+     "days": "thu"
+    },
+    {
+     "from": "13:15",
+     "place": "mickeys",
+     "act": "the counter and the book",
+     "days": "thu"
+    },
+    {
+     "from": "17:30",
+     "place": "bus_stop_qs",
+     "act": "the bus home",
+     "days": "thu"
+    },
+    {
+     "from": "18:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "thu"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home across the river",
+     "days": "sat"
+    },
+    {
+     "from": "08:30",
+     "place": "mickeys",
+     "act": "the counter and the book",
+     "days": "sat"
+    },
+    {
+     "from": "13:00",
+     "place": "bus_stop_qs",
+     "act": "the bus home",
+     "days": "sat"
+    },
+    {
+     "from": "13:30",
+     "place": "edge_north",
+     "act": "home",
+     "days": "sat"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home across the river",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 89,
+   "src": "canon; casting sheila-dunn SHEET; STORY-FRAME 3"
+  },
+  {
+   "person": "pauline_kitching",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "06:45",
+     "place": "mickeys",
+     "act": "the radio",
+     "days": "mon-sat"
+    },
+    {
+     "from": "12:00",
+     "place": "rank_mickeys",
+     "act": "a cigarette by the rank",
+     "days": "mon-sat"
+    },
+    {
+     "from": "12:20",
+     "place": "mickeys",
+     "act": "the radio",
+     "days": "mon-sat"
+    },
+    {
+     "from": "19:00",
+     "place": "bus_stop_qs",
+     "act": "the bus home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "19:30",
+     "place": "edge_north",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "sun"
+    },
+    {
+     "from": "09:00",
+     "place": "mickeys",
+     "act": "the radio, Sunday hours",
+     "days": "sun"
+    },
+    {
+     "from": "16:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 20,
+   "src": "canon; 3.2.2"
+  },
+  {
+   "person": "kevin_needham",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "06:15",
+     "place": "caff",
+     "act": "breakfast",
+     "days": "mon-sat"
+    },
+    {
+     "from": "07:00",
+     "place": "rank_mickeys",
+     "act": "car one",
+     "days": "mon-sat"
+    },
+    {
+     "from": "12:30",
+     "place": "caff",
+     "act": "his break",
+     "days": "mon-sat"
+    },
+    {
+     "from": "13:15",
+     "place": "rank_mickeys",
+     "act": "car one",
+     "days": "mon-sat"
+    },
+    {
+     "from": "19:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "sun"
+    },
+    {
+     "from": "12:00",
+     "place": "rank_mickeys",
+     "act": "car one, Sunday",
+     "days": "sun"
+    },
+    {
+     "from": "18:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 94,
+   "src": "canon; 3.2.2; 2.10.2"
+  },
+  {
+   "person": "terry_hodgson",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "rank_mickeys",
+     "act": "the night car",
+     "days": "mon-sat"
+    },
+    {
+     "from": "03:00",
+     "place": "d_cl_24",
+     "act": "home to bed",
+     "days": "mon-sat"
+    },
+    {
+     "from": "18:00",
+     "place": "rank_mickeys",
+     "act": "the night car",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "rank_mickeys",
+     "act": "the night car",
+     "days": "sun"
+    },
+    {
+     "from": "03:00",
+     "place": "d_cl_24",
+     "act": "home to bed",
+     "days": "sun"
+    },
+    {
+     "from": "19:00",
+     "place": "rank_mickeys",
+     "act": "the night car",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 315,
+   "src": "canon; 3.2.2"
+  },
+  {
+   "person": "darren_milner",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_23",
+     "act": "his mother's",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "10:00",
+     "place": "caff",
+     "act": "a tea he does not pay for",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "11:00",
+     "place": "ritas",
+     "act": "selling",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "12:30",
+     "place": "rank_mickeys",
+     "act": "hanging about",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "13:30",
+     "place": "launderette",
+     "act": "the warm",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "15:00",
+     "place": "phone_parade",
+     "act": "the phone box",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "16:00",
+     "place": "rank_mickeys",
+     "act": "hanging about",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "19:00",
+     "place": "cammack_base",
+     "act": "near the lock-ups",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "22:30",
+     "place": "d_nr_23",
+     "act": "his mother's",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_23",
+     "act": "his mother's",
+     "days": "tue,thu,sat"
+    },
+    {
+     "from": "10:00",
+     "place": "caff",
+     "act": "a tea he does not pay for",
+     "days": "tue,thu,sat"
+    },
+    {
+     "from": "11:00",
+     "place": "rank_ferry",
+     "act": "the boat queue",
+     "days": "tue,thu,sat"
+    },
+    {
+     "from": "13:00",
+     "place": "rank_mickeys",
+     "act": "hanging about",
+     "days": "tue,thu,sat"
+    },
+    {
+     "from": "16:00",
+     "place": "snooker_hall",
+     "act": "the tables",
+     "days": "tue,thu,sat"
+    },
+    {
+     "from": "18:30",
+     "place": "rank_mickeys",
+     "act": "hanging about",
+     "days": "tue,thu,sat"
+    },
+    {
+     "from": "21:00",
+     "place": "d_nr_23",
+     "act": "his mother's",
+     "days": "tue,thu,sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_23",
+     "act": "his mother's",
+     "days": "sun"
+    },
+    {
+     "from": "12:00",
+     "place": "rank_mickeys",
+     "act": "hanging about",
+     "days": "sun"
+    },
+    {
+     "from": "15:00",
+     "place": "d_nr_23",
+     "act": "his mother's",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 331,
+   "src": "canon; 2.8.1"
+  },
+  {
+   "person": "danny_cammack",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_40",
+     "act": "his flat",
+     "days": "mon-sat"
+    },
+    {
+     "from": "11:00",
+     "place": "cammack_base",
+     "act": "the lock-ups",
+     "days": "mon-sat"
+    },
+    {
+     "from": "15:00",
+     "place": "rank_north",
+     "act": "watching the other rank",
+     "days": "mon-sat"
+    },
+    {
+     "from": "16:00",
+     "place": "cammack_base",
+     "act": "the lock-ups",
+     "days": "mon-sat"
+    },
+    {
+     "from": "20:00",
+     "place": "snooker_hall",
+     "act": "holding court",
+     "days": "mon-sat"
+    },
+    {
+     "from": "23:30",
+     "place": "d_nr_40",
+     "act": "his flat",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_40",
+     "act": "his flat",
+     "days": "sun"
+    },
+    {
+     "from": "13:00",
+     "place": "cammack_base",
+     "act": "the lock-ups",
+     "days": "sun"
+    },
+    {
+     "from": "18:00",
+     "place": "d_nr_40",
+     "act": "his flat",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 391,
+   "src": "canon; STORY-FRAME 3 (decision of 24 Nov: the main opponent; drove Mickey's own car); casting danny-cammack"
+  },
+  {
+   "person": "maureen_jensen",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cs_19",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "08:00",
+     "place": "widow_base",
+     "act": "the office over the net store",
+     "days": "mon-sat"
+    },
+    {
+     "from": "18:00",
+     "place": "d_cs_19",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cs_19",
+     "act": "home",
+     "days": "sun"
+    },
+    {
+     "from": "10:00",
+     "place": "chapel",
+     "act": "Mass",
+     "days": "sun"
+    },
+    {
+     "from": "13:15",
+     "place": "d_cs_19",
+     "act": "home",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 573,
+   "src": "canon; STORY-FRAME 3; casting maureen-jensen; RT2-05 (Frank's line keeps her from his hands)"
+  },
+  {
+   "person": "carol_ellis",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "mon-fri"
+    },
+    {
+     "from": "08:30",
+     "place": "police_station",
+     "act": "her desk",
+     "days": "mon-fri"
+    },
+    {
+     "from": "18:30",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "sat-sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "canon; STORY-FRAME 3; RT2-05"
+  },
+  {
+   "person": "geoffrey_agar",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "tue,fri"
+    },
+    {
+     "from": "10:00",
+     "place": "agar_base",
+     "act": "the agents' back room",
+     "days": "tue,fri"
+    },
+    {
+     "from": "12:30",
+     "place": "edge_north",
+     "act": "back to town",
+     "days": "tue,fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "mon,wed,thu,sat,sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "canon; STORY-FRAME 2 and 4; casting geoffrey-agar"
+  },
+  {
+   "person": "keith_garbutt",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "mon-sat"
+    },
+    {
+     "from": "10:30",
+     "place": "caff",
+     "act": "his table",
+     "days": "mon-sat"
+    },
+    {
+     "from": "12:00",
+     "place": "edge_north",
+     "act": "about town",
+     "days": "mon-sat"
+    },
+    {
+     "from": "19:00",
+     "place": "snooker_hall",
+     "act": "a corner table",
+     "days": "mon-sat"
+    },
+    {
+     "from": "22:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "canon; 2.10.4; STORY-FRAME 2"
+  },
+  {
+   "person": "ada_vane",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "adas",
+     "act": "asleep",
+     "days": "mon-wed,fri-sat"
+    },
+    {
+     "from": "08:00",
+     "place": "adas",
+     "act": "at her window",
+     "days": "mon-wed,fri-sat"
+    },
+    {
+     "from": "10:00",
+     "place": "grocer",
+     "act": "her shopping",
+     "days": "mon-wed,fri-sat"
+    },
+    {
+     "from": "10:45",
+     "place": "laveracks",
+     "act": "a bit of fish",
+     "days": "mon-wed,fri-sat"
+    },
+    {
+     "from": "11:15",
+     "place": "adas",
+     "act": "at her window",
+     "days": "mon-wed,fri-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "adas",
+     "act": "asleep",
+     "days": "thu"
+    },
+    {
+     "from": "08:00",
+     "place": "adas",
+     "act": "at her window",
+     "days": "thu"
+    },
+    {
+     "from": "09:30",
+     "place": "newsagent",
+     "act": "her pension",
+     "days": "thu"
+    },
+    {
+     "from": "10:15",
+     "place": "grocer",
+     "act": "her shopping",
+     "days": "thu"
+    },
+    {
+     "from": "11:00",
+     "place": "adas",
+     "act": "at her window",
+     "days": "thu"
+    },
+    {
+     "from": "00:00",
+     "place": "adas",
+     "act": "asleep",
+     "days": "sun"
+    },
+    {
+     "from": "08:00",
+     "place": "adas",
+     "act": "at her window (Father Walsh brings her communion)",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 42,
+   "src": "canon; STORY-FRAME 4 (surname)"
+  },
+  {
+   "person": "june_suddaby",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "boarding_house",
+     "act": "her room",
+     "days": "mon-fri"
+    },
+    {
+     "from": "10:00",
+     "place": "mickeys",
+     "act": "his things",
+     "days": "mon-fri"
+    },
+    {
+     "from": "11:30",
+     "place": "tea_room",
+     "act": "alone",
+     "days": "mon-fri"
+    },
+    {
+     "from": "13:00",
+     "place": "boarding_house",
+     "act": "her room",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "boarding_house",
+     "act": "her room",
+     "days": "sat"
+    },
+    {
+     "from": "11:00",
+     "place": "ferry_landing",
+     "act": "the boat over and back",
+     "days": "sat"
+    },
+    {
+     "from": "15:00",
+     "place": "boarding_house",
+     "act": "her room",
+     "days": "sat"
+    },
+    {
+     "from": "00:00",
+     "place": "boarding_house",
+     "act": "her room",
+     "days": "sun"
+    },
+    {
+     "from": "09:30",
+     "place": "chapel",
+     "act": "Mass and a candle",
+     "days": "sun"
+    },
+    {
+     "from": "13:30",
+     "place": "boarding_house",
+     "act": "her room",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 453,
+   "src": "canon; STORY-FRAME 4"
+  },
+  {
+   "person": "brendan_walsh",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "priests_house",
+     "act": "asleep",
+     "days": "mon,wed-sat"
+    },
+    {
+     "from": "07:30",
+     "place": "chapel",
+     "act": "morning Mass",
+     "days": "mon,wed-sat"
+    },
+    {
+     "from": "09:00",
+     "place": "priests_house",
+     "act": "his desk",
+     "days": "mon,wed-sat"
+    },
+    {
+     "from": "13:00",
+     "place": "adas",
+     "act": "a call on Ada",
+     "days": "mon,wed-sat"
+    },
+    {
+     "from": "17:00",
+     "place": "chapel",
+     "act": "the church open",
+     "days": "mon,wed-sat"
+    },
+    {
+     "from": "18:00",
+     "place": "priests_house",
+     "act": "supper",
+     "days": "mon,wed-sat"
+    },
+    {
+     "from": "20:30",
+     "place": "edge_north",
+     "act": "sick calls on foot",
+     "days": "mon,wed-sat"
+    },
+    {
+     "from": "22:30",
+     "place": "priests_house",
+     "act": "asleep",
+     "days": "mon,wed-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "priests_house",
+     "act": "asleep",
+     "days": "tue"
+    },
+    {
+     "from": "07:30",
+     "place": "chapel",
+     "act": "morning Mass",
+     "days": "tue"
+    },
+    {
+     "from": "09:00",
+     "place": "priests_house",
+     "act": "his desk",
+     "days": "tue"
+    },
+    {
+     "from": "13:00",
+     "place": "adas",
+     "act": "a call on Ada",
+     "days": "tue"
+    },
+    {
+     "from": "17:00",
+     "place": "chapel",
+     "act": "the church open",
+     "days": "tue"
+    },
+    {
+     "from": "18:00",
+     "place": "priests_house",
+     "act": "supper",
+     "days": "tue"
+    },
+    {
+     "from": "19:00",
+     "place": "chapel_hall",
+     "act": "the Tuesday tea and talk",
+     "days": "tue"
+    },
+    {
+     "from": "21:30",
+     "place": "priests_house",
+     "act": "asleep",
+     "days": "tue"
+    },
+    {
+     "from": "00:00",
+     "place": "priests_house",
+     "act": "asleep",
+     "days": "sun"
+    },
+    {
+     "from": "08:30",
+     "place": "chapel",
+     "act": "Masses",
+     "days": "sun"
+    },
+    {
+     "from": "13:00",
+     "place": "priests_house",
+     "act": "the afternoon",
+     "days": "sun"
+    },
+    {
+     "from": "18:00",
+     "place": "chapel",
+     "act": "evening Mass",
+     "days": "sun"
+    },
+    {
+     "from": "19:00",
+     "place": "priests_house",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 449,
+   "src": "canon; RT2-05"
+  },
+  {
+   "person": "alison_sedman",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "tue,thu"
+    },
+    {
+     "from": "09:30",
+     "place": "newsagent",
+     "act": "asking",
+     "days": "tue,thu"
+    },
+    {
+     "from": "10:30",
+     "place": "rank_mickeys",
+     "act": "a word with whoever is on it",
+     "days": "tue,thu"
+    },
+    {
+     "from": "11:30",
+     "place": "caff",
+     "act": "her dinner",
+     "days": "tue,thu"
+    },
+    {
+     "from": "12:30",
+     "place": "edge_north",
+     "act": "back to the paper (the warehouse row is her fare)",
+     "days": "tue,thu"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "mon,wed,fri-sun"
+    }
+   ],
+   "longest_walk_m": 94,
+   "src": "canon; STORY-FRAME 4"
+  },
+  {
+   "person": "philip_danby",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cl_29",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "10:00",
+     "place": "fishing_quay_west",
+     "act": "his walk on the quay",
+     "days": "mon-sat"
+    },
+    {
+     "from": "11:30",
+     "place": "tea_room",
+     "act": "a pot of tea",
+     "days": "mon-sat"
+    },
+    {
+     "from": "14:00",
+     "place": "d_cl_29",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "16:00",
+     "place": "allotments",
+     "act": "the allotments",
+     "days": "mon-sat"
+    },
+    {
+     "from": "18:00",
+     "place": "d_cl_29",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_29",
+     "act": "asleep",
+     "days": "sun"
+    },
+    {
+     "from": "11:00",
+     "place": "ferry_landing",
+     "act": "watching the boats",
+     "days": "sun"
+    },
+    {
+     "from": "14:00",
+     "place": "d_cl_29",
+     "act": "home",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 360,
+   "src": "canon; STORY-FRAME 4"
+  },
+  {
+   "person": "brenda_laverack",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_5",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "05:00",
+     "place": "fish_dock",
+     "act": "buying at the boxes",
+     "days": "mon-sat"
+    },
+    {
+     "from": "08:15",
+     "place": "laveracks",
+     "act": "gutting and the counter",
+     "days": "mon-sat"
+    },
+    {
+     "from": "17:45",
+     "place": "d_nr_5",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_5",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 457,
+   "src": "canon; 3.4.1; side story 8"
+  },
+  {
+   "person": "lee_drewery",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_12",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "05:55",
+     "place": "dock_gate",
+     "act": "the pen at six",
+     "days": "mon-sat"
+    },
+    {
+     "from": "08:00",
+     "place": "fish_dock",
+     "act": "what work there is",
+     "days": "mon-sat"
+    },
+    {
+     "from": "12:00",
+     "place": "rank_mickeys",
+     "act": "sat on the bollard",
+     "days": "mon-sat"
+    },
+    {
+     "from": "15:00",
+     "place": "fishing_quay_east",
+     "act": "a line off the quay",
+     "days": "mon-sat"
+    },
+    {
+     "from": "18:00",
+     "place": "ritas",
+     "act": "the step after closing",
+     "days": "mon-sat"
+    },
+    {
+     "from": "19:15",
+     "place": "d_nr_12",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_12",
+     "act": "asleep",
+     "days": "sun"
+    },
+    {
+     "from": "14:00",
+     "place": "fishing_quay_east",
+     "act": "a line off the quay",
+     "days": "sun"
+    },
+    {
+     "from": "17:00",
+     "place": "d_nr_12",
+     "act": "home",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 736,
+   "src": "canon; 2.8.1; 2.10.2; STORY-FRAME 4"
+  },
+  {
+   "person": "rita_welburn",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_qs_4",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "08:45",
+     "place": "ritas",
+     "act": "opening up",
+     "days": "mon-sat"
+    },
+    {
+     "from": "13:00",
+     "place": "ritas",
+     "act": "the step, a cigarette",
+     "days": "mon-sat"
+    },
+    {
+     "from": "13:30",
+     "place": "ritas",
+     "act": "the counter",
+     "days": "mon-sat"
+    },
+    {
+     "from": "17:45",
+     "place": "d_qs_4",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_qs_4",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 16,
+   "src": "canon; 2.10.2; side story 25"
+  },
+  {
+   "person": "wayne_harrison",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_27",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "10:00",
+     "place": "ritas",
+     "act": "the back room",
+     "days": "mon-sat"
+    },
+    {
+     "from": "16:00",
+     "place": "ritas",
+     "act": "the step",
+     "days": "mon-sat"
+    },
+    {
+     "from": "17:45",
+     "place": "snooker_hall",
+     "act": "the tables",
+     "days": "mon-sat"
+    },
+    {
+     "from": "22:00",
+     "place": "d_nr_27",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_27",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 324,
+   "src": "canon; 2.8.1"
+  },
+  {
+   "person": "hal_metcalfe",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_qs_6",
+     "act": "asleep",
+     "days": "mon"
+    },
+    {
+     "from": "09:45",
+     "place": "metcalfes",
+     "act": "the shop",
+     "days": "mon"
+    },
+    {
+     "from": "11:00",
+     "place": "ritas",
+     "act": "a Monday call",
+     "days": "mon"
+    },
+    {
+     "from": "12:00",
+     "place": "metcalfes",
+     "act": "the shop",
+     "days": "mon"
+    },
+    {
+     "from": "17:45",
+     "place": "d_qs_6",
+     "act": "home",
+     "days": "mon"
+    },
+    {
+     "from": "00:00",
+     "place": "d_qs_6",
+     "act": "asleep",
+     "days": "tue-sat"
+    },
+    {
+     "from": "09:45",
+     "place": "metcalfes",
+     "act": "the shop",
+     "days": "tue-sat"
+    },
+    {
+     "from": "17:45",
+     "place": "d_qs_6",
+     "act": "home",
+     "days": "tue-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_qs_6",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 78,
+   "src": "canon; side story 26"
+  },
+  {
+   "person": "susan_coverdale",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_14",
+     "act": "asleep",
+     "days": "mon-fri"
+    },
+    {
+     "from": "08:30",
+     "place": "customs",
+     "act": "the customs house",
+     "days": "mon-fri"
+    },
+    {
+     "from": "17:15",
+     "place": "ritas",
+     "act": "past the window",
+     "days": "mon-fri"
+    },
+    {
+     "from": "18:30",
+     "place": "d_nr_14",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_14",
+     "act": "asleep",
+     "days": "sat-sun"
+    }
+   ],
+   "longest_walk_m": 567,
+   "src": "canon; 2.10.2; side story 19"
+  },
+  {
+   "person": "nora_cronin",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cl_6",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "07:15",
+     "place": "priests_house",
+     "act": "his breakfast",
+     "days": "mon-sat"
+    },
+    {
+     "from": "13:00",
+     "place": "grocer",
+     "act": "his table",
+     "days": "mon-sat"
+    },
+    {
+     "from": "14:00",
+     "place": "laveracks",
+     "act": "his fish",
+     "days": "mon-sat"
+    },
+    {
+     "from": "17:30",
+     "place": "priests_house",
+     "act": "his supper",
+     "days": "mon-sat"
+    },
+    {
+     "from": "19:30",
+     "place": "d_cl_6",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_6",
+     "act": "asleep",
+     "days": "sun"
+    },
+    {
+     "from": "09:30",
+     "place": "chapel",
+     "act": "Mass",
+     "days": "sun"
+    },
+    {
+     "from": "13:00",
+     "place": "d_cl_6",
+     "act": "home",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 416,
+   "src": "canon; side story 22"
+  },
+  {
+   "person": "winifred_duggleby",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cl_16",
+     "act": "asleep",
+     "days": "mon-fri"
+    },
+    {
+     "from": "08:00",
+     "place": "chapel",
+     "act": "the flowers and the brass",
+     "days": "mon-fri"
+    },
+    {
+     "from": "11:30",
+     "place": "d_cl_16",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "15:00",
+     "place": "adas",
+     "act": "a cup with Ada",
+     "days": "mon-fri"
+    },
+    {
+     "from": "18:30",
+     "place": "d_cl_16",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_16",
+     "act": "asleep",
+     "days": "sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_16",
+     "act": "asleep",
+     "days": "sun"
+    },
+    {
+     "from": "09:30",
+     "place": "chapel",
+     "act": "Mass",
+     "days": "sun"
+    },
+    {
+     "from": "12:00",
+     "place": "d_cl_16",
+     "act": "home",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 340,
+   "src": "canon regular; side stories 21, 23"
+  },
+  {
+   "person": "doreen_harland",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cl_25",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "05:45",
+     "place": "launderette",
+     "act": "the boiler, the early shift",
+     "days": "mon-sat"
+    },
+    {
+     "from": "14:00",
+     "place": "d_cl_25",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_25",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 320,
+   "src": "canon regular; side stories 9, 10"
+  },
+  {
+   "person": "pat_stainton",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_31",
+     "act": "asleep",
+     "days": "mon-fri"
+    },
+    {
+     "from": "07:45",
+     "place": "launderette",
+     "act": "the presses",
+     "days": "mon-fri"
+    },
+    {
+     "from": "17:00",
+     "place": "d_nr_31",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_31",
+     "act": "asleep",
+     "days": "sat-sun"
+    }
+   ],
+   "longest_walk_m": 234,
+   "src": "hook-cast.json iva (unnamed; named here)"
+  },
+  {
+   "person": "irene_lowther",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_33",
+     "act": "asleep",
+     "days": "mon-fri"
+    },
+    {
+     "from": "07:45",
+     "place": "launderette",
+     "act": "the sorting room",
+     "days": "mon-fri"
+    },
+    {
+     "from": "16:00",
+     "place": "d_nr_33",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_33",
+     "act": "asleep",
+     "days": "sat-sun"
+    }
+   ],
+   "longest_walk_m": 240,
+   "src": "hook-cast.json selma (unnamed; named here)"
+  },
+  {
+   "person": "julie_kettlewell",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cl_9",
+     "act": "asleep",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "08:30",
+     "place": "newsagent",
+     "act": "the cards in the window",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "09:30",
+     "place": "launderette",
+     "act": "asking after work",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "11:00",
+     "place": "caff",
+     "act": "a tea she makes last",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "14:30",
+     "place": "d_cl_9",
+     "act": "home",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "18:00",
+     "place": "d_cl_9",
+     "act": "the rent man at six",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_9",
+     "act": "asleep",
+     "days": "thu"
+    },
+    {
+     "from": "08:30",
+     "place": "newsagent",
+     "act": "the cards in the window",
+     "days": "thu"
+    },
+    {
+     "from": "09:30",
+     "place": "market_stalls_quay",
+     "act": "looking",
+     "days": "thu"
+    },
+    {
+     "from": "13:00",
+     "place": "d_cl_9",
+     "act": "home",
+     "days": "thu"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_9",
+     "act": "asleep",
+     "days": "tue,sat"
+    },
+    {
+     "from": "08:30",
+     "place": "newsagent",
+     "act": "the cards in the window",
+     "days": "tue,sat"
+    },
+    {
+     "from": "09:30",
+     "place": "edge_north",
+     "act": "into town for work",
+     "days": "tue,sat"
+    },
+    {
+     "from": "15:00",
+     "place": "d_cl_9",
+     "act": "home",
+     "days": "tue,sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_9",
+     "act": "asleep",
+     "days": "sun"
+    },
+    {
+     "from": "09:30",
+     "place": "caff",
+     "act": "a tea with Pat",
+     "days": "sun"
+    },
+    {
+     "from": "12:45",
+     "place": "d_cl_9",
+     "act": "home",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 417,
+   "src": "canon; 2.8.1; 2.11.1; STORY-FRAME 4"
+  },
+  {
+   "person": "tracey_scarth",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_19",
+     "act": "asleep",
+     "days": "mon-wed,fri"
+    },
+    {
+     "from": "09:00",
+     "place": "launderette",
+     "act": "alterations",
+     "days": "mon-wed,fri"
+    },
+    {
+     "from": "17:00",
+     "place": "d_nr_19",
+     "act": "home",
+     "days": "mon-wed,fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_19",
+     "act": "asleep",
+     "days": "thu"
+    },
+    {
+     "from": "07:30",
+     "place": "market_stalls_quay",
+     "act": "her stall",
+     "days": "thu"
+    },
+    {
+     "from": "16:15",
+     "place": "d_nr_19",
+     "act": "home",
+     "days": "thu"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_19",
+     "act": "asleep",
+     "days": "sat"
+    },
+    {
+     "from": "09:00",
+     "place": "launderette",
+     "act": "alterations",
+     "days": "sat"
+    },
+    {
+     "from": "13:00",
+     "place": "d_nr_19",
+     "act": "home",
+     "days": "sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_19",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 233,
+   "src": "canon regular; side stories 5, 11"
+  },
+  {
+   "person": "stanley_hirst",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_35",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "09:00",
+     "place": "ritas",
+     "act": "the appraising",
+     "days": "mon-sat"
+    },
+    {
+     "from": "17:15",
+     "place": "d_nr_35",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_35",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 258,
+   "src": "hook-cast.json ines (unnamed; named here)"
+  },
+  {
+   "person": "mandy_calvert",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_37",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "09:00",
+     "place": "ritas",
+     "act": "the tickets",
+     "days": "mon-sat"
+    },
+    {
+     "from": "11:00",
+     "place": "ritas",
+     "act": "the step",
+     "days": "mon-sat"
+    },
+    {
+     "from": "11:15",
+     "place": "ritas",
+     "act": "the tickets",
+     "days": "mon-sat"
+    },
+    {
+     "from": "17:15",
+     "place": "d_nr_37",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_37",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 264,
+   "src": "hook-cast.json marta (unnamed; named here)"
+  },
+  {
+   "person": "leslie_cotterill",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_38",
+     "act": "asleep",
+     "days": "mon-fri"
+    },
+    {
+     "from": "08:45",
+     "place": "ritas",
+     "act": "key cutting",
+     "days": "mon-fri"
+    },
+    {
+     "from": "13:00",
+     "place": "iveson_yard",
+     "act": "odd jobs at the yard",
+     "days": "mon-fri"
+    },
+    {
+     "from": "17:00",
+     "place": "d_nr_38",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_38",
+     "act": "asleep",
+     "days": "sat"
+    },
+    {
+     "from": "08:45",
+     "place": "ritas",
+     "act": "key cutting",
+     "days": "sat"
+    },
+    {
+     "from": "12:00",
+     "place": "d_nr_38",
+     "act": "home",
+     "days": "sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_38",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 381,
+   "src": "hook-cast.json jelena (unnamed; named here)"
+  },
+  {
+   "person": "colin_mastin",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cs_7",
+     "act": "asleep",
+     "days": "mon-fri"
+    },
+    {
+     "from": "05:45",
+     "place": "dock_gate",
+     "act": "in at six, the cranes inside",
+     "days": "mon-fri"
+    },
+    {
+     "from": "17:30",
+     "place": "d_cs_7",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cs_7",
+     "act": "asleep",
+     "days": "sat"
+    },
+    {
+     "from": "05:45",
+     "place": "dock_gate",
+     "act": "Saturday morning",
+     "days": "sat"
+    },
+    {
+     "from": "12:30",
+     "place": "d_cs_7",
+     "act": "home",
+     "days": "sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cs_7",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 470,
+   "src": "canon regular; side story 15"
+  },
+  {
+   "person": "albert_suggitt",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "boarding_house",
+     "act": "asleep",
+     "days": "mon-fri"
+    },
+    {
+     "from": "06:30",
+     "place": "fish_dock",
+     "act": "the nets",
+     "days": "mon-fri"
+    },
+    {
+     "from": "12:00",
+     "place": "caff",
+     "act": "his dinner",
+     "days": "mon-fri"
+    },
+    {
+     "from": "12:45",
+     "place": "boarding_house",
+     "act": "his room",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "boarding_house",
+     "act": "asleep",
+     "days": "sat-sun"
+    },
+    {
+     "from": "11:00",
+     "place": "fishing_quay_east",
+     "act": "watching the water",
+     "days": "sat-sun"
+    },
+    {
+     "from": "13:00",
+     "place": "boarding_house",
+     "act": "his room",
+     "days": "sat-sun"
+    }
+   ],
+   "longest_walk_m": 475,
+   "src": "canon; side story 16"
+  },
+  {
+   "person": "paddy_rourke",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_41",
+     "act": "asleep",
+     "days": "mon-fri"
+    },
+    {
+     "from": "07:45",
+     "place": "customs",
+     "act": "the docks",
+     "days": "mon-fri"
+    },
+    {
+     "from": "17:00",
+     "place": "d_nr_41",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_41",
+     "act": "asleep",
+     "days": "sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_41",
+     "act": "asleep",
+     "days": "sun"
+    },
+    {
+     "from": "09:30",
+     "place": "chapel",
+     "act": "Mass",
+     "days": "sun"
+    },
+    {
+     "from": "13:00",
+     "place": "d_nr_41",
+     "act": "home",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 672,
+   "src": "hook-cast.json goran (unnamed; named here)"
+  },
+  {
+   "person": "gary_mawer",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_30",
+     "act": "asleep",
+     "days": "mon-fri"
+    },
+    {
+     "from": "07:30",
+     "place": "iveson_yard",
+     "act": "the slip and the yard",
+     "days": "mon-fri"
+    },
+    {
+     "from": "17:00",
+     "place": "d_nr_30",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_30",
+     "act": "asleep",
+     "days": "sat"
+    },
+    {
+     "from": "09:00",
+     "place": "iveson_yard",
+     "act": "Saturday jobs",
+     "days": "sat"
+    },
+    {
+     "from": "12:00",
+     "place": "d_nr_30",
+     "act": "home",
+     "days": "sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_30",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 196,
+   "src": "canon regular; side story 17"
+  },
+  {
+   "person": "ian_megginson",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_8",
+     "act": "asleep",
+     "days": "mon-fri"
+    },
+    {
+     "from": "07:30",
+     "place": "iveson_yard",
+     "act": "the workshop",
+     "days": "mon-fri"
+    },
+    {
+     "from": "17:00",
+     "place": "d_nr_8",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_8",
+     "act": "asleep",
+     "days": "sat"
+    },
+    {
+     "from": "09:00",
+     "place": "ironmonger",
+     "act": "odd jobs",
+     "days": "sat"
+    },
+    {
+     "from": "12:00",
+     "place": "d_nr_8",
+     "act": "home",
+     "days": "sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_8",
+     "act": "asleep",
+     "days": "sun"
+    },
+    {
+     "from": "10:00",
+     "place": "allotments",
+     "act": "his plot",
+     "days": "sun"
+    },
+    {
+     "from": "13:30",
+     "place": "d_nr_8",
+     "act": "home",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 378,
+   "src": "canon regular; 2.11.1; side story 3"
+  },
+  {
+   "person": "christine_pickering",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_9",
+     "act": "asleep",
+     "days": "mon-fri"
+    },
+    {
+     "from": "08:45",
+     "place": "harbour_board",
+     "act": "the counter, sandwiches at her desk",
+     "days": "mon-fri"
+    },
+    {
+     "from": "16:45",
+     "place": "d_nr_9",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_9",
+     "act": "asleep",
+     "days": "sat"
+    },
+    {
+     "from": "10:00",
+     "place": "newsagent",
+     "act": "the Saturday paper and a chat",
+     "days": "sat"
+    },
+    {
+     "from": "11:30",
+     "place": "d_nr_9",
+     "act": "home",
+     "days": "sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_9",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 574,
+   "src": "canon regular; side story 20"
+  },
+  {
+   "person": "karen_grummitt",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "boarding_house",
+     "act": "her room",
+     "days": "mon-sat"
+    },
+    {
+     "from": "06:30",
+     "place": "ferry_landing",
+     "act": "the ticket window",
+     "days": "mon-sat"
+    },
+    {
+     "from": "19:00",
+     "place": "boarding_house",
+     "act": "her room",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "boarding_house",
+     "act": "her room",
+     "days": "sun"
+    },
+    {
+     "from": "10:30",
+     "place": "caff",
+     "act": "Sunday breakfast",
+     "days": "sun"
+    },
+    {
+     "from": "11:45",
+     "place": "boarding_house",
+     "act": "her room",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 38,
+   "src": "canon regular; 2.11.1; side story 28"
+  },
+  {
+   "person": "gordon_leckenby",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_42",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "06:00",
+     "place": "ferry_landing",
+     "act": "the first boat",
+     "days": "mon-sat"
+    },
+    {
+     "from": "17:15",
+     "place": "d_nr_42",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_42",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 362,
+   "src": "canon regular; side story 18"
+  },
+  {
+   "person": "sylvia_rennison",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "boarding_house",
+     "act": "asleep",
+     "days": "mon-fri"
+    },
+    {
+     "from": "06:30",
+     "place": "boarding_house",
+     "act": "breakfasts",
+     "days": "mon-fri"
+    },
+    {
+     "from": "10:30",
+     "place": "laveracks",
+     "act": "fish for the lodgers",
+     "days": "mon-fri"
+    },
+    {
+     "from": "11:30",
+     "place": "boarding_house",
+     "act": "the house",
+     "days": "mon-fri"
+    },
+    {
+     "from": "22:00",
+     "place": "boarding_house",
+     "act": "asleep",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "boarding_house",
+     "act": "asleep",
+     "days": "sat-sun"
+    },
+    {
+     "from": "06:30",
+     "place": "boarding_house",
+     "act": "breakfasts and the step",
+     "days": "sat-sun"
+    }
+   ],
+   "longest_walk_m": 104,
+   "src": "canon; side story 27"
+  },
+  {
+   "person": "edith_stockill",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cl_12",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "09:15",
+     "place": "adas",
+     "act": "a word at Ada's window",
+     "days": "mon-sat"
+    },
+    {
+     "from": "10:00",
+     "place": "newsagent",
+     "act": "the pension counter",
+     "days": "mon-sat"
+    },
+    {
+     "from": "14:00",
+     "place": "d_cl_12",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_12",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 352,
+   "src": "canon regular; side story 24"
+  },
+  {
+   "person": "shaun_hewson",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "boarding_house",
+     "act": "his room",
+     "days": "mon-thu"
+    },
+    {
+     "from": "07:00",
+     "place": "caff",
+     "act": "breakfast",
+     "days": "mon-thu"
+    },
+    {
+     "from": "08:00",
+     "place": "empty_unit",
+     "act": "his ladder on the parade's boards",
+     "days": "mon-thu"
+    },
+    {
+     "from": "12:00",
+     "place": "caff",
+     "act": "dinner",
+     "days": "mon-thu"
+    },
+    {
+     "from": "13:00",
+     "place": "launderette",
+     "act": "the next board",
+     "days": "mon-thu"
+    },
+    {
+     "from": "17:00",
+     "place": "boarding_house",
+     "act": "his room",
+     "days": "mon-thu"
+    },
+    {
+     "from": "00:00",
+     "place": "boarding_house",
+     "act": "his room",
+     "days": "fri"
+    },
+    {
+     "from": "07:00",
+     "place": "caff",
+     "act": "breakfast",
+     "days": "fri"
+    },
+    {
+     "from": "08:00",
+     "place": "mickeys",
+     "act": "his ladder at Mickey's bay",
+     "days": "fri"
+    },
+    {
+     "from": "12:00",
+     "place": "caff",
+     "act": "dinner",
+     "days": "fri"
+    },
+    {
+     "from": "13:00",
+     "place": "launderette",
+     "act": "the next board",
+     "days": "fri"
+    },
+    {
+     "from": "17:00",
+     "place": "boarding_house",
+     "act": "his room",
+     "days": "fri"
+    },
+    {
+     "from": "00:00",
+     "place": "boarding_house",
+     "act": "his room",
+     "days": "sat"
+    },
+    {
+     "from": "11:00",
+     "place": "snooker_hall",
+     "act": "the tables",
+     "days": "sat"
+    },
+    {
+     "from": "14:00",
+     "place": "boarding_house",
+     "act": "his room",
+     "days": "sat"
+    },
+    {
+     "from": "00:00",
+     "place": "boarding_house",
+     "act": "his room",
+     "days": "sun"
+    },
+    {
+     "from": "11:00",
+     "place": "fishing_quay_west",
+     "act": "a walk",
+     "days": "sun"
+    },
+    {
+     "from": "13:00",
+     "place": "boarding_house",
+     "act": "his room",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 134,
+   "src": "canon; 2.11.1; side story 6"
+  },
+  {
+   "person": "dawn_pybus",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "mon-thu"
+    },
+    {
+     "from": "09:00",
+     "place": "adas",
+     "act": "the rent round, Quay Street",
+     "days": "mon-thu"
+    },
+    {
+     "from": "12:15",
+     "place": "d_cl_9",
+     "act": "the rent round, Chapel Lane",
+     "days": "mon-thu"
+    },
+    {
+     "from": "15:00",
+     "place": "agar_base",
+     "act": "the agents' book",
+     "days": "mon-thu"
+    },
+    {
+     "from": "16:00",
+     "place": "edge_north",
+     "act": "back to town",
+     "days": "mon-thu"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "fri"
+    },
+    {
+     "from": "09:00",
+     "place": "adas",
+     "act": "the rent round, Quay Street",
+     "days": "fri"
+    },
+    {
+     "from": "11:00",
+     "place": "mickeys",
+     "act": "behind Mr Askew at the counter",
+     "days": "fri"
+    },
+    {
+     "from": "15:00",
+     "place": "agar_base",
+     "act": "the agents' book",
+     "days": "fri"
+    },
+    {
+     "from": "16:00",
+     "place": "edge_north",
+     "act": "back to town",
+     "days": "fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "sat-sun"
+    }
+   ],
+   "longest_walk_m": 498,
+   "src": "canon regular; side story 29; timetables weekly rent (Mr Leonard Askew)"
+  },
+  {
+   "person": "dennis_iveson",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_44",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "07:30",
+     "place": "iveson_yard",
+     "act": "the yard",
+     "days": "mon-sat"
+    },
+    {
+     "from": "12:00",
+     "place": "iveson_hut",
+     "act": "his dinner in the hut",
+     "days": "mon-sat"
+    },
+    {
+     "from": "13:00",
+     "place": "iveson_yard",
+     "act": "the yard",
+     "days": "mon-sat"
+    },
+    {
+     "from": "17:15",
+     "place": "d_nr_44",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_44",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 144,
+   "src": "canon; 2.8.1; RT2-05"
+  },
+  {
+   "person": "norman_dent",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "dents_warehouses",
+     "act": "his round of the row"
+    },
+    {
+     "from": "07:00",
+     "place": "d_cl_20",
+     "act": "home to bed"
+    },
+    {
+     "from": "19:30",
+     "place": "dents_warehouses",
+     "act": "his round of the row"
+    }
+   ],
+   "longest_walk_m": 591,
+   "src": "canon; 2.11.1; side story 31"
+  },
+  {
+   "person": "grace_rinaldi",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_bp_3",
+     "act": "asleep",
+     "days": "mon-thu"
+    },
+    {
+     "from": "05:30",
+     "place": "caff",
+     "act": "opening up",
+     "days": "mon-thu"
+    },
+    {
+     "from": "15:30",
+     "place": "d_bp_3",
+     "act": "home",
+     "days": "mon-thu"
+    },
+    {
+     "from": "00:00",
+     "place": "d_bp_3",
+     "act": "asleep",
+     "days": "fri-sat"
+    },
+    {
+     "from": "05:30",
+     "place": "caff",
+     "act": "opening up",
+     "days": "fri-sat"
+    },
+    {
+     "from": "22:15",
+     "place": "d_bp_3",
+     "act": "home",
+     "days": "fri-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_bp_3",
+     "act": "asleep",
+     "days": "sun"
+    },
+    {
+     "from": "07:30",
+     "place": "caff",
+     "act": "Sunday mornings",
+     "days": "sun"
+    },
+    {
+     "from": "12:15",
+     "place": "d_bp_3",
+     "act": "home",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 142,
+   "src": "canon; side story 11"
+  },
+  {
+   "person": "peter_tang",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_bp_5",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "10:00",
+     "place": "grocer",
+     "act": "the day's veg",
+     "days": "mon-sat"
+    },
+    {
+     "from": "11:00",
+     "place": "d_bp_5",
+     "act": "the kitchen, prep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "16:30",
+     "place": "tangs_takeaway",
+     "act": "the counter",
+     "days": "mon-sat"
+    },
+    {
+     "from": "23:45",
+     "place": "d_bp_5",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_bp_5",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 54,
+   "src": "canon; side stories 4, 12"
+  },
+  {
+   "person": "lily_tang",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_bp_5",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "11:00",
+     "place": "d_bp_5",
+     "act": "the books",
+     "days": "mon-sat"
+    },
+    {
+     "from": "16:30",
+     "place": "tangs_takeaway",
+     "act": "the front",
+     "days": "mon-sat"
+    },
+    {
+     "from": "23:45",
+     "place": "d_bp_5",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_bp_5",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "canon; side story 4"
+  },
+  {
+   "person": "old_firm_man",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "ferry_landing",
+     "act": "the landing"
+    },
+    {
+     "from": "01:15",
+     "place": "edge_west",
+     "act": "gone along the quay"
+    },
+    {
+     "from": "09:00",
+     "place": "caff",
+     "act": "a tea in the corner"
+    },
+    {
+     "from": "09:45",
+     "place": "edge_west",
+     "act": "gone"
+    },
+    {
+     "from": "21:45",
+     "place": "ferry_landing",
+     "act": "the landing"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "canon (never named); STORY-FRAME 2; hook-cast.json outfit_man"
+  },
+  {
+   "person": "simon_ombler",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "mon-fri"
+    },
+    {
+     "from": "09:15",
+     "place": "agar_base",
+     "act": "the front office",
+     "days": "mon-fri"
+    },
+    {
+     "from": "17:15",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "sat-sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "STORY-FRAME 4 (proposed); 2.10.2 (a named lieutenant)"
+  },
+  {
+   "person": "alan_sowerby",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "mon-wed,fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "thu"
+    },
+    {
+     "from": "09:30",
+     "place": "licensing",
+     "act": "the licensing committee",
+     "days": "thu"
+    },
+    {
+     "from": "16:30",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "thu"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "sat-sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "STORY-FRAME 4 (proposed)"
+  },
+  {
+   "person": "cyril_pashby",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cl_33",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "10:00",
+     "place": "chapel",
+     "act": "the steps",
+     "days": "mon-sat"
+    },
+    {
+     "from": "13:00",
+     "place": "d_cl_33",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_33",
+     "act": "asleep",
+     "days": "sun"
+    },
+    {
+     "from": "09:30",
+     "place": "chapel",
+     "act": "Mass, in black",
+     "days": "sun"
+    },
+    {
+     "from": "11:00",
+     "place": "d_cl_33",
+     "act": "home",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 140,
+   "src": "STORY-FRAME 4 item 16 (the role proposed; the name invented here)"
+  },
+  {
+   "person": "arvids_ozols",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "fishing_basin_north",
+     "act": "aboard"
+    },
+    {
+     "from": "21:00",
+     "place": "rank_mickeys",
+     "act": "his cab to nowhere"
+    },
+    {
+     "from": "22:00",
+     "place": "fishing_basin_north",
+     "act": "by cab: back aboard"
+    }
+   ],
+   "longest_walk_m": 432,
+   "src": "STORY-FRAME 4 item 17 (proposed); ship's berth provisional (the map has no ship berth: fishing_basin_north stands in)"
+  },
+  {
+   "person": "stathers",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cs_17",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "05:30",
+     "place": "dock_gate",
+     "act": "the pen",
+     "days": "mon-sat"
+    },
+    {
+     "from": "09:00",
+     "place": "widow_base",
+     "act": "the office below hers",
+     "days": "mon-sat"
+    },
+    {
+     "from": "13:00",
+     "place": "dock_gate",
+     "act": "the hut and the tax",
+     "days": "mon-sat"
+    },
+    {
+     "from": "18:00",
+     "place": "d_cs_17",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cs_17",
+     "act": "asleep",
+     "days": "sun"
+    },
+    {
+     "from": "10:00",
+     "place": "chapel",
+     "act": "Mass, behind her",
+     "days": "sun"
+    },
+    {
+     "from": "13:15",
+     "place": "d_cs_17",
+     "act": "home",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 415,
+   "src": "STORY-FRAME 4 item 18 names him Frank Stathers (proposed); first name changed here to Vic because the lead is now Frank (decision of 24 Nov); for the story lane to confirm"
+  },
+  {
+   "person": "mark_billany",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "boarding_house",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "06:00",
+     "place": "dock_gate",
+     "act": "the tax hut",
+     "days": "mon-sat"
+    },
+    {
+     "from": "12:00",
+     "place": "caff",
+     "act": "dinner",
+     "days": "mon-sat"
+    },
+    {
+     "from": "13:00",
+     "place": "rank_ferry",
+     "act": "the tax on the ferry rank",
+     "days": "mon-sat"
+    },
+    {
+     "from": "17:00",
+     "place": "widow_base",
+     "act": "the take",
+     "days": "mon-sat"
+    },
+    {
+     "from": "21:00",
+     "place": "boarding_house",
+     "act": "his room",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "boarding_house",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 725,
+   "src": "STORY-FRAME 7 worked example 3 (proposed)"
+  },
+  {
+   "person": "pat_brannigan",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "boarding_house",
+     "act": "asleep",
+     "days": "mon"
+    },
+    {
+     "from": "11:00",
+     "place": "widow_base",
+     "act": "the net store",
+     "days": "mon"
+    },
+    {
+     "from": "16:00",
+     "place": "boxing_club",
+     "act": "the club",
+     "days": "mon"
+    },
+    {
+     "from": "18:00",
+     "place": "boarding_house",
+     "act": "his room",
+     "days": "mon"
+    },
+    {
+     "from": "22:00",
+     "place": "widow_base",
+     "act": "the van to the last boat",
+     "days": "mon"
+    },
+    {
+     "from": "00:00",
+     "place": "widow_base",
+     "act": "the van back from the last boat",
+     "days": "tue-sat"
+    },
+    {
+     "from": "04:00",
+     "place": "boarding_house",
+     "act": "asleep",
+     "days": "tue-sat"
+    },
+    {
+     "from": "11:00",
+     "place": "widow_base",
+     "act": "the net store",
+     "days": "tue-sat"
+    },
+    {
+     "from": "16:00",
+     "place": "boxing_club",
+     "act": "the club",
+     "days": "tue-sat"
+    },
+    {
+     "from": "18:00",
+     "place": "boarding_house",
+     "act": "his room",
+     "days": "tue-sat"
+    },
+    {
+     "from": "22:00",
+     "place": "widow_base",
+     "act": "the van to the last boat",
+     "days": "tue-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "widow_base",
+     "act": "the van back from the last boat",
+     "days": "sun"
+    },
+    {
+     "from": "04:00",
+     "place": "boarding_house",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 474,
+   "src": "invented: 2.10.2 (three named men each)"
+  },
+  {
+   "person": "dougie_saltmarsh",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_43",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "05:00",
+     "place": "fish_dock",
+     "act": "the porters' cut",
+     "days": "mon-sat"
+    },
+    {
+     "from": "09:30",
+     "place": "cold_stores",
+     "act": "the yard gate",
+     "days": "mon-sat"
+    },
+    {
+     "from": "14:30",
+     "place": "snooker_hall",
+     "act": "the tables",
+     "days": "mon-sat"
+    },
+    {
+     "from": "20:00",
+     "place": "d_nr_43",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_43",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 613,
+   "src": "invented: 2.10.2; side story 8 (the syndicate's man who takes the porters' cut)"
+  },
+  {
+   "person": "craig_fewson",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_39",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "11:00",
+     "place": "cammack_base",
+     "act": "the lock-ups",
+     "days": "mon-sat"
+    },
+    {
+     "from": "15:00",
+     "place": "rank_ferry",
+     "act": "watching the ferry rank",
+     "days": "mon-sat"
+    },
+    {
+     "from": "20:00",
+     "place": "snooker_hall",
+     "act": "with Danny",
+     "days": "mon-sat"
+    },
+    {
+     "from": "23:00",
+     "place": "d_nr_39",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_39",
+     "act": "asleep",
+     "days": "sun"
+    },
+    {
+     "from": "13:00",
+     "place": "cammack_base",
+     "act": "the lock-ups",
+     "days": "sun"
+    },
+    {
+     "from": "18:00",
+     "place": "d_nr_39",
+     "act": "home",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 396,
+   "src": "STORY-FRAME 4 item 18 (proposed)"
+  },
+  {
+   "person": "shane_boddy",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_34",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "12:00",
+     "place": "cammack_base",
+     "act": "the lock-ups",
+     "days": "mon-sat"
+    },
+    {
+     "from": "17:00",
+     "place": "phone_parade",
+     "act": "the corner by the phone box",
+     "days": "mon-sat"
+    },
+    {
+     "from": "20:00",
+     "place": "snooker_hall",
+     "act": "the tables",
+     "days": "mon-sat"
+    },
+    {
+     "from": "23:00",
+     "place": "d_nr_34",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_34",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 324,
+   "src": "invented: 2.10.2; side story 23 (two of Danny's men)"
+  },
+  {
+   "person": "wes_akers",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "net_loft",
+     "act": "the crates",
+     "days": "mon-sat"
+    },
+    {
+     "from": "02:30",
+     "place": "d_nr_32",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "13:00",
+     "place": "cammack_base",
+     "act": "the lock-ups",
+     "days": "mon-sat"
+    },
+    {
+     "from": "22:30",
+     "place": "net_loft",
+     "act": "the crates",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "net_loft",
+     "act": "the crates",
+     "days": "sun"
+    },
+    {
+     "from": "02:30",
+     "place": "d_nr_32",
+     "act": "asleep",
+     "days": "sun"
+    },
+    {
+     "from": "14:00",
+     "place": "cammack_base",
+     "act": "the lock-ups",
+     "days": "sun"
+    },
+    {
+     "from": "18:00",
+     "place": "d_nr_32",
+     "act": "home",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 286,
+   "src": "invented: 2.10.2; side stories 23, 31"
+  },
+  {
+   "person": "jason_pinder",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_28",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "11:30",
+     "place": "cammack_base",
+     "act": "the lock-ups",
+     "days": "mon-sat"
+    },
+    {
+     "from": "17:00",
+     "place": "phone_parade",
+     "act": "the corner",
+     "days": "mon-sat"
+    },
+    {
+     "from": "21:00",
+     "place": "tangs_takeaway",
+     "act": "outside at closing",
+     "days": "mon-sat"
+    },
+    {
+     "from": "23:00",
+     "place": "d_nr_28",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_28",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 324,
+   "src": "invented: side story 11 (a young man of about twenty); STORY-FRAME 4 item 15"
+  },
+  {
+   "person": "barry_coult",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "from away",
+     "days": "tue,fri"
+    },
+    {
+     "from": "10:00",
+     "place": "agar_base",
+     "act": "his instructions",
+     "days": "tue,fri"
+    },
+    {
+     "from": "11:00",
+     "place": "cold_stores",
+     "act": "the yard",
+     "days": "tue,fri"
+    },
+    {
+     "from": "15:00",
+     "place": "edge_north",
+     "act": "gone",
+     "days": "tue,fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "from away",
+     "days": "mon,wed,thu,sat,sun"
+    }
+   ],
+   "longest_walk_m": 90,
+   "src": "invented: 2.10.2; STORY-FRAME 5 (men from away, hired on Agar's paper)"
+  },
+  {
+   "person": "ray_spink",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "from away",
+     "days": "tue,fri"
+    },
+    {
+     "from": "10:00",
+     "place": "agar_base",
+     "act": "waiting outside",
+     "days": "tue,fri"
+    },
+    {
+     "from": "11:00",
+     "place": "cold_stores",
+     "act": "the yard",
+     "days": "tue,fri"
+    },
+    {
+     "from": "15:00",
+     "place": "edge_north",
+     "act": "gone",
+     "days": "tue,fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "from away",
+     "days": "mon,wed,thu,sat,sun"
+    }
+   ],
+   "longest_walk_m": 90,
+   "src": "invented: 2.10.2"
+  },
+  {
+   "person": "kenny_varley",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "from away",
+     "days": "tue,fri"
+    },
+    {
+     "from": "10:00",
+     "place": "agar_base",
+     "act": "the van",
+     "days": "tue,fri"
+    },
+    {
+     "from": "11:00",
+     "place": "cold_stores",
+     "act": "the van in the yard",
+     "days": "tue,fri"
+    },
+    {
+     "from": "15:00",
+     "place": "edge_north",
+     "act": "gone",
+     "days": "tue,fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "from away",
+     "days": "mon,wed,thu,sat,sun"
+    }
+   ],
+   "longest_walk_m": 90,
+   "src": "invented: 2.10.2"
+  },
+  {
+   "person": "eric_tharratt",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "mon-fri"
+    },
+    {
+     "from": "05:30",
+     "place": "cold_stores",
+     "act": "the packing shift",
+     "days": "mon-fri"
+    },
+    {
+     "from": "17:45",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "sat"
+    },
+    {
+     "from": "05:30",
+     "place": "cold_stores",
+     "act": "Saturday shift",
+     "days": "sat"
+    },
+    {
+     "from": "13:15",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "sat"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "STORY-FRAME 4 item 19 (proposed); replaces wave 1's placeholder 'Norman (the cold-store manager)'"
+  },
+  {
+   "person": "derek_hebblewhite",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "up in town"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "STORY-FRAME 4 item 19, 5 Act III (proposed)"
+  },
+  {
+   "person": "trevor_garton",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "14:00",
+     "place": "police_station",
+     "act": "the late turn",
+     "days": "mon-fri"
+    },
+    {
+     "from": "15:00",
+     "place": "rank_north",
+     "act": "the patrol car's stop",
+     "days": "mon-fri"
+    },
+    {
+     "from": "15:30",
+     "place": "police_station",
+     "act": "the patrol car's round (police.json)",
+     "days": "mon-fri"
+    },
+    {
+     "from": "22:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "sat-sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "STORY-FRAME 2 (proposed); 2.6.8; police.json bought_look_away (whose prototype hint was PC Harker)"
+  },
+  {
+   "person": "graham_wardell",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "09:00",
+     "place": "police_station",
+     "act": "CID",
+     "days": "mon-fri"
+    },
+    {
+     "from": "13:00",
+     "place": "caff",
+     "act": "a bacon sandwich",
+     "days": "mon-fri"
+    },
+    {
+     "from": "13:45",
+     "place": "police_station",
+     "act": "CID",
+     "days": "mon-fri"
+    },
+    {
+     "from": "18:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "sat-sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "STORY-FRAME 2 (proposed); 2.6.8; police.json bought_lose_statement (whose prototype hint was DC Pollitt)"
+  },
+  {
+   "person": "neil_screeton",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_26",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "07:30",
+     "place": "iveson_yard",
+     "act": "the yard",
+     "days": "mon-sat"
+    },
+    {
+     "from": "17:00",
+     "place": "iveson_yard",
+     "act": "chains the gap",
+     "days": "mon-sat"
+    },
+    {
+     "from": "18:45",
+     "place": "d_nr_26",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_26",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 208,
+   "src": "STORY-FRAME 7 worked example 2 (proposed); 2.8.1 (a yard hand in his twenties)"
+  },
+  {
+   "person": "pc_ibbotson",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "off duty",
+     "days": "mon-fri"
+    },
+    {
+     "from": "08:00",
+     "place": "police_station",
+     "act": "parade",
+     "days": "mon-fri"
+    },
+    {
+     "from": "08:30",
+     "place": "mickeys",
+     "act": "the day beat, Quay Street (police.json)",
+     "days": "mon-fri"
+    },
+    {
+     "from": "12:30",
+     "place": "caff",
+     "act": "his break",
+     "days": "mon-fri"
+    },
+    {
+     "from": "13:00",
+     "place": "cold_stores",
+     "act": "the day beat, the north road to the cold-store road (police.json)",
+     "days": "mon-fri"
+    },
+    {
+     "from": "16:00",
+     "place": "police_station",
+     "act": "off duty",
+     "days": "mon-fri"
+    },
+    {
+     "from": "16:30",
+     "place": "edge_north",
+     "act": "off duty",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "off duty",
+     "days": "sat-sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "prototype cast.js pc (PC Ibbotson, kept by wave 1 ledger-texts); 2.6.1; FIT-L01; first name invented"
+  },
+  {
+   "person": "pc_haigh",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "mickeys",
+     "act": "the night beat (police.json)"
+    },
+    {
+     "from": "06:00",
+     "place": "police_station",
+     "act": "off duty"
+    },
+    {
+     "from": "06:30",
+     "place": "edge_north",
+     "act": "asleep"
+    },
+    {
+     "from": "21:30",
+     "place": "police_station",
+     "act": "parade"
+    },
+    {
+     "from": "22:00",
+     "place": "mickeys",
+     "act": "the night beat (police.json)"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "invented: 2.6.1 (the beat constable's night round); RT2-05 (the second constable); timetables beat"
+  },
+  {
+   "person": "sgt_kitson",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "police_station",
+     "act": "the custody desk"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "invented: STORY-FRAME 5 (the sergeant's three goes at Nowak)"
+  },
+  {
+   "person": "len_ackroyd",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "07:00",
+     "place": "rank_north",
+     "act": "his cars",
+     "days": "mon-sat"
+    },
+    {
+     "from": "19:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "invented: 2.15.3; vehicles.json portside_cars (the prototype's hint Len Wardle: surname changed so it is not mistaken for DC Wardell)"
+  },
+  {
+   "person": "malcolm_ruddock",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cs_5",
+     "act": "asleep",
+     "days": "mon-fri"
+    },
+    {
+     "from": "05:30",
+     "place": "cold_stores",
+     "act": "the yard",
+     "days": "mon-fri"
+    },
+    {
+     "from": "14:00",
+     "place": "d_cs_5",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cs_5",
+     "act": "asleep",
+     "days": "sat"
+    },
+    {
+     "from": "05:30",
+     "place": "cold_stores",
+     "act": "Saturday shift",
+     "days": "sat"
+    },
+    {
+     "from": "13:15",
+     "place": "d_cs_5",
+     "act": "home",
+     "days": "sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cs_5",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 156,
+   "src": "invented: RT2-05 (the cold-store manager's deputy); STORY-FRAME 5"
+  },
+  {
+   "person": "len_garside",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "chandlery",
+     "act": "asleep upstairs"
+    },
+    {
+     "from": "08:00",
+     "place": "chandlery",
+     "act": "the back room"
+    },
+    {
+     "from": "21:00",
+     "place": "chandlery",
+     "act": "asleep upstairs"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "invented: RT2-05 (the dock gun seller)"
+  },
+  {
+   "person": "bernard_gill",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "08:45",
+     "place": "car_lot",
+     "act": "the lot's hut",
+     "days": "mon-sat"
+    },
+    {
+     "from": "17:15",
+     "place": "edge_north",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "invented: 2.15.1; RT2-05 (the car-lot man)"
+  },
+  {
+   "person": "leonard_askew",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "mon-thu"
+    },
+    {
+     "from": "09:30",
+     "place": "agar_base",
+     "act": "the agents' office",
+     "days": "mon-thu"
+    },
+    {
+     "from": "17:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "mon-thu"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "fri"
+    },
+    {
+     "from": "11:00",
+     "place": "mickeys",
+     "act": "the rent at the counter",
+     "days": "fri"
+    },
+    {
+     "from": "12:00",
+     "place": "edge_north",
+     "act": "back to the agents",
+     "days": "fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "sat-sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "timetables.json weekly rent (Mr Leonard Askew, chosen there from letters-and-print.json); RT2-05 (the landlord's agent)"
+  },
+  {
+   "person": "aidan_keogh",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "doctors",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "08:00",
+     "place": "doctors",
+     "act": "by knock",
+     "days": "mon-sat"
+    },
+    {
+     "from": "21:00",
+     "place": "doctors",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "doctors",
+     "act": "asleep",
+     "days": "sun"
+    },
+    {
+     "from": "09:30",
+     "place": "chapel",
+     "act": "Mass",
+     "days": "sun"
+    },
+    {
+     "from": "11:00",
+     "place": "doctors",
+     "act": "by knock",
+     "days": "sun"
+    },
+    {
+     "from": "21:00",
+     "place": "doctors",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 110,
+   "src": "invented: 1.3.11 (the stitching doctor); prototype fares doctor_night"
+  },
+  {
+   "person": "harry_holt",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_18",
+     "act": "asleep",
+     "days": "mon-fri"
+    },
+    {
+     "from": "07:45",
+     "place": "garage",
+     "act": "the workshop",
+     "days": "mon-fri"
+    },
+    {
+     "from": "17:45",
+     "place": "d_nr_18",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_18",
+     "act": "asleep",
+     "days": "sat"
+    },
+    {
+     "from": "07:45",
+     "place": "garage",
+     "act": "Saturday mornings",
+     "days": "sat"
+    },
+    {
+     "from": "12:15",
+     "place": "d_nr_18",
+     "act": "home",
+     "days": "sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_18",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 562,
+   "src": "wave 1 places.json Holt (surname kept); first name invented; RT-06 (the tyre man)"
+  },
+  {
+   "person": "phil_rawling",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "up in town"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "invented: RT-06 (the glazier)"
+  },
+  {
+   "person": "wilf_hardcastle",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cl_31",
+     "act": "asleep"
+    },
+    {
+     "from": "07:00",
+     "place": "pigeon_loft",
+     "act": "the birds"
+    },
+    {
+     "from": "12:00",
+     "place": "d_cl_31",
+     "act": "his dinner"
+    },
+    {
+     "from": "14:30",
+     "place": "pigeon_loft",
+     "act": "the birds"
+    },
+    {
+     "from": "18:30",
+     "place": "d_cl_31",
+     "act": "home"
+    }
+   ],
+   "longest_walk_m": 229,
+   "src": "invented: places.json pigeon_loft ('the bird man of the allotments (people file)')"
+  },
+  {
+   "person": "edna_coulson",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cl_7",
+     "act": "asleep",
+     "days": "mon-fri"
+    },
+    {
+     "from": "06:00",
+     "place": "mickeys",
+     "act": "cleaning the front office, from six",
+     "days": "mon-fri"
+    },
+    {
+     "from": "07:00",
+     "place": "tea_room",
+     "act": "cleaning",
+     "days": "mon-fri"
+    },
+    {
+     "from": "08:15",
+     "place": "snooker_hall",
+     "act": "cleaning",
+     "days": "mon-fri"
+    },
+    {
+     "from": "11:45",
+     "place": "d_cl_7",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_7",
+     "act": "asleep",
+     "days": "sat"
+    },
+    {
+     "from": "06:00",
+     "place": "mickeys",
+     "act": "Saturday clean",
+     "days": "sat"
+    },
+    {
+     "from": "09:30",
+     "place": "d_cl_7",
+     "act": "home",
+     "days": "sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_7",
+     "act": "asleep",
+     "days": "sun"
+    },
+    {
+     "from": "09:30",
+     "place": "chapel",
+     "act": "Mass",
+     "days": "sun"
+    },
+    {
+     "from": "11:00",
+     "place": "d_cl_7",
+     "act": "home",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 420,
+   "src": "invented: 2.5.5 (the cleaner at six)"
+  },
+  {
+   "person": "bill_huxtable",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_1",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "05:45",
+     "place": "dock_gate",
+     "act": "the pen, first in by the quay road",
+     "days": "mon-sat"
+    },
+    {
+     "from": "14:00",
+     "place": "caff",
+     "act": "his tea",
+     "days": "mon-sat"
+    },
+    {
+     "from": "15:30",
+     "place": "d_nr_1",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_1",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 712,
+   "src": "invented: 2.5.5 (the first dock worker)"
+  },
+  {
+   "person": "jimmy_raw",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_2",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "05:45",
+     "place": "dock_gate",
+     "act": "the pen",
+     "days": "mon-sat"
+    },
+    {
+     "from": "14:00",
+     "place": "rank_mickeys",
+     "act": "by car two",
+     "days": "mon-sat"
+    },
+    {
+     "from": "15:30",
+     "place": "snooker_hall",
+     "act": "a frame",
+     "days": "mon-sat"
+    },
+    {
+     "from": "18:30",
+     "place": "d_nr_2",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_2",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 706,
+   "src": "invented: RT2-13 (the dockers by car two); 1.3.12"
+  },
+  {
+   "person": "ken_dobbin",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_3",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "05:45",
+     "place": "dock_gate",
+     "act": "the pen",
+     "days": "mon-sat"
+    },
+    {
+     "from": "14:00",
+     "place": "rank_mickeys",
+     "act": "by car two with Jimmy",
+     "days": "mon-sat"
+    },
+    {
+     "from": "15:30",
+     "place": "snooker_hall",
+     "act": "a frame",
+     "days": "mon-sat"
+    },
+    {
+     "from": "18:30",
+     "place": "d_nr_3",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_3",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 700,
+   "src": "invented: RT2-13; 1.3.12"
+  },
+  {
+   "person": "eddie_birtwhistle",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_4",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "04:45",
+     "place": "fish_dock",
+     "act": "the boxes",
+     "days": "mon-sat"
+    },
+    {
+     "from": "11:00",
+     "place": "caff",
+     "act": "his dinner",
+     "days": "mon-sat"
+    },
+    {
+     "from": "12:45",
+     "place": "d_nr_4",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_4",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 463,
+   "src": "invented: side story 8 (the porter)"
+  },
+  {
+   "person": "leonard_tasker",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "mon-fri"
+    },
+    {
+     "from": "09:30",
+     "place": "launderette",
+     "act": "the office",
+     "days": "mon-fri"
+    },
+    {
+     "from": "12:30",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "sat-sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "invented: side story 9 (the laundry's owner); the steam laundry and the Washeteria are one place on wave 1's map"
+  },
+  {
+   "person": "margaret_lofthouse",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "07:00",
+     "place": "mickeys",
+     "act": "a poster on the glass",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "08:00",
+     "place": "market_stalls_quay",
+     "act": "leaflets",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "10:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "tue,thu,sat,sun"
+    }
+   ],
+   "longest_walk_m": 37,
+   "src": "invented: side story 14; letters-and-print.json (Meridian Against the Poll Tax)"
+  },
+  {
+   "person": "stan_pickles",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "07:30",
+     "place": "harbour_board",
+     "act": "the works yard",
+     "days": "mon-fri"
+    },
+    {
+     "from": "16:30",
+     "place": "edge_north",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "sat-sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "invented: side story 30 (the harbour office's works man)"
+  },
+  {
+   "person": "rodney_usher",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_10",
+     "act": "asleep",
+     "days": "mon-fri"
+    },
+    {
+     "from": "08:45",
+     "place": "harbour_board",
+     "act": "the back office",
+     "days": "mon-fri"
+    },
+    {
+     "from": "17:00",
+     "place": "snooker_hall",
+     "act": "the tables",
+     "days": "mon-fri"
+    },
+    {
+     "from": "20:00",
+     "place": "d_nr_10",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_10",
+     "act": "asleep",
+     "days": "sat"
+    },
+    {
+     "from": "14:00",
+     "place": "snooker_hall",
+     "act": "the tables",
+     "days": "sat"
+    },
+    {
+     "from": "18:00",
+     "place": "d_nr_10",
+     "act": "home",
+     "days": "sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_10",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 597,
+   "src": "invented: RT-03 (a clerk who sells times of shipments)"
+  },
+  {
+   "person": "douglas_fenwick",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "08:30",
+     "place": "customs",
+     "act": "the bonded store",
+     "days": "mon-fri"
+    },
+    {
+     "from": "16:30",
+     "place": "edge_north",
+     "act": "home",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home",
+     "days": "sat-sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "invented: RT-03 (an officer who never reports, by trade); places.json customs owner"
+  },
+  {
+   "person": "anthony_raine",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "up in town"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "invented: STORY-FRAME 5 (the brief is Agar's man)"
+  },
+  {
+   "person": "dobson",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "chip_shop",
+     "act": "asleep upstairs",
+     "days": "mon-sat"
+    },
+    {
+     "from": "10:30",
+     "place": "chip_shop",
+     "act": "the fryers",
+     "days": "mon-sat"
+    },
+    {
+     "from": "23:45",
+     "place": "chip_shop",
+     "act": "asleep upstairs",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "chip_shop",
+     "act": "asleep upstairs",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "wave 1 places.json and timetables (Mr Dobson); first name invented"
+  },
+  {
+   "person": "peart",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "newsagent",
+     "act": "asleep upstairs",
+     "days": "mon-sat"
+    },
+    {
+     "from": "05:45",
+     "place": "newsagent",
+     "act": "the papers in",
+     "days": "mon-sat"
+    },
+    {
+     "from": "18:15",
+     "place": "newsagent",
+     "act": "upstairs",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "newsagent",
+     "act": "asleep upstairs",
+     "days": "sun"
+    },
+    {
+     "from": "06:45",
+     "place": "newsagent",
+     "act": "Sunday papers",
+     "days": "sun"
+    },
+    {
+     "from": "12:15",
+     "place": "newsagent",
+     "act": "upstairs",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "wave 1 places.json and rooms (Peart); first name invented"
+  },
+  {
+   "person": "arthur_brigham",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_6",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "08:30",
+     "place": "grocer",
+     "act": "opening up",
+     "days": "mon-sat"
+    },
+    {
+     "from": "17:45",
+     "place": "d_nr_6",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_6",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 98,
+   "src": "invented: places.json grocer (unnamed keeper)"
+  },
+  {
+   "person": "tadeusz_nowicki",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_7",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "08:30",
+     "place": "ironmonger",
+     "act": "opening up",
+     "days": "mon-sat"
+    },
+    {
+     "from": "17:45",
+     "place": "d_nr_7",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_7",
+     "act": "asleep",
+     "days": "sun"
+    },
+    {
+     "from": "09:30",
+     "place": "chapel",
+     "act": "Mass",
+     "days": "sun"
+    },
+    {
+     "from": "13:00",
+     "place": "d_nr_7",
+     "act": "home",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 345,
+   "src": "invented: places.json ironmonger (unnamed keeper); casting mix (Polish) for a 1990 northern port"
+  },
+  {
+   "person": "joyce_ellerby",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cl_4",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "08:30",
+     "place": "tea_room",
+     "act": "the urn",
+     "days": "mon-sat"
+    },
+    {
+     "from": "17:45",
+     "place": "d_cl_4",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_4",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 332,
+   "src": "invented: places.json tea_room (unnamed keeper)"
+  },
+  {
+   "person": "george_cammidge",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cl_8",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "08:45",
+     "place": "chandlery",
+     "act": "the shop",
+     "days": "mon-sat"
+    },
+    {
+     "from": "17:45",
+     "place": "d_cl_8",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_8",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 335,
+   "src": "invented: places.json chandlery (unnamed keeper); side story 13"
+  },
+  {
+   "person": "vince_lazenby",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_13",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "10:45",
+     "place": "snooker_hall",
+     "act": "opening up",
+     "days": "mon-sat"
+    },
+    {
+     "from": "22:45",
+     "place": "d_nr_13",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_13",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 282,
+   "src": "invented: places.json snooker_hall (unnamed keeper)"
+  },
+  {
+   "person": "sid_bulmer",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_15",
+     "act": "asleep",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "17:30",
+     "place": "boxing_club",
+     "act": "the club night",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "22:00",
+     "place": "d_nr_15",
+     "act": "home",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_15",
+     "act": "asleep",
+     "days": "sat"
+    },
+    {
+     "from": "09:30",
+     "place": "boxing_club",
+     "act": "Saturday morning",
+     "days": "sat"
+    },
+    {
+     "from": "13:15",
+     "place": "d_nr_15",
+     "act": "home",
+     "days": "sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_15",
+     "act": "asleep",
+     "days": "tue,thu,sun"
+    }
+   ],
+   "longest_walk_m": 254,
+   "src": "invented: places.json boxing_club (head trainer); 2.11.1"
+  },
+  {
+   "person": "maggie_firth",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "tea_stall",
+     "act": "the stall"
+    },
+    {
+     "from": "06:15",
+     "place": "d_nr_17",
+     "act": "asleep"
+    },
+    {
+     "from": "21:30",
+     "place": "tea_stall",
+     "act": "the stall"
+    }
+   ],
+   "longest_walk_m": 729,
+   "src": "invented: places.json tea_stall"
+  },
+  {
+   "person": "norman_shillito",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cl_10",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "08:45",
+     "place": "barber",
+     "act": "the chair",
+     "days": "mon-sat"
+    },
+    {
+     "from": "17:15",
+     "place": "d_cl_10",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_10",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 61,
+   "src": "invented: places.json barber (unnamed keeper)"
+  },
+  {
+   "person": "beryl_wood",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cl_11",
+     "act": "asleep",
+     "days": "mon-sun"
+    },
+    {
+     "from": "07:45",
+     "place": "launderette",
+     "act": "the front",
+     "days": "mon-sun"
+    },
+    {
+     "from": "23:15",
+     "place": "d_cl_11",
+     "act": "home",
+     "days": "mon-sun"
+    }
+   ],
+   "longest_walk_m": 364,
+   "src": "invented: places.json launderette ('the Washeteria's keeper')"
+  },
+  {
+   "person": "joe_cairns",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cl_13",
+     "act": "asleep",
+     "days": "mon-sat"
+    },
+    {
+     "from": "09:00",
+     "place": "second_hand",
+     "act": "the shop",
+     "days": "mon-sat"
+    },
+    {
+     "from": "17:30",
+     "place": "d_cl_13",
+     "act": "home",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_13",
+     "act": "asleep",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 406,
+   "src": "invented: places.json second_hand (unnamed keeper)"
+  },
+  {
+   "person": "harold_stead",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cl_15",
+     "act": "asleep",
+     "days": "tue,fri"
+    },
+    {
+     "from": "09:30",
+     "place": "d_cl_15",
+     "act": "waiting for a car",
+     "days": "tue,fri"
+    },
+    {
+     "from": "10:00",
+     "place": "infirmary",
+     "act": "his chest",
+     "days": "tue,fri"
+    },
+    {
+     "from": "12:00",
+     "place": "d_cl_15",
+     "act": "home",
+     "days": "tue,fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_15",
+     "act": "asleep",
+     "days": "mon,wed,thu,sat,sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "invented: 3.4.1 (40 fare people)"
+  },
+  {
+   "person": "dorothy_garbett",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cl_17",
+     "act": "asleep",
+     "days": "wed"
+    },
+    {
+     "from": "13:30",
+     "place": "d_cl_17",
+     "act": "waiting for a car",
+     "days": "wed"
+    },
+    {
+     "from": "14:00",
+     "place": "edge_north",
+     "act": "her sister's",
+     "days": "wed"
+    },
+    {
+     "from": "18:00",
+     "place": "d_cl_17",
+     "act": "home",
+     "days": "wed"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_17",
+     "act": "asleep",
+     "days": "mon,tue,thu-sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "invented: 3.4.1 (40 fare people)"
+  },
+  {
+   "person": "raymond_kaye",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "on the road",
+     "days": "mon"
+    },
+    {
+     "from": "18:00",
+     "place": "boarding_house",
+     "act": "his room for two nights",
+     "days": "mon"
+    },
+    {
+     "from": "00:00",
+     "place": "boarding_house",
+     "act": "his room",
+     "days": "tue"
+    },
+    {
+     "from": "09:00",
+     "place": "ironmonger",
+     "act": "his order book",
+     "days": "tue"
+    },
+    {
+     "from": "11:00",
+     "place": "chandlery",
+     "act": "his order book",
+     "days": "tue"
+    },
+    {
+     "from": "13:00",
+     "place": "boarding_house",
+     "act": "his room",
+     "days": "tue"
+    },
+    {
+     "from": "00:00",
+     "place": "boarding_house",
+     "act": "his room",
+     "days": "wed"
+    },
+    {
+     "from": "08:30",
+     "place": "boarding_house",
+     "act": "waiting for a car",
+     "days": "wed"
+    },
+    {
+     "from": "09:00",
+     "place": "edge_north",
+     "act": "by cab: the station",
+     "days": "wed"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "on the road",
+     "days": "thu-sun"
+    }
+   ],
+   "longest_walk_m": 125,
+   "src": "invented: 3.4.1 (40 fare people)"
+  },
+  {
+   "person": "sandra_newbould",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "infirmary",
+     "act": "the night shift",
+     "days": "mon-fri"
+    },
+    {
+     "from": "07:30",
+     "place": "d_cl_19",
+     "act": "asleep",
+     "days": "mon-fri"
+    },
+    {
+     "from": "20:30",
+     "place": "d_cl_19",
+     "act": "waiting for a car",
+     "days": "mon-fri"
+    },
+    {
+     "from": "21:00",
+     "place": "infirmary",
+     "act": "the night shift",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_19",
+     "act": "asleep",
+     "days": "sat-sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "invented: 3.4.1 (40 fare people)"
+  },
+  {
+   "person": "tony_marsden",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_nr_20",
+     "act": "asleep",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "04:00",
+     "place": "d_nr_20",
+     "act": "waiting for a car",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "04:30",
+     "place": "fish_dock",
+     "act": "by cab: his boat",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "12:00",
+     "place": "caff",
+     "act": "dinner",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "14:00",
+     "place": "d_nr_20",
+     "act": "home",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_nr_20",
+     "act": "asleep",
+     "days": "tue,thu,sat,sun"
+    }
+   ],
+   "longest_walk_m": 463,
+   "src": "invented: 3.4.1 (40 fare people)"
+  },
+  {
+   "person": "janet_ruddle",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "the offices in town",
+     "days": "mon-fri"
+    },
+    {
+     "from": "01:30",
+     "place": "d_cl_21",
+     "act": "asleep",
+     "days": "mon-fri"
+    },
+    {
+     "from": "17:30",
+     "place": "d_cl_21",
+     "act": "waiting for a car",
+     "days": "mon-fri"
+    },
+    {
+     "from": "18:00",
+     "place": "edge_north",
+     "act": "the offices in town",
+     "days": "mon-fri"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_21",
+     "act": "asleep",
+     "days": "sat-sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "invented: 3.4.1 (40 fare people)"
+  },
+  {
+   "person": "gerald_pashley",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "d_cl_22",
+     "act": "asleep",
+     "days": "sat"
+    },
+    {
+     "from": "13:30",
+     "place": "d_cl_22",
+     "act": "waiting for a car",
+     "days": "sat"
+    },
+    {
+     "from": "14:00",
+     "place": "edge_north",
+     "act": "by cab: the bowls club",
+     "days": "sat"
+    },
+    {
+     "from": "21:30",
+     "place": "d_cl_22",
+     "act": "home",
+     "days": "sat"
+    },
+    {
+     "from": "00:00",
+     "place": "d_cl_22",
+     "act": "asleep",
+     "days": "mon-fri,sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "invented: 3.4.1 (40 fare people)"
+  },
+  {
+   "person": "kathleen_moran",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "sun"
+    },
+    {
+     "from": "09:00",
+     "place": "chapel",
+     "act": "Mass",
+     "days": "sun"
+    },
+    {
+     "from": "12:00",
+     "place": "chapel",
+     "act": "waiting for a car",
+     "days": "sun"
+    },
+    {
+     "from": "12:30",
+     "place": "edge_north",
+     "act": "by cab: home in town",
+     "days": "sun"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "mon-sat"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "invented: 3.4.1 (40 fare people)"
+  },
+  {
+   "person": "ahmed_rashid",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "thu"
+    },
+    {
+     "from": "07:30",
+     "place": "market_stalls_quay",
+     "act": "the barrows",
+     "days": "thu"
+    },
+    {
+     "from": "09:00",
+     "place": "rank_mickeys",
+     "act": "waiting for a car with boxes",
+     "days": "thu"
+    },
+    {
+     "from": "09:30",
+     "place": "edge_north",
+     "act": "back to his shop",
+     "days": "thu"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "mon-wed,fri-sun"
+    }
+   ],
+   "longest_walk_m": 42,
+   "src": "invented: 3.4.1 (40 fare people)"
+  },
+  {
+   "person": "brian_tindall",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "05:30",
+     "place": "rank_north",
+     "act": "waiting for a car",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "06:00",
+     "place": "ferry_landing",
+     "act": "by cab: the pilot launch",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "14:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "mon,wed,fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "tue,thu,sat,sun"
+    }
+   ],
+   "longest_walk_m": 0,
+   "src": "invented: 3.4.1 (40 fare people)"
+  },
+  {
+   "person": "eileen_crabtree",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "fri"
+    },
+    {
+     "from": "09:30",
+     "place": "boarding_house",
+     "act": "Sylvia's set",
+     "days": "fri"
+    },
+    {
+     "from": "11:00",
+     "place": "adas",
+     "act": "Ada's set",
+     "days": "fri"
+    },
+    {
+     "from": "12:30",
+     "place": "rank_mickeys",
+     "act": "waiting for a car",
+     "days": "fri"
+    },
+    {
+     "from": "13:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "fri"
+    },
+    {
+     "from": "00:00",
+     "place": "edge_north",
+     "act": "home in town",
+     "days": "mon-thu,sat,sun"
+    }
+   ],
+   "longest_walk_m": 90,
+   "src": "invented: 3.4.1 (40 fare people)"
+  },
+  {
+   "person": "terence_bould",
+   "rows": [
+    {
+     "from": "00:00",
+     "place": "boarding_house",
+     "act": "his room",
+     "days": "mon-sat"
+    },
+    {
+     "from": "11:00",
+     "place": "harbour_board",
+     "act": "the shipping office",
+     "days": "mon-sat"
+    },
+    {
+     "from": "16:00",
+     "place": "snooker_hall",
+     "act": "the tables",
+     "days": "mon-sat"
+    },
+    {
+     "from": "19:00",
+     "place": "boarding_house",
+     "act": "his room",
+     "days": "mon-sat"
+    },
+    {
+     "from": "00:00",
+     "place": "boarding_house",
+     "act": "his room",
+     "days": "sun"
+    }
+   ],
+   "longest_walk_m": 597,
+   "src": "invented: 3.4.1 (40 fare people)"
+  }
+ ]
+}

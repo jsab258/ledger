@@ -1,0 +1,82 @@
+{
+ "id": "wilf_hardcastle",
+ "cast_id": null,
+ "called": "the bird man",
+ "name": "Wilf Hardcastle",
+ "age": 72,
+ "sex": "m",
+ "role": "Keeps the pigeon loft at the back of the allotments",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.68,
+  "b": 0.45,
+  "skin": 0,
+  "hair": [
+   "flatcap",
+   "#7a7068"
+  ],
+  "top": [
+   "jacket",
+   "#5a5a40",
+   "#3a3a30"
+  ],
+  "bot": [
+   "trousers",
+   "#3a3a30"
+  ],
+  "x": []
+ },
+ "nerve": 0.4,
+ "venal": 0.66,
+ "talk": 0.3,
+ "discretion": 0.76,
+ "temperament": {
+  "nerve": 0.4,
+  "dutiful": 0.3,
+  "willingness": 0.3,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_cl_31",
+ "sched": [
+  [
+   0.0,
+   "d_cl_31",
+   "asleep"
+  ],
+  [
+   7.0,
+   "pigeon_loft",
+   "the birds"
+  ],
+  [
+   12.0,
+   "d_cl_31",
+   "his dinner"
+  ],
+  [
+   14.5,
+   "pigeon_loft",
+   "the birds"
+  ],
+  [
+   18.5,
+   "d_cl_31",
+   "home"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-wilf_hardcastle.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Wilf Hardcastle, 72, keeps the pigeons at the back of the allotments. Tells the time by when the birds come home.",
+  "speak": "Slow, fond, all about birds.",
+  "life": "31 Chapel Lane; the loft from seven.",
+  "rivals": "Has watched the quay from the loft roof forty years."
+ },
+ "can_die": false,
+ "invented": true,
+ "src": "invented: places.json pigeon_loft ('the bird man of the allotments (people file)')"
+}

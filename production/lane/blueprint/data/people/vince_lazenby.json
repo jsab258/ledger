@@ -1,0 +1,81 @@
+{
+ "id": "vince_lazenby",
+ "cast_id": null,
+ "called": "the snooker man",
+ "name": "Vince Lazenby",
+ "age": 49,
+ "sex": "m",
+ "role": "Keeps the snooker hall on the quay",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.76,
+  "b": 0.6,
+  "skin": 0,
+  "hair": [
+   "slicked",
+   "#2a2a2a"
+  ],
+  "top": [
+   "waistcoat",
+   "#2a2a2a",
+   "#e8e4dc"
+  ],
+  "bot": [
+   "trousers",
+   "#2a2a2a"
+  ],
+  "x": []
+ },
+ "nerve": 0.55,
+ "venal": 0.58,
+ "talk": 0.4,
+ "discretion": 0.68,
+ "temperament": {
+  "nerve": 0.55,
+  "dutiful": 0.4,
+  "willingness": 0.4,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "d_nr_13",
+ "sched": [
+  [
+   0.0,
+   "d_nr_13",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   10.75,
+   "snooker_hall",
+   "opening up",
+   "mon-sat"
+  ],
+  [
+   22.75,
+   "d_nr_13",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_nr_13",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-vince_lazenby.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Vince Lazenby, 49, keeps the snooker hall. Danny holds court at his back table; he lets him.",
+  "speak": "Laconic, 'table four's free'.",
+  "life": "13 North Road.",
+  "rivals": "Rents tables to all three."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: places.json snooker_hall (unnamed keeper)"
+}

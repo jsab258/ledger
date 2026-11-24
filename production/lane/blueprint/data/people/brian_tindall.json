@@ -1,0 +1,87 @@
+{
+ "id": "brian_tindall",
+ "cast_id": null,
+ "called": "Brian",
+ "name": "Brian Tindall",
+ "age": 52,
+ "sex": "m",
+ "role": "A Harbour Board pilot who needs the landing at all hours",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.8,
+  "b": 0.55,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#7a7068"
+  ],
+  "top": [
+   "pea_coat",
+   "#1c2230",
+   "#c0a040"
+  ],
+  "bot": [
+   "trousers",
+   "#1c2230"
+  ],
+  "x": []
+ },
+ "nerve": 0.45,
+ "venal": 0.58,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.45,
+  "dutiful": 0.4,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "mon,wed,fri"
+  ],
+  [
+   5.5,
+   "rank_north",
+   "waiting for a car",
+   "mon,wed,fri"
+  ],
+  [
+   6.0,
+   "ferry_landing",
+   "by cab: the pilot launch",
+   "mon,wed,fri"
+  ],
+  [
+   14.0,
+   "edge_north",
+   "home in town",
+   "mon,wed,fri"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "tue,thu,sat,sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-brian_tindall.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Brian Tindall, 52, Harbour Board pilot. Brings ships in and wants to be at the launch ten minutes ago.",
+  "speak": "Clipped, urgent.",
+  "life": "A Harbour Board pilot who needs the landing at all hours",
+  "rivals": "None of the three."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: 3.4.1 (40 fare people)"
+}

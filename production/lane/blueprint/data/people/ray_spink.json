@@ -1,0 +1,88 @@
+{
+ "id": "ray_spink",
+ "cast_id": null,
+ "called": "Spink",
+ "name": "Ray Spink",
+ "age": 37,
+ "sex": "m",
+ "role": "Coult's man; one of the men from away",
+ "kind": "rival_man",
+ "voice": null,
+ "look": {
+  "h": 1.8,
+  "b": 0.7,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#5a4a3a"
+  ],
+  "top": [
+   "donkey",
+   "#2a2e36",
+   "#2a2e36"
+  ],
+  "bot": [
+   "jeans",
+   "#30384a"
+  ],
+  "x": []
+ },
+ "nerve": 0.5,
+ "venal": 0.58,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.5,
+  "dutiful": 0.4,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "from away",
+   "tue,fri"
+  ],
+  [
+   10.0,
+   "agar_base",
+   "waiting outside",
+   "tue,fri"
+  ],
+  [
+   11.0,
+   "cold_stores",
+   "the yard",
+   "tue,fri"
+  ],
+  [
+   15.0,
+   "edge_north",
+   "gone",
+   "tue,fri"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "from away",
+   "mon,wed,thu,sat,sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-ray_spink.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Ray Spink, 37, Coult's second, a hired man from away.",
+  "speak": "Grunts.",
+  "life": "From away.",
+  "rivals": "Agar's paper."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: 2.10.2",
+ "fight_kind": "brawler"
+}

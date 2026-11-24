@@ -1,0 +1,107 @@
+{
+ "id": "pc_ibbotson",
+ "cast_id": null,
+ "called": "the constable",
+ "name": "Ian Ibbotson",
+ "age": 29,
+ "sex": "m",
+ "role": "The beat constable: Quay Street and the north road by day, the night beat 22:00 to 06:00 on his night weeks",
+ "kind": "officer",
+ "voice": null,
+ "look": {
+  "h": 1.84,
+  "b": 0.5,
+  "skin": 0,
+  "hair": [
+   "helmet",
+   "#14161c"
+  ],
+  "top": [
+   "tunic",
+   "#14161c",
+   "#c9c9c9"
+  ],
+  "bot": [
+   "trousers",
+   "#14161c"
+  ],
+  "x": []
+ },
+ "nerve": 0.45,
+ "venal": 0.58,
+ "talk": 0.2,
+ "discretion": 0.9,
+ "temperament": {
+  "nerve": 0.45,
+  "dutiful": 0.4,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "off duty",
+   "mon-fri"
+  ],
+  [
+   8.0,
+   "police_station",
+   "parade",
+   "mon-fri"
+  ],
+  [
+   8.5,
+   "mickeys",
+   "the day beat, Quay Street (police.json)",
+   "mon-fri"
+  ],
+  [
+   12.5,
+   "caff",
+   "his break",
+   "mon-fri"
+  ],
+  [
+   13.0,
+   "cold_stores",
+   "the day beat, the north road to the cold-store road (police.json)",
+   "mon-fri"
+  ],
+  [
+   16.0,
+   "police_station",
+   "off duty",
+   "mon-fri"
+  ],
+  [
+   16.5,
+   "edge_north",
+   "off duty",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "off duty",
+   "sat-sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-pc_ibbotson.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "A police constable from the town station, sent down Quay Street when someone has made a statement.",
+  "speak": "Formal, a bit stiff, by the book. Calls Frank \"sir\".",
+  "life": "Three years in uniform.",
+  "fire": "It is a CID matter. He would not know.",
+  "rivals": "He would not know."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "prototype cast.js pc (PC Ibbotson, kept by wave 1 ledger-texts); 2.6.1; FIT-L01; first name invented",
+ "fallback_role": "the second constable takes his beat from the next night (RT2-05)"
+}

@@ -1,0 +1,81 @@
+{
+ "id": "dobson",
+ "cast_id": null,
+ "called": "Mr Dobson",
+ "name": "Walter Dobson",
+ "age": 53,
+ "sex": "m",
+ "role": "Keeps Dobson's chip shop on Back Parade",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.74,
+  "b": 0.8,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#6a5a4a"
+  ],
+  "top": [
+   "whites",
+   "#f0f0ec",
+   "#f0f0ec"
+  ],
+  "bot": [
+   "trousers",
+   "#2a2a2a"
+  ],
+  "x": []
+ },
+ "nerve": 0.4,
+ "venal": 0.58,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.4,
+  "dutiful": 0.4,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "chip_shop",
+ "sched": [
+  [
+   0.0,
+   "chip_shop",
+   "asleep upstairs",
+   "mon-sat"
+  ],
+  [
+   10.5,
+   "chip_shop",
+   "the fryers",
+   "mon-sat"
+  ],
+  [
+   23.75,
+   "chip_shop",
+   "asleep upstairs",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "chip_shop",
+   "asleep upstairs",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-dobson.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Walter Dobson, 53, fries on Back Parade. Opens Sundays from 11 November.",
+  "speak": "Jolly, loud, 'salt and vinegar?'",
+  "life": "Above the shop.",
+  "rivals": "Feeds all three."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "wave 1 places.json and timetables (Mr Dobson); first name invented"
+}

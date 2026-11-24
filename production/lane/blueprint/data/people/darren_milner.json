@@ -1,0 +1,176 @@
+{
+ "id": "darren_milner",
+ "cast_id": "sam",
+ "called": "Darren",
+ "name": "Darren Milner",
+ "age": 25,
+ "sex": "m",
+ "role": "The street hustler; owes Mickey's 22 pounds and pays in what he hears",
+ "kind": "principal",
+ "voice": "p286",
+ "look": {
+  "h": 1.74,
+  "b": 0.25,
+  "skin": 2,
+  "hair": [
+   "mullet",
+   "#6a4a2a"
+  ],
+  "top": [
+   "shell",
+   "#3a2a7a",
+   "#19b3a6"
+  ],
+  "bot": [
+   "trackies",
+   "#2a2360"
+  ],
+  "x": [
+   "pager"
+  ]
+ },
+ "nerve": 0.3,
+ "venal": 0.8,
+ "talk": 0.95,
+ "discretion": 0.05,
+ "temperament": {
+  "nerve": 0.3,
+  "dutiful": 0.4,
+  "willingness": 0.4,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "d_nr_23",
+ "sched": [
+  [
+   0.0,
+   "d_nr_23",
+   "his mother's",
+   "mon,wed,fri"
+  ],
+  [
+   10.0,
+   "caff",
+   "a tea he does not pay for",
+   "mon,wed,fri"
+  ],
+  [
+   11.0,
+   "ritas",
+   "selling",
+   "mon,wed,fri"
+  ],
+  [
+   12.5,
+   "rank_mickeys",
+   "hanging about",
+   "mon,wed,fri"
+  ],
+  [
+   13.5,
+   "launderette",
+   "the warm",
+   "mon,wed,fri"
+  ],
+  [
+   15.0,
+   "phone_parade",
+   "the phone box",
+   "mon,wed,fri"
+  ],
+  [
+   16.0,
+   "rank_mickeys",
+   "hanging about",
+   "mon,wed,fri"
+  ],
+  [
+   19.0,
+   "cammack_base",
+   "near the lock-ups",
+   "mon,wed,fri"
+  ],
+  [
+   22.5,
+   "d_nr_23",
+   "his mother's",
+   "mon,wed,fri"
+  ],
+  [
+   0.0,
+   "d_nr_23",
+   "his mother's",
+   "tue,thu,sat"
+  ],
+  [
+   10.0,
+   "caff",
+   "a tea he does not pay for",
+   "tue,thu,sat"
+  ],
+  [
+   11.0,
+   "rank_ferry",
+   "the boat queue",
+   "tue,thu,sat"
+  ],
+  [
+   13.0,
+   "rank_mickeys",
+   "hanging about",
+   "tue,thu,sat"
+  ],
+  [
+   16.0,
+   "snooker_hall",
+   "the tables",
+   "tue,thu,sat"
+  ],
+  [
+   18.5,
+   "rank_mickeys",
+   "hanging about",
+   "tue,thu,sat"
+  ],
+  [
+   21.0,
+   "d_nr_23",
+   "his mother's",
+   "tue,thu,sat"
+  ],
+  [
+   0.0,
+   "d_nr_23",
+   "his mother's",
+   "sun"
+  ],
+  [
+   12.0,
+   "rank_mickeys",
+   "hanging about",
+   "sun"
+  ],
+  [
+   15.0,
+   "d_nr_23",
+   "his mother's",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-darren_milner.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "The street hustler. Out of work, lives at his mother's on Chapel Lane, carries a pager. Loyal to whoever helped him last, easily bought and easily scared. He owes Mickey's book twenty-two pounds.",
+  "speak": "Fast, conspiratorial, friendly. Opens with \"so listen\" when he has something to sell.",
+  "life": "Did bits for Mickey: messages, watching a door. Hangs about outside the parade, the market and the video shop. Knows who is skint and who is flush.",
+  "fire": "Heard the row went up at two in the morning and that someone got paid twice for it. He does not know who.",
+  "rivals": "Cammack's crew pay cash and want lads to stand about; he is tempted. The Widow does not need him. Agar would not know his name. Garbutt pages him sometimes."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon; 2.8.1",
+ "fallback_role": "his tips come through Pauline's radio talk and the caff, his debt closed",
+ "fight_kind": "brawler"
+}

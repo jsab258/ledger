@@ -1,0 +1,114 @@
+{
+ "id": "danny_cammack",
+ "cast_id": "danny",
+ "called": "Danny",
+ "name": "Danny Cammack",
+ "age": 27,
+ "sex": "m",
+ "role": "Head of the new crew; drove car two for Mickey; the main opponent",
+ "kind": "principal",
+ "voice": "p243",
+ "look": {
+  "h": 1.78,
+  "b": 0.4,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#3a2a1a"
+  ],
+  "top": [
+   "leather",
+   "#1a1a1e",
+   "#8a2a2a"
+  ],
+  "bot": [
+   "jeans",
+   "#2a3550"
+  ],
+  "x": []
+ },
+ "nerve": 0.75,
+ "venal": 0.5,
+ "talk": 0.2,
+ "discretion": 0.84,
+ "temperament": {
+  "nerve": 0.75,
+  "dutiful": 0.5,
+  "willingness": 0.2,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "d_nr_40",
+ "sched": [
+  [
+   0.0,
+   "d_nr_40",
+   "his flat",
+   "mon-sat"
+  ],
+  [
+   11.0,
+   "cammack_base",
+   "the lock-ups",
+   "mon-sat"
+  ],
+  [
+   15.0,
+   "rank_north",
+   "watching the other rank",
+   "mon-sat"
+  ],
+  [
+   16.0,
+   "cammack_base",
+   "the lock-ups",
+   "mon-sat"
+  ],
+  [
+   20.0,
+   "snooker_hall",
+   "holding court",
+   "mon-sat"
+  ],
+  [
+   23.5,
+   "d_nr_40",
+   "his flat",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_nr_40",
+   "his flat",
+   "sun"
+  ],
+  [
+   13.0,
+   "cammack_base",
+   "the lock-ups",
+   "sun"
+  ],
+  [
+   18.0,
+   "d_nr_40",
+   "his flat",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-danny_cammack.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Danny Cammack, 27. Drove car two for Mickey and never gave the key back. Thinks the office should have been his. Runs the new crew from the lock-ups behind North Road.",
+  "speak": "Quick, funny, needling. Calls Frank 'nephew'. Prices every door out loud.",
+  "life": "A flat on North Road; the lock-ups by day; Quay Street by night when he wants noise.",
+  "rivals": "Wants the Hook's name and to hear the old firms say it. Fears being somebody's driver again.",
+  "secret": "Still has his key to car two."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon; STORY-FRAME 3 (decision of 24 Nov: the main opponent; drove Mickey's own car); casting danny-cammack",
+ "fallback_role": "Craig Fewson takes his ladder at the same rung, his key and his grudge",
+ "fight_kind": "wiry"
+}

@@ -1,0 +1,96 @@
+{
+ "id": "terry_hodgson",
+ "cast_id": "dusan",
+ "called": "Terry",
+ "name": "Terry Hodgson",
+ "age": 52,
+ "sex": "m",
+ "role": "The night driver, on the set from six",
+ "kind": "firm",
+ "voice": null,
+ "look": {
+  "h": 1.72,
+  "b": 0.7,
+  "skin": 1,
+  "hair": [
+   "balding",
+   "#4a4a4a"
+  ],
+  "top": [
+   "carcoat",
+   "#5a4a36",
+   "#2a2a2a"
+  ],
+  "bot": [
+   "trousers",
+   "#30302e"
+  ],
+  "x": []
+ },
+ "nerve": 0.6,
+ "venal": 0.4,
+ "talk": 0.45,
+ "discretion": 0.5,
+ "temperament": {
+  "nerve": 0.6,
+  "dutiful": 0.55,
+  "willingness": 0.4,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "d_cl_24",
+ "sched": [
+  [
+   0.0,
+   "rank_mickeys",
+   "the night car",
+   "mon-sat"
+  ],
+  [
+   3.0,
+   "d_cl_24",
+   "home to bed",
+   "mon-sat"
+  ],
+  [
+   18.0,
+   "rank_mickeys",
+   "the night car",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "rank_mickeys",
+   "the night car",
+   "sun"
+  ],
+  [
+   3.0,
+   "d_cl_24",
+   "home to bed",
+   "sun"
+  ],
+  [
+   19.0,
+   "rank_mickeys",
+   "the night car",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-terry_hodgson.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Mickey's night driver. Twenty years of nights.",
+  "speak": "Quiet, flat, gives nothing away for free. Night-shift patience.",
+  "life": "Sleeps days. Knows Norman Dent on the warehouse row and brings him a paper.",
+  "fire": "He had a fare to the ferry at one that night, he says, and the other car was out. It was not him on the row.",
+  "rivals": "He has run Garbutt home more than once and been told to forget the address."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon; 3.2.2",
+ "fallback_role": "a car short until a driver is hired",
+ "fight_kind": "boxer"
+}

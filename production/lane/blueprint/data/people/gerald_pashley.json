@@ -1,0 +1,89 @@
+{
+ "id": "gerald_pashley",
+ "cast_id": null,
+ "called": "Gerald",
+ "name": "Gerald Pashley",
+ "age": 66,
+ "sex": "m",
+ "role": "A retired accountant who goes to the bowls club in town on Saturday afternoons and comes home late",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.74,
+  "b": 0.45,
+  "skin": 0,
+  "hair": [
+   "balding",
+   "#c0bab0"
+  ],
+  "top": [
+   "blazer",
+   "#2a2a4a",
+   "#c0a040"
+  ],
+  "bot": [
+   "trousers",
+   "#5a5a5a"
+  ],
+  "x": [
+   "glasses"
+  ]
+ },
+ "nerve": 0.45,
+ "venal": 0.58,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.45,
+  "dutiful": 0.4,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_cl_22",
+ "sched": [
+  [
+   0.0,
+   "d_cl_22",
+   "asleep",
+   "sat"
+  ],
+  [
+   13.5,
+   "d_cl_22",
+   "waiting for a car",
+   "sat"
+  ],
+  [
+   14.0,
+   "edge_north",
+   "by cab: the bowls club",
+   "sat"
+  ],
+  [
+   21.5,
+   "d_cl_22",
+   "home",
+   "sat"
+  ],
+  [
+   0.0,
+   "d_cl_22",
+   "asleep",
+   "mon-fri,sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-gerald_pashley.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Gerald Pashley, 66, did Mickey's books before Sheila took over the figures and never forgave him. Says so.",
+  "speak": "Precise, bitter, comic.",
+  "life": "A retired accountant who goes to the bowls club in town on Saturday afternoons and comes home late",
+  "rivals": "None of the three."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: 3.4.1 (40 fare people)"
+}

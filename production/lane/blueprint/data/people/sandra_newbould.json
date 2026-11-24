@@ -1,0 +1,87 @@
+{
+ "id": "sandra_newbould",
+ "cast_id": null,
+ "called": "Sandra",
+ "name": "Sandra Newbould",
+ "age": 34,
+ "sex": "f",
+ "role": "A night nurse at the Infirmary from Chapel Lane",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.64,
+  "b": 0.4,
+  "skin": 0,
+  "hair": [
+   "ponytail",
+   "#5a3a20"
+  ],
+  "top": [
+   "coat",
+   "#2a3a5a",
+   "#e0e0e8"
+  ],
+  "bot": [
+   "skirt",
+   "#2a3a5a"
+  ],
+  "x": []
+ },
+ "nerve": 0.45,
+ "venal": 0.58,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.45,
+  "dutiful": 0.4,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_cl_19",
+ "sched": [
+  [
+   0.0,
+   "infirmary",
+   "the night shift",
+   "mon-fri"
+  ],
+  [
+   7.5,
+   "d_cl_19",
+   "asleep",
+   "mon-fri"
+  ],
+  [
+   20.5,
+   "d_cl_19",
+   "waiting for a car",
+   "mon-fri"
+  ],
+  [
+   21.0,
+   "infirmary",
+   "the night shift",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "d_cl_19",
+   "asleep",
+   "sat-sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-sandra_newbould.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Sandra Newbould, 34, nights on casualty. Has stitched half the Hook and recognises the other half.",
+  "speak": "Brisk, tired, unshockable.",
+  "life": "A night nurse at the Infirmary from Chapel Lane",
+  "rivals": "None of the three."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: 3.4.1 (40 fare people)"
+}

@@ -1,0 +1,118 @@
+{
+ "id": "june_suddaby",
+ "cast_id": "june",
+ "called": "June",
+ "name": "June Suddaby",
+ "age": 38,
+ "sex": "f",
+ "role": "Mickey's daughter, back for the funeral; a better claim than Frank's to the name on the board",
+ "kind": "principal",
+ "voice": "p277",
+ "look": {
+  "h": 1.68,
+  "b": 0.35,
+  "skin": 0,
+  "hair": [
+   "bob",
+   "#4a3020"
+  ],
+  "top": [
+   "mac",
+   "#8c7a5a",
+   "#2a2a2a"
+  ],
+  "bot": [
+   "trousers",
+   "#2c2c34"
+  ],
+  "x": []
+ },
+ "nerve": 0.6,
+ "venal": 0.2,
+ "talk": 0.3,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.6,
+  "dutiful": 0.3,
+  "willingness": 0.6,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "boarding_house",
+ "sched": [
+  [
+   0.0,
+   "boarding_house",
+   "her room",
+   "mon-fri"
+  ],
+  [
+   10.0,
+   "mickeys",
+   "his things",
+   "mon-fri"
+  ],
+  [
+   11.5,
+   "tea_room",
+   "alone",
+   "mon-fri"
+  ],
+  [
+   13.0,
+   "boarding_house",
+   "her room",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "boarding_house",
+   "her room",
+   "sat"
+  ],
+  [
+   11.0,
+   "ferry_landing",
+   "the boat over and back",
+   "sat"
+  ],
+  [
+   15.0,
+   "boarding_house",
+   "her room",
+   "sat"
+  ],
+  [
+   0.0,
+   "boarding_house",
+   "her room",
+   "sun"
+  ],
+  [
+   9.5,
+   "chapel",
+   "Mass and a candle",
+   "sun"
+  ],
+  [
+   13.5,
+   "boarding_house",
+   "her room",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-june_suddaby.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Mickey Suddaby's estranged daughter, back from the south for the funeral and staying at Regent House until Friday. She wants nothing from the office and says so.",
+  "speak": "Cool, clipped, tired. Polite the way you are to a stranger. Does not ask Frank about himself.",
+  "life": "Left Meridian at nineteen. A teacher of adults at a college down south. She is collecting a box of photographs and going home on Friday.",
+  "fire": "She was not here. She says her father always had a reason to be out at night.",
+  "rivals": "Knows the names from growing up. Agar did her father's conveyancing. She wants none of it."
+ },
+ "can_die": false,
+ "invented": false,
+ "src": "canon; STORY-FRAME 4"
+}

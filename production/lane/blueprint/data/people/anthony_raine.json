@@ -1,0 +1,64 @@
+{
+ "id": "anthony_raine",
+ "cast_id": null,
+ "called": "the brief",
+ "name": "Anthony Raine",
+ "age": 45,
+ "sex": "m",
+ "role": "A solicitor, Agar's man: the brief who can argue Ron out as a messenger, at his fee",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.8,
+  "b": 0.45,
+  "skin": 0,
+  "hair": [
+   "swept",
+   "#4a3a2a"
+  ],
+  "top": [
+   "suit",
+   "#202028",
+   "#e8e4dc"
+  ],
+  "bot": [
+   "trousers",
+   "#202028"
+  ],
+  "x": [
+   "briefcase"
+  ]
+ },
+ "nerve": 0.5,
+ "venal": 0.5,
+ "talk": 0.4,
+ "discretion": 0.68,
+ "temperament": {
+  "nerve": 0.5,
+  "dutiful": 0.5,
+  "willingness": 0.4,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "up in town"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-anthony_raine.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Anthony Raine, 45, a criminal solicitor who takes Agar's referrals. Can make a messenger of a man, at his fee.",
+  "speak": "Smooth, quick, bills by the quarter hour.",
+  "life": "Up in town; the station's interview rooms.",
+  "rivals": "Agar's man."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: STORY-FRAME 5 (the brief is Agar's man)"
+}

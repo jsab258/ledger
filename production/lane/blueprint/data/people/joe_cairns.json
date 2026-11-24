@@ -1,0 +1,83 @@
+{
+ "id": "joe_cairns",
+ "cast_id": null,
+ "called": "the second-hand man",
+ "name": "Joe Cairns",
+ "age": 70,
+ "sex": "m",
+ "role": "Keeps the second-hand shop on the quay",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.68,
+  "b": 0.45,
+  "skin": 0,
+  "hair": [
+   "white",
+   "#e0dcd4"
+  ],
+  "top": [
+   "cardigan",
+   "#5a4a3a",
+   "#3a3a30"
+  ],
+  "bot": [
+   "trousers",
+   "#3a3630"
+  ],
+  "x": [
+   "glasses"
+  ]
+ },
+ "nerve": 0.4,
+ "venal": 0.66,
+ "talk": 0.6,
+ "discretion": 0.52,
+ "temperament": {
+  "nerve": 0.4,
+  "dutiful": 0.3,
+  "willingness": 0.6,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_cl_13",
+ "sched": [
+  [
+   0.0,
+   "d_cl_13",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   9.0,
+   "second_hand",
+   "the shop",
+   "mon-sat"
+  ],
+  [
+   17.5,
+   "d_cl_13",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_cl_13",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-joe_cairns.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Joe Cairns, 70, keeps the second-hand shop. Buys house clearances; knows whose mother died.",
+  "speak": "Wandering, kind.",
+  "life": "13 Chapel Lane.",
+  "rivals": "None."
+ },
+ "can_die": false,
+ "invented": true,
+ "src": "invented: places.json second_hand (unnamed keeper)"
+}

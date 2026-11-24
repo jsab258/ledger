@@ -1,0 +1,95 @@
+{
+ "id": "tadeusz_nowicki",
+ "cast_id": null,
+ "called": "Mr Nowicki",
+ "name": "Tadeusz Nowicki",
+ "age": 64,
+ "sex": "m",
+ "role": "Keeps the ironmonger's on Quay Street; came from Gdynia in 1947",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.7,
+  "b": 0.5,
+  "skin": 0,
+  "hair": [
+   "white",
+   "#e0dcd4"
+  ],
+  "top": [
+   "brown_coat",
+   "#6a5038",
+   "#e0d8c8"
+  ],
+  "bot": [
+   "trousers",
+   "#3a3630"
+  ],
+  "x": [
+   "glasses"
+  ]
+ },
+ "nerve": 0.55,
+ "venal": 0.5,
+ "talk": 0.4,
+ "discretion": 0.68,
+ "temperament": {
+  "nerve": 0.55,
+  "dutiful": 0.5,
+  "willingness": 0.4,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "d_nr_7",
+ "sched": [
+  [
+   0.0,
+   "d_nr_7",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   8.5,
+   "ironmonger",
+   "opening up",
+   "mon-sat"
+  ],
+  [
+   17.75,
+   "d_nr_7",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_nr_7",
+   "asleep",
+   "sun"
+  ],
+  [
+   9.5,
+   "chapel",
+   "Mass",
+   "sun"
+  ],
+  [
+   13.0,
+   "d_nr_7",
+   "home",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-tadeusz_nowicki.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Tadeusz Nowicki, 64, keeps the ironmonger's. Came over after the war. The only man on the Hook who says Frank's surname right first time, and corrects the others.",
+  "speak": "Courteous, Polish cadence, exact about screws.",
+  "life": "7 North Road.",
+  "rivals": "Keeps out of it."
+ },
+ "can_die": false,
+ "invented": true,
+ "src": "invented: places.json ironmonger (unnamed keeper); casting mix (Polish) for a 1990 northern port"
+}

@@ -1,0 +1,115 @@
+{
+ "id": "hal_metcalfe",
+ "cast_id": "hal",
+ "called": "Hal",
+ "name": "Henry Metcalfe",
+ "age": 66,
+ "sex": "m",
+ "role": "Keeps the coin shop that sells no coins; Monday visits",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.7,
+  "b": 0.45,
+  "skin": 0,
+  "hair": [
+   "balding",
+   "#9a958a"
+  ],
+  "top": [
+   "cardigan",
+   "#4a4a3a",
+   "#6a6a5a"
+  ],
+  "bot": [
+   "trousers",
+   "#3a3a34"
+  ],
+  "x": [
+   "glasses"
+  ]
+ },
+ "nerve": 0.3,
+ "venal": 0.8,
+ "talk": 0.2,
+ "discretion": 0.85,
+ "temperament": {
+  "nerve": 0.3,
+  "dutiful": 0.3,
+  "willingness": 0.1,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": true,
+ "home": "d_qs_6",
+ "sched": [
+  [
+   0.0,
+   "d_qs_6",
+   "asleep",
+   "mon"
+  ],
+  [
+   9.75,
+   "metcalfes",
+   "the shop",
+   "mon"
+  ],
+  [
+   11.0,
+   "ritas",
+   "a Monday call",
+   "mon"
+  ],
+  [
+   12.0,
+   "metcalfes",
+   "the shop",
+   "mon"
+  ],
+  [
+   17.75,
+   "d_qs_6",
+   "home",
+   "mon"
+  ],
+  [
+   0.0,
+   "d_qs_6",
+   "asleep",
+   "tue-sat"
+  ],
+  [
+   9.75,
+   "metcalfes",
+   "the shop",
+   "tue-sat"
+  ],
+  [
+   17.75,
+   "d_qs_6",
+   "home",
+   "tue-sat"
+  ],
+  [
+   0.0,
+   "d_qs_6",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-hal_metcalfe.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "He keeps Metcalfe's, a coin shop on Quay Street that sells no coins. Things are left at his back door in the alley at night.",
+  "speak": "Sparse, sour, precise. Answers questions with questions.",
+  "life": "Lives over the shop. Takes a pot of tea at the Copper Kettle at half twelve. Has one tray in the window and it has never changed.",
+  "fire": "He has no opinion and says so twice.",
+  "rivals": "He takes what Garbutt sends and asks nothing.",
+  "secret": "He receives the bag from the ferry and passes it on. He does not know what is in it and does not want to."
+ },
+ "can_die": false,
+ "invented": false,
+ "src": "canon; side story 26"
+}

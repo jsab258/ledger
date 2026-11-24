@@ -1,0 +1,89 @@
+{
+ "id": "dorothy_garbett",
+ "cast_id": null,
+ "called": "Dorothy",
+ "name": "Dorothy Garbett",
+ "age": 69,
+ "sex": "f",
+ "role": "A widow on Chapel Lane who goes to her sister's in town on Wednesdays",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.56,
+  "b": 0.5,
+  "skin": 0,
+  "hair": [
+   "set",
+   "#c0b0a0"
+  ],
+  "top": [
+   "coat",
+   "#5a4a6a",
+   "#d8d0c0"
+  ],
+  "bot": [
+   "skirt",
+   "#3a3640"
+  ],
+  "x": [
+   "handbag"
+  ]
+ },
+ "nerve": 0.45,
+ "venal": 0.58,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.45,
+  "dutiful": 0.4,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_cl_17",
+ "sched": [
+  [
+   0.0,
+   "d_cl_17",
+   "asleep",
+   "wed"
+  ],
+  [
+   13.5,
+   "d_cl_17",
+   "waiting for a car",
+   "wed"
+  ],
+  [
+   14.0,
+   "edge_north",
+   "her sister's",
+   "wed"
+  ],
+  [
+   18.0,
+   "d_cl_17",
+   "home",
+   "wed"
+  ],
+  [
+   0.0,
+   "d_cl_17",
+   "asleep",
+   "mon,tue,thu-sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-dorothy_garbett.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Dorothy Garbett, 69, goes to her sister's every Wednesday and has opinions about the sister's husband.",
+  "speak": "Confiding, 'between you and me'.",
+  "life": "A widow on Chapel Lane who goes to her sister's in town on Wednesdays",
+  "rivals": "None of the three."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: 3.4.1 (40 fare people)"
+}

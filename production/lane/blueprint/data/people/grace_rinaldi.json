@@ -1,0 +1,112 @@
+{
+ "id": "grace_rinaldi",
+ "cast_id": "cafe",
+ "called": "Grace",
+ "name": "Grace Rinaldi",
+ "age": 58,
+ "sex": "f",
+ "role": "Keeps the caff, her Italian father's before her",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.6,
+  "b": 0.65,
+  "skin": 6,
+  "hair": [
+   "bun",
+   "#3a3030"
+  ],
+  "top": [
+   "apron",
+   "#8a2a2a",
+   "#f2ead8"
+  ],
+  "bot": [
+   "skirt",
+   "#2a2a2a"
+  ],
+  "x": []
+ },
+ "nerve": 0.45,
+ "venal": 0.58,
+ "talk": 0.85,
+ "discretion": 0.25,
+ "temperament": {
+  "nerve": 0.45,
+  "dutiful": 0.4,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_bp_3",
+ "sched": [
+  [
+   0.0,
+   "d_bp_3",
+   "asleep",
+   "mon-thu"
+  ],
+  [
+   5.5,
+   "caff",
+   "opening up",
+   "mon-thu"
+  ],
+  [
+   15.5,
+   "d_bp_3",
+   "home",
+   "mon-thu"
+  ],
+  [
+   0.0,
+   "d_bp_3",
+   "asleep",
+   "fri-sat"
+  ],
+  [
+   5.5,
+   "caff",
+   "opening up",
+   "fri-sat"
+  ],
+  [
+   22.25,
+   "d_bp_3",
+   "home",
+   "fri-sat"
+  ],
+  [
+   0.0,
+   "d_bp_3",
+   "asleep",
+   "sun"
+  ],
+  [
+   7.5,
+   "caff",
+   "Sunday mornings",
+   "sun"
+  ],
+  [
+   12.25,
+   "d_bp_3",
+   "home",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-grace_rinaldi.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "She keeps Rinaldi's, the caff on the corner of Chapel Lane. Half the street has breakfast there and she hears all of it.",
+  "speak": "Motherly, bossy, quick. Feeds first and asks after.",
+  "life": "Her father came from Italy and opened the caff in 1936. She lives over it. Opens at six for the dock.",
+  "fire": "She fed the firemen till four. One of them said it burned too clean.",
+  "rivals": "The Widow's foreman breakfasts at the window table. Agar's clerk has never set foot in the place."
+ },
+ "can_die": false,
+ "invented": false,
+ "src": "canon; side story 11"
+}

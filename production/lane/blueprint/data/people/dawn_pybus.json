@@ -1,0 +1,125 @@
+{
+ "id": "dawn_pybus",
+ "cast_id": "danica",
+ "called": "Dawn",
+ "name": "Dawn Pybus",
+ "age": 27,
+ "sex": "f",
+ "role": "Runs for the rent collector, Mr Askew of Agar & Co's agents",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.62,
+  "b": 0.35,
+  "skin": 0,
+  "hair": [
+   "ponytail",
+   "#8a6040"
+  ],
+  "top": [
+   "anorak",
+   "#6a2a3a",
+   "#e0d8c8"
+  ],
+  "bot": [
+   "jeans",
+   "#3a4a66"
+  ],
+  "x": [
+   "clipboard"
+  ]
+ },
+ "nerve": 0.3,
+ "venal": 0.6,
+ "talk": 0.4,
+ "discretion": 0.68,
+ "temperament": {
+  "nerve": 0.3,
+  "dutiful": 0.3,
+  "willingness": 0.4,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "mon-thu"
+  ],
+  [
+   9.0,
+   "adas",
+   "the rent round, Quay Street",
+   "mon-thu"
+  ],
+  [
+   12.25,
+   "d_cl_9",
+   "the rent round, Chapel Lane",
+   "mon-thu"
+  ],
+  [
+   15.0,
+   "agar_base",
+   "the agents' book",
+   "mon-thu"
+  ],
+  [
+   16.0,
+   "edge_north",
+   "back to town",
+   "mon-thu"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "fri"
+  ],
+  [
+   9.0,
+   "adas",
+   "the rent round, Quay Street",
+   "fri"
+  ],
+  [
+   11.0,
+   "mickeys",
+   "behind Mr Askew at the counter",
+   "fri"
+  ],
+  [
+   15.0,
+   "agar_base",
+   "the agents' book",
+   "fri"
+  ],
+  [
+   16.0,
+   "edge_north",
+   "back to town",
+   "fri"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "sat-sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-dawn_pybus.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Dawn Pybus, 27, runs the rent book round for Mr Askew. Apologetic on every step.",
+  "speak": "Apologetic, quick, 'I only collect it'.",
+  "life": "Lives up in town.",
+  "rivals": "Works for Agar's agents and knows whose rent went up."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon regular; side story 29; timetables weekly rent (Mr Leonard Askew)"
+}

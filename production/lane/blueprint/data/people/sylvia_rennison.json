@@ -1,0 +1,102 @@
+{
+ "id": "sylvia_rennison",
+ "cast_id": "sanja",
+ "called": "Mrs Rennison",
+ "name": "Sylvia Rennison",
+ "age": 64,
+ "sex": "f",
+ "role": "Keeps Regent House, the boarding house; a lodger of Danny's three weeks behind",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.6,
+  "b": 0.6,
+  "skin": 0,
+  "hair": [
+   "set",
+   "#9a8a7a"
+  ],
+  "top": [
+   "blouse",
+   "#5a6a7a",
+   "#e8e0d0"
+  ],
+  "bot": [
+   "skirt",
+   "#3a3540"
+  ],
+  "x": [
+   "glasses"
+  ]
+ },
+ "nerve": 0.5,
+ "venal": 0.6,
+ "talk": 0.7,
+ "discretion": 0.3,
+ "temperament": {
+  "nerve": 0.5,
+  "dutiful": 0.3,
+  "willingness": 0.6,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "boarding_house",
+ "sched": [
+  [
+   0.0,
+   "boarding_house",
+   "asleep",
+   "mon-fri"
+  ],
+  [
+   6.5,
+   "boarding_house",
+   "breakfasts",
+   "mon-fri"
+  ],
+  [
+   10.5,
+   "laveracks",
+   "fish for the lodgers",
+   "mon-fri"
+  ],
+  [
+   11.5,
+   "boarding_house",
+   "the house",
+   "mon-fri"
+  ],
+  [
+   22.0,
+   "boarding_house",
+   "asleep",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "boarding_house",
+   "asleep",
+   "sat-sun"
+  ],
+  [
+   6.5,
+   "boarding_house",
+   "breakfasts and the step",
+   "sat-sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-sylvia_rennison.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "She keeps Regent House, the boarding house on Quay Street where Frank has a room. Mickey paid his first week.",
+  "speak": "Starched, sharp, house rules first. Thaws for a lodger who pays and wipes his feet.",
+  "life": "Twenty-six years of lodgers: ferry crews, reps, men between ships. Knows what time every lodger comes in.",
+  "fire": "Two of her lodgers were firemen that week. They would not talk at breakfast.",
+  "rivals": "Mr Agar holds her mortgage and she will not hear a word against him in the hall."
+ },
+ "can_die": false,
+ "invented": false,
+ "src": "canon; side story 27"
+}

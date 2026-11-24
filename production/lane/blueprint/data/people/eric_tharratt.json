@@ -1,0 +1,102 @@
+{
+ "id": "eric_tharratt",
+ "cast_id": null,
+ "called": "Mr Tharratt",
+ "name": "Eric Tharratt",
+ "age": 54,
+ "sex": "m",
+ "role": "Shift manager at the Old Basin Cold Stores; gives the contract",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.76,
+  "b": 0.6,
+  "skin": 0,
+  "hair": [
+   "balding",
+   "#7a7068"
+  ],
+  "top": [
+   "warehouse_coat",
+   "#e0dcd0",
+   "#3a3a3a"
+  ],
+  "bot": [
+   "trousers",
+   "#2a2a2a"
+  ],
+  "x": [
+   "clipboard"
+  ]
+ },
+ "nerve": 0.4,
+ "venal": 0.42,
+ "talk": 0.3,
+ "discretion": 0.76,
+ "temperament": {
+  "nerve": 0.4,
+  "dutiful": 0.6,
+  "willingness": 0.3,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "mon-fri"
+  ],
+  [
+   5.5,
+   "cold_stores",
+   "the packing shift",
+   "mon-fri"
+  ],
+  [
+   17.75,
+   "edge_north",
+   "home in town",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "sat"
+  ],
+  [
+   5.5,
+   "cold_stores",
+   "Saturday shift",
+   "sat"
+  ],
+  [
+   13.25,
+   "edge_north",
+   "home in town",
+   "sat"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-eric_tharratt.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Eric Tharratt, 54, shift manager at the cold stores. Will talk once a firm with four cars meets the packing shift on time five mornings in one week.",
+  "speak": "Clock-watching, terse, 'five mornings, then we'll talk'.",
+  "life": "Up in town; the cold stores from half past five.",
+  "rivals": "Agar holds the road; the Widow holds the gate; he wants his shift in on time."
+ },
+ "can_die": true,
+ "invented": "proposed by the story frame",
+ "src": "STORY-FRAME 4 item 19 (proposed); replaces wave 1's placeholder 'Norman (the cold-store manager)'",
+ "fallback_role": "Malcolm Ruddock, his deputy, holds the contract (RT2-05)"
+}

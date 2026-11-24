@@ -1,0 +1,88 @@
+{
+ "id": "lily_tang",
+ "cast_id": "takeaway_f",
+ "called": "Mrs Tang",
+ "name": "Lily Tang",
+ "age": 41,
+ "sex": "f",
+ "role": "The takeaway's front and its books",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.58,
+  "b": 0.4,
+  "skin": 5,
+  "hair": [
+   "bob",
+   "#14141a"
+  ],
+  "top": [
+   "cardigan",
+   "#b0304a",
+   "#f0f0ec"
+  ],
+  "bot": [
+   "trousers",
+   "#22222a"
+  ],
+  "x": []
+ },
+ "nerve": 0.45,
+ "venal": 0.58,
+ "talk": 0.6,
+ "discretion": 0.4,
+ "temperament": {
+  "nerve": 0.45,
+  "dutiful": 0.4,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_bp_5",
+ "sched": [
+  [
+   0.0,
+   "d_bp_5",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   11.0,
+   "d_bp_5",
+   "the books",
+   "mon-sat"
+  ],
+  [
+   16.5,
+   "tangs_takeaway",
+   "the front",
+   "mon-sat"
+  ],
+  [
+   23.75,
+   "d_bp_5",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_bp_5",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-lily_tang.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "She and her husband Peter keep the Golden River takeaway and live over it. She takes the orders at the hatch.",
+  "speak": "Bright, quick, teasing. Remembers every order.",
+  "life": "Does the washing at the Washeteria in the morning and the orders at night. Knows who orders for one now who used to order for two.",
+  "fire": "She remembers the smell more than the sight.",
+  "rivals": "She keeps the rent book and knows what Agar's clerk is like on the doorstep."
+ },
+ "can_die": false,
+ "invented": false,
+ "src": "canon; side story 4"
+}

@@ -1,0 +1,81 @@
+{
+ "id": "doreen_harland",
+ "cast_id": "zora",
+ "called": "Doreen",
+ "name": "Doreen Harland",
+ "age": 61,
+ "sex": "f",
+ "role": "A washerwoman at the laundry who won't retire; the early shift",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.58,
+  "b": 0.6,
+  "skin": 0,
+  "hair": [
+   "perm",
+   "#9a8a7a"
+  ],
+  "top": [
+   "overall",
+   "#6a8aa0",
+   "#e8e4dc"
+  ],
+  "bot": [
+   "skirt",
+   "#3a3a40"
+  ],
+  "x": []
+ },
+ "nerve": 0.35,
+ "venal": 0.4,
+ "talk": 0.4,
+ "discretion": 0.68,
+ "temperament": {
+  "nerve": 0.35,
+  "dutiful": 0.3,
+  "willingness": 0.4,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "d_cl_25",
+ "sched": [
+  [
+   0.0,
+   "d_cl_25",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   5.75,
+   "launderette",
+   "the boiler, the early shift",
+   "mon-sat"
+  ],
+  [
+   14.0,
+   "d_cl_25",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_cl_25",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-doreen_harland.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Doreen Harland, 61, a washerwoman at the laundry, on the early shift for forty years. Saw the pay packets made up.",
+  "speak": "Brisk, broad, says what she thinks of everybody's washing.",
+  "life": "25 Chapel Lane. At the laundry by six.",
+  "rivals": "Keeps out of it."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon regular; side stories 9, 10"
+}

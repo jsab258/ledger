@@ -1,0 +1,94 @@
+{
+ "id": "dougie_saltmarsh",
+ "cast_id": null,
+ "called": "Dougie",
+ "name": "Dougie Saltmarsh",
+ "age": 29,
+ "sex": "m",
+ "role": "The Widow's man on the fish dock and the cold-store yard",
+ "kind": "rival_man",
+ "voice": null,
+ "look": {
+  "h": 1.74,
+  "b": 0.4,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#a07040"
+  ],
+  "top": [
+   "anorak",
+   "#2a3a2a",
+   "#2a2a2a"
+  ],
+  "bot": [
+   "jeans",
+   "#30384a"
+  ],
+  "x": []
+ },
+ "nerve": 0.5,
+ "venal": 0.5,
+ "talk": 0.4,
+ "discretion": 0.68,
+ "temperament": {
+  "nerve": 0.5,
+  "dutiful": 0.5,
+  "willingness": 0.4,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "d_nr_43",
+ "sched": [
+  [
+   0.0,
+   "d_nr_43",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   5.0,
+   "fish_dock",
+   "the porters' cut",
+   "mon-sat"
+  ],
+  [
+   9.5,
+   "cold_stores",
+   "the yard gate",
+   "mon-sat"
+  ],
+  [
+   14.5,
+   "snooker_hall",
+   "the tables",
+   "mon-sat"
+  ],
+  [
+   20.0,
+   "d_nr_43",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_nr_43",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-dougie_saltmarsh.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Dougie Saltmarsh, 29, takes the porters' cut on the fish dock for the Widow and watches the cold-store yard.",
+  "speak": "Quick, sly, laughs at his own jokes.",
+  "life": "43 North Road.",
+  "rivals": "The Widow's man; the porter answers to him."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: 2.10.2; side story 8 (the syndicate's man who takes the porters' cut)",
+ "fight_kind": "wiry"
+}

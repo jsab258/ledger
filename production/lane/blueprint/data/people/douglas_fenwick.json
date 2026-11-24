@@ -1,0 +1,81 @@
+{
+ "id": "douglas_fenwick",
+ "cast_id": null,
+ "called": "the officer who never reports",
+ "name": "Douglas Fenwick",
+ "age": 56,
+ "sex": "m",
+ "role": "A customs officer who never reports, by trade (RT-03); the bonded store",
+ "kind": "officer",
+ "voice": null,
+ "look": {
+  "h": 1.78,
+  "b": 0.55,
+  "skin": 0,
+  "hair": [
+   "grey_short",
+   "#8a8480"
+  ],
+  "top": [
+   "tunic",
+   "#1c2540",
+   "#c9b04a"
+  ],
+  "bot": [
+   "trousers",
+   "#1c2540"
+  ],
+  "x": []
+ },
+ "nerve": 0.45,
+ "venal": 0.74,
+ "talk": 0.3,
+ "discretion": 0.76,
+ "temperament": {
+  "nerve": 0.45,
+  "dutiful": 0.2,
+  "willingness": 0.3,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "home",
+   "mon-fri"
+  ],
+  [
+   8.5,
+   "customs",
+   "the bonded store",
+   "mon-fri"
+  ],
+  [
+   16.5,
+   "edge_north",
+   "home",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home",
+   "sat-sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-douglas_fenwick.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Douglas Fenwick, 56, customs officer at the bonded store. Has not written a report worth reading in ten years. Trades.",
+  "speak": "Weary, careful, never a direct answer.",
+  "life": "Up in town; the customs house.",
+  "rivals": "The Widow's loads pass him."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: RT-03 (an officer who never reports, by trade); places.json customs owner"
+}

@@ -1,0 +1,81 @@
+{
+ "id": "joyce_ellerby",
+ "cast_id": null,
+ "called": "Mrs Ellerby",
+ "name": "Joyce Ellerby",
+ "age": 55,
+ "sex": "f",
+ "role": "Keeps the Copper Kettle tea room",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.62,
+  "b": 0.55,
+  "skin": 0,
+  "hair": [
+   "set",
+   "#b0a090"
+  ],
+  "top": [
+   "blouse",
+   "#e8d8e0",
+   "#8a5a6a"
+  ],
+  "bot": [
+   "skirt",
+   "#4a4048"
+  ],
+  "x": []
+ },
+ "nerve": 0.4,
+ "venal": 0.58,
+ "talk": 0.6,
+ "discretion": 0.52,
+ "temperament": {
+  "nerve": 0.4,
+  "dutiful": 0.4,
+  "willingness": 0.6,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_cl_4",
+ "sched": [
+  [
+   0.0,
+   "d_cl_4",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   8.5,
+   "tea_room",
+   "the urn",
+   "mon-sat"
+  ],
+  [
+   17.75,
+   "d_cl_4",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_cl_4",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-joyce_ellerby.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Joyce Ellerby, 55, keeps the Copper Kettle. Doilies and opinions.",
+  "speak": "Genteel, nosy.",
+  "life": "4 Chapel Lane.",
+  "rivals": "None."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: places.json tea_room (unnamed keeper)"
+}

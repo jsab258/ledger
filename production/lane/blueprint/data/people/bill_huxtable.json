@@ -1,0 +1,90 @@
+{
+ "id": "bill_huxtable",
+ "cast_id": null,
+ "called": "Bill",
+ "name": "Bill Huxtable",
+ "age": 48,
+ "sex": "m",
+ "role": "The first dock worker along the quay each morning (05:15, past the landing and the fish dock to the pen); a finder (2.5.5)",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.84,
+  "b": 0.8,
+  "skin": 0,
+  "hair": [
+   "flatcap",
+   "#4a4a48"
+  ],
+  "top": [
+   "donkey",
+   "#1c1f26",
+   "#e07a1a"
+  ],
+  "bot": [
+   "trousers",
+   "#2a2a2a"
+  ],
+  "x": [
+   "bait_tin"
+  ]
+ },
+ "nerve": 0.5,
+ "venal": 0.58,
+ "talk": 0.4,
+ "discretion": 0.68,
+ "temperament": {
+  "nerve": 0.5,
+  "dutiful": 0.4,
+  "willingness": 0.4,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_nr_1",
+ "sched": [
+  [
+   0.0,
+   "d_nr_1",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   5.75,
+   "dock_gate",
+   "the pen, first in by the quay road",
+   "mon-sat"
+  ],
+  [
+   14.0,
+   "caff",
+   "his tea",
+   "mon-sat"
+  ],
+  [
+   15.5,
+   "d_nr_1",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_nr_1",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-bill_huxtable.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Bill Huxtable, 48, docker since he was fifteen. First along the quay every morning; at the pen before anybody.",
+  "speak": "Short, dry, 'mornin''.",
+  "life": "1 North Road.",
+  "rivals": "Pays the Widow's men like everybody; respects Ron."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: 2.5.5 (the first dock worker)",
+ "fight_kind": "big_man"
+}

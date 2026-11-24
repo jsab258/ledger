@@ -1,0 +1,116 @@
+{
+ "id": "kevin_needham",
+ "cast_id": "ferko",
+ "called": "Kevin",
+ "name": "Kevin Needham",
+ "age": 36,
+ "sex": "m",
+ "role": "The day driver on Mickey's rank, car one; the Widow's eyes among the regulars",
+ "kind": "firm",
+ "voice": null,
+ "look": {
+  "h": 1.78,
+  "b": 0.5,
+  "skin": 1,
+  "hair": [
+   "short",
+   "#3a2a1a"
+  ],
+  "top": [
+   "leather",
+   "#3a2a22",
+   "#1a1a1a"
+  ],
+  "bot": [
+   "jeans",
+   "#39445a"
+  ],
+  "x": [
+   "tash"
+  ]
+ },
+ "nerve": 0.5,
+ "venal": 0.4,
+ "talk": 0.7,
+ "discretion": 0.3,
+ "temperament": {
+  "nerve": 0.5,
+  "dutiful": 0.55,
+  "willingness": 0.4,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "home",
+   "mon-sat"
+  ],
+  [
+   6.25,
+   "caff",
+   "breakfast",
+   "mon-sat"
+  ],
+  [
+   7.0,
+   "rank_mickeys",
+   "car one",
+   "mon-sat"
+  ],
+  [
+   12.5,
+   "caff",
+   "his break",
+   "mon-sat"
+  ],
+  [
+   13.25,
+   "rank_mickeys",
+   "car one",
+   "mon-sat"
+  ],
+  [
+   19.0,
+   "edge_north",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home",
+   "sun"
+  ],
+  [
+   12.0,
+   "rank_mickeys",
+   "car one, Sunday",
+   "sun"
+  ],
+  [
+   18.0,
+   "edge_north",
+   "home",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-kevin_needham.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Mickey's day driver, eight years in the same seat.",
+  "speak": "Easy, matey, a moaner about the weather and the fares.",
+  "life": "Lives out past the station. Worries the office will shut.",
+  "fire": "He was in bed. Terry had the night car.",
+  "rivals": "He has driven Agar's clerk and never had a tip."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon; 3.2.2; 2.10.2",
+ "fallback_role": "a car short until a driver is hired",
+ "fight_kind": "brawler"
+}

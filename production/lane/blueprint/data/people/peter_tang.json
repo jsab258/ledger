@@ -1,0 +1,94 @@
+{
+ "id": "peter_tang",
+ "cast_id": "takeaway_m",
+ "called": "Mr Tang",
+ "name": "Peter Tang",
+ "age": 44,
+ "sex": "m",
+ "role": "Keeps the takeaway on the parade with his wife; came from the New Territories in 1968",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.7,
+  "b": 0.45,
+  "skin": 5,
+  "hair": [
+   "short",
+   "#14141a"
+  ],
+  "top": [
+   "apron",
+   "#f0f0ec",
+   "#f0f0ec"
+  ],
+  "bot": [
+   "trousers",
+   "#22222a"
+  ],
+  "x": []
+ },
+ "nerve": 0.45,
+ "venal": 0.58,
+ "talk": 0.4,
+ "discretion": 0.5,
+ "temperament": {
+  "nerve": 0.45,
+  "dutiful": 0.4,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_bp_5",
+ "sched": [
+  [
+   0.0,
+   "d_bp_5",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   10.0,
+   "grocer",
+   "the day's veg",
+   "mon-sat"
+  ],
+  [
+   11.0,
+   "d_bp_5",
+   "the kitchen, prep",
+   "mon-sat"
+  ],
+  [
+   16.5,
+   "tangs_takeaway",
+   "the counter",
+   "mon-sat"
+  ],
+  [
+   23.75,
+   "d_bp_5",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_bp_5",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-peter_tang.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "He and his wife Lily keep the Golden River, the Chinese takeaway at the north end of the parade, and live over it. Open five till half eleven.",
+  "speak": "Polite, careful, dry sense of humour. northern vowels after twenty years.",
+  "life": "Came from Hong Kong in 1969. Buys vegetables at Copper Row market every morning. The late trade means he sees who is about at eleven.",
+  "fire": "They were still up. He saw the glow and rang 999 from the phone box.",
+  "rivals": "Cammack's lads come in late, loud, and pay. Agar is his landlord and the rent went up in spring."
+ },
+ "can_die": false,
+ "invented": false,
+ "src": "canon; side stories 4, 12"
+}

@@ -1,0 +1,115 @@
+{
+ "id": "philip_danby",
+ "cast_id": "elias",
+ "called": "Mr Danby",
+ "name": "Philip Danby",
+ "age": 33,
+ "sex": "m",
+ "role": "A teacher with the school shut; walks",
+ "kind": "principal",
+ "voice": null,
+ "look": {
+  "h": 1.82,
+  "b": 0.35,
+  "skin": 0,
+  "hair": [
+   "floppy",
+   "#5a4430"
+  ],
+  "top": [
+   "cord_jacket",
+   "#6a5a3a",
+   "#d8c8a8"
+  ],
+  "bot": [
+   "cords",
+   "#4a4030"
+  ],
+  "x": [
+   "glasses",
+   "scarf"
+  ]
+ },
+ "nerve": 0.4,
+ "venal": 0.58,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.4,
+  "dutiful": 0.4,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_cl_29",
+ "sched": [
+  [
+   0.0,
+   "d_cl_29",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   10.0,
+   "fishing_quay_west",
+   "his walk on the quay",
+   "mon-sat"
+  ],
+  [
+   11.5,
+   "tea_room",
+   "a pot of tea",
+   "mon-sat"
+  ],
+  [
+   14.0,
+   "d_cl_29",
+   "home",
+   "mon-sat"
+  ],
+  [
+   16.0,
+   "allotments",
+   "the allotments",
+   "mon-sat"
+  ],
+  [
+   18.0,
+   "d_cl_29",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_cl_29",
+   "asleep",
+   "sun"
+  ],
+  [
+   11.0,
+   "ferry_landing",
+   "watching the boats",
+   "sun"
+  ],
+  [
+   14.0,
+   "d_cl_29",
+   "home",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-philip_danby.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Philip Danby, 33, a teacher at the comprehensive, which stands closed for the game's window. Walks the Hook every day because he does not know what else to do with a morning.",
+  "speak": "Mild, wry, too many words, apologises for them.",
+  "life": "Rents 29 Chapel Lane. Walks the quay at ten and the allotments after dinner.",
+  "rivals": "Knows none of them and says so."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon; STORY-FRAME 4",
+ "fallback_role": "that friendship ends"
+}

@@ -1,0 +1,167 @@
+{
+ "id": "shaun_hewson",
+ "cast_id": "franjo",
+ "called": "Shaun",
+ "name": "Shaun Hewson",
+ "age": 26,
+ "sex": "m",
+ "role": "The sign painter doing the parade's boards this month",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.77,
+  "b": 0.3,
+  "skin": 0,
+  "hair": [
+   "quiff",
+   "#2a1a10"
+  ],
+  "top": [
+   "overall",
+   "#e8e4d8",
+   "#3a5a8a"
+  ],
+  "bot": [
+   "trousers",
+   "#e0dccf"
+  ],
+  "x": []
+ },
+ "nerve": 0.35,
+ "venal": 0.4,
+ "talk": 0.65,
+ "discretion": 0.3,
+ "temperament": {
+  "nerve": 0.35,
+  "dutiful": 0.3,
+  "willingness": 0.4,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "boarding_house",
+ "sched": [
+  [
+   0.0,
+   "boarding_house",
+   "his room",
+   "mon-thu"
+  ],
+  [
+   7.0,
+   "caff",
+   "breakfast",
+   "mon-thu"
+  ],
+  [
+   8.0,
+   "empty_unit",
+   "his ladder on the parade's boards",
+   "mon-thu"
+  ],
+  [
+   12.0,
+   "caff",
+   "dinner",
+   "mon-thu"
+  ],
+  [
+   13.0,
+   "launderette",
+   "the next board",
+   "mon-thu"
+  ],
+  [
+   17.0,
+   "boarding_house",
+   "his room",
+   "mon-thu"
+  ],
+  [
+   0.0,
+   "boarding_house",
+   "his room",
+   "fri"
+  ],
+  [
+   7.0,
+   "caff",
+   "breakfast",
+   "fri"
+  ],
+  [
+   8.0,
+   "mickeys",
+   "his ladder at Mickey's bay",
+   "fri"
+  ],
+  [
+   12.0,
+   "caff",
+   "dinner",
+   "fri"
+  ],
+  [
+   13.0,
+   "launderette",
+   "the next board",
+   "fri"
+  ],
+  [
+   17.0,
+   "boarding_house",
+   "his room",
+   "fri"
+  ],
+  [
+   0.0,
+   "boarding_house",
+   "his room",
+   "sat"
+  ],
+  [
+   11.0,
+   "snooker_hall",
+   "the tables",
+   "sat"
+  ],
+  [
+   14.0,
+   "boarding_house",
+   "his room",
+   "sat"
+  ],
+  [
+   0.0,
+   "boarding_house",
+   "his room",
+   "sun"
+  ],
+  [
+   11.0,
+   "fishing_quay_west",
+   "a walk",
+   "sun"
+  ],
+  [
+   13.0,
+   "boarding_house",
+   "his room",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-shaun_hewson.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "A sign painter, the last on the Hook. This week he is painting out the name over the empty unit on the parade for the landlord.",
+  "speak": "Easygoing, observant, talks about letters the way other men talk about football. Notices what is written and who it is written for.",
+  "life": "Learned from his grandad. From the ladder he sees the whole parade all day.",
+  "fire": "He painted the No. 4 on that warehouse door. He says someone had it repainted a fortnight before it burned, and not by him.",
+  "rivals": "Agar's clerk pays him to paint names out. Cammack paid him cash for the pink sign on the video shop."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon; 2.11.1; side story 6",
+ "fight_kind": "brawler"
+}

@@ -1,0 +1,87 @@
+{
+ "id": "alan_sowerby",
+ "cast_id": null,
+ "called": "Mr Sowerby",
+ "name": "Alan Sowerby",
+ "age": 51,
+ "sex": "m",
+ "role": "The council's licensing officer, who has to act on Agar's letters",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.72,
+  "b": 0.5,
+  "skin": 0,
+  "hair": [
+   "balding",
+   "#8a8078"
+  ],
+  "top": [
+   "suit",
+   "#4a4a40",
+   "#e0d8c8"
+  ],
+  "bot": [
+   "trousers",
+   "#4a4a40"
+  ],
+  "x": []
+ },
+ "nerve": 0.3,
+ "venal": 0.42,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.3,
+  "dutiful": 0.6,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "mon-wed,fri"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "thu"
+  ],
+  [
+   9.5,
+   "licensing",
+   "the licensing committee",
+   "thu"
+  ],
+  [
+   16.5,
+   "edge_north",
+   "home in town",
+   "thu"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "sat-sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-alan_sowerby.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Alan Sowerby, 51, licensing officer. Would rather nobody wrote to him.",
+  "speak": "Harassed, procedural.",
+  "life": "The council offices up in town; the licensing hearing on Thursdays.",
+  "rivals": "Answers to the committee, which answers to Agar."
+ },
+ "can_die": true,
+ "invented": "proposed by the story frame",
+ "src": "STORY-FRAME 4 (proposed)"
+}

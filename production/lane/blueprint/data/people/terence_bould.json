@@ -1,0 +1,89 @@
+{
+ "id": "terence_bould",
+ "cast_id": null,
+ "called": "Terence",
+ "name": "Terence Bould",
+ "age": 29,
+ "sex": "m",
+ "role": "A merchant seaman between ships, lodging at Regent House",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.78,
+  "b": 0.5,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#5a3a20"
+  ],
+  "top": [
+   "pea_coat",
+   "#1c2230",
+   "#1c2230"
+  ],
+  "bot": [
+   "jeans",
+   "#30384a"
+  ],
+  "x": [
+   "kitbag"
+  ]
+ },
+ "nerve": 0.45,
+ "venal": 0.58,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.45,
+  "dutiful": 0.4,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "boarding_house",
+ "sched": [
+  [
+   0.0,
+   "boarding_house",
+   "his room",
+   "mon-sat"
+  ],
+  [
+   11.0,
+   "harbour_board",
+   "the shipping office",
+   "mon-sat"
+  ],
+  [
+   16.0,
+   "snooker_hall",
+   "the tables",
+   "mon-sat"
+  ],
+  [
+   19.0,
+   "boarding_house",
+   "his room",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "boarding_house",
+   "his room",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-terence_bould.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Terence Bould, 29, between ships. Waits for a berth and spends what he has on cabs to the shipping office.",
+  "speak": "Restless, homesick, tells sea stories badly.",
+  "life": "A merchant seaman between ships, lodging at Regent House",
+  "rivals": "None of the three."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: 3.4.1 (40 fare people)"
+}

@@ -1,0 +1,95 @@
+{
+ "id": "peart",
+ "cast_id": null,
+ "called": "Mr Peart",
+ "name": "Ronald Peart",
+ "age": 62,
+ "sex": "m",
+ "role": "Keeps Peart's, the newsagent and tobacconist, with the pension counter",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.7,
+  "b": 0.55,
+  "skin": 0,
+  "hair": [
+   "balding",
+   "#a09a90"
+  ],
+  "top": [
+   "cardigan",
+   "#6a5a40",
+   "#d8d0c0"
+  ],
+  "bot": [
+   "trousers",
+   "#3a3630"
+  ],
+  "x": [
+   "glasses"
+  ]
+ },
+ "nerve": 0.4,
+ "venal": 0.58,
+ "talk": 0.6,
+ "discretion": 0.52,
+ "temperament": {
+  "nerve": 0.4,
+  "dutiful": 0.4,
+  "willingness": 0.6,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "newsagent",
+ "sched": [
+  [
+   0.0,
+   "newsagent",
+   "asleep upstairs",
+   "mon-sat"
+  ],
+  [
+   5.75,
+   "newsagent",
+   "the papers in",
+   "mon-sat"
+  ],
+  [
+   18.25,
+   "newsagent",
+   "upstairs",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "newsagent",
+   "asleep upstairs",
+   "sun"
+  ],
+  [
+   6.75,
+   "newsagent",
+   "Sunday papers",
+   "sun"
+  ],
+  [
+   12.25,
+   "newsagent",
+   "upstairs",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-peart.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Ronald Peart, 62, the newsagent. Witness to half the street's wills. The Pilot on the counter at six.",
+  "speak": "Gossip by headline.",
+  "life": "Over the shop.",
+  "rivals": "Sells papers to all three."
+ },
+ "can_die": false,
+ "invented": true,
+ "src": "wave 1 places.json and rooms (Peart); first name invented"
+}

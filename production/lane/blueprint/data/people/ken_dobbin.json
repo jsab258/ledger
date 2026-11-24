@@ -1,0 +1,94 @@
+{
+ "id": "ken_dobbin",
+ "cast_id": null,
+ "called": "a docker",
+ "name": "Ken Dobbin",
+ "age": 40,
+ "sex": "m",
+ "role": "A docker from the pen; Jimmy Raw's mate by car two (RT2-13)",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.86,
+  "b": 0.85,
+  "skin": 0,
+  "hair": [
+   "shaved",
+   "#3a3a3a"
+  ],
+  "top": [
+   "donkey",
+   "#1c1f26",
+   "#e07a1a"
+  ],
+  "bot": [
+   "trousers",
+   "#2a2a2a"
+  ],
+  "x": []
+ },
+ "nerve": 0.5,
+ "venal": 0.58,
+ "talk": 0.4,
+ "discretion": 0.68,
+ "temperament": {
+  "nerve": 0.5,
+  "dutiful": 0.4,
+  "willingness": 0.4,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "d_nr_3",
+ "sched": [
+  [
+   0.0,
+   "d_nr_3",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   5.75,
+   "dock_gate",
+   "the pen",
+   "mon-sat"
+  ],
+  [
+   14.0,
+   "rank_mickeys",
+   "by car two with Jimmy",
+   "mon-sat"
+  ],
+  [
+   15.5,
+   "snooker_hall",
+   "a frame",
+   "mon-sat"
+  ],
+  [
+   18.5,
+   "d_nr_3",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_nr_3",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-ken_dobbin.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Ken Dobbin, 40, a big docker who follows Jimmy Raw.",
+  "speak": "Says nothing; laughs when Jimmy does.",
+  "life": "3 North Road.",
+  "rivals": "Same as Jimmy."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: RT2-13; 1.3.12",
+ "fight_kind": "big_man"
+}

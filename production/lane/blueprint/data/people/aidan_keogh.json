@@ -1,0 +1,102 @@
+{
+ "id": "aidan_keogh",
+ "cast_id": null,
+ "called": "the old doctor",
+ "name": "Aidan Keogh",
+ "age": 69,
+ "sex": "m",
+ "role": "The retired doctor on Chapel Lane who stitches by knock for fifteen pounds and remembers every face",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.75,
+  "b": 0.45,
+  "skin": 0,
+  "hair": [
+   "white",
+   "#e0dcd4"
+  ],
+  "top": [
+   "cardigan",
+   "#5a5a48",
+   "#d0c8b0"
+  ],
+  "bot": [
+   "trousers",
+   "#3a3a34"
+  ],
+  "x": [
+   "glasses",
+   "bag"
+  ]
+ },
+ "nerve": 0.6,
+ "venal": 0.66,
+ "talk": 0.2,
+ "discretion": 0.84,
+ "temperament": {
+  "nerve": 0.6,
+  "dutiful": 0.3,
+  "willingness": 0.2,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "doctors",
+ "sched": [
+  [
+   0.0,
+   "doctors",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   8.0,
+   "doctors",
+   "by knock",
+   "mon-sat"
+  ],
+  [
+   21.0,
+   "doctors",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "doctors",
+   "asleep",
+   "sun"
+  ],
+  [
+   9.5,
+   "chapel",
+   "Mass",
+   "sun"
+  ],
+  [
+   11.0,
+   "doctors",
+   "by knock",
+   "sun"
+  ],
+  [
+   21.0,
+   "doctors",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-aidan_keogh.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Dr Aidan Keogh, 69, Dublin-trained, retired from a practice in town. Stitches what comes to his door at 23 Chapel Lane and asks nothing. Fifteen pounds.",
+  "speak": "Dry, Irish, clinical, 'hold still'.",
+  "life": "23 Chapel Lane; the Infirmary's porch some nights.",
+  "rivals": "Remembers every face."
+ },
+ "can_die": false,
+ "invented": true,
+ "src": "invented: 1.3.11 (the stitching doctor); prototype fares doctor_night"
+}

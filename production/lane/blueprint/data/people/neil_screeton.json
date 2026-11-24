@@ -1,0 +1,88 @@
+{
+ "id": "neil_screeton",
+ "cast_id": null,
+ "called": "Iveson's lad",
+ "name": "Neil Screeton",
+ "age": 26,
+ "sex": "m",
+ "role": "Iveson's yard hand; chains the crane gap at five",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.9,
+  "b": 0.9,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#6a4a2a"
+  ],
+  "top": [
+   "overall",
+   "#4a3a2a",
+   "#2a2a2a"
+  ],
+  "bot": [
+   "jeans",
+   "#30384a"
+  ],
+  "x": []
+ },
+ "nerve": 0.6,
+ "venal": 0.42,
+ "talk": 0.3,
+ "discretion": 0.76,
+ "temperament": {
+  "nerve": 0.6,
+  "dutiful": 0.6,
+  "willingness": 0.3,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "d_nr_26",
+ "sched": [
+  [
+   0.0,
+   "d_nr_26",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   7.5,
+   "iveson_yard",
+   "the yard",
+   "mon-sat"
+  ],
+  [
+   17.0,
+   "iveson_yard",
+   "chains the gap",
+   "mon-sat"
+  ],
+  [
+   18.75,
+   "d_nr_26",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_nr_26",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-neil_screeton.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Neil Screeton, 26, Dennis Iveson's yard hand. Chains the crane gap at five every evening since the fire.",
+  "speak": "Slow, literal, keeps count.",
+  "life": "26 North Road.",
+  "rivals": "Iveson's lad; the hardest fight in the yard if fronted up (STORY-FRAME 7)."
+ },
+ "can_die": true,
+ "invented": "proposed by the story frame",
+ "src": "STORY-FRAME 7 worked example 2 (proposed); 2.8.1 (a yard hand in his twenties)",
+ "fight_kind": "big_man"
+}

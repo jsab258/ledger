@@ -72,7 +72,7 @@ HEAD = {'file': {'type': 'string'}, 'version': {'type': 'string'}, 'clock': {'ty
         'properties': {'realSecondsPerGameHour': {'type': 'integer', 'minimum': 120, 'maximum': 120}}},
         'sources': {'type': 'array', 'items': {'type': 'string'}}, 'open_points': {'type': 'array'}}
 TIME = {'type': 'string', 'pattern': '^([01][0-9]|2[0-9]):[0-5][0-9]$'}
-DAYS = {'type': 'string', 'pattern': '^(mon|tue|wed|thu|fri|sat|sun)(-(mon|tue|wed|thu|fri|sat|sun))?(,(mon|tue|wed|thu|fri|sat|sun))*$|^daily$'}
+DAYS = {'type': 'string', 'pattern': '^(mon|tue|wed|thu|fri|sat|sun)(-(mon|tue|wed|thu|fri|sat|sun))?(,(mon|tue|wed|thu|fri|sat|sun)(-(mon|tue|wed|thu|fri|sat|sun))?)*$|^daily$'}  # wave 2: a range after a comma (mon-wed,fri-sat)
 
 TO_COME = {
     'people/<id>.json': {
@@ -88,10 +88,15 @@ TO_COME = {
             'temperament': {'type': 'object', 'required': ['nerve', 'dutiful', 'willingness'],
                             'properties': {k: {'type': 'number', 'minimum': 0, 'maximum': 1} for k in ('nerve', 'dutiful', 'willingness')}},
             'keepsQuiet': {'type': 'boolean'},
-            'sched': {'type': 'array', 'items': {'type': 'array'}, 'x-note': '[fromHour, where (a places.json id), act, days?]'},
+            'sched': {'type': 'array', 'items': {'type': 'array'}, 'x-note': '[fromHour, where (a places.json id or a map.json door id for a home), act, days?]; derived from routines.json, which is the home of the routine'},
             'lines': {'type': 'object'}, 'card': {'type': 'object', 'required': ['who', 'speak', 'life']},
             'can_die': {'type': 'boolean'}, 'fallback_role': {'type': 'string'}, 'src': SRC},
-        'x-rules': ['age 18 or over: no children anywhere (canon)', 'every sched place is a places.json id', 'Tom has can_die false']},
+        'x-rules': ['age 18 or over: no children anywhere (canon)', 'every sched place is a places.json id or a map.json door id', 'Frank (frank_nowak) has can_die false', 'name_ladder on frank_nowak: the new owner, Nowak, Frank, Frankie; nobody says Tom or Tommy (decision of 24 Nov)']},
+    'cast.json': {
+        'x-made': 'wave 2 (24 Nov 2026): the index of people/, the fighter kinds (1.3.12) and the rule that will make the residents', 'type': 'object',
+        'required': ['file', 'version', 'clock', 'people', 'fighter_kinds', 'residents_rule'],
+        'properties': dict(HEAD, people={'type': 'array', 'items': {'type': 'object', 'required': ['id', 'name', 'kind'], 'properties': {'id': ID, 'name': {'type': 'string'}, 'kind': {'type': 'string'}}}},
+                           fighter_kinds={'type': 'object'}, residents_rule={'type': 'object'}, name_ladder={'type': 'array'})},
     'ties.json': {
         'x-made': 'by hand from TECH-PLAN section 3 (ties, the real town\'s form)', 'type': 'object', 'required': ['file', 'version', 'ties'],
         'properties': dict(HEAD, ties={'type': 'array', 'items': {'type': 'array', 'x-note': '[a, b, strength 0..1, "place hh:mm days; ..."]'}})},
@@ -100,7 +105,7 @@ TO_COME = {
         'properties': dict(HEAD, routines={'type': 'array', 'items': {'type': 'object', 'required': ['person', 'rows', 'src'],
             'properties': {'person': ID, 'src': SRC, 'rows': {'type': 'array', 'items': {'type': 'object', 'required': ['from', 'place', 'act'],
                 'properties': {'from': TIME, 'place': ID, 'act': {'type': 'string'}, 'days': DAYS}}}}}}),
-        'x-rules': ['every place is a places.json id', 'a move between consecutive rows is reachable on the map graph at walking pace in the game time between them (the 200 m walking-reach rule checked on the 120 s hour)']},
+        'x-rules': ['every place is a places.json id, a map.json door id (a home) or a routines.json provisional_places id', 'a move between consecutive rows is reachable on the map graph at walking pace in the game time between them (the 200 m walking-reach rule checked on the 120 s hour)']},
     'lines/<file>.json': {
         'x-made': 'by hand from TECH-PLAN section 3 (lines)', 'type': 'object', 'required': ['file', 'version', 'lines'],
         'properties': dict(HEAD, lines={'type': 'array', 'items': {'type': 'object', 'required': ['id', 'who', 'situation', 'text', 'once', 'src'],

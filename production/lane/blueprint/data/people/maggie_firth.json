@@ -1,0 +1,74 @@
+{
+ "id": "maggie_firth",
+ "cast_id": null,
+ "called": "the tea-stall woman",
+ "name": "Maggie Firth",
+ "age": 50,
+ "sex": "f",
+ "role": "Keeps the tea stall on the quay, 22:00 to 06:00",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.64,
+  "b": 0.7,
+  "skin": 0,
+  "hair": [
+   "headscarf",
+   "#6a3a3a"
+  ],
+  "top": [
+   "duffel",
+   "#3a3a30",
+   "#2a2a2a"
+  ],
+  "bot": [
+   "trousers",
+   "#2a2a2a"
+  ],
+  "x": [
+   "fingerless_gloves"
+  ]
+ },
+ "nerve": 0.6,
+ "venal": 0.66,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.6,
+  "dutiful": 0.3,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "d_nr_17",
+ "sched": [
+  [
+   0.0,
+   "tea_stall",
+   "the stall"
+  ],
+  [
+   6.25,
+   "d_nr_17",
+   "asleep"
+  ],
+  [
+   21.5,
+   "tea_stall",
+   "the stall"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-maggie_firth.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Maggie Firth, 50, keeps the night tea stall on the quay. Sees the landing all night and says it is none of hers.",
+  "speak": "Raw, funny, 'sugar's extra'.",
+  "life": "17 North Road; sleeps by day.",
+  "rivals": "Serves the Widow's men and the beat constable alike."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: places.json tea_stall"
+}

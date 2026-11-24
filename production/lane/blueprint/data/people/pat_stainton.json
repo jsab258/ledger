@@ -1,0 +1,81 @@
+{
+ "id": "pat_stainton",
+ "cast_id": "iva",
+ "called": "Pat",
+ "name": "Pat Stainton",
+ "age": 45,
+ "sex": "f",
+ "role": "A presser at the laundry",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.62,
+  "b": 0.55,
+  "skin": 0,
+  "hair": [
+   "perm",
+   "#7a5a3a"
+  ],
+  "top": [
+   "overall",
+   "#7a9aa8",
+   "#e8e4dc"
+  ],
+  "bot": [
+   "skirt",
+   "#30303a"
+  ],
+  "x": []
+ },
+ "nerve": 0.3,
+ "venal": 0.4,
+ "talk": 0.4,
+ "discretion": 0.68,
+ "temperament": {
+  "nerve": 0.3,
+  "dutiful": 0.3,
+  "willingness": 0.4,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "d_nr_31",
+ "sched": [
+  [
+   0.0,
+   "d_nr_31",
+   "asleep",
+   "mon-fri"
+  ],
+  [
+   7.75,
+   "launderette",
+   "the presses",
+   "mon-fri"
+  ],
+  [
+   17.0,
+   "d_nr_31",
+   "home",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "d_nr_31",
+   "asleep",
+   "sat-sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-pat_stainton.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Pat Stainton, 45, works the presses at the laundry. Julie's friend until the summer lay-offs.",
+  "speak": "Tired, kind, quick to laugh at herself.",
+  "life": "31 North Road. The presses eight to five.",
+  "rivals": "Keeps out of it."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "hook-cast.json iva (unnamed; named here)"
+}

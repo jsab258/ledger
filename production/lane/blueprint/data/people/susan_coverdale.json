@@ -1,0 +1,88 @@
+{
+ "id": "susan_coverdale",
+ "cast_id": "tibor",
+ "called": "Miss Coverdale",
+ "name": "Susan Coverdale",
+ "age": 38,
+ "sex": "f",
+ "role": "A customs officer who lives past Rita's; Agar's eyes",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.69,
+  "b": 0.4,
+  "skin": 1,
+  "hair": [
+   "short",
+   "#2a2018"
+  ],
+  "top": [
+   "tunic",
+   "#1c2540",
+   "#c9b04a"
+  ],
+  "bot": [
+   "trousers",
+   "#1c2540"
+  ],
+  "x": []
+ },
+ "nerve": 0.7,
+ "venal": 0.3,
+ "talk": 0.4,
+ "discretion": 0.7,
+ "temperament": {
+  "nerve": 0.7,
+  "dutiful": 0.3,
+  "willingness": 0.6,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "d_nr_14",
+ "sched": [
+  [
+   0.0,
+   "d_nr_14",
+   "asleep",
+   "mon-fri"
+  ],
+  [
+   8.5,
+   "customs",
+   "the customs house",
+   "mon-fri"
+  ],
+  [
+   17.25,
+   "ritas",
+   "past the window",
+   "mon-fri"
+  ],
+  [
+   18.5,
+   "d_nr_14",
+   "home",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "d_nr_14",
+   "asleep",
+   "sat-sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-susan_coverdale.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "A customs officer at the Harbour Office. She meets every ferry, the last one at half past ten at night, and goes off duty at eleven.",
+  "speak": "Correct, cool, observant. Civil service patience. Notices bags.",
+  "life": "Six years on the Meridian landing. Knows the ferry crews and which passengers travel light.",
+  "fire": "There were goods under bond in No. 4. The paperwork does not match what burned. She has told Ellis so.",
+  "rivals": "She has stopped the Widow's lorries twice and found nothing either time."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon; 2.10.2; side story 19"
+}

@@ -1,0 +1,96 @@
+{
+ "id": "alison_sedman",
+ "cast_id": "noor",
+ "called": "Alison",
+ "name": "Alison Sedman",
+ "age": 30,
+ "sex": "f",
+ "role": "A reporter on the Meridian Pilot; the fire",
+ "kind": "principal",
+ "voice": null,
+ "look": {
+  "h": 1.66,
+  "b": 0.3,
+  "skin": 2,
+  "hair": [
+   "long",
+   "#7a3b22"
+  ],
+  "top": [
+   "anorak",
+   "#2f5a54",
+   "#e2d9c2"
+  ],
+  "bot": [
+   "jeans",
+   "#3a4a66"
+  ],
+  "x": [
+   "bag"
+  ]
+ },
+ "nerve": 0.8,
+ "venal": 0.2,
+ "talk": 0.6,
+ "discretion": 0.5,
+ "temperament": {
+  "nerve": 0.8,
+  "dutiful": 0.3,
+  "willingness": 0.6,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "tue,thu"
+  ],
+  [
+   9.5,
+   "newsagent",
+   "asking",
+   "tue,thu"
+  ],
+  [
+   10.5,
+   "rank_mickeys",
+   "a word with whoever is on it",
+   "tue,thu"
+  ],
+  [
+   11.5,
+   "caff",
+   "her dinner",
+   "tue,thu"
+  ],
+  [
+   12.5,
+   "edge_north",
+   "back to the paper (the warehouse row is her fare)",
+   "tue,thu"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "mon,wed,fri-sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-alison_sedman.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "A reporter on the local paper, the Meridian Evening Mail. She will not drop the warehouse fire, though her editor has told her to.",
+  "speak": "Quick, warm, direct. Asks one question more than is polite. Laughs easily and means it.",
+  "life": "Meridian born. Takes her tea at Rinaldi's and stands looking at the ruin of No. 4 most mornings.",
+  "fire": "She wrote the first report. The insurance on No. 4 was raised a month before it burned. A cab was seen on the row that night. Her editor wants it left.",
+  "rivals": "Agar sits on the board that owns her paper's building. She has never got a quote out of the Widow. Cammack sends the paper adverts for his video shop."
+ },
+ "can_die": false,
+ "invented": false,
+ "src": "canon; STORY-FRAME 4"
+}

@@ -1,0 +1,107 @@
+{
+ "id": "rodney_usher",
+ "cast_id": null,
+ "called": "the shipping clerk",
+ "name": "Rodney Usher",
+ "age": 33,
+ "sex": "m",
+ "role": "A Harbour Board clerk who sells the times of shipments (RT-03)",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.76,
+  "b": 0.35,
+  "skin": 0,
+  "hair": [
+   "parted",
+   "#3a2a1a"
+  ],
+  "top": [
+   "suit",
+   "#4a4a50",
+   "#e0d8c8"
+  ],
+  "bot": [
+   "trousers",
+   "#4a4a50"
+  ],
+  "x": [
+   "glasses"
+  ]
+ },
+ "nerve": 0.3,
+ "venal": 0.74,
+ "talk": 0.7,
+ "discretion": 0.44,
+ "temperament": {
+  "nerve": 0.3,
+  "dutiful": 0.2,
+  "willingness": 0.7,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_nr_10",
+ "sched": [
+  [
+   0.0,
+   "d_nr_10",
+   "asleep",
+   "mon-fri"
+  ],
+  [
+   8.75,
+   "harbour_board",
+   "the back office",
+   "mon-fri"
+  ],
+  [
+   17.0,
+   "snooker_hall",
+   "the tables",
+   "mon-fri"
+  ],
+  [
+   20.0,
+   "d_nr_10",
+   "home",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "d_nr_10",
+   "asleep",
+   "sat"
+  ],
+  [
+   14.0,
+   "snooker_hall",
+   "the tables",
+   "sat"
+  ],
+  [
+   18.0,
+   "d_nr_10",
+   "home",
+   "sat"
+  ],
+  [
+   0.0,
+   "d_nr_10",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-rodney_usher.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Rodney Usher, 33, a clerk in the Harbour Board's back office. Knows every ship's time and sells them at the snooker hall.",
+  "speak": "Smarmy, whispering.",
+  "life": "10 North Road.",
+  "rivals": "Sells to the Widow too."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: RT-03 (a clerk who sells times of shipments)"
+}

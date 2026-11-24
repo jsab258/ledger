@@ -1,0 +1,99 @@
+{
+ "id": "harry_holt",
+ "cast_id": null,
+ "called": "Holt",
+ "name": "Harry Holt",
+ "age": 50,
+ "sex": "m",
+ "role": "Keeps Holt's garage on Cold Store Road; the tyre man and the recovery truck",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.78,
+  "b": 0.7,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#4a4038"
+  ],
+  "top": [
+   "overall",
+   "#3a4a3a",
+   "#2a2a2a"
+  ],
+  "bot": [
+   "trousers",
+   "#2a2a2a"
+  ],
+  "x": []
+ },
+ "nerve": 0.5,
+ "venal": 0.58,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.5,
+  "dutiful": 0.4,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_nr_18",
+ "sched": [
+  [
+   0.0,
+   "d_nr_18",
+   "asleep",
+   "mon-fri"
+  ],
+  [
+   7.75,
+   "garage",
+   "the workshop",
+   "mon-fri"
+  ],
+  [
+   17.75,
+   "d_nr_18",
+   "home",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "d_nr_18",
+   "asleep",
+   "sat"
+  ],
+  [
+   7.75,
+   "garage",
+   "Saturday mornings",
+   "sat"
+  ],
+  [
+   12.25,
+   "d_nr_18",
+   "home",
+   "sat"
+  ],
+  [
+   0.0,
+   "d_nr_18",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-harry_holt.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Harry Holt, 50, keeps the garage on Cold Store Road. Mends what the rivals break, for money and a day.",
+  "speak": "Cheerful, oily, quotes by the hour.",
+  "life": "18 North Road.",
+  "rivals": "Mends everybody's cars."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "wave 1 places.json Holt (surname kept); first name invented; RT-06 (the tyre man)"
+}

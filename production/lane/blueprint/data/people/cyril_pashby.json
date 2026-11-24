@@ -1,0 +1,95 @@
+{
+ "id": "cyril_pashby",
+ "cast_id": null,
+ "called": "the Man in Black",
+ "name": "Cyril Pashby",
+ "age": 71,
+ "sex": "m",
+ "role": "Walks behind every old docker's coffin and marks the funeral out of ten, aloud",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.7,
+  "b": 0.4,
+  "skin": 0,
+  "hair": [
+   "balding",
+   "#d0ccc4"
+  ],
+  "top": [
+   "overcoat",
+   "#101012",
+   "#101012"
+  ],
+  "bot": [
+   "trousers",
+   "#101012"
+  ],
+  "x": [
+   "black_hat"
+  ]
+ },
+ "nerve": 0.6,
+ "venal": 0.66,
+ "talk": 0.3,
+ "discretion": 0.76,
+ "temperament": {
+  "nerve": 0.6,
+  "dutiful": 0.3,
+  "willingness": 0.3,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_cl_33",
+ "sched": [
+  [
+   0.0,
+   "d_cl_33",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   10.0,
+   "chapel",
+   "the steps",
+   "mon-sat"
+  ],
+  [
+   13.0,
+   "d_cl_33",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_cl_33",
+   "asleep",
+   "sun"
+  ],
+  [
+   9.5,
+   "chapel",
+   "Mass, in black",
+   "sun"
+  ],
+  [
+   11.0,
+   "d_cl_33",
+   "home",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-cyril_pashby.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Cyril Pashby, 71, a retired docker known only as the Man in Black. Walks behind every old docker's coffin and marks the funeral out of ten, aloud.",
+  "speak": "Solemn, deadpan, a mark out of ten for everything.",
+  "life": "33 Chapel Lane. The chapel steps whenever there is a funeral.",
+  "rivals": "Marks them all."
+ },
+ "can_die": false,
+ "invented": true,
+ "src": "STORY-FRAME 4 item 16 (the role proposed; the name invented here)"
+}

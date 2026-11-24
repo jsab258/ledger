@@ -1,0 +1,88 @@
+{
+ "id": "barry_coult",
+ "cast_id": null,
+ "called": "Coult",
+ "name": "Barry Coult",
+ "age": 42,
+ "sex": "m",
+ "role": "A bailiff from away, hired on Agar's paper; leads the men at the cold store",
+ "kind": "rival_man",
+ "voice": null,
+ "look": {
+  "h": 1.88,
+  "b": 0.85,
+  "skin": 0,
+  "hair": [
+   "shaved",
+   "#3a3a3a"
+  ],
+  "top": [
+   "car_coat",
+   "#2a2a2a",
+   "#2a2a2a"
+  ],
+  "bot": [
+   "trousers",
+   "#2a2a2a"
+  ],
+  "x": []
+ },
+ "nerve": 0.7,
+ "venal": 0.5,
+ "talk": 0.4,
+ "discretion": 0.68,
+ "temperament": {
+  "nerve": 0.7,
+  "dutiful": 0.5,
+  "willingness": 0.4,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "edge_north",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "from away",
+   "tue,fri"
+  ],
+  [
+   10.0,
+   "agar_base",
+   "his instructions",
+   "tue,fri"
+  ],
+  [
+   11.0,
+   "cold_stores",
+   "the yard",
+   "tue,fri"
+  ],
+  [
+   15.0,
+   "edge_north",
+   "gone",
+   "tue,fri"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "from away",
+   "mon,wed,thu,sat,sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-barry_coult.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Barry Coult, 42, a certificated bailiff from away who does what Agar's paper says. Leads the men who shut the cold store's door man in.",
+  "speak": "Officious, 'I've a warrant for that'.",
+  "life": "Comes and goes in a van from up the coast.",
+  "rivals": "Agar's man while the paper lasts."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: 2.10.2; STORY-FRAME 5 (men from away, hired on Agar's paper)",
+ "fight_kind": "big_man"
+}

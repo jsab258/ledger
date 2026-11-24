@@ -1,0 +1,102 @@
+{
+ "id": "mark_billany",
+ "cast_id": null,
+ "called": "Billany",
+ "name": "Mark Billany",
+ "age": 31,
+ "sex": "m",
+ "role": "The Widow's taxman at the gate and on the ferry rank",
+ "kind": "rival_man",
+ "voice": null,
+ "look": {
+  "h": 1.8,
+  "b": 0.6,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#5a3a20"
+  ],
+  "top": [
+   "donkey",
+   "#1c1f26",
+   "#e07a1a"
+  ],
+  "bot": [
+   "jeans",
+   "#30384a"
+  ],
+  "x": [
+   "cap"
+  ]
+ },
+ "nerve": 0.55,
+ "venal": 0.42,
+ "talk": 0.3,
+ "discretion": 0.76,
+ "temperament": {
+  "nerve": 0.55,
+  "dutiful": 0.6,
+  "willingness": 0.3,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": true,
+ "home": "boarding_house",
+ "sched": [
+  [
+   0.0,
+   "boarding_house",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   6.0,
+   "dock_gate",
+   "the tax hut",
+   "mon-sat"
+  ],
+  [
+   12.0,
+   "caff",
+   "dinner",
+   "mon-sat"
+  ],
+  [
+   13.0,
+   "rank_ferry",
+   "the tax on the ferry rank",
+   "mon-sat"
+  ],
+  [
+   17.0,
+   "widow_base",
+   "the take",
+   "mon-sat"
+  ],
+  [
+   21.0,
+   "boarding_house",
+   "his room",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "boarding_house",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-mark_billany.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Mark Billany, 31, collects the Widow's tax off the cabs at the dock gate and the ferry rank.",
+  "speak": "Mouthy until hit.",
+  "life": "15 Cold Store Road.",
+  "rivals": "The Widow's man."
+ },
+ "can_die": true,
+ "invented": "proposed by the story frame",
+ "src": "STORY-FRAME 7 worked example 3 (proposed)",
+ "fight_kind": "brawler"
+}

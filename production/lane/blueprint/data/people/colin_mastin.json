@@ -1,0 +1,101 @@
+{
+ "id": "colin_mastin",
+ "cast_id": "stipe",
+ "called": "Colin",
+ "name": "Colin Mastin",
+ "age": 41,
+ "sex": "m",
+ "role": "A crane driver on the docks; offered night work off the books",
+ "kind": "regular",
+ "voice": null,
+ "look": {
+  "h": 1.8,
+  "b": 0.65,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#4a3a2a"
+  ],
+  "top": [
+   "donkey",
+   "#2a2e36",
+   "#e07a1a"
+  ],
+  "bot": [
+   "jeans",
+   "#30384a"
+  ],
+  "x": [
+   "flatcap"
+  ]
+ },
+ "nerve": 0.5,
+ "venal": 0.4,
+ "talk": 0.6,
+ "discretion": 0.52,
+ "temperament": {
+  "nerve": 0.5,
+  "dutiful": 0.3,
+  "willingness": 0.6,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": false,
+ "home": "d_cs_7",
+ "sched": [
+  [
+   0.0,
+   "d_cs_7",
+   "asleep",
+   "mon-fri"
+  ],
+  [
+   5.75,
+   "dock_gate",
+   "in at six, the cranes inside",
+   "mon-fri"
+  ],
+  [
+   17.5,
+   "d_cs_7",
+   "home",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "d_cs_7",
+   "asleep",
+   "sat"
+  ],
+  [
+   5.75,
+   "dock_gate",
+   "Saturday morning",
+   "sat"
+  ],
+  [
+   12.5,
+   "d_cs_7",
+   "home",
+   "sat"
+  ],
+  [
+   0.0,
+   "d_cs_7",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-colin_mastin.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Colin Mastin, 41, drives a crane inside the gate. The Widow's people have offered dockers night work off the books.",
+  "speak": "Straight, slow, asks a straight question and waits.",
+  "life": "7 Cold Store Road; the gate at six.",
+  "rivals": "Works under the Widow's tax like every man at the gate."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon regular; side story 15"
+}

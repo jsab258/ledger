@@ -1,0 +1,94 @@
+{
+ "id": "shane_boddy",
+ "cast_id": null,
+ "called": "Shane",
+ "name": "Shane Boddy",
+ "age": 23,
+ "sex": "m",
+ "role": "One of Danny's crew; sold the chapel's lead to Iveson",
+ "kind": "rival_man",
+ "voice": null,
+ "look": {
+  "h": 1.79,
+  "b": 0.45,
+  "skin": 0,
+  "hair": [
+   "spiky",
+   "#c09050"
+  ],
+  "top": [
+   "shell",
+   "#2a5a8a",
+   "#e0e0e0"
+  ],
+  "bot": [
+   "trackies",
+   "#2a2360"
+  ],
+  "x": []
+ },
+ "nerve": 0.45,
+ "venal": 0.54,
+ "talk": 0.5,
+ "discretion": 0.6,
+ "temperament": {
+  "nerve": 0.45,
+  "dutiful": 0.45,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_nr_34",
+ "sched": [
+  [
+   0.0,
+   "d_nr_34",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   12.0,
+   "cammack_base",
+   "the lock-ups",
+   "mon-sat"
+  ],
+  [
+   17.0,
+   "phone_parade",
+   "the corner by the phone box",
+   "mon-sat"
+  ],
+  [
+   20.0,
+   "snooker_hall",
+   "the tables",
+   "mon-sat"
+  ],
+  [
+   23.0,
+   "d_nr_34",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_nr_34",
+   "asleep",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-shane_boddy.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Shane Boddy, 23, Danny's crew. Did the chapel roof's lead with Wes and sold it to Dennis Iveson.",
+  "speak": "Loud, cocky, laughs too long.",
+  "life": "34 North Road with his mother.",
+  "rivals": "Danny's man; Rita fences for him."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: 2.10.2; side story 23 (two of Danny's men)",
+ "fight_kind": "brawler"
+}

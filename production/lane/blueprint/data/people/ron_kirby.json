@@ -1,0 +1,139 @@
+{
+ "id": "ron_kirby",
+ "cast_id": "rocco",
+ "called": "Ron",
+ "name": "Ron Kirby",
+ "age": 58,
+ "sex": "m",
+ "role": "A docker until 1989; Mickey kept him on the door and the rank",
+ "kind": "principal",
+ "voice": "p227",
+ "look": {
+  "h": 1.88,
+  "b": 1,
+  "skin": 1,
+  "hair": [
+   "flatcap",
+   "#3a3a3a"
+  ],
+  "top": [
+   "donkey",
+   "#1c1f26",
+   "#3c4350"
+  ],
+  "bot": [
+   "trousers",
+   "#2a2a2a"
+  ],
+  "x": []
+ },
+ "nerve": 0.8,
+ "venal": 0.3,
+ "talk": 0.7,
+ "discretion": 0.35,
+ "temperament": {
+  "nerve": 0.8,
+  "dutiful": 0.7,
+  "willingness": 0.4,
+  "from": "town-traits-draft-2026-09-29 (nerve, loyalty; willingness from 'a wounding they saw': yes 0.6, no 0.4, never 0.1)"
+ },
+ "keepsQuiet": true,
+ "home": "d_cl_14",
+ "sched": [
+  [
+   0.0,
+   "d_cl_14",
+   "asleep",
+   "mon-sat"
+  ],
+  [
+   6.5,
+   "caff",
+   "breakfast",
+   "mon-sat"
+  ],
+  [
+   7.5,
+   "rank_mickeys",
+   "on the rank",
+   "mon-sat"
+  ],
+  [
+   12.0,
+   "laveracks",
+   "dinner from the fish shop",
+   "mon-sat"
+  ],
+  [
+   12.5,
+   "rank_mickeys",
+   "on the rank",
+   "mon-sat"
+  ],
+  [
+   17.0,
+   "rank_ferry",
+   "the boat queue",
+   "mon-sat"
+  ],
+  [
+   18.0,
+   "mickeys",
+   "the door",
+   "mon-sat"
+  ],
+  [
+   23.0,
+   "d_cl_14",
+   "home",
+   "mon-sat"
+  ],
+  [
+   0.0,
+   "d_cl_14",
+   "asleep",
+   "sun"
+  ],
+  [
+   9.5,
+   "allotments",
+   "his plot",
+   "sun"
+  ],
+  [
+   13.0,
+   "d_cl_14",
+   "home",
+   "sun"
+  ],
+  [
+   18.0,
+   "mickeys",
+   "the door",
+   "sun"
+  ],
+  [
+   23.0,
+   "d_cl_14",
+   "home",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-ron_kirby.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "A docker for thirty years until the scheme went in 1989. Mickey kept him on for the door and the rank. Big, slow, sees everything on the street and forgets none of it.",
+  "speak": "Slow, heavy, friendly on the surface and transactional underneath. Respects strength and cash, in that order. Calls Frank \"boss\" now and then.",
+  "life": "Lives on Chapel Lane. Breakfast at Rinaldi's, fish from Brenda Laverack at dinner time. Knows every docker who was laid off and where each one drinks his tea now.",
+  "fire": "Was on the rank till midnight that night and saw nothing, he says. The row was dark by one.",
+  "rivals": "The Widow's lads work the fish dock and she pays on the day. Agar never comes down the street himself. Cammack's lot wear shell suits and stand about outside the video shop on Copper Row. Garbutt is the man who rings.",
+  "secret": "He carries the outfit's asks to whoever sits in Mickey's chair, and takes a cut."
+ },
+ "can_die": true,
+ "invented": false,
+ "src": "canon; casting ron-kirby SHEET; STORY-FRAME 3",
+ "fallback_role": "the most loyal man",
+ "fight_kind": "boxer"
+}

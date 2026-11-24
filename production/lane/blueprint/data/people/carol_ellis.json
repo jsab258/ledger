@@ -1,0 +1,82 @@
+{
+ "id": "carol_ellis",
+ "cast_id": "ellis",
+ "called": "DS Ellis",
+ "name": "Carol Ellis",
+ "age": 40,
+ "sex": "f",
+ "role": "Detective Sergeant, CID; cannot be bought",
+ "kind": "officer",
+ "voice": null,
+ "look": {
+  "h": 1.7,
+  "b": 0.4,
+  "skin": 0,
+  "hair": [
+   "short",
+   "#5a4030"
+  ],
+  "top": [
+   "mac",
+   "#6b6a5a",
+   "#1f2a3a"
+  ],
+  "bot": [
+   "trousers",
+   "#22252c"
+  ],
+  "x": []
+ },
+ "nerve": 0.45,
+ "venal": 0.58,
+ "talk": 0.2,
+ "discretion": 0.9,
+ "temperament": {
+  "nerve": 0.45,
+  "dutiful": 0.4,
+  "willingness": 0.5,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "police_station",
+ "sched": [
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "mon-fri"
+  ],
+  [
+   8.5,
+   "police_station",
+   "her desk",
+   "mon-fri"
+  ],
+  [
+   18.5,
+   "edge_north",
+   "home in town",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "edge_north",
+   "home in town",
+   "sat-sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-carol_ellis.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "A detective sergeant with CID. She will not close the warehouse fire case. She comes down Quay Street when the street gets loud about the new owner of Mickey's.",
+  "speak": "Level, patient, exact. Asks short questions and waits. Never threatens. Never jokes on duty.",
+  "life": "Eighteen years in. Works from the town station. Knows Quay Street by its doors.",
+  "fire": "The fire officer found two seats of fire in No. 4. Nobody will say whose car was on the row. The file stays open on her desk.",
+  "rivals": "She has files on all three and convictions on none."
+ },
+ "can_die": false,
+ "invented": false,
+ "src": "canon; STORY-FRAME 3; RT2-05"
+}

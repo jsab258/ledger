@@ -1,0 +1,125 @@
+{
+ "id": "edna_coulson",
+ "cast_id": null,
+ "called": "the cleaner",
+ "name": "Edna Coulson",
+ "age": 59,
+ "sex": "f",
+ "role": "The cleaner at six: the Harbour Board, then the Copper Kettle and Agar's agents; a finder (2.5.5)",
+ "kind": "minor",
+ "voice": null,
+ "look": {
+  "h": 1.58,
+  "b": 0.55,
+  "skin": 0,
+  "hair": [
+   "headscarf",
+   "#8a5a4a"
+  ],
+  "top": [
+   "overall",
+   "#7a5a7a",
+   "#e0d8c8"
+  ],
+  "bot": [
+   "skirt",
+   "#3a3a40"
+  ],
+  "x": [
+   "bucket"
+  ]
+ },
+ "nerve": 0.45,
+ "venal": 0.66,
+ "talk": 0.6,
+ "discretion": 0.52,
+ "temperament": {
+  "nerve": 0.45,
+  "dutiful": 0.3,
+  "willingness": 0.6,
+  "from": "chosen by the data-build wave 2 job from the person's card"
+ },
+ "keepsQuiet": false,
+ "home": "d_cl_7",
+ "sched": [
+  [
+   0.0,
+   "d_cl_7",
+   "asleep",
+   "mon-fri"
+  ],
+  [
+   6.0,
+   "mickeys",
+   "cleaning the front office, from six",
+   "mon-fri"
+  ],
+  [
+   7.0,
+   "tea_room",
+   "cleaning",
+   "mon-fri"
+  ],
+  [
+   8.25,
+   "snooker_hall",
+   "cleaning",
+   "mon-fri"
+  ],
+  [
+   11.75,
+   "d_cl_7",
+   "home",
+   "mon-fri"
+  ],
+  [
+   0.0,
+   "d_cl_7",
+   "asleep",
+   "sat"
+  ],
+  [
+   6.0,
+   "mickeys",
+   "Saturday clean",
+   "sat"
+  ],
+  [
+   9.5,
+   "d_cl_7",
+   "home",
+   "sat"
+  ],
+  [
+   0.0,
+   "d_cl_7",
+   "asleep",
+   "sun"
+  ],
+  [
+   9.5,
+   "chapel",
+   "Mass",
+   "sun"
+  ],
+  [
+   11.0,
+   "d_cl_7",
+   "home",
+   "sun"
+  ]
+ ],
+ "lines": {
+  "own": "lines/own-edna_coulson.json",
+  "note": "own lines live in lines/ (a record each); see lines/README.md"
+ },
+ "card": {
+  "who": "Edna Coulson, 59, cleans the Harbour Board from six, then the tea room and the agents' office. Finds what the night left.",
+  "speak": "Tutting, nosy, 'I'm not paid to see that'.",
+  "life": "7 Chapel Lane.",
+  "rivals": "Tells Nora Cronin everything."
+ },
+ "can_die": true,
+ "invented": true,
+ "src": "invented: 2.5.5 (the cleaner at six)"
+}
