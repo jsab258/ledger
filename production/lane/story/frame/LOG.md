@@ -1,0 +1,13 @@
+# Story frame: log
+
+Phase 1 of the story on paper, after his decision of 24 Nov 09:04 ("A on top of C"). Job brief from the advisor; rows on his page under doc_id suffix "-storyframe".
+
+- 24 Nov 09:08: start. Read canon, RULINGS (story parts), the craft anatomy and principles, the judge, the method, the blueprint (Sonnet digests of the AAA studies, the blueprint's systems, the v3 bibles, the method and details catalogue; kept in the session, not committed).
+- 24 Nov ~09:40: the lead's structure written (working/STRUCTURE-2026-11-24.md): the empire goal, the powers and pacts, the core six, the early deed (the line in the book), the spine as world-state conditions, the director, memory and talk, the ending, three open choices.
+- 24 Nov ~10:45: a Fable helper (max effort) wrote STORY-FRAME-2026-11-26.md from it (about 66 minutes).
+- 24 Nov: three fresh Opus readers, blind (brief: readers/BRIEF-FRAME-SCORE.md): 26, 23, 24 of 30 (mean 24.3); all "revision". Shared lacks: the loss forced on the player, the turn may not wake for a careful player, the middle turning into post upkeep, the last act paperwork.
+- 24 Nov: the one revision (Fable, from the lead's eight fixes): the loss the player's to stop at a price; the turn's guaranteed window; posts held by their men with one authored crisis each; the yard winnable; the five mornings as jobs; the quay on the last afternoon; a "what the player has to understand" box; named payoffs. First version kept in working/STORY-FRAME-v1-as-scored.md.
+- 24 Nov: three new fresh Opus readers on the revision: 27, 25, 27 (mean 26.3); all "revision". Still weak: the loss now reads soft (open choice 2), clarity in weeks five and six, side stories tied by number only.
+- 24 Nov: the systems list (SYSTEMS-THE-STORY-NEEDS.md) and the emergent measure (EMERGENT-MEASURE.md) written by the lead.
+- 24 Nov: one fresh Opus reviewer per file (working/REVIEW-*.md). Frame: 9 must-fix, all fixed by the lead (a retired spelling of Nowak, car two never lost, rivals kept to Act II except Danny's notice, status labels, Mickey's name on the sign, a surname clash, the licence trigger, the ending rule's new inputs named, two new characters marked). Systems: 7 must-fix, fixed (three statuses to PARTLY, sixteen rows added, section ids); one point rejected: the 32 side stories were answered yes on his page on 8 Nov. Measure: 10 must-fix, fixed (choice points logged, a controlled replay, named persons, comebacks must reach Tom, shares over five evenings, a quote's source).
+- Stop here. Phase 2 (twenty key scenes with variants, judged blind) waits for his picks on the open choices.

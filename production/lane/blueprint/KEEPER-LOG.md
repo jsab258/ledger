@@ -65,3 +65,4 @@ Next run starts here:
 2. STATUS.md on wip: crowd counts at five samples when pushed (FIT-G9, 2.1.2); the run-speed choice (C-267) once a second game is solid.
 3. Unfinished from run 4: production/lane/blueprint/data-sweep/ and production/lane/blueprint/economy/ landed during this run (their handover lines above) and are not folded yet: fold them first, as their handover lines ask.
 4. GTA V's teardown into 5.11; his answers to R1 to R13 and Q3 to Q20 from the advisor rows.
+- 24 Nov 2026, story frame: production/lane/story/frame/SYSTEMS-THE-STORY-NEEDS.md. Fold SYSTEMS-THE-STORY-NEEDS.md in as parts or gaps.
