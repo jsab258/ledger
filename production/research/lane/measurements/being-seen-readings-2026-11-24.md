@@ -31,7 +31,10 @@ One RDR2 incident, edited: the flag rises within about 4 to 8 s of a fist fight;
 - 0 to 44 s: Arthur with a wagon by a shed, no flag. 45 s: a white WITNESS flag ("investigating") is up. It stays white through 71 s (about 27 s) while a rider approaches from the rocks. 73 s: the flag turns red (the witness has seen him). 77 s: no flag (lost or settled; the step between is not yet read).
 - One incident, uncut by eye: investigating to seen about 27 s; seen to cleared under about 4 s. The deed itself is not in view (so deed to investigating unknown).
 
+## RDR2, 2uugZeY_mLQ (Saint Denis, 'act normal after a crime', day; coarse sheet every 10 s, read by 09:53 Swiss)
+- WANTED at 0 and 10 s; no flag at 20 and 30 s; WITNESS at 40 s; WANTED from 50 to 100 s while Arthur stands near a lawman and walks off; no flag at 110 s. More than one incident and likely cuts (the flag changes faster than the spells read elsewhere): a lead that a wanted state can clear within about 10 s near a lawman when the player acts normal; fine sheet 100 to 110 s owed.
+
 ## Count so far
-RDR2: two incidents (one edited), both leads. KCD2: none. Five uncut incidents a game owed.
+RDR2: three clips read, all leads (one edited, one likely cut). KCD2: none. Five uncut incidents a game owed.
 ## Next
 2uugZeY_mLQ (RDR2; IBsRlI5GfWs's 73 to 77 s step), olf2KJN5VV8 and AlNbGAgF3EM (KCD2), coarse sheet then fine; look for uncut stretches from deed to flag and flag to wanted or fine. Further uncut no-commentary clips by web search if these fall short.
