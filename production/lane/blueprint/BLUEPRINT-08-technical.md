@@ -127,6 +127,7 @@ Text, hearing, motor and cognition options.
 - Standard: (1) Eight manual slots with picture, day, hour, place; (2) three rotating autosaves; (3) power cut during save x 100: a good save always loads. Test: SaveChaos style: kill the process at random points during 100 saves; every time a save loads and equals one of the last two good states.
 - Source: The description, section 3 (saving); ER-SAVE-01; PC players' expectation from the players study (bugs and broken saves punished). (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS AX-07; GAME-DESCRIPTION-COPY-2 §3, §35; DESIGN §17 (ER-SAVE-01); GTAVI-MAP (GTA VI: 15 manual slots, one autosave)
 - Status: decided. Coverage row: AX-07. Conflicts settled: C-175.
+- Checklist (23 Nov, top twenty no. 7; A39.08, A39.09): missing: a confirm before overwriting or deleting a save, and a rule that New game never overwrites existing slots or autosaves. Gap for the design proof; status unchanged.
 
 ### AX-08 Accessibility features listed in game and on the store page
 
@@ -235,6 +236,7 @@ Bodies, props, cars and doors colliding believably; ragdoll blended with authore
 - Standard: In a 2-hour soak of walking, driving and fights: zero pass-throughs, zero stuck over 5 s, zero launches. Test: B: the soak with a clip and pass-through detector.
 - Source: ER-CORE-01; ER-FIGHT-06; the description, sections 10, 11. (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS 8.10, P04; DESIGN §1 (ER-CORE-01), §7 (ER-FIGHT-06); GAME-DESCRIPTION-COPY-2 §40
 - Status: decided. Coverage row: 8.10.
+- Checklist (23 Nov, top twenty no. 14; A12.05, A12.06, A12.07, A12.08): missing: small loose props must not block him, heavy props (crates, barrels) must have weight, one gravity must govern drops and throws, and objects must settle and sleep instead of vibrating; each with a test. Gap for the design proof; status unchanged.
 
 
 ## 8.11 The browser build: budgets, step and save

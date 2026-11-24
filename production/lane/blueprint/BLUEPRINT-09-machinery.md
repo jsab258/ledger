@@ -120,6 +120,9 @@ The clumsy-player bot, scripted tests, the AI hands-on session, the panel of eig
 - Standard: DESIGN §19; a play build reaches him only with a publish-gate pass and a known-issues note Test: gate.py passes; nightly walk report
 - Source: DESIGN §19; RULINGS 18 Nov (machinery: not met by the player; no coverage row). Designed in: DESIGN §19; tools/lane/gate
 - Status: machinery. Coverage row: none (group 9 is not met by the player).
+- Checkers proven (production/lane/checkers/CHECKERS-PROVEN.md, 23 Nov): mended checkers caught 11 of 17 planted faults, and on 14 fresh faults 4 for certain (29%), so plan on about a third. What slips: faults off the scripted path, checks that read the game's records instead of what is drawn or heard, repeated lines, a talk nobody reaches, half-solid props, a camera fault in an unvisited room. Rule carried to the giant prompt: a check counts only when it passes twice and off its path; the list of what already fails comes from two runs; a go also needs no new blocker from the other checkers.
+- Checkers proven, for the giant prompt: every menu, the title screen and every box worked by keys alone (today's title screen takes none after Save and quit); the test hook kept by name; sounds recorded only when they play and the drawn head's turn readable; hidden twins replay each playthrough check a second time, by another route, after Save and Continue, and at night (the twin column for S01 to S41); and the faults the AI players found in today's build (CHECKERS-PROVEN section 'Faults the AI players found').
+- Landscape lessons (production/research/lane/ai-games-landscape/LESSONS-2026-11-24.md, 23 Nov): copy now, best first: a feature census after every loop (every part's test re-run, dropped features shown); a reviewer reading a played evening's transcript against the casting sheets; many scripted playthroughs per loop (they catch soft locks, not quality); outside players on the first playable. Costs unpriced. His loop ruling of 23 Nov already names the census and the played evening read.
 
 ## 9.6 The tuning table
 
@@ -206,6 +209,7 @@ The 18 studies, unreached sources, re-checks (Study 17 review, GTA VI after a mo
 - Standard: Research method (13 Oct): primary sources, dated, unreached listed Test: a fresh reviewer per study
 - Source: CLAUDE.md research method (machinery: not met by the player; no coverage row). Designed in: aaa-reference studies
 - Status: machinery. Coverage row: none (group 9 is not met by the player).
+- Story judge (production/lane/story/judge/JUDGE-PROVEN.md, 23 Nov): passed its pre-set mark as a screen, not as proof of taste: on 40 disguised pairs in both orders Opus 94.7% of decided, Sonnet 91.9%, mark 85%; only 18 scenes went unrecognised; longer text was chosen about 60% of the time, so scenes must match the shelf's length. Writing approach (production/research/writing-approach/APPROACH-2026-11-24.md): recommended (A): measure first, slice first, one heavy scene staged early (his pick on it pending); odds of the RDR2 bar low and unknown. Both inform the story loops; no part's status changes.
 
 ## 9.12 Design records
 
