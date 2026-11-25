@@ -4,9 +4,9 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-25 17:22 (the hourly run)
 
-**Row due:** 17:35 (last row 16:35; page read 16:40: verdicts after 2026-11-25T12:58 UTC (none since), advisor after 2026-11-25T15:10:00+01:00 (none since); last acks 393, 394 at 15:58).
+**Next due:** 2026-11-30 13:00 (weekly stop at 90%, read 18:23 25 Nov; production/weekly-stop.json). Last row 18:26; page read 18:20: verdicts after 2026-11-25T12:58 UTC (none since), advisor after 2026-11-25T17:25:00+01:00 (none since); last ack 395 at 17:26.
 **Uncommitted:** nothing of this session's; the office-print PNGs and three Kiln notes are not this session's, left alone.
-**Stopped:** 2026-11-25 16:49 (the 15:52 run: advisors 393, 394 acted on; chases on foot L.A. Noire and Sleeping Dogs 5 of 5 each, both reviewed; history at 248k of 250k, stopped between pieces; nothing running)
+**Stopped:** 2026-11-25 18:29 (the 17:22 run: weekly stop at 90%, read 18:23; advisor 395 acted on; KCD2 being seen one uncut sample; everything pushed; nothing running)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -34,30 +34,25 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- 15:52 run: advisors 393, 394 acted on and acked 15:58 (decisions 33-38 in RULINGS; canon pillar 'Real-world agency'). Rows 15:58, 16:35. Chases on foot: L.A. Noire 5 of 5 (about 52, 58, 21, 54, 60 s), review fixes made: length solid with notes, no escape rule. Sleeping Dogs 5 of 5 (about 96, 67, 14, 66, 72 s; Broken Parts JzQycLOdY6U, Ponytail ALTXcZ0nrUA, Zi Wai t3rAMMeariQ); review NOT SOLID, dates fixed, edges open. Pushed.
-- 14:37 run: advisors 388-392 acted on (RULINGS at the cap; the page and API-credit lines moved to RULINGS-ENFORCED.md); L.A. Noire Part 5 samples 3 and 4; pushed.
-
+- 17:22 run: advisor 395 recorded and acked 17:26 (three build stages in playing order replace the one-shot; measuring only the five deciding rows; being seen next). KCD2 being seen: ibyJamin Parts 4, 5, 3 scanned whole (about 5.6 h of footage): one uncut sample (Part 4 at 2,572 s: hare red about 1 s, challenge within 1 s, clear about 16 s after; kcd2-being-seen-part4-2026-11-25.md, evidence on F: game-inputs/footage/wMk2tFAd26E). Pushed. Allowance 90% at 18:23: the weekly stop taken (stop file, last row 18:26 with every measuring row's state, page item weekly-stop-2026-11-25: switch the hourly task off until Monday 13:00).
+- 15:52 run: advisors 393, 394; chases on foot L.A. Noire and Sleeping Dogs 5 of 5 each.
 
 ## In flight
-- Nothing running: no helper or scan; the browser pane holds Buried Alive (t3rAMMeariQ).
+- Nothing running; the browser pane holds Part 3 (QwbRkSwrQAk), viewport back to desktop.
 
-## Next, in order
-0000. **Measuring block running (advisor 392)** until the newest reading reaches 90% (89% at 15:04); then finish the step, commit, push, **one last row with the state of every measuring row** so Monday continues there, then the weekly stop (item 00).
-000. **Footage runs with the pane hidden** (the method in item 3).
-00. Pace: 80% at 04:46; **the weekly stop is 90%** (advisor 352): at the newest reading of 90% finish the step, commit, push, one row, write production/weekly-stop.json {"until": "2026-11-30T13:00", "reading": N}, set "**Next due:** 2026-11-30 13:00", one page item (switch off the scheduled task ledger-daily-fresh-session, Code tab, Scheduled; on after Monday 13:00), stop all work. Full pace until then (advisors 359, 366: no pace-line holds).
-0. If he types "RDR2 drill starting": `python tools/drills/rdr2_record.py start` in the background; on "RDR2 drill done": the same with stop; read the frames by his card (advisor 361).
-1. **On foot, the walk:** cadence done (solid). Step length still unread: a side-on stretch, heel gap over height (none seen in rzz5BOoJ9Rc); then KCD2's walk is first person, so the second game's walk is RDR2 or Sleeping Dogs footage.
-3. **Chases on foot:** L.A. Noire 5 of 5 (length solid with notes; escape rule none). Sleeping Dogs 5 of 5, review NOT SOLID: first read edges at 1 s for samples 1-4 (5 done: 503-575 s) (times in the note's 'Review fixes, first part'), check sample 3's first 23 s and sample 4's black for cuts; the loss rule needs uploaded runs that lose the target (search 'Sleeping Dogs mission failed lost'). **Then GTA V by a shape method** (police foot pursuits are systemic, so samples come from free-roam footage: wanted on foot, the time from a cop's first run to lost or caught). Method that works: storyboard thumbnails first (the player response's spec, level 2), drawn on a canvas sheet; real frames by the seek-and-play loop (movie_player.seekTo, playVideo, pause, draw; a 45 s tool limit, so run it in the page and poll); the hidden pane's screenshot lags one call: take it twice. Single-mission uploads found by YouTube's search page read from ytInitialData (videoRenderer).
-4. **KCD2 being seen with crowd reactions** (one town crime clip serves both): ibyJamin Part 4 (wMk2tFAd26E) or 5 (AK8xLkS1Cfs), hare scan with the parchment filter (drop hits above 12% beige); first check by eye that this player shows the behaviour icon at a known alarm. If none by the week's end, say so in STATUS.
-4a. **Photo counts (advisor 370):** two tries used; OS legend unreached (06:10); next period footage of northern side streets by eye. Quay Street stays at 34 m. 5. 1990 sources: headlamp reach a lead (period-lamps-reach-2026-11-25.md); BS 5489-3:1989 unreached; our car braking (8-11 m vs the Code's 14 m) unchecked.
-6. n23-7 DAILY-2026-11-25 by 19:00: its API line already holds today's spend (US$4.90 by 07:40 run caps); the old note 'US$1.10 tonight' had no source found in api-spend.jsonl at 16:45: add it only if a night run logs it.
-6b. n23-4 voice trial waits for the loops, no download (advisor 381).
-0b. Next night walk Mon 30 Nov 01:30 (held while the stop file holds). 4p. Marvelous stays open. No Unreal work until the browser prototype is done (advisor 288). 5p. History rewrite HELD for his word. Progress page daily (progress.json only).
+## Next, in order (from Mon 30 Nov 13:00, after the reset)
+0. Read his page (the weekly-stop item: close it once the task is on again), the advisor channel, and Monday's order (advisor 395: Mon 07:00 the full build plan and foundation pass by a cloud job if 4% or more was left; the PC's part comes with the new order). The stop file lapses by itself at 13:00 (nightly_walk.py); delete it then.
+1. **Measuring, only the five deciding rows (advisor 395):** being seen first. KCD2 needs four more uncut samples: short single-incident clips from other players (search YouTube inside the pane, ytInitialData videoRenderer: "kingdom come deliverance 2 caught stealing", "caught lockpicking", "trespassing guard"), each read uncut by eye around the incident at 1 s with the hare box scan (scanHareP in the note's method: frame_sheet.js scanHare plus the parchment share; set the viewport to 1280x720 first, a hidden pane reports zero width; screenshots twice). Then crowd reactions from the same clips (who turns, how far, how long until they settle).
+2. Chases on foot: Sleeping Dogs edges at 1 s for samples 1-4 and the loss rule (search 'Sleeping Dogs mission failed lost'); then GTA V by a shape method (wanted on foot in free roam, a cop's first run to lost or caught).
+3. On foot: step length (a side-on stretch, heel gap over height); the second game's walk from RDR2 or Sleeping Dogs footage.
+4. Crowd counts stay a lead. Photo counts (advisor 370) and the 1990 sources (headlamp reach, BS 5489-3:1989, our car braking) are leads for the loops now.
+5. If he types "RDR2 drill starting": `python tools/drills/rdr2_record.py start` in the background; "RDR2 drill done": the same with stop (advisor 361). n23-4 voice trial waits for the loops (advisor 381). Marvelous stays open. No Unreal work until the browser prototype is done (advisor 288). History rewrite HELD for his word. Progress page daily (progress.json only).
 
 ## Footage tools
 All in tools/drills/frame_sheet.js (sheet, SAVED EVIDENCE to F:/LedgerTools/game-inputs/footage/<id>/, RED SCAN for RDR2, HARE BOX SCAN for KCD2), each with its known faults. Stamp every time from Get-Date. Storyboard sprites for colour cues only; leg crops every 0.1 s read cadence.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
+- 25 Nov 17:25-18:22: one PC thief playthrough (ibyJamin Parts 3-5, about 5.6 h) gave one being-seen sample: its time goes to quests, fights and travel. Red or orange runs are mostly fights (enemy marks on the compass) and lamp or fire light; look at each. A 1 s alarm can fall between 4 s steps: use 2 s. Part 3 streamed at about 1 frame a second (Parts 4-5 at 3-5).
 - 25 Nov 11:33: GamesMediaLA uploads carry advert pods every two or three seeks (five in 12 min); set aside for Santosx07's. 10:57: the motion scan stalls when the player drops its source hidden; fixed with the player's own seek and play calls.
 
 ## Kept as they are

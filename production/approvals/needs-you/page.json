@@ -1,11 +1,45 @@
 {
  "tab": "LEDGER: Needs you",
- "kicker": "LEDGER · Needs you · 0 open · updated Tuesday 24 November, 21:40",
+ "kicker": "LEDGER · Needs you · 1 open · updated Wednesday 25 November, 18:24",
  "title": "Needs you",
  "how": [
   "Only what is open for you, oldest first. Each item says what to do, links everything it needs, and gives my recommendation. It leaves this page once you have answered it here or done it.",
-  "Nothing open: the page says so."
+  "Pick an answer under each item; a note is optional."
  ],
  "foot": "One page, one link, kept current (his order of 2 November). The same list is kept as plain data beside it (items.json) for the advisor's checker.",
- "sections": []
+ "sections": [
+  {
+   "kind": "need",
+   "key": "weekly-stop-2026-11-25",
+   "name": "ACTION: Switch off the hourly LEDGER session until Monday 13:00",
+   "why": [
+    "Everything is committed and pushed; nothing is running.",
+    "Left on, it starts every hour and spends a little each time."
+   ],
+   "steps": [
+    "In the Claude app, open the Code tab, then Scheduled",
+    "Open \"ledger-daily-fresh-session\" and switch it off",
+    "After Monday 30 November 13:00, switch it back on",
+    "Tap Done below"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "only_you": "his-setting",
+   "tried": "A scheduled run cannot change a schedule (refused without a person); the week's allowance reached 90% at 18:23, so all work has stopped until Monday 13:00.",
+   "recommendation": "Switch it off now; on again after Monday 13:00.",
+   "added": "2026-11-25 18:23",
+   "pictures": [],
+   "detail": [],
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ]
+   ]
+  }
+ ]
 }

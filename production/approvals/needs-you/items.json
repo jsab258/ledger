@@ -395,6 +395,41 @@
    "state": "done",
    "added": "2026-11-24 20:08",
    "closed": "2026-11-24 21:40, answered in the advisor chat 24 Nov 21:1x (advisor 364): clean up the whole rulings file; done 21:50 (4,900 to 4,869 words; three questions to him in the advisor row)"
+  },
+  {
+   "id": "weekly-stop-2026-11-25",
+   "added": "2026-11-25 18:23",
+   "tag": "ACTION",
+   "his_hands": true,
+   "only_you": "his-setting",
+   "tried": "A scheduled run cannot change a schedule (refused without a person); the week's allowance reached 90% at 18:23, so all work has stopped until Monday 13:00.",
+   "title": "Switch off the hourly LEDGER session until Monday 13:00",
+   "text": "The week's allowance reached 90% (the weekly stop). Switch the hourly session off now and back on after Monday 30 November 13:00.",
+   "why": [
+    "Everything is committed and pushed; nothing is running.",
+    "Left on, it starts every hour and spends a little each time."
+   ],
+   "steps": [
+    "In the Claude app, open the Code tab, then Scheduled",
+    "Open \"ledger-daily-fresh-session\" and switch it off",
+    "After Monday 30 November 13:00, switch it back on",
+    "Tap Done below"
+   ],
+   "links": [
+    {
+     "label": "This page",
+     "url": "https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8"
+    }
+   ],
+   "blocks": "nothing; it only saves the hourly starts",
+   "recommendation": "Switch it off now; on again after Monday 13:00.",
+   "options": [
+    [
+     "done",
+     "Done (recommended)"
+    ]
+   ],
+   "state": "open"
   }
  ]
 }

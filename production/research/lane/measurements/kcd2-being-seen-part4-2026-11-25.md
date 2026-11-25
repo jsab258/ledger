@@ -34,5 +34,8 @@ F:/LedgerTools/game-inputs/footage/wMk2tFAd26E/ (index.json): the red hare zoom 
 ## Part 5 (AK8xLkS1Cfs, 7,208 s, dated 18 Feb 2025), scanned whole at 2 s (3,604 rows, about 17:43 to 17:56 Swiss)
 Runs looked at by eye: 28-168 s a bandit ambush and fight in a forest; 854 s a red hare for under a second as Henry follows a soldier into a private building ("a private area" note top right), straight into quest dialogue at 855 s: a trespass flash with no reaction, a lead only; 3,620 s a loot screen; 5,952-6,138 s a night village fight started by dialogue ("We'll teach you not to meddle in other people's business!"), scripted; 6,172-6,196 s menus (parchment 24-32%); 1,574 s and 6,406 s firelight. No being-seen sample.
 
-## Next
-Part 3 (QwbRkSwrQAk, 1:57:12) by the same scan. Measured hours so far: about 0.55 h (17:25 to 17:58).
+## Part 3 (QwbRkSwrQAk, 7,031 s, dated 15 Feb 2025), scanned whole (2 s to 1,824 s, then 3 s; 2,647 rows, about 17:58 to 18:22 Swiss; slower streaming)
+Runs looked at by eye: 486-496 s and 3,909-3,930 s fights in the countryside; 1,350 s and 5,215 s the inventory; 2,235-2,475 s a fight with the player's hand-written notes over it; 3,873 s a map event card; 5,160-5,181 s a fight (red-tinted screen); 1,848 s, 5,862-5,988 s and 6,999 s firelight and campfire dialogue. No being-seen sample.
+
+## Shortfall, plainly
+About 5.6 h of one player's thief playthrough (Parts 3, 4, 5) gave one sample. Story-led parts spend their time on quests, fights and travel; unscripted crimes in someone's view are rare. Next, if the measuring block resumes: short single-incident clips from other players ("caught stealing", "caught lockpicking", "trespassing" in KCD2), each read uncut by eye around the incident, as the RDR2 samples were. Measured hours: about 1.0 h (17:25 to 18:24).
