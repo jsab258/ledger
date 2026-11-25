@@ -1575,6 +1575,14 @@ static class Program
         string forcedMoment = Environment.GetEnvironmentVariable("LEDGER_TALK_MOMENT");
         Helper.ForcedMoment = forcedMoment == "conversation" || forcedMoment == "smalltalk" ? forcedMoment : null;
         if (Helper.ForcedMoment != null) Console.Error.WriteLine("talk-helper: every line's moment forced to " + Helper.ForcedMoment + " (measuring switch)");
+        // REPLY THINKING OFF FOR A MEASURING RUN (n23-3, 25 Nov 2026): the bench's arms ran with --reply-thinking-off, the
+        // talk program never set it, so in the game Sonnet 5 and 5.5 drafts think first; LEDGER_TALK_THINKING_OFF=1 sends
+        // each draft at its lowest thinking (ConversationEngine.ReplyThinking). Unset, the game is exactly as shipped.
+        if (Environment.GetEnvironmentVariable("LEDGER_TALK_THINKING_OFF") == "1")
+        {
+            ConversationEngine.ReplyThinkingOff = true;
+            Console.Error.WriteLine("talk-helper: reply drafts at their lowest thinking (measuring switch)");
+        }
         // THE KEY'S CAP, ENFORCED IN CODE (Jafar, 30 September): with --budget-usd
         // (or LEDGER_TALK_BUDGET_USD) every call reserves its worst case first,
         // and none is sent that could take the run past the budget (BudgetedClient).
