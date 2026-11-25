@@ -12,13 +12,14 @@ Walking the town with the camera: the verb under every other verb.
 
 ### 1.1.1 Walk, run and turn
 
-- How it works: Frank walks, runs and turns with weight, like a man in boots on wet cobbles: turning is quick, starting and stopping have a short ease, and running is plainly louder and more noticed than walking. Z held (or a light stick touch) walks slowly and halves the reach of his footsteps. Crouch is in (his ruling of 24 Nov, Q19); its input and what it does to what is caught are not yet written. Every action answers within 100 ms, a press 100 ms early still counts, keyboard movement is eased and mouse look never jumps. Tuning speeds are walk 1.6 m/s, slow walk 0.9, run 5.5, holdall run 5.3.
-- Standard: ER-INPUT-01 (every action answers within 100 ms, eased keys, mouse look never jumps); feel numbers (start, stop, turn rate, run speed) to be measured from reference games Test: feel numbers inside measured bands (input probe); H: 'did moving feel heavy or slippery?'; his eye in Unreal
-- Source: DESIGN §17 ER-INPUT-01; advisor 256 (waits on a dated study). Designed in: DESCRIPTION-COPY-2 §6 and §3 (Controls); DESIGN §17 ER-INPUT-01; DEFINITIONS pass 3 §G4
-- Status: pending. Coverage row: 1.1.1. Conflicts settled: C-270.
+- How it works: Frank walks, runs and turns with weight, like a man in boots on wet cobbles: turning is quick, starting and stopping have a short ease, and running is plainly louder and more noticed than walking. Z held (or a light stick touch) walks slowly and halves the reach of his footsteps. Crouch is in (his ruling of 24 Nov, Q19): C, toggle or hold in settings, 1.2 m/s against 1.6 walking; what it does to what is caught is set in 1.1.5 and 1.4.3 (CS-12). Every action answers within 100 ms, a press up to 0.1 s early counts, keyboard movement is eased and mouse look never jumps. Tuning speeds are walk 1.6 m/s, slow walk 0.9, run 5.5, holdall run 5.3.
+- Standard: ER-INPUT-01 (every action answers within 100 ms, eased keys, mouse look never jumps); crouch 1.2 m/s with hold or toggle (accessibility); feel numbers (start, stop, turn rate, run speed) to be measured from reference games. Test: feel numbers inside measured bands (input probe); H: 'did moving feel heavy or slippery?'; his eye in Unreal
+- Source: DESIGN §17 ER-INPUT-01; advisor 256 (waits on a dated study); crouch from his ruling of 24 Nov (Q19) with its speed and input DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-02, CS-12)
+- Status: pending. Coverage row: 1.1.1. Conflicts settled: C-270, C-355.
+- Reference solid (Sleeping Dogs; STATUS.md on wip, 24 Nov 00:50, five-sample rule): sprint 5.5 m/s and jog 4.5 m/s (4.1 to 4.9). The design's run (5.5) equals the sprint; the built prototype runs at 4.2 m/s, about the jog; which Frank's run follows is open (C-267). One game only and it has no walk key, so walk, slow walk, start, stop and turn stay pending (second game about 2 h, DECIDES-CHECK 24 Nov).
+- Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov); the combat pass's numbers (wind costs, weapon forces, edge table) are for the next data wave. Data sweep class C.
 - Crouch in, answered 24 Nov (Q19): his ruling of 24 Nov (RULINGS on wip, his decisions page). Replaces 'there is no crouch'. The feel numbers still wait on the study, so the status stays pending.
-- Reference solid (Sleeping Dogs; STATUS.md on wip, 24 Nov 00:50, five-sample rule; samples in SLEEPING-DOGS-DRILL-2026-11-23): sprint 5.5 m/s (5.5 four times, 5.6) and jog 4.5 m/s (4.1 to 4.9), read from the game's distance readout toward a standing man. The design's run (5.5) equals the sprint; the built prototype runs at 4.2 m/s, about the jog (the drill's own comparison against Frank's built 160 and 420 cm/s); which Frank's run follows is open (C-267). One game only and it has no walk key, so the walk (1.6), slow walk, start, stop and turn stay pending; second game: KCD2 or GTA V footage, about 2 h (DECIDES-CHECK, 24 Nov). Status stays pending until the rest is solid.
-- Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Reference solid (GTA V; STATUS.md on wip, 25 Nov 01:12, five uncut stretches at 0.1 s): Franklin's walk about 2.0 steps a second (1.9 to 2.0). A cadence only: no step length was read, so Frank's walk speed stays pending (C-508).
 
 ### 1.1.2 On-foot camera follow
 
@@ -36,7 +37,7 @@ Walking the town with the camera: the verb under every other verb.
 
 - How it works: A door opens with the use key and Frank walks through without catching; stairs are walked, not snagged on; a locked door says it is locked. Nothing inside Mickey's holds him against a wall. Doors creak, hit and latch, and a forced door is the loudest thing in a quiet street. From any state he can move on within 5 s by walking, getting out or backing out, or a short in-world reset puts him on clear ground; there is no jump.
 - Standard: Never stuck (ER-CORE-01: moves on within 5 s); in or out of a door in under 2 s; no jump (ruling 23 Sep) Test: B: 30 minutes of walking into every door and stair; S: door use timed
-- Source: DESIGN §1 ER-CORE-01; ruling 23 Sep (his ruling or canon). Designed in: DESCRIPTION-COPY-2 §6; DESIGN §1 ER-CORE-01; RULINGS 23 Sep genre line (no jump)
+- Source: DESIGN §1 ER-CORE-01; ruling 23 Sep (his ruling or canon). Designed in: DESCRIPTION-COPY-2 §6; DESIGN §1 ER-CORE-01; RULINGS 23 Sep genre line (no jump) Reality check (CHECK A20): the 68 cm and 11 cm a side figures come from our own scene; the real figure would come from 1990 door and room dimensions (British Standards, period plans), the camera need kept as a stated exception.
 - Status: ruled (his ruling or canon). Coverage row: 1.1.3.
 - Prior research: research/interior-blockout and research/office-camera (research-3 and research-4 sheets): Frank is 68 cm wide, so a real front door leaves about 11 cm a side; walks were straight lines with a 30 cm capsule, no nav mesh and no doors, so every target through a wall failed; third-person rooms run 1.5 to 2 times real size.
 
@@ -49,10 +50,10 @@ Walking the town with the camera: the verb under every other verb.
 
 ### 1.1.5 Hiding and keeping out of sight
 
-- How it works: Hiding is what a man in a street can really do, with only the move keys and, since his ruling of 24 Nov, crouch (Q19); how crouch changes what is caught is not yet set. A still figure in a doorway counts at the doorway's light (0.12) and is caught at most as a shape, and only beyond 8 m; moving through the same doorway counts at the street's light (0.25 unlit). With his back to a watcher his face cannot be caught, though the coat can. Among three or more people within 2 m a glance at him takes 0.7 s instead of 0.35 s; behind a van, stall or corner nothing is caught; nothing on screen says 'hidden'.
-- Standard: Light scale (doorway 0.12, unlit street 0.25) and symmetry (ER-EYES-02); the felt rules to be measured in reference games Test: S: standing still in a doorway lowers what is caught versus walking past; H: 'where would you stand to not be seen?'; addendum rules ER-HIDE-01 to 03
-- Source: DESIGN §2 'In the moment'; ER-EYES-02 (waits on a dated study). Designed in: DESIGN-ADDENDUM A1; DESCRIPTION-COPY-2 §7; DESIGN §2 ER-EYES-02
-- Status: pending. Coverage row: 1.1.5. Conflicts settled: C-270.
+- How it works: Hiding is what a man in a street can really do, with the move keys and crouch (his ruling of 24 Nov, Q19). A still figure in a doorway counts at the doorway's light (0.12) and is caught at most as a shape, and only beyond 8 m; moving through the same doorway counts at the street's light (0.25 unlit). Crouch halves footstep reach and makes his shape half as easy to pick out beyond 4 m in the dark, at the cost of speed (1.2 against 1.6 m/s); it does nothing in light within 4 m, and crouching where nobody crouches is itself odd to anyone who sees it. With his back to a watcher his face cannot be caught, though the coat can. Among three or more people within 2 m a glance takes 0.7 s instead of 0.35 s; behind a van, stall or corner nothing is caught; nothing on screen says 'hidden'.
+- Standard: Light scale (doorway 0.12, unlit street 0.25) and symmetry (ER-EYES-02); crouched in the dark beyond 4 m he is caught less than standing, and under a lamp within 4 m crouch changes nothing. Simulated: approach from 12 m behind an unaware man in a dark doorway, crouched, wet cobbles: 58% put out, 13% spotted; by day walking 15% out, 77% spotted (leads, judgement). Test: S: standing still in a doorway lowers what is caught versus walking past; H: 'where would you stand to not be seen?'; ER-HIDE-01 to 03
+- Source: DESIGN §2 ER-EYES-02 (waits on a dated study); crouch ruling 24 Nov (Q19); the crouch effect DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-12), for him to overturn
+- Status: pending. Coverage row: 1.1.5. Conflicts settled: C-270, C-355.
 
 ### 1.1.6 Tailing on foot
 
@@ -87,7 +88,7 @@ Walking the town with the camera: the verb under every other verb.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (waits on a dated study). Designed in: DEFINITIONS design pass 3 §G4; FIT-CHECK F21
 - Status: pending. Coverage row: FIT-G4.
-- Reference solid (Sleeping Dogs; STATUS.md on wip, 24 Nov 00:50): sprint 5.5 m/s, equal to the design's run; jog 4.5 m/s, about the built prototype's run of 4.2 (C-267). The walk, the constable's speeds and the runner's 5% stay pending; one game only, a second wanted (DECIDES-CHECK, 24 Nov). Status unchanged.
+- Reference solid (Sleeping Dogs; STATUS.md on wip, 24 Nov 00:50): sprint 5.5 m/s, equal to the design's run; jog 4.5 m/s, about the built prototype's run of 4.2 (C-267). The walk, the constable's speeds and the runner's 5% stay pending; one game only, a second wanted (DECIDES-CHECK, 24 Nov). GTA V walk cadence is now solid at about 2.0 steps a second (STATUS.md on wip, 25 Nov 01:12; five stretches by one method, leg crops every 0.1 s, in ON-FOOT-FOOTAGE-QUESTIONS-2026-11-24.md): a cadence only, no step length was found, so no walk speed follows from it; Frank's 1.6 m/s walk stays pending (C-508). Status unchanged.
 
 ## 1.2 Driving
 
@@ -114,10 +115,10 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 
 ### 1.2.3 Getting in and out
 
-- How it works: A car Frank may open (the firm's cars, his own, an unlocked one) takes 1.5 to 2.5 s from door to seated, from either side, and he is moving within 1 s after; getting out takes under 2 s. A blocked door never traps him. Forcing a locked parked car takes about 6 s; there is no carjacking of a car with somebody in it. Crew and fares ride in the cab and a man at his side rides along; getting out after a wreck is immediate and Frank walks.
+- How it works: A car Frank may open (the firm's cars, his own, an unlocked one) takes 1.5 to 2.5 s from door to seated, from either side, and he is moving within 1 s after; getting out takes under 2 s. A blocked door never traps him. Forcing a locked parked car takes about 6 s; a car with somebody in it can be taken by pulling the driver out (1.2.10; his ruling of 25 Nov, advisor 378): loud, reported, heavy consequences. Crew and fares ride in the cab and a man at his side rides along; getting out after a wreck is immediate and Frank walks.
 - Standard: a car Frank may open: door to seated 1.5 to 2.5 s, moving within 1 s after; out under 2 s; forced entry of a locked car about 6 s; a blocked door never traps (ER-DRIVE-07) Test: S: enter and exit timed from both sides, door blocked
 - Source: STATUS.md and gtavi-driving-builder-2026-11-21 (SOLID); description section 23 (reference game). Designed in: DEFINITIONS design pass 4 'Getting in and out (1.2.3)'; GTAVI-MAP Run 5 additions; DESCRIPTION-COPY-2 s.10, s.23; DESIGN s.5 ER-DRIVE-07; PARTS-TREE notes on 1.2.3
-- Status: measured (solid in STATUS.md: five uncut, dated samples). Coverage row: 1.2.3. Conflicts settled: C-006, C-007.
+- Status: measured (the times: solid in STATUS.md, five uncut, dated samples; the carjack sentence is ruled, 25 Nov). Coverage row: 1.2.3. Conflicts settled: C-006, C-007, C-501.
 
 ### 1.2.4 Crashes, damage and unsticking
 
@@ -167,10 +168,10 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 
 ### 1.2.10 Taking a parked car
 
-- How it works: Only parked cars, never one with somebody in it, and only by force, with no minigame. It is loud (heard at the force reach), the owner reports it when he finds it gone, the car is then known to the police, and a taken car has no roof sign so witnesses do not name it as the firm's. Taking one by force takes about 6 s (the description, section 23, kept by design pass 4). GTA VI's two ways in (a brick through the quarter-light or a tool at the door) are a lead to check in the footage pass, without their times; a car with a steering lock cannot be taken.
-- Standard: His word of 20 Nov 07:54 (advisor 263, DECISIONS A27) confirmed it as recommended; no lockpicking game (DESIGN §18); never a moving car. Forced entry about 6 s (design pass 4, 1.2.3); a car with a steering lock cannot be taken. Test: S: a taken car is reported and named; force heard at its reach; addendum rules ER-TAKE-01
-- Source: Q2, answered by his words of 20 Nov 07:39 (advisor 263; DESIGN-ADDENDUM A27) (his answer). Designed in: DESIGN-ADDENDUM A27; ONE-SHOT-PROMPT 'Taking a parked car'; GTAVI-MAP Y1.2
-- Status: ruled (his answer of 20 Nov 07:39, advisor 263: confirmed as recommended). Coverage row: 1.2.10. Conflicts settled: C-012.
+- How it works: A parked car is taken only by force, with no minigame. A car with a driver in it can also be taken by pulling him out (his ruling of 25 Nov, advisor 378): loud, reported, with heavy consequences from the witness, memory and police systems and no cap. It is loud (heard at the force reach), the owner reports it when he finds it gone, the car is then known to the police, and a taken car has no roof sign so witnesses do not name it as the firm's. Taking one by force takes about 6 s (the description, section 23, kept by design pass 4). GTA VI's two ways in (a brick through the quarter-light or a tool at the door) are a lead to check in the footage pass, without their times; a car with a steering lock cannot be taken.
+- Standard: His word of 20 Nov 07:54 (advisor 263, DECISIONS A27) confirmed it as recommended; no lockpicking game (DESIGN §18). Pulling a driver out: heard at the force reach, always reported, the car known to the police; the time it takes and whether a moving car can be stopped for it are not set (none yet). Forced entry about 6 s (design pass 4, 1.2.3); a car with a steering lock cannot be taken. Test: S: a taken car is reported and named; force heard at its reach; addendum rules ER-TAKE-01
+- Source: Q2, answered by his words of 20 Nov 07:39 (advisor 263; DESIGN-ADDENDUM A27) (his answer); advisor 378, 25 Nov (RULINGS on wip). Designed in: DESIGN-ADDENDUM A27; ONE-SHOT-PROMPT 'Taking a parked car'; GTAVI-MAP Y1.2
+- Status: ruled (parked car: his answer of 20 Nov 07:39, advisor 263; pulling a driver out: his ruling of 25 Nov, advisor 378, which replaces 'never one with somebody in it'). Coverage row: 1.2.10. Conflicts settled: C-012, C-501.
 
 ### 1.2.11 The horn
 
@@ -224,108 +225,212 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 
 ### 1.3.1 Blows and contact
 
-- How it works: A blow starts within 0.1 s of the button. A jab lands in 0.25 to 0.40 s; the committed heavy blow in 0.63 to 0.85 s and cannot be cancelled, which is what makes it readable. Contact is sold by a hit-stop of 0.025 to 0.13 s by blow (jab 0.025 to 0.05, heavy 0.06 to 0.12, swing 0.07 to 0.13), a brief camera close-in held about 0.8 s inside the wider fight view, a small shake and four layers of sound. A struck man reels to the side he was hit. There are no combos (his ruling of 24 Nov: combos out).
-- Standard: ER-FIGHT-01 (timings inside the melee sheet bands C1 to C15): C1 blow starts within 0.1 s; C2 jab 0.25 to 0.40 s to contact, heavy 0.63 to 0.85 s; C3 hit-stop 0.025 to 0.13 s by blow; camera close-in held about 0.8 s Test: S: melee drills at 1/60 s inside C1 to C15 (tools/lane/melee_drills.py); his feel check
-- Source: FEEL-TARGETS-MELEE (c); DESIGN §7 (waits on a dated study). Designed in: FEEL-TARGETS-MELEE C1 to C4, C10; DESIGN §7 Feel; DESCRIPTION-COPY-2 §9
+- How it works: A blow starts within 0.1 s of the button. A jab lands in 0.25 to 0.40 s; the committed heavy blow in 0.63 to 0.85 s and cannot be cancelled, which is what makes it readable. Contact is sold by a hit-stop of 0.025 to 0.13 s by blow (jab 0.025 to 0.05, heavy 0.06 to 0.12, swing 0.07 to 0.13), a camera close-in held about 0.8 s inside the wider fight view, a small shake and four layers of sound. A struck man reels to the side he was hit. No combos, no feints, no five-zone rose (his ruling of 24 Nov); the cross and hook are the heavy blow's animations by angle, and in a grab the heavy comes out as a knee, elbow or headbutt. Aim is high or low by stick or mouse. Holding guard while striking pulls the blow to a third of its force for sparring. Every action costs wind (jab 0.12, heavy 0.20, kick 0.10, grab 0.08 of a full breath).
+- Standard: ER-FIGHT-01 (timings inside the melee sheet bands, C1 to C13 and C15; C14, combination, is struck since combos are out): C1 blow starts within 0.1 s; C2 jab 0.25 to 0.40 s to contact, heavy 0.63 to 0.85 s; C3 hit-stop 0.025 to 0.13 s by blow; close-in about 0.8 s. Test: S: melee drills at 1/60 s (tools/lane/melee_drills.py), drill M2 struck; his feel check
+- Source: FEEL-TARGETS-MELEE (c); DESIGN §7 (waits on a dated study); verb set and wind costs DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-02, CS-03), for him to overturn
 - Status: pending. Coverage row: 1.3.1.
-- Prior research: research/aaa-reference study 14 (read from files, a lead): KCD2 swing to contact about 0.75 s, hit reaction median 1.27 s; game-design/combat-design.md (12 Oct): no health bar, no lock-on, no combat music.
+- Prior research: research/aaa-reference study 14 (read from files, a lead): KCD2 swing to contact about 0.75 s, hit reaction median 1.27 s. DECIDES-CHECK 24 Nov: fist timings are a lead (Sleeping Dogs and KCD2 drills, about 2 h).
 - DECIDES-CHECK, 24 Nov: fist timings drop from deciding to a lead: they are band numbers the loops retune in minutes. Sleeping Dogs and KCD2 drills, about 2 h, as a lead. Status unchanged.
 
 ### 1.3.2 Reading and answering blows
 
-- How it works: Every incoming blow can be read 0.45 to 0.80 s before it lands, in the other man's shoulders, feet and breath, never an icon; at most two men swing at once, 0.4 s apart. Guard (a held key) makes a blocked fist do little, a blocked heavy blow stagger Frank a little, and a swung weapon break through. A tap with a direction slips a blow (about 0.3 s); a blow thrown just after a slip or block counts as a counter, a heavy blow at a jab's speed. Mashing empties Frank in 6 to 10 jabs and he needs 4 to 8 s for his wind; the slower-fights assist makes wind-ups 25% longer with one swinger.
-- Standard: Every incoming blow readable 0.45 to 0.80 s before it lands; at most two men swing at once, 0.4 s apart (ER-FIGHT-02) Test: S: drills; H: 'did you see the blow coming?'; addendum rules ER-DEFEND-01 to 02
-- Source: DESIGN §7; melee sheet (waits on a dated study). Designed in: DESIGN §7 ER-FIGHT-02; DESIGN-ADDENDUM A29; DESCRIPTION-COPY-2 §9, §3; FEEL-TARGETS-MELEE C5, C6, C8, C11
+- How it works: Every incoming blow can be read 0.45 to 0.80 s before it lands, in the other man's shoulders, feet and breath, never an icon; at most two men swing at once, 0.4 s apart, and the rest circle, block the way out, pick something up or try to grab him from behind. Guard (a held key) makes a blocked fist do little and a blocked heavy blow stagger Frank a little, though wind still drains. A guard plus a direction tap slips a blow (about 0.3 s). A blow thrown within 0.45 s of a block or slip is a counter: 0.6 of the wind-up and half again the force. A guard raised in the last 0.15 s costs no wind. Mashing empties Frank in a handful of blows (wind under 0.18, hands drop, he gasps); wind comes back at 0.12 a second, twice that with hands up. Getting it back takes 4 to 8 s by the earlier figure; the simulator's median is about 10 s, a tuning item for the loops. The slower-fights assist makes wind-ups 25% longer.
+- Standard: Every incoming blow readable 0.45 to 0.80 s before it lands; at most two men swing at once, 0.4 s apart (ER-FIGHT-02); 'who was winning?' answered right 4 times in 5 from the body alone. Test: S: drills; H: 'did you see the blow coming?'; ER-DEFEND-01 to 02
+- Source: DESIGN §7; melee sheet (waits on a dated study); wind and counter rules DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-02 to CS-04), for him to overturn
 - Status: pending. Coverage row: 1.3.2.
-- Checklist (23 Nov, top twenty no. 13; A18.05): missing: recovery times after a jab, heavy blow and swing, set and tested as readable. Gap for the design proof; status unchanged.
+- Checklist (23 Nov, top twenty no. 13; A18.05): missing: recovery times after a jab, heavy blow and swing, set and tested as readable. Gap for the design proof. DECIDES-CHECK 24 Nov: a lead, read with 1.3.1.
 - DECIDES-CHECK, 24 Nov: a lead, read with 1.3.1 (fist timings are band numbers).
 
 ### 1.3.3 Targeting without lock-on
 
-- How it works: No lock-on: the man the stick points at is the man hit, and Frank slides to about 1 m in the wind-up. With three men round him he hits the one he points at, and nobody is hit through a wall. Closing in takes 0.40 to 0.55 s from at most 2.0 m.
-- Standard: ER-FIGHT-06: the man pointed at is the man hit, nobody hit through a wall; slide to about 1 m (lead) Test: S: targeting script with three men round Frank
-- Source: DESIGN §7 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §7 ER-FIGHT-06; DESCRIPTION-COPY-2 §9; FEEL-TARGETS-MELEE C9
+- How it works: No lock-on: the man the stick or mouse points at is the man hit, and Frank slides to about 1 m in the wind-up. With three men round him he hits the one he points at, and nobody is hit through a wall. Closing in takes 0.40 to 0.55 s from at most 2.0 m. A man needs about a metre of front to swing, so in a doorway or passage only one can reach Frank at a time, and walls shorten a long swing. The man the next blow goes to shows it only in Frank's shoulders and head turning, no marker.
+- Standard: ER-FIGHT-06: the man pointed at is the man hit, nobody hit through a wall; slide to about 1 m (lead). Test: S: targeting script with three men round Frank; in a doorway only one man reaches him
+- Source: DESIGN §7 (DECIDED by the design proof, for him to overturn); passage and doorway rule DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-03, CS-29)
 - Status: decided. Coverage row: 1.3.3.
 
-### 1.3.4 The lower rungs
+### 1.3.4 The lower rungs and the one fight model
 
-- How it works: The ladder has eight rungs: stare, square up, threaten, shove or grab, strike, weapon out, weapon used, kill. Most confrontations end on rungs 1 to 4: a stare held, a man squared up to, a threat said (in talk or shown), a shove into a wall, and somebody gives way. Each rung is an act with the seven slots, so the town treats it like any deed. On the M key a hard look is rung 1 and a shove rung 4; a grab holds a man about 2 s.
-- Standard: Most confrontations end on rungs 1 to 4; each rung an act the town treats like any deed Test: S: each rung exposes seven slots; H: rung reached and why
-- Source: his combat design 12 Oct; DESIGN §7 (his ruling or canon). Designed in: DESIGN §7; DESCRIPTION-COPY-2 §9, §8; RULINGS 12 Oct (combat design)
-- Status: ruled (his ruling or canon). Coverage row: 1.3.4.
+- How it works: The ladder has eight rungs: stare, square up, threaten, shove or grab, strike, weapon out, weapon used, kill. It is the street's reading of how far a confrontation has gone, not a separate system: there is no combat mode, and every person in the Hook (Frank, his crew, a docker, a constable, two strangers quarrelling) uses the same actions, body, wind and temper rule (CS-01, 1.3.7, 1.3.8), so a fight Frank only watches runs the same way. Each rung is an act with the seven slots. Most confrontations end on rungs 1 to 4. Talk is the main weapon: before or during a fight Frank can threaten, demand, offer, bluff, name himself, call his men or yield, a 1 to 2 s act he can be hit during. A threat folds a man when his nerve plus pride is under the threat (a word 0.5, a weapon shown 0.8) times 0.8 plus 0.4 of Frank's menace. A bluff counts as a word, and a man who learns it was one lowers Frank's menace. A threat stops a report to the police, never the street's talk (his ruling of 3 Oct). A standoff is two sides each with a weapon shown; the first to move commits the street to rung 7.
+- Standard: One rule set: swapping Frank for a townsperson with the same choices gives the same outcome spread (swap test owed). Most confrontations end on rungs 1 to 4; a threat is not a sure win. Simulated at menace 0.3: a bare word folds 12% of lone men, a cosh shown 28%, a knife shown 47%; two men together 0%, 2%, 5%. Test: B: the simulator's threat table; S: every man who folds to a shown weapon is a witness to rung 6
+- Source: his combat design 12 Oct and ruling 3 Oct (ruled); the one fight model and talk rules DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-01, CS-10), for him to overturn
+- Status: decided. Coverage row: 1.3.4.
+
+### CS-08 Grabs, holds and the ground
+
+- How it works: A grab (collar or arm) works unless the man slips it. From a grab: shove, shove into a surface, throw down, pin to a wall (about 2 s a press, and opens live talk), or take the weapon arm (a disarm: 40 in 100 it comes free and drops where anyone may take it). A man can grab Frank from behind while another hits him; Frank breaks free by pressing grab, a fresh Frank in about 1 s, an emptied one in 3. A choke in a fight works only from behind on a man busy with someone else, and takes half as long again; from the front it is a grab. A downed man can be kicked, struck, helped up or left, and gets up in 2 to 5 s unless beaten or out; a man on the ground can grab an ankle. No wrestling minigame.
+- Standard: Every hold has a way out; a disarmed weapon is a real object on the ground. Test: S: a dropped knife can be picked up by the other man; B: the simulator counts disarms both ways
+- Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-08), for him to overturn; his design (shove, grab, pin); KCD2 clinch and Sleeping Dogs grapples (census M021 to M030)
+- Status: decided. Coverage row: none yet.
+
+### CS-13 Takedowns from behind
+
+- How it works: An unaware man reached within 1 m from behind can be taken by any action; nothing is instant or certain. Choke: a carotid hold puts him out in about 7.5 s (4 to 11; sources say 5 to 10); each second he may break free (about 1 in 30 at the start); the struggle is heard about 6 m. Released at once he is out 10 to 60 s. Held on deliberately he is in danger: none for 20 s more, then a rising chance (10% at 30 s, 40% at a minute, 70% at 90 s, near certain at two minutes), the man going still as the cue; this is his question D1 (open, recommended yes), a judgement curve. Cosh from behind: out about 6 in 10, knocked down 3 in 10, death about 1 in 200. Fist: out about 1 in 8. Knife: by where it lands, a thrust kills about 1 in 8. Failure: he hears the last step and turns, startled. An officer struck unseen does not know it was Frank (24 Nov).
+- Standard: No instant kill, no guaranteed knock-out; failure believable and readable. Simulated (unlit street, crouched, wet cobbles): choke out 40%, broke free 17%, spotted 38%; cosh out 35%. Test: B: the simulator; S: a held choke follows the curve once D1 is answered
+- Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-13), for him to overturn, D1 his; combat/RESEARCH.md (carotid timings; no firm threshold); his rulings 24 Nov
+- Status: decided. Coverage row: none yet.
 
 ### 1.3.5 The street as a weapon
 
-- How it works: Seven places first: walls, doorways, railings, car bonnets, steps, kerbs and the quay edge, each a paired move fitted by height (a man shoved against railings, a head against a bonnet, a man put over the quay edge). Every move is fully animated and the camera does not turn away (his ruling of 24 Nov, Q4: PEGI 18 within canon's limits); blood and light gore only, no torture or cruelty as spectacle (canon). Both hold: fully animated blows, gore light. A man put into railings is out of the fight for 4 s, and a man put in the water climbs out at the nearest ladder within a minute.
-- Standard: Seven places first, fitted by height (DESIGN); Sleeping Dogs' environment moves as the reference (melee sheet (a)) Test: S: each of seven places triggers its move; content check: fully animated with no cut-away, gore light (canon)
-- Source: DESIGN §7; FEEL-TARGETS-MELEE (a) (reference game); his ruling of 24 Nov (RULINGS on wip, his decisions page) for the animation and PEGI 18. Designed in: DESIGN §7; DESCRIPTION-COPY-2 §9, §6; DEFINITIONS pass 3 §P18; FEEL-TARGETS-MELEE (a)
-- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 1.3.5. Conflicts settled: C-273.
-- Data (run 5): exact values in production/lane/blueprint/data/map.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- How it works: Seven places first: walls, doorways, railings, car bonnets, steps, kerbs and the quay edge, each a paired move fitted by height. Surfaces are force, not finishers: a shove or throw into a hard surface hits at force 2.0 and the man is out of the fight about 4 s; glass adds a cut by the edge rule; phone box and quay bollard count too. Car doors can be slammed on a man (force 2.0 to an arm or head). Doors can be slammed, held shut or kicked open (a locked one takes several kicks and is heard). A heavy blow or run on wet cobbles slips 1 time in 20. Light can be changed (a bulb broken, a switch flicked). A man put in the water climbs out at the nearest ladder within a minute if conscious; unconscious and face down he is dying and dead in about two minutes unless pulled out. Frank never swims and can pull a man out from the steps. Every move is fully animated, no cut-away (his ruling of 24 Nov, Q4); blood and light gore only (canon).
+- Standard: Seven places first, fitted by height (Sleeping Dogs' environment moves as the reference). Shove into a surface never takes a man past serious (his fists line). Quay: conscious man out within 60 s; unconscious face down dead by about 130 s. Test: S: each of seven places triggers its paired move; content check: no cut-away, gore light
+- Source: DESIGN §7; FEEL-TARGETS-MELEE (a); his rulings 30 Oct and 24 Nov; surfaces, water and doors DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-07; cold-water figure from combat/RESEARCH.md, Tipton), for him to overturn
+- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 1.3.5. Conflicts settled: C-273, C-356.
+- Data (run 5): exact values in production/lane/blueprint/data/map.json (data build wave 1, 24 Nov). Data sweep class B.
 
 ### 1.3.6 Things to hand and carried weapons
 
-- How it works: Things to hand break: a chair after about 2 blows, a brick 3, a dustbin lid 4, a wheel brace never, and they are left behind. Carried weapons (cosh, knuckleduster, knife, bat) can be seen on him, are found in a search and must be got rid of; a weapon comes out only on a held input (semicolon), chosen from the two things under the coat, and cannot be undrawn unseen. A swung improvised weapon takes 0.80 to 1.05 s to contact. What the town makes of a blow rises with the weapon, with no number shown.
-- Standard: Breaks after chair 2, brick 3, lid 4 blows, wheel brace never; C2 swing 0.80 to 1.05 s; a weapon drawn cannot be undrawn unseen Test: S: breakage counts; a weapon out on a held input only (ER-FIGHT-08); a cosh from behind on an unaware man knocks out and is seen as a strike
-- Source: DESIGN §7; melee sheet C2 (no reference figure yet). Designed in: DESIGN §7; DESCRIPTION-COPY-2 §9; FEEL-TARGETS-MELEE C2, C12; DESIGN §7 ER-FIGHT-08
-- Status: unmeasured. Coverage row: 1.3.6.
+- How it works: A weapon is a row of data, never a special case: kind (blunt, edge, firearm), force, wind-up, reach, wind cost, blows before it breaks, whether it hides under the coat, the menace it carries when shown, its noise and the evidence it leaves. Carried: knuckleduster, cosh, bat, utility knife, flick knife (his 12 Oct tiers; makes fictional). Things to hand break: a chair after 2 blows, a brick 3, a dustbin lid 4, a wheel brace never; anything graspable within 1.5 m that the props list marks can be swung or thrown. Never a bottle, a glass or anything to do with drink (canon). A knife is usable from the first second of a fight (advisor 374). Two things under the coat at most. A weapon comes out on a held input (semicolon) and cannot be undrawn unseen. A thrown thing hits by its force at half the wind-up and is left where it falls; a carried knife thrown is gone. A knife against one unarmed man nearly always wins, as in life; its price is the body count and what follows.
+- Standard: Every weapon a data row with its answer (a grab on the weapon arm, a chair, numbers, running); breaks after chair 2, brick 3, lid 4, wheel brace never; C2 swing 0.80 to 1.05 s; a weapon drawn cannot be undrawn unseen. Simulated: a knife wins 99% of decided fights against one unarmed man and about 3 in 4 against two. Test: B: weapon table; S: props list carries the graspable flag, no drink item flagged; a cosh from behind on an unaware man is seen as a strike
+- Source: his ruling 25 Nov (advisor 374: a knife from a fight's start); his design 12 Oct (four tiers); weapon table DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-06), for him to overturn; no reference figure for swing time yet
+- Status: decided. Coverage row: 1.3.6.
 
-### 1.3.7 Condition without bars
+### 1.3.7 Condition without bars: the body rule
 
-- How it works: There is no health bar: posture, breath, a dropped guard, blood and a limp show a man's state, and a player asked 'who was winning?' can say. Fists knock a man out (10 to 30 s) and never kill on their own. A fall against a kerb, wall or step within 3 s of a blow can kill, rarely, and the town treats it as a killing; the quiet blow from behind with a cosh or fist knocks out for 10 to 30 s. Frank has three states, fresh, hurt and beaten, shown only in his body. There is no armour and there are no healing items (his ruling of 24 Nov: both out).
-- Standard: No health bar; fists never kill; only a fall against kerb, wall or step within 3 s of a blow can, rarely (ER-FIGHT-05); knock-out 10 to 30 s Test: S: 10,000 simulated fights, deaths only by the fall rule; H: 'who was winning?'
-- Source: ruling 30 Oct; DESIGN §7; melee sheet (his ruling or canon). Designed in: DESCRIPTION-COPY-2 §9; DESIGN §7 ER-FIGHT-05; RULINGS 30 Oct; FEEL-TARGETS-MELEE C7; DEFINITIONS RT-11, RT2-12
-- Status: ruled (his ruling or canon). Coverage row: 1.3.7.
+- How it works: There is no health bar: posture, breath, a dropped guard, blood and a limp show a man's state. One rule decides every injury for every person from what struck, how hard, where and the state of the man struck. Zones are head, torso, arms, legs. Blunt harm adds up by zone (the head a quarter more): bruise, hurt from 3, serious from 9.5, critical from 15 on the head or 22.5 on the body. Edges and points do not add up: each cut or stab draws its wound by zone (a body thrust: minor 40%, serious 44%, critical 16%; neck or face 25%, 40%, 35%; arm 70%, 27%, 3%; leg 62%, 32%, 6%), so where a stab lands decides and a body stab can kill (advisor 374). Critical means dying: about 55 in 100 die unaided, about 20 helped. His fists line stands: fists and a shove into a surface never take a man past serious; a fall can (1.3.5, RT2-12). Knocked-out men breathe and twitch, never look dead. States: fresh, hurt, beaten, down, out, dying, dead; Frank alone never reaches dead. No armour, no healing items (24 Nov).
+- Standard: Deaths from fist fights alone at most 1 in 1,000 (by the fall rule only); a knife fight kills roughly 1 in 10 (UK hospital data 7.2% of stabbed patients died; one Icelandic series 17% before hospital); a beating to submission leaves most men hurt, about a fifth seriously; knock-out 10 to 60 s from fists, 30 s to 5 minutes from a weapon. Test: B: seed 1990, 2,000 fights a scenario: fist fights 1 death in 2,000, a knife used by Frank 94 deaths per 1,000; H: 'who was winning?' right 4 in 5
+- Source: his rulings 30 Oct (fists never kill alone) and 25 Nov (advisor 374); rule and edge table DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-04, CS-05; combat/RESEARCH.md), for him to overturn; the edge table is judgement inside the research bands
+- Status: ruled (his ruling or canon). Coverage row: 1.3.7. Conflicts settled: C-350, C-353.
+- Story conflict C-338: answered by CS-18 (a broken arm in plaster for weeks: no heavy blow with that arm, driving clumsy); see 1.3.11.
 - Story conflict C-338 (run 5): The part gives Frank three states (fresh, hurt, beaten) with marks lasting one to five days, while the story needs a lasting arm in plaster that changes driving and the quay's fists. Until designed, the part stands; the need is a gap for the design proof.
 
 ### 1.3.8 Odds, crowds and nerve in a fight
 
-- How it works: A fair one-on-one is roughly even and skill tips it: a patient fighter wins most, a masher fewer than 3 in 10. Two against one is deadly and three is a beating; a skilled player wins a fair two against one about one time in four (15 to 35% in the bots), a masher under 10%. A man who is watched or cornered stands longer; alone he gives way sooner; blood on Frank lowers his nerve. Watchers keep about 3 m and scatter once a weapon is out; a man at Frank's side takes the second man.
-- Standard: Fair one-on-one roughly even; skill beats mashing (patient bot wins most, masher under 3 in 10, ER-FIGHT-07); watchers about 3 m (lead) Test: S: scripted patient and mashing fighters; seeded nerve cases
-- Source: DESIGN §7 (no reference figure yet). Designed in: DESIGN §7 ER-FIGHT-07; DESCRIPTION-COPY-2 §9; DEFINITIONS pass 3 §P18
-- Status: unmeasured. Coverage row: 1.3.8.
-- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-07 bot bands: the greedy bot is beaten or arrested, the lazy one not in Act I; decided. None measured.
+- How it works: Every half second each man not acting chooses: press, hold, back off, look for something to hand, call for help, yield, beg or run. The choice comes from his will to fight: nerve plus friends standing, minus the menace of what he faces (knuckleduster 0.35, cosh 0.45, bat 0.55, knife 0.75, gun 1.0), minus hurt, minus being outnumbered, minus Frank's menace; grudge adds. Watched by his own people he stands longer. Low will: he runs if he can, else yields; beaten and cornered, he begs. A skilled player wins most fair one-on-ones (simulator: careful 79%, masher 19%) and tuning by fighter kind keeps a boxer or big man near even. At most two swing at once; the rest circle, cut off the way out or grab from behind; crowds are bodies and a wild blow can hit a bystander; friends join by ties. Two against one is deadly and three a beating; Ron at Frank's shoulder turns two against one into a fight he usually wins. A man seen running from every fight loses menace.
+- Standard: Skill beats mashing: a patient fighter wins most fair one-on-ones, a masher under 3 in 10 (ER-FIGHT-07); fair two against one: skilled about 1 in 4 (simulated 29%), masher under 1 in 10 (0.1%); three against one 1%; with Ron (2 v 2) 78%. About 2 in 5 men yield and 1 in 7 run against a careful Frank. Test: B: scripted patient and mashing fighters; seeded nerve cases
+- Source: DESIGN §7 ER-FIGHT-07; his design 12 Oct; DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-09, CS-11; simulator seed 1990, rare-event rates are leads), for him to overturn
+- Status: decided. Coverage row: 1.3.8. Conflicts settled: C-359.
+- Studies: FF-07 bot bands; DECIDES-CHECK 24 Nov: against several is a lead, at most two swing 0.4 s apart is decided (ER-FIGHT-02).
+- Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov); the combat pass's numbers (wind costs, weapon forces, edge table) are for the next data wave. Data sweep class C.
 - DECIDES-CHECK, 24 Nov: against several is a lead, not deciding: at most two swing, 0.4 s apart, is already decided (ER-FIGHT-02) and the method is built whatever the number.
-- Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
 
-### 1.3.9 How a fight ends
+### 1.3.9 How a fight ends and Frank losing
 
-- How it works: A fight ends when someone backs off, runs, goes down, the police arrive or people step in; backing off and running are inputs at every moment. Frank cannot die: beaten, he comes round on the pavement, in Grace Rinaldi's kitchen or in hospital, sometimes robbed, with a street that knows he lost, and is in control within 60 real seconds with the cost said. Hospital costs days, never money, and plants a witness.
-- Standard: A way out at every moment (ER-FIGHT-03); Frank never dies, in control within 60 real s (ER-FIGHT-04); Frank cannot die (his ruling of 12 Oct, archived DECISIONS 13 Oct 02:45; canon OPEN 3) Test: S: each of five endings scripted; beaten route timed
-- Source: DESIGN §7; the description §3; the approved design, canon OPEN 3 (his ruling or canon). Designed in: DESIGN §7 Death; DESCRIPTION-COPY-2 §9; DEFINITIONS RT2-13; canon OPEN 3 (the approved whole-game design)
-- Status: ruled (his ruling or canon). Coverage row: 1.3.9. Conflicts settled: C-014.
-- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-01 failure costs game hours and standing, never replayed minutes; decided; FF-07 bot bands: the greedy bot is beaten or arrested, the lazy one not in Act I; decided. None measured.
+- How it works: A fight ends when someone backs off, runs, yields, begs, goes down or is knocked out, a bystander steps in (odds rise about a tenth for each watcher), the police arrive or friends pull a man away. Backing off and running are inputs at every moment. A yielded or downed man can be left, helped up, robbed, held one night (no tying shown) or spoken to live. Frank's own yield (hands up) is answered by the other side's purpose: a man defending himself leaves, a robber robs. Frank cannot die: when the body rule would make him dying he is out instead. He comes round on the pavement, in a neighbour's kitchen (Grace Rinaldi's, with regard) or in hospital, where he wakes to days and the bill his 12 Oct design names (its size open, R14: recommended small, from the price list) and a witness is planted; what it costs follows who beat him: robbed by men who rob (RT2-13), taken to a rival's boss, cautioned by a constable, or left. He is in control within 60 real seconds with the cost said, and the town knows he lost. The men who did it can be fronted, paid or let go.
+- Standard: A way out at every moment (ER-FIGHT-03); Frank never dies, in control within 60 real s (ER-FIGHT-04); no dead end. Simulated Frank beaten or out, never dead: 5% of careful one-on-ones, 43% of two against one. Test: S: every lost-fight route reaches a come-round within 60 real s (not simulated); each of five endings scripted
+- Source: his ruling of 12 Oct (Frank cannot die; canon OPEN 3) and 24 Nov; hospital bill from his 12 Oct design as the combat pass reads it (the 12 Oct text not re-read by the keeper); manner of endings DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-14, CS-15)
+- Status: ruled (his ruling or canon). Coverage row: 1.3.9. Conflicts settled: C-014, C-352.
+- Studies: FF-01 failure costs game hours and standing, never replayed minutes; FF-07. None measured.
+
+### CS-16 Bodies and evidence, 1990
+
+- How it works: An unconscious man or body can be dragged (0.9 m/s), carried over the shoulder, put in a boot (4 s), rolled into the dock (3 s) or left. Bodies are found by people on their routines (2.5.5) and by smell after days. Evidence is what 1990 had: fingerprints on smooth surfaces compared by hand on the 16-point standard (days), blood on clothes until washed, blood group but no DNA database (1995), a weapon with a history, fibres, tyre and shoe marks, and witnesses above all. Getting rid of a weapon is itself a deed someone may see. A car pushed off the quay with a body is a big loud deed: divers come, the registration is traced and the boot searched. A bloodied coat can be burnt or washed. Carrying or dumping a body is read as a killing seen, at the grave band.
+- Standard: The police know only what someone perceived or a search found (FF-05). Test: S: golden rows: a print on a knife handle names Frank only if his prints are on file (after an arrest)
+- Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-16), for him to overturn; combat/RESEARCH.md (16-point standard 1953 to 2001; NAFIS 2001; DNA database 1995)
+- Status: decided. Coverage row: none yet.
+
+### CS-17 How the street reads a fight
+
+- How it works: Every confrontation is a deed with the seven slots plus how it was done: weapon, from behind, on a man down, on a man who yielded, the victim's sex and age, numbers. Reading is severity times manner: from behind 1.3, on a man down 1.5, on a man who yielded 1.6, with a weapon 1.4, on a woman or anyone over sixty 1.5 (the town's reading; Frank's own line is dropped, RT-09), dirty fighting 1.2, a fight in a church, hospital or tea room 1.3, a threat against a man's family 1.3. Provocation (the other struck first) lowers it to 0.7 if Frank stopped when it stopped. Gossip carries the manner and blurs it with distance and retelling. The reading moves menace, fear, regard and the local paper. Service is a temper decision: a shopkeeper refuses or serves frightened; a landlady Frank hurt puts him out. The street's mood follows the violence it has seen and is never wiped (canon).
+- Standard: The same injury reads differently by manner; a player can hear the manner come back in talk. Test: B: consequence counts by band; S: gossip golden rows carry the manner slot
+- Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-17), for him to overturn; canon (moat, gossip); 30 Sep witness ruling; his ruling of 24 Nov (RT-09 dropped)
+- Status: decided. Coverage row: none yet.
+
+### CS-19 Police, charges and the heat after a fight
+
+- How it works: The police act on what is reported and seen. The charge follows the injury and manner in 1990 terms: common assault (up to 6 months); actual bodily harm (s.47, 5 years); wounding or grievous bodily harm (s.20, 5 years); with a weapon, on a man down or yielded, or critical, GBH with intent (s.18, up to life); a death, manslaughter or murder; assaulting a constable, Police Act 1964 s.51. A report needs a witness who tells or a victim with high law; a threat can stop that, never the talk. A beat constable is a person on the same rules with a truncheon and a radio: he shouts to stop, holds the man he takes to be at fault, and strikes and radios if resisted; help comes in minutes. Holding or robbing a constable is grave. Killing a constable brings the long heat (24 Nov: always recoverable, bribery possible, an officer struck unseen does not know who). Bent officers can be bought (DS Ellis about £800 then £100 a week).
+- Standard: No charge without what a witness or search gives; every route recoverable. Test: B: every injury maps to its charge (seed 1990); S (build): whether a charge is laid needs a witness
+- Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-19), for him to overturn; combat/RESEARCH.md (OAPA 1861, CJA 1988 s.39, Police Act 1964 s.51); his rulings 3 Oct and 24 Nov
+- Status: decided. Coverage row: none yet.
+
+### CS-20 Revenge and the man who comes back
+
+- How it works: A beaten man's grudge times how badly he was hurt and shamed decides: he lets it go; tells (by his law dial); comes back alone (high nerve) or with friends (low nerve), usually within three game days; or sends word to whoever protects him, and a rival outfit takes it up as an insult. A man whose friend was beaten may come instead. Revenge can be met by fighting, talking (an apology, a payment) or sending men first. Settling a grudge ends the feud, never the memory. A beaten man can be recruited if his regard turns (a fair fight, a spared yield, money).
+- Standard: Every man Frank beat crosses his path again within three game days (STORY-05; a meeting, not always a fight). Simulated: about 3 in 10 beaten men take revenge, about 1 in 12 report it. Test: S (build): the routine-crossing rule
+- Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-20), for him to overturn; the temper model (grudge); PLAYERS-STORIES STORY-05
+- Status: decided. Coverage row: none yet.
+
+### CS-21 Sending men to do violence
+
+- How it works: Frank orders a man hurt, frightened or taught a lesson through a crewman (D56's first crime verb). The crewman carries it out by the same fight rules and his temper decides whether as asked, less or more (a high-grudge man goes too far). He is a second person who knows: the accomplice is the risk. Striking or threatening one of his own men costs regard with him and every crewman who hears; low regard and high nerve refuses or quits; high grudge may sell Frank to a rival. Rivals may go for Frank's men. A send to kill is possible within canon, rare, refused by a crewman with high law or low regard, and he knows forever. A crewman with a gun follows the same dial as Frank.
+- Standard: The result of a send is decided by the fight rules, not a dice roll on success. Test: B (owed): sends through the simulator with the crewman as the fighter; not run
+- Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-21), for him to overturn; his design 12 Oct; D56
+- Status: decided. Coverage row: none yet.
 
 ### 1.3.10 Firearms
 
-- How it works: Guns are rare and late, after melee, and AAA when used. None in the Hook at the start; they come only through people (bought, stolen, taken, or found once at Mickey's). A held semicolon draws from under the coat, the camera goes to an aim row, there is no crosshair and no ammunition count; the aim is from one fixed shoulder (his ruling of 24 Nov); an empty revolver clicks (in); there is no gyro aiming, no scope, no explosion and one kind of round, no ammunition types (all out); before War a hit wounds and never kills, at War it can kill. A shot is heard to about 177 m by day and whoever hears it keeps it for good. The dial runs Fists, Shown, Fired, War and never moves on a deed nobody saw or heard.
-- Standard: Guns rare and late (ruling 18 Nov end state A); AAA when used; shot heard 177 m by day; feel numbers to be measured Test: S: dial rules; feel numbers inside measured bands once researched
-- Source: RULINGS 28 Oct combat line; DESIGN §7 dial (no reference figure yet). Designed in: DESCRIPTION-COPY-2 §27; DESIGN §7 dial; DEFINITIONS RT-10, RT2-14; RULINGS 28 Oct combat line (18 Nov end state A)
+- How it works: Guns are rare and late, after melee, and AAA when used. None in the Hook at the start; they come only through people. A held semicolon draws from under the coat, the camera goes to an aim row, there is no crosshair and no ammunition count; the aim is from one fixed shoulder (24 Nov); an empty revolver clicks; no gyro aiming, scope, explosion or ammunition types. A gun is a weapon row with the highest menace (1.0): men without guns run or take cover behind anything solid, which blocks a shot; a shut door or walls cut a shot's sound to about a quarter. A shot is heard to about 177 m by day and whoever hears it keeps it for good. The dial runs Fists, Shown, Fired, War and moves only on a gun seen or heard. Carrying a gun is a charge in itself. Before War a hit wounds and never kills, at War it can kill: the combat pass recommends the body rule for guns at any time (his question D3, open), with the dial governing who carries guns and how the police answer.
+- Standard: Guns rare and late (ruling 18 Nov end state A); AAA when used; shot heard 177 m by day; feel numbers to be measured. Today's text (no death before War) stands until he answers D3. Test: S: dial rules; wall stops a shot; feel numbers inside measured bands once researched
+- Source: RULINGS 28 Oct combat line (18 Nov end state A); DESIGN §7 dial; changes pending his answer to D3 in the combat pass (COMBAT-SYSTEM.md CS-23; combat/RULINGS-TO-REVISIT.md R3)
 - Status: unmeasured. Coverage row: 1.3.10.
-- Prior research: game-design/weapons-spec.md (approved 29 Jul): a .38 heard about 177 m on a daytime street, capped at 250 m; guns only through people; drawing a weapon is a verb that cannot be undone.
+- Prior research: game-design/weapons-spec.md (approved 29 Jul): a .38 heard about 177 m, capped at 250 m; its bottle line is struck by canon. Checklist 23 Nov (A19.04, A19.09, A19.11): recoil, rate of fire and empty-gun cue still to measure; empty click answered 24 Nov.
+- Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov); the combat pass's numbers (wind costs, weapon forces, edge table) are for the next data wave. Data sweep class C.
 - Checklist (23 Nov, top twenty no. 12; A19.04, A19.09, A19.11): missing: each gun needs visible recoil with aim return, a rate of fire, and an empty-gun cue (click and hand action) since there is no ammunition count; all measured against the firearms footage. Gap for the design proof; status unchanged. Answered 24 Nov for the empty gun: the empty revolver's click is in (his ruling of 24 Nov).
-- Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
 
 ### 1.3.11 Marks that last
 
-- How it works: A beaten Frank carries bruises and a cut lip for three game days and a limp for one. Others see them (a give-away) and say so, and marks fade on the clock. A bat leaves a limp for a day; a knife wound bleeds, with blood on the coat, until stitched. A retired doctor in a terrace by the quay stitches without asking, for money (£20 in the price list), and remembers.
-- Standard: Condition shows in the body, never a bar (DESIGN §7); a mark is a give-away (DESIGN §2) Test: S: a marked Frank is caught more; marks fade on the clock; addendum rules ER-MARK-01
-- Source: DESIGN §2, §7 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN-ADDENDUM A21 (ER-MARK-01); DESCRIPTION-COPY-2 §9; DEFINITIONS RT-11, §G8
+- How it works: Every injury is a record on the person with its days: a bruise a day or two; hurt (a cut lip, a black eye) three days, shown; serious (broken nose, ribs, a stab stitched) a hospital stay of 3 to 14 days and marks for weeks; a broken arm in plaster for weeks, changing what he can do (one-armed: no heavy blow with that arm, driving clumsy). Split knuckles from punching show and slow the grip a day. A man fighting on while hurt worsens and collapses sooner. Townspeople and crew heal on the same clock and are off their routines meanwhile. Others see Frank's marks (a give-away) and say so. A bat leaves a limp; a knife wound bleeds, blood on the coat, until stitched. A retired doctor in a terrace by the quay stitches for money (£20 in the price list) and remembers. No healing items.
+- Standard: Condition shows in the body, never a bar; a mark is a give-away; injuries last their days on the same clock for everyone. Test: S: a marked Frank is caught more; marks fade on the clock; records last their days; ER-MARK-01
+- Source: DESIGN §2, §7; his ruling of 24 Nov (no healing items); levels and days DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-18), for him to overturn
 - Status: decided. Coverage row: 1.3.11.
-- Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-04 a man Frank beat shows a mark for a game day and mentions it first; decided. None measured.
-- Studies: aaa-studies/PLAYERS-STORIES.md: STORY-04 a third of moments turn on a mark a witness connected; decided; STORY-05 a rival's man meets Frank twice; every man he beat meets him within three game days; decided. None measured.
-- Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-01 failure costs game hours and standing, never replayed minutes; decided; FF-04 a cost to body or standing shows and has an end or a way back; decided. None measured.
-- Studies: aaa-studies/IMMERSION-FEATURES.md: IM-04 blood and dirt come from deeds, never walking or rain alone, and are noticed; decided. None measured.
+- Studies: MEM-04 a man Frank beat shows a mark for a game day and mentions it first; STORY-04; STORY-05 every man he beat meets him within three game days; FF-04; IM-04. All decided, none measured.
+- Story needs (frame, 24 Nov, S26): the lasting arm in plaster is now designed here (answers C-338).
 - The body shows the day (catalogue 23 Nov, rank 6; seen in 3 games): Bruises, blood and dirt show and are noticed. Partly: short are wet coat and hair in rain and breath on a cold night (a soaked man talked of is in 4.2.4; wetness drives the look in 2.1.4). Feature only; no timing; the part's status is unchanged.
 - Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
 - Story needs (frame, 24 Nov): a lasting injury, the left arm in plaster, that changes driving and the quay's fists, with days and rescuers read from the record (SYSTEMS-THE-STORY-NEEDS S26; Frank's deeds carried F6, F7, S57). Partly covered: marks last days; a lasting arm injury and a one-armed Frank are missing (see CONFLICT 1.3.7).
 
+### CS-22 Fire
+
+- How it works: Fire can be set at any time and can kill (his ruling of 25 Nov). It spreads by material and wind, is seen and smelt, draws a crowd and the fire brigade, and a man trapped inside follows the body rule (smoke critical in minutes). Arson is its own deed, read grave if anyone was inside, to town and police like any other killing. It is not a hand weapon; hot fat, scalds and burns as weapons are out (cruelty, canon). The spread model (terraces, cars, warehouses) is a gap for the place parts.
+- Standard: His ruling; the street reads it as grave. Test: S: golden rows for an empty and an occupied building
+- Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-22), for him to overturn; his ruling of 25 Nov
+- Status: decided. Coverage row: none yet.
+
 ### 1.3.12 Fighter types
 
-- How it works: Every fight's men are written as one of a few kinds: a boxer who guards, a brawler who rushes, a big man slow to drop, a man with a knife who keeps his distance, and (from the fit check) a wiry one who slips and runs. A big man has the most hidden capacity and a knife man the least. No two fights in a row use the same mix, so Lee on the quay, Iveson's yard hand and the two dockers by car two each feel different.
-- Standard: No two fights in a row use the same mix (ER-TYPES-01); players punish the same loop (PLAYERS punish 9) Test: S: the job data; addendum rules ER-TYPES-01
-- Source: PLAYERS.md; DESIGN §18 (reference game). Designed in: DESCRIPTION-COPY-2 §9; DESIGN-ADDENDUM A29 (ER-TYPES-01); DEFINITIONS pass 3 §P17, RT-11
-- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 1.3.12. Conflicts settled: C-015.
-- Data (run 5): exact values in production/lane/blueprint/data/people/ (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- How it works: Every fight's men are written as one of a few kinds, each a row of the same fight model, not special code: a boxer who guards, a brawler who rushes, a big man slow to drop, a man with a knife who keeps his distance, and a wiry one who slips and runs. Capacity differs: a big man 21, a boxer 15, a brawler 14, a wiry or knife man 12, Frank 12 (simulator values). No two fights in a row use the same mix, so Lee on the quay, Iveson's yard hand and the two dockers by the car each feel different. Each outfit has a way: the dockside syndicate's men come in numbers and grab; Cammack's crew draw a knife quickly and run quickly; Agar's men avoid fists and send for help.
+- Standard: At least five kinds, no two fights in a row with the same mix (ER-TYPES-01); players punish the same loop. Test: S: the job data; addendum rules ER-TYPES-01
+- Source: PLAYERS.md; DESIGN §18; DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-04, CS-11), for him to overturn
+- Status: decided. Coverage row: 1.3.12. Conflicts settled: C-015.
+- Data (run 5): exact values in production/lane/blueprint/data/people/ (data build wave 2, 24 Nov). Data sweep class B.
+
+### CS-24 Frank's growth in the hands
+
+- How it works: Frank rises mainly in position (crew, name, weapons, the menace the town has seen); skills are taught by those who trust him and kept if lost (Ron teaches the slip and counter window, the pin and the choke; the boxing club teaches guard and wind); hand skills improve quietly with practice, at most a quarter better (a wider counter window, less wind per blow, a firmer grab). No numbers shown, no skill tree. Sparring at the club or with Ron is practice without hospital (blows at a third of force, no knock-out past a count). This marks his 12 Oct line 'never gets better at fighting' as replaced by the later ruling.
+- Standard: At most a quarter better; no skill tree. Test: B (owed): simulator with Frank's defence and wind at 1.25 times shows the gain stays inside a quarter
+- Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-24), for him to overturn; RULINGS 23 Nov (growth); his design 30 Oct
+- Status: decided. Coverage row: none yet.
+
+### CS-25 Fight difficulty, assists and accessibility
+
+- How it works: No difficulty levels (D27, D30), only assists that change their own thing: longer wind-ups (25%), auto-resolve a fight (the same rules at a different tempo), the seeing assist, sound shown as words, hold or toggle for guard, crouch and run, full rebinding, subtitles with speaker names, danger cues readable without colour, reduce motion, a gore setting, a simplified scheme (one button strikes, guard automatic against the man in front, timing still counts) and the minimal HUD switch his design names (a small figure for Frank's state, off by default, never anyone else's). Early on Frank is alone and fights are risky; crew, name and weapons tip the odds later while rivals send more men; nothing scales enemies to him.
+- Standard: Each assist changes only its own thing. Test: S: screen inventory with each assist; B: auto-resolve uses the simulator's rules
+- Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-25), for him to overturn; his design (accessible); D27, D30
+- Status: decided. Coverage row: none yet.
+
+### CS-26 Fight sound and animation
+
+- How it works: Blows differ by surface and body part; breath and grunts carry state; footsteps by surface; a shot by place (street, warehouse, over water). Animation is lab-tested before building (his ruling): motion matching for footwork, motion warping to line bodies up, physics reactions blended over authored ones with a cap on how far a body flops, paired moves per surface fitted by height; faces show pain, fear and anger; clothes pull when grabbed. No clip shows drink, gambling, children, torture or cruelty as spectacle.
+- Standard: The animation source passes the lab test (one wind-up, strike, hit reaction, shove into a wall) before any build; content gate on clip names. Test: the lab test
+- Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-26), for him to overturn; his design 12 Oct (the animation question); RULINGS 30 Oct and 25 Nov (advisor 379)
+- Status: pending. Coverage row: none yet.
+
+### CS-27 The inquiry into a death that is not a constable's
+
+- How it works: A body found, a man dead in hospital after a fight or a man missing long enough to be reported starts an inquiry by the local CID (DS Ellis's office): the scene, the body, statements from whoever the record says saw anything, the dead man's ties. It needs what any charge needs: a witness who tells, evidence that names (CS-16) or a confession; without them it stays open. A bought Ellis slows it, steers it to another suspect if one fits, and stops short of covering a killing the town saw. Frank may be leaned on if talk points at him. A constable killed by anyone is the long heat. What the story does when a principal dies is the story pass's, a gap.
+- Standard: No charge without a witness, evidence or confession; always recoverable. Test: S: golden rows for a body found with no witness, with one witness, and with a print on file
+- Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-27), for him to overturn; his ruling of 24 Nov (long heat; Ellis bribable); the 1990 police research
+- Status: decided. Coverage row: none yet.
+
+### CS-28 Edges a player will try
+
+- How it works: Saves keep everything: a chase, manhunt or long heat carries across a load; reloading is never stopped, and the game says when something is permanent (D27, D30). No fighting on anything moving; Frank cannot climb on a moving car. No animal is ever harmed. A car can knock a person down and hurt them badly, never kill; a man knocked into the water by a car climbs out; a claim of accident is a cover story against what witnesses saw. Hiding in a car boot is a hiding place like a doorway, and a car search finds him. Pulling a driver out to take the car is in (his ruling of 25 Nov, advisor 378): loud, reported, heavy consequences; the pass's recommendation to leave it out is overruled.
+- Standard: No dead end, no harmed animal, no killing car. Test: S: each edge as a golden row
+- Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-28), for him to overturn; canon (cars, content rule); RULINGS 24 and 25 Nov (advisor 378 for the driver)
+- Status: decided. Coverage row: none yet.
+
+### CS-29 Smaller fight rules the census asked for
+
+- How it works: One line each: cross and hook are the heavy blow by angle, no third button; cover is moving behind something solid, no snap key, a wall stops a shot; carried weapons are bought (a utility knife and a cosh-length of pipe at the ironmonger), taken or found; a cover story to a constable is a claim, running from an arrest is a new offence; taunts are written ahead in period speech, slurs never; dirt on a man is a give-away; any coat or uniform is a give-away changed, never a key; a yard or closed shop after hours is a wrong place; pickpocketing is not a verb; the bank's camera is the only one, tape recycled weekly; gossip cools by severity; breaking Garbutt's truce is read grave and the wronged outfit takes revenge; a man who runs from every fight loses menace; the ambulance takes 10 to 15 minutes and attacking medics reads at 1.6; ragdolls are capped and settle in seconds. Out: a stranger spawning to rob the loser, bailing from a moving car, stacking bodies as furniture.
+- Standard: Each line a golden row or part of another test. Test: S: golden rows
+- Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-29), for him to overturn; census rows; RULINGS 24 Sep, 30 Sep, 24 Nov
+- Status: decided. Coverage row: none yet.
+
+### CS-30 Rules the second blind check asked for
+
+- How it works: One line each: one action is held, never a queue, and a press 0.1 s early counts; a groin kick is a low kick, grit in the eyes blinds 2 s, both read dirty; a thrown thing is aimed like a blow with no reticle; broken glass and stalls are deeds against their owner, who asks for money or tells; a weapon under a coat shows as a bulge or a hand near a pocket, no icon; backing down is always there and the town remembers who did; a held man lies, stalls or bargains by his temper and says only what he knows; speech mid-fight is written lines, live talk opens with a man pinned or yielded; a shop bell rings at its reach and wired alarms are rare (the bank, the chandler's); orders are a held key and a word, no wheel; casualty passes a stab or gunshot to the police; blood stays until rain or a hose; a dead man's ties grieve with a funeral within the week; an alibi is a claim by another person; waiting at a man's home is a deed his household sees and nobody can be farmed by repeat beating.
+- Standard: Each line a golden row. Test: S: golden rows
+- Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-30), for him to overturn; the second blind check (census rows M411 to M463)
+- Status: decided. Coverage row: none yet.
 
 ### RT-09 Frank's line against women, over-sixties and the priest
 
@@ -337,35 +442,35 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 
 ### RT-10 Firearms as a verb
 
-- How it works: Guns are late and rare through the dial. A held semicolon draws from under the coat, the camera goes to the aim row from one fixed shoulder (his ruling of 24 Nov), and the mouse or stick aims with no crosshair (an optional dot, off by default). A hit depends on aim, distance and whether Frank moved; before War a hit wounds and never kills, at War a body hit can kill, a named and permanent event. An aimed shot to the arm disarms and one to the leg stops a runner (Y1.5). A revolver holds six and reloads in a shown action; empty, it clicks (in, his ruling of 24 Nov); there is no gyro aiming, no scope, no explosion and no ammunition types (all out, his ruling of 24 Nov); men with guns shoot from where they stand, never use cover, and run when outmatched; nobody shoots from a moving car. A shot Frank goes down, comes round in hospital and never dies.
-- Standard: The rules above pass or fail; draw, aim and hit timings within the band of the firearms footage measuring. Test: B: a gun range scene with timings; S: no on-screen count.
-- Source: The description, sections 3, 33; ruling 18 Nov (guns rare and late); MEASUREMENTS-NEEDED A (firearms feel); Y1.5. (waits on a dated study). Designed in: DEFINITIONS §RT-10; DESCRIPTION-COPY-2 §27; RULINGS 18 Nov (guns rare and late); MEASUREMENTS-NEEDED A12; GTAVI-MAP Y1.5
+- How it works: Guns are late and rare through the dial. A held semicolon draws from under the coat, the camera goes to the aim row from one fixed shoulder (24 Nov), and the mouse or stick aims with no crosshair (an optional dot, off by default). A hit depends on aim, distance and whether Frank moved. Before War a hit wounds and never kills, at War a body hit can kill, a named and permanent event; the combat pass recommends the body rule at any time (his question D3, open), so today's text stands until he answers. An aimed shot to the arm disarms and one to the leg stops a runner (Y1.5). A revolver holds six and reloads in a shown action; empty, it clicks. No gyro, scope, explosion or ammunition types (all out, 24 Nov). Men with guns shoot from where they stand and run when outmatched; men without take cover behind anything solid; nobody shoots from a moving car. A shot Frank goes down, comes round in hospital and never dies.
+- Standard: The rules above pass or fail; draw, aim and hit timings within the band of the firearms footage measuring. Test: B: a gun range scene with timings; S: no on-screen count; a wall stops a shot
+- Source: The description §3, §33; ruling 18 Nov (guns rare and late); MEASUREMENTS-NEEDED A; Y1.5; changes pending D3 (COMBAT-SYSTEM.md CS-23; RULINGS-TO-REVISIT R3)
 - Status: pending. Coverage row: RT-10.
-- Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov); the combat pass's numbers (wind costs, weapon forces, edge table) are for the next data wave. Data sweep class C.
 
 ### RT-11 Hidden damage and injury states
 
-- How it works: Each man has a hidden capacity by fighter type (big man most, knife man least): a jab takes little, a heavy blow about three jabs' worth, a weapon more (bat more than cosh); a blow from behind knocks out for 10 to 30 s. Down is out, never dead from fists. Frank has three states shown only in his body: fresh, hurt (guard slower to rise, breath shorter, a stagger) and beaten (down). A knife wound bleeds until stitched; a bat leaves a limp for a day; hurt does not stack past beaten.
-- Standard: Blows to put a man down per type within the band of the damage footage measuring (KCD2, Sleeping Dogs, RDR2); "who was winning?" answered right by 4 of 5 testers from the body alone. Test: B: fixed-seed fights counting blows to down per type; P: the five-friend question.
-- Source: The description, section 10; MEASUREMENTS-NEEDED A (damage model). (waits on a dated study). Designed in: DEFINITIONS §RT-11; DESCRIPTION-COPY-2 §9; MEASUREMENTS-NEEDED A6
-- Status: pending. Coverage row: RT-11.
-- Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- How it works: Each man has a wind (0 to 1) and a condition: hurt taken against his capacity by fighter kind (1.3.12). A jab costs 0.12 wind, a heavy 0.20; below 0.18 a man is emptied, hands drop and he gasps; blows land weaker as wind falls. Force is the action's (jab 1.0, heavy 2.6, kick 1.7, boot on a downed man 1.6, shove into a surface 2.0) times the weapon (knuckleduster 1.35, chair 1.7, cosh 1.9, brick 2.0, bat 2.3), half again unseen or on a counter. A weapon blow does more than a heavy fist blow (bat more than cosh). States are shown only in the body: fresh, hurt (from 40% of capacity: guard slower, breath short, a stagger), beaten (can barely fight, yields or runs), down 2 to 5 s, out, dying, dead; Frank alone never reaches dead. Down is out, never dead from fists. Injury levels and their days are in 1.3.7 and 1.3.11.
+- Standard: 'Who was winning?' answered right by 4 of 5 testers from the body alone; blows to put a man down per kind within the band of the damage footage measuring (KCD2, Sleeping Dogs, RDR2). Test: B: fixed-seed fights counting blows to down per kind; P: the five-friend question
+- Source: The description §10; MEASUREMENTS-NEEDED A; wind, force and states DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-04, CS-05), for him to overturn; KCD2 stamina as the core resource (census M016, M017)
+- Status: decided. Coverage row: RT-11.
+- Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov); the combat pass's numbers (wind costs, weapon forces, edge table) are for the next data wave. Data sweep class C.
 
 ### RT2-11 Finishing a downed man, kicks and bodies
 
-- How it works: Finishing a downed man is a decision in the quiet afterwards: with nobody else standing, Frank stands over him and holds strike for 2 s, and the game asks 'Finish him?' twice. The blow on a downed man, and beating a man who pleads, stay, fully animated and with no cut-away (his ruling of 24 Nov, Q4; PEGI 18 within canon's limits, live talk too). Canon's content rule still holds: blood and light gore, no torture or cruelty as spectacle; so the blows are fully shown and the gore is light. With fists yes is a serious beating (hospital, days), never a death; with a weapon it is a killing. A body is dragged at 0.9 m/s, loaded into a boot in 4 s, or put in the dock from the quay edge in 3 s; a living man put in the water climbs out at the nearest ladder. A knife wounds (hospital 5 game days, blood on Frank, 8 hours if arrested) and kills only by the finishing decision or the fall rule.
-- Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4), RT2-11, except that the camera never turns away and the blows are fully animated (PEGI 18); gore light (canon) Test: B (bot), as written under RT2-11; content check: no cut-away, no cruelty as spectacle
-- Source: his ruling of 24 Nov (RULINGS on wip, his decisions page) (Q4); design pass 3, RT2-11 for the rest. Designed in: DEFINITIONS design pass 3 RT2-11; DESCRIPTION-COPY-2 §9; canon content rule
-- Status: ruled. Coverage row: RT2-11. Conflicts settled: C-017, C-274.
+- How it works: Finishing is a decision in the quiet afterwards, never a move in the flow of the fight: with nobody else standing Frank stands over the man and holds strike or kick for 2 s, and the game asks twice. The blow on a downed man, and beating a man who pleads, stay, fully animated with no cut-away (his ruling of 24 Nov, Q4; PEGI 18 within canon's limits); gore light. A kick standing is a low kick; on a downed man it is the boot (force 1.6). What it does is the body rule: fists stay at serious; boots can reach critical, rarely (his question D2, open; recommended yes), the second ask then naming it ('He's not moving. Again?'); a weapon can kill. Watchers read it worse (1.6 on a man who yielded). A body is dragged at 0.9 m/s, carried over the shoulder, put in a boot in 4 s, or rolled into the dock from the quay edge in 3 s. A knife wounds or kills by where it lands (1.3.7), not only by finishing. Bodies and evidence are in CS-16.
+- Standard: Camera never turns away, blows fully animated (PEGI 18), gore light; with fists yes is a serious beating, never a death. Simulated, if D2 is yes: finishing a downed man with three boots kills about 1 in 50 of the fights Frank wins (15.5 per 1,000 fights), with a cosh to the head about 1 in 22. Test: B (bot); content check: no cut-away, no cruelty as spectacle
+- Source: his ruling of 24 Nov (Q4) and 25 Nov (advisor 374); boots and bodies DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-14, CS-16), for him to overturn; D2 is his
+- Status: ruled. Coverage row: RT2-11. Conflicts settled: C-017, C-274, C-341, C-353.
 - Story needs (frame, 24 Nov): finishing a downed man, worked example 3 reworded to the finishing decision unless a kick is added (SYSTEMS-THE-STORY-NEEDS S46). Covered by the part; the frame's example needs rewording (see CONFLICT).
 - Story conflict C-341 (run 5): The part has no kick input and finishing with fists means hospital, while the frame's worked example 3 has Frank "put the boot in" to a downed taxman. Until designed, the part stands; the need is a gap for the design proof.
 
 ### RT2-12 The rare fatal fall
 
-- How it works: A fall kills only when all hold: a heavy or weapon blow knocks the man down, his head lands within 0.4 m of a kerb's edge, a step's edge or a wall's foot, and he was already spent (at least three heavy blows or one weapon blow taken before). Beforehand he shows it, unsteady with his guard down. Never in the boxing club, never by a car, never to Frank, never from fists alone on open ground. It is deterministic: the same fight replayed gives the same result; at the three edges a fall kills in 1 in 50 to 1 in 20 knockdowns, away from any edge never.
-- Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4), RT2-12 Test: B (bot), as written under RT2-12
-- Source: design pass 3, RT2-12 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 RT2-12; DESIGN §7 ER-FIGHT-05; RULINGS 30 Oct
-- Status: decided. Coverage row: RT2-12.
+- How it works: A fall can kill when a heavy or weapon blow knocks the man down near an edge (a kerb, a step or a wall's foot, head within 0.4 m) and he was already spent (three heavy blows or one weapon blow taken). Beforehand he shows it, unsteady with guard down. His head strikes: serious about 1 in 10, critical 1 in 50 of such knock-downs; a critical man dies about half the time, so deaths run below the earlier band of 1 in 50 to 1 in 20. It applies to everyone's fights, not only Frank's. Never in the boxing club, never by a car, never to Frank (he is out instead), and away from any edge never. The quay edge works through drowning (1.3.5), not this rule.
+- Standard: Fist fights alone: 1 death in 2,000 (open street and kerb alike, too few events to call a rate); deterministic for a given seed; never away from an edge. Test: B (bot): kerbside scenario, seed 1990
+- Source: his 30 Oct ruling (a fall can kill, rarely, a killing to the town); band reading DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-07; RULINGS-TO-REVISIT R17, R18), for him to overturn
+- Status: decided. Coverage row: RT2-12. Conflicts settled: C-357.
 
 ### RT2-13 Robbed when beaten
 
@@ -375,6 +480,13 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Status: decided. Coverage row: RT2-13. Conflicts settled: C-018.
 - Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-02 a failure takes only the money the design names; decided. None measured.
 - Data (run 5): exact values in production/lane/blueprint/data/people/ (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+
+### WI-P15 Beaten again and again
+
+- How it works: Each beating costs as the fight parts say. A third beating within a game week brings someone in: Ron comes to fetch him from the pavement or the hospital and says plainly what the streets are saying, and the men who beat him (named) are known in the Ledger; the robbers rob only what he carries (RT2-13), so a run of beatings cannot strip the office or the tin. No loop is closed: running, backing off and staying in are always open.
+- Standard: Repeated defeat never strips the floor and always names who did it. Test: B: a bot beaten seven nights running keeps the office, car two and the tin.
+- Source: 1.3.9 (replaced by CS-14 and CS-15 in the combat pass); RT2-13; RT2-06. DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/PROPOSED-PARTS.md P15, D6) for him to overturn; CS-15 covers a run of losses in general, this part adds Ron's fetch and the floor.
+- Status: decided. Coverage row: none yet.
 
 ### RT2-14 How guns reach Frank
 
@@ -386,16 +498,16 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 
 ### FIT-P17 At least five kinds of fighter
 
-- How it works: At least five kinds of fighter: the boxer who guards, the brawler who rushes, the big man slow to drop, the man with a knife who keeps his distance, and the wiry one who slips and runs. No two fights in a row use the same mix.
-- Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
-- Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 §P17; DESIGN-ADDENDUM A29
+- How it works: At least five kinds of fighter, as data rows of one fight model: the boxer who guards, the brawler who rushes, the big man slow to drop, the man with a knife who keeps his distance, and the wiry one who slips and runs. No two fights in a row use the same mix. See 1.3.12 for capacities and outfit habits.
+- Standard: At least five kinds in the data; no two fights in a row with the same mix. Test: B (bot) as written; S: the job data
+- Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-04, CS-11), for him to overturn; design pass 3; FIT-CHECK-2026-11-21.md
 - Status: decided. Coverage row: FIT-P17. Conflicts settled: C-019.
 
 ### FIT-P18 Two against one stays deadly
 
-- How it works: Two against one stays deadly: a skilled player, patient and using the street, wins a fair two against one about one time in four; a masher about one in twenty. Running and backing off are always there, and the street's places count double (a man put into railings is out of it for 4 s). In 200 bot fights the skilled bot wins 15 to 35% and the masher under 10%.
-- Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
-- Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 §P18; DESCRIPTION-COPY-2 §9
+- How it works: Two against one stays deadly: a skilled player, patient and using the street, wins a fair two against one about one time in four; a masher under one in ten. Running and backing off are always there, and the street's places count double (a man put into railings is out of it for 4 s). Simulated (44,000 fights, seed 1990): careful Frank 29% (43% lost, 28% stopped by a bystander or the police), masher 0.1%; three against one 1% (84% lost); with Ron at his side (2 v 2) 78%.
+- Standard: Skilled bot wins 15 to 35% of fair two against one, masher under 10% (the earlier text's one in twenty is inside it). Test: B (bot), 200 fights as written
+- Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-11), for him to overturn; design pass 3; FIT-CHECK-2026-11-21.md
 - Status: decided. Coverage row: FIT-P18.
 
 ## 1.4 Being seen
@@ -407,32 +519,41 @@ The felt side of the town's eyes: the player's three questions answered from pic
 
 - How it works: The world shows who has noticed him in bodies: a head turns, a longer look, a pause in a walk, two heads together, a step back at night, a figure at the glass of a lit window. The head turns at the start of the 1.2 s a watcher needs to know him, so there is at least 0.8 s of warning. A window is a watcher only when a figure shows at it (Ada in her dark front room is the one exception, learned once). A player can answer 'is he seen, how far did that carry, who noticed' from picture and sound eight times in ten, also with sound off and with the light cue off.
 - Standard: Cue at the start of the 1.2 s to know him, at least 0.8 s before identification (ER-EYES-03); posture first (D29); a window is a watcher only when a figure shows at it (ER-NIGHT-02); reference behaviour to be measured Test: H: the three questions at ten random moments, 8 of 10 right, sound off and light cue off
-- Source: DESIGN §2; D29 (waits on a dated study). Designed in: DESIGN §2 ER-EYES-01, -03; DESIGN §6 ER-NIGHT-02; DESCRIPTION-COPY-2 §7
+- Source: DESIGN §2; D29 (waits on a dated study). Designed in: DESIGN §2 ER-EYES-01, -03; DESIGN §6 ER-NIGHT-02; DESCRIPTION-COPY-2 §7 Reality check (CHECK A84, A86; RESEARCH C2): the 1.2 s and the distances are prototype values, never measured in a game; one study found familiar faces recognised reliably only within about 15 m and above about 15 lux (abstract only), brighter than a lit side street, a flag for the measurement, not a change.
 - Status: pending. Coverage row: 1.4.1.
 - Prior research: research/detection-legibility: three states readable at once by posture and head turns, never bars; a readout is fair when it gives back what the character knows and the camera took away, cheating when it adds what he does not know.
+- Deciding row (DECIDES-CHECK, 24 Nov, corrected by the reality check, 24 Nov): being seen in KCD2 and RDR2 sets only the watcher numbers (how fast and how far, under known light), hence cover places and the constable's ladder; it does not set lamp spacing, which comes from BS 5489-3:1977 (about 34 m plus or minus 10%) and dated photo counts (4.1.1, 4.4). The measurement is still first among the game rows, then applied to the real lamp layout; none sampled; two games planned, about 5 h.
 - Deciding row (DECIDES-CHECK, 24 Nov): being seen in KCD2 and RDR2 sets sight distances and light scaling, hence lamp spacing, cover places and the constable's ladder; none sampled; two games planned, about 5 h.
+- Reference solid (RDR2 and GTA VI; STATUS.md on wip, ladder-review-2026-11-25.md, eight uncut samples, four players): from a witness's flag to wanted, about 2 to 106 s, median about 33.5 s. A floor for the constable's ladder timing, folded as a reference; the part's own standard is unchanged (run 7).
 
 ### 1.4.2 Light and dark as cover
 
-- How it works: The light value the watchers use is the one the player sees: the corners of the picture darken and lift with it (daylight 1, lamp 0.7, unlit street 0.25, doorway 0.12). Dark is readable, never blind: Frank and the ground 5 m round him are always visible above a brightness floor.
-- Standard: Picture corners follow the rule's light value; Frank and 5 m round him always visible above a brightness floor (ER-NIGHT-01) Test: H: screenshots at the darkest spots; S: light value matches the cue
-- Source: DESIGN §2, §6 (waits on a dated study). Designed in: DESIGN §2, §6 ER-NIGHT-01; DESCRIPTION-COPY-2 §7, §3
+- How it works: The light value the watchers use is the one the player sees: the corners of the picture darken and lift with it (daylight 1, lamp 0.7, unlit street 0.25, doorway 0.12). Dark is readable, never blind: Frank and the ground 5 m round him are always visible above a brightness floor. Light can be changed in play: a broken bulb or a flicked switch changes it at once, and a lamp going out is noticed by anyone who sees it or knows the street. A torch shows its carrier, a lit cigarette is a light point visible far in the dark, and drizzle or rain, as his 5 Oct weathers, cut sight by the rain rule (no fog: R21). A dark coat at night makes his shape a fifth harder to pick out.
+- Standard: Picture corners follow the rule's light value; Frank and 5 m round him always visible above a brightness floor (ER-NIGHT-01). Test: H: screenshots at the darkest spots; S: light value matches the cue; breaking a lamp changes the value within a frame
+- Source: DESIGN §2, §6 (waits on a dated study); light changes and clothes DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-07, CS-12), for him to overturn; the numbers are judgement until the KCD2 and RDR2 seeing study
 - Status: pending. Coverage row: 1.4.2.
 - Deciding row (DECIDES-CHECK, 24 Nov): read with 1.4.1 (KCD2 and RDR2, about 5 h).
 
 ### 1.4.3 Hearing his own noise
 
-- How it works: Every noise the rule hears, the player hears at the same strength. Reach is set by the act, the hour and the rain: a footstep at three in the morning carries about 3.6 m and at noon nothing; walking slowly halves the reach; the cab is heard within about 44 m by day. A street that has noticed him goes quiet. With the picture off a tester can still tell a walk from a run; a 'sound shown' assist offers short words for deaf players.
-- Standard: ER-SND-01: every noise the rule hears the player hears at the same strength; with picture off a walk is told from a run Test: H: sound-only test
-- Source: DESIGN §17 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §2, §17 ER-SND-01; DESCRIPTION-COPY-2 §6, §10, §3
+- How it works: Every noise the rule hears, the player hears at the same strength. Reach is set by act, surface, hour and weather: a walking footstep at night about 3.6 m on dry flags, a quarter more on wet cobbles, 1.7 times on gravel, about twice on a metal deck, more on broken glass; rain halves it and the day's traffic drowns it; crouched or slow walking halves it. Indoors a bare stair creaks at twice dry flags and carpet halves it; walls and shut doors cut a sound to a quarter, an open door to a half; sleepers hear at a third. A blow lands as a noise of about 8 m, broken glass 15 m, a shout 40 m, a shot about 177 m by day; the cab is heard within about 44 m by day. A street that has noticed him goes quiet. A 'sound shown' assist offers short words for deaf players.
+- Standard: ER-SND-01: every noise the rule hears the player hears at the same strength; with picture off a walk is told from a run. Simulated: surface cuts a choke's success by a seventh to a quarter (crouched, unlit: wet cobbles 41%, gravel 35%, metal deck 31%). Test: H: sound-only test; S: reach by surface matches the table
+- Source: DESIGN §17 (DECIDED by the design proof); surfaces and indoors DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-12), for him to overturn; judgement, no published detection numbers found (combat/RESEARCH.md)
 - Status: decided. Coverage row: 1.4.3.
-- Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov); the combat pass's numbers (wind costs, weapon forces, edge table) are for the next data wave. Data sweep class C.
+
+### CS-12 Senses and stealth, the settled details
+
+- How it works: Stealth is the perception ladder canon holds, with these settled beyond 1.1.5, 1.4.2, 1.4.3 and 1.4.8: a watcher sees only where he faces, and how sure he is grows with light, nearness, movement and time in view. A man found unconscious is acted on by temper: helped, fetched help for, robbed or walked past, and a found man is a story that travels. Frank's men on a quiet job are noise and light like anyone: a crewman with low nerve or high mouth chatters unless ordered quiet. A mask or scarf hides the face slot but is itself a give-away; disguise fools strangers, never those who know him. No meters; the optional seeing assist outlines only people facing Frank. Everyone sees everything their senses allow, so a takedown seen is a deed seen.
+- Standard: Stealth works and fails believably: crouched in the dark it mostly works, under a lamp or by day it mostly does not, a loud surface is felt. Simulated: unlit street walking 34% out, crouched 41%; under a lamp crouched 18% out, 73% spotted. Test: B: the simulator; S: no meter on screen
+- Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-12), for him to overturn; canon (perception ladder); census (KCD2 noise and visibility, Hitman, RDR2); combat/RESEARCH.md (no published detection timings found: judgement)
+- Status: decided. Coverage row: none yet.
 
 ### 1.4.4 Give-aways and the coat
 
-- How it works: What makes him easier to know: running, the same coat as last night, blood (until washed with water in private), dirt, a weapon in the hand, wrong clothes for the door, bruises, a holdall, the car. The coat buys doubt about the face and none about the car: a deed from the car always names the car. He can shed a slot against witnesses who have not told yet: change the coat, use the second car or respray, a cap and scarf at night or a barber for a week, walk apart from Ron, get rid of the weapon; what gossip has carried is never undone.
+- How it works: What makes him easier to know: running, the same coat as last night, blood (until washed with water in private), dirt, a weapon in the hand, wrong clothes for the door, bruises, a holdall, the car, a mask. A mask goes through the same witness rules (his ruling of 25 Nov, advisor 378): whoever sold it remembers, and worn in the street it is noticed. The coat buys doubt about the face and none about the car: a deed from the car always names the car. He can shed a slot against witnesses who have not told yet: change the coat, use the second car or respray, a cap and scarf at night or a barber for a week, walk apart from Ron, get rid of the weapon; what gossip has carried is never undone.
 - Standard: ER-EYES-10: each give-away raises what a witness catches; a deed from the car always names the car Test: S: golden rows, one per give-away
-- Source: DESIGN §2 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §2 'What gives him away', ER-EYES-10; DESIGN-ADDENDUM A21; GTAVI-MAP GV-02; DESCRIPTION-COPY-2 §7
+- Source: DESIGN §2 (DECIDED by the design proof, for him to overturn); the mask: his ruling of 25 Nov (advisor 378). Designed in: DESIGN §2 'What gives him away', ER-EYES-10; DESIGN-ADDENDUM A21; GTAVI-MAP GV-02; DESCRIPTION-COPY-2 §7
 - Status: decided. Coverage row: 1.4.4. Conflicts settled: C-020.
 - Prior research: coverage audits of Hitman, KCD2 and RDR2 (research-2 sheet): disguise fools strangers, never people who know him; a new coat does not beat someone who knows him; coat, not face, is what RDR2 recognises.
 - Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-02 a witness who caught a mark but not Frank links him only while he wears it; decided, thin. None measured.
@@ -465,9 +586,9 @@ The felt side of the town's eyes: the player's three questions answered from pic
 
 ### 1.4.8 Drawing a watcher away
 
-- How it works: A thrown stone (O) or a rattled bin makes a noise at its reach; a watcher inside it turns his head or walks to look, and remembers there was a noise. A rattled bin moves the beat constable off his round and he rejoins it where he left. A yard dog barks at a stranger and a scrap of food quiets it for a while; no verb harms a dog.
-- Standard: Uses the sound reach rule (DESIGN §2); a watcher drawn away remembers the noise Test: S: a noise inside reach turns a head; outside reach does nothing
-- Source: DESIGN §2 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN-ADDENDUM A23; DESCRIPTION-COPY-2 §3 (Controls); DEFINITIONS pass 3 §G5
+- How it works: A thrown stone or a rattled bin makes a noise at its reach; a watcher inside it turns his head or walks to look, and remembers there was a noise. Watchers have four states: calm (glances round now and then), uneasy (heard something: turns, looks, walks to look), alert (knows someone is there: searches the likely places, calls out) and engaged; he settles back to calm after about a minute. A rattled bin moves the beat constable off his round and he rejoins it where he left. A yard dog barks at a stranger and a scrap of food quiets it; no verb harms any animal (dogs, pigeons, gulls). No meters: alertness reads in heads, posture and voice.
+- Standard: Uses the sound reach rule (1.4.3); a watcher drawn away remembers the noise; back to calm about 60 s after. Test: S: a noise inside reach turns a head; outside reach does nothing; no verb harms an animal
+- Source: DESIGN §2 (DECIDED by the design proof); alertness states and animals DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-12, CS-28), for him to overturn
 - Status: decided. Coverage row: 1.4.8.
 
 ## 1.5 Chases
@@ -481,6 +602,7 @@ On foot and by car; every chase ends, caught or lost.
 - Standard: Lost once unseen for 7 s or 70 m (DESIGN §8); No chase ends while the pursuer can see Frank, except caught, wrecked or at the soft edge; lost car chase median 60 to 120 s, 90th percentile under 240 s; foot chase median 30 to 90 s; none past 240 s (design pass 4, DP5-C01 to C03); feel to be measured in reference games; By his ruling of 24 Nov (R1) chases run 1 to 3 minutes, rich in lanes and yards; the bot bands above are the checks and are to be set against it. Test: S: 50 seeded chases, chase and search lengths logged (DP5-C01 to C03); H: 'how did you lose him?'
 - Source: DESIGN §8; advisor 256; chase length: his ruling of 24 Nov (RULINGS on wip, his decisions page) (R1) (waits on a dated study). Designed in: DEFINITIONS design pass 4 C-01 to C-03 and Run 5 second pass; design pass 3 F03, G1, G4; DESIGN s.8
 - Status: pending. Coverage row: 1.5.1. Conflicts settled: C-021, C-022, C-276.
+- Lead, not solid (STATUS.md on wip, 25 Nov; SLEEPING-DOGS-FOOT-CHASE-2026-11-25.md, two of five samples): Sleeping Dogs' foot chases ran 96 s (a scripted opening run, ends in capture) and 67 s (the Night Market, the runner held 12 to 16 m ahead); its loss rule is a gap held, not sight alone: a 20 s countdown starts once the gap passes about 43 to 45 m (read from our own drill, one run), and whether closing the gap stops it is unread. LEDGER's 7 s unseen or 70 m rule stands; this is a lead for the keeper to weigh (C-504). Status stays pending.
 - Deciding row (DECIDES-CHECK, 24 Nov): chases on foot (C1 to C8) decide where the ginnels, yards and six vault places go, by whether chases are won by breaking sight or by outrunning; none sampled yet; three games planned, about 4 h.
 
 ### 1.5.2 Pursuing on foot
@@ -495,7 +617,7 @@ On foot and by car; every chase ends, caught or lost.
 
 - How it works: A hit-and-run seen by an officer, a refused stop or a car that saw the deed starts a chase with the patrol car's bell and lights. There is no timer: it ends lost, caught, wrecked or at the soft edge. A car chase is lost by 7 s unseen or a gap over 200 m while unseen, never by distance driven alone. A good-driver bot's lost car chase has a median of 60 to 120 s and a 90th percentile under 240 s; none passes 4 real minutes. The drivable loop is 1,528 m, a lap in 76 to 96 s. Caught is a stop or an arrest, never a game over, and nobody shoots from a moving car. By his ruling of 24 Nov (R1) a chase runs 1 to 3 minutes, rich in lanes and yards.
 - Standard: Refusing a stop is a chase that ends caught or lost (DESIGN §5); ER-DRIVE-10; No chase ends while the pursuer can see Frank, except caught, wrecked or at the soft edge; lost car chase median 60 to 120 s, 90th percentile under 240 s; foot chase median 30 to 90 s; none past 240 s (design pass 4, DP5-C01 to C03); By his ruling of 24 Nov (R1) chases run 1 to 3 minutes, rich in lanes and yards; the bot bands above are the checks and are to be set against it. Test: S: 50 seeded chases, chase and search lengths logged (DP5-C01 to C03); lost by breaking sight
-- Source: DESIGN §5, §8; chase length: his ruling of 24 Nov (RULINGS on wip, his decisions page) (R1) (waits on a dated study). Designed in: DEFINITIONS design pass 4 C-01, C-02, Run 5 second pass 'Can the Hook and the docks hold the measured chases?'; design pass 3 F03, G1, G3; DESIGN s.5
+- Source: DESIGN §5, §8; chase length: his ruling of 24 Nov (RULINGS on wip, his decisions page) (R1) (waits on a dated study). Designed in: DEFINITIONS design pass 4 C-01, C-02, Run 5 second pass 'Can the Hook and the docks hold the measured chases?'; design pass 3 F03, G1, G3; DESIGN s.5 Reality check (CHECK A98, A94, E06): 1,528 m with a 76 to 96 s lap gives 16 to 20 m/s against FIT-G2's 27 m/s (C-395); the loop length is our own, and the loss rule (7 s, 200 m) and search length are carried from the prototype, owed from reference footage.
 - Status: pending. Coverage row: 1.5.3. Conflicts settled: C-024, C-025, C-026, C-276.
 
 ### 1.5.4 Pursuers
@@ -525,7 +647,8 @@ On foot and by car; every chase ends, caught or lost.
 - How it works: A chase is lost when the pursuer has not seen Frank for 7 s, or the gap is over 70 m while Frank is out of sight. For car chases the distance is 200 m, because a car covers 70 m in about 4 s. On foot the gap rarely reaches 70 m in a typical chase, so foot chases are mostly lost by the 7 s. Distance driven alone never loses a chase. Design pass 4 changes only the wording: 'inside 90 s' becomes 'in a typical chase', since no chase has a timer.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 F03; design pass 4 C-01; FIT-CHECK F03
-- Status: decided. Coverage row: FIT-F03. Conflicts settled: C-029, C-030.
+- Status: decided. Coverage row: FIT-F03. Conflicts settled: C-029, C-030, C-504.
+- Lead, not solid (STATUS.md on wip, 25 Nov; two of five Sleeping Dogs samples): its foot chase is lost when the gap stays over about 45 m for about 20 s, against LEDGER's 70 m while unseen or 7 s unseen. One game, one drill run; the design's figure is not changed.
 
 ### FIT-F04 Chase length against the reference games (GTA IV in Mafia DE's place)
 
@@ -533,6 +656,7 @@ On foot and by car; every chase ends, caught or lost.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (waits on a dated study). Designed in: DEFINITIONS design pass 3 F04; design pass 4 'The chase against the chase sheet'; FIT-CHECK F04
 - Status: pending. Coverage row: FIT-F04. Conflicts settled: C-031.
+- Solid so far (STATUS.md on wip): GTA VI heat at peak two stars, star lit to cleared by car, about 27 to 122 s, median about 47 s (22 Nov, five uncut samples, four from one player); RDR2 wanted lit to cleared by riding off with no lawman close, about 41.5 to 97 s, median about 70.5 s (24 Nov 20:25, five samples, four from one player). These are heat lengths, not chase lengths; foot chases have only the Sleeping Dogs leads (1.5.1).
 
 ### DP5-C01 A chase has no timer (car and foot)
 
@@ -556,8 +680,16 @@ On foot and by car; every chase ends, caught or lost.
 - How it works: After a chase is lost the patrol searches the last-seen streets for 30 to 120 real seconds, slowly, lamp on the turnings, then waits on that road for the rest of the night. Seen again inside the search, the same chase resumes with what he already knows; seen after it, a new chase starts. The band is a judgement between the search leads (about 20 s, 50 s, 68 s, once at least 6 minutes) and GTA VI's solid whole wanted spell (about 27 to 122 s, median about 47 s, four of five samples from one player).
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the chase Test: B: seeded chase set, lengths logged
 - Source: car-chases-sheet-2026-11-21 (leads); g5-heat-samples (SOLID, whole spell); FIT-CHECK F02 to F04, P13 (waits on a dated study). Designed in: DEFINITIONS design pass 4 C-03; g5-heat-samples; being-seen sheets
-- Status: pending. Coverage row: DP5-C03. Conflicts settled: C-034.
+- Status: pending (the reference heat lengths are solid in STATUS.md on wip; the 30 to 120 s band stays a design judgement the bots check, C-505). Coverage row: DP5-C03. Conflicts settled: C-034, C-505.
+- Measured 25 Nov (STATUS.md on wip): heat length at peak two stars in GTA VI, median about 47 s (about 27 to 122 s; solid 22 Nov); RDR2 riding off, no lawman close, median about 70.5 s (about 41.5 to 97 s, five samples, video seconds with some map time inside; solid 24 Nov 20:25); a return into sight resumes pursuit at the level held (GTA VI, five samples, solid), as the rule says. Both medians sit inside 30 to 120 s. RDR2's shootout case (about 109 and 513 s) and three stars (about 322 s) stay leads.
 - DECIDES-CHECK, 24 Nov: a lead, a 30 to 120 s band the bots check; the GTA VI wanted spell at peak two stars (median about 47 s) stays SOLID in STATUS.md after its star level was re-read by code on 23 Nov 15:33, and still falls inside the band.
+
+### WI-P10 Hiding indoors during a chase
+
+- How it works: A foot pursuer follows Frank through any open door he saw him use; a door Frank shuts unseen is not searched (the lost-chase search of DP5-C03 walks streets for 30 to 120 s and does not try doors); a shop he runs into is a place full of witnesses and the keeper tells the constable. Hiding in a yard or a lane's dark corner works by breaking sight (1.1.5), and the search's lamp finds him only if it lights him.
+- Standard: Indoors is searched only where the pursuer saw him go or the search's reach passes. Test: S: chases ending through a seen door, an unseen door, and into a shop.
+- Source: 1.1.5; DP5-C03. DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/PROPOSED-PARTS.md P10, D6) for him to overturn.
+- Status: decided. Coverage row: none yet.
 
 ## 1.6 Jobs with the hands
 
@@ -574,10 +706,10 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 
 ### 1.6.2 Searching and taking
 
-- How it works: No search minigame. Search times are a drawer 2 s, a desk 4 s, a wardrobe 5 s; a safe needs its key or combination from a person. Searching makes noise (a drawer about 2 m, a forced cupboard about 10 m at night); in a dark room it takes twice as long without a torch. What is found is authored per job; taking is one press and what is taken can be found on him. A man down can be searched in a few seconds, seen like any act.
-- Standard: none yet: search time per container and the noise of searching to be set Test: S: every container searchable, each search timed and heard at its reach; addendum rules ER-SEARCH-01 to 02
-- Source: DESIGN §4 (no numbers) (no reference figure yet). Designed in: DESIGN-ADDENDUM A4 (ER-SEARCH-01, -02), A33; DESCRIPTION-COPY-2 §9
-- Status: unmeasured. Coverage row: 1.6.2.
+- How it works: No search minigame. Search times are a drawer 2 s, a desk 4 s, a wardrobe 5 s; a safe needs its key or combination from a person. Searching makes noise (a drawer about 2 m, a forced cupboard about 10 m at night); in a dark room it takes twice as long without a torch. What is found is authored per job; taking is one press and what is taken can be found on him. Anyone down, out or dead can be searched in a few seconds, seen like any act, and carries what fits their role (his ruling of 25 Nov, advisors 376, 377): a constable's truncheon, cuffs, whistle, radio (police traffic is heard while Frank holds it) and pocketbook (the day's names and descriptions). Stolen police kit raises the police response (2.6.10).
+- Standard: none yet for times: search time per container and the noise of searching to be set. Pass: anyone down, out or dead can be searched and yields only what fits his role. Test: S: every container and every downed person searchable, each search timed and heard at its reach; addendum rules ER-SEARCH-01 to 02
+- Source: DESIGN §4 (no numbers) (no reference figure yet); his ruling of 25 Nov (advisors 376, 377) for who can be searched and what they carry. Designed in: DESIGN-ADDENDUM A4 (ER-SEARCH-01, -02), A33; DESCRIPTION-COPY-2 §9
+- Status: ruled (who can be searched and what they carry: his ruling of 25 Nov, advisors 376, 377); search times unmeasured. Coverage row: 1.6.2. Conflicts settled: C-502.
 - Checklist (23 Nov, top twenty no. 8; A36.02): missing: taking something must say what was taken, on screen or in Frank's words; the design describes no feedback. Gap for the design proof; status unchanged.
 - Data (run 5): exact values in production/lane/blueprint/data/rooms.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
 
@@ -670,21 +802,36 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - Source: DESIGN-ADDENDUM-2026-11-20 A34 (from REFERENCE-MECHANICS-2026-11-20 M1.97) (reference game). Designed in: DESIGN-ADDENDUM A34; DESCRIPTION-COPY-2 §14
 - Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 1.6.13.
 
+### WI-P05 Mugging and shoplifting
+
+- How it works: Beating a man and searching him for his money (1.6.2, a man down can be searched) is a robbery at any rung: 12 hours if arrested, Ellis up one stage, the man a witness at face distance. A threat with a weapon to make a man hand over is a robbery of a person and possible from the start (his ruling of 25 Nov, advisor 378): his temper decides whether he hands over, runs or fights; it is witnessed, reported, remembered, with consequences from the systems and never caps (C-431). Shops in 1990 Quay Street keep most stock behind the counter (newsagent, tobacconist, chandler) or under the keeper's eye (grocer, ironmonger); taking from a shelf is a lift (1.6.13) with the keeper as the person who may feel it, by the same fixed limits. Felt, he says so to Frank's face, will not serve him for a game week and tells his own people; unfelt, the loss is found at closing and suspected of whoever he noticed. Stock taken is hot goods (1.6.3).
+- Standard: A beating and search for money is a robbery at any rung; a weapon hold-up of a person is open from the start with consequences by temper; a shelf lift follows the lift rule with the keeper watching. Test: S: a mugging in Act I logged as robbery; a shelf lift in good light with the keeper attentive is felt.
+- Source: 1.6.13; 1.6.3; his ruling of 25 Nov (advisor 378: robbery a general action, anyone, anywhere, from the start). DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/PROPOSED-PARTS.md P05, D6) for him to overturn; its keeping 1.6.15's gate is replaced by the ruling.
+- Status: decided. Coverage row: none yet.
+
 ### 1.6.14 Damage by hand
 
-- How it works: A job or pressure can ask Frank to break a window, windscreen, van light or shop sign himself. It is a loud act heard at the force reach, the damage stays until mended, and the owner reads it as a message from whoever he suspects and knows by morning. It climbs a rival's ladder if aimed at his; sending men to do it is the sent verb.
+- How it works: A job or pressure can ask Frank to break a window, windscreen, van light or shop sign himself. It is a loud act heard at the force reach, the damage stays until mended, and the owner reads it as a message from whoever he suspects and knows by morning. It climbs a rival's ladder if aimed at his; sending men to do it is the sent verb. Frank may also set fire to a building at any time (his ruling of 25 Nov, advisors 374, 375): a fire can kill, and a death by fire is a killing to the town and the police like any other (2.16), within canon's content rule.
 - Standard: rule: Every damage act is heard at the force reach, leaves a mark that stays until mended, and is known to its owner by morning. Check S. Test: Every damage act is heard at the force reach, leaves a mark that stays until mended, and is known to its owner by morning. Check S.
-- Source: DESIGN-ADDENDUM-2026-11-20 A35 (from REFERENCE-MECHANICS-2026-11-20 M3.13) (reference game). Designed in: DESIGN-ADDENDUM A35; DESCRIPTION-COPY-2 §22
-- Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 1.6.14.
+- Source: DESIGN-ADDENDUM-2026-11-20 A35 (from REFERENCE-MECHANICS-2026-11-20 M3.13) (reference game); fire: his ruling of 25 Nov (advisors 374, 375). Designed in: DESIGN-ADDENDUM A35; DESCRIPTION-COPY-2 §22
+- Status: ruled (fire: his ruling of 25 Nov); the rest pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 1.6.14. Conflicts settled: C-503.
 
 
 ### 1.6.15 Hold-ups of shops and people
-- How it works: Never in Act I: possible from rung 2 and only through the escalation dial, with a carried weapon (bat, knife) from dial state 0 and with a gun only once a gun has reached Frank through a person. Only places with a till and people with a purse: the six shops of Quay Street, the pawn, the chandlery, the Harbour Office pay window on a Friday, a named adult carrying takings to the bank; no children anywhere (canon's content rule); the bar on Ada, the priest and anyone sixty or over came from Frank's dropped line (RT-09, his ruling of 24 Nov) and goes with it. It starts on the held weapon key with the weapon out (rung 6 of the ladder); the keeper answers by his temper; Frank can wait (the till in about 8 s, to measure), threaten again, or go. The take is what the till holds that hour, hot for a week. Always witnessed at face distance, always reported or told (Rita, Wayne and Hal tell their own people), a robbery (12 hours if taken), DS Ellis up one stage; said to his face within a game day; that shop refuses him for good; at most one a week per street before the shops shut early, never the same place twice; never a game over.
-- Standard: ER-HOLDUP-01 to 05: none before rung 2, none with a gun before one reached Frank through a person; every one witnessed at face distance, reported or told within a game hour, said to his face within a game day; the take never above the till and balanced in the flows ledger; Frank in control within 2 real minutes with a Ledger line; nobody under the content rule and no place twice. Test: S: seeded hold-ups, the chain printed; the target list.
-- Source: his ruling of 20 Nov (hold-ups: shops and people, rare and late through the dial; loud, witnessed, remembered, heavily punished, never a game over); DESIGN-ADDENDUM A41 (DECIDED by the design proof, for him to overturn); the line's drop, his ruling of 24 Nov (RULINGS on wip, his decisions page). Designed in: DESIGN-ADDENDUM A41; RULINGS 20 Nov.
-- Status: decided. Conflicts settled: C-275. Coverage row: none yet (no parts-tree part or coverage.json row; asked of the design proof in BLUEPRINT-11).
+
+- How it works: Robbery is a general action: Frank can hold up anyone, anywhere, from the first hour, a till, a purse or a person in the street. No rung, dial state, Act or weekly quota stands in front of it, and no list of places or people limits it, except canon's content rule (no children anywhere). The bank is a soft-edge place with no walked interior; whether it can be robbed waits on Q21 (C-432). The take is what the till or purse holds that hour. A mask goes through the witness rules: whoever sold it remembers the sale, and worn in the street it is noticed (1.4.4). The consequences come from the systems and are never capped by this part: witnesses at face distance, the report or the telling, the police and the case (a robbery, 12 hours if taken), talk that cools in about a week, the shop's fear and takings. Never a game over.
+- Standard: Pass: a hold-up can be tried on any adult in any place from the first hour, and the code holds no rung, dial, Act, per-street, per-week or per-place limit; every one is witnessed at face distance, reported or told within a game hour, and remembered through the witness rules; the take never above what the till or purse held and balanced in the flows ledger; nobody under the content rule; Frank in control within 2 real minutes with a Ledger line. Test: S: seeded hold-ups in the first hour and late, on a shop, a person and a home, the chain printed; a read of the code finds no gate.
+- Source: His ruling of 25 Nov (advisor 378: robbery a general action, anyone, anywhere, from the start; masks through the witness rules; consequences from the systems, never caps; the people pass checks the economy), which replaces his ruling of 20 Nov (rare and late, only through the dial) and the gates of DESIGN-ADDENDUM A41; RULINGS on wip. Designed in: DESIGN-ADDENDUM A41 (the consequence chain only).
+- Status: ruled (his ruling of 25 Nov, advisor 378). Conflicts settled: C-275, C-500. Coverage row: none yet (no parts-tree part or coverage.json row; asked of the design proof in BLUEPRINT-11).
+- Economy (24 Nov, section 5.5): A hold-up pays what the till holds that hour (about £90, a small shop's day), loud, witnessed, 2 case points. The shop is afraid for weeks: takings fall a tenth and recover as the fear fades. Judgement.
 - Data (run 5): exact values in production/lane/blueprint/data/places.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
-- Economy (24 Nov, section 5.5): A hold-up pays what the till holds that hour (about £90, a small shop's day), rare and late, loud, witnessed, 2 case points. The shop is afraid for weeks: takings fall a tenth and recover as the fear fades. Judgement.
+
+### WI-P12 Trying a crime early, and the bank
+
+- How it works: No input is refused on screen. A weapon drawn at a counter in hour one is a robbery attempt like any other (his ruling of 25 Nov, advisor 378: robbery from the start, anyone, anywhere); the keeper's temper decides: most step back from the till and shout, one with nerve reaches for the phone, a frightened one hands over. It is witnessed and reported as a robbery (12 hours if arrested), Ellis rises a stage, and the shop refuses him; consequences come from the systems, never from caps (C-431). The bank sits in the Exchange (soft edge, not walked), its camera the town's only CCTV (his ruling of 24 Nov); it cannot be robbed in the release (out of scope, D7: a bank job would need the map to grow).
+- Standard: No input is refused; an early attempt has a real outcome by temper. Test: S: a weapon drawn at the grocer's counter in hour one; outcome logged and the town's reading checked against 1.6.15's witnessed-and-told rule.
+- Source: 1.6.15; canon (CCTV at the bank); RT-09; his ruling of 25 Nov (advisor 378). DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/PROPOSED-PARTS.md P12, D6 and D7) for him to overturn: the bank out of scope is a scope call (see revisit).
+- Status: decided; the bank out of scope. Coverage row: none yet.
 
 ### RT2-19 The phone as a verb
 
