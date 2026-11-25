@@ -85,3 +85,20 @@ YouTube's search page read from the page itself (results for "Santosx07 LA Noire
 ## Santosx07 Part 3 (07FhMIUKBog), motion scan 25 Nov 13:42-13:58 Swiss
 
 Scanned 0 to 3,408 s at 8 s (motion between t and t + 0.5 s on a 64x36 copy), hidden pane, 1280x720; stopped there for the advisor's pause (387); 3,408-3,698 s unscanned. Adverts of up to 160 s every five minutes or so of scanning, one 4,451 s pod needed a reload (as on GamesMediaLA's). Median motion 15. Stretches over 35 for 16 s or more: 152-168, 488-512, 1136-1152, 1496-1512, 1592-1624, 1744-1760, 2000-2016, 2400-2416, 2496-2520, 2624-2648, 2664-2680, 2944-2968, 3328-3368 s (still rising at 3,408). No frame read yet; next: one mid frame each, driving dropped first. The guide's list puts The Driver's Seat's rooftop chase (Adrian Black) on the Traffic desk, likely in this part (unverified).
+
+### Part 3's stretches read, 25 Nov about 14:47-14:58 Swiss
+
+Method: YouTube's own preview thumbnails (the storyboard, 160x90, one every 10 s), drawn on a canvas sheet in the hidden pane; no video played, so no adverts. Real frames (every 2 s) only where a thumbnail showed someone running. Seeking now draws an advert nearly every seek (15 s, 245 s, 192 s, then a 3,033 s pod needing a reload), so thumbnails first is the cheaper path.
+- The thirteen stretches by thumbnail: 160 a car's ownership paper (close-up); 500 driving; 1144 walking a street; 1504 walking past cars; 1608 and 1752 walking a hillside crime scene; 2008 constables at a car (scene); 2408 cutscene; 2508 walking a street; 2636 driving; 2672 driving past palms; 2956 an interior; 3348 the notebook. None is a foot chase.
+- 3,300-3,698 s by thumbnail: driving 3,350-3,410; interviews and a dark interior 3,420-3,540; a newspaper and a bar cutscene 3,550-3,690. At 3,328-3,330 Cole jogs out along a path to his car (real frames): not a chase. At 3,470 one figure runs across a sunlit yard: checked below.
+- No Driver's Seat rooftop chase in Part 3 (the guide's placement unverified, now likely a later part).
+- 3,460-3,498 s in real frames (after a reload): Cole walks across the yard to a door and into a house (3,470-3,478), then an interview; nobody flees. **Part 3 holds no foot chase.** Chases on foot, L.A. Noire stays 2 of 5; next Parts 5, 6, 7 (IDs above), thumbnails first.
+
+## Samples 3 and 4: Santosx07 Part 5 (HqiDCFlV17g, 2,455 s, channel Santosx07 read on the page), 25 Nov about 14:58-15:02 Swiss
+
+Found by its thumbnails (one per 10 s, read in contact sheets of 96), then real frames every 2-3 s in the hidden pane (no adverts this time). Both runs are Cole chasing a suspect who bolts mid-scene; the camera stays behind Cole; at 200 px the suspect is mostly out of frame or a dot, so the gap is a rough estimate only.
+- Sample 3, about 1,179 to 1,200 s (about 21 s, edges read at 2 s): a doorstep talk, the man bolts; street, a yard, an alley along a brick wall; ends in a tackle (both on the ground, a button prompt), a cut to black at 1,202 s, then the next scene. Gap: the suspect not readable in frame (unread).
+- Sample 4, about 1,395 to 1,449 s (about 54 s, edges read at 3 s): from parked cars onto a sports ground, under the bleachers, across the field (the suspect a small figure far ahead, perhaps 20-30 m, estimate, unverified), a lot, a main street, then into a side street; ends at about 1,449 s with Cole grappling him at contact, black at 1,452 s, then a club's title card. Scripted catch, no escape rule.
+- Running total: L.A. Noire 4 of 5 (lengths about 52, 58, 21, 54 s; every ending a takedown, warning shot or hostage, never an escape). Next: Part 6 (HE3E-U0cxPQ) or 7 (nnc7d97Up08), thumbnails first.
+- Part 6 (HE3E-U0cxPQ, 2,934 s, The Silk Stocking Murder) by thumbnails, about 15:03 Swiss: crime scenes, interviews, driving; a rooftop search at 480-630 s at walking pace. No foot chase.
+- Part 7 (nnc7d97Up08, 2,903 s, The White Shoe Slaying) by thumbnails (dark ones brightened), 15:05 (Get-Date): a park crime scene at night, interviews, night driving; a scuffle in a yard about 2,200-2,260 s (a fight, not a chase). No foot chase. Sample 5 next from Part 9 (nLwXUYDdfeo) onward.
