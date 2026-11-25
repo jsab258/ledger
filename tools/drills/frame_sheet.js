@@ -138,3 +138,21 @@ window.scanHare = async (t0, t1, step) => {
   }
   window.hs.done = true;
 };
+
+// HIDDEN PANE (25 Nov 2026, 09:05): while the pane is hidden the page shrinks to about 480x273, so sheet() cells are
+// unreadable. oneFit(t) draws a single frame across the whole viewport with its time label; then wait 2 s and take a
+// full-size screenshot (scale 1): scaled screenshots, and screenshots taken at once, came back black. Video play,
+// seeks and canvas reads all work hidden; a stalled player: reload the tab once and re-query the video.
+window.oneFit = async (t) => {
+  const v = document.querySelector('video'); v.muted = true; v.pause();
+  let c = document.getElementById('lsheet');
+  if (!c) { c = document.createElement('canvas'); c.id = 'lsheet'; document.documentElement.appendChild(c); }
+  const W = innerWidth, H = Math.round(W * 9 / 16); c.width = W; c.height = H;
+  c.style.cssText = `position:fixed;left:0;top:0;width:${W}px;height:${H}px;z-index:2147483647;background:#000`;
+  const ok = await new Promise((r) => { v.addEventListener('seeked', () => r(true), { once: true }); v.currentTime = t; setTimeout(() => r(false), 6000); });
+  for (let k = 0; k < 40 && v.readyState < 4; k++) await new Promise((r) => setTimeout(r, 200));
+  await new Promise((r) => setTimeout(r, 500));
+  const g = c.getContext('2d'); g.drawImage(v, 0, 0, W, H);
+  g.fillStyle = '#ff0'; g.font = 'bold 14px sans-serif'; g.fillText(v.currentTime.toFixed(1), 4, 16);
+  return ok;
+};

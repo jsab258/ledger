@@ -216,3 +216,4 @@ hair colour 2 of 2; worn paint 2 of 2; the office and sit on by default 2 of 2; 
 - 25 Nov 00:22: GTA V wanted-star pixel test (two boxes, white counts, blob widths): the ammo count moves into the stars' slot when no stars show; set aside after two tries.
 - 25 Nov 01:15-01:22: footage in a hidden browser pane: seeks never fire 'seeked', each frame waits out its 6 s timeout, then the player reloaded and the sheet came back empty (0x0). Footage needs the pane on screen; while hidden, do non-footage work.
 - 25 Nov 01:18: two research readers could not open PDFs (binary to their fetch tool, no shell): the session extracts with pdftotext and hands the text back to a reader.
+- 25 Nov 08:55 (advisor 378): footage had stopped since 01:15 not for the machine but for a handover rule written after one stalled player ('while hidden, no footage'); re-tested with the pane hidden and the screen off: plays, seeks, frames read. Rule replaced: on a stall, reload once.

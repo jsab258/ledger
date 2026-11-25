@@ -1146,3 +1146,5 @@
 {"event": "stop", "at": "2026-11-25T01:31:00", "note": "1990 sources: PDFs extracted, lamps and footfall noted; footage blocked by hidden pane"}
 {"event": "start", "at": "2026-11-25T01:16:00", "task": "n23-1", "phase": "0", "kind": "production"}
 {"event": "stop", "at": "2026-11-25T01:28:00", "note": "three research-reader helpers (lamps, footfall, extracted texts)"}
+{"event": "start", "at": "2026-11-25T08:53:00", "task": "n23-1 chases on foot: Sleeping Dogs opening run; footage hidden-pane fix (advisor 378)", "phase": "n23-1", "kind": "production"}
+{"event": "stop", "at": "2026-11-25T09:07:00", "note": ""}
