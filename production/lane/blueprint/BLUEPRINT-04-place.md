@@ -27,6 +27,7 @@ The map as data with testable layout rules.
 - Source: RULINGS 21 Sep, 1 Oct (the look); CLAUDE.md gate; DESIGN §6 (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: atlas-01 (DISTRICTS, TOWN-FORM-BIBLE); DEFINITIONS G1; DESIGN s.6; Study 4 target 3; RULINGS 'The look and the street' (21 Sep, 1 Oct, 3 Oct); CLAUDE.md gate; colour rule: his ruling of 24 Nov (RULINGS on wip, his decisions page) (R7); R1 and the map file: his ruling of 24 Nov (RULINGS on wip, his decisions page)
 - Status: outside. Coverage row: 4.1.2. Conflicts settled: C-094, C-095, C-291.
 - Data (run 5): exact values in production/lane/blueprint/data/map.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G21, G14.
 
 ### 4.1.3 Landmarks and signs
 
@@ -47,6 +48,7 @@ The map as data with testable layout rules.
 - Status: decided. Coverage row: 4.1.4. Conflicts settled: C-096.
 - Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-01 a job judges the result, never the route; decided. None measured.
 - Data (run 5): exact values in production/lane/blueprint/data/places.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G21.
 
 ### 4.1.5 Street build rules
 
@@ -91,6 +93,7 @@ The Hook's working waterfront (canon, 19 Nov).
 - Status: outside. Coverage row: 4.2.1. Conflicts settled: C-291.
 - Prior research: research/south-quay: granite cope 0.60 across, 0.30 deep, 50 mm proud (chosen, no source), setts 100 to 200 mm, wall batter 1 in 20 (chosen), water 3.20 m below the cope at half tide.
 - Data (run 5): exact values in production/lane/blueprint/data/map.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G20.
 
 ### 4.2.2 Old Basin, fish dock, cold stores
 
@@ -99,6 +102,7 @@ The Hook's working waterfront (canon, 19 Nov).
 - Source: RULINGS 21 Sep, 1 Oct (the look); CLAUDE.md gate (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: DESIGN s.5, s.13, s.14; atlas-01 TOWN-FORM-BIBLE D04; DEFINITIONS G1, G9; COPY-2 s.12, s.31; RULINGS 28 Oct; RULINGS 'The look and the street' (21 Sep, 1 Oct, 3 Oct); CLAUDE.md gate; colour rule: his ruling of 24 Nov (RULINGS on wip, his decisions page) (R7); R1 and the crane: his ruling of 24 Nov (RULINGS on wip, his decisions page)
 - Status: outside. Coverage row: 4.2.2. Conflicts settled: C-103, C-291, C-299.
 - Data (run 5): exact values in production/lane/blueprint/data/map.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G20, G13, G14.
 
 ### 4.2.3 Dock gate, customs, Harbour Board
 
@@ -109,13 +113,14 @@ The Hook's working waterfront (canon, 19 Nov).
 - Status: outside. Coverage row: 4.2.3. Conflicts settled: C-291.
 - Data (run 5): exact values in production/lane/blueprint/data/map.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
 - Economy conflict C-333 (run 5): The part says tax is collected on his drivers "from rung 3 in Act II". The design says £5 a car a week once Frank has five cars, until answered; consistent in effect (five cars come at rung 3), the design's figure fills it. RT2-09 says a lost dock gate post brings the tax back; the design leaves the post's £40 a week out of the run. Won: his ruling where one speaks, else the newer economy design.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G13, G04, G11, G12.
 
 ### 4.2.4 The water's edge
 
-- How it works: Frank never walks or runs into the water: the quay edge stops him like a kerb that cannot be stepped off, and cars cannot leave the quay (bollards and the edge stop them, and a car backs out). In a fight the quay edge is one of the street's places: a man put in climbs out at the nearest ladder within 60 real seconds, soaked and humiliated, and the town talks. Water never kills. Frank, put in by others, climbs out the same way. Things can be thrown in (a weapon, goods, a bag); what goes in is gone and whoever saw it keeps it. Tested by 30 minutes along every quay edge on foot and by car with no fall in.
+- How it works: Frank never walks or runs into the water: the quay edge stops him like a kerb that cannot be stepped off, and cars cannot leave the quay (bollards and the edge stop them, and a car backs out). In a fight the quay edge is one of the street's places: a man put in climbs out at the nearest ladder within 60 real seconds, soaked and humiliated, and the town talks. An unconscious man face down in the water drowns in about two minutes, a killing to town and police (his decision 6, 25 Nov; combat pass CS-07; C-543). Frank, put in by others, climbs out the same way. Things can be thrown in (a weapon, goods, a bag); what goes in is gone and whoever saw it keeps it. Tested by 30 minutes along every quay edge on foot and by car with no fall in.
 - Answered 24 Nov (Q19): swimming is out (the quay edge stops him as written); set climbing places are in.
-- Standard: Never stuck (ER-CORE-01); Frank cannot die (his ruling of 12 Oct, archived DECISIONS 13 Oct 02:45); water never kills Test: B: 30 minutes along the quay edge, no fall in; S: a man knocked in climbs out; addendum rules ER-WATER-01 to 02
-- Source: DESIGN §1; his rulings (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.6; COPY-2 s.6; DESIGN-ADDENDUM A11 (ER-WATER-01, 02); DESIGN s.1; Q19: his ruling of 24 Nov (RULINGS on wip, his decisions page)
+- Standard: Never stuck (ER-CORE-01); Frank cannot die (his ruling of 12 Oct, archived DECISIONS 13 Oct 02:45); a conscious man never drowns, an unconscious man face down does after about two minutes Test: B: 30 minutes along the quay edge, no fall in; S: a man knocked in climbs out; addendum rules ER-WATER-01 to 02
+- Source: DESIGN §1; his rulings (his ruling or canon); drowning of an unconscious man: his decision 6 of 25 Nov. Designed in: ONE-SHOT-PROMPT s.6; COPY-2 s.6; DESIGN-ADDENDUM A11 (ER-WATER-01, 02); DESIGN s.1; Q19: his ruling of 24 Nov (RULINGS on wip, his decisions page)
 - Status: ruled (his ruling or canon). Coverage row: 4.2.4.
 - Data (run 5): exact values in production/lane/blueprint/data/map.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
 
@@ -141,6 +146,7 @@ Rooms where jobs and stories go; every interior designed and photoreal (D14).
 - Status: outside. Coverage row: 4.3.2. Conflicts settled: C-291.
 - Home as play (catalogue 23 Nov, rank 20; seen in 1 game): The flat: kettle, wireless, letters on the mat, a tin under the floorboards, photographs and letters, never children. Not yet: the flat is named only; things to use there are for the design proof to place. Feature only; no timing; the part's status is unchanged.
 - Data (run 5): exact values in production/lane/blueprint/data/rooms.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G13.
 
 ### 4.3.3 Shops and workplaces
 
@@ -176,6 +182,7 @@ Rooms where jobs and stories go; every interior designed and photoreal (D14).
 - Source: RULINGS 21 Sep, 1 Oct (the look); CLAUDE.md gate (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: canon content rule; COPY-2 s.4, s.5, s.29; DEFINITIONS G1, G10, RT-09; RULINGS 'The look and the street' (21 Sep, 1 Oct, 3 Oct); CLAUDE.md gate; colour rule: his ruling of 24 Nov (RULINGS on wip, his decisions page) (R7)
 - Status: outside. Coverage row: 4.3.6. Conflicts settled: C-291.
 - Data (run 5): exact values in production/lane/blueprint/data/rooms.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G08.
 
 ### 4.3.7 The police station
 
@@ -243,6 +250,7 @@ AI drivers that always brake for people; parked cars from the kit.
 - Prior research: research/traffic (TRAFFIC-COST-2026-11-17): at most two moving cars in view, one every 40 to 90 s by day, 15 to 20 mph, density by hour 1.0 at 07 to 10 and 17 to 20, 0.8 by day, 0.2 in the small hours; the 0.5 ms budget for up to six cars is unmeasured.
 - Traffic that indicates and yields to sirens (catalogue 23 Nov, next tier): Cars indicate and pull aside for a siren. Partly: traffic stops for people and slows at the street mouth; indicating and yielding are not named. Feature only; no timing; the part's status is unchanged.
 - Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G14, G04.
 
 ### 4.5.2 Parked cars
 
@@ -271,6 +279,7 @@ The firm's cabs, period cars, police cars and vans, all fictional.
 - Standard: Boats and buses scenery (ruling 23 Sep) Test: the gate
 - Source: RULINGS 23 Sep (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: RULINGS 23 Sep; COPY-2 s.3, s.11, s.14; DEFINITIONS G2, G6
 - Status: outside. Coverage row: 4.6.2.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G14, G20.
 
 ## 4.7 Day and night
 
@@ -285,6 +294,7 @@ The clock's light: day and night now, four or five states later, no moving sun.
 - Source: RULINGS weather and night (his ruling or canon). Designed in: DESIGN s.6 (ER-NIGHT-01, 02); LIGHT-WEATHER-VALUES-2026-11-17; RULINGS 1 Oct, 7 Oct, 29 Oct; DEFINITIONS CLK-05; clock: his ruling of 24 Nov (RULINGS on wip, his decisions page) (R2); map.json carries realSecondsPerGameHour 120
 - Status: ruled (his ruling or canon). Coverage row: 4.7. Conflicts settled: C-108, C-109, C-292.
 - Data (run 5): exact values in production/lane/blueprint/data/light-weather.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G12.
 
 ## 4.8 Weather
 
@@ -298,6 +308,7 @@ Dry overcast, drizzle, rain; one wetness value drives look, sight, sound and who
 - Source: RULINGS 5 Oct; DESIGN §6 (his ruling or canon). Designed in: DESIGN s.6 (ER-NIGHT-03); LIGHT-WEATHER-VALUES-2026-11-17; COPY-2 s.5, s.10; DEFINITIONS G9; RULINGS 5 Oct
 - Status: ruled (his ruling or canon). Coverage row: 4.8.
 - Data (run 5): exact values in production/lane/blueprint/data/light-weather.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G12, G19.
 
 ## 4.9 1990 detail
 
@@ -313,6 +324,7 @@ Signage, poll-tax posters, the brand bible's owed brands, CCTV at the bank, phon
 - Status: ruled (his ruling or canon). Coverage row: 4.9. Conflicts settled: C-110.
 - Class shown in heating (catalogue 23 Nov, next tier): Gas fire, storage heater, coal fire and paraffin heater as set dressing. Partly: the part gives the share of homes without central heating; the dressing by class is not named. Feature only; no timing; the part's status is unchanged.
 - Data (run 5): exact values in production/lane/blueprint/data/letters-and-print.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G20.
 
 ## 4.10 Pubs without drink and the closed school
 

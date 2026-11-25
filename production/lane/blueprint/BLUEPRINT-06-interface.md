@@ -27,6 +27,7 @@ The minimal screen.
 - Status: ruled (his ruling or canon). Coverage row: 6.1.2.
 - Prior research: research/aaa-reference study 10 (file-read, a lead): subtitle default 39 units, range 34 to 54; research/ui-design: 36 at 1080 and 48 on his 3440 by 1440, at most about 40 letters a line, 7 to 1 contrast. Keep 24 as the floor, name 39 as the default, define the unit, check at 48.
 - Data (run 5): exact values in production/lane/blueprint/data/ui-text.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G24.
 
 ### 6.1.3 The belief line
 
@@ -81,6 +82,7 @@ Frank's notebook of people and events: the one place he sees where he stands.
 - Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-01 after Act I something reaches Frank at least every 30 real minutes; Open page names the next step; decided. None measured.
 - His ruling of 23 Nov: every direction given by a person is kept in the Ledger or Frank's notes to reread; the Open page is where an open job's directions are reread (gap, run 4: the entry's exact wording and test to be written by the design proof).
 - Data (run 5): exact values in production/lane/blueprint/data/ledger-texts.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G04, G24.
 
 ### 6.2.4 Money in words
 
@@ -177,6 +179,7 @@ Typing, suggested lines, the game's own decision lines, Leave always there.
 - Source: typed-talk/README.md and agreement-2026-11-21.json: two blind labellers agreed 98.3% (kappa 0.98), hard lines 63 of 65, amounts 28 of 28 (real-world figure or published standard). Designed in: DEFINITIONS-2026-11-21 §RT-14; typed-talk/README.md and agreement-2026-11-21.json; DESCRIPTION-2 §28
 - Status: sourced (dated real-world figure or published standard; not a five-sample measurement). Coverage row: RT-14. Conflicts settled: C-122.
 - Studies: aaa-studies/TALK-AS-PLAY.md: TALK-08 a typed line matching a decision only brings up the written decision line; 90% of 20 phrasings; decided. None measured.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G04, G03, G01, G06.
 
 ## 6.8 Photo mode
 
@@ -204,6 +207,7 @@ Addresses, house numbers, street-name plates, passengers' 'left here', asking a 
 - His ruling of 23 Nov: directions from people, each kept to reread in the Ledger or Frank's notes; no waypoint or marker (OUT-09).
 - His ruling of 24 Nov: free fast travel is out; his own driver may skip a trip.
 - Data (run 5): exact values in production/lane/blueprint/data/places.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G24.
 
 ## 6.10 Letters and papers in hand
 
@@ -218,3 +222,5 @@ Things to read: the paper, Agar's solicitor's letters, the VAT letter, notes, po
 - Status: decided. Coverage row: 6.10.
 - His ruling of 24 Nov: printed things read close (the fare book, letters, paper, signs, boards) get a final 2026 look as 2D before Unreal, the paper map first (6.3); every printed line still traces to what Alison saw or was told.
 - Data (run 5): exact values in production/lane/blueprint/data/letters-and-print.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G13, G05.
+

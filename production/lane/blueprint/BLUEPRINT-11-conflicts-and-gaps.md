@@ -416,6 +416,22 @@ The source of each line is in brackets; where a conflict names no winner, the bl
 - C-508 Walk cadence against walk speed. GTA V walk cadence is solid at about 2.0 steps a second, but FIT-G4's walk (1.6 m/s) is a speed and no step length was measured. Won: nothing changes the walk speed; only the cadence is recorded as measured. Parts: FIT-G4, 1.1.1 (cadence line added in run 7).
 - C-530 The 2.6.6 constable's kit and the 7.9 failure part (run 7). The what-if sweep, the reality check and the newest rulings each rewrote 2.6.6 and 7.9. Won: one merged text each (the 25 Nov ruling on the constable's kit and on always a way back; the sweep's remand road; the reality check's PACE 1984 note). Parts: 2.6.6, 7.9.
 
+### Keeper run 8 (25 Nov evening): the combat pass revision 1, the question passes and his decisions 1 to 38, his rulings of 25 Nov (advisors 382 to 395), the evening's measuring
+
+- C-540 Guns before War (1.3.10, RT-10). The parts said a hit before War wounds and never kills, pending D3; the combat pass revision 1 applied D3. Won: his answer of 25 Nov (D3 yes): a gunshot can kill at any stage, by the body rule and CS-31's zones. Parts: 1.3.10, RT-10, CS-31.
+- C-541 Lifting and planting (1.6.13 against CS-29). 1.6.13 allowed a lift; CS-29 said pickpocketing is not a verb. Won: his decision 12 (yes, one verb with readable limits); CS-29's line struck, planting added to 1.6.13. Parts: 1.6.13, CS-29.
+- C-542 The police uniform (CS-29, decision 13). CS-29 made any uniform a give-away, never a key, and decision 13 recommended that none can be got. Won: his ruling of advisor 388 (his A, the newer words): a downed constable's tunic and helmet can be worn, with limits. Parts: CS-29, CS-33.
+- C-543 Water never kills (4.2.4) against the combat pass's drowning (CS-07). Won: his decision 6 (yes): an unconscious man face down drowns in about two minutes, a killing; a conscious man climbs out. Parts: 4.2.4, 1.3.5.
+- C-544 Roof routes in chases (decision 22). The pass recommended a few set roof routes. Won: his answer, no roof routes; no part had them, 1.5.1 now says so. Parts: 1.5.1.
+- C-545 DS Ellis courted (decision 31). The pass recommended friendship yes, courting no. Won: his answer, courtable by the romance rule, she stays the bent detective. Parts: 3.2.8, 2.6.5.
+- C-546 Philip Danby, love interest (canon's cast line) against romance women only (advisor 383) and his decision 9. Open for the canon session: canon outranks the blueprint and still names him a love interest; the parts carry his decision 9 (Philip a friend) marked as waiting on canon's line, which the keeper does not edit. Parts: 3.2.5, 3.2.8.
+- C-547 The one-shot (his rulings of 20 and 21 Nov; ONE-SHOT-PROMPT; many parts' "before the one-shot") against three stages (advisor 395). Won: the three stages; wherever a part says "before the one-shot" or "in the one-shot", read "before stage 1" or "in the stage that holds the part" until the stage list lands. Parts: 9.14, 9.12, index.
+- C-548 The held choke's curve. D1 as asked said no risk for 20 s past the knock-out; revision 1 moved it to 40 s because the first curve began before its only source. Won: revision 1 (later, reviewed), inside his yes. Parts: CS-13.
+- C-549 Economy figures in G27. The whole-game pass's run of 100 seeds a style gives some figures different from the economy design's (lift 339 against 305 to 340, round 182 against 177 to 182; the 224 against 785 squeeze figure is the same in both). Won: the design file's 300-run figures for standards; the 100-seed figures are leads. Parts: 7.17.
+- C-550 Chase length. His ruling of 24 Nov (his decisions page) says chases run 1 to 3 minutes; the evening's foot-chase figures (L.A. Noire median about 54 s, solid with notes on length; Sleeping Dogs about 67 s, not solid) are under a minute or just over, every one a scripted catch. Won: the ruling stands (rule c); listed as R22. Parts: 1.5.1, FIT-F04.
+- C-551 The whole-game pass found "reputation as the build" missing from the blueprint, while his ruling of advisor 386 is in RULINGS. Won: the ruling, carried by the new part 7.17 and rules G25 to G27. Parts: 7.17.
+- C-552 Hostage-taking as a shield (the combat pass's Out list) against his decision 1 (a held man walked past watchers: yes). Won: both stand together: a held man can be walked past watchers by the holding rule (G17), the police never give way to it, and a shield the police respect stays out. Parts: CS-29, 1.6.14.
+
 ## Gaps for the design proof
 - Hold-ups (1.6.15): ruled in on 20 Nov, made a general action from the start on 25 Nov (advisor 378, 1.6.15 rewritten in run 7), but no parts-tree part and no coverage.json row exist; the blueprint carries the part as decided. The design proof to add the row.
 - Guns rare and late: Mickey's revolver can be found at rung 2 (RT2-14, 2.12.2), about the start of Act II, which sits uneasily with his rulings (guns rare, late, after melee). The design proof to gate the find on a later state or put it to him.
@@ -1172,6 +1188,21 @@ Not counted as a gap: the checklist check's note that OUT-08 reads wider than it
 - Data files still carry superseded values (keeper run 7, from the helpers' reads): map.json and light-weather.json the old Quay Street lamps; fares.json and ECONOMY-DESIGN the old tariff; data/places.json holdups and holdups_why the old robbery gates; police.json the constable's kit and sees_tom_when (Tom for Frank); tune.json and people/ the combat pass's numbers; 54 people files with can_die false; the send jobs' exclusion list; carol_ellis.json 'cannot be bought'. The data job brings each to the blueprint.
 - Holding someone overnight in a locked room (his ruling of 25 Nov, advisor 374: one night at most, no tying up shown) has no part yet; the next system pass designs it.
 - Booking (his ruling of 24 Nov, advisor 373): the design gate counts only gaps that change how the game is built; the gap list here still mixes those with content gaps (a number, a line, a prop) that go to the loops. The design proof sorts them.
+
+### Keeper run 8 (25 Nov evening)
+
+- 9.14 Building in three stages: the stage list S01 to S41 is not on the branch; parts cannot be tagged by stage, and the stage prompts need it.
+- BLUEPRINT-12, every rule G01 to G32: proposed directions with no working values; Monday's system passes (police and justice, talk and gossip, people, the cab trade, witnesses and senses, story, the crowd, combat, pacing and styles) set them; the 996 and 350 questions re-run as the measure.
+- 7.17 Play styles: quiet routes for the yard (week 6), week 7's one fight and each rival's go at his men (week 5) are not written; the five readings are not in the people data; the style bots (G29) and the replay tests (G30) are not built.
+- 7.17, the schemer: rumours, framing, planting and tips have rules (G01, G13, G15) but no designed steps.
+- CS-31, CS-32: gun, arm and leg figures and the sawn-off's spread rest on judgement; the medical and ballistic sources were not reachable from the cloud and are to be read from the PC; the 1990 constable's kit is partly unverified.
+- CS-35: its thirteen lines are not re-judged by a fresh tester.
+- 2.6.11 The arrest interview: the solicitor's advice, alibis checked against witnesses and a crewman's confession have no designed steps yet (Monday's police pass).
+- 3.2.8 Courting: her dials' thresholds for each step of courting are not set (Monday's people pass).
+- 3.2.5: canon's cast line still names Philip Danby a love interest (C-546).
+- 1.4.1 Being seen: KCD2 has one uncut sample of five; RDR2 is the only solid being-seen figure.
+- 1.5.1 Chases on foot: no reference gives an escape rule except Sleeping Dogs (a lead); Sleeping Dogs' edges for four samples and its loss rule are open; GTA V not started.
+- Content shortfalls for the loops: 265 rows listed by rule in BLUEPRINT-12; they do not hold stage 1.
 
 ## Source traces not found
 

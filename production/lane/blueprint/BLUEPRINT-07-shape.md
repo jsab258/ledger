@@ -21,6 +21,7 @@ Minute by minute: control at 0:20, first fare 2:30, a choice and a deed at 5:30,
 - Source: DESIGN §15; Study 2 (leads); canon targets (his ruling or canon). Designed in: DESIGN §15 (table and ER-FIRST-01 to 04); GAME-DESCRIPTION-COPY-2 §4; ONE-SHOT-PROMPT 4; DEFINITIONS design pass 3, clock table CLK-01; QUESTIONS 4; RULINGS 28 Sep, 3 Oct; his ruling of 24 Nov (RULINGS on wip, his decisions page) (Q12)
 - Status: ruled (his ruling or canon). Coverage row: 7.1. Conflicts settled: C-124, C-125.
 - Data (run 5): the data sweep (class C) needs the scenes file (data file 18), still to be made from the story on paper; exact values pending it.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G28.
 
 ## 7.2 An evening
 
@@ -76,6 +77,7 @@ State-fired beats across seven weeks, then the inspection week.
 - Status: decided. Coverage row: GD-03. Conflicts settled: C-131.
 - Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-06 a step lost twice brings another way within a game day; decided. None measured.
 - Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-01 a job judges the result, never the route; decided. None measured.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G22.
 
 ### RT-04 Act transitions and stall paths
 
@@ -87,6 +89,7 @@ State-fired beats across seven weeks, then the inspection week.
 - Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-01 after Act I something reaches Frank at least every 30 real minutes; Open page names the next step; decided. None measured.
 - Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-02 Act II in at least four stages of 4 real hours at most, each ending in a rung change; decided. None measured.
 - Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G22, G30.
 
 ### FIT-F13 Act II's week count and its fail-safe
 
@@ -108,6 +111,7 @@ How play time is shared: on foot, driving, talk, jobs, fights and chases, the Le
 - Standard: DESIGN table (on foot 25%, driving 22%, talk 19%, jobs 17%, fights and chases 8%, Ledger 6%, waiting 3%) rests on judgement; to be measured from timed one-hour stretches of reference games Test: H: play time booked by activity against the measured shares
 - Source: DESIGN §1 (judgement); his question 20:29 (advisor 257) (waits on a dated study). Designed in: DESIGN §1 (table, set for 18 hours); GAME-DESCRIPTION-COPY-2 §34, §41; canon pillar; MEASUREMENTS-NEEDED block 3
 - Status: pending. Coverage row: 7.5. Conflicts settled: C-136, C-137.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G28.
 
 ### FIT-F15 What the act hours include (side stories inside the main story's about 20 h)
 
@@ -141,6 +145,7 @@ Nine sources of tension; a retellable moment each evening.
 - Source: DESIGN §3 (no reference figure yet). Designed in: DESIGN §3 (ER-TENS-01, 02); GAME-DESCRIPTION-COPY-2 §2; VISION. Signature moments: DECIDED by the hype-video job (hype/SIGNATURE-MOMENTS.md, hype/SUMMARY.md, 25 Nov) for him to overturn; backed by the fifty list (fifty/FIFTY.md rows 1, 3, 4, 5, 11, 17, 18, 19, 20, 25, 26, 27, 30, 31).
 - Status: unmeasured (the ten tests are decided; none has been run). Coverage row: 7.6.
 - Story needs (measure): a full moment passes four tests (the player chose; it could have gone another way by replay; a named person was there; it came back and reached him); pass mark at least one in the first 30 minutes and two in every later hour, at least 5 in a three-hour evening, half from witnesses, recognition or returns, a third with a mark, 6 of 8 panel players naming a person and a consequence (EMERGENT-MEASURE T1 to T3, T10). Partly covered: the part holds the three-test retellable moment and the 5 of 8 panel bar; the replay test, the mark share and the 6 of 8 retelling are missing.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G28.
 
 ### GD-05 Humour and a mix of tones
 
@@ -164,6 +169,7 @@ What a newcomer can point to at each rung: the name, greetings, property, clothe
 - Status: decided. Coverage row: 7.7.
 - His ruling of 23 Nov (RULINGS on wip, genre line): growth is mainly in position; never levels: streets and people come to be known by practice, skills are taught by those who trust him and kept if lost, and hand skills improve quietly, at most a quarter better. The rungs above stand; the taught skills and the quarter cap are owed a design (gap, run 4). Conflict C-263.
 - Data (run 5): exact values in production/lane/blueprint/data/lines/ (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G26.
 
 ## 7.8 Saving
 
@@ -180,6 +186,7 @@ An autosave after every deed, consequence and job step; reloading never stopped.
 - Source: DESIGN §17; D35, D58 (his ruling or canon). Designed in: DESIGN §17 (ER-SAVE-01); GAME-DESCRIPTION-COPY-2 §3, §35 (saving); DEFINITIONS AX-07; GTAVI-MAP Y8.2
 - Status: ruled (his ruling or canon). Coverage row: 7.8.
 - Checklist (23 Nov, top twenty no. 6; A39.01, A39.03): missing: the player must be told in plain words when the game saves, and a visible saving sign must show while a save is written. Gap for the design proof; status unchanged.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G24.
 
 ## 7.9 Failure without reload
 
@@ -223,6 +230,7 @@ No stats, no difficulty ladder: assists only (seeing assist, hints, aim of drivi
 - Standard: ER-JOB-04; never force waiting (Study 17) Test: S: the week of waits
 - Source: DESIGN §4, §6 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §4 (ER-JOB-04), §6; GAME-DESCRIPTION-COPY-2 §34; DEFINITIONS CLK-04
 - Status: decided. Coverage row: 7.11. Conflicts settled: C-307.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G28.
 
 ## 7.12 Always something to do
 
@@ -238,6 +246,7 @@ By day, with no job live, a fare, a debt or a person with a word for him within 
 - Standard: ER-CORE-07; ER-CORE-05 (never more than 5 minutes with nothing new) Test: S: idle probe at 20 daytime moments; H empty minutes
 - Source: DESIGN §1 (no reference figure yet). Designed in: DESIGN §1 (ER-CORE-05, 07); GAME-DESCRIPTION-COPY-2 §34; FIT-CHECK F32; DEFINITIONS G1, G4 Reality check (CHECK D80; RESEARCH C3): Frank's 1.6 m/s is a design value, not measured (only GTA V's walk cadence is solid, no step length, C-508); ordinary people walk about 1.3 to 1.5 m/s (modern UK counts, TRL PPR700 London mean 1.46; no pre-1992 figure found), so the 48 m circle is a game figure, not a real pace.
 - Status: unmeasured. Coverage row: 7.12. Conflicts settled: C-143.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G28.
 
 ### GD-02 Density: something to meet every so many metres or seconds on a street
 
@@ -333,6 +342,7 @@ How fast a game hour passes in real time.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 4 (run 5), the clock Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (his ruling or canon). Designed in: DEFINITIONS design pass 4 CLK-06 and F13; design pass 3 CLK-06 (F13, F14); RULINGS 21 Nov; his ruling of 24 Nov (RULINGS on wip, his decisions page) (R2)
 - Status: ruled (his ruling or canon). Coverage row: CLK-06. Conflicts settled: C-157, C-158, C-307, C-309.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G28, G30.
 
 ### CLK-07 Weekly rhythms (rent, cooling, rival rungs)
 
@@ -367,6 +377,7 @@ What happens when the story ends: the close, credits, and whether play continues
 - Source: ruling 23 Sep (his ruling or canon). Designed in: DESIGN-ADDENDUM §A7 (ER-AFTER-01); GAME-DESCRIPTION-COPY-2 §33; DEFINITIONS RT2-21; RULINGS 23 Sep
 - Status: ruled (his ruling or canon). Coverage row: 7.15.
 - Data (run 5): the data sweep (class C) needs the scenes file (data file 18), still to be made from the story on paper; exact values pending it.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G22, G31.
 
 ### GD-04 A second playthrough: what differs
 
@@ -375,6 +386,7 @@ What happens when the story ends: the close, credits, and whether play continues
 - Source: CLOUD-FIGURES-2026-11-21.md C4: KCD2 one ending, 8 epilogue decisions and 3 later paths (Gamepressure, PC Gamer 2025); RDR2 2 endings, 4 with honour (rdr2.org 2023, SegmentNext 2024); LEDGER's eight differences in five hours asks more than either (reference game). Designed in: DEFINITIONS GD-04; CLOUD-FIGURES C4; GAME-DESCRIPTION-COPY-2 §37, §33
 - Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: GD-04. Conflicts settled: C-162.
 - Studies: aaa-studies/PLAYERS-STORIES.md: STORY-07 two first evenings share under half their moments; decided. None measured.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G30.
 
 ### RT2-21 After the ending and past nine weeks (seven under the ruled clock)
 
@@ -395,6 +407,16 @@ Things to do with people that are not crime: a boxing club, a snooker hall, quay
 - Source: his ruling of 24 Nov (RULINGS on wip, his decisions page) (Q13, Q3); canon. Designed in: DESIGN-ADDENDUM §A28; GAME-DESCRIPTION-COPY-2 §29; DEFINITIONS G10; QUESTIONS-FOR-JAFAR-2026-11-20 Q3
 - Status: ruled (his ruling or canon). Coverage row: 7.16. Conflicts settled: C-310, C-311.
 - Data (run 5): exact values in production/lane/blueprint/data/rooms.json and places.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+
+## 7.17 Play styles and the town's reading of Frank
+
+### 7.17 Play styles and the town's reading of Frank
+
+- How it works: KCD2's play styles with no skill tree (his ruling of 25 Nov, advisor 386, his A): every job and every story beat has three or more routes (talk or menace, stealth or cunning, force), each leaving different traces (talk leaves people who heard him and what he promised; stealth leaves things moved, doors forced and glimpses; force leaves bodies, marks and witnesses). The town's reading of Frank (feared, trusted, quiet, cruel, generous), held per person from the deeds that person holds and never shown as a number, changes what each route allows with that person (rule G26). The town adapts to how he plays so no route dominates (G27; his decision 37: drivers walk out, a street keeps a lookout, shops shut early, people ring sooner, never vigilante violence). A round or front held through a go-between counts for rung 3 (decision 33); the spine's crew aims have a solo route (decision 34); the five heaviest scenes carry Frank's lines in two or three variants by reading (decision 36). Difficulty rises by stakes and circumstance, never by levels (G32).
+- Standard: every job card and spine beat names three routes, each finishing in a bot run (G25, G29); the whole-game pass's forced fights (the yard in week 6, week 7's fight, each rival's go at his men in week 5) each gain a quiet route; no route pays more than twice the middle one an hour (G27; the whole-game pass's run of 100 seeds a style, leads only: lift 339, tobacco 240, landing 200, round 182, fares 55 pounds an hour; the economy design's figures for standards, lift 305 to 340 and round 177 to 182; routes not yet in either run; C-549). Test: B: six pure style bots and a mixed one over the whole story (G29); S: economy run with routes
+- Source: his ruling of 25 Nov (advisor 386; RULINGS on wip); his decisions 33, 34, 36, 37; the whole-game question pass (questions/SUMMARY-WHOLEGAME.md, RULES-WHOLEGAME.md G25 to G27, G32); designed in Monday's system passes
+- Status: ruled. Coverage row: none yet. Rules: G25, G26, G27, G32.
+- Whole-game pass, on paper today: the brute works end to end; the ghost, the talker, stealth, the clean firm and a second run work partly; the schemer does not (rumours, framing, planting and tips not built: G01, G13, G15).
 
 ## 7.OUT Left out by his rulings
 
@@ -460,6 +482,7 @@ Things to do with people that are not crime: a boxing club, a snooker hall, quay
 - Source: ruling 23 Sep: no jump (vaulting at set places to the recommended answer of his question 1); his ruling of 24 Nov (RULINGS on wip, his decisions page) (Q19) (left out by his ruling or canon). Designed in: RULINGS 23 Sep; DESIGN-ADDENDUM §A26; DEFINITIONS G1, G4; QUESTIONS-FOR-JAFAR-2026-11-20 Q1
 - Status: out. Coverage row: OUT-08. Conflicts settled: C-312.
 - Data (run 5): exact values in production/lane/blueprint/data/map.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G14.
 
 ### OUT-09 Minimap, waypoints, markers
 

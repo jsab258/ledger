@@ -23,6 +23,7 @@ Story pick (keeper run 4, 24 Nov): his choice "A on top of C", as reported in th
 - Prior research: research/british-crime-fiction-tone and game-design/story-outline-2026-09-28.md: the National Dock Labour Scheme ended 3 Jul 1989 (9,221 registered dockers in April 1989, under 4,000 by October 1990); poll-tax riot 31 Mar 1990; the class reading, not greed; game-design/warehouse-fire-2026-09-29.md for Mickey's past.
 - Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-04 check order: first hour, rest of Act I, Act II stage one; decided; WQ-05 each act ends closing a thread; decided. None measured.
 - Data (run 5): the data sweep (class B) needs the scenes file (data file 18), still to be made from the story on paper; exact values pending it.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G22.
 
 ### 3.1.2 Act II, The Rise and the Squeeze
 
@@ -42,6 +43,7 @@ Story pick (keeper run 4, 24 Nov): his choice "A on top of C", as reported in th
 - Story needs (frame, 24 Nov): deed cards F1 to F7 as director cards, one a week, each with a declined branch, plus Frank's one loud deed of his own each week at his own risk, seen and retold (Frank's deeds test; Frank's deeds carried). Not covered; the part's beats are states only and hold no weekly player-chosen deed.
 - Story needs (frame, 24 Nov): the turn's guaranteed window, a tip reaching Ellis by the end of week five whatever the player does, its source read from the record (SYSTEMS-THE-STORY-NEEDS S17). Not covered; only the rival fail-safe exists, not a tip fail-safe, and the turn cannot wake before the Landing and lesson five.
 - Story needs (frame, 24 Nov): the guaranteed collision of a day appointment and a night job (SYSTEMS-THE-STORY-NEEDS S37). Covered.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G22, G25.
 
 ### 3.1.3 Act III, The Ledger Comes Due
 
@@ -56,6 +58,7 @@ Story pick (keeper run 4, 24 Nov): his choice "A on top of C", as reported in th
 - Data (run 5): the data sweep (class C) needs the scenes file (data file 18), still to be made from the story on paper; exact values pending it.
 - Story needs (frame, 24 Nov): Act III's five mornings each fetched by a different kind of play, two as set pieces (a man at his door; a chase for Kevin's log; a break-in or a word for an invoice; a drive with the Widow; week one's line) (SYSTEMS-THE-STORY-NEEDS S27; paper second run). Partly covered: five graded mornings exist; they are asks, not different jobs.
 - Story conflict C-339 (run 5): The part has the inspector ask for one item each morning that Frank produces or asks for in writing, while the story needs each morning fetched by a different kind of play, two as set pieces. Until designed, the part stands; the need is a gap for the design proof.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G13, G22.
 
 ### 3.1.4 The endings
 
@@ -66,6 +69,7 @@ Story pick (keeper run 4, 24 Nov): his choice "A on top of C", as reported in th
 - Status: ruled (his ruling or canon). Coverage row: 3.1.4. Conflicts settled: C-065, C-066, C-297.
 - Story needs (frame, 24 Nov): the ending's town voices, up to five lines from named people holding a deed first hand, plus what each rival still calls him (SYSTEMS-THE-STORY-NEEDS S30). Partly covered by "a short close in the town"; the selection rule and line banks are missing.
 - Walk-out ending (his ruling of 25 Nov, advisors 374, 375): leaving Meridian or selling Mickey's is a short walk-out ending, only by deliberate choice, asked twice; every other route (arrest, the long heat, a killing charge, a guilty verdict) leaves a reachable way back (7.9, LH-07). Scene and lines not yet written (gap, run 7).
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G25, G31, G15, G22, G29.
 
 ### 3.1.5 Ending signs and Frank's reading
 
@@ -83,6 +87,7 @@ Story pick (keeper run 4, 24 Nov): his choice "A on top of C", as reported in th
 - Source: ruling 30 Sep (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.36; COPY-2 s.30, s.31; DESIGN s.9, s.16; RULINGS 30 Sep; DEFINITIONS RT-02; Q7: his ruling of 24 Nov (RULINGS on wip, his decisions page)
 - Status: ruled (his ruling or canon). Coverage row: 3.1.6. Conflicts settled: C-297.
 - Data (run 5): the data sweep (class C) needs the scenes file (data file 18), still to be made from the story on paper; exact values pending it.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G09, G13, G14, G05.
 
 ### RT-01 Act III morning grading
 
@@ -112,6 +117,7 @@ Story pick (keeper run 4, 24 Nov): his choice "A on top of C", as reported in th
 - Status: pending. Coverage row: RT2-04. Conflicts settled: C-069, C-297.
 - Story needs (frame, 24 Nov): the final choice (leave the line, write it true on Sheila's true count, or Danny's name) mapping onto books, charges and "nobody given to Ellis", with the close chosen from the state at five (SYSTEMS-THE-STORY-NEEDS S29; paper second run). Partly covered: the rule reads the save; Sheila's true count as a third book and the three counter actions are missing.
 - Story conflict C-346 (run 5): The part's friendship is Alison or Danby called on three times, while the frame's final choice and close ("lost with a friend") may turn on Ron or Sheila as the friend (open choice 4). Until designed, the part stands; the need is a gap for the design proof.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G25, G31.
 
 ### RT2-15 The successor's offer and the last day
 
@@ -156,6 +162,7 @@ Named people.
 - Prep: INVENTORY section 2: regulars 30 (16 in the prototype; all 30 in cloud-week/town with facts, 8 with secrets); own lines 12 x 60 = 720 and about 57 people x 30 = 1,710 (the prototype about 150 and about 120); 401 own lines for Ron, Darren, Father Walsh and June already exist in cloud-week/lines (94, 93, 112, 102).
 - Data (run 5): exact values in production/lane/blueprint/data/people/ (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
 - Story needs (paper, 24 Nov): the young man under the overhang as a new speaking role (Frank's deeds carried). Partly covered: regulars have own lines; this role is not on the list.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G09.
 
 ### 3.2.4 The crowd
 
@@ -168,6 +175,7 @@ Named people.
 - Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-07 every witness whose telling reaches Frank or police can be met again, with a face and own line; decided. None measured.
 - Prep: SOUND-PLAN SND-12: wordless walla by density, none under 3 people, thin 3 to 11, full at 12 or more (own bands sized to the rescaled G9 counts); words come only from people's own lines; SND-14 every reaction situation has lines for at least 6 speaker kinds.
 - Data (run 5): exact values in production/lane/blueprint/data/crowd.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G08.
 
 ### 3.2.5 Someone worth being honest for
 
@@ -175,6 +183,8 @@ Named people.
 - Standard: One of Act I's five threads; Danby is never seen at work (the school stands closed) Test: S: the friendship reaches its ending state
 - Source: DESIGN §16; canon (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.35; COPY-2 s.29, s.4; DESIGN s.16; DEFINITIONS RT2-04; canon
 - Status: ruled (his ruling or canon). Coverage row: 3.2.5.
+- His decision 9 (25 Nov): Philip Danby stays a friend, never courted, since courting is women only (advisor 383); canon still names him a love interest, and that line is the canon session's to change (C-546). Alison Sedman's thread can become courting under 3.2.8.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G06, G07.
 
 ### 3.2.6 One complete person
 
@@ -191,6 +201,14 @@ Named people.
 - Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 3.2.7.
 - Data (run 5): the data sweep (class C) needs the scenes file (data file 18), still to be made from the story on paper; exact values pending it.
 - Story needs (frame, 24 Nov): calling on people and the friendship (SYSTEMS-THE-STORY-NEEDS S39). Covered.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G06, G04, G07, G09.
+
+### 3.2.8 Courting by the dials
+
+- How it works: Romance is a can-you under the people rules (his ruling of 25 Nov, advisor 383): women only, each by her own dials (unattached, temper, regard, what she knows of him); nothing explicit; lightly scripted. No marriage (advisor 389): courting goes as far as walking out together. Its consequences follow her dials, her ties and what she learns of him: she may stay loyal, even help trap a rival through talk and a setup; she may be frightened and leave; a rival's former partner may want revenge and be drawn to Frank. DS Ellis can be courted by this rule while she stays the bent detective (his decision 31); Philip Danby stays a friend (his decision 9).
+- Standard: no woman can be courted against her dials; nothing explicit is shown or said; no marriage; what she learns of his deeds moves her by the same memory and gossip rules as anyone (golden rows). Test: S: golden rows; H: the romance lens's questions in the 996 re-run
+- Source: his rulings of 25 Nov (advisors 383, 389; RULINGS on wip); his decisions 9, 20, 31; rule G06 (BLUEPRINT-12); designed in Monday's people pass
+- Status: ruled. Coverage row: none yet. Rules: G06, G07. Conflicts settled: C-545, C-546.
 
 ## 3.3 Side stories
 
@@ -212,6 +230,7 @@ About 25 found on foot (his ruling of 24 Nov, Q9; the earlier text said 25 to 40
 - Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 3.3. Conflicts settled: C-073, C-298, C-293.
 - Data (run 5): exact values in production/lane/blueprint/data/side-stories/ (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
 - Story needs (frame, 24 Nov): each kept side story naming its return (a recruit, front, hook, witness or voice in the close) (SYSTEMS-THE-STORY-NEEDS S31). Partly covered: about 25 stories ending in something the town knows; which are kept and their returns are open.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G09, G22, G31.
 
 ## 3.4 Fares
 
@@ -229,6 +248,7 @@ Few and chosen, each a person with something going on, feeding the crime; never 
 - Data (run 5): exact values in production/lane/blueprint/data/fares.json (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
 - Economy (24 Nov, economy/ECONOMY-DESIGN-2026-11-26.md section 6, EC-01; tariff corrected by his ruling of 24 Nov, advisor 372): the firm's fare is about 60p to start, then 80p a mile (the design's 80p plus £1.10 was above London's 1990 rate and the late-1991 average outside it); the quarter more 22:00 to 06:00 and Sundays is carried over unchecked. A £2.50 to £3.50 fare is then about 2.4 to 3.6 miles (arithmetic), which is why most rides go beyond the Hook. The old test figures (1.5 miles at 14:00 £2.45, at 23:00 £3.06) are void; the same ride is £1.80 and £2.25 by arithmetic, to be re-run by the economy lane; ECONOMY-DESIGN and fares.json still carry the old tariff.
 - Economy conflict C-327 (run 5): Settled: the part now carries his ruling of 24 Nov (a fare is £2.50 to £3.50; 80p plus distance is gone). Still open: the old £85 to £95 a week from drivers' fares in the part's text is replaced by the half split but not recomputed (gap).
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G20, G13.
 
 ### 3.4.2 Wrinkles
 
@@ -236,6 +256,7 @@ Few and chosen, each a person with something going on, feeding the crime; never 
 - Standard: Every fare after the first teaching fare carries one (F20); no wrinkle twice running (ER-JOB-06) Test: H: the log; S: no repeat twice running
 - Source: DESIGN §5, §4 (no reference figure yet). Designed in: ONE-SHOT-PROMPT s.13 and its conflicts note; COPY-2 s.12, s.41; DESIGN s.5; DEFINITIONS F20, G7, CLK-02
 - Status: unmeasured. Coverage row: 3.4.2. Conflicts settled: C-076, C-077, C-292.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G20.
 
 ### 3.4.3 Pauline and the radio
 
@@ -243,6 +264,7 @@ Few and chosen, each a person with something going on, feeding the crime; never 
 - Standard: ER-DRIVE-09: always right, repeated on a key Test: S: a scripted driver follows each fare's words alone
 - Source: DESIGN §5; canon (radio) (his ruling or canon). Designed in: ONE-SHOT-PROMPT s.13; COPY-2 s.12; DESIGN s.5 (ER-DRIVE-09); GTAVI-MAP GV-03; canon (the radio)
 - Status: ruled (his ruling or canon). Coverage row: 3.4.3.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G20.
 
 ### FIT-G7 How many fare people are written
 
@@ -311,6 +333,7 @@ The authored jobs.
 - Studies: aaa-studies/TALK-AS-PLAY.md: TALK-02 each decision talk has two outcomes that turn on state he can see or know, reason said; decided. None measured.
 - Data (run 5): the data sweep (class C) needs the scenes file (data file 18), still to be made from the story on paper; exact values pending it.
 - Story needs (frame, 24 Nov): the sit-down, accept, defy or counter (SYSTEMS-THE-STORY-NEEDS S36). Covered.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G08, G22.
 
 ### 3.5.6 Job template and step states
 
@@ -323,6 +346,7 @@ The authored jobs.
 - Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-01 a job judges the result, never the route; decided; MS-02 a planned job's three keys leave at least two different traces; decided. None measured.
 - Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-03 no dead leg over 2 minutes; a job 5 to 30 minutes, planned ones to 45; decided; MS-04 a failed step changes the town, never sends him back; decided. None measured.
 - Prior research: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: four of seven professional pieces fault rigid missions (RDR2 fails for straying); GTA V heists with a choice of approach are praised; thin.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G25.
 
 ### 3.5.7 How jobs reach him
 
@@ -334,6 +358,7 @@ The authored jobs.
 - Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-03 Acts II and III each open a new place or way; decided; DENSE-09 half the side stories first met by walking past; decided. None measured.
 - Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-08 a forced-failure bot still finds jobs, rent and two brakes it can act on (talk it down, buy it quiet, a favour) the next week of Act II; decided. None measured.
 - Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-01 after Act I something reaches Frank at least every 30 real minutes; Open page names the next step; decided. None measured.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G22.
 
 ### GD-08 The catalogue of jobs and stories per act (count, kinds, givers)
 
@@ -375,6 +400,7 @@ Talk content and its system; the moat, never the main thing.
 - Prior research: aaa-studies/TALK-AS-PLAY.md: no published figure for choices a minute or exchange length in any reference game; the 12-word median comes from studies/03 (KCD2 files, background only), so live-reply length is unmeasured.
 - Checklist (23 Nov, top twenty no. 5; A31.09, A31.10): missing: a rule for Frank walking off mid-talk (talk ends, the person remembers) and for a fight or shout breaking in on talk (talk drops, the person reacts). Gap for the design proof; status unchanged.
 - Story needs (frame, 24 Nov): live talk carrying the spine's facts as they become true (SYSTEMS-THE-STORY-NEEDS S25). Covered.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G02, G09.
 
 ### 3.6.2 Claim check
 
@@ -386,6 +412,7 @@ Talk content and its system; the moat, never the main thing.
 - Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-01 a deed a named person saw is said to Frank with one concrete detail; decided. None measured.
 - Studies: aaa-studies/TALK-AS-PLAY.md: TALK-03 a fact Frank holds changes the reply and is named; a wrong push ends in a state, never a reload; decided; TALK-05 a person with an unsettled deal cites it in the next talk's first reply; decided. None measured.
 - Studies: aaa-studies/TALK-AS-PLAY.md: TALK-08 a typed line matching a decision only brings up the written decision line; 90% of 20 phrasings; decided; TALK-09 no empty dodge: a reply lacks neither a fact nor a stated reason; decided. None measured.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G09, G03, G02.
 
 ### 3.6.3 Written street lines
 
@@ -410,6 +437,7 @@ Talk content and its system; the moat, never the main thing.
 - Bystander talk reflects what Frank just did (catalogue 23 Nov, rank 3; seen in 3 games): At the counter and the bus stop people talk of what happened, in their own words. Partly: the situation list has a body or a man down but not recent deeds heard at second hand. Feature only; no timing; the part's status is unchanged.
 - Checklist (23 Nov, top twenty no. 15; A30.13, A13.12): missing: a line must stop when its speaker falls, leaves or is killed mid-line, and two people must speak in turn and wait, with a transcript check. Gap for the design proof; status unchanged.
 - Data (run 5): exact values in production/lane/blueprint/data/lines/ (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G02.
 
 ### 3.6.5 Decision lines
 
@@ -480,6 +508,7 @@ Small authored incidents placed on the clock and the town's state: a row on the 
 - Status: ruled (his ruling or canon). Coverage row: 3.7. Conflicts settled: C-089.
 - Owners and witnesses chase a thief (catalogue 23 Nov, rank 15; seen in 1 game): A bag snatched outside the grocer: Frank chases or not, and the street remembers which. Already covered: the shoplifter running from the grocer is a happening, and every happening leaves something the town knows. Feature only; no timing; the part's status is unchanged.
 - Data (run 5): exact values in production/lane/blueprint/data/happenings.json (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G07.
 
 ### RT-19 Content supply at night and late in Acts II-III
 

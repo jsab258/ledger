@@ -79,6 +79,7 @@ Text, hearing, motor and cognition options.
 - Status: ruled (his ruling or canon). Coverage row: 8.4.1.
 - Prep: SOUND-PLAN SND-26: with the assist on, a word for each of four cues (Frank's loud noise, a street gone quiet, a shout, a car heard) and none when off; it shows what Frank hears, never what anyone knows.
 - Data (run 5): exact values in production/lane/blueprint/data/ui-text.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G24.
 
 ### AX-01 Text and interface size, contrast and font
 
@@ -86,6 +87,7 @@ Text, hearing, motor and cognition options.
 - Standard: XAG 101 (text display) and 102 (contrast): text at 200% never clipped; contrast at least 4.5 to 1 measured on 50 frames by day, night and rain. Test: S: screenshots at 100, 150 and 200% at 1280x720, 1920x1080 and 3440x1440; contrast measured by script on the subtitle and prompt regions.
 - Source: XAG 101, 102 (sources/a11y-pc.json); the description, section 3 ("nothing under 24 units"); GTA VI's text size setting (Y1.9). (real-world figure or published standard). Designed in: DEFINITIONS AX-01; sources/a11y-pc.json (XAG 101, 102); GAME-DESCRIPTION-COPY-2 §3, §35; DESIGN §17 (ER-SCREEN-02)
 - Status: sourced (dated real-world figure or published standard; not a five-sample measurement). Coverage row: AX-01. Conflicts settled: C-172.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G24.
 
 ### AX-02 Subtitle options
 
@@ -93,6 +95,7 @@ Text, hearing, motor and cognition options.
 - Standard: GAG basic and XAG 104: the four options (size, background box, speaker's name, street chatter) present; the first screen offers them; no subtitle without its audio; every subtitle stays for its line plus 0.3 s. Test: B: every line played in a 2-hour soak logged with its subtitle on and off times.
 - Source: GAG (subtitles), XAG 104; the description, section 3; ruling 23 Sep (subtitle only with its audio). (real-world figure or published standard). Designed in: DEFINITIONS AX-02; sources/a11y-pc.json (XAG 104, GAG); RULINGS 23 Sep
 - Status: sourced (dated real-world figure or published standard; not a five-sample measurement). Coverage row: AX-02.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G24.
 
 ### AX-03 Motion and comfort settings (shake, bob, blur, field of view, background movement)
 
@@ -100,6 +103,7 @@ Text, hearing, motor and cognition options.
 - Standard: XAG 117 and GAG: every listed effect can be turned off alone; flashing reduced below three flashes a second when switched. Test: S: each switch toggled and the frames checked; a flash-rate script on a gunshot clip with the switch on.
 - Source: XAG 117, GAG (motion); ruling 28 Oct (86 degree lens); GTA VI's settings list (Y1.9). (real-world figure or published standard). Designed in: DEFINITIONS AX-03 and Design pass 3 preamble; RULINGS 28 Oct camera line (21 Nov edit); sources/a11y-pc.json (XAG 117); LOG.md 21 Nov
 - Status: sourced (dated real-world figure or published standard; not a five-sample measurement). Coverage row: AX-03. Conflicts settled: C-173.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G24.
 
 ### AX-04 Audio options (separate sliders, mono, speech clarity)
 
@@ -144,6 +148,7 @@ Text, hearing, motor and cognition options.
 - Standard: XAG 106: every menu item and every Ledger line is spoken when focused with the switch on. Test: B: a menu walk with speech events logged; any focused item without a speech event fails.
 - Source: XAG 106; Y1.9 (screen narration). (real-world figure or published standard). Designed in: DEFINITIONS AX-09; sources/a11y-pc.json (XAG 106); GTAVI-MAP Y1.9
 - Status: sourced (dated real-world figure or published standard; not a five-sample measurement). Coverage row: AX-09.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G24.
 
 ### AX-10 Pause and focus safety (pause on losing focus, alt-tab safe)
 

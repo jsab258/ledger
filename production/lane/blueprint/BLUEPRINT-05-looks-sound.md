@@ -93,6 +93,7 @@ Movement.
 - Source: RULINGS; risk R4 (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: CORNER-PLAN-2026-11-02 step 3; BASELINE-2026-11-02 row g; RULINGS Clothes floor 3 Oct; 6-RISKS R4; DESCRIPTION-2 §7
 - Status: outside. Coverage row: 5.2.5.
 - Prior research: research/natural-idles: base loop 8 to 12 s with weight shift, breaks every 30 to 60 s, breathing additive 1 to 2 cm at 15 to 20 a minute; research/townspeople-animation: Witcher 3 about 35 idles per body type; foot slide bar 3 cm a contact.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G23.
 
 ### 5.2.6 Body language of knowing
 
@@ -311,6 +312,7 @@ Silence is the commonest music; never combat music.
 - Status: ruled (his ruling or canon). Coverage row: 5.7.1. Conflicts settled: C-116, C-117, C-305.
 - Prep: SOUND-PLAN SND-21 to 23: no music unless a world source (caff radio, record through a window, chapel organ, club radio, busker) is within its distance; the prototype's generated score is removed; world music passes a small-speaker filter; every tune carries its tool and licence line.
 - Data (run 5): exact values in production/lane/blueprint/data/sounds.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G20, G21.
 
 ### FIT-P09 Music made for the game, placed in the world
 

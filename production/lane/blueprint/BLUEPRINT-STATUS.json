@@ -1,43 +1,41 @@
 {
  "version": 1,
- "updated": "2026-11-25 (keeper run 7, morning)",
+ "updated": "2026-11-25 (keeper run 8, evening)",
  "by": "blueprint keeper, claude-opus-5-5",
  "totals": {
   "measured": 1,
-  "ruled": 90,
+  "ruled": 94,
   "sourced": 15,
-  "decided": 173,
+  "decided": 177,
   "pending": 59,
   "unmeasured": 42,
   "out": 15,
   "outside": 52,
-  "machinery": 22,
-  "parts": 469
+  "machinery": 23,
+  "parts": 478
  },
- "conflicts_settled": 380,
- "gaps": 725,
+ "conflicts_settled": 393,
+ "gaps": 737,
  "groups": {
   "What the player does with his hands": {
-   "parts": 106,
+   "parts": 111,
    "measured": 1,
-   "decided": 52,
+   "decided": 56,
    "pending": 26,
    "unmeasured": 12,
    "out": 1,
    "outside": 0,
    "machinery": 0,
-   "open_questions": [
-    "D1",
-    "D2",
-    "D3"
-   ],
-   "note": "includes 1.6.15 hold-ups; CS-08 to CS-30 from the combat pass (25 Nov, ready for review), coverage rows none yet",
-   "ruled": 14,
+   "open_questions": [],
+   "note": "includes 1.6.15 hold-ups; CS-08 to CS-30 from the combat pass (25 Nov, ready for review), coverage rows none yet; run 8: CS-31 to CS-35 (combat revision 1), D1 to D3 answered yes",
+   "ruled": 15,
    "sourced": 0,
-   "rulings_to_revisit": []
+   "rulings_to_revisit": [
+    "R22"
+   ]
   },
   "The town under the hood": {
-   "parts": 119,
+   "parts": 120,
    "measured": 0,
    "decided": 77,
    "pending": 12,
@@ -48,12 +46,12 @@
    "open_questions": [
     "Q21"
    ],
-   "ruled": 17,
+   "ruled": 18,
    "sourced": 3,
    "rulings_to_revisit": []
   },
   "Story and people": {
-   "parts": 45,
+   "parts": 46,
    "measured": 0,
    "decided": 9,
    "pending": 11,
@@ -64,7 +62,7 @@
    "open_questions": [
     "Q18"
    ],
-   "ruled": 16,
+   "ruled": 17,
    "sourced": 0,
    "rulings_to_revisit": []
   },
@@ -111,7 +109,7 @@
    "rulings_to_revisit": []
   },
   "The game's shape": {
-   "parts": 48,
+   "parts": 49,
    "measured": 0,
    "decided": 9,
    "pending": 8,
@@ -120,7 +118,7 @@
    "outside": 0,
    "machinery": 0,
    "open_questions": [],
-   "ruled": 15,
+   "ruled": 16,
    "sourced": 0,
    "rulings_to_revisit": []
   },
@@ -139,14 +137,14 @@
    "rulings_to_revisit": []
   },
   "The machinery": {
-   "parts": 22,
+   "parts": 23,
    "measured": 0,
    "decided": 0,
    "pending": 0,
    "unmeasured": 0,
    "out": 0,
    "outside": 0,
-   "machinery": 22,
+   "machinery": 23,
    "open_questions": [],
    "ruled": 0,
    "sourced": 0,
@@ -328,5 +326,29 @@
   "chases on foot (1.5.1, 1.5.2)",
   "crowd reactions (2.3.2)",
   "crowd counts by street and hour (FIT-G9, GD-02): SOLID by count as a floor (median 6 in the busiest daytime view, KCD2 and RDR2); the 1990 archive ceiling owed"
+ ],
+ "general_rules": {
+  "count": 32,
+  "ids": "G01 to G32",
+  "file": "BLUEPRINT-12-general-rules.md",
+  "parts_citing": 205,
+  "status": "proposed, decided within canon; working values from Monday's system passes",
+  "content_shortfalls_for_loops": 265
+ },
+ "his_decisions_1_to_38": "answered 25 Nov (advisors 390, 391, 393): as recommended except 22 and 31; 13 and 20 by rulings 388, 389",
+ "open_questions_all": [
+  "Q18",
+  "Q21"
+ ],
+ "rulings_to_revisit_open": [
+  "R14",
+  "R15",
+  "R16",
+  "R17",
+  "R18",
+  "R19",
+  "R20",
+  "R21",
+  "R22"
  ]
 }

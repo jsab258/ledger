@@ -40,6 +40,7 @@ Walking the town with the camera: the verb under every other verb.
 - Source: DESIGN §1 ER-CORE-01; ruling 23 Sep (his ruling or canon). Designed in: DESCRIPTION-COPY-2 §6; DESIGN §1 ER-CORE-01; RULINGS 23 Sep genre line (no jump) Reality check (CHECK A20): the 68 cm and 11 cm a side figures come from our own scene; the real figure would come from 1990 door and room dimensions (British Standards, period plans), the camera need kept as a stated exception.
 - Status: ruled (his ruling or canon). Coverage row: 1.1.3.
 - Prior research: research/interior-blockout and research/office-camera (research-3 and research-4 sheets): Frank is 68 cm wide, so a real front door leaves about 11 cm a side; walks were straight lines with a 30 cm capsule, no nav mesh and no doors, so every target through a wall failed; third-person rooms run 1.5 to 2 times real size.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G14.
 
 ### 1.1.4 Carrying
 
@@ -47,6 +48,7 @@ Walking the town with the camera: the verb under every other verb.
 - Standard: Found is worse than used (load as a tension source); running blocked while carrying in the prototype; how much a load slows to be measured Test: S: a carried load raises what a witness catches; H: 'could you tell what Frank was carrying?'
 - Source: DESIGN §3 source 3; prototype round 6 (no reference figure yet). Designed in: DESCRIPTION-COPY-2 §6; DESIGN §3, §15; DEFINITIONS pass 3 §G4; MEASUREMENTS-NEEDED A1
 - Status: unmeasured. Coverage row: 1.1.4. Conflicts settled: C-002.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G13.
 
 ### 1.1.5 Hiding and keeping out of sight
 
@@ -62,6 +64,7 @@ Walking the town with the camera: the verb under every other verb.
 - Source: DESIGN §4 (tails family, no numbers) (no reference figure yet). Designed in: DESIGN-ADDENDUM A2 (ER-TAIL-01 to 03); DESIGN §4 Tails; DESCRIPTION-COPY-2 §13
 - Status: unmeasured. Coverage row: 1.1.6.
 - Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G12, G16.
 
 ### 1.1.7 Stopping and blending in
 
@@ -71,6 +74,7 @@ Walking the town with the camera: the verb under every other verb.
 - Status: unmeasured. Coverage row: 1.1.7.
 - Being followed, stared at or crowded is noticed (catalogue 23 Nov, rank 4; seen in 3 games): A neighbour notices Frank loitering and says so. Partly: a stopped man who does not belong draws notice; short is the spoken warning, then a complaint or a report. Feature only; no timing; the part's status is unchanged.
 - A rest idle on world objects (catalogue 23 Nov, next tier): Frank leans on the harbour rail, smokes, watches. Partly: sitting and smoking are covered; leaning on the rail is not. Feature only; no timing; the part's status is unchanged.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G01.
 
 ### 1.1.8 Vaulting low walls and fences
 
@@ -81,6 +85,7 @@ Walking the town with the camera: the verb under every other verb.
 - Set climbing places in, answered 24 Nov (Q19): his ruling of 24 Nov (RULINGS on wip, his decisions page). Replaces 'no climbing'.
 - Measuring note (SLEEPING-DOGS-DRILL, 23 Nov): in Sleeping Dogs the run key also vaults; no number for LEDGER's vault times yet.
 - Data (run 5): exact values in production/lane/blueprint/data/map.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G14, G12.
 
 ### FIT-G4 Frank's, the constables' and the runner's speeds
 
@@ -127,6 +132,7 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - Source: FEEL-TARGETS-DRIVING M11; DESIGN §5 (waits on a dated study). Designed in: DESIGN §5 ER-DRIVE-01, -08; DESCRIPTION-COPY-2 §10; FEEL-TARGETS-DRIVING M11; GTAVI-MAP Y1.1; DEFINITIONS pass 3 §F05
 - Status: pending. Coverage row: 1.2.4. Conflicts settled: C-008, C-009.
 - Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G19.
 
 ### 1.2.5 Cars and people
 
@@ -134,6 +140,7 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - Standard: Canon (his pick 18 Nov 22:07): hurts, never kills; only the player's car strikes; the choice put within 2 s (ER-DRIVE-03, ER-DRIVE-04, ER-DRIVE-05, ER-DRIVE-10) Test: S: 1,000 seeded crossings with no contact; hits at 5, 15, 30, 50 mph, nobody dies; both choices seeded
 - Source: canon content rule; DESIGN §5 (his ruling or canon). Designed in: Canon content rule (his pick 18 Nov 22:07); DESIGN §5 ER-DRIVE-03 to -05, -10; DESCRIPTION-COPY-2 §11; DEFINITIONS pass 3 §P04, §G2
 - Status: ruled (his ruling or canon). Coverage row: 1.2.5.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G19.
 
 ### 1.2.6 Tailing and being tailed by car
 
@@ -141,6 +148,7 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - Standard: none yet: following distance and the 'made' rule to be measured Test: S: scripted car tail; H: 'did you know how close was too close?'; addendum rules ER-TAIL-01 to 03
 - Source: DESIGN §5 wrinkle 'the tail' (no numbers) (no reference figure yet). Designed in: DESIGN-ADDENDUM A2; DESIGN §5 wrinkles; DEFINITIONS pass 3 §G2
 - Status: unmeasured. Coverage row: 1.2.6.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G12.
 
 ### 1.2.7 Driving with passengers
 
@@ -149,6 +157,7 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - Source: DESIGN §1, §11 (no reference figure yet). Designed in: DESCRIPTION-COPY-2 §10, §34; DESIGN §1 ER-CORE-08, §11 ER-TALK-05; DEFINITIONS RT2-20; GTAVI-MAP GV-03
 - Status: unmeasured. Coverage row: 1.2.7.
 - Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-03 no dead leg over 2 minutes; a job 5 to 30 minutes, planned ones to 45; decided. None measured.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G20.
 
 ### 1.2.8 Riding as a passenger
 
@@ -156,6 +165,7 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - Standard: A crewman told to drive is an AI driver and always brakes for people (DESIGN §12); a skipped ride costs its real time on the clock Test: S: a ride arrives; skip advances the clock by the drive's time; addendum rules ER-RIDE-01
 - Source: DESIGN §12; canon; his ruling of 24 Nov (RULINGS on wip, his decisions page) for free fast travel out (his ruling or canon). Designed in: DESIGN-ADDENDUM A24 (ER-RIDE-01); DESCRIPTION-COPY-2 §10; DESIGN §12
 - Status: ruled (his ruling or canon). Coverage row: 1.2.8. Conflicts settled: C-010.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G04.
 
 ### 1.2.9 Repairs, plates and paint
 
@@ -165,6 +175,7 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - Status: decided. Coverage row: 1.2.9. Conflicts settled: C-011.
 - Studies: aaa-studies/IMMERSION-FEATURES.md: IM-01 no hunger, tiredness or hygiene value drains on a clock; decided; IM-06 cars and men show harm; no repeated care action required; decided. None measured.
 - People react to appearance (catalogue 23 Nov, rank 5; seen in 3 games): Passers-by remark on a clean or a battered cab. Not yet: a remark on the cab's state, for the design proof to place. Feature only; no timing; the part's status is unchanged.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G11, G13.
 
 ### 1.2.10 Taking a parked car
 
@@ -172,6 +183,7 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - Standard: His word of 20 Nov 07:54 (advisor 263, DECISIONS A27) confirmed it as recommended; no lockpicking game (DESIGN §18). Pulling a driver out: heard at the force reach, always reported, the car known to the police; the time it takes and whether a moving car can be stopped for it are not set (none yet). Forced entry about 6 s (design pass 4, 1.2.3); a car with a steering lock cannot be taken. Test: S: a taken car is reported and named; force heard at its reach; addendum rules ER-TAKE-01
 - Source: Q2, answered by his words of 20 Nov 07:39 (advisor 263; DESIGN-ADDENDUM A27) (his answer); advisor 378, 25 Nov (RULINGS on wip). Designed in: DESIGN-ADDENDUM A27; ONE-SHOT-PROMPT 'Taking a parked car'; GTAVI-MAP Y1.2
 - Status: ruled (parked car: his answer of 20 Nov 07:39, advisor 263; pulling a driver out: his ruling of 25 Nov, advisor 378, which replaces 'never one with somebody in it'). Coverage row: 1.2.10. Conflicts settled: C-012, C-501.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G13, G15, G20.
 
 ### 1.2.11 The horn
 
@@ -187,6 +199,7 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - Source: production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR-LEDGER.md (DECIDED by the design proof, for him to overturn). Designed in: GTAVI-MAP §GV-01; DEFINITIONS RT2-11
 - Status: decided. Coverage row: GV-01.
 - Data (run 5): exact values in production/lane/blueprint/data/rooms.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G13, G17.
 
 ### GV-03 The passenger who knows the way
 
@@ -196,6 +209,7 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - Status: decided. Coverage row: GV-03.
 - Data (run 5): exact values in production/lane/blueprint/data/lines/ (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
 - Story needs (frame and paper, 24 Nov): Ron's naming of buildings as a driving state that stops for good after the night between (paper second run via the story on paper). Partly covered: the passenger says the way by landmark; the state that ends after the night is missing.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G20.
 
 ### FIT-G2 Car speeds and the stop band
 
@@ -203,6 +217,7 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 §G2; FIT-CHECK F33
 - Status: decided. Coverage row: FIT-G2. Conflicts settled: C-013.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G19.
 
 ### FIT-F05 How often the one-hit wreck happens in ordinary driving
 
@@ -217,6 +232,7 @@ The cab and other cars: at AAA quality as the end state, never a driving game.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4) Test: B (bot) as written
 - Source: design pass 3; FIT-CHECK-2026-11-21.md (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS design pass 3 §P04; DESCRIPTION-COPY-2 §11
 - Status: decided. Coverage row: FIT-P04.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G19.
 
 ## 1.3 Fighting
 
@@ -231,6 +247,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Status: pending. Coverage row: 1.3.1.
 - Prior research: research/aaa-reference study 14 (read from files, a lead): KCD2 swing to contact about 0.75 s, hit reaction median 1.27 s. DECIDES-CHECK 24 Nov: fist timings are a lead (Sleeping Dogs and KCD2 drills, about 2 h).
 - DECIDES-CHECK, 24 Nov: fist timings drop from deciding to a lead: they are band numbers the loops retune in minutes. Sleeping Dogs and KCD2 drills, about 2 h, as a lead. Status unchanged.
+- Revision 1 (25 Nov, his pick A; CS-02): blows land on the attacker's line (high the head, low the body, a guarded blow on the forearms, a low kick or low thrust on the legs); the zone dice table removed. Rule: G19.
 
 ### 1.3.2 Reading and answering blows
 
@@ -254,6 +271,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Standard: One rule set: swapping Frank for a townsperson with the same choices gives the same outcome spread (swap test owed). Most confrontations end on rungs 1 to 4; a threat is not a sure win. Simulated at menace 0.3: a bare word folds 12% of lone men, a cosh shown 28%, a knife shown 47%; two men together 0%, 2%, 5%. Test: B: the simulator's threat table; S: every man who folds to a shown weapon is a witness to rung 6
 - Source: his combat design 12 Oct and ruling 3 Oct (ruled); the one fight model and talk rules DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-01, CS-10), for him to overturn
 - Status: decided. Coverage row: 1.3.4.
+- The chance rule (his pick A, 25 Nov, advisor 382; combat pass revision 1): readable rules decide outcomes; no hidden roll overrules a correct play; blows land, are blocked or slipped by what the struck man is doing, his guard by his reaction time against the wind-up; blows land on the attacker's line, not a zone table; knock-downs and knock-outs by thresholds on force and visible state; the low end of injury safe and certain; a small chance only at the violent end (a knife's depth, a fall at a kerb, a critical wound, a shotgun's spread, a choke held on, boots on a head), every such chance fixed to the save, so a reload replays the same act the same way. Simulator (seed 1990, 2,000 a scenario): careful one against one with fists won 73% (94% of decided), a masher 11%, careful two against one 29%; no deaths in 2,000 fist fights. Standard: the reload check (the same 200 stabs from one save under two random streams give the same outcomes). Status of this line: ruled.
 
 ### CS-08 Grabs, holds and the ground
 
@@ -261,6 +279,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Standard: Every hold has a way out; a disarmed weapon is a real object on the ground. Test: S: a dropped knife can be picked up by the other man; B: the simulator counts disarms both ways
 - Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-08), for him to overturn; his design (shove, grab, pin); KCD2 clinch and Sleeping Dogs grapples (census M021 to M030)
 - Status: decided. Coverage row: none yet.
+- Revision 1 (25 Nov; CS-08): a disarm follows grip and moment (winded, hurt, arm hurt, just swung), else a struggle for the arm; guns by the same rule. Unarmed Frank against a knife man won 48%, with a bat aimed at the knife arm 77% (simulator leads).
 
 ### CS-13 Takedowns from behind
 
@@ -268,6 +287,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Standard: No instant kill, no guaranteed knock-out; failure believable and readable. Simulated (unlit street, crouched, wet cobbles): choke out 40%, broke free 17%, spotted 38%; cosh out 35%. Test: B: the simulator; S: a held choke follows the curve once D1 is answered
 - Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-13), for him to overturn, D1 his; combat/RESEARCH.md (carotid timings; no firm threshold); his rulings 24 Nov
 - Status: decided. Coverage row: none yet.
+- Revision 1 (25 Nov; D1 yes): the choke has no break chance except a big, fresh man against a winded or hurt Frank, time by build 6.5, 7.5 or 10 s; a cosh from behind puts a man out every time and one blow never kills; a fist from behind floors, never puts out; a choke held on after he passes out can kill, the body showing it, no risk for 40 s past the knock-out, 20% at 60 s past (simulator; C-548).
 
 ### 1.3.5 The street as a weapon
 
@@ -276,6 +296,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Source: DESIGN §7; FEEL-TARGETS-MELEE (a); his rulings 30 Oct and 24 Nov; surfaces, water and doors DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-07; cold-water figure from combat/RESEARCH.md, Tipton), for him to overturn
 - Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 1.3.5. Conflicts settled: C-273, C-356.
 - Data (run 5): exact values in production/lane/blueprint/data/map.json (data build wave 1, 24 Nov). Data sweep class B.
+- Revision 1 (25 Nov; CS-07) and his decision 6: an unconscious man face down in the dock drowns in about two minutes, a killing; a conscious man climbs out (4.2.4 reworded, C-543).
 
 ### 1.3.6 Things to hand and carried weapons
 
@@ -292,6 +313,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Status: ruled (his ruling or canon). Coverage row: 1.3.7. Conflicts settled: C-350, C-353.
 - Story conflict C-338: answered by CS-18 (a broken arm in plaster for weeks: no heavy blow with that arm, driving clumsy); see 1.3.11.
 - Story conflict C-338 (run 5): The part gives Frank three states (fresh, hurt, beaten) with marks lasting one to five days, while the story needs a lasting arm in plaster that changes driving and the quay's fists. Until designed, the part stands; the need is a gap for the design proof.
+- Revision 1 (25 Nov; CS-05): knock-down and knock-out by thresholds on force and visible state, steadiness measured before the blow's own harm; one finishing blow raises harm one level at most, with the cue (he stops covering, goes still; "He's not moving. Again?"); D2 yes: kicking a man on the ground can kill, rarely (31 deaths per 1,000 fights kicking on regardless, 0 stopping at the cue, simulator leads); his decision 7: cold kills after a stated time under the body rule.
 
 ### 1.3.8 Odds, crowds and nerve in a fight
 
@@ -302,6 +324,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Studies: FF-07 bot bands; DECIDES-CHECK 24 Nov: against several is a lead, at most two swing 0.4 s apart is decided (ER-FIGHT-02).
 - Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov); the combat pass's numbers (wind costs, weapon forces, edge table) are for the next data wave. Data sweep class C.
 - DECIDES-CHECK, 24 Nov: against several is a lead, not deciding: at most two swing, 0.4 s apart, is already decided (ER-FIGHT-02) and the method is built whatever the number.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G07, G08.
 
 ### 1.3.9 How a fight ends and Frank losing
 
@@ -310,6 +333,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Source: his ruling of 12 Oct (Frank cannot die; canon OPEN 3) and 24 Nov; hospital bill from his 12 Oct design as the combat pass reads it (the 12 Oct text not re-read by the keeper); manner of endings DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-14, CS-15)
 - Status: ruled (his ruling or canon). Coverage row: 1.3.9. Conflicts settled: C-014, C-352.
 - Studies: FF-01 failure costs game hours and standing, never replayed minutes; FF-07. None measured.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G07.
 
 ### CS-16 Bodies and evidence, 1990
 
@@ -317,6 +341,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Standard: The police know only what someone perceived or a search found (FF-05). Test: S: golden rows: a print on a knife handle names Frank only if his prints are on file (after an arrest)
 - Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-16), for him to overturn; combat/RESEARCH.md (16-point standard 1953 to 2001; NAFIS 2001; DNA database 1995)
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G13, G15.
 
 ### CS-17 How the street reads a fight
 
@@ -324,6 +349,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Standard: The same injury reads differently by manner; a player can hear the manner come back in talk. Test: B: consequence counts by band; S: gossip golden rows carry the manner slot
 - Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-17), for him to overturn; canon (moat, gossip); 30 Sep witness ruling; his ruling of 24 Nov (RT-09 dropped)
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G08, G19.
 
 ### CS-19 Police, charges and the heat after a fight
 
@@ -331,6 +357,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Standard: No charge without what a witness or search gives; every route recoverable. Test: B: every injury maps to its charge (seed 1990); S (build): whether a charge is laid needs a witness
 - Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-19), for him to overturn; combat/RESEARCH.md (OAPA 1861, CJA 1988 s.39, Police Act 1964 s.51); his rulings 3 Oct and 24 Nov
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G17.
 
 ### CS-20 Revenge and the man who comes back
 
@@ -338,6 +365,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Standard: Every man Frank beat crosses his path again within three game days (STORY-05; a meeting, not always a fight). Simulated: about 3 in 10 beaten men take revenge, about 1 in 12 report it. Test: S (build): the routine-crossing rule
 - Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-20), for him to overturn; the temper model (grudge); PLAYERS-STORIES STORY-05
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G08, G02.
 
 ### CS-21 Sending men to do violence
 
@@ -345,12 +373,13 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Standard: The result of a send is decided by the fight rules, not a dice roll on success. Test: B (owed): sends through the simulator with the crewman as the fighter; not run
 - Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-21), for him to overturn; his design 12 Oct; D56
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G07, G10.
 
 ### 1.3.10 Firearms
 
 - How it works: Guns are rare and late, after melee, and AAA when used. None in the Hook at the start; they come only through people. A held semicolon draws from under the coat, the camera goes to an aim row, there is no crosshair and no ammunition count; the aim is from one fixed shoulder (24 Nov); an empty revolver clicks; no gyro aiming, scope, explosion or ammunition types. A gun is a weapon row with the highest menace (1.0): men without guns run or take cover behind anything solid, which blocks a shot; a shut door or walls cut a shot's sound to about a quarter. A shot is heard to about 177 m by day and whoever hears it keeps it for good. The dial runs Fists, Shown, Fired, War and moves only on a gun seen or heard. Carrying a gun is a charge in itself. Before War a hit wounds and never kills, at War it can kill: the combat pass recommends the body rule for guns at any time (his question D3, open), with the dial governing who carries guns and how the police answer.
-- Standard: Guns rare and late (ruling 18 Nov end state A); AAA when used; shot heard 177 m by day; feel numbers to be measured. Today's text (no death before War) stands until he answers D3. Test: S: dial rules; wall stops a shot; feel numbers inside measured bands once researched
-- Source: RULINGS 28 Oct combat line (18 Nov end state A); DESIGN §7 dial; changes pending his answer to D3 in the combat pass (COMBAT-SYSTEM.md CS-23; combat/RULINGS-TO-REVISIT.md R3)
+- Standard: Guns rare and late (ruling 18 Nov end state A); AAA when used; shot heard 177 m by day; feel numbers to be measured. D3 answered yes (25 Nov): a gunshot can kill at any stage, by the body rule and CS-31's zones. Test: S: dial rules; wall stops a shot; feel numbers inside measured bands once researched
+- Source: RULINGS 28 Oct combat line (18 Nov end state A); DESIGN §7 dial; D3 answered yes 25 Nov (combat pass revision 1: COMBAT-SYSTEM.md CS-23, CS-31; combat/REVISION-1.md)
 - Status: unmeasured. Coverage row: 1.3.10.
 - Prior research: game-design/weapons-spec.md (approved 29 Jul): a .38 heard about 177 m, capped at 250 m; its bottle line is struck by canon. Checklist 23 Nov (A19.04, A19.09, A19.11): recoil, rate of fire and empty-gun cue still to measure; empty click answered 24 Nov.
 - Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov); the combat pass's numbers (wind costs, weapon forces, edge table) are for the next data wave. Data sweep class C.
@@ -367,6 +396,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - The body shows the day (catalogue 23 Nov, rank 6; seen in 3 games): Bruises, blood and dirt show and are noticed. Partly: short are wet coat and hair in rain and breath on a cold night (a soaked man talked of is in 4.2.4; wetness drives the look in 2.1.4). Feature only; no timing; the part's status is unchanged.
 - Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
 - Story needs (frame, 24 Nov): a lasting injury, the left arm in plaster, that changes driving and the quay's fists, with days and rescuers read from the record (SYSTEMS-THE-STORY-NEEDS S26; Frank's deeds carried F6, F7, S57). Partly covered: marks last days; a lasting arm injury and a one-armed Frank are missing (see CONFLICT 1.3.7).
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G19.
 
 ### CS-22 Fire
 
@@ -374,6 +404,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Standard: His ruling; the street reads it as grave. Test: S: golden rows for an empty and an occupied building
 - Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-22), for him to overturn; his ruling of 25 Nov
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G18.
 
 ### 1.3.12 Fighter types
 
@@ -396,6 +427,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Standard: Each assist changes only its own thing. Test: S: screen inventory with each assist; B: auto-resolve uses the simulator's rules
 - Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-25), for him to overturn; his design (accessible); D27, D30
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G24.
 
 ### CS-26 Fight sound and animation
 
@@ -410,6 +442,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Standard: No charge without a witness, evidence or confession; always recoverable. Test: S: golden rows for a body found with no witness, with one witness, and with a print on file
 - Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-27), for him to overturn; his ruling of 24 Nov (long heat; Ellis bribable); the 1990 police research
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G16.
 
 ### CS-28 Edges a player will try
 
@@ -417,19 +450,57 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Standard: No dead end, no harmed animal, no killing car. Test: S: each edge as a golden row
 - Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-28), for him to overturn; canon (cars, content rule); RULINGS 24 and 25 Nov (advisor 378 for the driver)
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G14.
 
 ### CS-29 Smaller fight rules the census asked for
 
-- How it works: One line each: cross and hook are the heavy blow by angle, no third button; cover is moving behind something solid, no snap key, a wall stops a shot; carried weapons are bought (a utility knife and a cosh-length of pipe at the ironmonger), taken or found; a cover story to a constable is a claim, running from an arrest is a new offence; taunts are written ahead in period speech, slurs never; dirt on a man is a give-away; any coat or uniform is a give-away changed, never a key; a yard or closed shop after hours is a wrong place; pickpocketing is not a verb; the bank's camera is the only one, tape recycled weekly; gossip cools by severity; breaking Garbutt's truce is read grave and the wronged outfit takes revenge; a man who runs from every fight loses menace; the ambulance takes 10 to 15 minutes and attacking medics reads at 1.6; ragdolls are capped and settle in seconds. Out: a stranger spawning to rob the loser, bailing from a moving car, stacking bodies as furniture.
+- How it works: One line each: cross and hook are the heavy blow by angle, no third button; cover is moving behind something solid, no snap key, a wall stops a shot; carried weapons are bought (a utility knife and a cosh-length of pipe at the ironmonger), taken or found; a cover story to a constable is a claim, running from an arrest is a new offence; taunts are written ahead in period speech, slurs never; dirt on a man is a give-away; any coat is a give-away changed, never a key; a downed constable's tunic and helmet can be worn with the limits of CS-33 (his ruling, advisor 388; C-542); a yard or closed shop after hours is a wrong place; lifting from a pocket and planting are one verb with readable limits (1.6.13; his decision 12, 25 Nov; C-541); the bank's camera is the only one, tape recycled weekly; gossip cools by severity; breaking Garbutt's truce is read grave and the wronged outfit takes revenge; a man who runs from every fight loses menace; the ambulance takes 10 to 15 minutes and attacking medics reads at 1.6; ragdolls are capped and settle in seconds. Out: a stranger spawning to rob the loser, bailing from a moving car, stacking bodies as furniture.
 - Standard: Each line a golden row or part of another test. Test: S: golden rows
 - Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-29), for him to overturn; census rows; RULINGS 24 Sep, 30 Sep, 24 Nov
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G11, G13, G02, G03, G04.
 
 ### CS-30 Rules the second blind check asked for
 
 - How it works: One line each: one action is held, never a queue, and a press 0.1 s early counts; a groin kick is a low kick, grit in the eyes blinds 2 s, both read dirty; a thrown thing is aimed like a blow with no reticle; broken glass and stalls are deeds against their owner, who asks for money or tells; a weapon under a coat shows as a bulge or a hand near a pocket, no icon; backing down is always there and the town remembers who did; a held man lies, stalls or bargains by his temper and says only what he knows; speech mid-fight is written lines, live talk opens with a man pinned or yielded; a shop bell rings at its reach and wired alarms are rare (the bank, the chandler's); orders are a held key and a word, no wheel; casualty passes a stab or gunshot to the police; blood stays until rain or a hose; a dead man's ties grieve with a funeral within the week; an alibi is a claim by another person; waiting at a man's home is a deed his household sees and nobody can be farmed by repeat beating.
 - Standard: Each line a golden row. Test: S: golden rows
 - Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-30), for him to overturn; the second blind check (census rows M411 to M463)
+- Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G08, G07, G12.
+
+### CS-31 What each part of the body does
+
+- How it works: Where a blow, stab or shot lands decides what it does, by readable effects shown in the body, for everyone (his question of 25 Nov 10:52). Arm: drops what that hand holds, no heavy blow or carrying with it until treated, a broken arm in plaster for weeks. Leg: cannot run, crawls. Torso: drops him, serious to dying. Head and face: knock-out, a broken face, dying; a facial mark the town names him by. Neck: the most dangerous. Arms and legs take blunt harm on their own count: 6 on one limb breaks it (a bat's full heavy blow on a forearm, a boot to a knee); fists alone never get there. An aimed shot to the arm disarms and one to the leg stops a runner (Y1.5, restored). Guns are worse than a knife, with the hit by aim and the sway shown in Frank's arms.
+- Standard: each zone's effect for blunt, blade and gun a golden row; fists never break a limb; the simulator's gun table (revolver body hit at 8 m: hits 79%, kills 21%; sawn-off at 3, 10, 20 m: kills 50%, 18%, 1%) a lead to retune. Test: S: golden rows; combat/SIM revision 1
+- Source: DECIDED by the combat pass revision 1, 25 Nov (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-31, REVISION-1.md), for him to overturn; wounds research partial and dated 25 Nov (rev1-work/RESEARCH-WOUNDS.md: two Swedish gunshot series, 30-day mortality 13% and 17% of those reaching hospital; per-region figures not reached from the cloud)
+- Status: decided. Coverage row: none yet.
+
+### CS-32 Where weapons come from, and the law of 1990
+
+- How it works: Every weapon in the Hook has a place it came from, a person who saw it change hands, and a law it meets; every make fictional. From homes (a kitchen knife, a hammer, a poker; free, missed by the owner, who may say so); the ironmonger and the ship's chandler (knives, hammers, a wheel brace, pipe, a crowbar, rope; rigging knives, a marlinspike, cargo hooks; sold openly, the seller remembers a buyer by the witness rules, his ruling of advisor 378); Rita's back room with Wayne (knuckledusters and flick knives, which nobody could lawfully sell in 1990: under the counter, only to a man Rita trusts, rung 2 and up, dearer, and Rita or Wayne knows; Frank can sell there too); off a man, off a body, a rival's lock-up; guns only through people (RT2-14, kept). The law of 1990: a blade in public (s.139, a fine only; a folding blade under 3 inches exempt; good reason); the s.141 Order in force 18 Jan 1989 (knuckledusters, butterfly knives, swordsticks: no selling, private possession lawful); flick knives (the 1959 Act); no under-16 knife rule until 1 Jan 1997; a revolver under a section 1 certificate, a shotgun shortened under 24 inches outside the shotgun certificate.
+- Standard: every weapon in the data has a source, a seller or owner who remembers, and the law it meets (golden rows). Test: S: golden rows
+- Source: DECIDED by the combat pass revision 1, 25 Nov (COMBAT-SYSTEM.md CS-32), for him to overturn; law research dated 25 Nov (rev1-work/RESEARCH-LAW.md, legislation.gov.uk enacted and point-in-time texts, Hansard; the s.139 commencement order, the 1990 Schedule 6 terms and the 1953 Act's definition text not reached, marked unverified); prior research: game-design/weapons-spec.md (approved 29 Jul; its bottle line struck by canon)
+- Status: decided. Coverage row: none yet. Hand-over to Monday's people pass: inventories by role, shop stock and prices, Rita's trust rung.
+
+### CS-33 Searching anyone who is down, and the constable's kit
+
+- How it works: Anyone down, out or dead, can be searched and carries what fits his role (his ruling, advisor 376). Kneel and go through his coat and pockets, about 4 s (a constable's belt kit about 6 s), hands full and back to the street, little noise; each thing taken or left. A beat constable in 1990 carries a wooden truncheon, handcuffs, a whistle, his personal radio, his pocketbook and his warrant card (the 1990 kit partly unverified, to check from the PC). The truncheon is a cosh's weapon row; the radio lets Frank hear police traffic while he holds it, until the station notices it has gone quiet; the pocketbook holds the day's names, descriptions and times. Taking anything from a man down is theft, or robbery if Frank put him down; from a constable it is read grave and raises the police response; police kit found on Frank later is evidence; a dead man's things on Frank are recognised by anyone who knew him. His tunic and helmet can be worn (his ruling, advisor 388, his A): a minute to take, done openly and remembered; distant strangers defer and may report to him; anyone close or who knows Frank sees through it; the police soon notice an unknown constable; caught, it is a grave crime; it traces to its owner.
+- Standard: searching takes about 4 s (6 s for the belt kit) and finds only what the role's inventory holds; stolen police kit raises the police response; the worn tunic fools only distant strangers who do not know Frank (golden rows). Test: S: golden rows
+- Source: his rulings of 25 Nov (advisors 376, 388; RULINGS on wip); COMBAT-SYSTEM.md CS-33 (revision 1) for the timings, DECIDED, for him to overturn
+- Status: ruled. Coverage row: none yet. Conflicts settled: C-542. Rule: G16.
+
+### CS-34 Can-yous beyond the big three
+
+- How it works: The combat pass's list of things a player can do here that KCD2, RDR2 and GTA V do not allow, each checked for fun, for fit with Britain 1990 and for the animation it needs (a shared set reused across many people and acts where possible); for example, breaking a knife man's arm with a bat so he drops it, fights one-handed and walks the street in plaster for weeks. "Beyond" is on paper, from the census and general knowledge of the three games, not measured.
+- Standard: each line passes fun, fit and an animation budget; the shared clip set reused wherever it serves (CS-34's table). Test: H: the panel's can-you questions
+- Source: his principle of 25 Nov (advisor 377: "can you" far wider than KCD2, RDR2 or GTA, by general rules); COMBAT-SYSTEM.md CS-34 (revision 1), DECIDED, for him to overturn
+- Status: decided. Coverage row: none yet.
+
+### CS-35 Lines the outside questions asked for
+
+- How it works: Thirteen lines, decided within canon: thrown things hit by weight (light 0.5, middling 1.2, heavy 1.8, aimed like a blow, the face a quarter more); falls from height (pushed down stairs, force 2.5 on landing, serious about 1 in 5, critical 1 in 30, fixed to the save; off the sea wall onto stone serious every time, critical about 1 in 4; Frank alone is out, never dying); a car door opened into a passer-by (1.5 from the seat, 2.0 standing; an assault when meant); a collar grab in a calm talk (a rung 4 deed, the talk goes on with him held); and lines on losing, wronged people meeting, followers, suspicion adding up, a remembered noise, windows, searching a crowd, a bribed witness beaten, and the sawn-off at the legs.
+- Standard: each line a golden row. Test: S: golden rows
+- Source: COMBAT-SYSTEM.md CS-35 (revision 1; rev1-work/RESULTS-30.md), DECIDED, for him to overturn; not yet re-judged by a fresh tester
 - Status: decided. Coverage row: none yet.
 
 ### RT-09 Frank's line against women, over-sixties and the priest
@@ -442,9 +513,9 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 
 ### RT-10 Firearms as a verb
 
-- How it works: Guns are late and rare through the dial. A held semicolon draws from under the coat, the camera goes to the aim row from one fixed shoulder (24 Nov), and the mouse or stick aims with no crosshair (an optional dot, off by default). A hit depends on aim, distance and whether Frank moved. Before War a hit wounds and never kills, at War a body hit can kill, a named and permanent event; the combat pass recommends the body rule at any time (his question D3, open), so today's text stands until he answers. An aimed shot to the arm disarms and one to the leg stops a runner (Y1.5). A revolver holds six and reloads in a shown action; empty, it clicks. No gyro, scope, explosion or ammunition types (all out, 24 Nov). Men with guns shoot from where they stand and run when outmatched; men without take cover behind anything solid; nobody shoots from a moving car. A shot Frank goes down, comes round in hospital and never dies.
+- How it works: Guns are late and rare through the dial. A held semicolon draws from under the coat, the camera goes to the aim row from one fixed shoulder (24 Nov), and the mouse or stick aims with no crosshair (an optional dot, off by default). A hit depends on aim, distance and whether Frank moved. A hit follows the body rule and CS-31's zones at any stage (D3, answered yes 25 Nov): a body or head shot can kill, a named and permanent event; in the simulator a revolver body shot at 8 m hits 79% and kills 21%, the sawn-off kills 50%, 18% and 1% at 3, 10 and 20 m (leads, combat/SIM revision 1). An aimed shot to the arm disarms and one to the leg stops a runner (Y1.5). A revolver holds six and reloads in a shown action; empty, it clicks. No gyro, scope, explosion or ammunition types (all out, 24 Nov). Men with guns shoot from where they stand and run when outmatched; men without take cover behind anything solid; nobody shoots from a moving car. A shot Frank goes down, comes round in hospital and never dies.
 - Standard: The rules above pass or fail; draw, aim and hit timings within the band of the firearms footage measuring. Test: B: a gun range scene with timings; S: no on-screen count; a wall stops a shot
-- Source: The description §3, §33; ruling 18 Nov (guns rare and late); MEASUREMENTS-NEEDED A; Y1.5; changes pending D3 (COMBAT-SYSTEM.md CS-23; RULINGS-TO-REVISIT R3)
+- Source: The description §3, §33; ruling 18 Nov (guns rare and late); MEASUREMENTS-NEEDED A; Y1.5; D3 answered yes 25 Nov (COMBAT-SYSTEM.md CS-23, CS-31, revision 1; C-540)
 - Status: pending. Coverage row: RT-10.
 - Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov); the combat pass's numbers (wind costs, weapon forces, edge table) are for the next data wave. Data sweep class C.
 
@@ -464,6 +535,7 @@ Fists first, things to hand, carried weapons, guns rare and last; the whole stre
 - Status: ruled. Coverage row: RT2-11. Conflicts settled: C-017, C-274, C-341, C-353.
 - Story needs (frame, 24 Nov): finishing a downed man, worked example 3 reworded to the finishing decision unless a kick is added (SYSTEMS-THE-STORY-NEEDS S46). Covered by the part; the frame's example needs rewording (see CONFLICT).
 - Story conflict C-341 (run 5): The part has no kick input and finishing with fists means hospital, while the frame's worked example 3 has Frank "put the boot in" to a downed taxman. Until designed, the part stands; the need is a gap for the design proof.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G24.
 
 ### RT2-12 The rare fatal fall
 
@@ -525,6 +597,8 @@ The felt side of the town's eyes: the player's three questions answered from pic
 - Deciding row (DECIDES-CHECK, 24 Nov, corrected by the reality check, 24 Nov): being seen in KCD2 and RDR2 sets only the watcher numbers (how fast and how far, under known light), hence cover places and the constable's ladder; it does not set lamp spacing, which comes from BS 5489-3:1977 (about 34 m plus or minus 10%) and dated photo counts (4.1.1, 4.4). The measurement is still first among the game rows, then applied to the real lamp layout; none sampled; two games planned, about 5 h.
 - Deciding row (DECIDES-CHECK, 24 Nov): being seen in KCD2 and RDR2 sets sight distances and light scaling, hence lamp spacing, cover places and the constable's ladder; none sampled; two games planned, about 5 h.
 - Reference solid (RDR2 and GTA VI; STATUS.md on wip, ladder-review-2026-11-25.md, eight uncut samples, four players): from a witness's flag to wanted, about 2 to 106 s, median about 33.5 s. A floor for the constable's ladder timing, folded as a reference; the part's own standard is unchanged (run 7).
+- KCD2 being seen (STATUS.md on wip, 25 Nov 17:42): first uncut sample read from the alarm icon itself (a farm hand sees Henry at a lock: red about 1 s, a challenge within about 1 s, clear about 16 s after the alarm, no guard); one of five, a lead; RDR2 stays the only solid being-seen figure.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G12.
 
 ### 1.4.2 Light and dark as cover
 
@@ -533,6 +607,7 @@ The felt side of the town's eyes: the player's three questions answered from pic
 - Source: DESIGN §2, §6 (waits on a dated study); light changes and clothes DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-07, CS-12), for him to overturn; the numbers are judgement until the KCD2 and RDR2 seeing study
 - Status: pending. Coverage row: 1.4.2.
 - Deciding row (DECIDES-CHECK, 24 Nov): read with 1.4.1 (KCD2 and RDR2, about 5 h).
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G12, G19.
 
 ### 1.4.3 Hearing his own noise
 
@@ -548,6 +623,8 @@ The felt side of the town's eyes: the player's three questions answered from pic
 - Standard: Stealth works and fails believably: crouched in the dark it mostly works, under a lamp or by day it mostly does not, a loud surface is felt. Simulated: unlit street walking 34% out, crouched 41%; under a lamp crouched 18% out, 73% spotted. Test: B: the simulator; S: no meter on screen
 - Source: DECIDED by the combat pass 25 Nov, ready for review (production/lane/blueprint/combat/COMBAT-SYSTEM.md CS-12), for him to overturn; canon (perception ladder); census (KCD2 noise and visibility, Hitman, RDR2); combat/RESEARCH.md (no published detection timings found: judgement)
 - Status: decided. Coverage row: none yet.
+- Revision 1 (25 Nov, his pick A): a man turns only for his routine glance (a rhythm the player can watch), a footstep inside his hearing, or other eyes; "turned at the last moment" removed. Simulator: a careful takedown from a dark doorway works 99.6%, on an unlit street 86%, under a lamp 19% (54% held back), by day 7% (leads).
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G12, G11, G14, G19.
 
 ### 1.4.4 Give-aways and the coat
 
@@ -560,6 +637,7 @@ The felt side of the town's eyes: the player's three questions answered from pic
 - Studies: aaa-studies/PLAYERS-STORIES.md: STORY-04 a third of moments turn on a mark a witness connected; decided. None measured.
 - Studies: aaa-studies/IMMERSION-FEATURES.md: IM-04 blood and dirt come from deeds, never walking or rain alone, and are noticed; decided; IM-05 a coat seen at a deed stays recognised until he changes coat; washing clears blood only; decided. None measured.
 - Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G11, G03.
 
 ### 1.4.5 Reaching the witness
 
@@ -583,6 +661,7 @@ The felt side of the town's eyes: the player's three questions answered from pic
 - Source: canon; DESIGN §7 lower rungs (his ruling or canon). Designed in: DESIGN-ADDENDUM A10 (ER-MANNER-01); DESCRIPTION-COPY-2 §8
 - Status: ruled (his ruling or canon). Coverage row: 1.4.7.
 - Studies: aaa-studies/TALK-AS-PLAY.md: TALK-06 every person answers a street manner within 1 s (ruled, though the study says measured). None measured.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G01.
 
 ### 1.4.8 Drawing a watcher away
 
@@ -590,6 +669,7 @@ The felt side of the town's eyes: the player's three questions answered from pic
 - Standard: Uses the sound reach rule (1.4.3); a watcher drawn away remembers the noise; back to calm about 60 s after. Test: S: a noise inside reach turns a head; outside reach does nothing; no verb harms an animal
 - Source: DESIGN §2 (DECIDED by the design proof); alertness states and animals DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-12, CS-28), for him to overturn
 - Status: decided. Coverage row: 1.4.8.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G12.
 
 ## 1.5 Chases
 
@@ -604,6 +684,8 @@ On foot and by car; every chase ends, caught or lost.
 - Status: pending. Coverage row: 1.5.1. Conflicts settled: C-021, C-022, C-276.
 - Lead, not solid (STATUS.md on wip, 25 Nov; SLEEPING-DOGS-FOOT-CHASE-2026-11-25.md, two of five samples): Sleeping Dogs' foot chases ran 96 s (a scripted opening run, ends in capture) and 67 s (the Night Market, the runner held 12 to 16 m ahead); its loss rule is a gap held, not sight alone: a 20 s countdown starts once the gap passes about 43 to 45 m (read from our own drill, one run), and whether closing the gap stops it is unread. LEDGER's 7 s unseen or 70 m rule stands; this is a lead for the keeper to weigh (C-504). Status stays pending.
 - Deciding row (DECIDES-CHECK, 24 Nov): chases on foot (C1 to C8) decide where the ginnels, yards and six vault places go, by whether chases are won by breaking sight or by outrunning; none sampled yet; three games planned, about 4 h.
+- Measuring update (STATUS.md on wip, 25 Nov evening): L.A. Noire 5 of 5 (about 52, 58, 21, 54, 60 s, median about 54 s; one channel, Nov 2017 uploads, every chase a scripted catch), its review found it not solid and STATUS now calls the length "solid with notes" with no escape rule; Sleeping Dogs 5 of 5 (about 96, 67, 14, 66, 72 s, median about 67 s), not solid (edges for four samples and the loss rule still open). The keeper keeps the part pending until STATUS marks a figure solid outright (standing rule a). Both medians sit inside the 30 to 90 s bot band; L.A. Noire's is under his 1 to 3 minutes, Sleeping Dogs' just over a minute (R22). His decision 22 (25 Nov): no set roof routes in chases.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G11.
 
 ### 1.5.2 Pursuing on foot
 
@@ -627,6 +709,7 @@ On foot and by car; every chase ends, caught or lost.
 - Source: DESIGN §8 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN s.8 ER-POL-02; DESCRIPTION-COPY-2 s.18, s.19; DESIGN-ADDENDUM A3, A36; DEFINITIONS design pass 4 C-01, C-03; design pass 3 G2, G4, G5
 - Status: decided. Coverage row: 1.5.4. Conflicts settled: C-027.
 - Checklist (23 Nov, top twenty no. 19; A14.10, A14.14): missing: pursuers and people must replan when a door shuts or a car blocks a lane, and armed men must not fire without a clear line, with a wall-between test. Gap for the design proof; status unchanged.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G14.
 
 ### RT2-22 A foot chase caught by a constable
 
@@ -703,6 +786,7 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - Source: DESIGN §4 Break-ins (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §4 Break-ins; DESCRIPTION-COPY-2 §8, §13
 - Status: decided. Coverage row: 1.6.1.
 - Data (run 5): exact values in production/lane/blueprint/data/map.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G14, G12.
 
 ### 1.6.2 Searching and taking
 
@@ -712,6 +796,7 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - Status: ruled (who can be searched and what they carry: his ruling of 25 Nov, advisors 376, 377); search times unmeasured. Coverage row: 1.6.2. Conflicts settled: C-502.
 - Checklist (23 Nov, top twenty no. 8; A36.02): missing: taking something must say what was taken, on screen or in Frank's words; the design describes no feedback. Gap for the design proof; status unchanged.
 - Data (run 5): exact values in production/lane/blueprint/data/rooms.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G03, G11, G14.
 
 ### 1.6.3 Lifts and the hot mark
 
@@ -721,6 +806,7 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - Status: unmeasured. Coverage row: 1.6.3. Conflicts settled: C-035.
 - Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-05 every buyer has a weekly purse; a refusal or part-payment in the last two weeks; decided. None measured.
 - Data (run 5): the data sweep (class B) sends its exact figures to the economy job: production/lane/blueprint/economy/ECONOMY-DESIGN-2026-11-26.md (see the Economy lines).
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G13.
 
 ### 1.6.4 Fronting up
 
@@ -751,6 +837,7 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - Status: decided. Coverage row: 1.6.7.
 - Studies: aaa-studies/IMMERSION-FEATURES.md: IM-03 a daily act holds control at most 10 s the first time, 5 after; decided; IM-04 blood and dirt come from deeds, never walking or rain alone, and are noticed; decided. None measured.
 - Studies: aaa-studies/IMMERSION-FEATURES.md: IM-05 a coat seen at a deed stays recognised until he changes coat; washing clears blood only; decided. None measured.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G13.
 
 ### 1.6.8 Using the world
 
@@ -766,6 +853,7 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - Standard: Two things under the coat; the rest at the office; found in a search (ruling 23 Sep: coat, pockets, cab-office storage) Test: S: a search finds what is carried; office storage keeps across saves; addendum rules ER-POCKET-01 to 02
 - Source: ruling 23 Sep genre line; DESIGN §7 (his ruling or canon). Designed in: DESIGN-ADDENDUM A5 (ER-POCKET-01, -02); RULINGS 23 Sep genre line; GTAVI-MAP GV-01
 - Status: ruled (his ruling or canon). Coverage row: 1.6.9.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G13, G10.
 
 ### 1.6.10 Frank's wardrobe
 
@@ -778,6 +866,7 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - Studies: aaa-studies/IMMERSION-FEATURES.md: IM-02 every daily act pays in the town; decided; IM-05 a coat seen at a deed stays recognised until he changes coat; washing clears blood only; decided. None measured.
 - Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-07 no purchase raises a fighting, driving or speaking value; decided. None measured.
 - Data (run 5): the data sweep (class C) sends its exact figures to the economy job: production/lane/blueprint/economy/ECONOMY-DESIGN-2026-11-26.md (see the Economy lines).
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G11.
 
 ### 1.6.11 Casing a place
 
@@ -786,6 +875,7 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - Source: DESIGN §4, §10 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN-ADDENDUM A23; DESCRIPTION-COPY-2 §13; DESIGN §4, §10 ER-LEDG-01
 - Status: decided. Coverage row: 1.6.11.
 - Studies: aaa-studies/MISSIONS-AND-SIDE-QUESTS.md: MS-02 a planned job's three keys leave at least two different traces; decided. None measured.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G12, G13, G23.
 
 ### 1.6.12 A torch on a night job
 
@@ -801,6 +891,8 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - Standard: rule: A lift on an attentive person, in good light or with fewer than three people near, is always felt; one on a distracted person in a crowd of three or more in poor light is never felt; his head turns before any felt lift; a lifted key is missed by the next morning and suspicion falls only on people he noticed (golden rows). Test: A lift on an attentive person, in good light or with fewer than three people near, is always felt; one on a distracted person in a crowd of three or more in poor light is never felt; his head turns before any felt lift; a lifted key is missed by the next morning and suspicion falls only on people he noticed (golden rows).
 - Source: DESIGN-ADDENDUM-2026-11-20 A34 (from REFERENCE-MECHANICS-2026-11-20 M1.97) (reference game). Designed in: DESIGN-ADDENDUM A34; DESCRIPTION-COPY-2 §14
 - Status: pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 1.6.13.
+- Planting (his decision 12, 25 Nov; rule G13): the same held press puts a small thing into a pocket, coat or bag under the same limits; what is planted keeps its owner and how it moved, and found later it traces by G13. CS-29's old line against it is struck (C-541).
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G13.
 
 ### WI-P05 Mugging and shoplifting
 
@@ -808,6 +900,7 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - Standard: A beating and search for money is a robbery at any rung; a weapon hold-up of a person is open from the start with consequences by temper; a shelf lift follows the lift rule with the keeper watching. Test: S: a mugging in Act I logged as robbery; a shelf lift in good light with the keeper attentive is felt.
 - Source: 1.6.13; 1.6.3; his ruling of 25 Nov (advisor 378: robbery a general action, anyone, anywhere, from the start). DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/PROPOSED-PARTS.md P05, D6) for him to overturn; its keeping 1.6.15's gate is replaced by the ruling.
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G13.
 
 ### 1.6.14 Damage by hand
 
@@ -815,7 +908,7 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - Standard: rule: Every damage act is heard at the force reach, leaves a mark that stays until mended, and is known to its owner by morning. Check S. Test: Every damage act is heard at the force reach, leaves a mark that stays until mended, and is known to its owner by morning. Check S.
 - Source: DESIGN-ADDENDUM-2026-11-20 A35 (from REFERENCE-MECHANICS-2026-11-20 M3.13) (reference game); fire: his ruling of 25 Nov (advisors 374, 375). Designed in: DESIGN-ADDENDUM A35; DESCRIPTION-COPY-2 §22
 - Status: ruled (fire: his ruling of 25 Nov); the rest pending (a reference-game lead; measured only when STATUS.md marks it solid). Coverage row: 1.6.14. Conflicts settled: C-503.
-
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G18, G19, G07, G13.
 
 ### 1.6.15 Hold-ups of shops and people
 
@@ -825,6 +918,7 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - Status: ruled (his ruling of 25 Nov, advisor 378). Conflicts settled: C-275, C-500. Coverage row: none yet (no parts-tree part or coverage.json row; asked of the design proof in BLUEPRINT-11).
 - Economy (24 Nov, section 5.5): A hold-up pays what the till holds that hour (about £90, a small shop's day), loud, witnessed, 2 case points. The shop is afraid for weeks: takings fall a tenth and recover as the fear fades. Judgement.
 - Data (run 5): exact values in production/lane/blueprint/data/places.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G08, G11, G20, G21.
 
 ### WI-P12 Trying a crime early, and the bank
 
@@ -832,6 +926,7 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - Standard: No input is refused; an early attempt has a real outcome by temper. Test: S: a weapon drawn at the grocer's counter in hour one; outcome logged and the town's reading checked against 1.6.15's witnessed-and-told rule.
 - Source: 1.6.15; canon (CCTV at the bank); RT-09; his ruling of 25 Nov (advisor 378). DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/PROPOSED-PARTS.md P12, D6 and D7) for him to overturn: the bank out of scope is a scope call (see revisit).
 - Status: decided; the bank out of scope. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G21.
 
 ### RT2-19 The phone as a verb
 
@@ -841,6 +936,7 @@ The work itself: getting in, searching, taking, fronting up, minding, getting re
 - Status: decided. Coverage row: RT2-19.
 - Prep: INVENTORY section 2: 3 phone boxes needed (the prototype has 1 in map.js), 0.2 hour if made in the one-shot.
 - Data (run 5): exact values in production/lane/blueprint/data/map.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G03, G01, G19, G20, G04.
 
 ## 1.7 Running the crew
 
@@ -853,6 +949,7 @@ Frank's power is people: orders in the field, sending in Act II, the board.
 - Standard: Two inputs at most, answered in voice or body within 1 s; a man who cannot says why (ER-CREW-01); crew never block a door (ER-CREW-02) Test: S: each order; B: crew never block a lane
 - Source: DESIGN §12 (no reference figure yet). Designed in: DESIGN §12 ER-CREW-01, -02, -04; DESCRIPTION-COPY-2 §22
 - Status: unmeasured. Coverage row: 1.7.1.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G07.
 
 ### 1.7.2 Sending (the eight verbs)
 
@@ -860,6 +957,7 @@ Frank's power is people: orders in the field, sending in Act II, the board.
 - Standard: Each through a named person; an order given and a line written; a beating never shown at length (DESIGN §12; canon no cruelty as spectacle) Test: S: each verb leaves a chain the town can trace; accomplice knows
 - Source: D56; DESIGN §12 (his ruling or canon). Designed in: DESIGN §12 Orders; DESCRIPTION-COPY-2 §22; DEFINITIONS RT-08, RT-09
 - Status: ruled (his ruling or canon). Coverage row: 1.7.2.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G13.
 
 ### 1.7.3 The board
 
@@ -869,6 +967,7 @@ Frank's power is people: orders in the field, sending in Act II, the board.
 - Status: unmeasured. Coverage row: 1.7.3.
 - Data (run 5): exact values in production/lane/blueprint/data/places.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
 - Story needs (paper, 24 Nov): the board as a visible score (Danny's name and arrow, or CAMMACK on the unit's shutter) (the story on paper, in KEEPER-LOG). Not covered; the part is a chalkboard of cars and fares only.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G10, G20.
 
 ### 1.7.4 Men at his side
 

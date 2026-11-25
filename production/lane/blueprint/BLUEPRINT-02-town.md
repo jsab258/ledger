@@ -20,6 +20,7 @@ Everyone keeps a day, with Frank or without him.
 - Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-06 a named person's routine repeats each ordinary day; a deed changes it visibly; decided. None measured.
 - A day, not a post (catalogue 23 Nov, rank 14; seen in 2 games): Regulars' days run as job chains, meeting at the caff and launderette after work (the newsagent shuts at 18:00), no pub. Partly: hourly routines exist; short are chained jobs and a shared evening place. Feature only; no timing; the part's status is unchanged.
 - Data (run 5): exact values in production/lane/blueprint/data/routines.json (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G23, G27, G02, G12, G20.
 
 ### 2.1.2 The crowd's clock windows
 
@@ -30,6 +31,7 @@ Everyone keeps a day, with Frank or without him.
 - Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-06 something within 35 m of any walkable point except routine-empty places; decided. None measured.
 - Deciding row (DECIDES-CHECK, 24 Nov): crowd counts by street and hour (read with FIT-G9).
 - Data (run 5): exact values in production/lane/blueprint/data/crowd.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G23.
 
 ### 2.1.3 Off-screen life
 
@@ -51,6 +53,7 @@ Everyone keeps a day, with Frank or without him.
 - Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-08 the night is its own street; a third of jobs and side stories after dark; decided. None measured.
 - Weather changes people (catalogue 23 Nov, rank 7; seen in 2 games): In rain people shelter in doorways and the bus shelter, under umbrellas. Partly: rain already empties the street and halves each crowd band; where people stand and umbrellas are not yet named. Feature only; no timing; the part's status is unchanged.
 - Data (run 5): exact values in production/lane/blueprint/data/light-weather.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G19, G23.
 
 ### 2.1.5 Crowd movement and avoidance
 
@@ -72,6 +75,7 @@ Everyone keeps a day, with Frank or without him.
 - Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-06 a named person's routine repeats each ordinary day; a deed changes it visibly; decided. None measured.
 - Data (run 5): exact values in production/lane/blueprint/data/timetables.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
 - Story needs (frame, 24 Nov): the town's calendar, Bonfire Night and Remembrance Sunday (SYSTEMS-THE-STORY-NEEDS S44). Covered.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G08, G02, G13, G19, G30.
 
 ### FIT-G9 Crowd counts by hour and place
 
@@ -104,6 +108,7 @@ The moat: every act exposes seven slots; identification climbs five rungs.
 - Standard: Every act exposes seven perceivable slots (canon) Test: S: PerceptionGolden rows
 - Source: canon The moat (his ruling or canon). Designed in: canon (The moat); DESIGN §2; DESCRIPTION-COPY-2 §5 (What a person catches); DEFINITIONS RT-14
 - Status: ruled (his ruling or canon). Coverage row: 2.2.1.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G01.
 
 ### 2.2.2 Identification ladder
 
@@ -114,6 +119,7 @@ The moat: every act exposes seven slots; identification climbs five rungs.
 - Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-02 a witness who caught a mark but not Frank links him only while he wears it; decided, thin. None measured.
 - Studies: aaa-studies/PLAYERS-STORIES.md: STORY-04 a third of moments turn on a mark a witness connected; decided. None measured.
 - Deciding row (DECIDES-CHECK, 24 Nov): being seen in KCD2 and RDR2 (read with 1.4.1); none sampled; about 5 h.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G11.
 
 ### 2.2.3 Sight by distance and light
 
@@ -124,6 +130,7 @@ The moat: every act exposes seven slots; identification climbs five rungs.
 - Prior research: research/eyewitness-testimony: identification about 96% at 5 m, 42% at 20 m, about 30% at 40 m; research/gaze-and-knowing (Fotios 2015). KCD2 recognition about 4 s, night minus 0.7, fog minus 0.5 are file-read leads; the old Unity Core held 40 m, not 35.
 - Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-05 no reaction without a printable chain of sightings; never through walls; decided. None measured.
 - Deciding row (DECIDES-CHECK, 24 Nov): being seen in KCD2 and RDR2 (read with 1.4.1); none sampled; about 5 h.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G12, G14.
 
 ### 2.2.4 Sound reach
 
@@ -134,6 +141,7 @@ The moat: every act exposes seven slots; identification climbs five rungs.
 - Prep: PRIOR-RESEARCH-INDEX section 8: how far footsteps and voices carry in KCD2, by ear against known distances (A7), still to be played; game-design/weapons-spec.md gives the .38 at about 177 m, capped at 250 m.
 - Prep: SOUND-PLAN SND-07: Frank's step in the mix must match the reach function within 1 dB at 03:00 (about 3.6 m) and be silent below -60 dBFS at noon; SND-13: after a seen deed the bed and one-shots fall at least 6 dB in that street for about a game hour (own design).
 - Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G12, G02.
 
 ### WI-P09 Walls, doors and a sleeping house
 
@@ -141,6 +149,7 @@ The moat: every act exposes seven slots; identification climbs five rungs.
 - Standard: Sound through walls and sleepers' waking follow fixed loudness rules, never a roll. Test: S: indoor fight heard map; a break-in with careful and loud acts in a sleeping house.
 - Source: checklist A28.06 (listed gap); 2.2.4; 1.6.1. DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/PROPOSED-PARTS.md P09, D6) for him to overturn; the half and the waking loudness are working values.
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G12, G02, G14.
 
 ### 2.2.5 Give-away rules
 
@@ -150,6 +159,7 @@ The moat: every act exposes seven slots; identification climbs five rungs.
 - Status: ruled (his ruling or canon). Coverage row: 2.2.5. Conflicts settled: C-283.
 - Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-02 a witness who caught a mark but not Frank links him only while he wears it; decided, thin. None measured.
 - Studies: aaa-studies/IMMERSION-FEATURES.md: IM-04 blood and dirt come from deeds, never walking or rain alone, and are noticed; decided. None measured.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G13.
 
 ### 2.2.6 Ground rules and trespass
 
@@ -158,6 +168,7 @@ The moat: every act exposes seven slots; identification climbs five rungs.
 - Source: DESIGN §4 (no reference figure yet). Designed in: DESIGN §4; DESIGN-ADDENDUM A10; DESCRIPTION-COPY-2 §8
 - Status: unmeasured. Coverage row: 2.2.6.
 - Data (run 5): exact values in production/lane/blueprint/data/places.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G11, G14, G08.
 
 ### RT2-03 What makes a person know Frank
 
@@ -165,6 +176,7 @@ The moat: every act exposes seven slots; identification climbs five rungs.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4), RT2-03 Test: B (bot), as written under RT2-03
 - Source: design pass 3, RT2-03 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §RT2-03; canon (The moat); DESCRIPTION-COPY-2 §5, §26
 - Status: decided. Coverage row: RT2-03.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G15.
 
 ## 2.3 Memory
 
@@ -181,6 +193,7 @@ Permanent per-person memory.
 - Studies: aaa-studies/TALK-AS-PLAY.md: TALK-05 a person with an unsettled deal cites it in the next talk's first reply; decided. None measured.
 - Studies: aaa-studies/IMMERSION-FEATURES.md: IM-05 a coat seen at a deed stays recognised until he changes coat; washing clears blood only; decided. None measured.
 - Story needs (frame, 24 Nov): permanent per-person memory and crowd extras becoming kept people (SYSTEMS-THE-STORY-NEEDS S21). Covered.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G26, G01, G07, G02, G04.
 
 ### 2.3.2 Witness certainty
 
@@ -191,6 +204,7 @@ Permanent per-person memory.
 - Prior research: research/eyewitness-testimony: weapon focus; witnesses who talk corrupt each other; confidence rises with retelling. The entry omits weapon focus and contamination.
 - Deciding row (DECIDES-CHECK, 24 Nov): crowd reactions (spread and settling) decide how one guard against a knot of onlookers is built; KCD2, RDR2 and Yakuza 0 give three answers, so footage bounds a design choice; two games planned, about 4 h.
 - Witnesses make the crime (catalogue 23 Nov, rank 1; seen in 4 games): A witness is only as sure as the sight, so a cap or another coat blurs the description, and no heat bar shows. Already covered: the part holds the certainty rule; coat and cap blurring a description sit in 1.4.4, 2.2.5 and 1.6.10. Feature only; no timing; the part's status is unchanged.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G03, G12.
 
 ## 2.4 Gossip
 
@@ -206,6 +220,7 @@ Talk passing between people who meet; the engine, never the show.
 - Prior research: research/rumour-propagation (14 Sep): 0.8 a hop and the 0.2 floor are tunables with no measurement, corroboration is not modelled; research/small-town-networks: tie layers 5, 15, 50, 150, dense clusters weakly joined.
 - Deciding row (DECIDES-CHECK, 24 Nov): crowd reactions (read with 2.3.2); the games read so far give three answers, so footage bounds a design choice.
 - Story needs (frame, 24 Nov): gossip at about 0.8 a hop, told never above seen, cooling 1 to 7 game days (SYSTEMS-THE-STORY-NEEDS S22). Covered.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G01, G02, G04, G06, G07.
 
 ### 2.4.2 Cooling by kind
 
@@ -216,6 +231,7 @@ Talk passing between people who meet; the engine, never the show.
 - Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-04 a cost to body or standing shows and has an end or a way back; decided; FF-08 a forced-failure bot still finds jobs, rent and two brakes it can act on (talk it down, buy it quiet, a favour) the next week of Act II; decided. None measured.
 - Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
 - Economy (24 Nov, section 5.5): A lift cools in a day or two; a round is told as a told version within a game day; a shop shutting is told for weeks. (Cooling by kind; design restates, no new figure.)
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G26.
 
 ### 2.4.3 Showing what people know
 
@@ -228,6 +244,7 @@ Talk passing between people who meet; the engine, never the show.
 - Studies: aaa-studies/TALK-AS-PLAY.md: TALK-05 a person with an unsettled deal cites it in the next talk's first reply; decided. None measured.
 - Prior research: aaa-studies/MEMORY-SYSTEMS.md: Hitman's most punished fault is noticing that breaks its own rules (5 of 9 players coded, thin), not a missing meter; posture first answers it without a meter.
 - Data (run 5): exact values in production/lane/blueprint/data/lines/ (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G07, G01, G02.
 
 ### 2.4.4 It comes back
 
@@ -241,6 +258,7 @@ Talk passing between people who meet; the engine, never the show.
 - Studies: aaa-studies/TALK-AS-PLAY.md: TALK-04 every way a decision talk fails leaves a state that comes back; decided. None measured.
 - Studies: aaa-studies/PLAYERS-STORIES.md: STORY-01 the tester logs each moment against four tests, with systems and mark; decided; STORY-03 half the moments come from witnesses, recognition or a returning person; physics and driving alone never count; decided. None measured.
 - Story needs (frame, 24 Nov): every deed of weight said to Frank's face within a game day for the whole game, with a line bank per deed kind and speaker kind (SYSTEMS-THE-STORY-NEEDS S23). Partly covered: the rule is written for week one only; later weeks and the line bank are missing.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G01.
 
 ### 2.4.5 The paper and the news
 
@@ -251,6 +269,7 @@ Talk passing between people who meet; the engine, never the show.
 - The world writes things down (catalogue 23 Nov, rank 18; seen in 1 game): The local paper, notices in the newsagent's window, the cab office's board. Partly: the paper is covered here and the board in 1.7.3; newsagent window notices are not. Feature only; no timing; the part's status is unchanged.
 - Data (run 5): exact values in production/lane/blueprint/data/letters-and-print.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
 - Story needs (paper, 24 Nov): Agar's bill as a letter (Frank's deeds carried; SIDE-CARDS D16). Partly covered: letters open as a page and go into the Ledger; this bill is not yet one of them.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G01, G13.
 
 ## 2.5 Witnesses after a deed
 
@@ -265,6 +284,7 @@ What people do once they have seen something.
 - Status: ruled (his ruling or canon). Coverage row: 2.5.1.
 - Studies: aaa-studies/PLAYERS-STORIES.md: STORY-03 half the moments come from witnesses, recognition or a returning person; physics and driving alone never count; decided. None measured.
 - Word passed person to person (catalogue 23 Nov, rank 11; seen in 1 game): A neighbour crosses to tell the grocer, and who heard depends on who talked. Already covered for a witness walking to tell; partly for second-hand tellers shown crossing the street. Feature only; no timing; the part's status is unchanged.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G19.
 
 ### 2.5.2 Stopping a witness
 
@@ -277,6 +297,7 @@ What people do once they have seen something.
 - Studies: aaa-studies/TALK-AS-PLAY.md: TALK-02 each decision talk has two outcomes that turn on state he can see or know, reason said; decided. None measured.
 - Studies: aaa-studies/TALK-AS-PLAY.md: TALK-03 a fact Frank holds changes the reply and is named; a wrong push ends in a state, never a reload; decided. None measured.
 - Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G15, G07, G05, G01, G12.
 
 ### 2.5.3 Crowd reaction to a deed
 
@@ -287,6 +308,7 @@ What people do once they have seen something.
 - Prior research: game-design/town-traits-draft-2026-09-29.md: nerve, loyalty and greed for 41 residents (superseded by the five dials in 2.14; Q6 is closed).
 - Checklist (23 Nov, top twenty no. 4; A13.18): missing: bystanders who saw a weapon must run away from the danger and toward doors, not past it, with a test. Gap for the design proof; status unchanged.
 - Data (run 5): exact values in production/lane/blueprint/data/people/ (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G08.
 
 ### 2.5.4 A street on edge
 
@@ -297,6 +319,7 @@ What people do once they have seen something.
 - Prior research: research/group-standing-without-a-score: taking the maximum makes one furious person and a town that has turned both read 'hostile'; count people above the sharing floor and band them into words.
 - Repeated deeds grow the response (catalogue 23 Nov, rank 12; seen in 1 game): Repeated deeds bring quieter witnesses, fewer people out and talk at the counter. Partly: the street on edge has witnesses telling sooner, the opposite of quieter witnesses; fewer people out and talk of it at the counter are for the design proof to weigh. Feature only; no timing; the part's status is unchanged.
 - Data (run 5): exact values in production/lane/blueprint/data/tune.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G27.
 
 ### 2.5.5 Finding an unseen deed
 
@@ -305,6 +328,7 @@ What people do once they have seen something.
 - Source: DESIGN-ADDENDUM A38 (reference game) for traces; the body rule DECIDED by the combat pass 25 Nov, ready for review (COMBAT-SYSTEM.md CS-16, CS-29; RULINGS-TO-REVISIT R13), for him to overturn
 - Status: decided. Coverage row: 2.5.5. Conflicts settled: C-354.
 - Prior research: research/crime-scene-1990: no National DNA Database until 10 Apr 1995 (NAFIS 1999), DNA first used Oct 1986; forensics compare and never name.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G13, G10, G27.
 
 ### GV-02 Shedding what a witness holds, slot by slot
 
@@ -312,6 +336,7 @@ What people do once they have seen something.
 - Standard: A changed slot no longer matches for witnesses who had not told; gossip already carried is never undone; the Ledger shows Frank's guess per slot in words. Test: B: deed, change one slot, meet the same witness: only that slot fails to match; a witness who told first still names it.
 - Source: production/research/lane/gtavi/YARDSTICK.md and IDEAS-FOR-LEDGER.md (DECIDED by the design proof, for him to overturn). Designed in: GTAVI-MAP §GV-02; DESIGN-ADDENDUM A21; DESCRIPTION-COPY-2 §26
 - Status: decided. Coverage row: GV-02. Conflicts settled: C-040.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G11.
 
 ### RT2-10 Crowd extras as witnesses
 
@@ -334,6 +359,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Status: decided. Coverage row: 2.6.1. Conflicts settled: C-041.
 - Prior research: research/british-policing-1988-1992 and production/art/atlas-02: custodian helmet, no stab vest, no high-visibility jacket until 1994; PACE Code E (tape) operational 29 Jul 1988.
 - Data (run 5): exact values in production/lane/blueprint/data/police.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G15, G16.
 
 ### 2.6.2 Challenge and search
 
@@ -341,6 +367,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Standard: DESIGN §8: stand and be searched, run and it is a chase Test: S: a search finds what is carried
 - Source: DESIGN §8 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §8; DESIGN-ADDENDUM A13; DEFINITIONS RT2-22; DESCRIPTION-COPY-2 §18
 - Status: decided. Coverage row: 2.6.2. Conflicts settled: C-042.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G13.
 
 ### 2.6.3 Statements and the arrest rule
 
@@ -351,6 +378,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Prior research: research/police-response-1990 ARREST note: criminal damage arrestable, common assault normally a summons, wounding, robbery and murder arrestable, hearsay can found suspicion; first appearance before magistrates, fine first, instalments (COURT).
 - Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-05 police know only what a person perceived or a search found; decided; FF-07 bot bands: the greedy bot is beaten or arrested, the lazy one not in Act I; decided. None measured.
 - Story needs (frame, 24 Nov): the night between, a race to reach the witness before nine run for Frank's own signature, with sign first, a cheaper way (a brief at a fee) or let it stand (SYSTEMS-THE-STORY-NEEDS S19). Partly covered: signed statements at nine and the witness race exist; conditions for the cheaper ways and Ron's later custody are missing.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G03, G01, G13, G15.
 
 ### WI-P07 A witness after she has signed
 
@@ -358,6 +386,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Standard: Every way to undo a statement has a stated weight and a lasting memory (MEM-09). Test: S: a signed witness talked round, paid, frightened and killed in four runs; the statement's weight logged.
 - Source: 2.6.3; MEM-09; CJA 1988 s.23. DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/PROPOSED-PARTS.md P07, D6) for him to overturn.
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G15, G05.
 
 ### 2.6.4 Custody as hours
 
@@ -369,6 +398,8 @@ A pressure Frank can read and answer, never the end of the game.
 - Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-01 failure costs game hours and standing, never replayed minutes; decided. None measured.
 - Story needs (frame, 24 Nov): remand to the end for Ron, remanded by the magistrates eight days at a time, one hearing in week 7, with visits (SYSTEMS-THE-STORY-NEEDS S19; paper second run). Partly covered: "charged and remanded" is named; the eight-day hearing and visits are missing.
 - Story conflict C-336 (run 5): The part makes custody a matter of hours then release or charge, while the story needs Ron held on remand to the end of the game with visits. Until designed, the part stands; the need is a gap for the design proof. Settled 24 Nov (what-if sweep, D5): the machinery is LH-07, the remand road with a visit each weekday and the committal on the eighth day; Ron's remand uses the same scenes.
+- The station inside (his decision 14, 25 Nov): a front counter, one interview room and one cell, nothing more; the arrest interview is played there (2.6.11).
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G15, G03, G16.
 
 ### WI-P03 What is taken at an arrest, and the solicitor
 
@@ -376,6 +407,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Standard: An arrest takes no money except a sum held as evidence, returned in a week unless it joins a charge; the envelope's fate follows what it holds; free and paid solicitors differ in one stated way. Test: S: arrests carrying cash, a weapon, the envelope with the copy, the envelope with only fare money; property logged on release.
 - Source: 2.6.4; economy/PRICES-WAGES-1990.md (a solicitor's brief on call, 50 pounds a week, DESIGN); reviewer R16 (the free duty solicitor against the economy's charged brief). DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/PROPOSED-PARTS.md P03, D6) for him to overturn; the quarter is a working value; 1990 custody property practice (PACE Code C) to confirm (C-434).
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G15.
 
 ### 2.6.5 DS Ellis and the four stages
 
@@ -387,6 +419,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Data (run 5): exact values in production/lane/blueprint/data/police.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
 - Economy (24 Nov, section 5.7): Ellis's case state moves with the bribe: cooling twice as fast while bought; 3 case points when a retainer is missed. Run: racketeer buys her in week 6, Act II's last week; at £1,000 not until week 8. Squeezing shops past bearing is how she gets a witness (also a case point a week).
 - Story needs (frame, 24 Nov): Ellis's stages and charges (SYSTEMS-THE-STORY-NEEDS S20). Covered; the tip rule is under 3.1.2.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G15, G16, G01, G03, G05.
 
 ### 2.6.6 Armed response and the dial's police
 
@@ -403,6 +436,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Source: DESIGN §5, §18 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §5, §18; DESIGN-ADDENDUM A12; DEFINITIONS G2; DESCRIPTION-COPY-2 §18
 - Status: decided. Coverage row: 2.6.7. Conflicts settled: C-045.
 - Data (run 5): exact values in production/lane/blueprint/data/police.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G19, G13.
 
 ### 2.6.8 Bought men and squaring the law
 
@@ -415,6 +449,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Economy conflict C-329 (run 5): Settled: the part now carries his ruling of 24 Nov (Ellis can be bought, about £800 then £100 a week, a missed week ends it). Still open: nothing; the part's rule that a bought officer Frank strikes is gone for good stays.
 - Story needs (frame, 24 Nov): the bought-Ellis state (bought once for 800 pounds cash, then 100 a week) and Wardell's lost statement used on the night between (paper second run via CAST-CHANGES; SYSTEMS-THE-STORY-NEEDS S13, S19). Partly covered: two bought officers exist; Ellis "cannot be bought" in the frame's own table, so a bought-Ellis state is missing.
 - Story needs (frame, 24 Nov): two named bought officers, Garton and Wardell (SYSTEMS-THE-STORY-NEEDS S13). Covered.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G04, G16, G05, G03, G15.
 
 ### WI-P08 Talking to a constable: threats, lies, a second bribe
 
@@ -422,6 +457,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Standard: A constable judges talk only against what he holds. Test: S: threats, lies and bribes to an honest and a bought constable; outcomes logged.
 - Source: 2.6.2; 2.6.8; FF-05; the combat pass's CS-19 (threatening an officer is a deed and a charge). DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/PROPOSED-PARTS.md P08, D6) for him to overturn.
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G03.
 
 ### 2.6.9 Charges, bail and the office searched
 
@@ -434,6 +470,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Story needs (frame, 24 Nov): a charged state for Frank on bail into Act III, and Customs as the charging body beside Ellis (SYSTEMS-THE-STORY-NEEDS S19; paper second run). Partly covered: charges and bail exist as police only; Customs charging is missing.
 - Story needs (frame, 24 Nov): the office search with a night's notice (SYSTEMS-THE-STORY-NEEDS S35). Covered.
 - Story conflict C-335 (run 5): The part says a charge has no court scene and no prison and only the police charge, while the story needs Ron remanded by magistrates eight days at a time with a hearing in week 7 and a Customs officer laying the charge. Until designed, the part stands; the need is a gap for the design proof.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G15, G01, G04, G13.
 
 ### 2.6.10 Police after a deed
 
@@ -444,6 +481,14 @@ A pressure Frank can read and answer, never the end of the game.
 - Prior research: research/crime-scene-1990 (no cold hits in 1990) and research/police-response-1990 (witness reporting rates); canon names CCTV and the weekly tape.
 - Witnesses make the crime (catalogue 23 Nov, rank 1; seen in 4 games): Police act only on a report, and the constable asks where Frank was seen. Already covered: the patrol searches the last-seen streets and nothing on screen marks where he searches. Feature only; no timing; the part's status is unchanged.
 - Data (run 5): exact values in production/lane/blueprint/data/police.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G03, G15, G01, G11.
+
+### 2.6.11 The arrest interview
+
+- How it works: An arrest brings a short played interview in live talk (his ruling of 25 Nov, advisor 384): DS Ellis, or a constable for lesser deeds, in the station's one interview room (his decision 14: a front counter, one interview room, one cell). The interviewer knows only signed statements and finds. Frank may lie, keep silent, ask for the solicitor or blame others; only a signed statement or a find catches a lie. What he says becomes a held claim (rule G03; G01 for what he tells about others); a man he blames hears of it by the gossip rules. It sits inside custody as hours (2.6.4) and feeds the case (RT-13, 2.6.9).
+- Standard: the interviewer never states a fact that no signed statement or find holds (claim check); a lie is caught only against a held statement or find; silence and the solicitor are always open (golden rows). Test: S: golden rows; claim check
+- Source: his ruling of 25 Nov (advisor 384; RULINGS on wip); his decision 14 (25 Nov); rules G03, G15 (BLUEPRINT-12); designed in Monday's police and justice pass
+- Status: ruled. Coverage row: none yet. Rules: G03, G15.
 
 ### RT-13 Ellis's case model
 
@@ -451,6 +496,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Standard: Stages move only on these rules, each with its sign; the charges list read at the ending equals the arrests and finds. Test: B: seeded deeds and quiet stretches; the stage log against the rules.
 - Source: The description, sections 20, 21. (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §RT-13; DESIGN §8; DESCRIPTION-COPY-2 §17, §18
 - Status: decided. Coverage row: RT-13.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G01, G15.
 
 ### RT2-02 Attacking the police
 
@@ -458,6 +504,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Standard: see DEFINITIONS-2026-11-21.md, design pass 3 (run 4), RT2-02 Test: B (bot), as written under RT2-02
 - Source: design pass 3, RT2-02 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §RT2-02, RT-09, 2.6.4
 - Status: decided. Coverage row: RT2-02. Conflicts settled: C-285.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G16, G19.
 
 ### LH-01 Which road a constable's killing takes
 
@@ -479,6 +526,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Standard: Every account matches the speaker's stored memory; Frank is stopped at least once in days 1 and 2; an alibi lasts as long as its giver holds. Test: B: accounts compared slot by slot for the three streets; Frank's stop logged; an alibi giver's regard lowered mid-week and the fall logged.
 - Source: his ruling of 24 Nov (men stopped, door to door, a reward); Crimestoppers began 1988 (crimestoppers-uk.org, summary only); ruling of 25 Sep (a character says only what the simulation knows). DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/LONG-HEAT.md, D1); five thousand pounds and the day-7 return are working values, the return unverified for 1990.
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G03, G15, G01.
 
 ### LH-04 Everyone who knows anything is leaned on
 
@@ -486,6 +534,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Standard: Visit order follows only what each knower holds; results follow only temper, the reward and Frank's earlier acts, and the same save gives the same results; Mickey's people and the trade people never sign. Test: B: 50 seeded squad weeks against the formula; replays identical.
 - Source: his ruling of 24 Nov (everyone who knows anything leaned on, each person's temper decides); 2.14; 2.5.2; ruling of 1 Oct; MEM-09. DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/LONG-HEAT.md, D1); the pull's weights are working values for the loops.
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G15, G07, G10.
 
 ### LH-05 The bought men, Ellis and the rivals in the squad's week
 
@@ -493,6 +542,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Standard: Police corruptible as individuals, never as a thesis (canon): the station never changes as a whole; every rival hold is earned by what his people saw or heard and is spent at most once. Test: S and B: a squad week with both constables and Ellis bought and a missed payment, each rival with and without a slot; offers, leads and holds logged.
 - Source: his ruling of 24 Nov (bought constables drop him; rival heads gain a hold); canon; 2.6.8; 2.10.2; LH-15. DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/LONG-HEAT.md, D1); two hundred pounds is a working value from GD-07.
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G16.
 
 ### LH-06 What is enough to charge him
 
@@ -500,6 +550,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Standard: A charge follows only from pieces a person perceived or a search found (FF-05); deterministic; every arrest shows its sign one game hour ahead. Test: B: each piece alone and in pairs; the charge fires exactly at 4; prints link only with an earlier arrest and bare hands.
 - Source: his ruling of 24 Nov (a signed statement, the weapon, his coat matched); research/crime-scene-1990 (local prints only, no databases); PACE limits and Code E. DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/LONG-HEAT.md, D1); point values and the 100 m and 50 m reaches are working values.
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G03, G15, G11, G13.
 
 ### LH-07 The remand road (every killing charge)
 
@@ -507,6 +558,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Standard: No remand day is a dead end: every day offers an act that can change the count through the solicitor even when no one else will come; a visit is a few real minutes, the rest skipped. Test: B: a charge with every knower signed and every helper hostile; an act offered each day; firm floor checked after eight days.
 - Source: his ruling of 24 Nov (charged and held on remand, visiting-room talks while the case is built) and his ruling of 25 Nov (advisors 374, 375: arrest and a killing charge always leave a way back); Hansard 6 Dec 1989 (a visit each weekday); eight-day remands. DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/LONG-HEAT.md, D1, D5); closes C-043, C-105, C-142 and gives C-336 its machinery.
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G15, G04, G07.
 
 ### LH-08 The bribe: rare, costly, risky
 
@@ -514,6 +566,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Standard: Canon: one officer, one thing, once a case; the station never changes; cash only; the go-between names an honest man before any approach. Test: S: one bribe per case; the second refused; squeeze and sell-out forced in seeded runs and the restored piece logged.
 - Source: his addition of 24 Nov (bribery possible, rare, costly, risky); canon; 2.6.8. DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/LONG-HEAT.md, D1); prices scaled from his Ellis price (about eight hundred) and GD-07, working values.
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G16.
 
 ### LH-09 Collapse or trial: the committal and the way back
 
@@ -521,6 +574,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Standard: Every step after a charge offers a way back a player can find from what he sees, and a guilty verdict always leaves one; frightening a witness away is weaker than winning her. Test: B: seeded committals where each witness holds, retracts or stays away; a worst-case run (every piece held) reaches an appeal with an act offered.
 - Source: his ruling of 24 Nov (witnesses holding or taking back decide collapse or trial); his ruling of 25 Nov (advisors 374, 375: a guilty verdict leaves a reachable way back, an appeal or another route always winnable); CJA 1988 s.23; D27. DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/LONG-HEAT.md, D1); the appeal's acts are working values; replaces LONG-HEAT's inside ending (C-430).
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G15.
 
 ### LH-10 After the long heat
 
@@ -535,6 +589,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Standard: Handing himself in always ends the manhunt and never adds a point by itself. Test: S: in a seeded manhunt the walk-in ends it within the scene; the count unchanged.
 - Source: player question (can you surrender, RDR2; what-if/research/player-questions-2026-11-24.md); FF-01. DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/LONG-HEAT.md, D1) for him to overturn.
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G15, G03.
 
 ### LH-13 Women officers and Ellis: the rule that replaces the dropped one
 
@@ -542,6 +597,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Standard: The same rules for every officer; the heavier reading shows in words and reporting, never as a refused input (RT-09). Test: B: the same strike on a male constable, a woman constable, a man of 65 and Ellis; reporting, talk speed and standing logged; Ellis's death hands her case whole to Hebden.
 - Source: his ruling of 24 Nov (line dropped, Ellis bribable); C-285; 1.3.6. DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/LONG-HEAT.md, D3) for him to overturn. The combat pass's CS-17 sets the same reading as a factor of 1.5 (C-436).
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G16.
 
 ### LH-15 A hold on Frank (the reverse hook)
 
@@ -549,6 +605,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Standard: Every hold traces to a fact the holder perceived or bought; each is spent at most once. Test: S: a rival hold earned in the long heat, spent at a sit-down, then gone; a second spend refused.
 - Source: RT-07 (the same thing the other way round); LH-05; LH-08; MEM-09. DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/LONG-HEAT.md, D1) for him to overturn.
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G05, G04.
 
 ### RT2-16 Police memory and arrest hours for road deeds
 
@@ -557,6 +614,7 @@ A pressure Frank can read and answer, never the end of the game.
 - Source: design pass 3, RT2-16 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §RT2-16, 2.4.2; DESCRIPTION-COPY-2 §18
 - Status: decided. Coverage row: RT2-16.
 - Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-04 a cost to body or standing shows and has an end or a way back; decided; FF-05 police know only what a person perceived or a search found; decided. None measured.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G11, G16, G13, G15.
 
 ### RT2-17 A gun found in a stop at War
 
@@ -590,6 +648,7 @@ Two pots: clean money in the fare book, night money in the tin.
 - Economy (24 Nov, section 4, EC-02; his ruling): Each car's takings are split half to the driver and half to the book; the firm pays fuel and cover (the design also puts repairs on the book, about £46 a car a week in all). A dead rank gives a car £130 a week in takings, a good rank from rung 2 £210, the cold-store contract £40 more. Judgement (inferred from the old £85 to £95 figure, tuned in the run).
 - Economy (24 Nov, section 4): Book from one car a week, owned / on terms: dead rank £19 / minus £3, good rank £59 / £37, with the contract £79 / £57. Cars are a slow earner and a sink until paid off; Mickey's two cars are the firm's Act I profit. Fuel £26 a week (13 gallons at £2.00; 1990 source: petrol £1.86 a gallon Oct 1989, Hansard 13 Feb 1990, with the autumn Gulf rise), cover £12 and repairs £8 (both judgement).
 - Economy conflict C-320 (run 5): Settled: the part now carries his ruling of 24 Nov (drivers keep half each car's takings, the firm pays fuel and cover; the £90 wage is gone). Still open: the old £85 to £95 a week a driver in the part's text is not recomputed (gap); a dead-rank car brings the book £65 a week less its costs.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G03, G04, G05.
 
 ### 2.7.2 Night money and the tin
 
@@ -600,6 +659,7 @@ Two pots: clean money in the fare book, night money in the tin.
 - Studies: aaa-studies/FAILURE-AND-FRUSTRATION.md: FF-02 a failure takes only the money the design names; decided. None measured.
 - Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-02 no take over the greater of £150 or 1.5 weeks' income; Act II's last week 3 to 10 times Act I's; decided. None measured.
 - Economy (24 Nov, section 2): Night money (debt book, runs, round, tobacco, loans, hooks, hold-ups, goods to a fence) goes to the tin or pocket. Night outgoings (men's cuts £10 to £40, men posted at rung 4 at £40 a week each, bribes, Ellis) are paid only from cash in hand; nothing turns the book into tin. Short pay is recorded and lowers that man's loyalty, never borrowed. Posts at £40 a week are judgement.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G13.
 
 ### 2.7.3 The wash
 
@@ -637,6 +697,7 @@ Two pots: clean money in the fare book, night money in the tin.
 - Data (run 5): the data sweep (class B) sends its exact figures to the economy job: production/lane/blueprint/economy/ECONOMY-DESIGN-2026-11-26.md (see the Economy lines).
 - Economy (24 Nov, sections 1 and 6, EC-04): Each shop has weekly takings, costs, its owner's draw and a margin, which is its purse (margins £44 to £175: fishmonger £1,100 takings, grocer £1,500, newsagent £1,900, launderette £420, caff £750, chip shop £900, ironmonger £650, tea room £380, pawn £700). Takings fall when its board rises and while it is afraid. Four losing weeks in a row and it shuts, saying so at two; no shop shuts without a cause the town can name. Judgement throughout (shops file section 5); this keeps "no price tables, stock or supply chains".
 - Economy (24 Nov, section 6, EC-05): Prices move only on a shop's own board, for a cause. A shop on a round pays out of up to 60% of its margin; past that, half the excess goes on its board (chalked over, capped at a quarter over) and half off its purse. The town says "prices are up" at 10% and "steep" at 25%. With no squeeze, robbery or rival, a board never moves. Judgement (Economy.cs's words).
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G20, G23.
 
 ### 2.7.6 Fencing
 
@@ -650,6 +711,7 @@ Two pots: clean money in the fare book, night money in the tin.
 - Economy (24 Nov, sections 5.5 and 6, EC-10; his ruling): Buy-back: within 7 game days the shop or pawnbroker that bought an item sells it back at what it paid plus a quarter; a fence holds nothing. Test: a radio sold for £12 is £15 on day 6, gone on day 8.
 - Economy (24 Nov, section 5.5): A lift pays about a third of retail at a fence (about £40), a fifth less for each further piece the same week; Rita opens at rung 2; a lift cools in a day or two. Judgement; the fence's third is inferred from later studies (Sutton 2014, AIC 2002, BOCSAR 1998). Best repeatable lever, £305 to £340 an hour; ten lifts a week bring about £100 more than two at the cost of three arrests.
 - Economy conflict C-330 (run 5): The part has no buy-back and says Rita holds goods for sale on. His ruling says the buyer sells back within 7 game days at price plus a quarter and a fence holds nothing; the ruling wins.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G13.
 
 ### 2.7.7 Flows ledger
 
@@ -657,6 +719,7 @@ Two pots: clean money in the fare book, night money in the tin.
 - Standard: ER-MONEY-01 Test: S: no money from nowhere
 - Source: DESIGN §9 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §9 (ER-MONEY-01, -02); DESCRIPTION-COPY-2 §20
 - Status: decided. Coverage row: 2.7.7.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G04.
 
 ### 2.7.8 Spending
 
@@ -670,6 +733,7 @@ Two pots: clean money in the fare book, night money in the tin.
 - Data (run 5): the data sweep (class B) sends its exact figures to the economy job: production/lane/blueprint/economy/ECONOMY-DESIGN-2026-11-26.md (see the Economy lines).
 - Economy (24 Nov, section 3 and prices file section 1): Spoken or written prices: 20 cigarettes £1.70 (1990 source: 161p on 12 Feb 1990, Hansard 14 Feb 1990, rising after the March Budget), paper 25p, tea 30p, caff breakfast £1.80 (judgement), caff meal £2.50, chip shop fish and chips £1.60 (judgement), milk 30p a pint (1990 source: 30.5p, Hansard 15 Mar 1991), sliced loaf about 52p (derived from 48.8p in 1989, Hansard 28 Feb 1990), bus 45p (judgement). Other list prices as the part has them (design-held).
 - Economy (24 Nov, prices file section 3): Property for talk: council house £23 a week, private terrace £35, rooms £25 (judgement), a shop unit on the parade £25 to £35 a week (judgement), a terraced house to buy about £25,000 (1990 source: North £37,374 in 1989, Hansard 9 Jul 1990, set well under).
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G04, G13, G20.
 
 ### GD-07 Economy over weeks: what money buys and how it rises across about 20 hours
 
@@ -743,6 +807,7 @@ Mickey's debt book.
 - Status: unmeasured. Coverage row: 2.8.1.
 - Data (run 5): exact values in production/lane/blueprint/data/people/ (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
 - Story needs (frame, 24 Nov): the debts (SYSTEMS-THE-STORY-NEEDS S41). Covered.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G04.
 
 ### 2.8.2 Partial payment and the book
 
@@ -752,6 +817,7 @@ Mickey's debt book.
 - Status: decided. Coverage row: 2.8.2.
 - Studies: aaa-studies/TALK-AS-PLAY.md: TALK-03 a fact Frank holds changes the reply and is named; a wrong push ends in a state, never a reload; decided. None measured.
 - Economy (24 Nov, section 2): Mickey's debt book stays £156, five debts (Darren in news, the other four in money or goods); it is left out of the money-ratio check as inherited. A debtor pays on Friday or not at all, since households have a few pounds left on Friday night and little by Thursday.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G04.
 
 ## 2.9 The outfit and the arrangement
 
@@ -775,6 +841,7 @@ The run to the ferry landing that Mickey kept.
 - Standard: Kept gives the hand-over beat; ended starts every rival one rung up; both reach rung 2 (RT-04). Test: B: week-one runs kept and ended; the Act II state compared.
 - Source: The description, sections 36, 37; RT-04. (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §2.9.2, RT-04, RT2-01; DESIGN §16; DESCRIPTION-COPY-2 §30, §31; ONE-SHOT-PROMPT S31
 - Status: decided. Coverage row: 2.9.2.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G22.
 
 ### RT2-01 The cold-store contract and rung 3 are circular
 
@@ -797,6 +864,7 @@ Three heads, each going after a different ledger.
 - Status: decided. Coverage row: 2.10.1. Conflicts settled: C-055.
 - Studies: aaa-studies/PLAYERS-STORIES.md: STORY-05 a rival's man meets Frank twice; every man he beat meets him within three game days; decided. None measured.
 - Story needs (frame, 24 Nov): rivals climb noticed, visit, pressure, threat, sit-down with the fail-safe (SYSTEMS-THE-STORY-NEEDS S3). Covered; the rivals' lieutenants and men are not yet named in the part.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G10, G04.
 
 ### 2.10.2 Rival eyes
 
@@ -806,6 +874,7 @@ Three heads, each going after a different ledger.
 - Status: decided. Coverage row: 2.10.2.
 - Studies: aaa-studies/PLAYERS-STORIES.md: STORY-03 half the moments come from witnesses, recognition or a returning person; physics and driving alone never count; decided; STORY-05 a rival's man meets Frank twice; every man he beat meets him within three game days; decided. None measured.
 - Data (run 5): exact values in production/lane/blueprint/data/people/ (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G10, G01, G08.
 
 ### 2.10.3 Pressures and answers
 
@@ -817,6 +886,7 @@ Three heads, each going after a different ledger.
 - Data (run 5): exact values in production/lane/blueprint/data/happenings.json (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
 - Economy (24 Nov, section 5.8): The Widow's tax is £5 a car a week at the dock gate once Frank has five cars, until answered (by a man posted there at £40 a week, a cost the run leaves out). Judgement.
 - Story needs (frame, 24 Nov): each outside power (police, docks, council, press, Customs) as a named power with one want and one fear the story can read, and the docks as a workforce (SYSTEMS-THE-STORY-NEEDS S5). Partly covered by the rivals' pressures; missing is the powers table for the non-rival factions.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G04, G10, G07, G26.
 
 ### WI-P06 Turning a rival's man, paying one to inform, playing rivals off
 
@@ -824,6 +894,7 @@ Three heads, each going after a different ledger.
 - Standard: Every turn, tip and lie traces to held facts and named tempers, each with a stated discovery and cost. Test: B: seeded attempts with men of known tempers; who turns, who is found out, how each ladder moves.
 - Source: his story ruling of 24 Nov (rivals fought or played off, rivals' men recruited); RT-07; 2.10; C-342. DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/PROPOSED-PARTS.md P06, D6) for him to overturn; thirty pounds and the thresholds are working values; Danny's own offer stays with the story lane.
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G10, G01, G03, G07.
 
 ### 2.10.4 The Fixer
 
@@ -834,6 +905,7 @@ Three heads, each going after a different ledger.
 - Studies: aaa-studies/MEMORY-SYSTEMS.md: MEM-08 every sit-down and 80% of Act II beats name a deed of Frank's the speaker holds; decided. None measured.
 - Data (run 5): exact values in production/lane/blueprint/data/people/ (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
 - Story needs (frame, 24 Nov): Garbutt's one truce a game and paying a rival to hold him two game weeks (SYSTEMS-THE-STORY-NEEDS S9). Covered; amounts are gaps.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G04.
 
 ### RT-05 The two rivals not met at Act II's end
 
@@ -858,6 +930,7 @@ Three heads, each going after a different ledger.
 - Source: design pass 3, RT2-07 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §RT2-07, RT-04, RT-06; DESCRIPTION-COPY-2 §24
 - Status: decided. Coverage row: RT2-07. Conflicts settled: C-056.
 - Prep: NUMBERS-RUN R1 to R3: as written an aggressive player's Act II ends on day 12 (Widow noticed day 8, sit-down day 12); a payer sees rung changes only in weeks 1 and 5. Fix A one rung a rival every 5 game days (hard player ends day 28); fix B a paid rival holds 7 days and takes at most 2 payments (payer's sit-down day 38). Fail-safe kept as written. First notice staggered (assumed): Widow day 8, Cammack day 10, Agar day 13.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G10, G07.
 
 ### WI-P13 The truce against deeds
 
@@ -865,6 +938,7 @@ Three heads, each going after a different ledger.
 - Standard: A truce holds only while Frank keeps it. Test: S: a deed against the truce rival on day 3; the truce ends and the rung rises.
 - Source: 2.10.4; RT2-07. DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/PROPOSED-PARTS.md P13, D6) for him to overturn.
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G04.
 
 ### RT2-08 Rivals as actors
 
@@ -873,6 +947,7 @@ Three heads, each going after a different ledger.
 - Source: design pass 3, RT2-08 (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §RT2-08, RT-07, RT-08; DESCRIPTION-COPY-2 §22
 - Status: decided. Coverage row: RT2-08.
 - Data (run 5): exact values in production/lane/blueprint/data/map.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G10, G04.
 
 ## 2.11 Crew under the hood
 
@@ -888,6 +963,7 @@ Men who know: needs, nerve, loyalty, fates.
 - Data (run 5): exact values in production/lane/blueprint/data/people/ (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
 - Story needs (frame, 24 Nov): recruiting a rival's man (low loyalty to his head) by a need met or a hook spent, with one true read of his head, and taking a beaten firm in whole (SYSTEMS-THE-STORY-NEEDS S10). Partly covered: missing are rival men as kept people, the turning check, the true read as a held fact and the old head's reaction; rival men's regard for their head has no data yet (temper job).
 - Story conflict C-342 (run 5): The part draws recruits from the thirty regulars and rivals only poach Frank's men (2.11.3), while the story needs Frank to turn a rival's man and take a beaten firm in. Until designed, the part stands; the need is a gap for the design proof.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G10.
 
 ### 2.11.2 Nerve, loyalty and breaking
 
@@ -896,6 +972,7 @@ Men who know: needs, nerve, loyalty, fates.
 - Source: DESIGN §12 (DECIDED by the design proof, for him to overturn); regard loss through grudge DECIDED by the temper job (temper/TEMPER-MODEL.md section 3, grudge; section 9, open point). Designed in: DESIGN §12 (ER-CREW-03); DESIGN-ADDENDUM A40; DEFINITIONS RT-07; DESCRIPTION-COPY-2 §22
 - Status: decided. Coverage row: 2.11.2.
 - Story needs (frame, 24 Nov): crew nerve and loyalty with signs before a break, read by "who comes for him in the yard" and the successor's offer (SYSTEMS-THE-STORY-NEEDS S11). Partly covered; the break pressure figure is still a gap.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G10, G08, G07, G15, G01.
 
 ### 2.11.3 Crew fates
 
@@ -903,6 +980,7 @@ Men who know: needs, nerve, loyalty, fates.
 - Standard: Each fate reachable in play; each produces a told version and a Ledger line; a poach always takes the least loyal man. Test: B: seeded runs for each fate.
 - Source: The description, section 27. (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §2.11.3, RT2-09; DESIGN §12; DESCRIPTION-COPY-2 §22
 - Status: decided. Coverage row: 2.11.3.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G07.
 
 ### WI-P01 Frank strikes his own people
 
@@ -910,6 +988,7 @@ Men who know: needs, nerve, loyalty, fates.
 - Standard: Every first blow on his own people has a stated cost and a way back; the third is final; Mickey's people never report it. Test: S: one, two and three strikes on Ron, Sheila, Pauline and a driver; who leaves, who returns, what the street says.
 - Source: RT-09; RT2-05; RT2-06; ruling of 1 Oct. DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/PROPOSED-PARTS.md P01, D6) for him to overturn; the combat pass's CS-21 covers striking crew in general, this part names the four people.
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G08.
 
 ### WI-P14 A dismissed man's grudge
 
@@ -928,6 +1007,7 @@ Men who know: needs, nerve, loyalty, fates.
 - Studies: aaa-studies/MONEY-AND-PROGRESSION.md: MP-03 each rung adds a weekly cost; outgoings at least half of income each Friday; decided. None measured.
 - Economy (24 Nov, section 2): Men's night cuts £10 to £40 from cash; a man posted at the gate, cold store or landing £40 a week (judgement, a part-time wage beside the £227 manual figure). Short pay is recorded and lowers loyalty. The honest firm would pay yard men from the book.
 - Economy conflict C-322 (run 5): Settled: the part now carries his ruling of 24 Nov (the driver keeps half his car's takings). Still open: nothing; the loyalty and short-pay rule for night cuts stands.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G07, G10.
 
 ## 2.12 Position in the town
 
@@ -953,6 +1033,7 @@ The rise under the hood: never a number.
 - Economy (24 Nov, section 5.2 and 7): Smuggled tobacco is a night lever tied to rung 4 posts: two cases a week pass unseen, four with men at the gate; pushed past, customs take the week's load and Ellis hears (run: seizures and three arrests within three weeks).
 - Economy conflict C-334 (run 5): The table asks for a first front and a first round for rung 3, and RT2-01 says the contract comes before rung 3, yet the design pays the contract's £40 a week from rung 3 and the run does not model the recruit (rung 2), night desk (rung 3) or three posts (rung 4). The table wins; his ruling that an honest firm stops at rung 2 agrees. Contract income from rung 3 is the design's own looseness (RT2-01 notes the circle).
 - Story needs (frame, 24 Nov): four rungs on exactly their holdings (SYSTEMS-THE-STORY-NEEDS S1). Covered; the gaps the blueprint already lists stand (what earns "Nowak" before rung 2, rung 4 fleet size).
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G25, G20.
 
 ### 2.12.3 Access and soft keys
 
@@ -965,6 +1046,7 @@ The rise under the hood: never a number.
 - Studies: aaa-studies/DENSE-DISTRICT-REVIEWS.md: DENSE-03 Acts II and III each open a new place or way; decided. None measured.
 - Studies: aaa-studies/IMMERSION-FEATURES.md: IM-02 every daily act pays in the town; decided; IM-05 a coat seen at a deed stays recognised until he changes coat; washing clears blood only; decided. None measured.
 - Data (run 5): exact values in production/lane/blueprint/data/people/ (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G11, G22.
 
 ### 2.12.4 Greetings by regard
 
@@ -976,6 +1058,7 @@ The rise under the hood: never a number.
 - Studies: aaa-studies/TALK-AS-PLAY.md: TALK-06 every person answers a street manner within 1 s (ruled, though the study says measured). None measured.
 - Data (run 5): exact values in production/lane/blueprint/data/lines/ (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
 - Story needs (frame, 24 Nov): each rung change said to Frank's face by a named person within a game day, Pauline's on-air name following the ladder, and each rung adding one new kind of night job (SYSTEMS-THE-STORY-NEEDS S2). Partly covered by greetings by regard; missing is the "named person says it within a game day" rule for every rung and the new job kind per rung.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G26, G01, G07, G11, G08.
 
 ### 2.12.5 Property that reacts
 
@@ -988,6 +1071,7 @@ The rise under the hood: never a number.
 - Studies: aaa-studies/WHERE-PLAYERS-QUIT.md: WQ-02 Act II in at least four stages of 4 real hours at most, each ending in a rung change; decided. None measured.
 - Prior research: aaa-studies/MONEY-AND-PROGRESSION.md MP-07: KCD2 skills reach about 20 of 30 by the first region's end and late Henry is a powerhouse (two reviews, thin); growth here is mainly position (his ruling of 23 Nov: practice, taught skills, hand skills at most a quarter better).
 - Data (run 5): exact values in production/lane/blueprint/data/rooms.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G20.
 
 ### RT-07 Hooks and knowledge as leverage
 
@@ -996,6 +1080,7 @@ The rise under the hood: never a number.
 - Source: The description, sections 24 (Ledger certainty), 27, 29, 30. (DECIDED by the design proof, for him to overturn). Designed in: DEFINITIONS §RT-07; DESIGN §12; DESCRIPTION-COPY-2 §38
 - Status: decided. Coverage row: RT-07.
 - Economy (24 Nov, section 5.4, EC-09): A hook spent for money takes what the person's purse holds (£50 to £300; the run uses £120) and is spent once; the person hates him and is a teller waiting. Rationed by hooks, never a timer, about one a fortnight at most; 0.6 of a case point. Judgement.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G05, G03, G13, G04.
 
 ## 2.13 The escalation dial
 
@@ -1009,6 +1094,7 @@ Fists, shown, fired, war: a fact in the town's memory, not a meter.
 - Source: ruling 18 Nov; DESIGN §7 (his ruling or canon). Designed in: DESIGN §7 (ER-FIGHT-08, -09); DEFINITIONS RT-12; RULINGS 18 Nov; DESCRIPTION-COPY-2 §27
 - Status: ruled (his ruling or canon). Coverage row: 2.13.
 - Story needs (frame, 24 Nov): the escalation dial 0 to 3, moving only on what was seen, read directly by the quay's "fists unless Fired or War" (SYSTEMS-THE-STORY-NEEDS S4). Covered.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G27.
 
 ### RT-12 Escalation dial War trigger
 
@@ -1034,6 +1120,7 @@ Nerve, loyalty and readiness to talk for each named person.
 - Story needs (frame, 24 Nov): values for the core six and thirty supporting people from their casting sheets (SYSTEMS-THE-STORY-NEEDS S14). Covered by the values; the residents to come take theirs in the seeded pass (rule in cast.json).
 - Open (temper job): crew break pressure (2.11.2); rival men's regard for their head (a tie, no data); facet-level evidence does not exist, the dials sit at factor level.
 - Data (run 5): exact values in production/lane/blueprint/data/people/ (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G26, G07, G04, G19, G27.
 
 ### 2.14.1 The brain level: rules or AI proposes (pending his decision)
 
@@ -1041,6 +1128,7 @@ Nerve, loyalty and readiness to talk for each named person.
 - Standard: No carried-out outcome outside the allowed set; zero impossible asks granted on the red-team set; knowledge spread identical with the overlay on or off; first word within 2 s (two serial calls measured about 2.8 s, a miss); spend under US$0.05 an evening for the overlay. Test: S: the 30 breaker talks in both modes, cassette replay identical; H: the friends' evening, both modes. Not measured; the numbers wait for the re-run.
 - Source: his ruling 24 Nov (advisors 371-372, RULINGS on wip: gossip stays on the rules until the wording layer is tested; re-run on the newest rules; V5 dropped; design stays until he decides); ai-brain/RESULTS.md and REVIEW.md (V2 2.92 retellable moments an evening against 1.83 for V1, one judge, proxies; the guarded hybrid not run); ai-brain/BRAIN-SWITCH.md (8.13.1 to 8.13.4, proposed).
 - Status: pending (his decision after the re-run). Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G01, G02.
 
 ## 2.15 The firm runs without him
 
@@ -1058,6 +1146,7 @@ Kevin drives days, Terry nights; the book fills slowly; the firm's name rises an
 - Economy (24 Nov, section 4, EC-03): More cars come on terms: about £90 down and £22 a week for a year from the book; a missed week is a letter said by Sheila, two and the car goes back; Mickey's car two is never taken. Outright price £600 to £1,200 (the run uses £900). Judgement (no 1990 used-car list reached). A steady player reaches five cars inside Act II (run: week 6; racketeer week 4; honest week 7).
 - Economy (24 Nov, section 4; ruling): A driver whose half of the takings is under £60 for two weeks running leaves, or if frightened. Drivers are not paid a wage. Judgement; the run records such weeks, none on the recommended figures.
 - Economy conflict C-323 (run 5): Applied: the part says cars on terms (£90 down and £22 a week) under the half split, and drivers leave if their half is under £60 two weeks running. Won: his ruling where one speaks, else the newer economy design.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G20, G14.
 
 ### 2.15.2 Ranks and accounts
 
@@ -1069,6 +1158,7 @@ Kevin drives days, Terry nights; the book fills slowly; the firm's name rises an
 - Data (run 5): exact values in production/lane/blueprint/data/places.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
 - Economy conflict C-324 (run 5): Applied: the part now says takings £210 a week, £105 to the book, £125 with the contract (economy design, newer); the ruling only fixes the half split.
 - Story needs (frame, 24 Nov): ranks (SYSTEMS-THE-STORY-NEEDS S43). Covered.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G20.
 
 ### 2.15.3 Other firms on the ranks
 
@@ -1077,6 +1167,7 @@ Kevin drives days, Terry nights; the book fills slowly; the firm's name rises an
 - Source: DESIGN §5; canon (his ruling or canon). Designed in: DESIGN-ADDENDUM A14; DESIGN §5; canon (three rivals)
 - Status: ruled (his ruling or canon). Coverage row: 2.15.3.
 - Data (run 5): exact values in production/lane/blueprint/data/people/ (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G20, G01, G10.
 
 ### RT2-06 The firm failing for good
 
@@ -1091,6 +1182,7 @@ Kevin drives days, Terry nights; the book fills slowly; the firm's name rises an
 - Standard: Every hold has a stated effect on the firm and the jobs; a crewman's arrest traces to Frank only through what the crewman perceived. Test: S: a 22-hour hold across a night job and an appointment; a driver stopped with goods, the envelope and a body.
 - Source: 2.15; RT2-06; RT2-17; FF-05. DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/PROPOSED-PARTS.md P04, D6) for him to overturn.
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G10, G15.
 
 ## 2.16 Death, bodies and the missing
 
@@ -1104,6 +1196,7 @@ A killing is permanent and remembered forever; a man who stops keeping his routi
 - Source: canon content rule; the downed man: his ruling of 24 Nov (RULINGS on wip, his decisions page) (his ruling or canon); fire and searching: his ruling of 25 Nov (advisors 374 to 377). Designed in: canon (content rule); DESIGN §7; DEFINITIONS RT2-11, RT2-12; ONE-SHOT-PROMPT 14
 - Status: ruled (his ruling or canon). Coverage row: 2.16. Conflicts settled: C-503.
 - The gap the bar leaves (catalogue 23 Nov, rank 13; seen in 1 game): A regular who stops appearing is noticed, asked after and talked about. Already covered for a killed or missing man; partly for an ordinary absence such as illness. Feature only; no timing; the part's status is unchanged.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G18.
 
 ### RT2-05 Killing principals and needed people
 
@@ -1113,6 +1206,7 @@ A killing is permanent and remembered forever; a man who stops keeping his routi
 - Status: decided. Coverage row: RT2-05. Conflicts settled: C-285.
 - Data (run 5): exact values in production/lane/blueprint/data/people/ (data build wave 2, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
 - Story needs (frame, 24 Nov): three chairs of fallback carriers (the opponent's place, the bond's place, the book's place if Sheila has left) (SYSTEMS-THE-STORY-NEEDS S33). Partly covered: role fallbacks exist for rival heads and others; these three are missing.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G22, G10, G19.
 
 ### WI-P02 Fallbacks for everyone the dropped line once shielded
 
@@ -1120,6 +1214,7 @@ A killing is permanent and remembered forever; a man who stops keeping his routi
 - Standard: Act II's beats, the sit-down, Act III and the endings never wait on one killable person, two deep. Test: B: each named person killed in turn at Act I's end and again at Act II's start, with the first fallback killed too; the story bot reaches an ending every time.
 - Source: his ruling of 24 Nov (Q3, line dropped); RT2-05; C-285. DECIDED by the what-if sweep 24 Nov (production/lane/blueprint/what-if/PROPOSED-PARTS.md P02, D6) for him to overturn; the generic holders are for the keeper to name from cast.json.
 - Status: decided. Coverage row: none yet.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G22, G10.
 
 ## 2.17 Fronts and rackets held
 
@@ -1134,6 +1229,7 @@ Taking a share of a business, putting a man in, money and trouble coming back; r
 - Status: decided. Coverage row: 2.17.
 - Data (run 5): exact values in production/lane/blueprint/data/places.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
 - Economy (24 Nov, section 5.1, EC-06): Protection is £5 to £15 a shop a week by what it can bear (eight shops at £10 is about £60 a week to the tin); the man on the round keeps a quarter. Asking past what a shop can bear raises its board and thins its trade; after three squeezed weeks the owner refuses and tells; four losing weeks shuts it. At £40 a shop Frank ends the story poorer (£224 against £785 at week 7). Judgement (margins from the shops file).
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G04, G20, G07.
 
 ### RT2-09 Turf: posts held and lost
 
@@ -1144,6 +1240,7 @@ Taking a share of a business, putting a man in, money and trouble coming back; r
 - Data (run 5): exact values in production/lane/blueprint/data/timetables.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class B.
 - Story needs (frame, 24 Nov): a post stands while its man is loyal and has the nerve, and the player is called only to one authored crisis per post (landing by night, cold store before dawn, dock gate by day) (SYSTEMS-THE-STORY-NEEDS S12). Not covered; the part says the opposite (see CONFLICT).
 - Story conflict C-337 (run 5): The part has a post lost after three empty days and a stare each time Frank arrives, while the story drops the daily stare and the three-day count and calls him only to one authored crisis per post. Until designed, the part stands; the need is a gap for the design proof.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G10.
 
 ### RT2-18 The licence hearing
 
@@ -1153,6 +1250,7 @@ Taking a share of a business, putting a man in, money and trouble coming back; r
 - Status: decided. Coverage row: RT2-18.
 - Story needs (frame, 24 Nov): a charge that suspends the licence a fortnight, back before the books open (SYSTEMS-THE-STORY-NEEDS S19). Partly covered: the suspension exists only as the hearing's outcome; the charge trigger is missing.
 - Story conflict C-340 (run 5): The part suspends the licence only after a failed hearing, while the story needs a charge to suspend it a fortnight (back before the books open, since RT2-04 needs the licence standing). Until designed, the part stands; the need is a gap for the design proof.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G13.
 
 ## 2.18 Ambulance and the hospital
 
@@ -1167,6 +1265,7 @@ Someone hurt is taken to hospital after a call from the phone box; stopping to h
 - Status: unmeasured. Coverage row: 2.18.
 - Emergency services come (catalogue 23 Nov, rank 16; seen in 2 games): An ambulance for a man hurt, never killed. Partly: the ambulance is covered (tape only for a body, 2.6.10); short are a crowd kept at a distance and the constable's notebook. Feature only; no timing; the part's status is unchanged.
 - Story needs (frame, 24 Nov): the infirmary's next-of-kin label and a hurt person's days in hospital (Frank's deeds carried; SYSTEMS-THE-STORY-NEEDS S26). Partly covered: the hospital stay exists; the next-of-kin label is missing.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G07.
 
 ### WI-P11 The hospital as a scene
 
@@ -1188,3 +1287,5 @@ A forced door shows for a day; glass stays broken until mended; his cars on the 
 - Source: DESIGN §4; canon (his ruling or canon). Designed in: DESIGN §4; ONE-SHOT-PROMPT 15; DEFINITIONS RT-06, RT2-08; canon (The moat)
 - Status: ruled (his ruling or canon). Coverage row: 2.19.
 - Economy (24 Nov, section 5.1): A shop shutting from protection, a hold-up or smuggled tobacco is told for weeks and is a lasting mark, with the cause the town can name.
+- Rules (question passes, 25 Nov; BLUEPRINT-12): G07, G13, G19, G18.
+
