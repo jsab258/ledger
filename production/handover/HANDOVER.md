@@ -6,7 +6,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Row due:** 07:34 (last row 06:34; page read 06:23; filter verdicts after 2026-11-25T05:23 UTC, advisor after 2026-11-24T23:55:00+01:00; last ack 373 at 23:55; nothing new since).
 **Uncommitted:** nothing; work pushed with this file.
-**Stopped:** 2026-11-25 05:03 (the 03:37 run: live talk measured inside the packaged game, real questions 1.73 s median, voice 0.05 s; voice-model scan shortlisted; 1990 gaps set aside; the ruler check found no ruler; footage impossible while the pane is hidden, so stopped at the item's end with nothing else runnable before he is up; nothing running)
+**Stopped:** 2026-11-25 06:51 (the 05:37 run: ruler check set aside after two tries; live talk inside the game on three routings, Haiku alone leads; OS lamp legend unreached; nothing running, the shipped talk program restored)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -50,7 +50,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 4a. **Photo counts (advisor 370):** two tries used; the different method: the OS 1:2,500 legend (are lamps drawn?), then period footage of northern side streets by eye. Quay Street stays at 34 m. 5. 1990 sources: footfall from the reader's file; headlamp reach now a lead (period-lamps-reach-2026-11-25.md); BS 5489-3:1989 and the 1987 Highway Code table unreached; our car braking flag (8-11 m against the Code's 14 m) unchecked.
 6. n23-7 DAILY-2026-11-25 by 19:00 (add the API line: US$1.10 tonight).
 6a. **n23-2 ruler check:** done to two tries (05:47), set aside for a position line after the prototype; the cheap-reader trial still open.
-6b. **n23-4 trial:** ZONOS3-Mini: its weights download raised in chat when he is at the PC (file, source, size), then the 12 cast lines against Pocket. **n23-3:** next, read why fast-first falls back 8/30 (steps per turn in F:/LedgerTools/latency/n23-3-2026-11-25/inside-held-fastfirst/talk.jsonl against inside-held-2), no PC run needed; then the recommendation by Fri 4 Dec (Haiku alone meets the bar with fewest fall-backs so far), one fresh reviewer first. Measuring runs: publish to F:/town-scratch, swap only LedgerTalk.exe with a backup, restore after (as 06:27, 06:39).
+6b. **n23-4 trial:** ZONOS3-Mini: its weights download raised in chat when he is at the PC (file, source, size), then the 12 cast lines against Pocket. **n23-3:** fast-first's fall-backs read (06:50): six are Haiku's redraft first sentence flagged by the claim check, two the cap. Next: the recommendation by Fri 4 Dec (Haiku alone leads; fast-first only with redrafts wholly on the better model, a later loop's change), one fresh reviewer first. Measuring runs: swap only LedgerTalk.exe into the played copy with a backup, restore after.
 6c. **4a photo counts:** the OS legend route read 06:10, unreached (no viewable 1970-90 plan; STATUS); next period footage by eye when the pane shows.
 0b. Next night walk Mon 30 Nov 01:30 (held while the stop file holds). 4p. Marvelous stays open. No Unreal work until the browser prototype is done (advisor 288). 5p. History rewrite HELD for his word. Progress page daily (progress.json only).
 
