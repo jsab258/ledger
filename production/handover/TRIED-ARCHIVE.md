@@ -212,3 +212,7 @@ hair colour 2 of 2; worn paint 2 of 2; the office and sit on by default 2 of 2; 
 - 24 Nov 22:55: a hare scan on a thief run hits only menus (75 of 75); filter by parchment share before looking.
 - 24 Nov 23:04: my own times ran up to 30 min ahead again (acks and records corrected from the clock and commit times): Get-Date before every written time.
 - 24 Nov 21:55: web fetch cannot read YouTube; search in the browser pane (in-page fetch of /results, ytInitialData).
+
+- 25 Nov 00:22: GTA V wanted-star pixel test (two boxes, white counts, blob widths): the ammo count moves into the stars' slot when no stars show; set aside after two tries.
+- 25 Nov 01:15-01:22: footage in a hidden browser pane: seeks never fire 'seeked', each frame waits out its 6 s timeout, then the player reloaded and the sheet came back empty (0x0). Footage needs the pane on screen; while hidden, do non-footage work.
+- 25 Nov 01:18: two research readers could not open PDFs (binary to their fetch tool, no shell): the session extracts with pdftotext and hands the text back to a reader.
