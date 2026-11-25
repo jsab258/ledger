@@ -1,0 +1,40 @@
+1|Frank in a coat seen at a theft is recognised by the coat the next week; in a different coat the witness only doubts. Status: designed.
+2|An owner recognises his stolen goods only in a shop window; nothing says he recognises them worn by Frank. Status: partly.
+3|A deed seen at night is said to Frank's face within one game day: designed for week one only; later weeks are partly.
+4|The Ledger's day book writes "Nobody saw." two game minutes after an unseen act and strikes it through when someone turns up. Status: designed.
+5|Memory is never wiped by skipped hours or sleep. Status: designed.
+6|After a seen deed, bystanders who saw a weapon flee and a person with nerve may step in unarmed. Status: designed.
+7|Typed insults are read as an "insult" act and the hearer remembers the rudeness. Status: designed.
+8|Only parked, empty cars can be taken; nobody can be pulled out of a car. Status: designed (out on purpose).
+9|An ordinary named person noticing that Frank has followed him for a long time (outside a tail job) is only partly designed.
+10|Live replies must come within 2 s or a written line plays. Status: designed (ruled).
+11|The reply check refuses anything after 1992, but there is no designed rule for how a character answers being told he is in a game. Status: partly.
+12|Police learn of a deed by a witness walking to a phone box; an arrest needs a signed statement made at nine the next morning, or an officer who saw it. Status: designed.
+13|After a lost chase the patrol searches the last-seen streets for 30 to 120 real seconds, then waits on that road the rest of the night. Status: designed.
+14|Two constables can be bought once each (£50, £200) and DS Ellis for about £800 then £100 a week. Status: designed.
+15|Custody costs hours: about 6 for a window, 8 for a wounding, 12 for a robbery, 22 for a killing. Status: designed.
+16|Armed officers appear only once the escalation dial reaches Fired. Status: designed.
+17|Next morning after a reported deed a constable knocks along the street asking at windows. Status: designed.
+18|Fists never kill except a rare fall where the head lands near a kerb or step edge. Status: designed.
+19|Frank cannot die and there is no game over. Status: designed (canon).
+20|An honest firm stops at rung 2, and nothing says what the story does for a player who refuses crime. Status: partly.
+21|Every named person keeps an hour-by-hour routine, sleeps at night, and a lit window means someone is home. Status: designed.
+22|The unnamed crowd's destinations are not designed. Status: partly.
+23|Spawning and despawning out of sight (nobody appears or vanishes in view) is missing.
+24|The pastimes he ruled in (boxing club, snooker hall, quay fishing, pigeon loft) have no designed parts beyond mentions (e.g. fishing places in map.json). Status: missing.
+25|A dropped coin or note picked up by the right person is listed as a gap, with no part carrying it. Status: missing.
+26|The night constable's whole beat cycle is about 7 real minutes, Mickey's door tried each lap, and he is always heard or seen at least 3 s before he can challenge. Status: designed.
+27|A rattled bin moves the constable off his beat and he rejoins where he left. Status: designed.
+28|A belief line low on screen says when Frank comes to believe something new, in words, no icon or meter. Status: designed.
+29|Subtitles appear only with their audio and are never under 24 units. Status: designed.
+30|Greetings by regard: a person's own line once a day, a shared line once a week per street, street talk at most every 45 s; walked at rung 1 and rung 3 the same street gives at least three differences. Status: designed.
+31|Overheard talk (the bench, the counter) cannot yet talk about what Frank did. Status: partly.
+32|How a deed was done (the manner) is not kept with the story record. Status: partly.
+33|The Hook and its docks span about 620 by 400 m, about 0.25 square km.
+34|A body brings tape, a torch at night and DS Ellis next morning; DS Ellis first appears only as a name in talk. Status: designed.
+35|Lose a fight and Frank comes round in Grace Rinaldi's kitchen; the men who robbed him are named and can be found. Status: designed.
+36|An offer like "a tenner" is read as ten pounds and offering more than Frank carries fails in character. Status: designed.
+37|Talk stays under 30% of play. Status: designed.
+38|Clothes changing how people treat Frank (a good suit served first) is not ruled; outfits and prices exist. Status: partly.
+39|Blood stays on the coat until washed in private or at the launderette, which remembers him. Status: designed.
+40|Lamps strike on at dusk up to six minutes apart, red before sodium yellow. Status: designed.

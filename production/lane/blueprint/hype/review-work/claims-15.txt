@@ -1,0 +1,15 @@
+1|Frank in a coat seen at a theft is recognised by the coat the next week; in a different coat the witness only doubts. Status: designed.
+3|A deed seen at night is said to Frank's face within one game day: designed for week one only; later weeks are partly.
+4|The Ledger's day book writes "Nobody saw." two game minutes after an unseen act and strikes it through when someone turns up. Status: designed.
+10|Live replies must come within 2 s or a written line plays. Status: designed (ruled).
+12|Police learn of a deed by a witness walking to a phone box; an arrest needs a signed statement made at nine the next morning, or an officer who saw it. Status: designed.
+16|Armed officers appear only once the escalation dial reaches Fired. Status: designed.
+20|An honest firm stops at rung 2, and nothing says what the story does for a player who refuses crime. Status: partly.
+21|Every named person keeps an hour-by-hour routine, sleeps at night, and a lit window means someone is home. Status: designed.
+22|The unnamed crowd's destinations are not designed. Status: partly.
+25|A dropped coin or note picked up by the right person is listed as a gap, with no part carrying it. Status: missing.
+26|The night constable's whole beat cycle is about 7 real minutes, Mickey's door tried each lap, and he is always heard or seen at least 3 s before he can challenge. Status: designed.
+29|Subtitles appear only with their audio and are never under 24 units. Status: designed.
+34|A body brings tape, a torch at night and DS Ellis next morning; DS Ellis first appears only as a name in talk. Status: designed.
+36|An offer like "a tenner" is read as ten pounds and offering more than Frank carries fails in character. Status: designed.
+37|Talk stays under 30% of play. Status: designed.

@@ -1,0 +1,22 @@
+# The sceptics: ten likeliest top comments (25 Nov 2026)
+
+The comments most likely to sit at the top under a "LEDGER: the GTA killer?" or "this game remembers everything" video. Sources: the recurring sceptic types written up in coverage of indie crime-game hype and AI-NPC demos (research/formats-research.md: Engadget, PC Gamer, GamesRadar, All Things How, VGC on the Unrecord trailer), plus KCD2's own complaints in the press. The wording is invented; the types are reported. For each: a design answer (the game itself replies), a pitch answer (how we talk about it), or accept it.
+
+| # | The comment | Answer | What |
+|---|---|---|---|
+| 1 | "Calling anything a GTA killer is clickbait. It's one street." | pitch, and accept | Never compare on scale; LEDGER is the Hook and its docks, about 0.25 square km, on purpose. The pitch is "one street that remembers everything", which turns the size into the point. Accept that scale fans will not come. |
+| 2 | "AI NPCs = robotic voices and canned replies. Pass." | design | Replies within 2 s in the character's own cast voice, or a written line; the 2 s bar is measured in the packaged game (1.6 to 1.7 s median this week, a long tail). The fix that matters: never show a slow or flat reply in a trailer; show talk only where it is short, local and in character. SM-10 is the test. |
+| 3 | "You can just gaslight the AI into anything, like Where Winds Meet." | design | The rules decide every outcome; the language model only words it. A paid witness stays paid, an honest one cannot be bought, the impossible never happens however often you reload. Needs the decision layer, claim check and replay guard (FIFTY 26, BUILD-owed). Show it: SM-10 on camera. |
+| 4 | "Tech demo. Vertical slice. Will never ship." | pitch | Show a long uncut stretch (a whole evening on Quay Street, 20 minutes, no cuts) rather than a cut trailer; publish the Steam page only once a packaged build plays. Nothing to design. |
+| 5 | "Remembering everything just means NPCs yell at you forever. KCD2 already does this and it gets annoying." | design | Remediation is behavioural: a man can be talked round, paid, frightened or befriended but still remembers; a person's own line is said once a day, a shared line once a week per street, street talk at most every 45 s (2.12.4). The memory shows as a changed manner, not repeated nagging. Designed. |
+| 6 | "How does she know it was me? Nobody saw." (the KCD2 complaint about guards pinning crimes without witnesses) | design | Nobody knows what they did not see or were not told; every reaction traces to a chain of sightings and tellings the test hook can print (2.4.4). The Ledger shows "Nobody saw." when it is true. This is LEDGER's edge over KCD2; say it in the pitch too. |
+| 7 | "No minimap, no markers, no health bar, no stats: so it's a walking sim with chores." | accept, with pitch | The realism crowd loves it; the arcade crowd will not. Pitch: "you read the town, not a HUD." Accept the loss of players who want markers; the assists exist for difficulty only. |
+| 8 | "Can I carjack people? Shoot cops? Then it's not a crime game." | accept | Only parked, empty cars are taken; guns are rare and late; a car never kills. These are canon and his rulings. The pitch frames LEDGER as a crime-firm game (cabs, debts, witnesses, rivals), not a rampage game. |
+| 9 | "1990 Britain, a minicab office... who is this for?" | pitch | The setting is the hook for people who are tired of American cities: phone boxes, cash, sodium lamps, the clocks going back. Show the place before the plot. Nothing to design. |
+| 10 | "Graphics look AI-generated / Unreal asset flip." | design, then pitch | The gate is KCD2 frames and the Hook sheet, approved by him frame by frame; no trailer until frames pass. In the pitch, show dated real 1990 photographs beside the game's frames once they match. Until then, accept that early footage gets this comment. |
+
+Likely supportive top comments, for balance (reported types): "this is what GTA should have been doing with NPCs", "finally a game set somewhere that isn't America", "Bethesda could never" (KCD2's version), people swapping their own stories of being caught.
+
+Two comments that would be fair and that the blueprint cannot yet answer:
+- "Overheard NPC chatter never mentions what I did." Answer owed: SM-05 (BLIND 9, FIFTY 16, BUILD).
+- "I followed a random guy and he just walked in circles." Answer owed: crowd trips with real ends and no popping in or out of view (BLIND 19, FIFTY 49, BUILD).
