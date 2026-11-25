@@ -182,6 +182,12 @@ which clauses the gate checks and which it does not claim to.
   feels is tension, risk and a rise to power, and every job is tense because
   the town is watching.
 
+## Pillar: real-world agency (Jafar, 25 November 2026)
+- Real-world agency: what a person could plausibly do in Britain in 1990,
+  the game answers by general rules, consistently, and the town remembers.
+  (His words 25 Nov 15:02, advisor 394: since July and August he has said
+  the player should have real-world agency; the general rules are that.)
+
 ## What LEDGER is not (D24 of 2026-09-14, rewritten to the pillar: Jafar, 19 November 2026)
 - NOT a gossip simulator, NOT a taxi simulator, NOT an economy simulation,
   NOT a story-first narrative game. His words: "we don't want a gossip
