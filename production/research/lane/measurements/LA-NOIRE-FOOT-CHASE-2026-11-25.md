@@ -108,9 +108,9 @@ Found by its thumbnails (one per 10 s, read in contact sheets of 96), then real 
 - Part 10 (sfXUPxQVmbk, 2,997 s, Santosx07, published about 2017) by thumbnails, then real frames 528-630 s every 3 s, 16:05 Swiss (Get-Date): **Sample 5, about 535 to 600 s (about 65 s, edges read at 3 s)**: a talk at a repair-service lot ends at 531-534 s, Cole runs from 537 s across the lot, along alleys, climbs a drainpipe (555-561 s), crosses rooftops past skylights, tanks and a parapet (564-594 s), a stumble at 597 s; at 600 s the suspect turns and a fistfight follows on the roof (603-630 s and on). The suspect is rarely in frame (gap unread). Scripted catch by a forced fight.
 - **L.A. Noire 5 of 5** (sample 5 corrected below to about 60 s): about 52, 58, 21, 54, 60 s (median about 54 s); endings: warning shot and arrest, hostage, two tackles, a rooftop fistfight; never an escape. Fresh review due before it counts as solid.
 
-## Review fixes (fresh review review-la-noire-foot-chase-2026-11-25.md, NOT SOLID; fixes 25 Nov about 16:30 Swiss)
+## Review fixes (fresh review review-la-noire-foot-chase-2026-11-25.md, NOT SOLID; fixes 25 Nov, pushed before 16:20 Swiss by Get-Date)
 
-Sources checked from each watch page's own data (publishDate, ownerChannelName, channelId, lengthSeconds), read in the built-in browser 25 Nov 2026 about 16:25 Swiss:
+Sources checked from each watch page's own data (publishDate, ownerChannelName, channelId, lengthSeconds), read in the built-in browser 25 Nov 2026 shortly before 16:20 Swiss:
 
 | Sample | Video | Published | Channel | Length of video |
 |---|---|---|---|---|

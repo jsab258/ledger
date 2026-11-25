@@ -80,3 +80,21 @@ From our own recording of the same mission (F:/LedgerTools/tmp/drills/sdhdship-o
 - The countdown "DON'T LOSE YOUR TARGET" appears between a gap of 42 m (260.3 s, none) and 45 m (263.4 s, 0:17 showing): it starts at about 43-45 m.
 - It runs down in about 20 s (0:17 to 0:02 at 3.1 s frame steps); the gap stayed 45 m throughout; "MISSION FAILED / YOU LOST NAZ" between 282.2 and 285.3 s.
 - So Sleeping Dogs: the runner held 12-16 m ahead in a good run; the chase is lost when the gap stays over about 45 m for about 20 s. Whether closing back under the gap stops the countdown is unread (no such frame).
+
+## Sample 3: the favour "Broken Parts" (read 25 Nov 2026 about 16:23 Swiss)
+
+Source: Addictive Gamer, "Sleeping Dogs: DE - Favor - Broken Parts (2012) (PS4)", https://www.youtube.com/watch?v=JzQycLOdY6U (71 s, published 1 Jun 2023 by the page's own data, PS4 by its title; the channel's title card at 1-2 s, then the favour as one continuous take as far as the frames show). Found by YouTube search 25 Nov about 16:21 Swiss (search for the favour named in foot-chase-candidates-2026-11-24.md, GamePressure's Aberdeen page). Thumbnails at about 1 s, then real frames 23-56 s every 1.5 s in the built-in browser.
+
+Built on: foot-chase-candidates-2026-11-24.md (the favour: a thief robs Wei, a chase on foot until he breaks his leg, then a fight).
+
+| Time (s) | Seen |
+|---|---|
+| 23-24.5 | talk at a shop door, the robbery |
+| 26-36.5 | a fight in a wet alley with several men |
+| 38-48.5 | Wei running along a waterfront promenade at night, a drop over a low wall about 44-45.5 s |
+| 50-51.5 | Wei reaches the thief and grabs him |
+| 53-56 | blows on the thief; then talk to the end |
+
+What it gives the row: **about 14 s of chasing (about 37 to 51 s, edges at 1.5 s)**; ends in a scripted catch (the thief falls, a fight), not an escape. The thief is rarely in frame at this size (gap unread). A short chase: the favour puts the fight before the run.
+
+Running total: Sleeping Dogs 3 of 5 (about 96, 67, 14 s). Next: Mission #6 "Identify & Arrest Supplier" (Willzyyy, RIBAlGcsZWs, 12:50) and the police run in "Meet the New Boss".
