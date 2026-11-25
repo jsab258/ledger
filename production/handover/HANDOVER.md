@@ -2,9 +2,9 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed, the next steps and the tries used.
 
-**Started:** 2026-11-25 08:52 (the hourly run)
+**Started:** 2026-11-25 10:22 (the hourly run)
 
-**Row due:** 10:43 (last row 09:43; page read 09:49; filter verdicts after 2026-11-25T08:49 UTC, advisor after 2026-11-25T09:35:00+01:00; last ack 381 at 09:44).
+**Row due:** 11:23 (last row 10:23; page read 10:38; filter verdicts after 2026-11-25T09:38 UTC, advisor after 2026-11-25T09:44:00+01:00; last ack 381 at 09:44).
 **Uncommitted:** this file only (no notes-only commit); the office-print PNGs and three Kiln notes are not this session's, left alone.
 **Stopped:** 2026-11-25 09:49 (the 08:52 run; nothing running but a harmless page scan loop)
 
