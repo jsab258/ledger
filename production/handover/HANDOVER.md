@@ -2,11 +2,11 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed, the next steps and the tries used.
 
-**Started:** 2026-11-25 12:07 (the hourly run)
+**Started:** 2026-11-25 13:37 (the hourly run)
 
-**Row due:** 13:14 (last row 12:14; page read 12:09; filter verdicts after 2026-11-25T11:09 UTC, advisor after 2026-11-25T12:12:30+01:00; last acks 383, 384 at 12:12).
+**Row due:** 14:41 (last row 13:41; page read 13:58; filter verdicts after 2026-11-25T12:58 UTC, advisor after 2026-11-25T14:00:00+01:00; last acks 386, 387 at 14:00).
 **Uncommitted:** nothing of this session's; the office-print PNGs and three Kiln notes are not this session's, left alone.
-**Stopped:** 2026-11-25 12:17 (the 12:07 run; measuring paused by advisor 384, light work done; nothing running)
+**Stopped:** 2026-11-25 14:05 (the 13:37 run: advisor 385 released 13:10, Part 3 scanned; advisor 387 paused again for the wholegame cloud job; 386 recorded; nothing running)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -35,20 +35,21 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 ## Done today
 - 07:22 and 08:52 runs: n23-3 drafted, reviewed, reopened to 4 Dec (advisor 380); advisors 374-381 acted on; Sleeping Dogs chases 2 of 5.
-- 10:22 run: **chases on foot, L.A. Noire 2 of 5** (LA-NOIRE-FOOT-CHASE-2026-11-25.md): Parts 1 and 2, about 52 and 58 s, one foot chase each. **Advisor 382** (his pick A, chance in combat) in RULINGS' Combat line at the 4,900 cap, DECISIONS, acked 11:13. Rows 10:23, 11:03. Pushed 84e80743a, d26f97d3e.
+- 10:22 run: L.A. Noire chases 2 of 5 (Parts 1, 2); advisor 382 in RULINGS; pushed.
 
+- 13:37 run: advisor 385 (release) acked; row 13:41; **Santosx07's later L.A. Noire parts found** (IDs in the note); Part 3 motion-scanned to 3,408 s (13 stretches, unread); **advisor 386** (three routes per job, no skill tree) in RULINGS at the cap (eight lines tightened), enforcer note, DECISIONS; **advisor 387** paused the block again; acks 14:00.
 - 12:07 run: **advisors 383 (romance a can-you, women only) and 384 (arrest interview; pause)** in RULINGS at the cap (tightened; DECISIONS names it), enforcers added, acked 12:12; row 12:14.
 
 ## In flight
-- Nothing running: no helper, no game, no scan; the browser pane holds GamesMediaLA Part 4 (mbM6es4xLLc) paused, viewport emulated 1280x720 (the app clears it).
+- Nothing running: no helper, no game, no scan (stopped); the browser pane holds Santosx07 Part 3 (07FhMIUKBog); its scan rows sit in that page's localStorage key ms_p3 and the note.
 
 ## Next, in order
-0000. **MEASURING BLOCK PAUSED (advisor 384, 11:45)** until the advisor says the cloud jobs combat2 (reported done 12:15) and questions have finished: light work only (rows, acks, records, DAILY), no footage, no helpers; without a release, do those and stop (idle runs spend nothing). On release, item 3.
+0000. **MEASURING BLOCK PAUSED again (advisor 387, 14:00)** until the advisor says the cloud job "wholegame" has finished (about 1-1.5 h): light work only (rows, acks, records, DAILY), no footage, no helpers; without a release, do those and stop. On release, item 3.
 000. **Footage runs with the pane hidden** (the method in item 3).
 00. Pace: 80% at 04:46; **the weekly stop is 90%** (advisor 352): at the newest reading of 90% finish the step, commit, push, one row, write production/weekly-stop.json {"until": "2026-11-30T13:00", "reading": N}, set "**Next due:** 2026-11-30 13:00", one page item (switch off the scheduled task ledger-daily-fresh-session, Code tab, Scheduled; on after Monday 13:00), stop all work. Full pace until then (advisors 359, 366: no pace-line holds).
 0. If he types "RDR2 drill starting": `python tools/drills/rdr2_record.py start` in the background; on "RDR2 drill done": the same with stop; read the frames by his card (advisor 361).
 1. **On foot, the walk:** cadence done (solid). Step length still unread: a side-on stretch, heel gap over height (none seen in rzz5BOoJ9Rc); then KCD2's walk is first person, so the second game's walk is RDR2 or Sleeping Dogs footage.
-3. **Chases on foot:** Sleeping Dogs 2 of 5; L.A. Noire 2 of 5 (both scripted: length and ending only). Next L.A. Noire source: Santosx07's later parts (only Part 2 and the Ending e_ND3GkfDj4 found by search; try his channel's uploads page or the Ending's description), or GamesMediaLA's 18 parts (IDs in the note; Part 4 scanned to 2,096 s, stretches listed, SET ASIDE for ad density: 1-3 min pods every two or three seeks). Hidden-pane method that works (25 Nov): resize_window 1280x720 on the tab, then a nine-frame canvas sheet (sheet6, in the note's method) and one screenshot; when the video has no duration or ready state 0, call movie_player.seekTo(t,true) then playVideo(); a 4,451 s 'advert' (a lecture) needs a page reload; Skip by ref does nothing hidden. Filter scan stretches with one mid frame first (most are driving). Then GTA V by a shape method.
+3. **Chases on foot:** Sleeping Dogs 2 of 5; L.A. Noire 2 of 5 (both scripted: length and ending only). Next: Santosx07 Part 3 (07FhMIUKBog): read one mid frame of each of the 13 stretches in the note (driving dropped), likeliest The Driver's Seat rooftop chase; finish 3,408-3,698 s. Then Parts 5, 6, 7 (IDs in the note). This upload also runs adverts about every five scan minutes; an interval that plays a paused advert muted keeps the scan moving; a 4,451 s pod needs a reload (rows saved to localStorage first). Hidden-pane method that works (25 Nov): resize_window 1280x720 on the tab, then a nine-frame canvas sheet (sheet6, in the note's method) and one screenshot; when the video has no duration or ready state 0, call movie_player.seekTo(t,true) then playVideo(); a 4,451 s 'advert' (a lecture) needs a page reload; Skip by ref does nothing hidden. Filter scan stretches with one mid frame first (most are driving). Then GTA V by a shape method.
 4. **KCD2 being seen with crowd reactions** (one town crime clip serves both): ibyJamin Part 4 (wMk2tFAd26E) or 5 (AK8xLkS1Cfs), hare scan with the parchment filter (drop hits above 12% beige); first check by eye that this player shows the behaviour icon at a known alarm. If none by the week's end, say so in STATUS.
 4a. **Photo counts (advisor 370):** two tries used; OS legend unreached (06:10); next period footage of northern side streets by eye. Quay Street stays at 34 m. 5. 1990 sources: headlamp reach a lead (period-lamps-reach-2026-11-25.md); BS 5489-3:1989 unreached; our car braking (8-11 m vs the Code's 14 m) unchecked.
 6. n23-7 DAILY-2026-11-25 by 19:00 (add the API line: US$1.10 tonight).
@@ -60,8 +61,6 @@ All in tools/drills/frame_sheet.js (sheet, SAVED EVIDENCE to F:/LedgerTools/game
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
 - 25 Nov 11:33: GamesMediaLA uploads carry advert pods every two or three seeks (five in 12 min); set aside for Santosx07's. 10:57: the motion scan stalls when the player drops its source hidden; fixed with the player's own seek and play calls.
-- 25 Nov 09:05: in the hidden pane 4x3 sheets are unreadable (page 480x273) and screenshots taken at once or scaled came back black; one frame, 2 s wait, full size works.
-- 25 Nov 07:32: a run script with $ErrorActionPreference Stop died on taskkill's stderr before restoring the shipped talk program (restored by hand, hash checked). 08:15: joined a transcript's "reply" and "rest" for recordings; "reply" is already whole (rest repeats its tail).
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3.

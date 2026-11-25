@@ -217,3 +217,8 @@ hair colour 2 of 2; worn paint 2 of 2; the office and sit on by default 2 of 2; 
 - 25 Nov 01:15-01:22: footage in a hidden browser pane: seeks never fire 'seeked', each frame waits out its 6 s timeout, then the player reloaded and the sheet came back empty (0x0). Footage needs the pane on screen; while hidden, do non-footage work.
 - 25 Nov 01:18: two research readers could not open PDFs (binary to their fetch tool, no shell): the session extracts with pdftotext and hands the text back to a reader.
 - 25 Nov 08:55 (advisor 378): footage had stopped since 01:15 not for the machine but for a handover rule written after one stalled player ('while hidden, no footage'); re-tested with the pane hidden and the screen off: plays, seeks, frames read. Rule replaced: on a stall, reload once.
+
+
+## Moved from the handover, 25 Nov 14:05
+- 25 Nov 09:05: in the hidden pane 4x3 sheets are unreadable (page 480x273) and screenshots taken at once or scaled came back black; one frame, 2 s wait, full size works.
+- 25 Nov 07:32: a run script with $ErrorActionPreference Stop died on taskkill's stderr before restoring the shipped talk program (restored by hand, hash checked). 08:15: joined a transcript's "reply" and "rest" for recordings; "reply" is already whole (rest repeats its tail).

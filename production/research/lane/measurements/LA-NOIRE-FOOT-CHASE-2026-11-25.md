@@ -77,3 +77,11 @@ Next: three more samples. Santosx07's Part 3 was not found by search (only Part 
 ## Player stalls in the hidden pane
 
 During the Part 2 scan the page's video lost its source twice (duration empty, ready state 0) with no advert showing; setting the video's time did nothing. The player's own seek and play calls (the movie_player element: seekTo, then playVideo) brought it back at once. The scan now calls them whenever the video has no duration or no frame.
+
+## Santosx07's later parts (found 25 Nov 13:50 Swiss)
+
+YouTube's search page read from the page itself (results for "Santosx07 LA Noire Remastered Walkthrough Part 3"), titles "LA Noire Remastered Walkthrough Part N - No Commentary Playthrough (PS4)": Part 3 07FhMIUKBog (Santosx07, 3,698 s, published 14 Nov 2017), 5 HqiDCFlV17g, 6 HE3E-U0cxPQ, 7 nnc7d97Up08, 9 nLwXUYDdfeo, 10 sfXUPxQVmbk, 11 R3c8tsek3XY, 12 toAxLi_KI0M, 13 indS6TNnjdw, 16 2O34cpEsip0 (channel of each beyond Part 3 not yet checked on its page; Part 2 here reads MBQWlj8scTI, unlike the note's Part 2 source, unchecked).
+
+## Santosx07 Part 3 (07FhMIUKBog), motion scan 25 Nov 13:42-13:58 Swiss
+
+Scanned 0 to 3,408 s at 8 s (motion between t and t + 0.5 s on a 64x36 copy), hidden pane, 1280x720; stopped there for the advisor's pause (387); 3,408-3,698 s unscanned. Adverts of up to 160 s every five minutes or so of scanning, one 4,451 s pod needed a reload (as on GamesMediaLA's). Median motion 15. Stretches over 35 for 16 s or more: 152-168, 488-512, 1136-1152, 1496-1512, 1592-1624, 1744-1760, 2000-2016, 2400-2416, 2496-2520, 2624-2648, 2664-2680, 2944-2968, 3328-3368 s (still rising at 3,408). No frame read yet; next: one mid frame each, driving dropped first. The guide's list puts The Driver's Seat's rooftop chase (Adrian Black) on the Traffic desk, likely in this part (unverified).
