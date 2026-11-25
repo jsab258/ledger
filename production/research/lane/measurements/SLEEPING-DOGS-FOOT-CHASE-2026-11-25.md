@@ -3,6 +3,13 @@
 Row: chases on foot (STATUS.md: "foot-chase length and how an escape ends it"). Sample 1 of five for Sleeping Dogs.
 Method researched: ON-FOOT-METHOD-2026-11-24.md (frames read by eye from uncut console footage, times from the video clock).
 
+Built on, read 25 Nov: foot-chase-candidates-2026-11-24.md (the clip and the guide missions), DECIDES-RECHECK-2026-11-24.md (chases on foot set length and how an escape ends it, not places).
+
+| Earlier research | This reading |
+|---|---|
+| Candidates list: Part 1's opening run is a foot chase (coarse frames 88-156 s) | confirms; pins it to about 107-203 s |
+| The row needs how an escape ends a chase | adds: this sample cannot answer it (scripted capture) |
+
 Source: Santosx07, "Sleeping Dogs Definitive Edition Walkthrough Part 1 - No Commentary Playthrough (PS4)", https://www.youtube.com/watch?v=1aFCDYV4gEw (duration 1,100.0 s, 1280x720), frames read 25 Nov 2026 in the built-in browser.
 
 ## Readings (video time, what the frame shows)
