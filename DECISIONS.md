@@ -683,3 +683,5 @@ Decision: his pick recorded as one line under People and the street's life; it r
 - 2026-11-25 03:50. 1990 sources: BS 5489-3:1989 tables, the 1987 Code stopping table and the wet wording marked not needed before the one-shot; the 30 mph braking flag closed (M3 allows shorter than the Code as licence). Reason: advisor 373, content gaps go to the loops; two readers reached no primary. Link: production/research/lane/measurements/STATUS.md.
 
 - 2026-11-25 04:05. n23-4 voice scan shortlist: ZONOS3-Mini first, Phonon 31M only if cloning is confirmed; Fish Drama 3, Ming, Audio8, Dia2, Breeze out. Reason: Apache/MIT like Kokoro and Chatterbox; CPU-sized beside the game; cloning. Pocket already newest (4.0.1). Link: production/research/voice-scan/SHORTLIST-2026-11-25.md.
+
+- 2026-11-25 05:45. The tester's filmed walks may run 16 s (play 4 s) so two same-side lamps 20 m apart pass in one take; the ruler check stops at two tries, set to a position line after the prototype. Reason: lamp timing needs no lens or height assumption; the 7 Nov rule. Link: production/research/lane/measurements/STATUS.md.

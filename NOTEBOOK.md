@@ -3029,3 +3029,12 @@ Made: an in-page reading of step rate from a following-camera clip (frame differ
 - Tools: research-reader (Sonnet), pdftotext earlier. Target and check: the shortlist's figures against the reading's links. Cost: about 0.4 h.
 - Failed and why: no model was shown keeping a regional accent from a clip; vendor latency is quoted on data-centre or laptop chips only.
 - Evidence: production/research/voice-scan/SHORTLIST-2026-11-25.md; production/research/lane/measurements/STATUS.md (25 Nov 03:50 line).
+
+## 25 Nov 2026, 05:47: the film as a speed ruler, checked against the code (n23-2, set aside after two tries)
+- Made: our own build's walk and run speeds read from the tester's film, against the code's true values.
+- Method: known-size scene objects as rulers, read from the scene's own placement file, not guessed: (1) one object's known height in pixels with the camera's logged lens gives depth per frame, speed by the slope; (2) two identical objects a known distance apart on the same side, timed as each leaves the frame at the same image point: no lens or height needed. Lit lamps at night track as bright blobs automatically.
+- Tools: the tester's fast film (frames with one clock), numpy/scipy blob labelling, the game log for the lens.
+- Target and check: within 5% of the code's 160 and 420 cm/s. Result: +25% (height method, blurred foot) and +19% (timing): the rulers agree, so the gap is either the reader or the character really moving faster than its code caps; unresolved without a position line.
+- Cost: about 0.3 h.
+- Failed and why: the 4 s step cap blocked the same-side timing (lifted to 16 s for filmed walks only); a ground-plane method failed on a climbing, bending street.
+- Evidence: production/research/lane/measurements/STATUS.md (ruler check line); F:/LedgerTools/tmp/ai-tester/film/2026-11-25-0539.

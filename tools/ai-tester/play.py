@@ -714,9 +714,11 @@ def act(verb, rest):
         return 1
     if verb == "walk":
         direction = rest[0] if rest else "forward"
-        seconds = min(4.0, max(0.2, float(rest[1]) if len(rest) > 1 else 1.0))
-        running = "--run" in rest
         filming = "--film" in rest
+        # 4 s a step for play; a filmed measuring walk may run 16 s (25 Nov, the ruler check: two lamps on
+        # one side stand 20 m apart, 12.5 s at the walk's 160 cm/s).
+        seconds = min(16.0 if filming else 4.0, max(0.2, float(rest[1]) if len(rest) > 1 else 1.0))
+        running = "--run" in rest
         fast = filming and "--fast" in rest
         kept = [] if fast else None
         hold(WALK_KEY.get(direction, "w"), seconds, running,
