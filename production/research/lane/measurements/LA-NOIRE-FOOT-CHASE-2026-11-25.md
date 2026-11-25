@@ -1,4 +1,4 @@
-# Chases on foot, L.A. Noire: samples 1 and 2 (25 Nov 2026)
+# L.A. Noire: chases on foot, samples 1 to 5 (25 Nov 2026)
 
 Built on, read 25 Nov: foot-chase-candidates-2026-11-24.md (the guide's case list: Warrants Outstanding is "just a simple foot chase", ladder, fire escape, drainpipe, a short fist fight), SLEEPING-DOGS-FOOT-CHASE-2026-11-25.md (how a sample is read and written), STATUS.md row "Feel: chases on foot" (length, and how an escape ends a chase).
 
@@ -106,4 +106,31 @@ Found by its thumbnails (one per 10 s, read in contact sheets of 96), then real 
 - Lead (a) enlarged by thumbnails: 680-810 s Cole alone climbs ladders and crosses rooftops (no second figure in any thumbnail), down at about 810 s, a cutscene at 850 s; it may be a climb to a vantage rather than a pursuit. Unread in real frames.
 - Part 9 leads read in real frames, 16:03 Swiss (Get-Date), session's seek-and-play loop: (a) 662-815 s every 4-5 s: Cole alone climbs scaffolds and ladders across rooftops, no second figure in any frame, ends at a clue (a badge, 811 s): a climb, not a pursuit. (b) 1,032-1,134 s every 3 s: Cole in shirt and braces walks a night beach at walking pace with the clue minimap and chimes, ending at a found shoe (1,128-1,134 s): an evidence search, not a tail. Part 9 holds no foot chase. Next: Part 10 (sfXUPxQVmbk) by thumbnails.
 - Part 10 (sfXUPxQVmbk, 2,997 s, Santosx07, published about 2017) by thumbnails, then real frames 528-630 s every 3 s, 16:05 Swiss (Get-Date): **Sample 5, about 535 to 600 s (about 65 s, edges read at 3 s)**: a talk at a repair-service lot ends at 531-534 s, Cole runs from 537 s across the lot, along alleys, climbs a drainpipe (555-561 s), crosses rooftops past skylights, tanks and a parapet (564-594 s), a stumble at 597 s; at 600 s the suspect turns and a fistfight follows on the roof (603-630 s and on). The suspect is rarely in frame (gap unread). Scripted catch by a forced fight.
-- **L.A. Noire 5 of 5**: about 52, 58, 21, 54, 65 s (median about 54 s); endings: warning shot and arrest, hostage, two tackles, a rooftop fistfight; never an escape. Fresh review due before it counts as solid.
+- **L.A. Noire 5 of 5** (sample 5 corrected below to about 60 s): about 52, 58, 21, 54, 60 s (median about 54 s); endings: warning shot and arrest, hostage, two tackles, a rooftop fistfight; never an escape. Fresh review due before it counts as solid.
+
+## Review fixes (fresh review review-la-noire-foot-chase-2026-11-25.md, NOT SOLID; fixes 25 Nov about 16:30 Swiss)
+
+Sources checked from each watch page's own data (publishDate, ownerChannelName, channelId, lengthSeconds), read in the built-in browser 25 Nov 2026 about 16:25 Swiss:
+
+| Sample | Video | Published | Channel | Length of video |
+|---|---|---|---|---|
+| 1 | B4rTMBDczuU, Part 1 | 13 Nov 2017 | Santosx07 (UCV-83QDvZq2dcgaT4x1S2FA) | 7,066 s |
+| 2 | MBQWlj8scTI, Part 2 | 14 Nov 2017 | the same | 2,827 s |
+| 3, 4 | HqiDCFlV17g, Part 5 | 16 Nov 2017 | the same | 2,455 s |
+| 5 | sfXUPxQVmbk, Part 10 | 20 Nov 2017 | the same | 2,997 s |
+
+Sample 5's edges read again at 1 s (531-540 s and 595-604 s): the suspect bolts past a stall at 536 s (cutscene), Cole runs from 537 s; Cole and the suspect go down at 597 s, a struggle at 598-601 s, a cut to a cutscene at 602 s. **Sample 5 is about 60 s (537 to 597 s), edges at 1 s**, replacing "about 65 s, 535-600 s".
+
+All five samples:
+
+| Sample | Where | Length | Edges read at | Gap | Ending |
+|---|---|---|---|---|---|
+| 1 | Part 1, rooftops | about 52 s | 1-2 s | 25-35 m by eye | warning shot, arrest cutscene |
+| 2 | Part 2, alleys | about 58 s | start 2 s, end 4 s | 10-15 m by eye | hostage, cutscene (outcome inferred) |
+| 3 | Part 5, yards | about 21 s | 2 s | unread | tackle |
+| 4 | Part 5, sports ground | about 54 s | 3 s | 20-30 m (estimate) | grapple at contact |
+| 5 | Part 10, rooftops | about 60 s | 1 s | unread | a fall, struggle, cutscene |
+
+Median about 54 s; range 21-60 s.
+
+Still open, as the review says: uncut: each chase was read as one continuous stretch with no cut between its edges, but the uploads as a whole were not checked for edits; all five come from one player's playthrough (one PS4 run, five different chases); samples 2-4's edges are coarser than 1 s; **how an escape ends a chase is not measured here**: every L.A. Noire chase is scripted to a catch, so this game gives length only; the escape rule rests on Sleeping Dogs (gap over about 45 m for about 20 s). Length: five samples, dated, one channel, one run: solid with notes for length only.
