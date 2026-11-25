@@ -73,3 +73,10 @@ What it gives the row:
 - Pacing: an obstacle or space change about every 10-15 s (market, alley, gate vault, stairs).
 
 Open: the distance that starts the countdown (needs a run where the player falls behind: our drill's try 2 at about 254-285 s, or another player's failed run).
+
+## The loss rule's numbers (our drill, read 25 Nov 2026 by an extractor helper, checked against its table)
+
+From our own recording of the same mission (F:/LedgerTools/tmp/drills/sdhdship-opening-2026-11-23-2043/, frames w-0076 to w-0093, 241.6-294.6 s; table in F:/LedgerTools/tmp/drills/night-market-countdown-2026-11-25.md):
+- The countdown "DON'T LOSE YOUR TARGET" appears between a gap of 42 m (260.3 s, none) and 45 m (263.4 s, 0:17 showing): it starts at about 43-45 m.
+- It runs down in about 20 s (0:17 to 0:02 at 3.1 s frame steps); the gap stayed 45 m throughout; "MISSION FAILED / YOU LOST NAZ" between 282.2 and 285.3 s.
+- So Sleeping Dogs: the runner held 12-16 m ahead in a good run; the chase is lost when the gap stays over about 45 m for about 20 s. Whether closing back under the gap stops the countdown is unread (no such frame).

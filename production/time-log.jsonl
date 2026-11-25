@@ -1152,3 +1152,5 @@
 {"event": "stop", "at": "2026-11-25T09:31:00", "note": ""}
 {"event": "start", "at": "2026-11-25T09:33:00", "task": "n23-3 recommendation revised (advisor 380)", "phase": "n23-3", "kind": "production"}
 {"event": "stop", "at": "2026-11-25T09:48:00", "note": ""}
+{"event": "start", "at": "2026-11-25T09:25:00", "task": "n23-1 night-market loss rule from drill frames (extractor helper)", "phase": "n23-1", "kind": "production"}
+{"event": "stop", "at": "2026-11-25T09:36:00", "note": ""}
