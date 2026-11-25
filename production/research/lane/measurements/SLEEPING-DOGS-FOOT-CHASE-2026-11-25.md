@@ -142,3 +142,10 @@ Built on: foot-chase-candidates-2026-11-24.md (Zi Wai named among the guide's fo
 What it gives the row: **about 70 s on foot (about 503 to 574 s, edges at 4 s)**; the target rarely in frame (gap unread); ends in a scripted fight, not a catch at contact or an escape; space changes every 5-15 s. Recorded on PC, not console.
 
 **Sleeping Dogs 5 of 5**: about 96, 67, 14, 66, 70 s (median about 67 s); four players' uploads (Santosx07 PS4, Willzyyy PC twice, Addictive Gamer PS4, The-Rickster6 PS4); every ending scripted (a fight or a catch); the loss rule from our own drill (gap over about 45 m for about 20 s). Fresh review due before it counts as solid.
+
+## Review fixes, first part (16:47 Swiss by Get-Date; review-sleeping-dogs-foot-chase-2026-11-25.md: NOT SOLID for length and for the loss rule)
+
+- Dates from each watch page's own data: sample 1, 1aFCDYV4gEw, Santosx07, published 9 Aug 2015 (1,100 s); sample 2, EHSDinKWPQI, Willzyyy, published 8 Jan 2023 (629 s). All five now dated; four channels (Willzyyy gives samples 2 and 5).
+- The night-market section's line 'the distance that starts the countdown not yet read' is superseded by the loss rule's numbers below it (about 43-45 m).
+- Still open, for the next run: edges at 1 s for samples 1 (hand-over 104-111 s), 2 (end 218-223 s), 3, 4 (start in the 157-160 s black) and 5 (start about 503 s); sample 3's first 23 s and sample 4's black checked for cuts; sample 1 is a guided follow ending in an arrest (counted as a chase by judgement). The loss rule is a lead on one run (our drill): it needs uploaded runs that lose the target.
+- Sample 5's edges at 1 s (16:49 Swiss): Wei leaves the car and lands at 502 s, runs from 503 s; still running at 575 s; the first blow of the fight at 576 s. **Sample 5 is about 72 s (503 to 575 s), edges at 1 s**, replacing about 70 s. Sleeping Dogs: about 96, 67, 14, 66, 72 s.

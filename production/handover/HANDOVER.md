@@ -4,9 +4,9 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-25 15:52 (the hourly run)
 
-**Row due:** 15:41 (last row 14:41; page read 15:00; filter verdicts after 2026-11-25T12:58 UTC (none since), advisor after 2026-11-25T14:50:00+01:00; last acks 391, 392 at 14:53).
+**Row due:** 17:35 (last row 16:35; page read 16:40: verdicts after 2026-11-25T12:58 UTC (none since), advisor after 2026-11-25T15:10:00+01:00 (none since); last acks 393, 394 at 15:58).
 **Uncommitted:** nothing of this session's; the office-print PNGs and three Kiln notes are not this session's, left alone.
-**Stopped:** 2026-11-25 15:15 (the 14:37 run: advisors 388-392 acted on; L.A. Noire foot chases 4 of 5; history at its limit; nothing running)
+**Stopped:** 2026-11-25 16:49 (the 15:52 run: advisors 393, 394 acted on; chases on foot L.A. Noire and Sleeping Dogs 5 of 5 each, both reviewed; history at 248k of 250k, stopped between pieces; nothing running)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -34,15 +34,12 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- 14:37 run: **advisors 388-391** in RULINGS at the cap (uniform with limits; no marriage, a relationship's consequences; all 32 question-pass answers, 22 no roof routes, 31 Ellis courtable); to fit, the page and API-credit lines moved word for word to RULINGS-ENFORCED.md; acks; row 14:41; DAILY-2026-11-25 written (14:45). **Advisor 392 released the block**: L.A. Noire Part 3 has no foot chase; **Part 5 holds samples 3 and 4** (about 21 s and 54 s, tackles); Parts 6, 7 none; Part 9 two leads unread. Pushed.
-- 07:22 and 08:52 runs: n23-3 drafted, reviewed, reopened to 4 Dec (advisor 380); advisors 374-381 acted on; Sleeping Dogs chases 2 of 5.
-- 10:22 run: L.A. Noire chases 2 of 5 (Parts 1, 2); advisor 382 in RULINGS; pushed.
+- 15:52 run: advisors 393, 394 acted on and acked 15:58 (decisions 33-38 in RULINGS; canon pillar 'Real-world agency'). Rows 15:58, 16:35. Chases on foot: L.A. Noire 5 of 5 (about 52, 58, 21, 54, 60 s), review fixes made: length solid with notes, no escape rule. Sleeping Dogs 5 of 5 (about 96, 67, 14, 66, 72 s; Broken Parts JzQycLOdY6U, Ponytail ALTXcZ0nrUA, Zi Wai t3rAMMeariQ); review NOT SOLID, dates fixed, edges open. Pushed.
+- 14:37 run: advisors 388-392 acted on (RULINGS at the cap; the page and API-credit lines moved to RULINGS-ENFORCED.md); L.A. Noire Part 5 samples 3 and 4; pushed.
 
-- 13:37 run: advisor 385 (release) acked; row 13:41; **Santosx07's later L.A. Noire parts found** (IDs in the note); Part 3 motion-scanned to 3,408 s (13 stretches, unread); **advisor 386** (three routes per job, no skill tree) in RULINGS at the cap (eight lines tightened), enforcer note, DECISIONS; **advisor 387** paused the block again; acks 14:00.
-- 12:07 run: **advisors 383 (romance a can-you, women only) and 384 (arrest interview; pause)** in RULINGS at the cap (tightened; DECISIONS names it), enforcers added, acked 12:12; row 12:14.
 
 ## In flight
-- Nothing running: no helper or scan; the browser pane holds Part 9 (nLwXUYDdfeo).
+- Nothing running: no helper or scan; the browser pane holds Buried Alive (t3rAMMeariQ).
 
 ## Next, in order
 0000. **Measuring block running (advisor 392)** until the newest reading reaches 90% (89% at 15:04); then finish the step, commit, push, **one last row with the state of every measuring row** so Monday continues there, then the weekly stop (item 00).
@@ -50,10 +47,10 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 00. Pace: 80% at 04:46; **the weekly stop is 90%** (advisor 352): at the newest reading of 90% finish the step, commit, push, one row, write production/weekly-stop.json {"until": "2026-11-30T13:00", "reading": N}, set "**Next due:** 2026-11-30 13:00", one page item (switch off the scheduled task ledger-daily-fresh-session, Code tab, Scheduled; on after Monday 13:00), stop all work. Full pace until then (advisors 359, 366: no pace-line holds).
 0. If he types "RDR2 drill starting": `python tools/drills/rdr2_record.py start` in the background; on "RDR2 drill done": the same with stop; read the frames by his card (advisor 361).
 1. **On foot, the walk:** cadence done (solid). Step length still unread: a side-on stretch, heel gap over height (none seen in rzz5BOoJ9Rc); then KCD2's walk is first person, so the second game's walk is RDR2 or Sleeping Dogs footage.
-3. **Chases on foot:** Sleeping Dogs 2 of 5; L.A. Noire 4 of 5 (about 52, 58, 21, 54 s; all scripted catches). Sample 5: Part 9 (nLwXUYDdfeo) leads in the note: (a) 680-810 s rooftops (may be a climb, not a pursuit), (b) 1,035-1,140 s night run, white-shirted man centre-frame, a grab at 1,140 s; read (b) at 1 s. Else Parts 10-13 (IDs in the note). **Method that works: YouTube's thumbnails first** (the player response's storyboard spec, level 2, 160x90 every 10 s, drawn on a canvas sheet and zoomed), real frames only on candidates; every seek may bring an advert (15-245 s; a 3,033 s pod needs a reload); a stalled video (ready state 0) needs movie_player.seekTo then playVideo. Then Sleeping Dogs 3-5, then GTA V by a shape method.
+3. **Chases on foot:** L.A. Noire 5 of 5 (length solid with notes; escape rule none). Sleeping Dogs 5 of 5, review NOT SOLID: first read edges at 1 s for samples 1-4 (5 done: 503-575 s) (times in the note's 'Review fixes, first part'), check sample 3's first 23 s and sample 4's black for cuts; the loss rule needs uploaded runs that lose the target (search 'Sleeping Dogs mission failed lost'). **Then GTA V by a shape method** (police foot pursuits are systemic, so samples come from free-roam footage: wanted on foot, the time from a cop's first run to lost or caught). Method that works: storyboard thumbnails first (the player response's spec, level 2), drawn on a canvas sheet; real frames by the seek-and-play loop (movie_player.seekTo, playVideo, pause, draw; a 45 s tool limit, so run it in the page and poll); the hidden pane's screenshot lags one call: take it twice. Single-mission uploads found by YouTube's search page read from ytInitialData (videoRenderer).
 4. **KCD2 being seen with crowd reactions** (one town crime clip serves both): ibyJamin Part 4 (wMk2tFAd26E) or 5 (AK8xLkS1Cfs), hare scan with the parchment filter (drop hits above 12% beige); first check by eye that this player shows the behaviour icon at a known alarm. If none by the week's end, say so in STATUS.
 4a. **Photo counts (advisor 370):** two tries used; OS legend unreached (06:10); next period footage of northern side streets by eye. Quay Street stays at 34 m. 5. 1990 sources: headlamp reach a lead (period-lamps-reach-2026-11-25.md); BS 5489-3:1989 unreached; our car braking (8-11 m vs the Code's 14 m) unchecked.
-6. n23-7 DAILY-2026-11-25 by 19:00 (add the API line: US$1.10 tonight).
+6. n23-7 DAILY-2026-11-25 by 19:00: its API line already holds today's spend (US$4.90 by 07:40 run caps); the old note 'US$1.10 tonight' had no source found in api-spend.jsonl at 16:45: add it only if a night run logs it.
 6b. n23-4 voice trial waits for the loops, no download (advisor 381).
 0b. Next night walk Mon 30 Nov 01:30 (held while the stop file holds). 4p. Marvelous stays open. No Unreal work until the browser prototype is done (advisor 288). 5p. History rewrite HELD for his word. Progress page daily (progress.json only).
 
