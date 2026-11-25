@@ -2,11 +2,11 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed, the next steps and the tries used.
 
-**Started:** 2026-11-25 07:22 (the hourly run)
+**Started:** 2026-11-25 08:52 (the hourly run)
 
-**Row due:** 07:34 (last row 06:34; page read 06:23; filter verdicts after 2026-11-25T05:23 UTC, advisor after 2026-11-24T23:55:00+01:00; last ack 373 at 23:55; nothing new since).
-**Uncommitted:** nothing; work pushed with this file.
-**Stopped:** 2026-11-25 06:51 (the 05:37 run: ruler check set aside after two tries; live talk inside the game on three routings, Haiku alone leads; OS lamp legend unreached; nothing running, the shipped talk program restored)
+**Row due:** 10:43 (last row 09:43; page read 09:49; filter verdicts after 2026-11-25T08:49 UTC, advisor after 2026-11-25T09:35:00+01:00; last ack 381 at 09:44).
+**Uncommitted:** this file only (no notes-only commit); the office-print PNGs and three Kiln notes are not this session's, left alone.
+**Stopped:** 2026-11-25 09:49 (the 08:52 run; nothing running but a harmless page scan loop)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -34,32 +34,31 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- 05:37 run: **ruler check** (n23-2) set aside after two tries: film or character ~20% fast (walk 2.0 vs 1.6, run 5.0 vs 4.2 m/s by the lamps), a position line after the prototype (STATUS); filmed tester walks up to 16 s. **n23-3**: newcomer questions run on Haiku by the moment rule: 1.59 s, 3/30 fell back; forced to Sonnet 5.5 (new default-off LEDGER_TALK_MOMENT switch, shipped exe restored): 5.34 s, 1/30 under 2 s; with Haiku's first sentence 1.71 s, 17/30, but 8/30 fell back. US$2.20 logged. OS lamp legend unreached. Rows 05:48, 06:34.
-- 03:37 run: live talk in the game 1.73 s (N23-3-QUESTIONS); voice scan shortlist (ZONOS3-Mini first); 1990 gaps set aside; 17 tester pictures deleted.
+- 07:22 run: n23-3 drafted and reviewed; advisors 374-377.
+- 08:52 run: advisors 378-380 in RULINGS or acted on, acked. **Footage runs hidden again** (the 01:15 hand-over rule was the cause; hidden, the page is 480x273: tools/drills/frame_sheet.js oneFit, then a 2 s wait and a full-size screenshot or a zoom of the frame). Chases on foot, Sleeping Dogs 2 of 5 (SLEEPING-DOGS-FOOT-CHASE-2026-11-25.md): opening run scripted 96 s, capture; night market 67 s, gap 12-16 m, ends at a set fight. **n23-3 reopened to 4 Dec** (advisor 380): recommendation revised, routing fault in FINDINGS, DECISIONS line. Rows 09:10.
 
 ## In flight
-- Nothing running: no helper, no game; the pane opens hidden while nobody is at the PC (06:08), so no footage. Sleeping Dogs Part 1 (1aFCDYV4gEw): coarse frames at 88-156 s show the alley run, not read finer.
+- Nothing running: no helper, no game; the browser pane holds YouTube (L.A. Noire Part 1, B4rTMBDczuU, not yet read).
 
 ## Next, in order
-000. **Footage needs the pane shown:** check `tabs_context` first; while it says hidden, do 6a/6b below, not footage.
+0a. Advisor 381 done 09:44 (note ONE-SHOT-REPLY-MODEL-2026-11-25.md, acked); n23-3 now only that note plus the 4 Dec delivery; no voice work before the loops.
+000. **Footage runs with the pane hidden** (checked 08:55 25 Nov, screen off: plays, seeks in 0.1-0.25 s, frames read). The 01:15 failure was a stalled player; on a stall reload the tab once and re-query the video, never wait for the pane.
 00. Pace: 80% at 04:46; **the weekly stop is 90%** (advisor 352): at the newest reading of 90% finish the step, commit, push, one row, write production/weekly-stop.json {"until": "2026-11-30T13:00", "reading": N}, set "**Next due:** 2026-11-30 13:00", one page item (switch off the scheduled task ledger-daily-fresh-session, Code tab, Scheduled; on after Monday 13:00), stop all work. Full pace until then (advisors 359, 366: no pace-line holds).
 0. If he types "RDR2 drill starting": `python tools/drills/rdr2_record.py start` in the background; on "RDR2 drill done": the same with stop; read the frames by his card (advisor 361).
 1. **On foot, the walk:** cadence done (solid). Step length still unread: a side-on stretch, heel gap over height (none seen in rzz5BOoJ9Rc); then KCD2's walk is first person, so the second game's walk is RDR2 or Sleeping Dogs footage.
-3. **Chases on foot:** Sleeping Dogs Santosx07 Part 1 (1aFCDYV4gEw: a 5-10 s sheet over 80-240 s for the opening run's start and end), then Part 3 (night-market chase; ids in sleeping-dogs-foot-chase-clips), then L.A. Noire's scripted chases; the GTA V star scan only by a shape or template method (third try needs the 7 Nov rule's researched method).
+3. **Chases on foot:** Sleeping Dogs 2 of 5 done (loss: gap over about 45 m for about 20 s); next L.A. Noire (Santosx07 Part 1 B4rTMBDczuU is 7,066 s with no chapters: motion scan done to about 6,200 s 25 Nov 09:48 (frame_sheet.js mscan; median motion 17): stretches over 40 for 30 s or more at 900-1010, 1100-1150, 1640-1670, 2060-2090, 2180-2210, 2970-3030, 3230-3260, 3300-3330, 3630-3660, 4000-4040, 4570-4640, 4910-4990, 5030-5060, 5360-5410, 5930-5980 s; read each by eye with oneFit only after the scan loop has ended; 6,200-7,066 not scanned), then GTA V by a shape method. Ads: wait them out (play, skip button) before reading.
 4. **KCD2 being seen with crowd reactions** (one town crime clip serves both): ibyJamin Part 4 (wMk2tFAd26E) or 5 (AK8xLkS1Cfs), hare scan with the parchment filter (drop hits above 12% beige); first check by eye that this player shows the behaviour icon at a known alarm. If none by the week's end, say so in STATUS.
-4a. **Photo counts (advisor 370):** two tries used; the different method: the OS 1:2,500 legend (are lamps drawn?), then period footage of northern side streets by eye. Quay Street stays at 34 m. 5. 1990 sources: footfall from the reader's file; headlamp reach now a lead (period-lamps-reach-2026-11-25.md); BS 5489-3:1989 and the 1987 Highway Code table unreached; our car braking flag (8-11 m against the Code's 14 m) unchecked.
+4a. **Photo counts (advisor 370):** two tries used; OS legend unreached (06:10); next period footage of northern side streets by eye. Quay Street stays at 34 m. 5. 1990 sources: headlamp reach a lead (period-lamps-reach-2026-11-25.md); BS 5489-3:1989 unreached; our car braking (8-11 m vs the Code's 14 m) unchecked.
 6. n23-7 DAILY-2026-11-25 by 19:00 (add the API line: US$1.10 tonight).
-6a. **n23-2 ruler check:** done to two tries (05:47), set aside for a position line after the prototype; the cheap-reader trial still open.
-6b. **n23-4 trial:** ZONOS3-Mini: its weights download raised in chat when he is at the PC (file, source, size), then the 12 cast lines against Pocket. **n23-3:** fast-first's fall-backs read (06:50): six are Haiku's redraft first sentence flagged by the claim check, two the cap. Next: the recommendation by Fri 4 Dec (Haiku alone leads; fast-first only with redrafts wholly on the better model, a later loop's change), one fresh reviewer first. Measuring runs: swap only LedgerTalk.exe into the played copy with a backup, restore after.
-6c. **4a photo counts:** the OS legend route read 06:10, unreached (no viewable 1970-90 plan; STATUS); next period footage by eye when the pane shows.
+6b. **n23-4 trial:** ZONOS3-Mini: its weights download raised in chat when he is at the PC (file, source, size), then the 12 cast lines against Pocket (the Pocket versions now exist, path above). **n23-3:** OPEN to 4 Dec (advisor 380): recommendation revised 09:40 (routing fault named in FINDINGS; bar on the real-question model, missed; no Haiku switch on speed; layer swappable). Before 4 Dec: the blind quality comparison only if a switch is proposed; ZONOS3-Mini: the download goes through the advisor chat (advisor 380). Measuring runs: swap only LedgerTalk.exe into the played copy with a backup; end processes with cmd /c taskkill (PowerShell's strict errors on taskkill skipped the restore once).
 0b. Next night walk Mon 30 Nov 01:30 (held while the stop file holds). 4p. Marvelous stays open. No Unreal work until the browser prototype is done (advisor 288). 5p. History rewrite HELD for his word. Progress page daily (progress.json only).
 
 ## Footage tools
 All in tools/drills/frame_sheet.js (sheet, SAVED EVIDENCE to F:/LedgerTools/game-inputs/footage/<id>/, RED SCAN for RDR2, HARE BOX SCAN for KCD2), each with its known faults. Stamp every time from Get-Date. Storyboard sprites for colour cues only; leg crops every 0.1 s read cadence.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
-- 25 Nov 04:08: a code read missed -AskSet sixty lines below (read whole functions). 05:45: a ground-plane ruler failed on the climbing, bending street; the 4 s step cap blocked lamp timing (lifted for filmed walks).
-- 25 Nov 03:41: Git Bash's date agreed with PowerShell tonight; a wait keyed on "bash is an hour behind" fired early. Key waits on PowerShell's Get-Date.
+- 25 Nov 09:05: in the hidden pane 4x3 sheets are unreadable (page 480x273) and screenshots taken at once or scaled came back black; one frame, 2 s wait, full size works.
+- 25 Nov 07:32: a run script with $ErrorActionPreference Stop died on taskkill's stderr before restoring the shipped talk program (restored by hand, hash checked). 08:15: joined a transcript's "reply" and "rest" for recordings; "reply" is already whole (rest repeats its tail).
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3.

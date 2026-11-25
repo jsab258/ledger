@@ -156,3 +156,21 @@ window.oneFit = async (t) => {
   g.fillStyle = '#ff0'; g.font = 'bold 14px sans-serif'; g.fillText(v.currentTime.toFixed(1), 4, 16);
   return ok;
 };
+
+// MOTION SCAN (25 Nov 2026, for long walkthroughs with no chapters): mscan(t0, t1, step) runs in the background (call
+// without await; poll window.ms.done / window.ms.rows in calls under 35 s). Each row [t, motion, light]: motion is the
+// mean colour change between t and t + 0.5 s on a 64x36 copy, light the mean brightness. Runs of high motion mark
+// running, driving or fights; read those stretches by eye with oneFit. About 2.5 rows a second hidden; skips ads.
+window.mscan = async (t0, t1, step) => {
+  const v = document.querySelector('video'); v.muted = true; v.pause();
+  const c = document.createElement('canvas'); c.width = 64; c.height = 36; const g = c.getContext('2d', { willReadFrequently: true });
+  const grab = async (t) => { await new Promise((r) => { v.addEventListener('seeked', r, { once: true }); v.currentTime = t; setTimeout(r, 5000); }); for (let k = 0; k < 20 && v.readyState < 2; k++) await new Promise((r) => setTimeout(r, 150)); g.drawImage(v, 0, 0, 64, 36); return g.getImageData(0, 0, 64, 36).data; };
+  window.ms = { done: false, rows: [] };
+  for (let t = t0; t <= t1; t += step) {
+    while (document.querySelector('.ad-showing')) { const b = document.querySelector('.ytp-skip-ad-button, .ytp-ad-skip-button-modern'); if (b) b.click(); await new Promise((r) => setTimeout(r, 1500)); }
+    const a = await grab(t), b = await grab(t + 0.5);
+    let d = 0, l = 0; for (let i = 0; i < a.length; i += 4) { d += Math.abs(a[i] - b[i]) + Math.abs(a[i+1] - b[i+1]) + Math.abs(a[i+2] - b[i+2]); l += a[i] + a[i+1] + a[i+2]; }
+    window.ms.rows.push([t, Math.round(d / 2304), Math.round(l / 2304)]);
+  }
+  window.ms.done = true;
+};
