@@ -1,0 +1,127 @@
+id,question,old verdict
+Q001,"Can Frank kill a beat constable with a cosh blow from behind, unseen, at night, and what happens?",WEAK
+Q002,"If Frank knocks a constable out from behind and nobody sees, does the constable know it was Frank when he wakes?",WEAK
+Q003,"Can Frank strike, shove or kill DS Ellis, and what happens to her case and the story?",WEAK
+Q004,"Can Frank strike a woman officer, and does anything treat it differently?",WEAK
+Q005,"Can a knife kill in an ordinary fight, or only by the finishing choice?",WELL
+Q006,Can Frank draw a knife during a talk to threaten someone without using it?,WEAK
+Q007,Can Frank kick a downed man (put the boot in)?,WEAK
+Q008,"How does Frank get rid of a weapon used in a killing, and can a found weapon be traced to him?",WEAK
+Q009,"Which weapon moves (draw, swing, stab, put away, drop) exist for each weapon?",WEAK
+Q010,"What happens after a killing: 22 hours then what? Remand, trial, prison, or release?",WEAK
+Q012,What does Ellis do while bought: does she still investigate a killing?,WEAK
+Q013,"Can Frank kill a constable in a fight that he started in the open, seen by the street?",WEAK
+Q014,"Can Frank kill a constable with the fatal-fall rule by accident, and is it treated as murder?",WELL
+Q015,What if Frank hides or sinks a constable's body: is a missing officer ever unexplained?,WEAK
+Q016,"Can Frank run from an arrest when a constable walks up, and what follows if he gets away?",WELL
+Q017,What if Frank runs from an arrest and is caught by the same constable later?,WELL
+Q018,Can Frank lock a constable in a room or a yard?,UNANSWERED
+Q019,Can Frank threaten a constable in talk?,WEAK
+Q020,"Can Frank lie to a constable who stops him (where he was, what is in the bag)?",WEAK
+Q021,"Can Frank own up to a deed to a constable, and does owning up change the hours?",WEAK
+Q022,Can Frank surrender during a manhunt to shorten it?,UNANSWERED
+Q023,"Can Frank steal from a constable (his notebook, his truncheon, his radio)?",WEAK
+Q024,"Can Frank follow the beat constable and learn his round, and does the constable notice being followed?",WEAK
+Q025,What happens if Frank strikes the second constable (the street-on-edge one) or both at once?,WEAK
+Q026,Can Frank push a constable into the dock?,WEAK
+Q027,Can Frank run a constable down with the car?,WEAK
+Q029,Can Frank attack the patrol car crew on foot during a stop?,WEAK
+Q030,"Can Frank shoot a constable before the dial is at War, and does the hit wound only?",WELL
+Q031,"Can Frank shoot a constable at War, and what does it bring?",WELL
+Q032,Can Frank hold up a constable at gunpoint?,WEAK
+Q033,"Can Frank bribe an honest constable, and what if he offers twice?",WEAK
+Q034,Can Frank blackmail a constable with something he knows?,WEAK
+Q035,Can a bought constable be squeezed for more than his one favour?,WEAK
+Q036,What if a bought constable is himself caught or questioned: does he sell Frank out?,WEAK
+Q037,Can Frank strike a bought officer and keep him bought if nobody saw?,WELL
+Q038,Can Frank kill a bought officer to stop him talking?,WEAK
+Q040,"Can Frank plant evidence (a weapon, stolen goods) on a rival for a search to find?",UNANSWERED
+Q041,Can Frank tip off the police anonymously about a rival's lock-up or gun?,WEAK
+Q046,What happens if Frank is arrested while carrying the envelope or a gun?,WEAK
+Q053,Does saving and loading during a manhunt or a chase keep it?,WEAK
+Q055,Can Frank hide inside a building or a yard during a foot chase?,WEAK
+Q056,Can Frank change his coat mid-chase to lose the police?,WEAK
+Q057,Can Frank swap to another car to lose a car chase?,WEAK
+Q059,"Does a constable's challenge happen by day, and on what?",WEAK
+Q060,What happens if Frank is seen carrying a body or dragging one?,WEAK
+Q063,Can Frank threaten Ellis?,WEAK
+Q069,"If Ellis is killed or hospitalised, who carries her case?",WEAK
+Q071,"Can Frank kill a rival head (Agar, the Widow, Danny) early in Act I?",WEAK
+Q072,"Can Frank kill Danny Cammack, the main opponent, before the end, and does the ending survive?",WEAK
+Q073,Can Frank walk into a rival's base and start a fight?,WEAK
+Q081,Can Frank threaten a rival head at a sit-down?,WEAK
+Q083,"Can rival men kill Frank's crewmen, and how does Frank learn of it?",WEAK
+Q084,Can Frank kill a rival's man on his post with nobody watching?,WEAK
+Q086,"Can Frank kill Garbutt, and what then?",WEAK
+Q087,Can Frank rob Garbutt or threaten him?,WEAK
+Q088,Can Frank strike Ron or Sheila?,WEAK
+Q089,"Can Frank kill Ron or Sheila, and does the story survive?",WEAK
+Q091,Can Frank fire Ron or Sheila?,WEAK
+Q092,"Can Frank sack, strike or rob a driver (Kevin, Terry)?",WEAK
+Q096,Can Frank strike Pauline or June?,WEAK
+Q099,"Can Frank kill a shopkeeper during a hold-up, and what does the street do?",WEAK
+Q102,Does a shopkeeper refuse to serve Frank after he robbed or threatened him?,WEAK
+Q104,Can Frank run a protection racket on a shop and what if the shopkeeper refuses?,WEAK
+Q105,"Can Frank kill a witness before nine in the morning, and is that a second killing?",WEAK
+Q107,"Can a witness take back a signed statement, and what makes her?",UNANSWERED
+Q108,Can Frank threaten a witness who has already signed?,WEAK
+Q111,Can Frank strike a witness on her walk to the phone box?,WEAK
+Q114,"Can Frank kill a kept extra who saw him, and where does the extra live?",WEAK
+Q116,Can Frank pick a fight with a stranger in the street for no reason?,WELL
+Q117,"Can Frank kill a random stranger by the fatal fall, and who investigates?",WELL
+Q120,Can Frank kill the retired doctor or stop him talking?,WEAK
+Q121,"Will the retired doctor stitch Frank after a killing, and does he tell?",WEAK
+Q122,"Can Frank strike, threaten or kill his landlady, and where does he sleep then?",WEAK
+Q123,"Can Frank strike or kill the priest, and what does the parish do?",WEAK
+Q124,Can Frank strike or kill Alison or Philip (the love interests)?,WEAK
+Q125,"Can Frank kill Darren, and who brings tips?",WELL
+Q126,"Can Frank strike an old man or an old woman, and does the street react more?",WEAK
+Q127,"Can Frank strike a woman in the street, and does the street react more?",WEAK
+Q128,"Can Frank kill someone inside a home with nobody else there, and how is it found?",WELL
+Q129,Can Frank use a bat or cosh on a man who is not fighting back?,WELL
+Q130,"Does a knuckleduster change a fist fight, and can fists with a knuckleduster kill?",WEAK
+Q131,Can Frank throw a knife or a brick?,WEAK
+Q132,Can Frank pick up a weapon dropped by an enemy?,WEAK
+Q133,"Can Frank carry more than two weapons, or hide one in the car?",WELL
+Q134,Can Frank wipe a weapon or burn his coat to destroy evidence?,WEAK
+Q135,Can a body or a weapon thrown in the dock be found by the police later?,WEAK
+Q136,Can Frank bury a body or put it in a skip or a lock-up?,WEAK
+Q137,What if Frank is seen putting a body into the dock?,WEAK
+Q138,"What happens to the car if a body was in its boot (blood, a search)?",WEAK
+Q139,Can Frank rob or search a body?,WELL
+Q141,"Can Frank shoot in the air to scare people, and does it move the dial?",WEAK
+Q142,Can Frank give a gun to a crewman?,WEAK
+Q143,What if Frank uses a gun inside a building where nobody outside hears?,WEAK
+Q146,"Can Frank burn a car or a house, and can fire spread?",UNANSWERED
+Q153,Can the car push someone into the dock or kill by a fall?,WELL
+Q155,Can Frank drive fares while wanted or with a body in the boot?,WEAK
+Q160,What if Frank tells a character he is the killer?,WEAK
+Q161,Can Frank threaten someone in talk with a weapon he does not have?,WEAK
+Q165,Can Frank send a crewman to kill someone?,WEAK
+Q168,Can Frank kill his own crewman who might talk?,WEAK
+Q171,Can Frank collect a debt from a dead debtor's family?,WEAK
+Q174,What if Frank ignores Ellis's office-search warning and keeps a gun at the office?,WEAK
+Q176,What if Frank wins every fight by running away?,WEAK
+Q177,What happens if Frank is beaten in the middle of a job with the envelope on him?,WELL
+Q178,What happens if a story beat's person is in hospital on the day?,WEAK
+Q179,"What if Frank goes to a story meeting armed, bloodied or with Ellis's car outside?",WEAK
+Q180,What if Frank kills everyone who could be a witness to anything?,WEAK
+Q181,Can Frank go out at 03:00 when nobody is about and do everything then?,WELL
+Q182,"Can Frank reload a save to undo a killing, and does the game say it is permanent?",WEAK
+Q184,What if Frank is beaten every night for a week?,WEAK
+Q187,What if Frank stands in a constable's path or follows him around all night?,WEAK
+Q190,What if Frank attacks the ambulance crew or a hospital patient?,UNANSWERED
+Q193,What if Frank kills the cold-store manager's deputy too (the fallback's fallback)?,WEAK
+Q194,What if Frank kills both rivals' lieutenants after their heads?,WEAK
+Q195,"What if a rival kills or hurts a principal Frank needs (Ron, Sheila)?",WEAK
+Q198,"Do people hear a fight behind a wall, and does a witness arrive late?",WEAK
+Q199,"Does killing an animal (a dog, a pigeon) count?",UNANSWERED
+Q200,Can Frank win a fight against a crowd of five?,WEAK
+Q201,Can Frank stop a fight between two other men?,WEAK
+Q204,"What if the beat constable is killed by a rival, not Frank: does the long heat fall on Frank anyway?",WEAK
+Q206,Can Frank take the Ellis bribe route and then kill her?,WEAK
+Q208,"Can Frank pull a gun in talk without firing (shown), and does it move the dial?",WEAK
+Q209,What does the town call it if Frank stabs a man and he lives?,WELL
+Q210,"Can Frank strike a man pleading on the ground, and what do watchers do?",WELL
+Q213,"What does the player see if he draws a weapon in a shop in the first hour, before hold-ups are allowed?",WEAK
+Q214,What happens if Frank attacks a rival's man during Garbutt's truce?,WEAK
