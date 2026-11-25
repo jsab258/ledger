@@ -4,7 +4,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-25 10:22 (the hourly run)
 
-**Row due:** 11:23 (last row 10:23; page read 10:38; filter verdicts after 2026-11-25T09:38 UTC, advisor after 2026-11-25T09:44:00+01:00; last ack 381 at 09:44).
+**Row due:** 12:03 (last row 11:03; page read 11:11; filter verdicts after 2026-11-25T10:11 UTC, advisor after 2026-11-25T11:00:00+01:00; last ack 382 at 11:13).
 **Uncommitted:** this file only (no notes-only commit); the office-print PNGs and three Kiln notes are not this session's, left alone.
 **Stopped:** 2026-11-25 09:49 (the 08:52 run; nothing running but a harmless page scan loop)
 

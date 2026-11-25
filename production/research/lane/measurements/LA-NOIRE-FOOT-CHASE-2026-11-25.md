@@ -1,4 +1,4 @@
-# Chases on foot, L.A. Noire: sample 1 (25 Nov 2026)
+# Chases on foot, L.A. Noire: samples 1 and 2 (25 Nov 2026)
 
 Built on, read 25 Nov: foot-chase-candidates-2026-11-24.md (the guide's case list: Warrants Outstanding is "just a simple foot chase", ladder, fire escape, drainpipe, a short fist fight), SLEEPING-DOGS-FOOT-CHASE-2026-11-25.md (how a sample is read and written), STATUS.md row "Feel: chases on foot" (length, and how an escape ends a chase).
 
@@ -39,9 +39,41 @@ Source: Santosx07, "LA Noire Remastered Walkthrough Part 1 - No Commentary Playt
 
 ## Other stretches checked (from the motion scan list)
 
-900-1010 cutscenes (the war flashback); 1100-1150 a street gunfight with patrolmen (not a foot chase); 1640-1670 walking; 2060-2210 driving; 3230-3330 evidence close-ups; 3630-3660 evidence; 4000-4040 indoors searching; 4570-4640 driving. Not yet read: 4910-4990, 5030-5060, 5360-5410, 5930-5980, and 6,200-7,066 s (not scanned).
+900-1010 cutscenes (the war flashback); 1100-1150 a street gunfight with patrolmen (not a foot chase); 1640-1670 walking; 2060-2210 driving; 3230-3330 evidence close-ups; 3630-3660 evidence; 4000-4040 indoors searching; 4570-4640 driving; 4910-5070 a crime scene searched on foot; 5360-5410 searching a house; 5930-5995 walking and driving; 6,200-7,066 s (coarse sheets every 30 s, then 10-15 s near the end, read 10:45-10:50): evidence, interviews, a car chase in the river bed (6,740-6,800 s), cutscenes, the station. Part 1 holds this one foot chase only. Next: Part 2 by the same player, https://www.youtube.com/watch?v=MBQWlj8scTI (2,827 s; found by web search 25 Nov 10:52).
 
 ## What failed
 
 - Mid-roll adverts start on most long seeks (one pod reported a 4,451 s "advert", a lecture); the skip button clicked by reference did not skip in the hidden pane; a page reload cleared the long one; shorter pods must be waited out (about 1-2 min each).
 - The motion scan flags camera movement in driving and evidence close-ups as much as running; most of its stretches were not chases. A frame at each stretch's middle is the cheap first filter.
+
+## Sample 2: Part 2, the alley chase to a hostage
+
+Source: Santosx07, "LA Noire Remastered Walkthrough Part 2 - No Commentary Playthrough (PS4)", https://www.youtube.com/watch?v=MBQWlj8scTI (duration 2,827.2 s), motion scan every 8 s (10:52-11:06 Swiss), then sheets at 10 s and 2 s (11:07-11:10).
+
+| t (s) | Frame |
+|---|---|
+| 1690-1724 | cutscene: an interview turns; a man draws a pistol on a woman in a flat |
+| 1726-1728 | player control indoors, running for the door (objective text on the left) |
+| 1730-1732 | out of the door, running across a yard, the suspect ahead |
+| 1740-1770 | running down back alleys past a lorry and crates |
+| 1774-1782 | the suspect ahead, holding a woman in front of him by a parked car (about 10-15 m by eye) |
+| 1788-1798 | cutscene: the two detectives standing in the alley afterwards |
+| 1800 | close on the ground, blood (inferred: the chase ended with the suspect shot; the shot itself not seen at 2 s) |
+| 1810 | loading screen |
+
+Numbers (leads): length about 58 s (1,727 to about 1,785 s, end edge read at 4 s); gap about 10-15 m by eye (estimate, unverified); ending: the suspect takes a hostage and the chase ends in a cutscene, scripted.
+
+Other Part 2 stretches (one mid frame each): 588 interview; 1408, 1536, 1624, 1952, 2036, 2240, 2688, 2772 driving. 0-240 s scanned before a stall; 240-2820 scanned. No other foot chase.
+
+## Both samples so far
+
+| Sample | Length | Gap (by eye) | Ending |
+|---|---|---|---|
+| 1, Part 1 rooftop | about 52 s | 25-35 m | warning shot, arrest cutscene |
+| 2, Part 2 alleys | about 58 s | 10-15 m | hostage, cutscene (suspect shot, inferred) |
+
+Next: the same player's later parts (playlist https://www.youtube.com/playlist?list=PL8GdEOUVaAGBy1u33ban4KBHTZse6RPL-), three more samples.
+
+## Player stalls in the hidden pane
+
+During the Part 2 scan the page's video lost its source twice (duration empty, ready state 0) with no advert showing; setting the video's time did nothing. The player's own seek and play calls (the movie_player element: seekTo, then playVideo) brought it back at once. The scan now calls them whenever the video has no duration or no frame.
