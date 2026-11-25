@@ -679,3 +679,7 @@ Decision: his pick A carried out. A line moves when every enforcer production/ru
 Decision: his pick recorded as one line under People and the street's life; it replaces the lane's RT2-02 killing line (RT2-02 lives in the lane's definitions, not in RULINGS, so the keeper is told in the ack). Enforcer: the Monday audit. The PC session does not design the long heat (the cloud what-if job does). Link: RULINGS.md.
 
 - 2026-11-24 23:53: Advisors 371-373 (his picks 23:13, 23:29, 23:34) recorded in RULINGS: main cast's gossip on rules; Quay Street lamps two at ~34 m; Monday's paper playthrough first; fares at the late-1991 tariff; AI-brain re-run V1-V4 plus hybrid, V5 dropped; only build-shaping gaps before the one-shot. The keeper reads RULINGS. Link: RULINGS.md.
+
+- 2026-11-25 03:50. 1990 sources: BS 5489-3:1989 tables, the 1987 Code stopping table and the wet wording marked not needed before the one-shot; the 30 mph braking flag closed (M3 allows shorter than the Code as licence). Reason: advisor 373, content gaps go to the loops; two readers reached no primary. Link: production/research/lane/measurements/STATUS.md.
+
+- 2026-11-25 04:05. n23-4 voice scan shortlist: ZONOS3-Mini first, Phonon 31M only if cloning is confirmed; Fish Drama 3, Ming, Audio8, Dia2, Breeze out. Reason: Apache/MIT like Kokoro and Chatterbox; CPU-sized beside the game; cloning. Pocket already newest (4.0.1). Link: production/research/voice-scan/SHORTLIST-2026-11-25.md.

@@ -3022,3 +3022,10 @@ Made: an in-page reading of step rate from a following-camera clip (frame differ
 - Cost: about 0.5 h, scan 12 min unattended.
 - Failed and why: the first cadence (3.3 steps a second) was likely one stride read as one step; townspeople at a crossing were standing, not walking (check motion before reading legs).
 - Evidence: production/research/lane/measurements/ON-FOOT-METHOD-2026-11-24.md (last entries).
+
+## 25 Nov 2026: period source gaps set aside; local voice-model scan, first pass
+- Made: (1) the last period-source gaps (a lighting standard's tables, a driving manual's stopping table as printed) set aside as content gaps for the loops; (2) a dated scan of local speech models released in the last three months, shortlisted to two.
+- Method: a gap is closed before the build only if it changes how the game is built (data, systems); a missing number goes to the loops. Two readers reaching no primary text is the stop signal, not a reason for a third search. A model scan starts from a written question list, a cheap reader reads model cards and licences in full, the session shortlists by licence principle, size beside the game and cloning, and every speed is measured on the target PC because no vendor publishes consumer-PC figures.
+- Tools: research-reader (Sonnet), pdftotext earlier. Target and check: the shortlist's figures against the reading's links. Cost: about 0.4 h.
+- Failed and why: no model was shown keeping a regional accent from a clip; vendor latency is quoted on data-centre or laptop chips only.
+- Evidence: production/research/voice-scan/SHORTLIST-2026-11-25.md; production/research/lane/measurements/STATUS.md (25 Nov 03:50 line).
