@@ -1150,3 +1150,5 @@
 {"event": "stop", "at": "2026-11-25T09:07:00", "note": ""}
 {"event": "start", "at": "2026-11-25T09:15:00", "task": "n23-1 chases on foot: Sleeping Dogs night market chase", "phase": "n23-1", "kind": "production"}
 {"event": "stop", "at": "2026-11-25T09:31:00", "note": ""}
+{"event": "start", "at": "2026-11-25T09:33:00", "task": "n23-3 recommendation revised (advisor 380)", "phase": "n23-3", "kind": "production"}
+{"event": "stop", "at": "2026-11-25T09:48:00", "note": ""}
