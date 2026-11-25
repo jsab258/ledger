@@ -46,3 +46,30 @@ Source: Santosx07, "Sleeping Dogs Definitive Edition Walkthrough Part 1 - No Com
 ## Hidden-pane method (25 Nov, new)
 
 The pane, when hidden, shrinks the page to 480x273, so 4x3 sheets are unreadable; draw one frame at a time to the full viewport, wait 2 s, then take a full-size screenshot (scaled screenshots and screenshots without the wait came back black). Video play, seeks and canvas reads work hidden.
+
+# Sample 2: the Night Market Chase (read 25 Nov 2026, 09:20-09:30 Swiss)
+
+Source: Willzyyy, "Sleeping Dogs: Definitive Edition - Mission #3 - Night Market Chase (4K 60fps)", https://www.youtube.com/watch?v=EHSDinKWPQI (629.1 s, served at 1280x720; recorded on PC by its description, not console), frames read 25 Nov 2026 in the built-in browser. Built on our own drill of the same mission (SLEEPING-DOGS-DRILL-2026-11-23.md, try 2: a 20 s countdown and "You lost Naz" when the gap grows).
+
+| t (s) | Frame |
+|---|---|
+| 85 | walking, objective "Ask Kwan for Ming's whereabouts" (before the chase) |
+| 120 | running to the objective, 43 m to it |
+| 140 | objective "Confront Ming", 25 m |
+| 150, 152.5 | cutscene: Ming with a woman, "I got a message for you" / "Oh shit" |
+| 155 | control: running after Ming through the market, Ming visible ahead |
+| 160 | objective "Chase Ming" |
+| 180 | red target marker, 16 m |
+| 205 | 12 m, into an alley, bystanders |
+| 212 | vaulting a gate |
+| 218 | 15 m, stairs behind a gate |
+| 223 | the yard: Ming's men around, rings at their feet (the fight) |
+| 228 | "Defeat Ming's thugs" |
+
+What it gives the row:
+- Length: about 67 s of chasing (about 154 to 221 s), one player's run.
+- The gap: the runner kept about 12 to 16 m ahead the whole way (three readings), shown as a distance on the marker; the player never closed it; the chase ends where the script puts it (a yard with his men, then a fight), not on a catch.
+- How an escape ends it (from our drill, same mission): when the gap grows, a 20 s countdown runs and the mission fails "You lost Naz" (the distance that starts the countdown not yet read). So Sleeping Dogs' loss rule is a gap held over a time, not line of sight alone (unverified until the threshold is read).
+- Pacing: an obstacle or space change about every 10-15 s (market, alley, gate vault, stairs).
+
+Open: the distance that starts the countdown (needs a run where the player falls behind: our drill's try 2 at about 254-285 s, or another player's failed run).
