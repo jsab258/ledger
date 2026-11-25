@@ -1,0 +1,132 @@
+- [the pacing critic] In the first hour, what is the first moment a new player feels the town has noticed Frank, and is it early enough to hook someone who has only the office and a phone?
+- [the pacing critic] How many minutes pass before Frank does his first job that has three real routes, and does a player who picks the wrong route there feel punished or intrigued?
+- [the pacing critic] In a two-hour evening session in week one, can a player finish a satisfying arc (a job, its fallout, one new face) and stop, or does every thread stay open?
+- [the pacing critic] When is the first time the player is trusted with a crew member, and does that arrive before the player has learned why a crew matters?
+- [the pacing critic] Hours two to five: which new system or freedom opens each hour, and is there any stretch of an hour with nothing new to learn or try?
+- [the pacing critic] How long does a single in-game day take in real minutes, and does a player who talks to everyone burn through the seven weeks faster or slower than one who rushes the story?
+- [the pacing critic] If a player spends three real hours on week two, wandering and talking, does the calendar punish that, or does the story politely wait?
+- [the pacing critic] What stops the middle weeks (three to five) from becoming a loop of collect money, pay bribe, settle a score, repeat?
+- [the pacing critic] Where in the seven weeks does the game deliberately slow down and let Frank sit in the office, and does that quiet feel earned or like a gap?
+- [the pacing critic] At what point does the player first feel Frank is no longer the new boy, and is that moment marked in play rather than in a cutscene or line of text?
+- [the pacing critic] How does the game keep a player from reaching the best route to every job by week three through memorising the town, and what replaces discovery after that?
+- [the pacing critic] In the last week, does the number of things demanding Frank's attention rise gently or spike, and can a player in a calm run still feel the squeeze?
+- [the pacing critic] Does the final week reward a player who has been patient and quiet with a different pace of play from a player who has been loud, or do both sprint to the same finish?
+- [the pacing critic] How long is the ending itself, from the last choice to the credits, and does it give each of the player's long-built relationships a beat or only the main two or three?
+- [the pacing critic] After the ending, does the player get a final look at the town as they leave it, and does that look cost enough play time to matter without dragging?
+- [the pacing critic] If a player takes a month-long break at week four and returns, how does the game remind them where they were, who is angry with them and what was about to happen?
+- [the pacing critic] How many save points or natural stopping places occur in a typical evening, and does the game ever make a player lose over an hour of progress by an unlucky crash of events?
+- [the pacing critic] Which weeks carry the heaviest story beats, and is the optional wandering content thickest exactly where the story is thinnest?
+- [the pacing critic] Does the tutorial work spread across the first week, or is there a point where the game stops teaching and a new player suddenly feels alone?
+- [the pacing critic] How quickly can a veteran player on a second run skip the slow opening, and does the game let them without making week one feel pointless?
+- [the pacing critic] Where does driving fit in the pace of a session: is a minicab trip across the Hook a welcome breather or a chore after the twentieth time?
+- [the pacing critic] On a long evening of three hours, is there a natural climax every forty minutes or so, or do big scenes cluster and leave dead stretches between?
+- [the pacing critic] Is the first death or serious injury of someone Frank knows set early enough to warn the player the town is serious, and late enough not to sour the opening?
+- [the pacing critic] How does the pace of a player who avoids all violence differ week by week from one who fights constantly, and do both reach the same heights of tension?
+- [the pacing critic] When the player has built a well-oiled empire by week five, does the game still have pressure to apply, or does the last two weeks feel like a victory lap?
+- [the pacing critic] What does the clock do to jobs the player ignores: do they vanish, sour, or wait forever, and does that choice keep the middle weeks from filling with stale errands?
+- [the pacing critic] Does the weather, light and mood of October to December change the feel of each week enough that a player could name the week from a screenshot, and does the pace follow that mood?
+- [the systems critic] Is there one route (talk, stealth or force) that pays best across all seven weeks, and what stops most players from drifting to it by week three?
+- [the systems critic] If Frank is feared by everyone by week four, what can fear still not buy, and does anything remain that only trust or quiet can open?
+- [the systems critic] Does money ever stop mattering: at what point does a rich Frank have nothing left worth buying, and what new cost appears to keep cash tense?
+- [the systems critic] Is a bribe ever a better answer than a threat to every problem, and can a player who bribes everyone starve their own bribe supply by week five?
+- [the systems critic] Can a player stay unseen enough to do every job in stealth and never be spotted, and what in the witness system makes that either easy or impossible?
+- [the systems critic] If every townsperson gossips, can a player exploit gossip by planting a false story about a rival and winning without touching anyone?
+- [the systems critic] Does having a crew make Frank safer or more exposed, and is there a point where more crew becomes a net weakness through the number of people who know too much?
+- [the systems critic] What happens to the economy if a player sells protection to every business in the Hook: does extortion become the dominant income and what stops it?
+- [the systems critic] Is a late-arriving weapon so strong that fists, coshes and knives stop mattering, or is there a cost (witnesses, police heat, reputation) that keeps them alive?
+- [the systems critic] Can a player play the police against the gangs and the gangs against the police until neither can act, and is that a clever strategy or an exploit?
+- [the systems critic] If the bent detective is fed money all game, does he become a permanent shield that makes witnesses irrelevant, and what limits him?
+- [the systems critic] Is there a build of reputation (for example, generous and quiet) that is too weak to survive a hard week, and does the game tell the player before it is too late?
+- [the systems critic] Does reputation have a ceiling or floor: can Frank be so hated he cannot recover, and so loved he cannot be touched?
+- [the systems critic] Can a minicab business that stays honest all seven weeks make enough to rival the crime route, and should it?
+- [the systems critic] How does the system treat a player who kills the most dangerous rival early: does the vacuum fill with someone worse, or does the game simply remove that threat?
+- [the systems critic] Can two systems feed each other in a loop, such as fear raising bribes' value which raises fear, until numbers run away?
+- [the systems critic] If a player ignores all the town's talkers and uses only the menu-free actions, does the live speech system become optional, and is that acceptable?
+- [the systems critic] Do cars give an unfair edge, such as outrunning any consequence by driving away, or do witnesses and plates keep the car honest?
+- [the systems critic] Can the player trap a key townsperson into permanent silence (by threat or kindness) and so break a system that depends on that person talking?
+- [the systems critic] Is there a combination of low-level jobs that yields more than the big jobs, and would the game notice a player grinding the same errand?
+- [the systems critic] Does a long-held grudge or debt compound, and can a player stack so much debt that every route closes to them?
+- [the systems critic] If a player refuses all help from crew and works alone, is that a hard mode or an easy one, and does the game agree with the player's guess?
+- [the systems critic] Can a player cheaply cheat the memory system by waiting for people to forget, and how long does a townsperson's memory last against the seven-week calendar?
+- [the systems critic] Are threats and kindness symmetric: does a generous Frank hit a diminishing return the way a cruel Frank does?
+- [the systems critic] Is there anything a player can try that is sensible (burn an office, forge a letter, borrow a van) with no system behind it, so that the world has no answer?
+- [the systems critic] What stops a player saving and reloading around a bad outcome until every job is perfect, and does the game want to stop it?
+- [the story critic] Can a player who never hits anyone reach every ending, and what does week four look like for him compared with a brawler?
+- [the story critic] Do the endings differ in more than who is alive, such as the state of the Hook, Mickey's, and what the town says of Frank?
+- [the story critic] How many of the main story beats can be avoided entirely by a determined player, and what does the game do when the player refuses the call?
+- [the story critic] If Frank kills a key named character before the scene that needs them, how does the story repair itself or does it end?
+- [the story critic] Can a player break the story by leaving town, hiding in the office, or never answering the phone, and what does the game do with a silent Frank?
+- [the story critic] On a second run, which story beats happen on the same day whatever Frank does, and which move with his choices?
+- [the story critic] Does the ending reflect the whole seven weeks or mostly the last three choices?
+- [the story critic] Is there an ending where Frank simply sells up and walks away, and does that ending feel finished rather than a fall-back?
+- [the story critic] Does Frank's uncle's secret (whatever the office hid) change depending on how Frank gathers it, or is it the same revelation by any route?
+- [the story critic] Can the player make an enemy of someone the story needs as an ally, and does the story bend toward a rougher alliance?
+- [the story critic] If the player befriends every rival, is the central conflict dissolved, and does the game have a way to bring it back?
+- [the story critic] How does the story handle a player who is loved by the town: does the drama still have teeth when no one wants Frank gone?
+- [the story critic] Can a player complete the story without ever learning the central mystery, and is that a valid ending or a failure?
+- [the story critic] Are there story beats that depend on information a player can miss, and how does the game ensure that a missed clue never becomes a wall?
+- [the story critic] What does the bent detective want, and can the player discover and exploit it so the police arc ends in a way only that player sees?
+- [the story critic] Can a character who dies in one run be the lead of a key scene in another, so the story feels different between runs rather than merely trimmed?
+- [the story critic] Does Frank's own voice and manner, set by his reputation, change what he says in the big scenes, or does the script stay one script?
+- [the story critic] If the player ignores the main plot for three weeks, does the world advance the plot without them and arrive at a worse position?
+- [the story critic] Can a long-term loyal crew member betray Frank on their own, and is the reason traceable back to how Frank treated them?
+- [the story critic] Is there an ending that depends on something done in week one, so an early offhand choice returns as a final surprise?
+- [the story critic] What is the story's answer to a player who wins everything: does the victory carry a cost, or is a flawless run allowed?
+- [the story critic] Can the death of a minor person in week two be felt in the finale, and how is it passed on through the town's memory?
+- [the story critic] Does the story ever make the player act against their reputation (a feared Frank asked to show mercy), and what if the player refuses?
+- [the story critic] How many different last scenes exist, and how many players would likely see each in a normal first run?
+- [the story critic] When the story requires a loss, such as the office or a friend, can a clever player prevent it, and does preventing it cost the story something else?
+- [the story critic] Does the tobacco-smoky world of 1990 feel the same at the end, or does Frank's change show in the places he is greeted, avoided or served?
+- [the long-term reactivity critic] How does the Hook look different in week six from week one if Frank has been feared, and different again if he has been trusted?
+- [the long-term reactivity critic] Which shops, doorways and streets change hands, shut or open over seven weeks, and could a player find a new place in week five that did not exist in week one?
+- [the long-term reactivity critic] Do townspeople change their daily routes, habits and talk about Frank as weeks pass, or do they only change when Frank is in sight?
+- [the long-term reactivity critic] By week six, how is Mickey's different: staff, customers, drivers, repairs, mood, and what in that change could a player not have caused directly?
+- [the long-term reactivity critic] If Frank removes a gang from the Hook, what do the streets look and sound like three weeks later, and who has moved in?
+- [the long-term reactivity critic] Does a person who was kind to Frank in week one still remember it in week six, and does the kindness show in what they offer?
+- [the long-term reactivity critic] How does the town's gossip about Frank drift over weeks: can a small rumour grow, twist and come back at him in a form he barely recognises?
+- [the long-term reactivity critic] Do people's attitudes to Frank get stale if he does nothing for two weeks, and is that visible in what they say and do?
+- [the long-term reactivity critic] Do the police change their patrols, methods and tone as Frank's trail thickens, and can a player see the net tightening before it closes?
+- [the long-term reactivity critic] After a big fight, how long do bruises, damaged doors, blood on a pavement or bandaged people remain, and do they ever get tidied away?
+- [the long-term reactivity critic] Does the weather and the turn from autumn to winter change what people do and where they gather, and does that alter which routes work?
+- [the long-term reactivity critic] Do the crew change over seven weeks in appearance, speech and nerve, depending on what Frank has had them do?
+- [the long-term reactivity critic] Does a person Frank frightened early become braver or more broken by week five, and which does the game choose?
+- [the long-term reactivity critic] If a player has bribed half the Hook, how does that change what an honest shopkeeper does or says toward him?
+- [the long-term reactivity critic] Can the town as a whole change its mind about Frank in a single week, and is that swing seen in the streets rather than just in a number?
+- [the long-term reactivity critic] Does the firm's own reputation (the minicab office as a name) diverge from Frank's, so that people fear the office but like the man, or the reverse?
+- [the long-term reactivity critic] How does a place Frank has damaged (a shop robbed, a yard burned) recover or decay by week six, and who is blamed?
+- [the long-term reactivity critic] Does the world forget convenient things, such as a witness who has seen too much leaving town, and does anyone notice they have gone?
+- [the long-term reactivity critic] Are there named people whose lives move on regardless, such as a marriage, a job loss or a new arrival, so that the town feels alive without Frank?
+- [the long-term reactivity critic] If the player never returns to a district corner for four weeks, what will they find there on return that tells them time passed?
+- [the long-term reactivity critic] How is what Frank does at night visible by day, such as a locked door, a missing car or a quiet corner, and how long do those marks last?
+- [the long-term reactivity critic] Can a player read the state of their whole empire at a glance in the town (who nods, who crosses the road), without opening any menu?
+- [the long-term reactivity critic] Do the driving and traffic of the Hook change, such as more police cars or fewer minicabs, as pressure builds?
+- [the long-term reactivity critic] If Frank's reputation shifts from feared to generous in week four, do old victims forgive, and does that need a visible sign?
+- [the long-term reactivity critic] Do the rivals' own plans evolve across the weeks, so that a player who waits finds the rivals have changed sides, merged or collapsed?
+- [the long-term reactivity critic] When two playthroughs reach week six, how many differences in the street alone, ignoring dialogue, would a careful observer count?
+- [the long-term reactivity critic] Does what Frank did in the docks leave a different mark from what he did in the Hook, and does one area's state spill into the other?
+- [the challenge critic] How hard is week one for a player new to the genre, and is there a floor under which a bad opening cannot leave Frank broke or dead?
+- [the challenge critic] How does difficulty rise across the seven weeks: through tougher enemies, tighter police, larger jobs or heavier consequences, and which should the player feel first?
+- [the challenge critic] If a player loses every fight in week two, can the game still be completed, and what does a beaten Frank look like to the town?
+- [the challenge critic] What happens when Frank runs out of money: does the game offer a way back, or does the debt spiral shut the player out?
+- [the challenge critic] Is there a failure that cannot be recovered from, such as a missed weekly payment or a dead key contact, and does the game warn the player in time?
+- [the challenge critic] How is a player who is arrested handled: does it cost days, cash, crew or reputation, and can a run be arrested three times and carry on?
+- [the challenge critic] Does the game ever scale enemies to Frank, and if not, does a strong Frank trivialise weeks five to seven?
+- [the challenge critic] Is there a difficulty setting, or does the reputation itself decide how hard the town is, so that a feared Frank is easier in some places and harder in others?
+- [the challenge critic] How does a careful, patient player experience tension compared with a reckless one, and does either ever feel the game is not testing them?
+- [the challenge critic] When the player fails a three-route job, does failure open a fourth route or a worse version of the same job, and how soon does it recur?
+- [the challenge critic] Can the player lose their uncle's office, and what remains of the game if they do?
+- [the challenge critic] After a crew member dies or quits, what is the cost to difficulty, and can the player rebuild by week six?
+- [the challenge critic] Is the last week the hardest, and does it test everything the player learned, or does it test only combat?
+- [the challenge critic] How do the cars and chases scale: does a clumsy driver find chases impossible by week four, and can a chase be avoided by planning?
+- [the challenge critic] Does a mistake in week one echo into week five in a way that feels like fair consequence rather than a trap?
+- [the challenge critic] What does the game do for a stuck player who has missed a clue or a person: a nudge, a recap, or silence?
+- [the challenge critic] Can a player who dies be restored to a few minutes earlier, or to a day start, and which cost does the world remember?
+- [the challenge critic] Do the three routes differ in difficulty by week, so that stealth is easiest early and force is easiest late, or the other way round?
+- [the challenge critic] Is a no-violence run harder than a violent one at any stage, and does the game make that difficulty come from the world rather than from locked doors?
+- [the challenge critic] How does the game handle the player who becomes overpowered by hoarding, and what cost makes a hoard a risk?
+- [the challenge critic] Does the live speech system make social routes harder when a player speaks badly or oddly, and can that become unfair?
+- [the challenge critic] If the police have enough witnesses by week five, how many ways can Frank get out of it, and are the exits fair to a player who did nothing clever?
+- [the challenge critic] Does a lost job leave a lasting scar on the world, or does the town let a player try that task again with only a small penalty?
+- [the challenge critic] How quickly can a player recover reputation after a bad week: a day, a week, never, and does the answer match the reputation they had built?
+- [the challenge critic] Can a player fail slowly, through a hundred small mistakes, and does the game make that spiral readable before the point of no return?
+- [the challenge critic] At what moment in a first run does the game most often kill or break a player, and what is the designer's target for how many players reach the ending at all?

@@ -1,0 +1,25 @@
+- If Frank plays it clean for the first three weeks and then turns brutal overnight, how long does the Hook take to stop reading him as trusted, and do people who knew him early behave differently from strangers?
+- By week six, when the town has seen hundreds of Frank's acts, does gossip still carry specific memories ("he broke Doyle's hand at the cab rank") or has it blurred into a single label, and can the player tell which?
+- What does a run look like where Frank never builds a crew at all and does every job himself, and which story beats or endings does that close off for good?
+- If a player finds one route that works (say menace) and uses it for every job, does the game push back by week four, or can a single-route playthrough reach the end without friction?
+- With no skill tree, what actually feels different between hour two and hour twenty in what Frank can do, and is reputation enough to give a sense of growth?
+- How many of the townsfolk who start the game are still alive, still in the Hook and still willing to talk to Frank by December on a violent run, and does the district feel emptier or just quieter?
+- If the police only act on what witnesses saw and said, is there a playthrough where Frank commits serious violence every week and is never touched, and is that a bug or a valid ending?
+- Does the bent detective's usefulness hold up across seven weeks, or does a bribed copper make the whole witness system irrelevant once he is on the payroll?
+- On a third playthrough with a player who knows every character's weakness, how much of the story can be skipped or short-circuited in the first week, and does the game still have a middle?
+- Which rival gang strategies (fight both, play them off, ally with one, ignore them) produce genuinely different Decembers, and which converge on the same final situation dressed differently?
+- How does the money curve run over seven weeks: is there a point, around week three or four, where Frank has more cash than anything to spend it on, and what stops protection income becoming a number that just climbs?
+- If a player spends most of the game driving minicab fares and running Mickey's straight, does the story wait for him, drag him in, or move on without him and leave him behind?
+- Does the town change visibly over October to December (shopfronts, who stands where, who is scared to open late) as a result of Frank's empire, or only in what people say?
+- When every townsperson can talk live, how does the game stop a patient player from talking every problem away, and does a talk-only run have any real failure states after the first fortnight?
+- If Frank makes an enemy in week one and avoids him entirely, does that grudge grow, fade or get passed on to others by week six, and is there a way the player can feel it coming?
+- How does a stealth or cunning run hold up in the late game, when guns appear and the stakes rise: are quiet routes still available for the last story beats, or does the finale force a fight?
+- How many distinct endings exist, and how many hours before the end is each one actually decided: is the outcome locked by week five, or can the last week still swing it?
+- Across a whole run, how often does a player meet a "can you" attempt the world has no answer for, and which kinds of sensible ideas (setting fires, framing someone, leaving town for a day) are most likely to hit a wall?
+- What is the difficulty of the game made of, given no skill tree and no levels: is it the fights, the police, the gossip, the money, and can a player pick how hard it is without a menu setting?
+- Does a cruel reputation and a generous one coexist, for example a Frank who terrifies the docks but pays for a widow's rent, and does the town ever hold both readings of him at once?
+- Over a 30 to 40 hour run, which days are dead air, with nothing scheduled and nothing pressing, and does the simulation fill them with anything worth doing?
+- If Frank's crew members each have loyalty and a temper, how often does a long run end with the empire undone from inside, and can a careful player see a betrayal coming weeks ahead?
+- If the player loses a key fight or gets arrested in week five, does the game carry on with consequences, or does it effectively reload, and how punishing is a run that goes wrong halfway?
+- Does the second half of the game introduce anything new to do or deal with, or does it mostly raise the numbers on the same jobs, and what keeps week six from feeling like week three?
+- How does a save-scummer break this game: can reloading after seeing who witnessed what turn every route into a clean one, and does the design care?

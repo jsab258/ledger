@@ -1,0 +1,107 @@
+- [the schemer] Can a player who never lifts a hand against anyone, and only spreads rumours, take down a rival gang by week five, and what does Frank's day-to-day look like while he does it?
+- [the schemer] If Frank plants the same false story with three different townspeople, how long before the town works out who started it, and does the story change as it passes along?
+- [the schemer] Over a full run, how many rivals can Frank play against each other at once before the web of lies collapses, and what does the collapse look like?
+- [the schemer] Can Frank frame a rival for something Frank did himself, and does the framing hold through to the final week or does it come apart once the real witnesses talk?
+- [the schemer] Does a reputation as a liar become so well known by week four that nobody believes Frank even when he tells the truth, and is there a way back from that?
+- [the schemer] When Frank feeds the bent detective false tips about a rival, does the detective ever learn the tips were bad, and how does the relationship change over the weeks?
+- [the schemer] Can a patient schemer reach every ending without ever being seen at the scene of anything, and is that run harder, easier or just slower than a fighting run?
+- [the schemer] If two rival gangs each believe Frank is secretly on their side, what is the longest that can be kept going and what ends it first, time or a careless word?
+- [the schemer] Does a rumour that Frank starts in week one still affect the town in week seven, or do rumours fade, and who decides when one dies?
+- [the schemer] Can Frank get a rival's own people to turn on him through gossip alone, and what does the rival boss do when half his crew have gone quiet?
+- [the schemer] What happens to a long scheme if the person Frank is relying on, a talkative neighbour or a driver, simply moves away, dies or loses nerve in the middle of it?
+- [the schemer] Is there any point in the run where a schemer is forced into open violence whatever he does, and if so, what does the game say about his earlier choices?
+- [the schemer] Can Frank pay a witness to change what they told the police, and does the police's action change only because the witness did, or does the detective sense something off?
+- [the schemer] How does the town treat Frank in week six if every trouble he caused was blamed on someone else, and does he feel safe or just lucky?
+- [the schemer] If Frank sets two of his own crew against each other to keep them weak, what does that cost him by the end, and does anyone ever notice the pattern?
+- [the schemer] Can a schemer end the game with every rival ruined and nobody ever knowing Frank was behind it, and is that ending distinct from the loud one?
+- [the schemer] How many separate lies can the player be carrying at once before the game itself stops being able to track who was told what, and what does Frank's own notebook or memory show him?
+- [the schemer] Does the game ever reward a schemer for a clever plan that failed, so that being found out is a story and not just a reload?
+- [the schemer] In a whole run built on blackmail, how many people end up holding something on Frank in return, and does that change what he can try in the last two weeks?
+- [the schemer] Can Frank make the police themselves the weapon, tipping them about a rival's depot, and does repeating the trick teach the police to distrust his tips?
+- [the schemer] What does Frank's office look like on day one against day forty-nine if he has only ever worked through go-betweens, and does the staff behave differently?
+- [the schemer] If the player spreads a rumour that Frank is far more dangerous than he is, can he reach week seven never having thrown a punch, and what happens when someone finally tests the bluff?
+- [the schemer] Do the rivals scheme back at Frank in a way a player could trace, and does the game ever let him be the victim of a framing he must unpick?
+- [the schemer] Can a schemer sell the same piece of information to two buyers, and how long before the two compare notes?
+- [the schemer] Is there a point in the run where the schemer's best move is to confess a small lie to win back trust, and does the town reward that?
+- [the schemer] If Frank's plan relies on a particular rival being in a particular place on a particular night, how does the game cope when the rival's own routine has drifted over four weeks?
+- [the schemer] What does the schemer's last week feel like compared with a brawler's, and are both equally tense or does one run out of things to do?
+- [the honest businessman] Can Frank run Mickey's as a straightforward, legal minicab firm for all seven weeks and still reach an ending, and what do the hours look like if he never takes a crooked job?
+- [the honest businessman] If the firm only ever grows by taking fares, hiring drivers and paying them fairly, does the money keep up with the rivals' pressure, and what carries the story forward?
+- [the honest businessman] Do the rival gangs leave a clean firm alone, or does the week-three squeeze arrive whatever Frank does, and what are the honest answers to it?
+- [the honest businessman] How does a reputation as trusted and generous change what a clean firm can ask of the town by week five, compared with a feared firm asking the same thing?
+- [the honest businessman] Can an honest Frank pay protection money once and then refuse to keep paying, and what does each choice cost over the following weeks?
+- [the honest businessman] Is there a way to get the bent detective off Frank's back without paying him or doing him favours, and how many weeks does the honest route take?
+- [the honest businessman] When Frank reports a crime to the police honestly, does it help or does it mark him as an informer, and how long does that mark last?
+- [the honest businessman] Can a clean firm win the loyalty of its drivers so well that the drivers defend it against rivals unasked, and what does that defence look like on the street?
+- [the honest businessman] How many of the main story jobs can an honest Frank complete by a legal route, and which ones simply cannot be done cleanly?
+- [the honest businessman] If an honest Frank refuses every illegal offer, do the offers keep coming at the same rate, dry up, or turn into threats?
+- [the honest businessman] Does the game let Frank grow the firm through contracts with ordinary businesses, such as hospital runs, regular office accounts and shop deliveries, and do those accounts react to rumours about him?
+- [the honest businessman] What does the minicab radio, rota and garage routine feel like over seven weeks if Frank plays it as a proper firm, and does the repetition ever need breaking up?
+- [the honest businessman] Can a legitimate Frank end the game as the respected owner of a thriving firm, with the rivals beaten by the law and not by him, and is that ending possible without luck?
+- [the honest businessman] If a driver in the firm is secretly doing something crooked, how does an honest owner find out, and what are his options short of violence?
+- [the honest businessman] Do the taxman, the licensing office and the insurance matters of a real minicab firm show up as obstacles, and can Frank use them as honest weapons or defences?
+- [the honest businessman] How does the town read an honest Frank who has no fear reputation at all, and does that leave him exposed to being pushed around in weeks four to six?
+- [the honest businessman] Can an honest Frank form an alliance with a decent rival firm or a trade body, and does that give him protection a crook could not have?
+- [the honest businessman] If the player takes only the honest route in one half of the run and crosses the line in the second, does the town remember the first half and how does it change the way they react?
+- [the honest businessman] What happens to an honest Frank who is wrongly accused by a rival of something he did not do, and what are the ways of clearing his name?
+- [the honest businessman] Is there a point where a clean firm's growth makes it a target of its own, because it now has something worth taking?
+- [the honest businessman] Can Frank refuse to hire anyone with a record, and does that shut off whole parts of the town's gossip and information that a looser employer would hear?
+- [the honest businessman] Does the death or departure of Mickey's old staff members change what an honest firm can do, and are there routes to keeping them loyal without bribes?
+- [the honest businessman] When an honest Frank makes a good choice that costs him money, does the game give back something later that a player can see, or is virtue just its own reward?
+- [the honest businessman] How much does the ending differ between a firm that stayed clean throughout and one that cleaned up late, and can the town tell the difference?
+- [the honest businessman] Can a run that avoids every crime still produce the dramatic beats of a crime story, such as a chase, a threat, a betrayal, and where do they come from?
+- [the honest businessman] If the honest player simply plays slowly, taking ordinary fares through the daytime, does the world move on without him in a way that punishes or enriches him?
+- [the honest businessman] What would a player notice about the game's tone in a fully honest run that a fully crooked player never sees?
+- [the completionist] Is it possible in one playthrough to see every job, every named person and every side story, or do some routes shut others out, and does the game tell the player which are exclusive?
+- [the completionist] How does the player know that a person, job or story is still available, and does the game ever quietly lose one without warning by week four?
+- [the completionist] If a player talks to every townsperson in the Hook in the first week, how much of what they say is already different by week three?
+- [the completionist] Does every named person have a route to a proper conclusion, alive or not, and what does the player see for someone Frank never met?
+- [the completionist] Can a completionist who tries all three routes on every job finish the story within seven weeks of game time, or does the clock force a choice?
+- [the completionist] How many distinct endings does a full run reach, and is each one reachable by more than one style of play?
+- [the completionist] If a side story needs a particular person alive and Frank has already lost them to a rival, can the story still be completed in some other form?
+- [the completionist] What does a completionist's journal or record show of a job done by force against the same job done by talk, and does the game remember both when the player repeats on a second save?
+- [the completionist] Are there stories hidden in the docks that a player only finds by walking at certain hours, and how does the game hint that they exist without using a marker?
+- [the completionist] Does finishing every side story change the main story's final week, or is the side content only reward and colour?
+- [the completionist] Can the player see how many jobs they missed after the ending, and does the game name the person who would have given each of them?
+- [the completionist] If the player completes every job in strict order from week one, does the town's reading of Frank end up consistent, or does it become contradictory because each job leaves different traces?
+- [the completionist] How does the game handle a person who can only be met on a day Frank was busy, and does that person's story move on without him?
+- [the completionist] Is every location in the Hook and docks used by at least one job or story, and does a completionist find places that exist only as scenery?
+- [the completionist] When a player tries something sensible that was not planned, such as returning a stolen item to its owner after a job, how many such small answers does the world have across the whole run?
+- [the completionist] Does completing the smallest favours for ordinary townspeople add up over weeks into something that changes the main story, and how visible is that?
+- [the completionist] What happens to a completionist who refuses the story's main thread for three weeks to do everything else, and does the main thread wait or move on without him?
+- [the completionist] How long does a thorough playthrough that sees every beat actually take in hours, and does the pacing hold across the whole of it?
+- [the completionist] Are there beats that can only be seen by a Frank who is both feared and trusted, and does the player's reputation ever need to be two things at once?
+- [the completionist] If a player collects every piece of evidence about every rival, does a hidden ending open that a casual player never sees?
+- [the completionist] Can the player find out a person's whole backstory without that person ever telling it, by piecing it together from other townspeople, and how reliable are the pieces?
+- [the completionist] Does the game keep a clear account of which people have been killed, scared away or reformed, so that a completionist can tell what each decision cost the town?
+- [the completionist] How different are the town's streets on the last day if the player has touched every thread, against a run that touched almost none?
+- [the completionist] Are there jobs that become impossible after a certain week, and does the game warn Frank through the people around him rather than a menu?
+- [the completionist] Can a completionist play to see the ending where Frank fails, loses the office or goes to prison, and is that ending as complete as the successful ones?
+- [the completionist] If the player is thorough about each rival's operation, do the rivals' stories end in a way that reflects what Frank learned, or does each one have a fixed fate?
+- [the second-playthrough player] Which story beats land on the same day whatever Frank does, and does a second-time player spot them by the third day?
+- [the second-playthrough player] After one full run, how much of the town's behaviour can the player predict, and where does the game still surprise them?
+- [the second-playthrough player] If the second run starts with the player knowing every rival's weakness, does the game let him skip the discovery, or are the clues still needed to unlock the options?
+- [the second-playthrough player] Do the AI townspeople behave differently on a new save, with different tempers, memories and loyalties, or are they the same people in the same moods?
+- [the second-playthrough player] Is the culprit of any mystery in the story the same person each time, and if not, how does the game keep the clues fair on both runs?
+- [the second-playthrough player] Can a second run reach a very different week four simply by choosing a different reputation in week one, and how large is the difference?
+- [the second-playthrough player] What does a player who tried force first and menace second find new when he plays talk first, and are the same jobs even recognisable?
+- [the second-playthrough player] Does the opening week play out the same way every time, or do small variations in who turns up and what they say make it feel fresh?
+- [the second-playthrough player] How much of the fresh material in a second run comes from systems, such as gossip and memory, and how much from authored content, and does the proportion matter?
+- [the second-playthrough player] If a player knows where a rival keeps something hidden, can the game's reputation and witness rules stop him walking straight there, and how?
+- [the second-playthrough player] Are there outcomes in the first run that only appear because the player did not know better, and can a second-run player recreate that ignorance in any way?
+- [the second-playthrough player] Does the order in which the player recruits his crew change which crew members survive to the end, and does the second-time player learn to read the signs?
+- [the second-playthrough player] Can a second run start with something carried over from the first, such as a changed town or a remembered name, and does the game want it to?
+- [the second-playthrough player] How different is a run in which the player ignores the main rival entirely, and does the story still deliver its beats or does it grow thin?
+- [the second-playthrough player] Which parts of the game are the same on every run because the schedule is fixed, such as shipments, deadlines and the weather, and which are driven by what Frank did?
+- [the second-playthrough player] Does the second run reward a player who sets a goal such as the cleanest possible firm or the most feared Frank, and does the game recognise it afterwards?
+- [the second-playthrough player] Is there a risk that a second-run player finds exploits the first-time player cannot, such as a gossip loop that always works, and how would the game close it?
+- [the second-playthrough player] Do the bent detective's demands change between runs, or is he always asking for the same favour in the same week?
+- [the second-playthrough player] When the player already knows a person will betray him in week five, what can he do about it, and does the betrayal still happen if he prevents it?
+- [the second-playthrough player] Is the ending the player reached the first time easy to get again, and how easily can the second-run player steer into a different one on purpose?
+- [the second-playthrough player] How does the game feel when the player tries to speed through the early weeks he already knows, and does the clock or the town push back?
+- [the second-playthrough player] Are there lines of dialogue, jobs or places that only show up for a returning player, and would that feel like a reward or a distraction?
+- [the second-playthrough player] After two runs, what remains unseen, and is the game honest that there is more to find?
+- [the second-playthrough player] If two players compare stories of the same week, how different would their accounts be, and which parts would they both recognise?
+- [the second-playthrough player] Does the knowledge of how a witness will react let a second-run player manipulate the police too easily, and what keeps the town's reaction from feeling solved?
+- [the second-playthrough player] Can a player replay the same job by the same route and get a different result because the people involved have moved on in their own lives, and how much of that is real simulation?
+- [the second-playthrough player] How much of the second run is spent redoing the same ground, and does the game offer a way to jump to a different starting situation without feeling like a cheat?

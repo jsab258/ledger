@@ -1,0 +1,108 @@
+- [the ghost] Can a player who is never seen and never violent still finish the story, and which endings does that close off?
+- [the ghost] If no witness ever saw Frank do anything, what does the town think of him by week four, and does reputation have anything to build on?
+- [the ghost] Does the police investigation have anything to chase when there are no witnesses, or do crimes simply vanish and the world feels untouched?
+- [the ghost] What does a ghost's money look like over seven weeks: where does it come from, and can the minicab office stay open without his being visible?
+- [the ghost] If Frank keeps his face hidden, how does his crew ever learn to trust or fear him, and who runs the day-to-day?
+- [the ghost] Do rival gangs ever find out who is hitting them when nobody saw him, and do they pick the wrong target instead?
+- [the ghost] Which jobs have a no-contact route all the way through, and which of them force a face-to-face meeting whatever the player does?
+- [the ghost] Can a ghost frame someone else for a job, and what happens to that person over the following weeks?
+- [the ghost] How many hours of a ghost run are spent waiting, watching or walking, and is there enough to do at night to stop it dragging?
+- [the ghost] Does the bent detective notice a clean player, and what does he want from a man who gives him nothing to bury?
+- [the ghost] Can a ghost reach the final confrontation without ever meeting the main rival, and what does that meeting turn into?
+- [the ghost] When the town gossips about unsolved events, does a ghost get blamed for things he did not do, and can he be trapped by his own absence?
+- [the pacifist talker] Can a player who only talks, bribes and bargains reach every ending, and what does week five look like for him?
+- [the pacifist talker] If Frank never raises a hand, does the town read him as trusted, weak or quietly dangerous, and who decides that?
+- [the pacifist talker] When talk is the main tool, how long before every townsperson has heard the same lines, and does free speech still surprise by week six?
+- [the pacifist talker] Can money alone buy a rival gang's loyalty for seven weeks, or does the price keep climbing until the player is broke?
+- [the pacifist talker] What happens when a pacifist is bluffing about a threat he will never carry out and someone calls it?
+- [the pacifist talker] Do people with a short temper ever stop listening, and is there a route through them that involves no violence at all?
+- [the pacifist talker] Can a lie told in week two come back in week six through gossip, and how does the player repair it using only words?
+- [the pacifist talker] Does a generous reputation make people cheaper to deal with or more eager to take advantage, and when does it tip over?
+- [the pacifist talker] If a pacifist is attacked, what is his option beyond running, and does running cost him standing with his crew?
+- [the pacifist talker] Can a crew of hard men be led by someone who never fights, and what do they do when he gives an order they think is soft?
+- [the pacifist talker] Which story beats are impossible to resolve by talk alone, and does the game say so or let the player find out too late?
+- [the pacifist talker] Can the bent detective be bought, flattered, blackmailed and out-talked in the same run, and do those choices cancel each other?
+- [the brute] If Frank wins every fight, does fear stop mattering by week five because nobody is left to frighten?
+- [the brute] How does a town that has seen a dozen beatings behave: does it get quieter, more hostile, or start organising against him?
+- [the brute] What does the brute's economy look like when shopkeepers pay up from fear, and does the money dry up as people move away or go to the police?
+- [the brute] Can a brute still get a witness to stay quiet by week six, or have too many people seen too much for any threat to matter?
+- [the brute] Are there people the brute cannot reach by force, and what does the game do when he treats everyone as a problem with fists?
+- [the brute] How does the police response scale over the weeks for a man who leaves a trail of hospital cases, and can he ever outrun it?
+- [the brute] Do his own crew turn on him if they see the way he treats people, and how much warning does the player get?
+- [the stealth player] Can a stealth player clear every job without being spotted, and where does the game force a loud moment on him?
+- [the stealth player] How does a stealth run differ in hours and pacing from a talking run, and are the nights too long without a daytime counterpart?
+- [the stealth player] If Frank steals, plants and sneaks all through week three, what traces does the town find, and who ends up blamed?
+- [the stealth player] Does being caught once while sneaking change how every later stealth attempt goes, because witnesses remember his face?
+- [the stealth player] Can a stealth player take over rival territory without a single confrontation, and what does the rival do when his assets go missing?
+- [the stealth player] Do the same routes stay open in week seven, or do guards, locks and routines change as the town reacts to what has been taken?
+- [the stealth player] When a stealth approach fails halfway through a job, can he fall back to talk or force, and does the mess carry into the next job?
+- [the stealth player] Are there enough ways to move unseen at night in an October to December port town, given fog, rain, lamplight and short days?
+- [the ghost] Does a ghost ever get a day of rest, or do the town's events keep running whether he is present or not, and does he miss things by staying hidden?
+- [the ghost] If Frank never speaks to a rival's lieutenants, do they stop sending messages, and does the silence read as menace or as weakness?
+- [the ghost] Can a ghost recruit crew members without ever being named as their boss, and what do they call him among themselves?
+- [the ghost] How does the ending screen or epilogue describe a man nobody ever saw, and does the town remember him at all?
+- [the ghost] Can a ghost use the minicab office's own radio and drivers as eyes without exposing himself, and how long before a driver talks?
+- [the ghost] If a ghost leaves no fingerprints, does the detective invent a suspect to close the case, and can Frank ever be that suspect?
+- [the ghost] What stops a ghost from simply robbing everything on week one, and is the pacing of access tied to anything other than his own patience?
+- [the ghost] Do anonymous tip-offs sent by Frank carry weight with the police, and does using them too often make them traceable?
+- [the ghost] Can the ghost collect protection money through intermediaries only, and what happens when an intermediary skims it?
+- [the ghost] If Frank is hidden all run, can his uncle's old contacts still recognise the family name and come looking for him in week five?
+- [the ghost] Which of the story's big set pieces can be watched from a distance rather than attended, and does the player still feel part of them?
+- [the ghost] Does the ghost's quiet reputation make the town more or less willing to confide in him on the few occasions he does appear?
+- [the ghost] How does a ghost deal with a witness who has already seen him once by accident in week two, and does that one sighting follow him to the end?
+- [the ghost] Is a never-violent, never-seen run noticeably slower to earn money than the other styles, and does the game compensate with anything else?
+- [the ghost] When the town's gossip chain collapses because nobody has seen anything, do townspeople invent stories, and can Frank steer those inventions?
+- [the pacifist talker] Do talkers get a different mix of jobs offered to them than fighters do, or do the same jobs appear and only the routes differ?
+- [the pacifist talker] Can a persuasive Frank talk a cornered enemy into surrendering mid-fight, and does the surrender hold once the room empties?
+- [the pacifist talker] How does free speech with the town feel on day forty compared with day one: do people remember him, refer back to old chats, and change tone?
+- [the pacifist talker] Can a pacifist run a protection racket through reputation alone, with nobody ever being hurt as an example?
+- [the pacifist talker] If Frank pays off the same person three times, does that person grow loyal, greedy or contemptuous?
+- [the pacifist talker] Can a pacifist play two gangs against each other using only rumours, and what stops it blowing up in his face?
+- [the pacifist talker] How much of a talker's success depends on the player's wording rather than on reputation, and can a clumsy sentence ruin a good standing?
+- [the pacifist talker] Does a pacifist run end with more people alive and better off than a violent one, and does the epilogue show that difference?
+- [the pacifist talker] Can a pacifist keep a bent detective on side by trading information and favours for the full seven weeks, or does the detective eventually demand blood?
+- [the pacifist talker] When a hard man in the town refuses to talk and only wants a fight, can the player route around him without losing face?
+- [the pacifist talker] Do apologies work, and can a pacifist rebuild a name he has damaged by honest talk across several days?
+- [the pacifist talker] Are there people who simply cannot be reasoned with, and does the game mark them clearly enough that a talker does not waste hours?
+- [the pacifist talker] Can a talker use the minicab drivers as a spoken network of favours, and does that network grow without his managing it?
+- [the pacifist talker] How many distinct voices and personalities does a pure talker meet over a run, and does he ever repeat a conversation he has already had?
+- [the pacifist talker] If the player talks his way out of the final confrontation, is that ending as weighty as the one reached by force?
+- [the brute] Does a brute's reputation as cruel lock him out of the trusted routes for the whole run, or can he buy forgiveness in week six?
+- [the brute] Can a brute still run a minicab business, with customers, drivers and bookings, when the whole Hook knows what he does to people?
+- [the brute] How does fist, cosh and knife violence stay interesting across fifty hours, and do fights get meaningfully harder as the weeks pass?
+- [the brute] When Frank wins every fight, what do enemy gangs do: send bigger men, send a gun, or give up?
+- [the brute] Does the first gun in week five feel like an escalation the brute caused, or just something the story hands him?
+- [the brute] Can a brute kill a key story character early, and what does the story do with the hole?
+- [the brute] If Frank beats a shopkeeper and the shopkeeper recovers, does he come back changed, scared, vengeful or gone?
+- [the brute] How many deaths can a run absorb before the police stop treating each one as a separate case and start hunting one man?
+- [the brute] Does the town ever organise a response to a brute, such as drivers refusing to work or neighbours sharing a lookout?
+- [the brute] Can a brute who has beaten everyone still get useful information, or does everyone lie to him from fear?
+- [the brute] How does a brute's crew behave on a night when Frank is hurt and needs them, and does their reaction depend on how he has treated them?
+- [the brute] Does a violent run produce more or less money than a quiet one by week four, once the cost of hospital time and hiding is counted?
+- [the brute] Can Frank's own injuries pile up over a run of constant fights, and does he have to stop, rest and be seen to be weak?
+- [the brute] Are there places in the Hook that stay safe from his violence by the game's design, and does the player feel that as a fair limit or a wall?
+- [the brute] If a brute kills the rival boss in week three, does a new boss take over and does the game still have a seven-week arc?
+- [the brute] Can a brute be talked down by his own crew in the middle of a rampage, and does the game let that happen?
+- [the brute] What does the epilogue say about a man who beat his way through the Hook, and does the town mourn, celebrate or just move on?
+- [the brute] Does a brute lose access to the bent detective's help because the detective cannot be seen near him, and what takes its place?
+- [the brute] Can a brute intimidate a witness who has already told the police, and what does that do to the case against him?
+- [the brute] When most people in the Hook are afraid of him, who is left who still talks to him honestly?
+- [the stealth player] Can a stealth player reach the same information and the same ending as a talker, or does cunning lead somewhere different?
+- [the stealth player] How does a player learn the patrols, shifts and habits of the town, and do those routines drift week to week so old knowledge goes stale?
+- [the stealth player] Does disguise exist for Frank, such as a minicab driver's coat, and does a disguise work on people who know him well?
+- [the stealth player] Can a stealth player use the cars quietly, such as parking out of sight or taking a minicab to a job, and does a chase ever start from a failed sneak?
+- [the stealth player] If someone sees Frank for one second through a window, what do they remember, and how reliable is it when they tell the police?
+- [the stealth player] Are there jobs where the stealth route is clearly the best choice, and others where it is clearly a trap, and does the game signal which is which?
+- [the stealth player] Can a stealth player steal from his own crew or his own office, and how does he get away with it?
+- [the stealth player] Does silence in a stealth run create a different mood in the town, with people unsettled by things going missing and nobody seen?
+- [the stealth player] Can a stealth player knock someone out quietly, and does that count as violence for the town's memory and the police's reading?
+- [the stealth player] How does a stealth player deal with dogs, night watchmen, cleaners and people who simply happen to be awake?
+- [the stealth player] Can he listen at doors, follow people and overhear plans, and does what he overhears change what the town does next?
+- [the stealth player] Does the stealth player's reputation as quiet help him on the talking routes, or does nobody know enough about him to give him anything?
+- [the stealth player] If a stealth player is caught in week six after a clean run, is that the end, a fine, a beating or a story beat of its own?
+- [the stealth player] Can a stealth player sabotage a rival's business, such as cutting a phone line or disabling a van, and how long before the rival rebuilds?
+- [the stealth player] Does stealth scale with time, so that by week seven the player is clearly better at it through knowledge, tools and contacts rather than any stats?
+- [the stealth player] How many different ways can one locked building be entered, and do they differ in the traces they leave, such as a forced door versus a copied key?
+- [the stealth player] Are tobacco and smoke used for stealth, such as a lit cigarette giving someone away or a smoking spot being a known place to catch a man alone?
+- [the stealth player] Can a stealth player plant evidence to turn the police against a rival, and does the detective see through it?
+- [the stealth player] Is there a point where the stealth player has so many small thefts behind him that the town works out something is going on, even with no suspect?

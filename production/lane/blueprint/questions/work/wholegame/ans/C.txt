@@ -1,0 +1,132 @@
+216|P|7.1; MEM-10; SM-04|A deed is said to his face within 30 real minutes (planned at minute 13) and the first choice and deed land at 5:30; none measured.||G28||||whole game: pacing and styles|
+217|P|3.5.1; 7.1|The first carry (after ten on night one) has three routes, lit quay, dark yard, cab; each finishes; its minute is not stated.|Name the minute: the first three-route job inside the first hour, each route ending in a different return the next morning.|G25|content|medium: teaching the routes|none|story|
+218|P|7.2; 7.6|An evening is designed (7.2) with retellable moments each hour; session arcs are not set.|Each act's stages end in a visible change on the board at most every four real hours; inside them a job, its fallout and a new face fit a two-hour evening.|G28|content|medium: session-sized arcs|none|whole game: pacing and styles|
+219|P|3.1.1; 2.11.1|Ron and drivers are there from the start; the first recruit opens rung 2 in week 2; crew sending opens in Act II.||G28||||whole game: pacing and styles|
+220|M|7.1; 7.5|The first hour is staged minute by minute; hours two to five have no unlock schedule.|Write an opening table for hours two to five: one new freedom each hour (the debt book, the night, menace, the radio, a recruit), tested for an hour with nothing new.|G28|content|medium: onboarding curve|none|whole game: pacing and styles|
+221|P|7.13; CLK-06|A game day is 48 real minutes; the calendar is fixed, so the weeks take the same game time; real time differs only by skips.||G28||||whole game: pacing and styles|
+222|P|CLK-06; RT-04|The calendar runs at its pace; the story waits on states but the act's fail-safe ends week 6 regardless.||G28||||whole game: pacing and styles|
+223|P|7.4; STORY-FRAME 5|Each week has a new aim and a new kind of hands (convoy, night job, snatch, turn a man); the weekly pressure guarantees a rival rung and a firm change; loops of collect-pay are not measured.|Hold the weekly-aim table as a rule: no two weeks share their main kind of hands; measure collect and pay errands under a fifth of Act II play.|G28|content|medium: a middle that changes|none|whole game: pacing and styles|
+224|P|STORY-FRAME 6|The director puts a rest or funny beat after each heavy beat and two game days between heavy beats; the office quiet is not named.||G28||||whole game: pacing and styles|
+225|P|7.7; 2.12.1|The name changes (Nowak at rung 2) are heard within a game day, played in the street.||G26||||people|
+226|P|2.1.1; 3.5|Routines fixed; best routes can be memorised; discovery later comes from new places and people per week.|Each week opens new places and people (the cold stores, the landing, the north road) and changes old ones by the town's adaptation rule.|G27|content|medium: discovery renews|none|whole game: pacing and styles|
+227|P|3.1.3; STORY-FRAME 5|Week 7 is five mornings, one per day, plus Danny on the last afternoon; even a calm run meets the inspector.||G28||||whole game: pacing and styles|
+228|P|3.1.3|Act III is the same five mornings for everyone; the grade reads the books; tempo by style is not designed.|Let the mornings read the run: a quiet firm has thin items to fetch with care; a loud one has more to hide and more doors to knock.|G31|content|medium: last week by history|none|story|
+229|P|STORY-FRAME 8; 7.15|The close is about five lines from named people plus the last name and the Saturday gate, then credits; length not set.|Set the close at two to four minutes with up to five voices chosen by depth of tie.|G31|content|low: a number|none|story|
+230|W|7.15; RT2-21|After the close play returns to the town in its ending state; the clock runs on.||||||story|
+231|P|3.1.5; 6|Frank's reading on Full stop and at each act's end gives a summary from signs; a return recap is not named.|On loading after a long break, offer Frank's reading and the week's aim (no recap of mechanics).|G28|content|medium: welcome back|none|whole game: pacing and styles|
+232|W|7.8|Autosave after every deed and step change, three rotating autosaves and eight manual slots; nothing is lost to a crash.||||||whole game: pacing and styles|
+233|P|STORY-FRAME 5; 3.3|Heavy scenes sit in weeks 1, 4, 5, 6 and 7; side stories fill slow gaps by the director; not measured.||G28||||whole game: pacing and styles|
+234|P|7.1; 6|The first hour teaches; afterwards the Ledger hints; when teaching stops is not written.|Keep teaching through the first week by people's lines (Ron, Sheila, Pauline) and stop teaching only what the player has done twice.|G24|content|medium: no cliff|none|whole game: pacing and styles|
+235|P|7.1|No skip of the opening.|A short opening on new games after the first (teaching fares cut, beats kept).|G28|content|medium: respecting veterans|none|whole game: pacing and styles|
+236|P|7.5; 1.2|Driving a fifth of play, never over a quarter; driving help assist; repetition not measured.||G28||||the cab trade|
+237|P|7.6; STORY-FRAME 6|Two retellable moments an hour and a director's spacing of heavy beats; a climax every 40 minutes is not set.||G28||||whole game: pacing and styles|
+238|P|STORY-FRAME 5|The Landing's old man shot through the arm in week 4 is the first serious injury on every path; a death of a known person is not guaranteed.||G28||||story|
+239|M|7.6|Tension is measured per 30 minutes but not per style.|Run tension logs per style bot; each style must reach ER-TENS-01 in every week.|G28|content|medium: equal tension across styles|none|whole game: pacing and styles|
+240|P|3.1.2; 3.1.3|Weeks 5 to 7 bring attacks on his men, the turn, three heads and the inspection, all landing on a strong firm too.||G27||||story|
+241|P|GD-03; 3.5.6|Jobs move to failed with a state the town talks of when impossible; ignored jobs with no deadline are not written.|Every job has a window; past it the giver takes it elsewhere and says so, so stale errands do not pile up.|G22|content|medium: no stale list|none|story|
+242|P|4 light and weather; 2.1.4|Light and weather change who is out; per-week mood is not designed.|Give each week its weather and light character on the season's figures (October dry and bright, November fog, December cold) and a signature place.|G28|content|medium: weeks you can name|none|whole game: pacing and styles|
+243|P|economy_run; COMBAT|Simulated: by pounds an hour the lift pays 339, tobacco 240, landing 200, round 182, fares 55; no lever pays more than twice the middle; routes (talk, stealth, force) are not compared.|Add route to the economy and story bots: each route's yield and cost per week; no route above twice the middle, with the town's adaptation the brake.|G27|build|medium: no dominant route, measured|none|whole game: pacing and styles|
+244|M|2.14|No readings; regard per person; fear buys compliance by nerve.|Under the reputation rule some things only trust opens (confidences, credit, witnesses who speak for him, Sheila's book) and some only quiet (being unsuspected).|G26|build|high: readings with distinct doors|none|people|
+245|P|GD-07; economy_run|Sinks never run dry before Act III (a named want still out of reach at week 7 in all styles); Act III money cannot buy the books clean.||G27||||the economy|
+246|P|2.14; 2.6.8; economy|Greed sets who takes money; payments hold rivals two weeks; nothing makes bribe supply run out.|Bribes have a cost beyond money: each bought person is someone who knows; high-greed men ask again; a town of bought men is a town of hooks on him.|G04|build|medium: bribes as liabilities|none|the economy|
+247|P|CS-12; 1.4|A careful takedown from a dark doorway works 99.6% in the simulator and by day 7% (an unlit street 86%, under a lamp 19%); every unseen deed leaves traces found by routine.||G12||||witnesses and senses|
+248|P|G01|Frank cannot start a rumour today (first pass).|Rumours under the source-of-talk rule, weighed by fit and traceable back, so they work but carry risk.|G01|build|high: rumour play with risk|none|talk and gossip|
+249|W|2.11.2|Each man sent is a second person who knows; past his nerve he talks; more crew means more who know.||||||people|
+250|P|economy_run (protection variants); 2.17|Simulated: protection at £25 makes the round the best lever (440 an hour) and shuts the newsagent; at £40 it leaves Frank poorer by week 7 (224 against 785).||G27||||the economy|
+251|P|2.13; COMBAT|Guns are rare, after melee; a shot moves the dial and Ellis; War brings armed police; costs keep fists alive.||G27||||combat|
+252|P|WI-P06; 2.6; 2.10|Rivals and police act on what they hold; playing them against each other needs tips and rumours, unbuilt.||G01||||police and justice|
+253|P|2.6.8; 2.6.5|Ellis bought holds her case; witnesses still report to other officers; she stops being bought past investigating? Not written.|A bought Ellis cools her own case but cannot stop a squad, a killing or other officers' signed statements; past the manhunt she cannot be bought.|G15|build|medium: limits to a shield|none|police and justice|
+254|M|2.14|No readings exist, so no weak build.|Each reading has a weakness the town finds (generous: asked more; quiet: overlooked by allies); the Ledger's reading names it as people say it.|G26|build|medium: readable risk|none|people|
+255|P|2.3.1; 2.4.2|Memory never wipes; regard can be won back by deeds; no ceiling or floor is written.|Readings have no floor or ceiling, but those he hurt never forget; new people can always be won; nobody is untouchable to the police.|G26|build|medium: always a way back|none|people|
+256|P|economy_run; 2.12.2|Simulated: honest worth week 13 163 to 991 against racketeer 964 to 1472; the honest firm stops at rung 2 by his pick.||G27||||the economy|
+257|W|RT2-05; RT2-07|The lieutenant takes the ladder at the same rung and counts as having seen the deed.||||||people|
+258|P|economy_run|No runaway loops found in the run; fear and money loops are not modelled.|Add fear and regard to the economy run per style and check no loop grows more than twice in a week.|G27|content|medium: loop check|none|the economy|
+259|W|3.6.8; 3.6.6|Suggested lines let a player speak without typing; live talk is the channel for talk routes but not compulsory.||||||talk and gossip|
+260|W|1.2; RT2-16|Cars are named by plate and sight; the police note every plate; a car hurts, never kills.||||||witnesses and senses|
+261|P|2.3.1; RT2-05|A person can be frightened or befriended into silence; story fallbacks by role exist.||G22||||story|
+262|P|economy_run|Simulated: no lever pays more than twice the middle; repetition of one errand is not tracked.|Repeating one small crime on one street draws the pattern rule (unease, a constable) and lowers its yield.|G27|build|medium: no grind|none|the economy|
+263|P|RT-16; 2.8; LH-15|Arrears never close the office; debts and hooks stack; every route has a way back (his ruling).||G04||||the economy|
+264|M|COMBAT; 2.11|Solo play is untested: careful 1 v 1 wins 73%, 2 v 1 29%, with Ron 73%.|State the trade: alone is fewer who know and harder fights; measure both in the style bots.|G32|content|medium: solo as a style|none|combat|
+265|W|2.3.1; 2.4.2|Memory never wipes; talk cools in 1 to 7 game days but what was seen is kept for good.||||||talk and gossip|
+266|M|2.14|Kindness has no diminishing return written.|Kindness repeated to a high-greed person invites asks; to anyone it plateaus after the first few; cruelty hardens; both under the adaptation rule.|G27|build|medium: symmetric returns|none|people|
+267|P|QUESTIONS.csv|The first pass lists 691 shortfalls; forging and fire are G18 and G13 rows.||G13||||police and justice|
+268|W|7.8; COMBAT|Reloading is never stopped; outcomes are fixed to the save, so a reload gives the same result.||||||whole game: pacing and styles|
+269|P|3.1.4; STORY-FRAME 5|All endings need no violence by Frank; week 4's Landing has three ways in; the yard and week 7's fight lack quiet routes.||G25||||story|
+270|W|STORY-FRAME 8; 3.1.4|Closes differ in the firm, the friends, who holds what, the street and the last name he is called.||||||story|
+271|P|STORY-FRAME 5; RT-04|No beat can be avoided: each comes by a second way in (the old firm's man at the door; the fail-safe).||G22||||story|
+272|W|RT2-05; STORY-FRAME 6|The story falls back by role; Danny's chair to Craig Fewson; Ron lives.||||||story|
+273|P|3.1.4 walk-out; RT-04|Leaving Meridian is a deliberate walk-out ending, asked twice; silence is met by beats brought to his door.||G22||||story|
+274|P|CLK-06|Calendar beats (the display Saturday, the gate chained on 1 December, rent each Friday) are fixed; the rest fire on states.||G30||||story|
+275|P|3.1.4; STORY-FRAME 8|The rule reads the save at five: books from all weeks, friendships, charges and the street's facts; the line's name is the last choice.||G31||||story|
+276|P|3.1.4|The walk-out ending exists by his ruling, scene not written.|Write the walk-out as a full close with voices like the others.|G31|content|medium: leaving as an ending|none|story|
+277|W|3.1.6|Mickey's real book is the same by any route; the fire's truth never becomes the street's.||||||story|
+278|P|2.10; WI-P06|Rivals can be allied or fought; allies follow rules; rougher alliances bend by state.||G22||||story|
+279|P|2.10; STORY-FRAME 2|Rivals can be paid and sided with; Danny is on the quay on every path; the conflict persists through the inspection.||G22||||story|
+280|P|STORY-FRAME 5|The inspection, the turn and rivals' attempts do not depend on the town's love.||G27||||story|
+281|P|3.1.6; 3.1.4|The fire's truth is never the street's; endings do not need it.||G31||||story|
+282|P|STORY-FRAME 6; GD-03|Every beat has a second way in; a missed clue is replaced by a carrier.||G22||||story|
+283|P|STORY-FRAME 3; 2.6.5|Ellis wants her case; she can be bought once; exploiting her wants is the people rules.||G05||||police and justice|
+284|P|RT2-05; STORY-FRAME 6|Chairs pass to named fallbacks (Craig Fewson for Danny), so a scene's lead changes.||G22||||story|
+285|M|3.6; STORY-FRAME 5|Big scenes are written once; Frank's lines do not read his reputation.|Key scenes keep two or three variants of Frank's lines by his reading (feared, trusted, quiet) and the other side's lines read the same.|G26|content|high: scenes that know who he is|none|story|
+286|W|RT-04; 2.10.1|Rivals climb on states and the fail-safe; ignoring them leaves him further behind.||||||story|
+287|P|2.11.2; 2.11.3|A crewman past his nerve or regard talks, with signs first; traceable to pay and treatment.||G10||||people|
+288|W|STORY-FRAME 5|The first morning's line in the fare book returns in week 5 and decides whose name it carries at five on the last day.||||||story|
+289|P|STORY-FRAME 5|Something is lost on every path (Ron stops naming the buildings).||G31||||story|
+290|P|2.3.1; STORY-FRAME 8|Memory is permanent and the close uses first-hand holders, so a death in week 2 can be named at the close.||G31||||story|
+291|M|STORY-FRAME 5|Beats do not read his reputation; mercy choices exist (Billany) but are not cast against reading.|The director prefers, among ready beats, one that tests the reading (a feared Frank asked to spare, a trusted one asked to lie).|G26|content|high: tested reputation|none|story|
+292|P|3.1.4|Five built states over three closes plus the walk-out; expected shares not estimated.|Report expected shares from the style bots' runs and the panel.|G29|content|low: measurement|none|story|
+293|P|STORY-FRAME 5|Ron's loss can be bought off cheaper with a hook somebody holds; something is lost on every path.||G31||||story|
+294|P|2.12.4; 7.7|Greetings and access change by rung and regard (SM-09).||G26||||people|
+295|P|7.7; 2.12.4; 2.5.4|Rung changes the street and greetings by regard; a feared against trusted Hook is not designed.|Write the street by reading: feared streets go quiet and step aside; trusted ones call out and offer; check with SM-09 per reading.|G26|content|high: a street that reads him|none|the crowd|
+296|P|2.7.5; 2.17; economy|Shops shut only with a cause (the newsagent shut under the racketeer); fronts change hands; new places opening are not written.|Let empty units let and closed shops reopen under new hands; at least two named changes over the seven weeks on any path.|G23|content|medium: a changing street|none|the crowd|
+297|P|2.1.1; 2.5.4|Routines fixed; streets on edge change behaviour; avoidance of Frank by route is not written.|People who fear him change their routes to avoid his office and car; people who like him pass by.|G27|content|high: routines that react|clips|the crowd|
+298|P|2.15; RT2-06; 3.4.3|The office fills with rung; drivers come and go by pay; Pauline and Sheila by rules.||G20||||the cab trade|
+299|P|RT2-09; 2.10|Posts held and lost; the rival's lieutenant takes over if the head goes; a vacuum filled by another is not written.|A removed gang leaves its posts empty for a week, then the next rival climbs into them unless Frank holds them.|G10|build|medium: vacuums fill|none|people|
+300|W|2.3.1; 2.14|Memory is permanent; regard moves by deeds; kindness is held.||||||people|
+301|P|2.4.1|Talk loses detail and never gains it; so it cannot twist into something new.|Keep it; a rumour can shift its emphasis (which detail survives) and is said back in the teller's words.|G02|content|medium: drift without invention|none|talk and gossip|
+302|M|2.14|Nothing makes readings stale.|Readings fade towards neutral with people who see nothing new for two weeks, never with those who hold a deed first hand.|G26|build|medium: reputation needs feeding|none|people|
+303|P|2.6.5; 2.6.1|Ellis's four stages each with a sign; patrols do not change beyond War's armed cars.|Each stage changes the street (a constable more often, a car parked, questions at doors).|G15|content|medium: the net seen|clips|police and justice|
+304|W|2.19|Bruises three days, glass until mended, blood until rain or bucket.||||||witnesses and senses|
+305|P|2.1.4|Weather and hour change who is out; the turn of season is not.|Add November and December shifts (earlier dark, fewer out at night, fog nights) to routines.|G23|content|medium: season in play|none|the crowd|
+306|M|2.11|Crew do not change appearance or speech over weeks.|Crew change by what they have done: a scar, a new coat bought with their cut, harder speech or nerves.|G10|content|high: crew that age|none|people|
+307|P|2.14|Grudge and nerve decide; braver or broken is not chosen.|By dials: high grudge grows braver against him (to the police or a rival); low nerve breaks.|G07|content|medium: lasting change|none|people|
+308|M|2.14|Nothing models honest people reacting to a bought town.|High-law people who learn of bribes grow cold and more ready to report; they say so.|G26|build|medium: honesty pushes back|none|people|
+309|P|2.4.2; 2.12.4|Talk can spread across town in days; greetings change; a one-week swing is possible after a heavy deed.||G26||||people|
+310|M|G20; 2.12|The firm's name and Frank's name are not separate.|The town holds a reading of the firm and of Frank apart; drivers' conduct shapes the firm's name.|G20|build|medium: firm and man apart|none|the cab trade|
+311|P|2.19; 2.7.5|Damage stays until mended for money and a day; blame by who saw.||G19||||witnesses and senses|
+312|P|2.5.5|A missing man becomes the town's question; his landlady and mates ask.||G09||||people|
+313|P|2.1.3; 3.2.3|Unseen people keep their routines; life events of regulars are not written.|Each regular has one life event across the seven weeks (a new job, a move, a death in the family told), independent of Frank.|G09|content|medium: a town with its own news|none|people|
+314|P|2.19; 2.1.3|Marks and shop changes stay; a corner untouched may look the same.|At least one visible change per street per fortnight (a shop window, a poster, a new face), from the calendar and events.|G23|content|medium: time felt|none|the crowd|
+315|W|2.19; 2.5.5|Night deeds leave marks (forced doors, missing things) found by routine and lasting until mended.||||||witnesses and senses|
+316|P|2.12.4; 7.7|Greetings and access show position and regard without a menu.||G26||||people|
+317|P|2.13; 2.6.6|War brings armed cars and stop and search; fewer night fares; other changes not written.||G27||||police and justice|
+318|M|2.3.1|Victims never forget; forgiveness is not written.|Old victims may soften by regard after amends but always hold the deed; a visible sign (a nod again) marks it.|G07|content|medium: forgiveness slow|none|people|
+319|P|RT2-08; 2.10|Rivals act as actors climbing ladders; merging or switching sides is not written.|Rivals can ally against Frank when he threatens both, under the truce rules (WI-P13).|G10|build|medium: rivals with plans|none|people|
+320|P|GD-04|Eight differences in five hours is the replay target, not measured for the street.||G30||||whole game: pacing and styles|
+321|P|2.10; RT2-09|The Widow holds the dock gate; turf is posts; docks and Hook are linked by people.||G10||||people|
+322|W|7.9; RT-16; RT2-06|Week one has floors: the office and car two never lost, arrears never close, Frank cannot die, control back within 2 minutes.||||||whole game: pacing and styles|
+323|P|STORY-FRAME 5|Stakes climb by week (money, things, ground, a person, his body and liberty, the firm); enemies do not scale.||G32||||whole game: pacing and styles|
+324|W|7.9; 1.3|Beaten, Frank comes round with the cost said; the story continues; the town holds the defeat.||||||combat|
+325|W|RT-16; RT2-06|Arrears never close the office and the firm has a floor with the same way back.||||||the economy|
+326|W|7.9; RT2-05|Nothing ruins a run; dead contacts fall back by role; signs come first.||||||story|
+327|W|2.6.4; 7.9; LH-07|Custody costs hours by charge; a way back always exists; repeated arrests carry on.||||||police and justice|
+328|P|COMBAT; 2.10|No enemy scaling; rivals add men and guns by the dial.||G32||||combat|
+329|W|7.10; OUT-06|No difficulty ladder, assists only; how people read Frank decides what each route allows (his ruling 25 Nov).||||||people|
+330|P|7.6|Tension sources include the clock and the law near; careful players face eyes and ears; measured per player kind nowhere.||G28||||whole game: pacing and styles|
+331|P|GD-03|A failed job ends in a state the town talks about and control returns; a second attempt is not written.|A failed job may return once in a harder form (the target guarded) or pass to a rival, said by its giver.|G22|content|medium: failure opens doors|none|story|
+332|W|RT2-06; RT2-18|The office is never lost; only a revoked licence ends the firm, with the walk-out and Burn Both still played.||||||the cab trade|
+333|P|2.11.3; 2.11.1|Crew can be lost and recruited again; a pool of men in the pen exists in week 6.||G10||||people|
+334|P|3.1.3; STORY-FRAME 5|Week 7 fetches the five things by five kinds of play and one fight.||G25||||story|
+335|P|1.5; 7.10|Driving help is an assist; chases can be avoided by not being seen.||G24||||combat|
+336|W|STORY-FRAME 7; 2.4.4|Deeds return as named people's remarks; signs come first; nothing is forced.||||||story|
+337|P|STORY-FRAME 6; 6|The Ledger holds the week's aim and one named next thing; every beat has a second way in.||G22||||story|
+338|W|7.9; 7.8|Frank cannot die; reload gives the same next hour; memories persist.||||||whole game: pacing and styles|
+339|M|COMBAT; CS-12|No rule shapes route difficulty by week.|Let the world shape it: stealth easier early (nobody knows him), force harder early (no men), talk stronger late (standing); measure with style bots.|G32|content|medium: routes that change over the run|none|whole game: pacing and styles|
+340|P|3.1.4|Endings need no violence; difficulty for the pacifist comes from people's dials, not locks.||G25||||whole game: pacing and styles|
+341|P|GD-07; 2.7.2|The tin is night money; sinks stay ahead; a hoard's risk is a search finding it.||G27||||the economy|
+342|P|3.6.2; 3.6.6|Claim check and suggested lines; odd speech is weighed by fit.||G03||||talk and gossip|
+343|P|LH; 2.6.8; 7.9|Ways out: the solicitor, silence, a lost statement, Ellis's trade, collapse at committal, an appeal; always a way back.||G15||||police and justice|
+344|P|GD-03; 2.19|A failed job's state is talked about; marks stay; retries are not written.||G22||||story|
+345|P|2.14; 2.4.2|Talk cools in days but first-hand memory stays; regard moves by deeds; recovery time not set.||G26||||people|
+346|P|3.1.5; 2.6.5|Every cost shows its sign before it decides; Frank's reading summarises.||G31||||whole game: pacing and styles|
+347|M|7.9|Frank cannot die and nothing breaks a run; no target for how many reach the ending is set.|Set a target: at least 7 of 8 panel players reach an ending in a median length; watch the stall points with the AI tester.|G28|content|medium: completion target|none|whole game: pacing and styles|
