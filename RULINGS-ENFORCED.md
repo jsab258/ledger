@@ -9,11 +9,13 @@ His binding rulings that a check tool already enforces, moved word for word from
 - 25 Oct: every order is a ledger (tools/order_ledger.py): each item done with its evidence, set aside with its reason, carried over, or dropped by him. [check: tools/ci-checks.sh, tools/hooks/pre-push, tools/order_ledger.py]
 - 3, 4, 11 Nov: one session at a time (this week's lane aside), switched by its history's size at an item's end, never started by him or a session; permissions never bypassed. [check: tools/fresh_gate.py, tools/history_check.py, tools/settings_check.py]
 - 25 Oct: His progress page (https://claude.ai/artifact/EEcWMTp5E9VqKrQsC8KBdk) is current every night, with each morning's three pictures. A boss falls at its goal or by his ruling. [check: tools/ci-checks.sh, tools/morning_pictures.py, tools/progress_page.py]
+- 2 Nov, his page: "LEDGER: Needs you" (https://claude.ai/artifact/1VZHkCBAHdw8HBdNHrByL8). 8 Nov: story drafts and small canon details judged built, in the game; items at most twice daily unless blocking. 17 Nov: items tagged ACTION, DECISION or REVIEW; places as he sees them; an ACTION item names its reason (sign-in, purchase, taste, his-setting) and routes tried. [check: tools/needs_you_page.py, tools/page_read_hook.py]
 
 ## Sources, licences and money
 
 - 3 Oct: Sources in order: free assets that fit (Poly Haven, ambientCG, CC0 Sketchfab scans with his token, unmarked CC-BY with credit); else our own, in Blender from real photographs and generated textures, as kits with variation. Asset families follow the asset plan. 30 Oct: CC BY 4.0 is allowed for clothes and their accessories (shoes, belts, hats, bags): makers credited, brand marks painted out. [check: tools/attribution-check.py, tools/catalogue.py]
 - 24 Sep: Nothing ships off the allowlist; a new tool enters by a record naming its weights licence; free allowlisted, non-NoAI content downloads unasked, named in the row. 19 Nov: licences are never his question; sessions decide by the allowlist and record it. [check: tools/attribution-check.py, tools/ci-checks.sh]
+- 1, 16 Nov: his plan's monthly API credit ($200, lapsing about the 11th) pays for the game's own calls (his play, measurement runs, friends' evenings), bulk text and scripted checks (never reviews or the gate), on the cheapest model a sample agrees with, batched; never beyond it; ceiling, reload, log and key as CLAUDE.md. [check: tools/settings_check.py, tools/api_batch.py]
 
 ## The look and the street
 
