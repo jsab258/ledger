@@ -2,11 +2,11 @@
 
 The one file a fresh session starts from. Rewritten at each stop; cap 1,800 words. Holds what is in flight, what failed, the next steps and the tries used.
 
-**Started:** 2026-11-25 10:22 (the hourly run)
+**Started:** 2026-11-25 12:07 (the hourly run)
 
-**Row due:** 12:03 (last row 11:03; page read 11:29; filter verdicts after 2026-11-25T10:29 UTC, advisor after 2026-11-25T11:00:00+01:00; last ack 382 at 11:13).
+**Row due:** 13:14 (last row 12:14; page read 12:09; filter verdicts after 2026-11-25T11:09 UTC, advisor after 2026-11-25T12:12:30+01:00; last acks 383, 384 at 12:12).
 **Uncommitted:** nothing of this session's; the office-print PNGs and three Kiln notes are not this session's, left alone.
-**Stopped:** 2026-11-25 11:33 (the 10:22 run; past the history point; nothing running)
+**Stopped:** 2026-11-25 12:17 (the 12:07 run; measuring paused by advisor 384, light work done; nothing running)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -35,12 +35,15 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 ## Done today
 - 07:22 and 08:52 runs: n23-3 drafted, reviewed, reopened to 4 Dec (advisor 380); advisors 374-381 acted on; Sleeping Dogs chases 2 of 5.
-- 10:22 run: **chases on foot, L.A. Noire 2 of 5** (LA-NOIRE-FOOT-CHASE-2026-11-25.md): Part 1 rooftop about 52 s, warning shot, arrest cutscene; Part 2 (MBQWlj8scTI) alleys about 58 s, hostage, cutscene; each part holds one foot chase only. **Advisor 382** (his pick A, chance in combat) in RULINGS' Combat line at the 4,900 cap, DECISIONS, acked 11:13. Rows 10:23, 11:03. Pushed 84e80743a, d26f97d3e.
+- 10:22 run: **chases on foot, L.A. Noire 2 of 5** (LA-NOIRE-FOOT-CHASE-2026-11-25.md): Parts 1 and 2, about 52 and 58 s, one foot chase each. **Advisor 382** (his pick A, chance in combat) in RULINGS' Combat line at the 4,900 cap, DECISIONS, acked 11:13. Rows 10:23, 11:03. Pushed 84e80743a, d26f97d3e.
+
+- 12:07 run: **advisors 383 (romance a can-you, women only) and 384 (arrest interview; pause)** in RULINGS at the cap (tightened; DECISIONS names it), enforcers added, acked 12:12; row 12:14.
 
 ## In flight
 - Nothing running: no helper, no game, no scan; the browser pane holds GamesMediaLA Part 4 (mbM6es4xLLc) paused, viewport emulated 1280x720 (the app clears it).
 
 ## Next, in order
+0000. **MEASURING BLOCK PAUSED (advisor 384, 11:45)** until the advisor says the cloud jobs combat2 (reported done 12:15) and questions have finished: light work only (rows, acks, records, DAILY), no footage, no helpers; without a release, do those and stop (idle runs spend nothing). On release, item 3.
 000. **Footage runs with the pane hidden** (the method in item 3).
 00. Pace: 80% at 04:46; **the weekly stop is 90%** (advisor 352): at the newest reading of 90% finish the step, commit, push, one row, write production/weekly-stop.json {"until": "2026-11-30T13:00", "reading": N}, set "**Next due:** 2026-11-30 13:00", one page item (switch off the scheduled task ledger-daily-fresh-session, Code tab, Scheduled; on after Monday 13:00), stop all work. Full pace until then (advisors 359, 366: no pace-line holds).
 0. If he types "RDR2 drill starting": `python tools/drills/rdr2_record.py start` in the background; on "RDR2 drill done": the same with stop; read the frames by his card (advisor 361).
