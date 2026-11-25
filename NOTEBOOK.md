@@ -3038,3 +3038,12 @@ Made: an in-page reading of step rate from a following-camera clip (frame differ
 - Cost: about 0.3 h.
 - Failed and why: the 4 s step cap blocked the same-side timing (lifted to 16 s for filmed walks only); a ground-plane method failed on a climbing, bending street.
 - Evidence: production/research/lane/measurements/STATUS.md (ruler check line); F:/LedgerTools/tmp/ai-tester/film/2026-11-25-0539.
+
+## 2026-11-25 being seen, KCD2, from a thief playthrough's icon (measuring block, set aside at one sample for now)
+- Made: one uncut KCD2 being-seen sample read from the behaviour icon itself, second by second; three 2 h parts of one PC thief playthrough scanned whole.
+- Method: a colour count in the on-screen alert icon's box at every 2-4 s of a long video, dropping menu frames by their parchment share; group hits into runs; look at each run by eye on a six-frame sheet; read a real one again at 1 s and 0.5 s. Most red or orange runs are fights (enemy marks) or warm lamp light, so every run is looked at before it counts.
+- Tools: the browser pane with a fixed 1280x720 viewport (a hidden pane reports zero width otherwise), page scripts in tools/drills/frame_sheet.js, screenshots taken twice (they lag one draw).
+- Target and check: five uncut samples a game; one found (red about 1 s, challenge within 1 s, watched 13 s, clear about 16 s after the alarm).
+- Cost: about 0.6 h so far.
+- Failed and why: a story-led playthrough holds few unscripted crimes in view; a short alarm can fall between 4 s steps (2 s used after the first part).
+- Evidence: production/research/lane/measurements/kcd2-being-seen-part4-2026-11-25.md; F:/LedgerTools/game-inputs/footage/wMk2tFAd26E/.
