@@ -9,7 +9,7 @@ GOAL (to Mon 30 Nov 13:00): his order of 23 November, adopted 23 Nov 08:12 (prod
 - [ ] n23-6 weekly audit; n23-7 efficiency and safety.
 - [x] Advisor 324: hidden-details catalogue (production/research/lane/details-catalogue/CATALOGUE.md).
 
-STATE (24 Nov 20:25): four numbers solid (Sleeping Dogs sprint 5.5 m/s, jog 4.5 m/s; RDR2 being seen, riding off, median about 70.5 s from five uncut samples, two players); KCD2 being seen leads only (its stream modded); n23-3 leaning Sonnet 5.5, about US$0.09 an hour of play (floor); in the game real questions 1.73 s median, voice 0.05 s (25 Nov); weekly stop at 90%.
+STATE (25 Nov 06:15): four numbers solid (Sleeping Dogs sprint 5.5, jog 4.5 m/s; RDR2 being seen, riding off, about 70.5 s); KCD2 being seen leads only; live talk in the game 1.6-1.7 s median on Haiku, 3 of 30 fall back; ruler check set aside (film or character ~20% fast); weekly stop at 90%.
 
 ## Handovers
 

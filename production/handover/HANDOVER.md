@@ -4,7 +4,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-25 05:37 (the hourly run)
 
-**Row due:** 05:48 (last row 04:48; page read 04:44; filter verdicts after 2026-11-25T03:44 UTC, advisor after 2026-11-24T23:55:00+01:00; last ack 373 at 23:55; nothing new since).
+**Row due:** 06:48 (last row 05:48; page read 06:09; filter verdicts after 2026-11-25T05:09 UTC, advisor after 2026-11-24T23:55:00+01:00; last ack 373 at 23:55; nothing new since).
 **Uncommitted:** nothing; work pushed with this file.
 **Stopped:** 2026-11-25 05:03 (the 03:37 run: live talk measured inside the packaged game, real questions 1.73 s median, voice 0.05 s; voice-model scan shortlisted; 1990 gaps set aside; the ruler check found no ruler; footage impossible while the pane is hidden, so stopped at the item's end with nothing else runnable before he is up; nothing running)
 
@@ -34,10 +34,11 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- 03:37 run: **live talk inside the packaged game** (n23-3, -AskSet=FILE with firsts-held.txt): real questions 1.73 s median, 17/30 under 2 s; voice share about 0.05 s; fall-backs uncounted (set LEDGER_TALK_TRANSCRIPT); at most US$1.10 (N23-3-QUESTIONS). **Voice scan** (n23-4): voice-scan/SHORTLIST-2026-11-25.md, ZONOS3-Mini first; Pocket already newest. **1990 gaps** set aside for the loops (DECISIONS 03:50). **Ruler check** not run, no ruler. My 17 unused tester pictures of 04:49 deleted.
+- 05:37 run: **ruler check** (n23-2) set aside after two tries: film or character ~20% fast (walk 2.0 vs 1.6, run 5.0 vs 4.2 m/s by the lamps), a position line after the prototype (STATUS); filmed tester walks up to 16 s. **n23-3**: held set again, 1.59 s, 3/30 fell back; these questions run on Haiku by the moment rule. US$0.60 logged. OS lamp legend unreached. Row 05:48.
+- 03:37 run: live talk in the game 1.73 s (N23-3-QUESTIONS); voice scan shortlist (ZONOS3-Mini first); 1990 gaps set aside; 17 tester pictures deleted.
 
 ## In flight
-- Nothing running; no helper, no game, browser pane closed. Sleeping Dogs Part 1 (1aFCDYV4gEw): coarse frames at 88-156 s show the opening's alley run, not read finer. The pane opened hidden at 03:45 (nobody at the PC): footage waits for him to be up.
+- Nothing running: no helper, no game; the pane opens hidden while nobody is at the PC (06:08), so no footage. Sleeping Dogs Part 1 (1aFCDYV4gEw): coarse frames at 88-156 s show the alley run, not read finer.
 
 ## Next, in order
 000. **Footage needs the pane shown:** check `tabs_context` first; while it says hidden, do 6a/6b below, not footage.
@@ -48,20 +49,21 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 4. **KCD2 being seen with crowd reactions** (one town crime clip serves both): ibyJamin Part 4 (wMk2tFAd26E) or 5 (AK8xLkS1Cfs), hare scan with the parchment filter (drop hits above 12% beige); first check by eye that this player shows the behaviour icon at a known alarm. If none by the week's end, say so in STATUS.
 4a. **Photo counts (advisor 370):** two tries used; the different method: the OS 1:2,500 legend (are lamps drawn?), then period footage of northern side streets by eye. Quay Street stays at 34 m. 5. 1990 sources: footfall from the reader's file; headlamp reach now a lead (period-lamps-reach-2026-11-25.md); BS 5489-3:1989 and the 1987 Highway Code table unreached; our car braking flag (8-11 m against the Code's 14 m) unchecked.
 6. n23-7 DAILY-2026-11-25 by 19:00 (add the API line: US$1.10 tonight).
-6a. **n23-2 ruler check** (STATUS 25 Nov 04:49): find a ruler without Unreal: the Quay Street lamp spacing (34 m in code; read the lamps' positions from the street spec or export), then film a walk lamp to lamp (play.py start, Enter x15, `walk forward N --film --fast`, him away 10 min) and compare with the true 160/420 cm/s. Tries used: 0.
-6b. **n23-4 trial:** ZONOS3-Mini: its weights download raised in chat when he is at the PC (file, source, size), then the 12 cast lines beside the game against Pocket. **n23-3:** a repeat in-game held run with LEDGER_TALK_TRANSCRIPT to count fall-backs; Sonnet 5.5 inside the game needs its talk program built with it (after the prototype); the recommendation by Fri 4 Dec, one fresh reviewer first.
+6a. **n23-2 ruler check:** done to two tries (05:47), set aside for a position line after the prototype; the cheap-reader trial still open.
+6b. **n23-4 trial:** ZONOS3-Mini: its weights download raised in chat when he is at the PC (file, source, size), then the 12 cast lines beside the game against Pocket. **n23-3:** fall-backs counted (05:58). Next: the better model's in-game time on newcomer questions needs a talk-program switch forcing the moment (e.g. an env word read beside LEDGER_TALK_CORE_MODEL) and the helper republished into the played copy, not during the night; then one held run with LEDGER_TALK_CORE_MODEL set to Sonnet 5.5; the recommendation by Fri 4 Dec weighs light model (1.6 s, measured) against better (unmeasured), one fresh reviewer first.
+6c. **4a photo counts:** the OS legend route read 06:10, unreached (no viewable 1970-90 plan; STATUS); next period footage by eye when the pane shows.
 0b. Next night walk Mon 30 Nov 01:30 (held while the stop file holds). 4p. Marvelous stays open. No Unreal work until the browser prototype is done (advisor 288). 5p. History rewrite HELD for his word. Progress page daily (progress.json only).
 
 ## Footage tools
-All in tools/drills/frame_sheet.js (each with its known faults): sheet, SAVED EVIDENCE (pane screenshots copied to F:/LedgerTools/game-inputs/footage/<id>/ with index.json and upload date), RED SCAN (RDR2 flag), HARE BOX SCAN (KCD2). Stamp every time from Get-Date: guesses ran 10-25 min ahead today too. YouTube storyboard sprites ("playerStoryboardSpecRenderer" in the watch page) show a whole video in a few images, for colour cues only. Leg crops every 0.1 s (csheet in the 25 Nov walk note's method) read cadence.
+All in tools/drills/frame_sheet.js (sheet, SAVED EVIDENCE to F:/LedgerTools/game-inputs/footage/<id>/, RED SCAN for RDR2, HARE BOX SCAN for KCD2), each with its known faults. Stamp every time from Get-Date. Storyboard sprites for colour cues only; leg crops every 0.1 s read cadence.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
-- 25 Nov 04:08: a code read said the game cannot ask a question list; wrong: -AskSet=FILE sits 60 lines below the built-in six (read the whole function). 04:49: the ruler check has no ruler (no position line, no marking sizes on record).
+- 25 Nov 04:08: a code read missed -AskSet sixty lines below (read whole functions). 05:45: a ground-plane ruler failed on the climbing, bending street; the 4 s step cap blocked lamp timing (lifted for filmed walks).
 - 25 Nov 03:41: Git Bash's date agreed with PowerShell tonight; a wait keyed on "bash is an hour behind" fired early. Key waits on PowerShell's Get-Date.
 
 ## Kept as they are
 - Waiting list for the next order: production/orders/2026-11-16.md section 3.
 - Tries used: the full list moved 22 Nov 12:55 to TRIED-ARCHIVE.md, "Moved from the handover".
-- API spend: about US$5.41 this month (production/api-spend.jsonl).
+- API spend: about US$7.11 this month (production/api-spend.jsonl).
 **Do not:** start local Unreal 01:15 to 04:30; run two Unreal jobs at once; run drapes or builds beside a timed Kiln gate; edit retention.py during a Kiln gate; run more helpers than RULINGS allows; tail Saved/route-checks.jsonl; print or copy any key; click anything outside Marvelous; run a tool with --help; let a helper stop a process; work while another main LEDGER session works; write a time without Get-Date; write judge/ from a fixer; name a held-back job to a fixer; write into his folders under C:/Game Dev Tools; delete a job file from md-jobs/inbox while the bridge runs (it crashed the bridge's tick at 19:17).
 
