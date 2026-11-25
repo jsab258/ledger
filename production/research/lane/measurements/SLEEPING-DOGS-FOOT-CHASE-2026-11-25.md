@@ -124,3 +124,21 @@ What it gives the row: **about 66 s of chasing (about 161 to 227 s, edges at 3 s
 Running total: Sleeping Dogs 4 of 5 (about 96, 67, 14, 66 s). Next: "Catch Siu Wah" (Game Dreamerz, aFDawv1-XlM, 4:28).
 - 'Catch Siu Wah' (Game Dreamerz, aFDawv1-XlM, 268 s, published 5 Oct 2023) by thumbnails every 2 s, 16:35 Swiss: a motorbike chase, then a car chase, then a cutscene from about 199 s; no foot chase. Next for sample 5: Zi Wai (the guide's Mission 28) or the police run in 'Meet the New Boss' (Willzyyy co6MNsgSbdA).
 - 'Meet the New Boss' (Willzyyy, co6MNsgSbdA, 732 s, published 18 Jan 2023, PC) by thumbnails every 5 s and real frames 96-240 s every 4 s, 16:37 Swiss: the opening is a gunfight through a club (96-160 s) and a shootout behind cars in the street (164-240 s), not a run from police; the foot chase from about 386 s is Ponytail's, the same chase as sample 4, so not counted again. Sample 5 still open: Zi Wai (the guide's Mission 28), or another chase named in a full walkthrough.
+
+## Sample 5: Zi Wai, in "Buried Alive" (read 25 Nov 2026, 16:42 Swiss by Get-Date)
+
+Source: Willzyyy, "Sleeping Dogs: Definitive Edition - Mission #37 - Buried Alive (4K 60fps)", https://www.youtube.com/watch?v=t3rAMMeariQ (1,091 s, published 29 Jan 2023 by the page's own data; recorded on PC by this channel's descriptions). Found by YouTube search for the chase the guide names (Zi Wai, foot-chase-candidates-2026-11-24.md). Thumbnails every 10 s, real frames 484-600 s every 4 s.
+
+Built on: foot-chase-candidates-2026-11-24.md (Zi Wai named among the guide's foot chases).
+
+| Time (s) | Seen |
+|---|---|
+| 484-500 | a car chase in the street |
+| 504 | Wei on foot beside a parked motorbike |
+| 508-540 | running through a shop, a door, alleys, a vault over a rail (524-528), a barred gate, a tiled terrace |
+| 544-572 | a pavement, steps, a garden, a plaza with palms |
+| 576-600 | a fight with several men |
+
+What it gives the row: **about 70 s on foot (about 503 to 574 s, edges at 4 s)**; the target rarely in frame (gap unread); ends in a scripted fight, not a catch at contact or an escape; space changes every 5-15 s. Recorded on PC, not console.
+
+**Sleeping Dogs 5 of 5**: about 96, 67, 14, 66, 70 s (median about 67 s); four players' uploads (Santosx07 PS4, Willzyyy PC twice, Addictive Gamer PS4, The-Rickster6 PS4); every ending scripted (a fight or a catch); the loss rule from our own drill (gap over about 45 m for about 20 s). Fresh review due before it counts as solid.
