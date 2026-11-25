@@ -1,6 +1,6 @@
 # LEDGER: the blueprint
 
-The whole game as one design. Version 1, 23 November 2026, by the blueprint keeper (claude-opus-5-5); updated the same day by keeper runs 2 and 3 on 24 November by run 4 and by run 5 in the evening (run 5: his rulings of 24 Nov from his decisions page, which answer almost every open question; the lead renamed Frank Nowak; the story frame and the story on paper with Frank's deeds; the 19 data files' first 17 made; the data sweep; the economy design; crowd counts solid as a floor; run 4: his rulings of 23 Nov on growth and directions, his story pick as reported, the measuring check, the checkers, the landscape lessons, the details catalogue and the checklist check; earlier: the solid rule for measured, craft standards, the browser build, the live voices hookup, rulings to revisit; the prior research index, the AAA studies and the preparation files folded part by part). This is the one document the design flows into; the giant one-shot prompt is written from it alone, and the one-shot starts only when it is complete (his ruling of 20 and 21 November; plan date the reset of Monday 7 December). Canon outranks it and his rulings decide what is in and out. Nothing here is new: the keeper consolidates what the design sources already say, settles their clashes by date and ruling, and lists what is missing.
+The whole game as one design. Version 1, 23 November 2026, by the blueprint keeper (claude-opus-5-5); updated the same day by keeper runs 2 and 3 on 24 November by run 4 and by run 5 in the evening (run 5: his rulings of 24 Nov from his decisions page, which answer almost every open question; the lead renamed Frank Nowak; the story frame and the story on paper with Frank's deeds; the 19 data files' first 17 made; the data sweep; the economy design; crowd counts solid as a floor; run 4: his rulings of 23 Nov on growth and directions, his story pick as reported, the measuring check, the checkers, the landscape lessons, the details catalogue and the checklist check; earlier: the solid rule for measured, craft standards, the browser build, the live voices hookup, rulings to revisit; the prior research index, the AAA studies and the preparation files folded part by part). This is the one document the design flows into; the giant one-shot prompt is written from it alone, and the one-shot starts only when it is complete (his ruling of 20 and 21 November; plan date the reset of Monday 7 December). Canon outranks it and his rulings decide what is in and out. Nothing here is new: the keeper consolidates what the design sources already say, settles their clashes by date and ruling, and lists what is missing. Keeper run 7, 25 November morning: the combat and stealth pass (CS parts, ready for review), the reality check (lamps by the 1977 code, the props bar owed from photographs, Quay Street's two lamps and the late-1991 fares by his rulings), the what-if sweep (the long heat LH-01 to LH-15, WI-P01 to WI-P15), the temper model (Q6 closed) and the brain level (pending his re-run), the fifty and hype studies, his rulings of 24 and 25 Nov (advisors 369 to 379: robbery anywhere from the start, pulling a driver out, always a way back, the walk-out ending, anyone down searchable, can-yous by general rules, fire, the first animation test) and the morning's solid figures.
 
 ## The game in one page
 
@@ -43,8 +43,8 @@ The prior research inventory (production/lane/blueprint/PRIOR-RESEARCH-INDEX.md)
 
 | File | Group | Parts | measured | ruled | sourced | decided | pending | unmeasured | out | outside | machinery |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| BLUEPRINT-01-hands.md | What the player does with his hands | 86 | 1 | 12 | 0 | 29 | 28 | 15 | 1 | 0 | 0 |
-| BLUEPRINT-02-town.md | The town under the hood | 94 | 0 | 16 | 3 | 53 | 12 | 10 | 0 | 0 | 0 |
+| BLUEPRINT-01-hands.md | What the player does with his hands | 106 | 1 | 14 | 0 | 52 | 26 | 12 | 1 | 0 | 0 |
+| BLUEPRINT-02-town.md | The town under the hood | 119 | 0 | 17 | 3 | 77 | 12 | 10 | 0 | 0 | 0 |
 | BLUEPRINT-03-story.md | Story and people | 45 | 0 | 16 | 0 | 9 | 11 | 8 | 0 | 1 | 0 |
 | BLUEPRINT-04-place.md | The place | 33 | 0 | 7 | 0 | 7 | 1 | 0 | 0 | 18 | 0 |
 | BLUEPRINT-05-looks-sound.md | How it looks and sounds | 39 | 0 | 7 | 0 | 1 | 0 | 8 | 0 | 23 | 0 |
@@ -53,11 +53,11 @@ The prior research inventory (production/lane/blueprint/PRIOR-RESEARCH-INDEX.md)
 | BLUEPRINT-08-technical.md | Technical | 25 | 0 | 5 | 10 | 4 | 1 | 0 | 0 | 5 | 0 |
 | BLUEPRINT-09-machinery.md | The machinery | 22 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 22 |
 | BLUEPRINT-10-shipping.md | Shipping | 13 | 0 | 5 | 1 | 1 | 0 | 0 | 1 | 5 | 0 |
-| all | | 424 | 1 | 87 | 15 | 126 | 61 | 45 | 15 | 52 | 22 |
+| all | | 469 | 1 | 90 | 15 | 173 | 59 | 42 | 15 | 52 | 22 |
 
 All 401 coverage.json rows are in, each once (284 parts-tree leaves and 117 rows added by the reviews, red teams, fit check, clock and rulings, each filed under the parts-tree part it belongs to), plus the 22 machinery parts and one ruled part with no coverage row yet (1.6.15 hold-ups, his ruling of 20 Nov, designed in DESIGN-ADDENDUM A41). Keeper run 2 added sections without coverage rows, not counted in the table: 5.11 craft standards, 8.11 the browser build, 8.12 the live voices hookup, 9.13 the browser build's modules, data and test door. The nine clock rows are ruled, on his ruling of 21 Nov (design pass 4 took clock B on 23 Nov). Design pass 4 of 23 Nov is folded in (no chase timer, the crowd per frame, car entry, three new chase rows DP5-C01 to C03).
 
-BLUEPRINT-11-conflicts-and-gaps.md holds the conflicts (C-000a to C-349, 324 in all, what won and why; run 5 added C-270 to C-276, C-280 to C-314 and C-320 to C-348; run 6 C-349), the 632 gaps for the design proof and the source traces not found; at the first build it held 194 conflicts and 303 gaps for the design proof and the source traces not found.
+BLUEPRINT-11-conflicts-and-gaps.md holds the conflicts (C-000a to C-530, 380 in all, what won and why; run 5 added C-270 to C-276, C-280 to C-314 and C-320 to C-348; run 6 C-349; run 7 C-350 to C-362, C-390 to C-405, C-430 to C-438, C-460 to C-464, C-480 to C-482, C-500 to C-508 and C-530), the 725 gaps for the design proof and the source traces not found; at the first build it held 194 conflicts and 303 gaps for the design proof and the source traces not found.
 
 ## The story chapter
 
@@ -86,6 +86,17 @@ All open items were answered on his decisions page of 24 Nov (RULINGS on wip), a
 
 New: none. His mixed lines of 1 Oct now hold outside the key scenes only, by his own choice of 24 Nov evening (C-349).
 
+New in keeper run 7 (25 Nov), from the combat pass, the reality check, the what-if sweep, the temper and brain jobs and the hype study; each ruling stands until he answers:
+- R14 the hospital (his combat design of 12 Oct, Frank wakes to the bill) against 1.3.9's "days, never money": the pass keeps the bill in CS-15. Recommended: change the blueprint to a small bill from the price list, so a loss costs a little money as well as days.
+- R15 a knife from a fight's start (25 Nov, advisor 374): in the simulation a careful Frank with a knife wins about 99% of decided fights against one unarmed man, a townsman's knife against unarmed Frank about 47%, about 9 deaths in 100 knife fights (leads from combat/SIM, not measured). Recommended: keep; the swap test is owed.
+- R16 pulling a driver out (25 Nov, advisor 378) against the combat pass's Out list and the hype study's advice to leave it out: Recommended: keep the ruling, design the consequences in the car parts (CS-28, 1.2.3, 1.2.10), and keep the pitch off any rampage claim.
+- R17 robbery anywhere from the start (25 Nov, advisor 378): the bank has no walked interior and holds the only CCTV (D7). Recommended: keep the ruling with the bank a soft-edge place at release (Q21); and let the people pass run the money bot on early, uncapped hold-ups against the 18 pound rent, as the ruling asks.
+- R18 the lead's line dropped (24 Nov): LH-13 and CS-17 read a blow on a woman or anyone over sixty one step heavier in the town's eyes, never a refused input. Recommended: keep.
+- R19 killing a constable, the long heat (24 Nov, advisor 369): LH-07 widens the remand road to every killing charge, so a killing of anyone keeps a way back as his 25 Nov ruling requires. Recommended: keep.
+- R20 Quay Street lamps (24 Nov, advisor 371) and the late-1991 fare tariff (advisor 372): the 34 m comes from a 2020 paper describing the 1977 code (the code itself unreached), the 80p a mile from a national mean of Nov 1991. Recommended: keep both; photo counts and the loops confirm or correct.
+- R21 three weathers (5 Oct): the blind fifty list misses sea fog off the docks. Recommended: keep three, mist folded in.
+- Smaller decisions within canon the combat pass took (shove into a wall stays serious; the quay edge kills by drowning, not the fall; burns and scalds and hostages as shields out; every animal safe): recommended keep (combat/RULINGS-TO-REVISIT.md).
+
 ## What still blocks the one-shot
 
 His yes on the measured story (Q18); the PC measuring's deciding rows (on foot: walk, start, stop and turn still leads, the run speeds solid in Sleeping Dogs only; being seen: RDR2 set aside at four clean samples, KCD2 not yet; chases on foot; crowd reactions), while crowd counts are now solid as a floor (GD-02, ceiling owed from the 1990 archive); the last two of the 19 data files his ruling of 24 Nov requires before the one-shot (the scenes, after the story, and the people data's cast changes W1 to W12), with 1,800 own street lines and most job, fare and side-story words marked TO WRITE for the story lane; and feasibility (INVENTORY.md: about 5,300 lines not yet written; what to make ahead, before 7 Dec). The dates stand: the complete blueprint first, plan 7 Dec, a week late accepted, no early Unreal test (C-265).
@@ -94,10 +105,14 @@ His yes on the measured story (Q18); the PC measuring's deciding rows (on foot: 
 
 Each with the recommendation. Until he answers, each part is built to the recommendation and marked so; his answer replaces it.
 
-- Q6 (2.14): Does every named person get his or her own temper? (scope, open since 29 Sep; not on his decisions page of 24 Nov) Recommended: Yes, measured before it lands. The data build of 24 Nov gives each of the 119 people in data/people/ a temper, so the one-shot builds to the recommendation.
+- D1 (1.3, violence and menace; combat pass 25 Nov): can a choke held on after a man passes out kill, only if the player keeps holding (no risk for 20 s past the knock-out, near certain by two minutes, the man going still as the cue)? Recommended: yes.
+- D2 (1.3, violence and menace): can kicking a man on the ground kill, rarely (about 1 in 50 of fights Frank finishes with three kicks), with the second ask naming the danger? Recommended: yes.
+- D3 (1.3.10, RT-10, violence and menace): can a gunshot kill at any time, not only once the town is at war, guns staying rare and late? Recommended: yes. Until he answers, 1.3.10 and RT-10 keep their text.
+- Q21 (scope; what-if sweep D7): a bank robbery at release? A: no, the bank stays a soft-edge place at the Exchange (recommended); B: a bank job after release; C: add it now, with a walked interior, alarm and tape.
 - Q18 (3.1, the story chapter above): His yes on the measured story, which the one-shot waits on (story, canon). The story is now chosen and on paper (frame of 24 Nov, 69 spine cards, the key scenes). Recommended: give the yes on the measured frame and its first-week slice now that the written-Frank choice is settled (written in the key scenes, C-349), with the remaining eighteen key scenes written.
 
 Answered on his decisions page of 24 Nov (RULINGS on wip; the parts are built to his answer):
+- Q6 every named person his or her own temper: yes (his Story line of 24 Nov, "each a temper"); the temper model's five dials, nerve, greed, mouth, law, grudge (2.14, run 7). The brain level (2.14.1) waits on the re-run his rulings of 24 Nov order (advisors 371, 372).
 - Q3 the lead's line on women, over-sixties and the priest: dropped (not the recommended keep; RT-09 out, C-275).
 - Q4 the blow on a downed man: stays, fully animated, no cut-away; beating a pleading man too; PEGI 18 within canon's limits (not the recommended cut-away; RT2-11, 1.3.5, 5.2.2, 5.9, 10.2).
 - Q5 DS Ellis: can be bought, about 800 pounds then 100 a week, a missed week ends it (not the recommended no; 2.6.8, 4.3.7, C-282).
