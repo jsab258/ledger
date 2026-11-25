@@ -4,9 +4,9 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-25 10:22 (the hourly run)
 
-**Row due:** 12:03 (last row 11:03; page read 11:11; filter verdicts after 2026-11-25T10:11 UTC, advisor after 2026-11-25T11:00:00+01:00; last ack 382 at 11:13).
-**Uncommitted:** this file only (no notes-only commit); the office-print PNGs and three Kiln notes are not this session's, left alone.
-**Stopped:** 2026-11-25 09:49 (the 08:52 run; nothing running but a harmless page scan loop)
+**Row due:** 12:03 (last row 11:03; page read 11:29; filter verdicts after 2026-11-25T10:29 UTC, advisor after 2026-11-25T11:00:00+01:00; last ack 382 at 11:13).
+**Uncommitted:** nothing of this session's; the office-print PNGs and three Kiln notes are not this session's, left alone.
+**Stopped:** 2026-11-25 11:33 (the 10:22 run; past the history point; nothing running)
 
 (At each item's end `python tools/history_check.py`: OVER means rewrite this file, set Stopped, stop.)
 
@@ -34,29 +34,29 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- 07:22 run: n23-3 drafted and reviewed; advisors 374-377.
-- 08:52 run: advisors 378-380 in RULINGS or acted on, acked. **Footage runs hidden again** (the 01:15 hand-over rule was the cause; hidden, the page is 480x273: tools/drills/frame_sheet.js oneFit, then a 2 s wait and a full-size screenshot or a zoom of the frame). Chases on foot, Sleeping Dogs 2 of 5 (SLEEPING-DOGS-FOOT-CHASE-2026-11-25.md): opening run scripted 96 s, capture; night market 67 s, gap 12-16 m, ends at a set fight. **n23-3 reopened to 4 Dec** (advisor 380): recommendation revised, routing fault in FINDINGS, DECISIONS line. Rows 09:10.
+- 07:22 and 08:52 runs: n23-3 drafted, reviewed, reopened to 4 Dec (advisor 380); advisors 374-381 acted on; Sleeping Dogs chases 2 of 5.
+- 10:22 run: **chases on foot, L.A. Noire 2 of 5** (LA-NOIRE-FOOT-CHASE-2026-11-25.md): Part 1 rooftop about 52 s, warning shot, arrest cutscene; Part 2 (MBQWlj8scTI) alleys about 58 s, hostage, cutscene; each part holds one foot chase only. **Advisor 382** (his pick A, chance in combat) in RULINGS' Combat line at the 4,900 cap, DECISIONS, acked 11:13. Rows 10:23, 11:03. Pushed 84e80743a, d26f97d3e.
 
 ## In flight
-- Nothing running: no helper, no game; the browser pane holds YouTube (L.A. Noire Part 1, B4rTMBDczuU, not yet read).
+- Nothing running: no helper, no game, no scan; the browser pane holds GamesMediaLA Part 4 (mbM6es4xLLc) paused, viewport emulated 1280x720 (the app clears it).
 
 ## Next, in order
-0a. Advisor 381 done 09:44 (note ONE-SHOT-REPLY-MODEL-2026-11-25.md, acked); n23-3 now only that note plus the 4 Dec delivery; no voice work before the loops.
-000. **Footage runs with the pane hidden** (checked 08:55 25 Nov, screen off: plays, seeks in 0.1-0.25 s, frames read). The 01:15 failure was a stalled player; on a stall reload the tab once and re-query the video, never wait for the pane.
+000. **Footage runs with the pane hidden** (the method in item 3).
 00. Pace: 80% at 04:46; **the weekly stop is 90%** (advisor 352): at the newest reading of 90% finish the step, commit, push, one row, write production/weekly-stop.json {"until": "2026-11-30T13:00", "reading": N}, set "**Next due:** 2026-11-30 13:00", one page item (switch off the scheduled task ledger-daily-fresh-session, Code tab, Scheduled; on after Monday 13:00), stop all work. Full pace until then (advisors 359, 366: no pace-line holds).
 0. If he types "RDR2 drill starting": `python tools/drills/rdr2_record.py start` in the background; on "RDR2 drill done": the same with stop; read the frames by his card (advisor 361).
 1. **On foot, the walk:** cadence done (solid). Step length still unread: a side-on stretch, heel gap over height (none seen in rzz5BOoJ9Rc); then KCD2's walk is first person, so the second game's walk is RDR2 or Sleeping Dogs footage.
-3. **Chases on foot:** Sleeping Dogs 2 of 5 done (loss: gap over about 45 m for about 20 s); next L.A. Noire (Santosx07 Part 1 B4rTMBDczuU is 7,066 s with no chapters: motion scan done to about 6,200 s 25 Nov 09:48 (frame_sheet.js mscan; median motion 17): stretches over 40 for 30 s or more at 900-1010, 1100-1150, 1640-1670, 2060-2090, 2180-2210, 2970-3030, 3230-3260, 3300-3330, 3630-3660, 4000-4040, 4570-4640, 4910-4990, 5030-5060, 5360-5410, 5930-5980 s; read each by eye with oneFit only after the scan loop has ended; 6,200-7,066 not scanned), then GTA V by a shape method. Ads: wait them out (play, skip button) before reading.
+3. **Chases on foot:** Sleeping Dogs 2 of 5; L.A. Noire 2 of 5 (both scripted: length and ending only). Next L.A. Noire source: Santosx07's later parts (only Part 2 and the Ending e_ND3GkfDj4 found by search; try his channel's uploads page or the Ending's description), or GamesMediaLA's 18 parts (IDs in the note; Part 4 scanned to 2,096 s, stretches listed, SET ASIDE for ad density: 1-3 min pods every two or three seeks). Hidden-pane method that works (25 Nov): resize_window 1280x720 on the tab, then a nine-frame canvas sheet (sheet6, in the note's method) and one screenshot; when the video has no duration or ready state 0, call movie_player.seekTo(t,true) then playVideo(); a 4,451 s 'advert' (a lecture) needs a page reload; Skip by ref does nothing hidden. Filter scan stretches with one mid frame first (most are driving). Then GTA V by a shape method.
 4. **KCD2 being seen with crowd reactions** (one town crime clip serves both): ibyJamin Part 4 (wMk2tFAd26E) or 5 (AK8xLkS1Cfs), hare scan with the parchment filter (drop hits above 12% beige); first check by eye that this player shows the behaviour icon at a known alarm. If none by the week's end, say so in STATUS.
 4a. **Photo counts (advisor 370):** two tries used; OS legend unreached (06:10); next period footage of northern side streets by eye. Quay Street stays at 34 m. 5. 1990 sources: headlamp reach a lead (period-lamps-reach-2026-11-25.md); BS 5489-3:1989 unreached; our car braking (8-11 m vs the Code's 14 m) unchecked.
 6. n23-7 DAILY-2026-11-25 by 19:00 (add the API line: US$1.10 tonight).
-6b. **n23-4 trial:** ZONOS3-Mini: its weights download raised in chat when he is at the PC (file, source, size), then the 12 cast lines against Pocket (the Pocket versions now exist, path above). **n23-3:** OPEN to 4 Dec (advisor 380): recommendation revised 09:40 (routing fault named in FINDINGS; bar on the real-question model, missed; no Haiku switch on speed; layer swappable). Before 4 Dec: the blind quality comparison only if a switch is proposed; ZONOS3-Mini: the download goes through the advisor chat (advisor 380). Measuring runs: swap only LedgerTalk.exe into the played copy with a backup; end processes with cmd /c taskkill (PowerShell's strict errors on taskkill skipped the restore once).
+6b. n23-4 voice trial waits for the loops, no download (advisor 381).
 0b. Next night walk Mon 30 Nov 01:30 (held while the stop file holds). 4p. Marvelous stays open. No Unreal work until the browser prototype is done (advisor 288). 5p. History rewrite HELD for his word. Progress page daily (progress.json only).
 
 ## Footage tools
 All in tools/drills/frame_sheet.js (sheet, SAVED EVIDENCE to F:/LedgerTools/game-inputs/footage/<id>/, RED SCAN for RDR2, HARE BOX SCAN for KCD2), each with its known faults. Stamp every time from Get-Date. Storyboard sprites for colour cues only; leg crops every 0.1 s read cadence.
 
 ## Tried and failed, and why (newest; older in TRIED-ARCHIVE.md)
+- 25 Nov 11:33: GamesMediaLA uploads carry advert pods every two or three seeks (five in 12 min); set aside for Santosx07's. 10:57: the motion scan stalls when the player drops its source hidden; fixed with the player's own seek and play calls.
 - 25 Nov 09:05: in the hidden pane 4x3 sheets are unreadable (page 480x273) and screenshots taken at once or scaled came back black; one frame, 2 s wait, full size works.
 - 25 Nov 07:32: a run script with $ErrorActionPreference Stop died on taskkill's stderr before restoring the shipped talk program (restored by hand, hash checked). 08:15: joined a transcript's "reply" and "rest" for recordings; "reply" is already whole (rest repeats its tail).
 
