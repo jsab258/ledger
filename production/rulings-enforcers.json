@@ -657,6 +657,13 @@
     "monday-audit"
    ],
    "note": "design, judgement: the Monday audit checks the lane's LONG-HEAT design against it (recoverable, no dead end; bribery rare, costly, risky)"
+  },
+  {
+   "line": "25 Nov (advisor 379): the Unreal phase's first",
+   "by": [
+    "monday-audit"
+   ],
+   "note": "advisor 379, 25 Nov: the animation lab test opens the Unreal phase (his pick B, not now); the Monday audit checks it stands first in the blueprint's technical chapter and that no Unreal animation work starts before it"
   }
  ]
 }
