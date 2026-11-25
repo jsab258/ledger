@@ -129,3 +129,12 @@ The method that makes the game, in setting-free words, rewritten from NOTEBOOK.m
 - Cost: about 4 builder hours over the day, most of it reading by eye before the scan existed; the scan pass itself under 1 hour.
 - Failed and why: a colour-only scan nearly missed a flashing state (the word white or pink most of the time), so count bright pixels in the word's own box; captures can lag one draw (trust the burned-in time label, confirm edges twice); a hidden browser pane unloads the video (a watchdog resumes it).
 - Evidence: production/research/lane/measurements/review-being-seen-rdr2-2026-11-24-d.md.
+
+### Walking cadence read from third-person footage (25 Nov 2026)
+- Made: a game character's walking cadence from an uncut, real-time video, five stretches, made solid by count.
+- Method: crop the legs, draw one cell every 0.1 s (about a fifth of a step) labelled with the video time; mark when a raised sole shows most in its rear swing; left and right alternate, so the gap between peaks is one step. Read whole sheets at a size where the shoe fills several pixels; tell sides by which leg the sole hangs from. Check the upload's speed first against an in-game clock (a day's light cycle).
+- Tools: a canvas contact-sheet function pasted into the video page; the browser pane's screenshots as saved evidence; one fresh low-cost reviewer reading the sheets blind.
+- Target and check: five samples agreeing within 10%; the reviewer's peaks within one cell.
+- Cost: about 0.15 h plus the reviewer's minute.
+- Failed: counting wide stances (both feet down) read 25% high, and one foot's repeat taken as a step read 65% high; small or dark crops hide the sides. A hidden browser window stops video decoding: footage needs the window on screen.
+- Evidence: production/research/lane/measurements/ON-FOOT-METHOD-2026-11-24.md (25 Nov entry); reviews/gta5-walk-cadence-review-2026-11-25.md.
