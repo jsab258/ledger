@@ -4,7 +4,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 
 **Started:** 2026-11-25 05:37 (the hourly run)
 
-**Row due:** 06:48 (last row 05:48; page read 06:09; filter verdicts after 2026-11-25T05:09 UTC, advisor after 2026-11-24T23:55:00+01:00; last ack 373 at 23:55; nothing new since).
+**Row due:** 07:34 (last row 06:34; page read 06:23; filter verdicts after 2026-11-25T05:23 UTC, advisor after 2026-11-24T23:55:00+01:00; last ack 373 at 23:55; nothing new since).
 **Uncommitted:** nothing; work pushed with this file.
 **Stopped:** 2026-11-25 05:03 (the 03:37 run: live talk measured inside the packaged game, real questions 1.73 s median, voice 0.05 s; voice-model scan shortlisted; 1990 gaps set aside; the ruler check found no ruler; footage impossible while the pane is hidden, so stopped at the item's end with nothing else runnable before he is up; nothing running)
 
@@ -34,7 +34,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 - **Progress page (advisor 275):** each refresh reads the live page and publishes only progress.json and changed files; never an old index.html, never plan.json. Helpers only as project types: settings_check flags catch-all helpers (target under 2%).
 
 ## Done today
-- 05:37 run: **ruler check** (n23-2) set aside after two tries: film or character ~20% fast (walk 2.0 vs 1.6, run 5.0 vs 4.2 m/s by the lamps), a position line after the prototype (STATUS); filmed tester walks up to 16 s. **n23-3**: held set again, 1.59 s, 3/30 fell back; these questions run on Haiku by the moment rule. US$0.60 logged. OS lamp legend unreached. Row 05:48.
+- 05:37 run: **ruler check** (n23-2) set aside after two tries: film or character ~20% fast (walk 2.0 vs 1.6, run 5.0 vs 4.2 m/s by the lamps), a position line after the prototype (STATUS); filmed tester walks up to 16 s. **n23-3**: newcomer questions run on Haiku by the moment rule: 1.59 s, 3/30 fell back; forced to Sonnet 5.5 (new default-off LEDGER_TALK_MOMENT switch, shipped exe restored): 5.34 s, 1/30 under 2 s. US$1.40 logged. OS lamp legend unreached. Rows 05:48, 06:34.
 - 03:37 run: live talk in the game 1.73 s (N23-3-QUESTIONS); voice scan shortlist (ZONOS3-Mini first); 1990 gaps set aside; 17 tester pictures deleted.
 
 ## In flight
@@ -50,7 +50,7 @@ The one file a fresh session starts from. Rewritten at each stop; cap 1,800 word
 4a. **Photo counts (advisor 370):** two tries used; the different method: the OS 1:2,500 legend (are lamps drawn?), then period footage of northern side streets by eye. Quay Street stays at 34 m. 5. 1990 sources: footfall from the reader's file; headlamp reach now a lead (period-lamps-reach-2026-11-25.md); BS 5489-3:1989 and the 1987 Highway Code table unreached; our car braking flag (8-11 m against the Code's 14 m) unchecked.
 6. n23-7 DAILY-2026-11-25 by 19:00 (add the API line: US$1.10 tonight).
 6a. **n23-2 ruler check:** done to two tries (05:47), set aside for a position line after the prototype; the cheap-reader trial still open.
-6b. **n23-4 trial:** ZONOS3-Mini: its weights download raised in chat when he is at the PC (file, source, size), then the 12 cast lines beside the game against Pocket. **n23-3:** fall-backs counted (05:58). Next: the better model's in-game time on newcomer questions needs a talk-program switch forcing the moment (e.g. an env word read beside LEDGER_TALK_CORE_MODEL) and the helper republished into the played copy, not during the night; then one held run with LEDGER_TALK_CORE_MODEL set to Sonnet 5.5; the recommendation by Fri 4 Dec weighs light model (1.6 s, measured) against better (unmeasured), one fresh reviewer first.
+6b. **n23-4 trial:** ZONOS3-Mini: its weights download raised in chat when he is at the PC (file, source, size), then the 12 cast lines against Pocket. **n23-3:** next, the better model with its first sentence by Haiku (ConversationEngine.FirstModel / LEDGER_TALK_FIRST_MODEL, with LEDGER_TALK_MOMENT=conversation and CORE_MODEL Sonnet 5.5): publish to F:/town-scratch, swap only LedgerTalk.exe into the played copy with a backup, run, restore (as 06:27). Then the recommendation by Fri 4 Dec (light model meets the bar; better only if fast-first does), one fresh reviewer first.
 6c. **4a photo counts:** the OS legend route read 06:10, unreached (no viewable 1970-90 plan; STATUS); next period footage by eye when the pane shows.
 0b. Next night walk Mon 30 Nov 01:30 (held while the stop file holds). 4p. Marvelous stays open. No Unreal work until the browser prototype is done (advisor 288). 5p. History rewrite HELD for his word. Progress page daily (progress.json only).
 

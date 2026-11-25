@@ -157,6 +157,8 @@ static class Program
         /// real-conversation moment to NAME instead of Models.Core, for a packaged measuring run; small talk is untouched
         /// and the moment rule (D48) unchanged. Unset, the game is exactly as shipped.
         public static string CoreModelOverride;
+        /// LEDGER_TALK_MOMENT (n23-3, 25 Nov 2026): a measuring run's forced moment, in place of the game's word; null as shipped.
+        public static string ForcedMoment;
         public static string ModelForMoment(TalkKind kind) =>
             kind == TalkKind.Conversation && !string.IsNullOrEmpty(CoreModelOverride) ? CoreModelOverride : TalkMoment.ModelFor(kind);
         /// The fast checker in front of Haiku, when LEDGER_FAST_CHECKER switched it on; null otherwise.
@@ -1128,7 +1130,7 @@ static class Program
                     // deal is standing, or it is a newcomer's real question; else small talk.
                     bool dealStanding = askTonight || weekAsk || weekStands;
                     lock (_askedNo) if (_askedNo.ContainsKey(to) || _askedWeek.ContainsKey(to) || _askedNo.ContainsKey(key) || _askedWeek.ContainsKey(key)) dealStanding = true;
-                    engine.Model = ModelForMoment(TalkMoment.Of(say, deedTopic != null || evidenceBears, dealStanding, momentSaid));
+                    engine.Model = ModelForMoment(TalkMoment.Of(say, deedTopic != null || evidenceBears, dealStanding, ForcedMoment ?? momentSaid));
                     var task = engine.SayToAsync(say, now, scene, cts.Token, onFirst);
                     var walkedOff = Task.Delay(Timeout.Infinite, walkCts.Token).ContinueWith(_ => { }, TaskScheduler.Default);
                     var timeout = Task.Delay(_patience);
@@ -1567,6 +1569,12 @@ static class Program
         string coreModel = cmi >= 0 && cmi + 1 < args.Length ? args[cmi + 1] : Environment.GetEnvironmentVariable("LEDGER_TALK_CORE_MODEL");
         Helper.CoreModelOverride = string.IsNullOrEmpty(coreModel) ? null : coreModel;
         if (Helper.CoreModelOverride != null) Console.Error.WriteLine("talk-helper: real conversation goes to " + Helper.CoreModelOverride + " (measuring switch)");
+        // THE MOMENT FORCED FOR A MEASURING RUN (n23-3, 25 Nov 2026): the held newcomer questions run as small talk by the
+        // moment rule, so the better model's time inside the game was never measured; LEDGER_TALK_MOMENT=conversation (or
+        // smalltalk) stands in for the game's own word on every line. Unset, the game is exactly as shipped.
+        string forcedMoment = Environment.GetEnvironmentVariable("LEDGER_TALK_MOMENT");
+        Helper.ForcedMoment = forcedMoment == "conversation" || forcedMoment == "smalltalk" ? forcedMoment : null;
+        if (Helper.ForcedMoment != null) Console.Error.WriteLine("talk-helper: every line's moment forced to " + Helper.ForcedMoment + " (measuring switch)");
         // THE KEY'S CAP, ENFORCED IN CODE (Jafar, 30 September): with --budget-usd
         // (or LEDGER_TALK_BUDGET_USD) every call reserves its worst case first,
         // and none is sent that could take the run past the budget (BudgetedClient).

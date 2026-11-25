@@ -9,7 +9,7 @@ GOAL (to Mon 30 Nov 13:00): his order of 23 November, adopted 23 Nov 08:12 (prod
 - [ ] n23-6 weekly audit; n23-7 efficiency and safety.
 - [x] Advisor 324: hidden-details catalogue (production/research/lane/details-catalogue/CATALOGUE.md).
 
-STATE (25 Nov 06:15): four numbers solid (Sleeping Dogs sprint 5.5, jog 4.5 m/s; RDR2 being seen, riding off, about 70.5 s); KCD2 being seen leads only; live talk in the game 1.6-1.7 s median on Haiku, 3 of 30 fall back; ruler check set aside (film or character ~20% fast); weekly stop at 90%.
+STATE (25 Nov 06:15): four numbers solid (Sleeping Dogs sprint 5.5, jog 4.5 m/s; RDR2 being seen, riding off, about 70.5 s); KCD2 being seen leads only; live talk in the game: newcomer questions on Haiku 1.6 s (3 of 30 fall back), forced to Sonnet 5.5 5.3 s; ruler check set aside (film or character ~20% fast); weekly stop at 90%.
 
 ## Handovers
 
