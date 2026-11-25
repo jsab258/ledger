@@ -1,21 +1,30 @@
 # Combat and stealth: summary
 
-25 Nov 2026. Ready for review.
+25 Nov 2026, revision 1 after your answers (10:52 to 11:31). Ready for review.
 
 ## For him, short
 
-Shortfalls first: the feature list is not yet complete enough (a fresh designer's check still scores 19% missing against a 5% target); answers often leave a detail open (12 of 20 on a clean test); nothing is built or measured yet, so all comparisons with other games are on paper.
+Shortfalls first: the gun and wound figures rest partly on judgement, because about half the medical sources would not open from the cloud (to read from the PC); of 30 outside questions, 1 was unanswered and 14 left a detail open before I added the missing lines, and those additions are not re-checked; nothing is built yet, so it is all on paper.
 
-What a fight should feel like: fast and ugly, over in seconds; most trouble ends with a look, a word or a blade shown; anything a man could try, the game answers; sneaking runs on dark, noise and turned backs; the street watches and retells how it was done; every blow has a price later and always a way back; Frank's strength is his people.
+What changed: no more hidden luck on a correct play. If Frank gets to a man unseen, the choke or cosh works; he fails only for things you could notice (light, a noisy floor, the man's glance over his shoulder, someone else watching). Small violence is safe; the danger grows with what you choose, the body shows it, and the rare chance at the violent end is fixed to your save, so reloading gives the same result. Your three yeses are in: a choke held on can kill, kicking a man on the ground can kill, a gunshot can kill at any time.
 
-What changed: one rule for injuries (what struck, how hard, where), one for each person's nerve, one for the senses, in place of special cases. Your fists rule stays. Crouch helps only in the dark.
+Where it lands:
 
-Test fights (44,000 simulated): a careful player wins about 4 in 5 one-on-one, a button-masher 1 in 5; two against one about 3 in 10; with Ron about 4 in 5. One death in 2,000 fist fights; a knife used kills in about 9 fights in 100. Sneaking in a dark doorway works about 6 times in 10, by day 1 in 7.
+| Part | Knife or club | Gun |
+|---|---|---|
+| Arm | drops what he holds, arm useless till treated | same; seldom kills |
+| Leg | limps, cannot run; a leg artery can kill | cannot run, crawls |
+| Body | drops him; serious to dying | down; half the time dying |
+| Head and face | knock-out, broken face, a scar the town knows him by | dying more often than not |
+| Neck | the most dangerous | nearly always dying |
 
-Your decisions:
-- D1. A choke held on after he passes out can kill: yes recommended, only if the player keeps holding.
-- D2. Kicking a man on the ground can kill, rarely: yes recommended (fists alone still cannot).
-- D3. A gunshot can kill at any time, not only once the town is at war: yes recommended; guns stay rare and late.
+Where weapons come from: kitchens; the ironmonger and the ship's chandler (sold openly, and they remember who bought); Rita's back room with Wayne for what the law forbade selling (knuckledusters, flick knives); taking one off a man in a fight or off a body; a rival's lock-up; guns as before (Mickey's desk, the deckhand at the fish dock). In 1990 carrying a blade in the street was a fine, not prison. Anyone down can be searched: a constable's truncheon, cuffs, radio (you hear the police hunt) and notebook (what they know).
+
+Test fights now: a careful player wins about 3 in 4 one-on-one, a button-masher about 1 in 9; two against one about 3 in 10; with Ron about 3 in 4. No deaths in 2,000 fist fights. Sneaking done carefully in the dark works almost every time; by day almost never. Kicking a downed man kills nobody if you stop when he goes still; about 3 in 100 fights if you keep kicking.
+
+New things you can do that GTA, Red Dead and Kingdom Come do not (on paper): break a knife arm and see him in plaster for weeks; a scar that names a man; hold a choke and let the body tell you when to stop; listen to a stolen police radio; open a dead man's flat with his keys; stash a blade under a cab seat to beat a search.
+
+Still open: wound and gun figures to confirm from the PC; feel timings wait for the measuring; inventories go to Monday's people pass.
 
 ## What else
 
@@ -27,5 +36,8 @@ Your decisions:
 - One subagent published its question list as a private artifact page while editing it (nobody else can open it); it is not part of the deliverable and can be deleted.
 
 ## Files
+
+Revision 1: REVISION-1.md (every change and why), rev1-work/ (law and wound research, the 10 new questions, RESULTS-30.md, REVIEW-REV1.md), SIM/v0/ (the first pass's simulator and results).
+
 
 COMBAT-SYSTEM.md (the system, CS-01 to CS-30, Out list, which blueprint parts it replaces), CENSUS.md, CENSUS-BLIND.md, SIM/ (combat_sim.py, results.json, results-print.txt, README.md), TESTS.md, RESEARCH.md, RULINGS-TO-REVISIT.md, METHOD.md, census-work/, tests-work/ (the helpers' files and the fresh review).

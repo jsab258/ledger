@@ -1,5 +1,7 @@
 # The combat simulator
 
+Revision 1 (25 Nov, his chance pick A): readable rules decide outcomes, chance only at the violent end and fixed to the save (fixed(), Fight.chance()); blocks by reaction time against wind-up; blows on the attacker's line; thresholds for knock-downs; stealth by his routine glance, footsteps in his hearing and other eyes, played three ways (walk, crouch, careful); zone effects (arm out, leg out, face marks); a gun table by zone and range; a knife table by zone; a reload check across random streams. The first pass's code and results are kept in v0/. `python3 combat_sim.py --seed 1990 --n 2000` reproduces results.json byte for byte (checked), about 25 s.
+
 combat_sim.py runs COMBAT-SYSTEM.md's rules on fights, threats and takedowns. Seeded and repeatable: `python3 combat_sim.py --seed 1990 --n 2000` reproduces results.json byte for byte (checked twice, and by the fresh reviewer). It takes about 15 s.
 
 - results.json: every scenario's numbers (win, lost, escaped, stopped, durations, deaths per 1,000, knock-outs, yields, flights, surface use, the opponents' worst injuries, the consequences: charges at each level, the street's reading band, revenge, reports, hospital days), the stealth approach grid (light by crouch by surface), the takedowns, the held-choke curve and the threat table.

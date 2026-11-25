@@ -2,6 +2,15 @@
 
 25 Nov 2026. All judging by fresh Opus testers who did not write the design; the files are in tests-work/.
 
+## 0. Revision 1 (25 Nov, after his answers)
+
+| Set | Questions | Answered | Weak | Unanswered | Notes |
+|---|---|---|---|---|---|
+| The 20 clean questions, re-judged by a fresh Opus tester against revision 1 | 20 | 8 | 11 | 1 (5%) | rev1-work/RESULTS-30.md. C08 (two people Frank wronged meeting) unanswered; first pass 8, 12, 0. |
+| 10 new questions on zones, weapons and searching, a fresh Opus writer who saw nothing | 10 | 7 | 3 | 0 | rev1-work/NEW-10.md, RESULTS-30.md. Weak: aiming at the weapon arm, a thrust to the leg, the sawn-off at the legs. |
+
+After the judging, CS-02 (aim at the weapon arm, low thrusts) and CS-35 (thirteen lines) answered every weak and unanswered point the tester listed: the designer's count, not re-judged, so the honest measure is the table above. Target (under 5% unanswered): 1 of 30 (3%), too few questions to prove it.
+
 ## 1. The questions
 
 | Set | Questions | Answered | Weak | Unanswered | Notes |

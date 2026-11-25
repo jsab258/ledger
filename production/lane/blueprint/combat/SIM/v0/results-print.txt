@@ -1,0 +1,34 @@
+1v1 fists patient                  win  78.8% (of decided  94.7%)  lost   4.5%  ran  0.0%  stopped 17.0%  med 15.2s p90 30.3s  deaths/1000 0.5
+2v1 fists patient                  win  28.6% (of decided  39.8%)  lost  43.2%  ran  0.0%  stopped 28.2%  med 24.5s p90 40.5s  deaths/1000 0.5
+1v1 fists masher                   win  18.5% (of decided  22.0%)  lost  65.7%  ran  0.0%  stopped 15.8%  med 16.1s p90 28.7s  deaths/1000 0.0
+2v1 fists masher                   win   0.1% (of decided   0.2%)  lost  93.2%  ran  0.0%  stopped  6.9%  med 8.2s p90 12.5s  deaths/1000 0.0
+1v1 fists street                   win  72.8% (of decided  89.9%)  lost   8.2%  ran  0.0%  stopped 19.1%  med 16.1s p90 31.9s  deaths/1000 0.0
+2v1 fists street                   win  20.1% (of decided  26.6%)  lost  55.5%  ran  0.0%  stopped 24.6%  med 22.1s p90 37.6s  deaths/1000 0.0
+1v1 fists menace                   win  77.5% (of decided  93.1%)  lost   5.8%  ran  0.0%  stopped 16.9%  med 16.8s p90 33.4s  deaths/1000 0.5
+2v1 fists menace                   win  23.4% (of decided  31.5%)  lost  50.8%  ran  0.0%  stopped 26.0%  med 23.2s p90 40.2s  deaths/1000 0.0
+1v1 fists runner                   win  55.5% (of decided  64.7%)  lost   2.4%  ran 27.9%  stopped 14.2%  med 14.6s p90 25.7s  deaths/1000 0.0
+2v1 fists runner                   win   4.2% (of decided   4.7%)  lost   6.0%  ran 79.1%  stopped 10.8%  med 11.3s p90 21.3s  deaths/1000 0.0
+3v1 fists patient                  win   1.1% (of decided   1.4%)  lost  83.8%  ran  0.0%  stopped 15.2%  med 16.0s p90 25.9s  deaths/1000 0.0
+2v2 with Ron patient               win  77.5% (of decided  93.6%)  lost   5.3%  ran  0.0%  stopped 17.8%  med 19.5s p90 31.8s  deaths/1000 0.5
+1v1 kerbside patient               win  80.0% (of decided  94.6%)  lost   4.5%  ran  0.0%  stopped 15.6%  med 15.9s p90 31.4s  deaths/1000 0.5
+1v1 vs knife man patient           win  50.0% (of decided  53.5%)  lost  43.5%  ran  0.0%  stopped  6.6%  med 9.1s p90 17.2s  deaths/1000 0.0
+1v1 Frank knife patient            win  95.8% (of decided  99.0%)  lost   0.9%  ran  0.0%  stopped  3.3%  med 3.9s p90 14.6s  deaths/1000 94.0
+1v1 Frank cosh patient             win  89.8% (of decided  98.0%)  lost   1.8%  ran  0.0%  stopped  8.5%  med 7.9s p90 21.2s  deaths/1000 3.0
+1v1 Frank bat masher               win  73.9% (of decided  78.5%)  lost  20.2%  ran  0.0%  stopped  6.0%  med 4.7s p90 21.3s  deaths/1000 3.0
+2v1 Frank knife patient            win  67.5% (of decided  77.3%)  lost  19.9%  ran  0.0%  stopped 12.7%  med 10.6s p90 27.8s  deaths/1000 159.0
+1v1 menace with knife shown        win  96.4% (of decided  99.0%)  lost   0.9%  ran  0.0%  stopped  2.7%  med 0.0s p90 9.7s  deaths/1000 42.0
+1v1 fists, Frank finishes          win  79.4% (of decided  94.2%)  lost   4.8%  ran  0.0%  stopped 15.8%  med 16.1s p90 30.0s  deaths/1000 15.5
+1v1 cosh, Frank finishes           win  91.2% (of decided  98.0%)  lost   1.9%  ran  0.0%  stopped  6.9%  med 7.6s p90 21.1s  deaths/1000 42.0
+1v1 yard at night, nobody about    win  94.2% (of decided  94.2%)  lost   5.8%  ran  0.0%  stopped  0.0%  med 18.3s p90 33.1s  deaths/1000 1.0
+doorway_dark|crouch|wet_cobbles {'out': 0.58, 'broke_free': 0.228, 'spotted': 0.128, 'turned': 0.065}
+unlit_street|walk|wet_cobbles {'broke_free': 0.143, 'out': 0.339, 'spotted': 0.442, 'turned': 0.076}
+unlit_street|crouch|wet_cobbles {'turned': 0.047, 'broke_free': 0.173, 'spotted': 0.367, 'out': 0.412}
+lamp|crouch|dry_flags {'spotted': 0.732, 'out': 0.179, 'turned': 0.019, 'broke_free': 0.07}
+day|walk|dry_flags {'spotted': 0.77, 'out': 0.149, 'broke_free': 0.058, 'turned': 0.022}
+unlit_street|crouch|gravel {'out': 0.353, 'broke_free': 0.138, 'spotted': 0.445, 'turned': 0.065}
+unlit_street|crouch|metal_deck {'out': 0.31, 'spotted': 0.466, 'broke_free': 0.137, 'turned': 0.088}
+takedown choke {'spotted': 0.383, 'turned': 0.044, 'out': 0.401, 'broke_free': 0.173}
+takedown cosh {'spotted': 0.391, 'staggered': 0.055, 'out': 0.338, 'knocked_down': 0.154, 'turned': 0.05, 'out_serious': 0.008, 'dead': 0.002, 'critical_survived': 0.001}
+takedown fist {'spotted': 0.37, 'staggered': 0.427, 'out': 0.07, 'knocked_down': 0.084, 'turned': 0.046, 'out_serious': 0.003}
+takedown knife {'serious': 0.237, 'spotted': 0.377, 'wounded': 0.212, 'dead': 0.076, 'turned': 0.047, 'critical_survived': 0.051}
+takedown choke_held_past_knockout_death_chance {'5 s': 0.0, '15 s': 0.0, '30 s': 0.1, '60 s': 0.4, '90 s': 0.7, '120 s': 0.95}
