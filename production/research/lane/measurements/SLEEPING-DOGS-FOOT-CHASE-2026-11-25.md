@@ -98,3 +98,27 @@ Built on: foot-chase-candidates-2026-11-24.md (the favour: a thief robs Wei, a c
 What it gives the row: **about 14 s of chasing (about 37 to 51 s, edges at 1.5 s)**; ends in a scripted catch (the thief falls, a fight), not an escape. The thief is rarely in frame at this size (gap unread). A short chase: the favour puts the fight before the run.
 
 Running total: Sleeping Dogs 3 of 5 (about 96, 67, 14 s). Next: Mission #6 "Identify & Arrest Supplier" (Willzyyy, RIBAlGcsZWs, 12:50) and the police run in "Meet the New Boss".
+
+## Lead, not a sample: Mission #6 "Identify & Arrest Supplier" (read 25 Nov 2026, 16:29 Swiss by Get-Date)
+
+Source: Willzyyy, https://www.youtube.com/watch?v=RIBAlGcsZWs (770 s, published 9 Jan 2023, recorded on PC in 4K by its description). Thumbnails every 5 s, real frames 252-416 s every 3 s. 229-333 s is a tail at walking pace (a shop, stairs, a park, a basketball court); 335-338 s running; 341-350 s uniformed police take a man down on the court, a red marker on the minimap; 353-359 s on foot past police in the rain; from 362 s a car chase behind a police car. About 20 s on foot at most before the car, who chases whom unread at this size. Set aside as a lead: a foot-to-car handover, not a foot chase with its own end. Sleeping Dogs stays 3 of 5. Next: the favours or missions the guide names (Siu Wah, Ponytail, Zi Wai) and the police run in "Meet the New Boss".
+
+## Sample 4: Ponytail, in "Meet the New Boss" (read 25 Nov 2026, 16:31 Swiss by Get-Date)
+
+Source: The-Rickster6, "Sleeping Dogs: Definitive Edition | Joe Ponytail Chase", https://www.youtube.com/watch?v=ALTXcZ0nrUA (292 s, published 10 Feb 2016 by the page's own data; its description links the PlayStation Store page, so PS4, inferred). Found by YouTube search 25 Nov (the target named in foot-chase-candidates-2026-11-24.md, the cheatcodes guide's Mission 16). Thumbnails every 2 s, then real frames 148-238 s every 3 s.
+
+Built on: foot-chase-candidates-2026-11-24.md (Ponytail named among the guide's foot chases of non-police targets).
+
+| Time (s) | Seen |
+|---|---|
+| 0-146 | the car part: shooting from a car roof, then a crash (146-154) |
+| 157-160 | black (a fade between the crash and the run; whether the upload cuts here is unread) |
+| 163-172 | Wei running after Ponytail up stairs and through an arcade, Ponytail in frame a few metres ahead (about 5-10 m, by eye, estimate) |
+| 175-223 | a car park, a ramp, a drying-sheet yard, a kitchen with cooks, alleys and stairs |
+| 226 | a barred gate |
+| 229 | cutscene: Ponytail down |
+| 232-238 | a fight follows |
+
+What it gives the row: **about 66 s of chasing (about 161 to 227 s, edges at 3 s)**; the gap by eye about 5-10 m where Ponytail is in frame; ends in a scripted takedown and a fight, not an escape; obstacle or space change every 5-15 s.
+
+Running total: Sleeping Dogs 4 of 5 (about 96, 67, 14, 66 s). Next: "Catch Siu Wah" (Game Dreamerz, aFDawv1-XlM, 4:28).
