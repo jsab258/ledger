@@ -40,7 +40,7 @@ The minimal screen.
 
 - How it works: The picture's corners darken and lift with the same light value the watchers use (daylight 1, lamp 0.7, unlit street 0.25, doorway 0.12); the cue is darkness at the frame's corners, no meter. It must be readable under simulated protanopia, deuteranopia and tritanopia.
 - Standard: Cue matches the rule's light value (DESIGN §2) Test: H: ER-EYES-01 with the cue off and on
-- Source: DESIGN §2 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §2; DESCRIPTION-2 §3; DEFINITIONS-2026-11-21 §AX-11; PARTS-TREE 6.1.4
+- Source: DESIGN §2 (DECIDED by the design proof, for him to overturn). Designed in: DESIGN §2; DESCRIPTION-2 §3; DEFINITIONS-2026-11-21 §AX-11; PARTS-TREE 6.1.4 Reality check (CHECK D6): the four light values are a design scale, not lux; tie it to the period's lit-street levels (BS 5489-3:1989 classes, 3.5 to 6 lux on a side street, 5.4.2) when the watcher numbers are measured.
 - Status: decided. Coverage row: 6.1.4.
 
 ### 6.1.5 Knowing the time

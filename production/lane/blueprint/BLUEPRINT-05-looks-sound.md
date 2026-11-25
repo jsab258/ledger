@@ -46,7 +46,7 @@ People on screen.
 
 - How it works: Named only; not designed beyond: a crowd count by hour and place (design pass 4: the parade front 12 to 20 people in the busy bands, 5 to 10 from 18:00 to 22:00, 2 to 5 from 22:00; one frame 4 to 10, GD-02) and the rule that a crowd extra who catches any slot of a deed becomes kept, with a fixed face, a coat and a home. No repeat distance or variety rule exists.
 - Standard: none yet: repeat distance and variety rules to be set Test: S: no identical pair in one frame; his eye
-- Source: risk R5 (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: DEFINITIONS-2026-11-21 §G9, §RT2-10; COVERAGE 5.1.5; 6-RISKS R4; PARTS-TREE 5.1.5
+- Source: risk R5 (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: DEFINITIONS-2026-11-21 §G9, §RT2-10; COVERAGE 5.1.5; 6-RISKS R4; PARTS-TREE 5.1.5 Reality check (CHECK C83): the parade front 12 to 20 people and the evening bands are design counts; real counts come from dated street photographs and film of 1990 port-town high streets, with KCD2 only for feel.
 - Status: outside. Coverage row: 5.1.5. Conflicts settled: C-314.
 - Measured floor: the crowd counts in GD-02 (7.12) now carry a measured floor, 6 people in the busiest daytime view (STATUS.md on wip, 24 Nov); the bands above are older leads. Status unchanged.
 - Prior research: casting/notes/crowd.md (SIGGRAPH 2008): colour tint doubles the time to spot a clone, so vary clothes before faces; idles 5 to 8 per kind with randomised starts (game-design/research/inhabited-street.md); game-design/authored-breadth-2026-11-13.md.
@@ -80,9 +80,9 @@ Movement.
 
 ### 5.2.4 Faces and mouths
 
-- How it works: Live lines' mouths follow the voice's loudness; prepared lines use Epic's audio-driven mouths. Frank stands about 1.5 m from a speaker and both face each other, with a glance before a live answer and no thinking sound (his ruling of 24 Nov). A speaker's face must not be broken when talking (the 4 Oct friends' build line asks for Sheila's face whole).
+- How it works: Live lines' mouths follow the voice's loudness; prepared lines use Epic's audio-driven mouths. Frank stands about 1.5 m from a speaker and both face each other, with a glance before a live answer and no thinking sound (his ruling of 24 Nov). After the clips test (5.2.7), MetaHuman Animator's voice-driven face is tried beside Epic's audio-driven mouths (his ruling of 25 Nov, advisor 379), gated against the same references. A speaker's face must not be broken when talking (the 4 Oct friends' build line asks for Sheila's face whole).
 - Standard: Live lines' mouths follow loudness; prepared lines use Epic's audio-driven mouths (1 Oct); Sheila's face whole when she talks Test: his eye at talking distance
-- Source: RULINGS 1 Oct, 4 Oct (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: RULINGS 1 Oct (Voices); DESIGN §11 Staging; PARTS-TREE 5.2.4; production/research/talking-face-faults/NOTE.md
+- Source: RULINGS 1 Oct, 4 Oct; 25 Nov (advisor 379, the voice-driven face test) (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: RULINGS 1 Oct (Voices); DESIGN §11 Staging; PARTS-TREE 5.2.4; production/research/talking-face-faults/NOTE.md
 - Status: outside. Coverage row: 5.2.4. Conflicts settled: C-300.
 - Prior research: research/lip-sync: Epic's StreamingADA (hidden beta in 5.8.2) returns 81 face controls every 20 ms about 80 ms behind, 34 MB; amplitude jaw as fallback; research/talking-face-faults: the captured idle passes about 150 mouth controls, only 11 overridden by loudness.
 
@@ -104,11 +104,12 @@ Movement.
 
 ### 5.2.7 Clip sourcing and cleanup
 
-- How it works: Clips come from Epic's samples, MetaHuman's movement clips, Mixamo on his account, and CMU motion capture inside the game (never resold or shipped as a library). Pexels and Pixabay clips serve only as motion references and controls, each licence read and recorded; he never films or performs anything. Raw Mixamo files stay out of git, history included.
-- Standard: Sources allowed: Epic samples, MetaHuman, Mixamo on his account, CMU inside the game; Pexels/Pixabay as references Test: each clip's source and licence recorded
+- How it works: Clips come from Epic's samples, MetaHuman's movement clips, Mixamo on his account, and CMU motion capture inside the game (never resold or shipped as a library). Pexels and Pixabay clips serve only as motion references and controls, each licence read and recorded; he never films or performs anything. Raw Mixamo files stay out of git, history included. The Unreal phase's first animation test (his ruling of 25 Nov, advisor 379): local text-to-animation, free first (NVIDIA Kimodo), on six two-body can-you moves; do the generated bodies meet at the contact, or do they need warping or mocap? Gated against Epic's animation sample and KCD2.
+- Standard: Pass: each of the six moves, played in the packaged build, has the two bodies meet at the contact without a visible fault, judged against Epic's animation sample and KCD2 frames; the six moves come from the can-you passes (not yet named). Sources allowed: Epic samples, MetaHuman, Mixamo on his account, CMU inside the game; Pexels/Pixabay as references Test: each clip's source and licence recorded
 - Source: RULINGS People's moves; 9, 12 Nov (Unreal-only; judged in Unreal against the Hook sheet and KCD2 frames). Designed in: RULINGS People's moves, 9 Nov, 12 Nov, 19 Nov; license-allowlist item 11; PARTS-TREE 5.2.7
-- Status: outside. Coverage row: 5.2.7.
+- Status: outside. Coverage row: 5.2.7. Conflicts settled: C-507.
 - Prior research: research/ai-video-motion: local clip (Wan 2.2 TI2V 5B) about 100 min of card for 81 frames at 832 by 480; markerless solve 35 to 41 min CPU, about 10 min per second of motion; foot slide under 2 cm. He never films (RULINGS 9 Nov).
+- Prior research: production/research/frontier-ai-uses/notes/HD-motion.md section B1: Kimodo's SOMA weights are under the NVIDIA Open Model License (code Apache-2.0; its SMPL-X weights are non-commercial); one body, at most 10 s a prompt, foot skating, about 17 GB of video memory (under 3 GB with the text encoder on the CPU), tested on NVIDIA cards only. Its licence is not on the allowlist and must be read there before use.
 
 ### 5.2.8 Physical reactions and falls
 
@@ -179,9 +180,9 @@ Light and grade.
 
 ### 5.4.2 Night lighting
 
-- How it works: Night is pools of lamp light with darkness between, lit windows, never one orange wash. The pool under a lamp is about ten times the night fill (the real range is 10 to 25); real side streets are lit to 3.5 to 6 lux average with the dimmest point 1 to 2.5 lux. Frank and the ground 5 m round him must always be visible above a brightness floor kept in the one tuning table.
+- How it works: Night is pools of lamp light with darkness between, lit windows, never one orange wash. The pool under a lamp is about ten times the night fill (the real range is 10 to 25); real side streets of the period were lit to class 3/3 or 3/2 of BS 5489-3:1989, 3.5 to 6.0 lux average with the dimmest point 1.0 to 2.5 lux (the brighter class 3/1 is 10.0 and 5.0). Frank and the ground 5 m round him must always be visible above a brightness floor kept in the one tuning table.
 - Standard: Ruling 1 Oct; ER-NIGHT-01 brightness floor Test: H: darkest-spot screenshots; the gate at night
-- Source: RULINGS 1 Oct; DESIGN §6 (his ruling or canon). Designed in: RULINGS 1 Oct, 7 Oct; DESIGN §6 ER-NIGHT-01; LIGHT-WEATHER-VALUES-2026-11-17; PARTS-TREE 5.4.2
+- Source: RULINGS 1 Oct; DESIGN §6 (his ruling or canon). Designed in: RULINGS 1 Oct, 7 Oct; DESIGN §6 ER-NIGHT-01; LIGHT-WEATHER-VALUES-2026-11-17; PARTS-TREE 5.4.2 Reality check (RESEARCH L2): the lux figures are the period's own BS 5489-3:1989 classes (kept in the 1992 reprint), Fotios and Robbins 2020 Table 1, table layout flattened, values aligned by order; the S1 class (15 and 5) is the 2003 code, not 1989. Lamp spacing is separate (4.1.1).
 - Status: ruled (his ruling or canon). Coverage row: 5.4.2.
 - Prior research: research/evening-light-1990 and archived DECISIONS 4 Nov: real night photographs 3.0 to 5.2 stops from pool to gap; the readable-night fix took the near-black share from 66% to 45%; sodium 589 nm (see 4.7).
 - Data (run 5): exact values in production/lane/blueprint/data/light-weather.json (data build wave 1, 24 Nov, checked by tools/validate_data.py and reviewed; open points in the file and DATA-BUILD-STATUS.md). Data sweep class C.
@@ -329,7 +330,7 @@ The camera system and the few short scenes.
 
 - How it works: One camera arm reads rows by Frank's state: street (the Between picture's height, 86 degree lens, 3.1 m back, feet in frame), run, room and talk (closer), fight (wider, 3.5 to 5.0 m back, both men's feet in at least 90% of frames), and car (about 5.8 m back, widening with speed). Blends take one second or less, shake obeys Reduce motion, and the camera never ends inside a wall, body or car. The field of view is a setting from 75 to 100 degrees, default 86.
 - Standard: Ruling 28 Oct (street, talk closer, fights wider); blends 1 s or less; shake obeys Reduce motion Test: S: frames counted; B clip detector
-- Source: RULINGS 28 Oct; DESIGN §17 (his ruling or canon). Designed in: RULINGS 28 Oct, 21 Nov; DESIGN §17 (ER-CAM-01, ER-CAM-02); FEEL-TARGETS-MELEE C10; DEFINITIONS-2026-11-21 Design pass 3 header; PARTS-TREE 5.8.1
+- Source: RULINGS 28 Oct; DESIGN §17 (his ruling or canon). Designed in: RULINGS 28 Oct, 21 Nov; DESIGN §17 (ER-CAM-01, ER-CAM-02); FEEL-TARGETS-MELEE C10; DEFINITIONS-2026-11-21 Design pass 3 header; PARTS-TREE 5.8.1 Reality check (CHECK C123): the talk, run and room rows from Mafia's files are placeholders until measured in KCD2, GTA V and RDR2 (tune.json cam.talk, cam.talk_close, cam.run and cam.room back distances now marked owed); the planned Sleeping Dogs camera drill also covers them.
 - Status: ruled (his ruling or canon). Coverage row: 5.8.1. Conflicts settled: C-119.
 - His ruling of 24 Nov: one fixed aiming shoulder; camera re-centre is in (gap: no wording or test yet).
 - Prior research: production/specs/camera.json: street row is his ruling and measured in the packaged game; talk, run and room rows came from Mafia's files, to be shown to him before kept.
@@ -495,7 +496,7 @@ Note: RUL 20 and 21 Nov put Kiln, hair and the crowd, and all Unreal work, behin
 | Kit grid and fit | Opening pieces keep their size; linear pieces fit within 10 per cent; sizes in names; pivots at bottom face or sill | Mafia: 88 per cent of windows and doors within 10 per cent of scale, 54 per cent of meshes carry their size [KIT, 1]. Grid size set by dated photographs (C-208) | Kiln | figure |
 | Wall and trim texel density | 512 px/m at walking distance; 1,024 px/m only within 2 m (interiors) and small print | BUD 4.7 geometry (1,720 / d pixels per metre at 3440 wide); Mafia ships a median 575 px/m [KIT, 2] | Unreal | figure |
 | Texture size mix | No texture over 4096; about a fifth at 4096, a third at 2048, two fifths at 1024 or smaller | Mafia 21 / 36 / 38 per cent [S5, 7]; BUD cap 4096 [AB] | Unreal | figure |
-| Street width and dressing | Front to front 9 to 15 m; at least 5 true props per 10 m of the walked street, thinner elsewhere | KCD2 median 9.9 m, Mafia 14.7 m; Mafia 4.9 props per 10 m from one 73 m sample [S4] | Unreal | figure |
+| Street width and dressing | Front to front 9 to 15 m; props per 10 m of the walked street owed from dated 1988 to 1992 photographs, no bar until counted | KCD2 median 9.9 m; the Mafia figures (14.7 m, 4.9 props per 10 m from one 73 m sample [S4]) struck, Mafia never being a reference; photo counts owed from the PC | Unreal | judgement |
 | Wear decals | Median 1 per wall, up to 6 where the player looks; leak stains about 2 in 5; up to 300 in view; fade-out near 0.044 screen size; grime mostly in the material | Mafia median 1, p90 6, 38 to 40 per cent leaks, fade 0.044 [WEAR; KIT, 3]; 300 is BUD [I] | Unreal | figure |
 | Interiors | Real rooms only where the story goes; mapped or fake rooms elsewhere; a real room behind glass up to 100,000 triangles, 2 LODs, at most 4 in view | Mafia 24 fake rooms in about 8,100 windows [S4]; BUD 4.7 for the 100,000 [I] | Unreal | judgement |
 | Hill and distance | Up to 2,000 triangles a house, rows merged, one atlas | BUD 4.7 [I]; KCD2 pre-merged distance meshes [S6, S12] | Kiln (buildings) | judgement |

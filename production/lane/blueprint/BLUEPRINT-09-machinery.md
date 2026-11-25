@@ -117,9 +117,9 @@ The clumsy-player bot, scripted tests, the AI hands-on session, the panel of eig
 
 ### 9.5 Testing and gates
 
-- How it works: The clumsy-player bot, scripted tests, the AI hands-on session, the panel of eight, the nightly packaged walk, the publish gate.
+- How it works: The clumsy-player bot, scripted tests, the AI hands-on session, the panel of eight, the nightly packaged walk, the publish gate. Monday after the reset, first, AI players play the blueprint on paper, briefed by the advisor, with no PC work (his ruling of 24 Nov, advisor 371).
 - Standard: DESIGN §19; a play build reaches him only with a publish-gate pass and a known-issues note Test: gate.py passes; nightly walk report
-- Source: DESIGN §19; RULINGS 18 Nov (machinery: not met by the player; no coverage row). Designed in: DESIGN §19; tools/lane/gate
+- Source: DESIGN §19; RULINGS 18 Nov; 24 Nov (advisor 371, the paper playthrough) (machinery: not met by the player; no coverage row). Designed in: DESIGN §19; tools/lane/gate
 - Status: machinery. Coverage row: none (group 9 is not met by the player).
 - Checkers proven (production/lane/checkers/CHECKERS-PROVEN.md, 23 Nov): mended checkers caught 11 of 17 planted faults, and on 14 fresh faults 4 for certain (29%), so plan on about a third. What slips: faults off the scripted path, checks that read the game's records instead of what is drawn or heard, repeated lines, a talk nobody reaches, half-solid props, a camera fault in an unvisited room. Rule carried to the giant prompt: a check counts only when it passes twice and off its path; the list of what already fails comes from two runs; a go also needs no new blocker from the other checkers.
 - Checkers proven, for the giant prompt: every menu, the title screen and every box worked by keys alone (today's title screen takes none after Save and quit); the test hook kept by name; sounds recorded only when they play and the drawn head's turn readable; hidden twins replay each playthrough check a second time, by another route, after Save and Continue, and at night (the twin column for S01 to S41); and the faults the AI players found in today's build (CHECKERS-PROVEN section 'Faults the AI players found').
@@ -222,10 +222,10 @@ canon, VISION, DESIGN and its addendum, BUILD-ORDER, this parts tree.
 
 ### 9.12 Design records
 
-- How it works: canon, VISION, DESIGN and its addendum, BUILD-ORDER, this parts tree.
-- Standard: canon outranks; DESIGN approved 19 Nov; every part has a standard (RULINGS line proposed in advisor 257) Test: tools/lane/parts-tree/check.py
-- Source: canon OPEN 3; advisor 257 (machinery: not met by the player; no coverage row). Designed in: production/lane/synthesis/
-- Status: machinery. Coverage row: none (group 9 is not met by the player).
+- How it works: canon, VISION, DESIGN and its addendum, BUILD-ORDER, this parts tree. Before the one-shot only gaps that change how the game is built are closed (data structures and systems: relationships as data, social moves, the brain, police response); content gaps (an animation, a number, a line, a prop) go to the loops, and the design gate counts only the first kind (his ruling of 24 Nov, advisor 373). Every system pass and gap hunt lists the can-yous it adds and checks each (his ruling of 25 Nov, advisors 376, 377).
+- Standard: canon outranks; DESIGN approved 19 Nov; every part has a standard (RULINGS line proposed in advisor 257), but a part whose figure is missing is a content gap for the loops, not a design-gate failure (advisor 373) Test: tools/lane/parts-tree/check.py
+- Source: canon OPEN 3; advisor 257; 24 Nov (advisor 373); 25 Nov (advisors 376, 377) (machinery: not met by the player; no coverage row). Designed in: production/lane/synthesis/
+- Status: machinery. Coverage row: none (group 9 is not met by the player). Conflicts settled: C-506.
 
 
 ## 9.13 The browser build's modules, data and test door
