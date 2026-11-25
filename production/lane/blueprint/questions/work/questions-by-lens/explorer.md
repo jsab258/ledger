@@ -1,0 +1,51 @@
+- Can Frank climb the fire escape behind the launderette at night, cross the rooftops of three terraced houses, and drop into a yard he was never meant to see?
+- What happens if Frank forces the padlock on the cellar door under the butcher's shop and finds the old bomb-damage tunnel leading to the docks?
+- Can Frank wait at the dock gates at 3am and see which crane driver lets a van through without a pass?
+- Can Frank pick up a half-burned letter from a bin behind the council offices, piece it together, and use it on the person it names?
+- Can Frank read a love letter left in his late uncle's desk drawer and then work out who it was meant for from the handwriting?
+- What happens if Frank walks into the Polish club on a Sunday, uninvited, and just sits down with the old men playing dominoes?
+- Can Frank find every key on his uncle's key ring by trying them in doors around the Hook, and does each one open something different?
+- Can Frank climb onto the roof of the Hook's cinema and watch the street below through the ventilation grille without being noticed?
+- What happens if Frank knocks on the door of a house with the curtains always drawn, and keeps coming back until someone answers?
+- Can Frank steal a ship's bell from a moored coaster and sell it to the scrap dealer who has been asking after one?
+- Can Frank break into the closed-down picture house and find what the projectionist left behind in the booth?
+- Can Frank follow a milkman's round before dawn and learn which houses have a light on, who is up, and who never answers the door?
+- Can Frank collect every issue of the local paper's Thursday edition from the newsagent and spot a story that changed between editions?
+- What happens if Frank asks the dying woman in the front room of number 14 to tell him the story she keeps half-starting, and he comes back every day until she finishes?
+- Can Frank hide in a shipping container at the docks and get lifted onto a ship, then find out where it is going?
+- Can Frank follow the tide tables in the harbourmaster's hut and discover which night the low water exposes the old slipway?
+- Can Frank find a loose brick in the wall of the allotments, pull out a tin, and trace the person who hid it?
+- Can Frank pick the lock of the vicar's vestry and read the parish register for names that no longer live in the Hook?
+- What happens if Frank asks every shopkeeper on the high street the same question about his uncle and compares their answers?
+- Can Frank search a dead man's flat before the landlady clears it, and keep what he finds without the police hearing?
+- Can Frank climb the water tower on the edge of the docks and see the whole Hook at sunrise, spotting things that are not visible from the street?
+- What happens if Frank stands in the phone box on Quay Street every evening at the same hour and answers when it rings?
+- Can Frank get into the lock-up garage that his uncle paid rent on for years, and what has been left in the dark corner under the tarpaulin?
+- Can Frank read the names scratched into the cell wall at the police station during a night in the cells, and find one he recognises?
+- Can Frank take a night shift on the docks as a casual labourer and see what the other men carry out in their lunch tins?
+- Can Frank talk his way into the bus depot's lost property office and look through what has gone unclaimed since 1985?
+- What happens if Frank finds the café owner's hidden stash of old photographs and shows one to a person who is in it?
+- Can Frank cut through the railway embankment fence at night, walk the disused line, and find the signal box someone has been living in?
+- Can Frank buy every newspaper, bus ticket and cigarette card dropped by a stranger, and piece together where that man has been?
+- Can Frank use a stolen library card to borrow the local history book that has been out for three years, and track down who still has it?
+- What happens if Frank visits the cemetery at dusk and finds fresh flowers on a grave that should have been forgotten?
+- Can Frank work out the pattern in the numbers chalked on the back wall of the cold store, and match it to a delivery schedule?
+- Can Frank get a night caretaker to let him into the closed school, and look in the headmaster's office filing cabinet for a name he is chasing?
+- Can Frank take an old woman up on her offer of tea in her flat and sit through her whole life story, and does anything she says turn out to matter later?
+- What happens if Frank climbs into the loft of Mickey's office and finds boxes of dispatch books going back thirty years?
+- Can Frank go through the dispatch books and find the one fare that his uncle logged but never explained?
+- Can Frank leave a coded note under a stone for a contact and check the next morning whether it has been picked up and answered?
+- Can Frank follow a nightwatchman's route round the timber yard and time the gap when no one is watching the gate?
+- What happens if Frank opens the locked back room of the social club and finds the trophies, ledgers and photographs of a gang that no longer exists?
+- Can Frank listen at the wall of the next-door flat for a week and piece together what the neighbours are planning from the fragments?
+- Can Frank find the sunken rowing boat in the dock mud at low tide and bring up what is chained inside?
+- Can Frank trace a stray dog back to its owner by asking around, and does the owner reward him with a favour?
+- What happens if Frank asks the lighthouse keeper's widow about the night a ship went missing, and returns with the ship's name?
+- Can Frank climb through the skylight of the empty bank on the high street and find the safe deposit boxes nobody ever claimed?
+- Can Frank collect every matchbook left in the Hook's cafes and use the printed addresses to find the one place nobody mentions?
+- Can Frank walk a lone pensioner home from the bus stop every evening for a week, and does she start leaving something out for him?
+- What happens if Frank breaks into the undertaker's after hours and looks at the book of who has been buried, and who was paid for?
+- Can Frank take the ferry across the estuary on the last crossing and find out why the deck hand never gets off at the far side?
+- Can Frank take the bin lorry's route at 5am with the crew and discover what the lads dig out of the skips and sell on?
+- Can Frank find a map drawn inside a cigarette packet and follow it to a hiding place under the old tram shed floor?
+- What happens if Frank reads the gravestone of his own uncle and finds a second name scratched on the back that no one will explain?

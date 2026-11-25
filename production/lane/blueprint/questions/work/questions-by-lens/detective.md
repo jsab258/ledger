@@ -1,0 +1,52 @@
+- Can Frank refuse to answer anything in a taped interview at the police station, say "no comment" to every question, and walk out when the custody clock runs out because the CID have nothing but suspicion?
+- Can Frank ask for the duty solicitor when he is booked in by the custody sergeant, and does the solicitor take him aside and tell him to keep quiet because the witness statement is weak?
+- What happens if Frank is held for questioning at the station overnight: does the crew carry on running Mickey's without him, or does a rival take the chance to lean on his drivers?
+- Can Frank stand in an identity parade at the station and hope the shopkeeper who saw him picks out the wrong man from the line of volunteers?
+- What happens if Frank gets a crew member to warn off the only witness before the identity parade, and the witness then refuses to attend: do the police drop the case or charge Frank with intimidating a witness?
+- Can Frank turn up at an identity parade with a fresh haircut and his moustache shaved off, and does the witness still pick him out?
+- Can Frank become a police informant for the bent detective, feeding him tips on a rival gang so the rival gets raided instead of him?
+- What happens if the town finds out Frank has been passing names to the CID: does word spread that he is a grass, and do people stop talking in front of him?
+- Can Frank work out which of his own drivers is a police informant by telling each of them a different false story and seeing which one the police act on?
+- When uniformed officers do house-to-house enquiries along a terrace after a stabbing near the docks, can Frank follow behind and knock on the same doors to find out who told the police what?
+- Can Frank pay a neighbour to tell the house-to-house officers that she saw a stranger in a donkey jacket running the other way?
+- Can Frank give a false alibi to the police, saying he was driving a fare all evening, and do they check the cab office booking book and ask the fare?
+- What happens if Frank's alibi witness gets nervous and changes her story when a detective visits her a second time?
+- Can Frank burn the jacket he wore during a fight on waste ground behind the warehouses, so the police cannot match the fibres or blood on it?
+- If Frank leaves fingerprints on a shop counter during a robbery, can the police match them days later, and does it matter whether Frank already has his prints on file from an old arrest?
+- Can Frank wear gloves to break into a bookkeeper's office, and does the scenes of crime officer then find nothing but glove marks?
+- What happens if Frank's blood is left at the scene after he cuts his hand smashing a window: can the police use the blood group to narrow it down to him, given it is 1990 and DNA tests are rare and slow?
+- Can Frank wash his cab out after giving a bleeding man a lift, and will the police still find traces if they impound the car?
+- Can Frank get a car seized by the police back from the pound by sending someone with forged papers?
+- What happens if the Crown Prosecution Service decides there is not enough evidence and drops the charge against Frank's crew member: does the arresting detective hold a grudge and come after Frank instead?
+- Can Frank pay a solicitor to get a remanded crew member out on bail at the magistrates' court, and what happens if the crew member skips bail?
+- Can Frank visit a crew member held on remand and find out what he told the police, or is the visit watched?
+- What happens if one of Frank's crew is arrested and the detective offers him a lighter charge to give evidence against Frank: can the crew member turn Queen's evidence?
+- Can Frank get word to an arrested crew member through his solicitor to keep his mouth shut, and does that put the solicitor at risk?
+- Can Frank make friends with the local beat bobby, give him free cab rides and tea at the office, so the constable looks the other way on small things?
+- What happens if the beat constable on foot patrol sees Frank loitering outside a jeweller's three nights running: does he stop Frank and note his name in his pocketbook?
+- Can the police stop and search Frank in the street on suspicion, and what happens if he is carrying a cosh in his coat at the time?
+- Can Frank hand his knife to a passer-by just before a constable searches him, and does the passer-by then tell the police?
+- What happens if Frank runs from a constable who stops him: does the officer radio for help, and do panda cars start cruising the Hook looking for him?
+- Can Frank hide in a stranger's back yard while police search the streets, and does the householder give him up or keep quiet out of fear?
+- Can Frank report a crime himself, going into the front counter at the station to tell the desk sergeant about a rival's stolen goods in a lock-up?
+- Can Frank write an anonymous letter to the police about a rival's hidden stash, and do they act on it without a named witness?
+- What happens if Frank bribes the bent detective to lose a witness statement: does the case collapse, and does anyone at the station notice the paperwork is missing?
+- Can Frank get the bent detective to tip him off before a police raid on Mickey's, so he can clear the back room in time?
+- What happens if the bent detective is himself investigated by an outside force for corruption: does he try to save himself by giving up Frank?
+- Can Frank secretly record the bent detective taking a bribe and use the tape to control him?
+- Can Frank frame a rival by planting stolen goods in his car and then tipping off the police with a phone call from a call box?
+- What happens if Frank uses the same phone box near the cab office for every anonymous tip-off: can the police work out who is calling?
+- Can Frank buy stolen goods from a thief and then find the police calling at Mickey's because the thief named him when he was nicked?
+- What happens if a witness picks Frank out from photographs in the mugshot album at the station: is that enough to arrest him, or do the police need more?
+- Can Frank get a crew member to confess to a crime Frank committed, and do the police believe him if his account does not match the scene?
+- What happens if Frank is charged and goes to the magistrates' court: does the game play out the hearing, and can witnesses fail to turn up and get the case thrown out?
+- Can Frank persuade a witness to say in court that she was not wearing her glasses that night, so her identification falls apart?
+- What happens if the police put an observation post in the flat above the newsagent opposite Mickey's: can Frank notice the curtains twitching and spot the watchers?
+- Can Frank spot an unmarked police car following his cab and lose it in the back streets of the Hook?
+- Can Frank find out that his office phone is tapped and use it to feed the police a false meeting time while the real deal goes ahead elsewhere?
+- What happens if the CID hold a press appeal in the local paper with a photofit that looks a bit like Frank: do townspeople start looking at him differently and phoning the incident room?
+- Can Frank get a description of himself wrong on purpose by wearing a borrowed coat and a flat cap, so witnesses describe a different man?
+- What happens if a witness tells the police she saw Frank's minicab, with its office number on the door, parked outside a house that was burgled?
+- Can Frank swap the number plates on a cab before a job so that a witness who notes the registration sends the police to the wrong car?
+- What happens if the police arrest the wrong man for something Frank did: does the town gossip about it, and can Frank let him take the blame or quietly get him released?
+- Can Frank be cautioned on arrest and have the words he says right then, like "you'll never prove it", written down and used against him later?

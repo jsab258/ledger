@@ -1,0 +1,55 @@
+- Can Frank ask out the woman who runs the newsagent's counter, and will she say no the first time but remember he asked?
+- Can Frank turn up at a woman's door with flowers he took from a neighbour's front garden, and will she notice where they came from?
+- What happens if Frank takes a date to the pictures and spends the film whispering to a crew member about a job?
+- Can Frank take a woman for a fish and chip supper on the sea wall and talk about his uncle until she asks him to stop?
+- What happens if Frank cancels a date at the last minute because a collection ran late, and then does it again the week after?
+- Can Frank send a message to a woman through her sister at the launderette instead of asking her himself?
+- Can Frank give a woman a lift home in a minicab with the meter off, and will the other drivers talk about it?
+- What happens if Frank's girlfriend sees him come out of a rival's flat with a split lip and refuses to believe his story?
+- Can Frank lie to his girlfriend that he works only the radio desk, and how long before she hears otherwise from a neighbour?
+- Can Frank tell his girlfriend the truth about the protection money, and does she keep it to herself or tell her mother?
+- What happens if a woman Frank is courting learns that he leaned on her father's shop for money?
+- Can Frank get jealous when a driver from the rank chats up his girlfriend, and what does he do about it without losing a driver?
+- What happens if Frank is seen having tea with a woman while his girlfriend is told by a friend of hers who saw it?
+- Can Frank court two women at once and keep them from comparing notes at the hairdresser's?
+- Can Frank end things kindly with a woman, and does she still speak well of him around the Hook afterwards?
+- What happens if Frank's ex starts telling people in the cafe what his business really is?
+- Can Frank buy his girlfriend a gold chain from a fence, and what happens when she wears it in front of the woman it was stolen from?
+- Can Frank take his girlfriend to meet his aunt, and will the aunt say what she thinks of the minicab office in front of her?
+- Can Frank ask his girlfriend to stay at his flat and then find she has tidied away the papers he hid?
+- What happens if Frank's girlfriend finds a bloodied shirt in his laundry basket and washes it for him without a word?
+- Can Frank propose marriage in the back of a minicab on the way to the station, and can she say yes or no on the spot?
+- What happens if Frank's girlfriend gets a friendly constable to ask about him over a cup of tea?
+- Can Frank ask a woman friend to cover the radio desk at night, and will she grow fond of him or tired of him?
+- Can Frank comfort a widow whose husband was hurt on the docks because of a job he ordered, and keep his part secret?
+- Can Frank sit with an old woman on a bench every Thursday, and will she begin to share rumours with him she would tell nobody else?
+- Can Frank carry an elderly man's coal up three flights of stairs, and will the old man tell his friends at the bowls club?
+- Can Frank pay an old widow's electric bill in secret, and will she work out who did it?
+- What happens if Frank's old neighbour falls ill and none of his crew will take her to the hospital because they are busy?
+- Can Frank drive an old man to visit his wife's grave on the anniversary and wait by the cab while he talks to her?
+- Can Frank go to the funeral of a driver killed in a crash he caused, and what does the family do when he walks in?
+- What happens if Frank skips his uncle's memorial gathering because of a deal, and the old crowd notice his empty chair?
+- Can Frank visit his uncle's grave and leave a cigarette on it, and will a stranger there tell him something about Mickey he did not know?
+- Can Frank find his uncle's old love letters in the office safe, and track down the woman who wrote them?
+- Can Frank ask his uncle's oldest friend what Mickey really owed, and will the friend tell the truth or the kind version?
+- What happens if Frank's cousin turns up asking for a job in the office and turns out to be useless at it?
+- Can Frank sack his own cousin, and does the whole family go cold on him at the Sunday dinner?
+- Can Frank get his mother on the phone and have a proper row about why he stayed in Meridian, and will she ring back?
+- What happens if Frank's mother posts a letter that makes clear she has heard rumours, and Frank lets it sit unanswered for a week?
+- Can Frank send money home to a relative in another town and have the post office clerk comment on the size of it?
+- Can Frank take his elderly aunt to the seaside for the afternoon on a quiet day, and will she tell the other drivers about it afterwards?
+- Can Frank ask an old friend from school to be best man, and what if the friend's wife refuses to let him come near Frank's crowd?
+- Can Frank get a crewman out of a quarrel with his wife by turning up and sitting at their table until things calm down?
+- What happens if Frank promises a loyal driver a day off for his daughter's wedding and then needs him that very morning?
+- Can Frank stand beside a driver whose husband-and-wife marriage is breaking up, and will taking sides cost him the other half of the pair?
+- What happens if a crew member falls for a woman from a rival firm, and Frank has to decide whether to let it go on?
+- Can Frank refuse to hand over a loyal old driver to the police when they come asking, and will the driver ever learn what Frank did for him?
+- What happens if a longtime friend of Frank's is arrested and Frank has to choose between paying for a solicitor and keeping the money for the crew?
+- Can Frank visit a friend in the cells and bring cigarettes, and will the friend keep quiet because of it?
+- Can Frank go to a hospital ward to see a crewman he got hurt, and will the nurse let him stay past visiting hours?
+- What happens if Frank breaks a promise to a dying driver to look after his wife, and she hears of it from a third person?
+- Can Frank attend a rival's mother's funeral out of respect and stand at the back without anyone starting a fight?
+- Can Frank pass the winter evenings teaching an older woman at the cafe to drive, and will the town read more into it than there is?
+- Can Frank give his girlfriend a spare key to the office, and what happens when she lets herself in and finds the second set of books?
+- What happens if Frank's girlfriend asks him to quit crime by Christmas, and he says yes with no plan to?
+- Can Frank end up alone at Christmas after losing the people close to him, and does the town respond to that in some small way?

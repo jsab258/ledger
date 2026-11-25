@@ -1,0 +1,53 @@
+- Can Frank ring a customer back from the phone box on the corner after the cab office line goes dead, and does the coin box swallow his ten pence if he talks too long?
+- What happens if Frank is ten pence short at the phone box and asks a passing woman for change, and she later mentions him to her neighbour?
+- Can Frank queue at the dole office on a Tuesday morning and overhear the clerk and the claimants talking about who has been caught working on the side?
+- Can Frank sign on at the dole office while running the cab office, and what happens if a neighbour tells the clerk he has been seen driving?
+- What happens if Frank is seen by someone from the office buying a poll tax summons envelope's worth of stamps at the post office, and does the town read anything into his debts?
+- Can Frank pay a neighbour's poll tax bill in cash, and does the street remember him as the man who sorted it?
+- Can Frank refuse to pay his own poll tax and receive a court summons through the door at Mickey's, with a bailiff turning up weeks later?
+- Can Frank hide a van full of takings behind the cab office when a bailiff comes to the door about the unpaid poll tax, and does the bailiff come back with a policeman?
+- Can Frank take a minicab fare to the ferry terminal at dawn and pick up a returning crew member whose name he has to find out from the foreman?
+- What happens if Frank drives a passenger to the ferry terminal and the last sailing has just gone, leaving the man shouting on the quayside?
+- Can Frank wait on the quay in thick sea fog for a delivery, and does the fog stop the police lamp from seeing him from the far wall?
+- Can Frank sit out a gale in the cab office while the docks shut down, and do the dockers drift in to Mickey's to get out of the rain and talk?
+- What happens if Frank drives the cab over the wet cobbles by the fish quay in November and skids into a stack of crates?
+- Can Frank walk down a terraced street at six in the morning and hear the knocker-up or the milk float, and does the milkman remember who he saw on the corner?
+- Can Frank leave a bag with the woman in the corner shop to collect later, and will she look inside?
+- Can Frank buy a packet of cigarettes on tick at the corner shop, and does the shopkeeper start chalking up what he owes in the back book?
+- What happens if Frank asks the corner shop owner to stop selling a rival's papers, or to put a card in the window for Mickey's cabs?
+- Can Frank put a postcard advertising the cab office in the newsagent's window, and does a rival firm take it down overnight?
+- Can Frank get a slow cold meal from the chip shop on a Friday night and find it queued out the door, with people talking about the news from the docks?
+- Can Frank stand in the chip shop queue and hear two women talk about the man who got his face cut near the lock gates last week?
+- Can Frank go to the launderette on a rainy Sunday and pass information through a woman folding sheets who only talks when the machines are loud?
+- What happens if Frank leaves his bloodied shirt in a launderette dryer and a woman there notices the stain?
+- Can Frank hang his washing out on the line behind the cab office and have a neighbour comment on a missing sheet?
+- Can Frank borrow a cup of sugar from the next terrace door and get invited in for a cup of tea he could use to learn the street's secrets?
+- Can Frank sit in a front room with a gas fire on the meter and talk to an old woman who lets him charge her meter with his own coins?
+- What happens if Frank puts fifty pence into a neighbour's gas meter and she tells the rest of the street how kind he is?
+- Can Frank take a night shift in the cab office and handle a stream of tired, rowdy late fares after the cinema lets out, and does a rude passenger get a clip round the ear from the radio operator?
+- Can Frank refuse to pick up a fare because the street is known for trouble, and does the caller go to a rival firm and tell people Mickey's is unreliable?
+- Can Frank give a stranger in the rain a lift to the bus station for nothing and have that stranger turn up later at a worse moment?
+- Can Frank take a cab fare to the hospital in the middle of the night and be asked by the nurse to wait outside for a man who may not come out?
+- Can Frank wait in a night bus shelter on a freezing morning and chat to a night shift cleaner on her way home who sees everything on her route?
+- What happens if Frank gets onto the last bus home with no change and the conductor lets him on or throws him off?
+- Can Frank ride the early workers' bus and learn from the dockers on board when the next shipment is due?
+- Can Frank use the town library on a Saturday to look up old newspapers about his uncle's death, and does the librarian remember what he asked for?
+- Can Frank read the local evening paper in the cab office and find a story about a fight he was part of, written with the wrong details?
+- Can Frank ring the evening paper from a phone box and give a false tip about a crime, and does a reporter turn up at the address?
+- Can Frank buy a second-hand television from a market stall and have the stallholder ask no questions about where the aerial goes?
+- Can Frank sell a stolen video recorder on the market on a Saturday morning, and does a trader on the next stall mark him as a fence?
+- What happens if Frank is seen in the covered market handing a brown envelope to the butcher, and the next shopper repeats it in the queue?
+- Can Frank get his hair cut at the barber's on the high street and hear which men have been in lately with injuries?
+- Can Frank wear a donkey jacket and a flat cap to blend in with the dockers, and do they notice he has never worked a shift?
+- Can Frank walk onto the docks at the shift change in the morning and be mistaken for a casual labourer asking for a day's work?
+- Can Frank bribe a gatekeeper at the dock gate with a carton of cigarettes to be let in after hours, and does the next shift's gateman ask about it?
+- Can Frank sit in the transport cafe by the docks with a mug of strong tea and a bacon roll and get the lorry drivers to talk about a cargo gone astray?
+- What happens if Frank is seen parked for an hour outside the closed bingo-free social hall on the estate, and rumours start about what he was waiting for?
+- Can Frank attend a funeral for a docker and stand with the family at the back, and does the town read anything into who comes to pay respects?
+- Can Frank go to the wedding reception in the church hall of a local family and be refused entry because he is the wrong sort, or let in because of a favour he did?
+- Can Frank join a street collection for a dead man's widow by knocking on doors, and does the street think better of him if he gives a big sum?
+- Can Frank watch the bonfire night fire on the waste ground on the fifth of November, and have someone use the noise and the crowd to cover a deal?
+- Can Frank take a fare to the Christmas lights switch-on on the high street and be stuck there in a crowd, with people recognising the cab and tapping the window?
+- Can Frank get a seasonal job for a cousin at the sorting office in December, and does the cousin start passing information about parcels?
+- Can Frank walk past a queue of people outside the electricity board showroom on the day the bills arrive and hear what they are saying about money?
+- Can Frank watch a power cut take out the whole terrace one winter evening and use the dark to slip into a house without being seen by the street?

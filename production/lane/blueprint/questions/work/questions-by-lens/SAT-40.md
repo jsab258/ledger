@@ -1,0 +1,40 @@
+- Can Frank refuse the crime life entirely and just run Mickey's as an honest minicab firm all the way to December, and does the game have an ending for that?
+- What happens if Frank walks into the police station on the first morning and tells the desk sergeant everything he knows about his uncle's dealings?
+- Can Frank stand perfectly still in the street for an hour of game time, and will passers-by start asking if he is all right or report a strange man loitering?
+- What happens if Frank tells every person he meets a different false name, and two of them later compare notes about him?
+- Can Frank follow a shopkeeper home after closing without being seen, learn where she lives, and use that to lean on her the next day?
+- What happens if Frank picks a fight with the biggest dock worker in the Hook, loses badly, and has to walk past the same men the next morning?
+- Can Frank pay a newsagent to put a card in his window advertising the cab office, and does it actually bring in more fares?
+- What happens if Frank starts a rumour that a rival gang boss is a police informer, and how fast and how far does it spread before it reaches the boss himself?
+- Can Frank change his look by shaving his beard, cutting his hair and buying a new coat, so that a witness who saw him last week no longer recognises him?
+- What happens if Frank gives a stranger's real description to the police, falsely accusing an innocent man of a robbery Frank committed?
+- Can Frank flirt with a woman at the launderette, take her out on a few dates, and will she notice and react when his crew start turning up at her door?
+- What happens if Frank sets fire to a rival's lock-up at night, and the fire spreads to the flat above where someone is sleeping?
+- Can Frank talk entirely in made-up gibberish or speak to people in French, and how do the townspeople respond to that in live conversation?
+- What happens if Frank tells a townsperson about the game itself, like saying "you are just a computer character", and does the person stay in 1990?
+- Can Frank disguise himself as a gas board engineer with a clipboard and talk his way into a flat to search it?
+- What happens if Frank keeps a crew member waiting for his wages for three weeks, and does that man grumble to others or go to a rival?
+- Can Frank hide in a wheelie bin or a doorway during a police search, and do constables actually check those places?
+- What happens if Frank plants stolen goods in a rival's car and then makes an anonymous call from a phone box to tip off the police?
+- Can Frank play a peacemaker, getting two warring gangs to sit down in his cab office and agree on territory without a punch thrown?
+- What happens if Frank drives his minicab on the wrong side of the road through the Hook at night with the headlights off?
+- Can Frank go to a funeral for someone he had killed, stand at the back, and will mourners notice his presence or his behaviour?
+- What happens if Frank saves a rival's lieutenant from being beaten in an alley, and does that man owe him later or see it as a trick?
+- Can Frank make a recording on a cassette tape of a bent detective taking a bribe and use it as blackmail?
+- What happens if Frank does nothing but sleep in the flat above the cab office for several days, and does the business, the crew and the town carry on without him?
+- Can Frank apologise sincerely to someone he wronged, like a man he roughed up, and can that person ever come to forgive him?
+- What happens if Frank quickly saves and reloads to redo a bad conversation, and does the person remember anything from the version he undid?
+- Can Frank tail a suspected informer in his cab, keeping a distance through traffic, without the man noticing he is being followed?
+- What happens if Frank has a nervous player who never wants to use violence, and every intimidation has to be done with words, reputation and money alone?
+- Can Frank write an anonymous letter to the local paper exposing the bent detective, and does it get printed and change how the police behave?
+- What happens if Frank picks up a fare who turns out to be a plain-clothes officer asking casual questions about the Hook?
+- Can Frank steal a pocket diary from a councillor and use the appointments in it to work out who he is secretly meeting?
+- What happens if Frank is seen by only one witness, an elderly widow, and he spends weeks being kind to her so she decides not to tell?
+- Can Frank use a payphone to ring a rival pretending to be someone else, disguising his voice, and does the rival believe him?
+- What happens if Frank steals from his own crew and one of them starts to suspect, quietly asking the others questions?
+- Can Frank get injured badly enough to need hospital, and does a doctor or nurse report his stab wound to the police?
+- What happens if Frank tries to leave Meridian entirely by driving out of the Hook or buying a ferry ticket at the docks?
+- Can Frank help a constable who is being attacked in the street, and does that earn him goodwill with the police or suspicion from criminals?
+- What happens if Frank keeps the same strict daily routine every day, and do watchers or rivals learn it and ambush him on it?
+- Can Frank put a brick through a shop window during a downpour at 3am when the street is empty, and could anyone still work out it was him from footprints, a dropped glove or his car being parked nearby?
+- What happens if a player with a hearing impairment plays with subtitles on, and are the live free-speech replies and overheard gossip captioned with who is speaking?

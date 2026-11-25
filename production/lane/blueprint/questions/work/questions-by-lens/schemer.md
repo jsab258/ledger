@@ -1,0 +1,50 @@
+- Can Frank tell the newsagent, in confidence, that a rival's driver has been skimming fares, and then watch how long it takes for the rumour to reach the rival himself?
+- Can Frank start a false rumour that a dock foreman is talking to the police, and will the foreman's own crew start avoiding him or roughing him up?
+- What happens if Frank tells two different people two different versions of the same story, and they later compare notes in the launderette?
+- Can Frank do a local landlord a favour, like moving a troublesome tenant on, and later call in that debt by asking him to give Frank a false alibi?
+- Can Frank promise the same protection job to two rival firms, take money from both, and keep them each believing he works only for them?
+- Can Frank tell a rival gang leader that his second-in-command has been meeting Frank behind his back, and will the leader turn on his own man?
+- What happens if Frank recruits a rival's best driver by offering better pay, and does the rival notice the driver is missing from his rank?
+- Can Frank get close to a man's oldest friend, feed the friend small lies about him over a few weeks, and slowly turn the friend against him?
+- Can Frank photograph a councillor leaving a married woman's flat at night and use the pictures to make him vote down a planning objection?
+- Can Frank blackmail a shopkeeper with something the shopkeeper's neighbour told him, and will the shopkeeper work out who talked?
+- Can Frank stage a fake argument with one of his own crew in the street, in front of witnesses, so the town believes the man has quit and he can spy on a rival?
+- Can Frank arrange for a rival to be seen near a burgled warehouse, with a reliable witness on hand, so the police pick up the wrong man?
+- What happens if one of Frank's crew sells him out to the bent detective, and can Frank find out who it was by feeding each man a different false job?
+- Can Frank plant a stolen watch in a rival's car and then tip off a constable anonymously from a phone box?
+- Can Frank pay a gossiping hairdresser to spread the story that a rival minicab firm's cars are unsafe, and will customers actually stop using them?
+- Can Frank make a rival believe that his own girlfriend has been talking to Frank, and will the rival confront her?
+- Can Frank broker a truce between two rival gangs, take a cut for keeping the peace, and then quietly break it when it suits him?
+- What happens if Frank keeps a written list of who owes him what, and someone steals the notebook from the cab office?
+- Can Frank lend a struggling cafe owner money, then use the debt to make her report everything said at her counter?
+- Can Frank persuade a witness to change her story to the police by reminding her of a favour he did for her brother?
+- Can Frank set up a meeting between a rival boss and the bent detective in his own office, then let the rival's men see them leaving together?
+- Can Frank recruit a disgruntled dock worker who was sacked by a rival's foreman, using only what he heard in gossip about the sacking?
+- What happens if Frank double-crosses an ally in front of the ally's own men, and does the ally lose their respect as well as Frank's friendship?
+- Can Frank leak a rival's delivery time to a third gang and then sit back while the two of them fight over it?
+- Can Frank discover that his own dispatcher has been passing his drivers' routes to a rival, and choose to feed false routes through her instead of sacking her?
+- Can Frank tell a frightened shopkeeper that another firm is about to hit his shop, just so he will pay Frank for protection?
+- Can Frank get a well-liked old docker to vouch for him in conversation, and does that change how others in the Hook treat Frank?
+- What happens if Frank spreads a rumour that is easily disproved, and does the town then trust what Frank says less?
+- Can Frank hide in the back room of the cab office and let a witness overhear a rival's man making threats, so the witness goes to the police on her own?
+- Can Frank forge a letter on a rival's notepaper insulting another gang, and post it so the second gang reads it?
+- Can Frank offer a rival's lieutenant a share of the business if he hands over his boss, and will the lieutenant weigh his loyalty against the offer?
+- Can Frank be betrayed by someone he thought was a friend, for example a driver who has been paid to tell a rival where Frank sleeps?
+- Can Frank use a debt he holds over a mechanic to get a rival's car's brakes "looked at", and does the mechanic refuse if it goes too far?
+- Can Frank tell the bent detective a rival is planning a robbery, so the police are waiting when the rival's crew turns up?
+- What happens if Frank blackmails someone who has nothing left to lose, and does that person go straight to the police with everything?
+- Can Frank make a show of generosity, like paying for a widow's funeral flowers in front of the whole street, to win the street's goodwill before asking for favours?
+- Can Frank pass on something embarrassing about a rival through a chain of three people, so it never traces back to him?
+- Can Frank get a rival's wife to tell him about her husband's business by pretending to be a sympathetic friend over several cab rides?
+- Can Frank arrange for two of his own crew who dislike each other to be paired on a job, hoping one will grass up the other?
+- What happens if Frank promises a favour, like getting a man's son-in-law out of trouble, and then fails to deliver?
+- Can Frank collect small secrets from his cab passengers' conversations and later use one of them as leverage?
+- Can Frank frame a rival for an assault by getting his own man to wear the rival's distinctive coat and be seen by witnesses?
+- Can Frank tell a rival that Frank's own crew is about to betray Frank, to lure the rival into a trap he thinks is an opportunity?
+- Can Frank let a known gossip "accidentally" see a large stack of cash in his office, to make the Hook think Mickey's is richer and stronger than it is?
+- Can Frank turn a witness who saw him do something by giving her a job at the cab office, and does she stay quiet because of loyalty or fear?
+- What happens if two people Frank has played against each other both discover the truth at the same time, and do they team up against him?
+- Can Frank buy the loyalty of the bent detective's informant, so information the detective receives is information Frank chose?
+- Can Frank publicly forgive a man who wronged him, in front of the street, then deal with him quietly weeks later when no one is looking?
+- Can Frank ask a crew member to take the blame for something in exchange for looking after his rent, and does the man keep his word under police questioning?
+- Can Frank spread word that a rival has gone soft and is paying the police, so that the rival's own protection clients stop paying him?

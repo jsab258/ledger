@@ -1,0 +1,51 @@
+- Can Frank kill the bent detective on his first morning, before he has met him, and does the empire route still have a way forward?
+- What happens if Frank kills the old rival gang boss in his sleep on day one, before any gang war has started?
+- Can Frank skip building a crew entirely and take over the rival gang's patch alone by beating up each of their runners one at a time?
+- What happens if Frank kills the one witness to his uncle's last night before the story ever asks him to talk to her?
+- Can Frank save the game just before a witness goes to the police, then reload and try again until the witness stays quiet?
+- What happens if Frank reloads a save after punching a shopkeeper, and does the shopkeeper's gossip about it still survive in the town?
+- Can Frank take the same fare from the station to the docks and back all day for steady money, and do the regular customers get bored or suspicious?
+- Can Frank park a stolen car in the lock-up behind Mickey's and sell it on again and again, and does the police clerk notice the repeat plates?
+- Can Frank collect protection money from the same newsagent twice in one day, and what does the newsagent do about it?
+- What happens if Frank pays the same constable a bribe every morning for a week, and does the price climb or the constable get greedy?
+- Can Frank hide behind a delivery van and wait for a patrol to walk past, and will the constable only act on what he actually saw?
+- Can Frank stand in a phone box with the door shut and make a crime happen across the road, then walk away unseen?
+- Can Frank commit a robbery in a dead-end alley where no window overlooks it, and will the town truly have no witness?
+- Can Frank wear a coat borrowed from a dead man and fool people who knew the dead man by sight?
+- Can Frank swap hats and coats in a back lane and come out the other end as a different description for the witnesses?
+- What happens if Frank locks a witness in the boot of a car for the whole night and drives out of town?
+- Can Frank frighten a witness into changing her statement after she has already told the police, and does the detective notice the two versions do not match?
+- Can Frank shout "police!" in a crowded market to make everyone run so he can lift a purse from the one man who stays?
+- Can Frank lure a constable away from his beat by ringing in a fake emergency from a phone box on the far side of the Hook?
+- What happens if Frank stands very still in the shadows of a doorway and a townsperson walks right past him, and does the AI person see him at all?
+- Can Frank walk backwards into a shop and out again so the shopkeeper's memory of his face is muddled?
+- Can Frank stay in the back of the cab with the lights off and let a suspicious townsperson look straight in without recognising him?
+- Can Frank sleep in his own bed for three days straight to let a hot crime cool, and will the police forget faster if he is seen being dull?
+- What happens if Frank takes a dead rival's wallet and diary and reads out the names in it to the police detective as if he had found them by honest work?
+- Can Frank dump a body in the harbour from the end of the quay in broad daylight when the dockers are on their break, and who sees it?
+- Can Frank climb onto a warehouse roof and drop down inside to skip a locked gate and a guard who never looks up?
+- Can Frank drive a minicab through the market on a Saturday to lose a police car, and do the stall holders remember the cab afterwards?
+- Can Frank park the cab outside the police station, leave the engine running, and walk in to give a false name?
+- Can Frank get a rival gang's enforcer arrested by planting a stolen item in his coat and then tipping off the constable?
+- What happens if Frank phones the police to report his own crime from a box on the wrong side of town as an alibi?
+- Can Frank use a gossip to ruin a rival's reputation by telling one nosy woman a lie and letting it spread through three more mouths?
+- Can Frank get an honest constable sacked by feeding gossip about him to the sergeant until it sticks?
+- What happens if Frank gives the same bribe envelope to two different officials, and do they ever compare notes?
+- Can Frank pay a stranger to confess to a crime he committed, and does the detective believe the stranger when witnesses say otherwise?
+- Can Frank sell the same stolen radio to two different buyers, and what do they do when they meet?
+- Can Frank run an errand for the rival gang boss to earn his trust, then use that trust to put a knife in him at the meeting?
+- Can Frank end the main story early by making the last big boss unable to turn up at his own meeting, say by wrecking his car on the way?
+- Can Frank get a key character to leave town for good by threatening his family at the door, and does the story continue without him?
+- What happens if Frank beats the lock-up keeper senseless and takes the only key, and the next mission needs that same man to open a door?
+- Can Frank go straight to the docks on day one and take a shipment before the story has set it up, and does the plot catch up?
+- Can Frank talk his way past a dock guard by claiming to be a new foreman, and does the guard check with anyone?
+- Can Frank hold a conversation with the same townsperson a hundred times in an hour to farm friendliness, and do they get fed up and tell him to go away?
+- Can Frank give a flat present to the same woman every day until she falls in love with him, and will the town notice the odd pattern?
+- Can Frank make a townsperson forget him by being away from the Hook for a month of in-game days?
+- What happens if Frank asks an AI person to repeat his own lie to others, and then tells the police to check it, so that the lie comes back to him as proof?
+- Can Frank use a hidden spot behind the cafe where no one can see him to trade stolen goods all day without anyone noticing?
+- Can Frank bait a mugger into attacking him in front of three witnesses so that the beating he gives back is plainly self defence?
+- Can Frank pick up a dropped wallet, hand it in at the station, and then use the police thank-you to get away with something small the next day?
+- Can Frank repeatedly pay a fine at the station to wipe a record, and does the sergeant start to ask why the same man is always in trouble?
+- What happens if Frank sets fire to a rival's lock-up late at night but leaves a burning rag in the wrong place, and can the fire brigade work out it was started on purpose?
+- Can Frank take the bus out of the district to escape a manhunt, and does the search follow him to the next town or stop at the edge of the map?

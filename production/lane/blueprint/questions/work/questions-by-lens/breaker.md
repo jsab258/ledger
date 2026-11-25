@@ -1,0 +1,51 @@
+- Can Frank stack three crates, a milk float crate and a wheelie bin on the dock to climb onto a warehouse roof?
+- What happens if Frank walks into a stranger's terraced house through an unlocked back door while the family is at tea?
+- Can Frank follow one dinner lady from her front door to her work and back for a whole day without anyone reporting him?
+- What happens if Frank spends an hour telling the cafe owner nonsense about spaceships and the weather in Peru?
+- Can Frank walk through the Hook wearing a bin liner as a cape and a colander on his head, and do people comment on it?
+- What happens if Frank turns up at his own uncle's funeral wearing a full clown costume?
+- Can Frank drag an unconscious man into the boot of a cab and leave him on the doorstep of the police station?
+- What happens if Frank drives a minicab off the end of the quay into the harbour with a passenger inside?
+- Can Frank swim out from the dock, and what happens when he gets tired in the cold November water?
+- Can Frank stand in the police station front office all night, and does the desk sergeant eventually ask him to leave or lock him up?
+- What happens if Frank sits in the cell voluntarily and refuses to leave when released?
+- Can Frank carry a dead man's body through the Hook in a roll of carpet, and does anyone question the shape?
+- What happens if Frank props a corpse in the back of his cab and picks up a fare as normal?
+- Can Frank hide a body in the boot of a parked car and then sell the car to a dealer on the Hook?
+- Can Frank wear a policeman's uniform taken from a laundry bag and direct traffic at the junction?
+- What happens if Frank pulls over a motorist while wearing a stolen constable's helmet and tunic?
+- Can Frank knock on every front door in one terrace in a row and ask each resident the same odd question?
+- What happens if Frank asks a pensioner to marry him on the high street, in front of her neighbours?
+- Can Frank sit on a bench outside the church for a whole day doing nothing, and do the locals start gossiping about the strange man who never moves?
+- What happens if Frank tells the same gossip to ten different people in an hour, and it comes back to him mangled?
+- Can Frank drive a minicab the wrong way round the one-way system for twenty minutes without being stopped?
+- What happens if Frank parks all of Mickey's cabs nose to tail across the only road into the docks?
+- Can Frank lock himself in the office toilet and refuse to come out when his driver needs the phone?
+- What happens if Frank leaves a lit cigarette on the sofa in a stranger's flat and walks out?
+- Can Frank set fire to the minicab office with himself inside and still talk his way out of it with the fire brigade?
+- Can Frank climb onto the roof of a moving bus and ride it across the Hook?
+- What happens if Frank puts a stranger's cat in the boot of the cab and drives round with it for a day?
+- Can Frank hand a police constable a pocketbook full of blank pages and claim it is evidence?
+- What happens if Frank gives his own name as a witness to a crime he committed himself?
+- Can Frank shout his crimes from the roof of the cab office until the police arrive, and do they believe a word of it?
+- What happens if Frank phones the police from a call box and describes the exact movements of a man who is standing next to him?
+- Can Frank fill the back of a cab with every pot plant from the florist and deliver them to the vicar?
+- What happens if Frank picks up a fare, drives him in a circle for an hour and then charges him for the full distance?
+- Can Frank refuse to get out of the cab when the passenger tells him the ride is over, and just keep driving him around?
+- What happens if Frank dresses as a woman and walks into a hairdresser's to ask for a job?
+- Can Frank walk into the back room of the butcher's shop and lock the door behind him from the inside?
+- What happens if Frank spends a whole day in one doorway, hat down, watching one house, then knocks at midnight?
+- Can Frank take the bus to the end of the line and ride it back with the same driver ten times in a row?
+- What happens if Frank sits down at a stranger's table in the cafe and eats the food from their plate?
+- Can Frank take a bath in the public washroom on the dock and leave his clothes outside for someone to steal?
+- What happens if Frank swaps his jacket and shoes with a tramp and then tries to enter the bank?
+- Can Frank get into the back of another minicab firm's cab, hold up his driver and demand the takings?
+- What happens if Frank speaks only in rhyming couplets to a bent detective during an interview?
+- Can Frank pin a stranger's wallet to a lamp post with a nail, and does anyone dare take it down?
+- What happens if Frank pushes a shopping trolley full of stolen tins down the middle of the main road at rush hour?
+- Can Frank sleep in the back of a parked cab on the dock for a week, and does anyone start to leave food or money for him?
+- What happens if Frank drives the cab into a shop window on purpose and then offers the owner cash on the spot?
+- Can Frank hold a wake in the cab office for a man who is not dead, and invite the man along?
+- What happens if Frank abandons his cab with the engine running in the middle of a zebra crossing and walks off?
+- Can Frank stack bodies of unconscious men in the cold store and do they freeze to death by morning?
+- What happens if Frank asks the AI townspeople one by one what they dreamed last night, and then repeats it back to the wrong people?

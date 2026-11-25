@@ -1,0 +1,52 @@
+- Can Frank pick the lock on the back door of a corner shop at night, and will the lock stay picked or does he have to relock it behind him so nobody notices?
+- Can Frank sneak into a rival's flat above a launderette while the occupant is in the bath, and rifle through the bedroom drawers without being heard over the running water?
+- What happens if Frank steals a milkman's white coat and cap at dawn and walks onto a closed estate as if he belonged there?
+- Can Frank put on a dustman's overalls and walk into the back yard of the council depot without anyone questioning him?
+- Can Frank wear a hi-vis jacket and carry a ladder to look like a workman, and get past the security man at the front of a warehouse?
+- What happens if Frank is wearing a disguise and a person who knows him well stands close enough to study his face for a few seconds?
+- Can Frank change his disguise in a telephone box and lose a constable who was chasing a man in a green coat?
+- Can Frank throw a brick through a shop window across the street to draw the night watchman away from the yard gate?
+- Can Frank turn on a radio in an empty room to make a guard walk over and investigate?
+- Can Frank let the air out of a parked van's tyres so its driver is stuck at the kerb while Frank searches the cargo?
+- Can Frank slip a note under a landlady's door that sends her out to the phone box, leaving her tenant's room unwatched?
+- Can Frank hide behind a pile of pallets on the dock and listen to two dockers talk about a shipment that is not on the manifest?
+- Can Frank follow a bent customs officer home on foot through the Hook without being spotted, staying a few streets behind him?
+- Can Frank tail a rival's car in a minicab without being noticed, and does it matter that his cab has the office's name on the door?
+- What happens if Frank tails a man onto a bus and the man gets off at the last second while Frank is still at the back?
+- Can Frank crouch below the window of a back room and overhear a meeting between two gang bosses, and does what he hears depend on the weather and the traffic outside?
+- Can Frank leave a bug in a rival's office, or does he have to find a way to use a telephone extension to listen in?
+- Can Frank cut the telephone line to a workshop so nobody inside can call the police while he works?
+- Can Frank climb a drainpipe to a first floor window and get in while a woman sits in the front room watching television?
+- What happens if Frank steps on a loose floorboard in an old terraced house at night, and does the sleeping occupant wake up and come to look?
+- Can Frank carry an unconscious bookie's runner to a back alley and hide him in a rubbish skip before the next patrol passes?
+- Can Frank drag a body into the boot of a car, and does the weight of it make the car sit lower so someone notices?
+- Can Frank put a drunk-looking man on a bench at the bus station and walk away, and do passers-by assume he is just asleep?
+- What happens if Frank leaves a body in a lock-up and a cleaner opens the door the next morning?
+- Can Frank wipe his fingerprints off a doorknob and a ledger after a burglary, and does the detective still find a way to link him to it?
+- Can Frank wear gloves in cold weather without anyone remarking on it, but find that wearing them in a warm cafe makes people suspicious?
+- Can Frank crouch in the dark storeroom of a butcher's shop and hold his breath as the owner walks by with a torch?
+- Can Frank use a cigarette to signal a lookout across the road, flicking it three times so his accomplice knows to move?
+- Can Frank sneak into the back of a church hall and sit among the congregation for a funeral to watch who attends and who does not?
+- What happens if Frank is caught in a stranger's house by a woman coming home early, and he tells her he is from the gas board?
+- Can Frank bluff his way into the town hall records office by claiming he is delivering a parcel for the clerk?
+- Can Frank shadow a postman on his round and steal a letter from his bag without the postman noticing it is gone?
+- Can Frank climb onto the roof of a terrace and move along the slates at night, and do the neighbours hear the tiles shift beneath him?
+- Can Frank lure a dog away from a yard by throwing it a bone from the butcher's, so he can climb the fence?
+- Can Frank spook a guard dog by making a noise in a different corner of the scrapyard, and does the guard come to see what upset it?
+- Can Frank break into a parked police panda car and hide in the back seat until the constable returns, to eavesdrop on a radio call?
+- What happens if Frank dresses as a nurse's porter at the hospital and wheels a trolley into a private ward to speak to a witness?
+- Can Frank hide in a wardrobe while two people talk in the bedroom, and does the door creaking open when he leaves give him away?
+- Can Frank slip a rival's housekeeper a few pounds to leave a back door unlatched on a particular night?
+- Can Frank listen through a thin party wall to the flat next door, and does the neighbour hear him pressing a glass to the plaster?
+- Can Frank create a distraction by setting off a car alarm on the far side of a car park so a doorman leaves his post?
+- What happens if Frank is seen entering a lock-up by an old woman at her window, and she later tells a constable she saw a man in a dark coat?
+- Can Frank wait in the shadow of the dock crane and time his dash across the lit yard to the moment the searchlight sweeps away?
+- Can Frank take off his shoes and carry them so that he walks silently on the stairs of a boarding house at night?
+- Can Frank climb into the back of a delivery lorry as it is loaded, and ride in with the crates to get into a closed factory?
+- What happens if Frank trips an alarm on a shop window and has to decide between running and staying hidden until the bell stops?
+- Can Frank watch a safe being opened from across the street through a pair of binoculars, and work out the combination from the dial movements?
+- Can Frank pose as a telephone engineer to get into a rival's back office and plant a bug in the handset?
+- Can Frank hide a stolen ledger in the lining of his coat and walk past a searching constable who is patting down everyone leaving the dock gate?
+- Can Frank put a note into a rival's coat pocket in a crowded bus queue without being noticed, so the man is found with something incriminating?
+- Can Frank wait by a tobacconist's till and watch where the owner keeps the spare key, then come back that night to use it?
+- What happens if Frank sneaks into the back of a parked van and is driven to a destination he did not choose, and can he get out unseen at the other end?

@@ -1,0 +1,54 @@
+- Can a low-vision player turn on a high-contrast outline for people and doors, so Frank can pick out the cafe owner in the Hook's grey November drizzle at dusk?
+- Can the text size and subtitle size be raised a long way, so a player reading from a sofa two metres away can still read a shopkeeper's reply?
+- Can a player with low vision use a screen magnifier mode on the street map, and still read the name of the lane Frank is standing in?
+- Can Frank's minicab satnav-free route be spoken aloud, such as "left at the chip shop, then second right", for a player who cannot read the corner street signs?
+- Can a blind-friendly audio cue guide Frank to a fare waving from the kerb on the far side of a foggy dock road?
+- Can a hard-of-hearing player see who is speaking when three people talk at once in the back office of Mickey's, with each line labelled by name and a direction marker?
+- Do subtitles show tone too, such as "(whispering)", "(angry, in a Scouse accent)" or "(laughing nervously)", for a player who cannot hear how a threat was meant?
+- What happens if a deaf player cannot hear a footstep, a cough or a car door behind Frank in the yard at night; is there a visual sign that someone is close?
+- Can a deaf player tell that two people near a bus shelter are gossiping about Frank, through an on-screen sign that shows the topic without needing the audio?
+- Can a hard-of-hearing player see a police siren coming from off-screen, as a flashing edge marker on the side it is approaching from?
+- Can Frank play a whole conversation by typing instead of speaking, and will the shopkeeper answer the typed words as if they were said aloud?
+- Can a player who stammers or has a speech difference have the live voice recogniser learn their way of speaking, so that Frank does not say "I never said that" when the player only paused?
+- What happens if a player with an anxiety about speaking aloud to AI turns off the microphone entirely, and still threatens the landlord of a bedsit by choosing from written lines?
+- Can a player who is anxious about live voice chat switch to a mode where they pick a tone (calm, firm, friendly) and Frank speaks the words for them?
+- If Frank's voice is typed instead of spoken, does the town still react to tone, such as a menacing type of line making the baker back away?
+- Can the player review a transcript of the last five minutes of talk with the fishmonger, to check what Frank actually promised?
+- What happens if the microphone picks up the player's flatmate talking in the next room; can Frank mute himself with one key, and does a speech bubble show what was caught?
+- Can the player correct a mis-heard line, such as "I'll pay the rent" heard as "I'll pray for rent", before the landlady reacts?
+- Can a slow reader pause a conversation with a nervous witness mid-sentence, and take as long as they like to read, without the witness walking off impatient?
+- Can the player ask any townsperson to repeat what they just said, without it counting as rudeness or as Frank being deaf?
+- Can a player with dyslexia switch the letters, in the pocketbook and the notice-board ads, to a plain, spaced-out typeface with cream-coloured paper?
+- Can a one-handed player on a keyboard alone play the whole game, including steering a minicab through a chase on Dock Road?
+- Can a player with one hand remap every action so that Frank can punch, block and dodge a docker's swing using only the right side of the keyboard?
+- Can a player hold a single key to sprint, rather than tapping it repeatedly, while Frank runs from a constable down the alley behind the launderette?
+- Can a fist fight be set to auto-block, so that a player with tremors can still survive a street brawl outside the taxi rank?
+- Can the cab's steering be set to assist, with the car staying on the road, while the player still chooses the turning points on a chase?
+- What happens in a car chase if a motion-sensitive player has the camera shake and speed blur switched off, and the pursuer's headlights are still visible in the mirror?
+- Can a player prone to nausea turn off head bob when Frank walks, and lower the field-of-view swing when he sprints round the docks?
+- Can Frank's drive through fog at night use a steady, flicker-free fog rather than moving, swirling effects that make a player dizzy?
+- Can a player with photosensitivity play the police-lights chase with the strobing blue lamps replaced by a steady glow?
+- What happens if a timed choice (give the bent detective his envelope now, or walk away) appears while the player is reading slowly; can the timer be paused or lengthened to nothing?
+- Can the player set every timed choice to wait for them, so that a crowded cafe argument does not decide itself while they are still reading the options?
+- If a timed choice is turned off, does the town treat Frank's long silence as hesitation, with the other person noticing and reacting, or does the world simply freeze?
+- Can a player with slow reactions ask the game to slow the whole chase, say to three quarters speed, and still win a trophy-level ending?
+- Can Frank hand a cosh to a crew member and tell him to deal with the pick-pocket, for a player who cannot manage the fight themselves?
+- Can a player skip a mugging scene entirely, such as choosing "it goes badly in the alley" and moving on, without losing the town's memory that it happened?
+- Can the player hold a button to see a shake-free, big-print summary of what a witness told the police, to understand why a constable is now at Mickey's door?
+- Can Frank read a character's feelings from a clear on-screen icon, such as nervous, angry or fond, for a player who cannot tell from the face or voice alone?
+- Can a colour-blind player tell the difference between the red and green marks on the notice-board map of which streets are Frank's and which the rival's?
+- Can a player with a visual impairment get a spoken read-out of the cab's fare meter and the cash in Frank's pocket, on request, at any moment?
+- Can a player ask for a spoken description of the room as Frank walks into the corner cafe, such as who is sitting where?
+- Can the menus, the pocketbook and the phone box instructions be read by a screen reader, so a blind player can find the save and load options?
+- Can the narration of a dockside cutscene be played with an audio description that says what is happening in the dark, such as "a man ducks behind a crate"?
+- What happens if a hard-of-hearing player uses closed captions for a phone call from the bent detective; does it say what the caller is doing in the background, such as a door shutting?
+- Can Frank use a text-to-speech helper on his side of a phone box call, so the player's typed words come out in his own voice and accent?
+- Can the player slow the pace of speech from townspeople, so that a fast-talking Glaswegian dock foreman is easy to follow in a noisy yard?
+- Can the game's background noise, like gulls, engines and a radio in a cafe, be turned down on its own so that a hard-of-hearing player can hear the one voice that matters?
+- Can a mono-audio mode be set for a player deaf in one ear, so that a whisper on the left of Frank's cab is not lost?
+- Can the player ask for a hint on what Frank might try at a locked back gate, in plain words, if they are stuck and cannot see the usual cues in the dark?
+- If a player has to take long breaks because of fatigue, can they save anywhere at all, even mid-chase, and come back to the same moment?
+- Can the game remind a player who has been away for a week, in short plain lines, who is angry with Frank, who owes him and what he promised?
+- What happens if a player with anxiety asks the game to warn them before a violent scene, such as a kneecapping, and then lets them dim it or skip it?
+- Can a player with a short attention span set the day's goals as a short checklist that stays on screen, such as "collect from the launderette, then pick up Mrs Hale"?
+- Can the player lower how often strangers stop Frank in the street with live chat, so that a crowded high street on market day does not overload someone who finds talk tiring?

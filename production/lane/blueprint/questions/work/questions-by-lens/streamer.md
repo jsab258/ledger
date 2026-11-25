@@ -1,0 +1,51 @@
+- Can Frank tell a nervous shopkeeper he is a film director scouting locations, and will the shopkeeper start telling customers about it?
+- What happens if Frank drives a minicab flat out down the High Street with a stolen handbag on the passenger seat and three constables on foot behind him?
+- Can Frank lead a police car chase into the docks and lose it by driving through an open warehouse and out the other side?
+- Can Frank fill a minicab with six townspeople who all dislike each other and drive them to the same destination to see what they say?
+- What happens if Frank greets every person he meets on the Hook street with the same line, and does the whole street start repeating it as a joke?
+- Can Frank convince the bent detective that Frank's rival is the bent one, and watch the detective turn on him in public?
+- Can Frank tell two gossips at the market that the other one has been spreading a rumour about her, and then stand back and watch the row?
+- What happens if Frank puts on a postman's uniform and delivers a threatening letter to a rival's front door?
+- Can Frank hide in the boot of his own cab while a passenger searches the car and then wonders where Frank went?
+- Can Frank pretend to be a police officer and tell a corner-shop owner he is there to collect protection money for the force?
+- Can Frank walk into the cafe wearing a full Santa costume in December and demand free tea from the owner?
+- What happens if Frank steals a rival minicab firm's sign overnight and nails it above the door of a laundrette?
+- Can Frank talk a nervous young thief out of mugging a pensioner, and does the pensioner thank him later?
+- What happens if Frank honks his horn at a funeral procession blocking the road, and do the mourners and townspeople remember the insult?
+- Can Frank get a dock foreman to give him a lift on a forklift to escape a pursuing rival?
+- Can Frank set up a fake fare booking so that a rival gang's driver turns up at an empty car park at midnight?
+- What happens if Frank boasts loudly in the cafe about a robbery he did not commit, and the police believe him?
+- Can Frank stage a fight in the street so that the real crime happens round the corner unnoticed?
+- Can Frank dress his driver as a road worker, shut a road with cones, and divert a rival's delivery van down a side street?
+- What happens if Frank leaves a loud, scruffy dog tied outside a rival's shop door and it barks at every customer until the shop empties?
+- Can Frank bribe the town busker to sing a song about the bent detective outside the police station?
+- Can Frank stand on a crate in the market square and give a speech, and will townspeople gather and argue about what he says?
+- What happens if Frank gives a free ride to the town gossip and tells her something deliberately false in the back seat?
+- Can Frank get a confused old man to wander into a rival's yard so the rival looks like he is harassing a pensioner?
+- Can Frank take a fare to the wrong end of town on purpose, and does an angry passenger shout at him through the window the whole way?
+- What happens if Frank drives the minicab through the front window of a closed shop to prove a point to his driver?
+- Can Frank ask the cafe owner to pretend they have never met, and will she keep to it when the police ask?
+- Can Frank climb a gantry crane at the docks to escape a mob, and will they wait at the bottom or give up?
+- What happens if Frank tries to leave the Hook on foot at dawn dragging a rolled-up carpet that a witness thinks looks like a body?
+- Can Frank recruit a rival's bouncer-type heavy by offering him double wages in front of his boss?
+- Can Frank sit in a phone box and call the same number every ten minutes until the person on the other end snaps and comes looking for him?
+- What happens if Frank answers the cab office phone in a ridiculous accent and the caller turns out to be a gang boss?
+- Can Frank get a street trader to swear on his mother's life that he did not see a robbery, and does the trader's own gossip give him away later?
+- Can Frank swap the number plates on two minicabs and trick a pursuing constable into stopping the wrong car?
+- What happens if Frank is wearing a rubber mask of a famous politician when a patrolling constable asks him for ID?
+- Can Frank tell a gullible newcomer that the corner shop is a police station and watch him try to report a crime there?
+- Can Frank hide a stolen television in a quiet alley and have a witness tell the police they saw him with a suspicious box?
+- What happens if Frank sets off a car alarm in front of a rival's flat every night for a week?
+- Can Frank take the keys from a stranger who looks too ill to drive, and will the stranger or the town thank him for it?
+- Can Frank pay a local tailor to make an exact copy of a rival boss's coat and wear it to be mistaken for him?
+- What happens if Frank challenges the town's hardest man to a race through the back streets in two stolen cars?
+- Can Frank cut the telephone line to the police box on a street corner and then report a crime from a phone box down the road?
+- Can Frank take over an unattended tea van and use it as cover for watching a rival's house?
+- What happens if Frank tells a chatty hairdresser a secret and then watches who in the shop hears about it by the afternoon?
+- Can Frank get an old woman on a mobility scooter to block a gang's getaway car in a narrow lane?
+- What happens if Frank pushes a rival boss into the harbour at the docks and a dockworker pulls him out and sees who did it?
+- Can Frank tow a rival's broken-down car to the police pound and report it as abandoned?
+- Can Frank dress up as a council inspector and tell a rival's cafe that it has been shut down for hygiene?
+- What happens if Frank gives a stolen watch to the bent detective as a gift and the detective's wife wears it in front of the real owner?
+- Can Frank film nothing, but pretend to hold a camcorder at a rival to make him think he is being recorded in a compromising act?
+- Can Frank drive a minicab onto the ferry ramp as it is leaving and jump the gap to escape the police?

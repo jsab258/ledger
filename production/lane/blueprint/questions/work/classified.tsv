@@ -1,0 +1,1057 @@
+N-GTA01	witnesses and senses	
+N-GTA02	crowd	
+N-GTA03	police and justice	
+N-GTA04	vehicles	
+N-GTA05	vehicles	
+N-GTA06	vehicles	
+N-GTA07	vehicles	
+N-GTA08	vehicles	
+N-GTA09	vehicles	
+N-GTA10	vehicles	
+N-GTA11	police and justice	
+N-GTA12	vehicles	
+N-GTA13	combat and stealth	
+N-GTA14	crowd	
+N-GTA15	witnesses and senses	
+N-GTA16	economy	
+N-GTA17	witnesses and senses	
+N-GTA18	crowd	
+N-GTA19	crowd	
+N-GTA20	talk and gossip	W-Q007
+N-GTA21	combat and stealth	
+N-GTA22	combat and stealth	
+N-GTA23	vehicles	
+N-GTA24	vehicles	
+N-GTA25	witnesses and senses	
+N-GTA26	police and justice	
+N-GTA27	police and justice	
+N-GTA28	witnesses and senses	W-Q147
+N-GTA29	economy	
+N-GTA30	world and places	
+N-GTA31	police and justice	
+N-GTA32	police and justice	
+N-GTA33	police and justice	
+N-GTA34	police and justice	
+N-GTA35	witnesses and senses	
+N-GTA36	people	
+N-GTA37	vehicles	
+N-GTA38	vehicles	
+N-GTA39	police and justice	
+N-GTA40	police and justice	
+N-GTA41	vehicles	
+N-GTA42	vehicles	
+N-GTA43	combat and stealth	
+N-GTA44	cab trade	
+N-GTA45	witnesses and senses	
+N-GTA46	vehicles	
+N-GTA47	vehicles	
+N-GTA48	vehicles	
+N-GTA49	vehicles	
+N-GTA50	police and justice	
+N-GTA51	vehicles	
+N-ROL01	witnesses and senses	
+N-ROL02	world and places	
+N-ROL03	economy	
+N-ROL04	witnesses and senses	
+N-ROL05	cab trade	
+N-ROL06	people	
+N-ROL07	economy	
+N-ROL08	economy	
+N-ROL09	world and places	
+N-ROL10	world and places	
+N-ROL11	cab trade	
+N-ROL12	people	
+N-ROL13	talk and gossip	
+N-ROL14	witnesses and senses	
+N-ROL15	talk and gossip	
+N-ROL16	economy	
+N-ROL17	people	
+N-ROL18	people	
+N-ROL19	combat and stealth	
+N-ROL20	people	
+N-ROL21	economy	
+N-ROL22	people	
+N-ROL23	people	W-Q007
+N-ROL24	people	
+N-ROL25	crowd	
+N-ROL26	people	
+N-ROL27	story	
+N-ROL28	crowd	
+N-ROL29	talk and gossip	
+N-ROL30	talk and gossip	
+N-ROL31	economy	
+N-ROL32	witnesses and senses	
+N-ROL33	cab trade	
+N-ROL34	world and places	
+N-ROL35	talk and gossip	
+N-ROL36	talk and gossip	
+N-ROL37	economy	
+N-ROL38	world and places	
+N-ROL39	world and places	
+N-ROL40	people	
+N-ROL41	world and places	
+N-ROL42	cab trade	
+N-ROL43	crowd	
+N-ROL44	witnesses and senses	
+N-ROL45	crowd	
+N-ROL46	story	
+N-ROL47	crowd	
+N-ROL48	people	
+N-ROL49	crowd	
+N-ROL50	people	
+N-ROL51	cab trade	
+N-LOC01	cab trade	
+N-LOC02	talk and gossip	
+N-LOC03	talk and gossip	
+N-LOC04	police and justice	
+N-LOC05	economy	
+N-LOC06	economy	
+N-LOC07	police and justice	
+N-LOC08	police and justice	
+N-LOC09	cab trade	
+N-LOC10	cab trade	
+N-LOC11	witnesses and senses	
+N-LOC12	world and places	
+N-LOC13	cab trade	
+N-LOC14	witnesses and senses	
+N-LOC15	economy	
+N-LOC16	economy	B-26
+N-LOC17	economy	
+N-LOC18	cab trade	
+N-LOC19	crowd	
+N-LOC20	witnesses and senses	N-LOC19
+N-LOC21	talk and gossip	
+N-LOC22	talk and gossip	
+N-LOC23	witnesses and senses	
+N-LOC24	economy	
+N-LOC25	cab trade	
+N-LOC26	cab trade	N-LOC25
+N-LOC27	crowd	
+N-LOC28	people	
+N-LOC29	crowd	
+N-LOC30	people	
+N-LOC31	cab trade	
+N-LOC32	cab trade	
+N-LOC33	talk and gossip	
+N-LOC34	crowd	
+N-LOC35	witnesses and senses	B-38
+N-LOC36	economy	
+N-LOC37	economy	
+N-LOC38	economy	
+N-LOC39	witnesses and senses	
+N-LOC40	talk and gossip	
+N-LOC41	witnesses and senses	N-ROL04
+N-LOC42	talk and gossip	N-ROL04
+N-LOC43	witnesses and senses	
+N-LOC44	world and places	
+N-LOC45	world and places	
+N-LOC46	crowd	
+N-LOC47	crowd	
+N-LOC48	crowd	
+N-LOC49	witnesses and senses	
+N-LOC50	witnesses and senses	
+N-LOC51	world and places	
+N-LOC52	crowd	
+N-LOC53	people	
+N-NOV01	police and justice	
+N-NOV02	police and justice	
+N-NOV03	police and justice	
+N-NOV04	police and justice	
+N-NOV05	police and justice	
+N-NOV06	people	
+N-NOV07	people	
+N-NOV08	economy	
+N-NOV09	economy	
+N-NOV10	economy	
+N-NOV11	story	
+N-NOV12	story	
+N-NOV13	story	
+N-NOV14	talk and gossip	
+N-NOV15	talk and gossip	
+N-NOV16	talk and gossip	
+N-NOV17	police and justice	
+N-NOV18	cab trade	
+N-NOV19	witnesses and senses	
+N-NOV20	witnesses and senses	
+N-NOV21	police and justice	
+N-NOV22	police and justice	
+N-NOV23	police and justice	
+N-NOV24	people	
+N-NOV25	people	
+N-NOV26	people	
+N-NOV27	people	
+N-NOV28	people	
+N-NOV29	people	
+N-NOV30	people	
+N-NOV31	police and justice	W-Q135
+N-NOV32	police and justice	
+N-NOV33	witnesses and senses	
+N-NOV34	witnesses and senses	
+N-NOV35	people	
+N-NOV36	police and justice	N-GTA27
+N-NOV37	people	
+N-NOV38	talk and gossip	
+N-NOV39	people	
+N-NOV40	economy	
+N-NOV41	witnesses and senses	
+N-NOV42	police and justice	
+N-NOV43	people	
+N-NOV44	people	
+N-NOV45	police and justice	
+N-NOV46	police and justice	
+N-NOV47	police and justice	
+N-NOV48	talk and gossip	
+N-NOV49	people	
+N-NOV50	witnesses and senses	
+N-NOV51	police and justice	
+N-NOV52	police and justice	
+N-DET01	police and justice	W-Q044
+N-DET02	police and justice	W-Q045
+N-DET03	police and justice	
+N-DET04	witnesses and senses	
+N-DET05	witnesses and senses	
+N-DET06	witnesses and senses	
+N-DET07	police and justice	W-Q189
+N-DET08	talk and gossip	N-NOV48
+N-DET09	police and justice	N-NOV06
+N-DET10	police and justice	
+N-DET11	witnesses and senses	
+N-DET12	police and justice	
+N-DET13	police and justice	
+N-DET14	police and justice	W-Q134
+N-DET15	police and justice	
+N-DET16	police and justice	
+N-DET17	police and justice	
+N-DET18	police and justice	
+N-DET19	police and justice	
+N-DET20	police and justice	
+N-DET21	police and justice	
+N-DET22	police and justice	
+N-DET23	police and justice	N-NOV22
+N-DET24	police and justice	N-NOV23
+N-DET25	police and justice	
+N-DET26	police and justice	
+N-DET27	police and justice	
+N-DET28	police and justice	
+N-DET29	police and justice	W-Q016
+N-DET30	police and justice	W-Q055
+N-DET31	police and justice	
+N-DET32	police and justice	
+N-DET33	police and justice	W-Q011
+N-DET34	police and justice	
+N-DET35	police and justice	
+N-DET36	police and justice	
+N-DET37	police and justice	
+N-DET38	police and justice	
+N-DET39	police and justice	
+N-DET40	witnesses and senses	
+N-DET41	police and justice	
+N-DET42	witnesses and senses	
+N-DET43	police and justice	
+N-DET44	police and justice	
+N-DET45	witnesses and senses	
+N-DET46	witnesses and senses	
+N-DET47	witnesses and senses	
+N-DET48	witnesses and senses	B-02
+N-DET49	police and justice	
+N-DET50	police and justice	N-GTA04
+N-DET51	police and justice	N-NOV20
+N-DET52	police and justice	
+N-SCH01	talk and gossip	
+N-SCH02	talk and gossip	
+N-SCH03	talk and gossip	
+N-SCH04	people	
+N-SCH05	economy	
+N-SCH06	talk and gossip	
+N-SCH07	people	
+N-SCH08	talk and gossip	
+N-SCH09	talk and gossip	
+N-SCH10	talk and gossip	
+N-SCH11	talk and gossip	
+N-SCH12	police and justice	N-NOV35
+N-SCH13	people	N-NOV06
+N-SCH14	police and justice	N-DET37
+N-SCH15	talk and gossip	
+N-SCH16	talk and gossip	
+N-SCH17	people	
+N-SCH18	economy	N-NOV34
+N-SCH19	economy	
+N-SCH20	police and justice	
+N-SCH21	people	
+N-SCH22	people	
+N-SCH23	people	
+N-SCH24	talk and gossip	
+N-SCH25	cab trade	
+N-SCH26	economy	
+N-SCH27	people	
+N-SCH28	talk and gossip	
+N-SCH29	witnesses and senses	
+N-SCH30	talk and gossip	
+N-SCH31	people	
+N-SCH32	people	
+N-SCH33	people	
+N-SCH34	police and justice	
+N-SCH35	talk and gossip	
+N-SCH36	crowd	
+N-SCH37	talk and gossip	
+N-SCH38	talk and gossip	
+N-SCH39	people	
+N-SCH40	people	
+N-SCH41	talk and gossip	
+N-SCH42	witnesses and senses	N-NOV19
+N-SCH43	talk and gossip	
+N-SCH44	talk and gossip	
+N-SCH45	witnesses and senses	
+N-SCH46	people	T-CC08
+N-SCH47	police and justice	
+N-SCH48	people	
+N-SCH49	people	
+N-SCH50	talk and gossip	
+N-ROM01	people	
+N-ROM02	people	
+N-ROM03	people	
+N-ROM04	people	
+N-ROM05	people	
+N-ROM06	talk and gossip	
+N-ROM07	people	
+N-ROM08	people	
+N-ROM09	people	
+N-ROM10	people	
+N-ROM11	people	
+N-ROM12	people	
+N-ROM13	people	
+N-ROM14	people	
+N-ROM15	talk and gossip	
+N-ROM16	economy	
+N-ROM17	people	
+N-ROM18	people	
+N-ROM19	people	
+N-ROM20	people	
+N-ROM21	people	
+N-ROM22	people	
+N-ROM23	people	
+N-ROM24	people	
+N-ROM25	talk and gossip	
+N-ROM26	people	
+N-ROM27	people	
+N-ROM28	people	
+N-ROM29	people	
+N-ROM30	people	
+N-ROM31	story	
+N-ROM32	story	
+N-ROM33	story	
+N-ROM34	people	
+N-ROM35	people	
+N-ROM36	people	
+N-ROM37	people	
+N-ROM38	economy	
+N-ROM39	talk and gossip	
+N-ROM40	people	
+N-ROM41	people	
+N-ROM42	people	
+N-ROM43	people	N-ROL20
+N-ROM44	people	
+N-ROM45	people	
+N-ROM46	people	
+N-ROM47	people	
+N-ROM48	people	
+N-ROM49	people	
+N-ROM50	people	
+N-ROM51	people	
+N-ROM52	people	
+N-ROM53	people	
+N-ROM54	people	
+N-ROM55	people	
+N-SPE01	story	
+N-SPE02	story	
+N-SPE03	combat and stealth	
+N-SPE04	story	
+N-SPE05	interface and access	W-Q182
+N-SPE06	interface and access	W-Q182
+N-SPE07	cab trade	
+N-SPE08	economy	
+N-SPE09	economy	
+N-SPE10	police and justice	
+N-SPE11	witnesses and senses	
+N-SPE12	witnesses and senses	
+N-SPE13	witnesses and senses	
+N-SPE14	witnesses and senses	
+N-SPE15	witnesses and senses	B-02
+N-SPE16	witnesses and senses	
+N-SPE17	police and justice	N-NOV33
+N-SPE18	crowd	
+N-SPE19	police and justice	N-GTA26
+N-SPE20	witnesses and senses	
+N-SPE21	witnesses and senses	
+N-SPE22	witnesses and senses	
+N-SPE23	witnesses and senses	
+N-SPE24	police and justice	
+N-SPE25	witnesses and senses	W-Q137
+N-SPE26	world and places	
+N-SPE27	vehicles	
+N-SPE28	police and justice	
+N-SPE29	police and justice	N-NOV03
+N-SPE30	police and justice	
+N-SPE31	talk and gossip	
+N-SPE32	police and justice	
+N-SPE33	economy	
+N-SPE34	police and justice	
+N-SPE35	economy	
+N-SPE36	story	
+N-SPE37	story	
+N-SPE38	story	
+N-SPE39	story	
+N-SPE40	story	
+N-SPE41	talk and gossip	
+N-SPE42	people	
+N-SPE43	people	
+N-SPE44	witnesses and senses	
+N-SPE45	talk and gossip	
+N-SPE46	witnesses and senses	
+N-SPE47	combat and stealth	
+N-SPE48	police and justice	
+N-SPE49	police and justice	
+N-SPE50	world and places	
+N-SPE51	police and justice	W-Q051
+N-BRE01	world and places	
+N-BRE02	world and places	
+N-BRE03	crowd	
+N-BRE04	talk and gossip	
+N-BRE05	crowd	
+N-BRE06	people	
+N-BRE07	combat and stealth	
+N-BRE08	vehicles	
+N-BRE09	world and places	W-Q186
+N-BRE10	police and justice	
+N-BRE11	police and justice	
+N-BRE12	crowd	
+N-BRE13	combat and stealth	
+N-BRE14	vehicles	
+N-BRE15	witnesses and senses	
+N-BRE16	witnesses and senses	
+N-BRE17	crowd	
+N-BRE18	people	
+N-BRE19	talk and gossip	
+N-BRE20	talk and gossip	
+N-BRE21	vehicles	
+N-BRE22	vehicles	
+N-BRE23	cab trade	
+N-BRE24	world and places	
+N-BRE25	world and places	
+N-BRE26	vehicles	
+N-BRE27	vehicles	
+N-BRE28	police and justice	
+N-BRE29	police and justice	
+N-BRE30	police and justice	
+N-BRE31	police and justice	
+N-BRE32	cab trade	
+N-BRE33	cab trade	
+N-BRE34	cab trade	
+N-BRE35	witnesses and senses	
+N-BRE36	world and places	
+N-BRE37	witnesses and senses	
+N-BRE38	vehicles	
+N-BRE39	crowd	
+N-BRE40	world and places	
+N-BRE41	witnesses and senses	
+N-BRE42	cab trade	
+N-BRE43	police and justice	
+N-BRE44	crowd	
+N-BRE45	crowd	
+N-BRE46	crowd	
+N-BRE47	vehicles	
+N-BRE48	people	
+N-BRE49	vehicles	
+N-BRE50	combat and stealth	
+N-BRE51	talk and gossip	
+N-STR01	talk and gossip	
+N-STR02	vehicles	
+N-STR03	vehicles	
+N-STR04	talk and gossip	
+N-STR05	crowd	
+N-STR06	police and justice	
+N-STR07	talk and gossip	
+N-STR08	witnesses and senses	
+N-STR09	witnesses and senses	
+N-STR10	police and justice	
+N-STR11	crowd	
+N-STR12	cab trade	
+N-STR13	crowd	
+N-STR14	crowd	
+N-STR15	world and places	
+N-STR16	cab trade	
+N-STR17	police and justice	
+N-STR18	witnesses and senses	
+N-STR19	vehicles	
+N-STR20	crowd	
+N-STR21	crowd	
+N-STR22	crowd	
+N-STR23	talk and gossip	
+N-STR24	crowd	
+N-STR25	cab trade	
+N-STR26	vehicles	N-BRE47
+N-STR27	talk and gossip	
+N-STR28	combat and stealth	
+N-STR29	witnesses and senses	N-BRE12
+N-STR30	people	
+N-STR31	talk and gossip	
+N-STR32	cab trade	
+N-STR33	witnesses and senses	
+N-STR34	vehicles	N-GTA04
+N-STR35	witnesses and senses	
+N-STR36	crowd	
+N-STR37	witnesses and senses	
+N-STR38	vehicles	
+N-STR39	vehicles	
+N-STR40	witnesses and senses	
+N-STR41	vehicles	
+N-STR42	police and justice	
+N-STR43	witnesses and senses	
+N-STR44	talk and gossip	
+N-STR45	vehicles	
+N-STR46	witnesses and senses	
+N-STR47	vehicles	
+N-STR48	crowd	
+N-STR49	police and justice	
+N-STR50	talk and gossip	
+N-STR51	vehicles	
+N-EXP01	world and places	
+N-EXP02	world and places	
+N-EXP03	world and places	
+N-EXP04	world and places	
+N-EXP05	story	N-ROM33
+N-EXP06	people	
+N-EXP07	world and places	
+N-EXP08	world and places	
+N-EXP09	world and places	
+N-EXP10	economy	
+N-EXP11	world and places	
+N-EXP12	witnesses and senses	
+N-EXP13	world and places	
+N-EXP14	talk and gossip	
+N-EXP15	world and places	
+N-EXP16	world and places	
+N-EXP17	world and places	
+N-EXP18	world and places	
+N-EXP19	story	
+N-EXP20	world and places	
+N-EXP21	witnesses and senses	
+N-EXP22	world and places	
+N-EXP23	world and places	
+N-EXP24	world and places	
+N-EXP25	world and places	
+N-EXP26	world and places	
+N-EXP27	world and places	
+N-EXP28	world and places	
+N-EXP29	world and places	
+N-EXP30	world and places	
+N-EXP31	world and places	
+N-EXP32	world and places	
+N-EXP33	world and places	
+N-EXP34	talk and gossip	
+N-EXP35	world and places	
+N-EXP36	world and places	
+N-EXP37	world and places	
+N-EXP38	combat and stealth	
+N-EXP39	world and places	
+N-EXP40	witnesses and senses	
+N-EXP41	world and places	
+N-EXP42	crowd	
+N-EXP43	story	
+N-EXP44	world and places	
+N-EXP45	world and places	
+N-EXP46	crowd	
+N-EXP47	world and places	
+N-EXP48	world and places	
+N-EXP49	world and places	
+N-EXP50	world and places	
+N-EXP51	story	
+N-BUS01	cab trade	
+N-BUS02	cab trade	
+N-BUS03	cab trade	
+N-BUS04	cab trade	
+N-BUS05	cab trade	
+N-BUS06	cab trade	
+N-BUS07	cab trade	
+N-BUS08	cab trade	B-23
+N-BUS09	cab trade	
+N-BUS10	cab trade	
+N-BUS11	cab trade	
+N-BUS12	cab trade	
+N-BUS13	economy	
+N-BUS14	cab trade	
+N-BUS15	cab trade	
+N-BUS16	police and justice	
+N-BUS17	police and justice	
+N-BUS18	economy	
+N-BUS19	economy	
+N-BUS20	economy	
+N-BUS21	economy	
+N-BUS22	economy	
+N-BUS23	economy	
+N-BUS24	economy	
+N-BUS25	economy	
+N-BUS26	economy	
+N-BUS27	economy	
+N-BUS28	economy	
+N-BUS29	cab trade	
+N-BUS30	cab trade	N-SCH07
+N-BUS31	cab trade	
+N-BUS32	cab trade	
+N-BUS33	cab trade	
+N-BUS34	economy	
+N-BUS35	economy	
+N-BUS36	cab trade	
+N-BUS37	economy	
+N-BUS38	economy	
+N-BUS39	economy	
+N-BUS40	economy	
+N-BUS41	police and justice	
+N-BUS42	economy	
+N-BUS43	people	
+N-BUS44	cab trade	
+N-BUS45	cab trade	
+N-BUS46	people	
+N-BUS47	people	
+N-BUS48	cab trade	
+N-BUS49	cab trade	
+N-BUS50	cab trade	
+N-BUS51	cab trade	
+N-STE01	combat and stealth	
+N-STE02	combat and stealth	
+N-STE03	witnesses and senses	
+N-STE04	witnesses and senses	
+N-STE05	witnesses and senses	
+N-STE06	witnesses and senses	
+N-STE07	witnesses and senses	
+N-STE08	combat and stealth	H-14
+N-STE09	combat and stealth	
+N-STE10	combat and stealth	
+N-STE11	combat and stealth	
+N-STE12	witnesses and senses	
+N-STE13	combat and stealth	
+N-STE14	witnesses and senses	
+N-STE15	combat and stealth	
+N-STE16	witnesses and senses	
+N-STE17	combat and stealth	
+N-STE18	combat and stealth	
+N-STE19	combat and stealth	
+N-STE20	witnesses and senses	
+N-STE21	combat and stealth	
+N-STE22	combat and stealth	
+N-STE23	combat and stealth	
+N-STE24	combat and stealth	
+N-STE25	police and justice	
+N-STE26	witnesses and senses	
+N-STE27	combat and stealth	
+N-STE28	combat and stealth	
+N-STE29	witnesses and senses	
+N-STE30	talk and gossip	
+N-STE31	talk and gossip	
+N-STE32	combat and stealth	
+N-STE33	combat and stealth	
+N-STE34	combat and stealth	
+N-STE35	combat and stealth	
+N-STE36	combat and stealth	
+N-STE37	witnesses and senses	
+N-STE38	combat and stealth	
+N-STE39	economy	
+N-STE40	witnesses and senses	N-EXP40
+N-STE41	combat and stealth	
+N-STE42	witnesses and senses	
+N-STE43	combat and stealth	
+N-STE44	combat and stealth	
+N-STE45	combat and stealth	
+N-STE46	combat and stealth	
+N-STE47	witnesses and senses	
+N-STE48	witnesses and senses	
+N-STE49	police and justice	
+N-STE50	combat and stealth	
+N-STE51	combat and stealth	
+N-STE52	combat and stealth	
+N-ACC01	interface and access	
+N-ACC02	interface and access	
+N-ACC03	interface and access	
+N-ACC04	interface and access	
+N-ACC05	interface and access	
+N-ACC06	interface and access	
+N-ACC07	interface and access	
+N-ACC08	interface and access	
+N-ACC09	interface and access	
+N-ACC10	interface and access	
+N-ACC11	interface and access	
+N-ACC12	interface and access	
+N-ACC13	interface and access	
+N-ACC14	interface and access	
+N-ACC15	interface and access	
+N-ACC16	interface and access	
+N-ACC17	interface and access	
+N-ACC18	interface and access	
+N-ACC19	interface and access	
+N-ACC20	interface and access	
+N-ACC21	interface and access	
+N-ACC22	interface and access	
+N-ACC23	interface and access	
+N-ACC24	interface and access	
+N-ACC25	interface and access	
+N-ACC26	interface and access	
+N-ACC27	interface and access	
+N-ACC28	interface and access	
+N-ACC29	interface and access	
+N-ACC30	interface and access	
+N-ACC31	interface and access	
+N-ACC32	interface and access	N-ACC31
+N-ACC33	interface and access	
+N-ACC34	interface and access	
+N-ACC35	interface and access	
+N-ACC36	interface and access	
+N-ACC37	interface and access	
+N-ACC38	interface and access	
+N-ACC39	interface and access	
+N-ACC40	interface and access	
+N-ACC41	interface and access	
+N-ACC42	interface and access	
+N-ACC43	interface and access	
+N-ACC44	interface and access	
+N-ACC45	interface and access	
+N-ACC46	interface and access	
+N-ACC47	interface and access	
+N-ACC48	interface and access	
+N-ACC49	interface and access	
+N-ACC50	interface and access	
+N-ACC51	interface and access	
+N-ACC52	interface and access	
+N-ACC53	interface and access	
+N-ACC54	interface and access	
+W-Q001	combat and stealth	
+W-Q002	witnesses and senses	
+W-Q003	story	
+W-Q004	combat and stealth	
+W-Q005	combat and stealth	
+W-Q006	combat and stealth	
+W-Q007	combat and stealth	
+W-Q008	police and justice	
+W-Q009	combat and stealth	
+W-Q010	police and justice	
+W-Q011	police and justice	
+W-Q012	police and justice	
+W-Q013	police and justice	
+W-Q014	police and justice	
+W-Q015	police and justice	
+W-Q016	police and justice	
+W-Q017	police and justice	
+W-Q018	police and justice	
+W-Q019	police and justice	
+W-Q020	police and justice	
+W-Q021	police and justice	
+W-Q022	police and justice	
+W-Q023	police and justice	
+W-Q024	witnesses and senses	
+W-Q025	combat and stealth	
+W-Q026	combat and stealth	
+W-Q027	vehicles	
+W-Q028	vehicles	
+W-Q029	combat and stealth	
+W-Q030	combat and stealth	
+W-Q031	police and justice	
+W-Q032	combat and stealth	
+W-Q033	police and justice	
+W-Q034	police and justice	
+W-Q035	police and justice	
+W-Q036	police and justice	
+W-Q037	police and justice	
+W-Q038	police and justice	
+W-Q039	police and justice	
+W-Q040	police and justice	
+W-Q041	police and justice	
+W-Q042	police and justice	
+W-Q043	police and justice	
+W-Q044	police and justice	
+W-Q045	police and justice	
+W-Q046	police and justice	
+W-Q047	police and justice	
+W-Q048	police and justice	
+W-Q049	police and justice	
+W-Q050	police and justice	
+W-Q051	police and justice	
+W-Q052	police and justice	
+W-Q053	interface and access	
+W-Q054	police and justice	
+W-Q055	police and justice	
+W-Q056	witnesses and senses	
+W-Q057	vehicles	
+W-Q058	vehicles	
+W-Q059	police and justice	
+W-Q060	witnesses and senses	
+W-Q061	police and justice	
+W-Q062	police and justice	
+W-Q063	police and justice	
+W-Q064	police and justice	
+W-Q065	police and justice	
+W-Q066	police and justice	
+W-Q067	police and justice	
+W-Q068	police and justice	
+W-Q069	police and justice	
+W-Q070	police and justice	
+W-Q071	story	
+W-Q072	story	
+W-Q073	combat and stealth	
+W-Q074	combat and stealth	
+W-Q075	combat and stealth	
+W-Q076	people	
+W-Q077	people	
+W-Q078	combat and stealth	
+W-Q079	combat and stealth	
+W-Q080	talk and gossip	
+W-Q081	talk and gossip	
+W-Q082	witnesses and senses	
+W-Q083	people	
+W-Q084	combat and stealth	
+W-Q085	people	
+W-Q086	story	
+W-Q087	story	
+W-Q088	story	
+W-Q089	story	
+W-Q090	story	
+W-Q091	story	
+W-Q092	cab trade	
+W-Q093	cab trade	
+W-Q094	talk and gossip	
+W-Q095	cab trade	
+W-Q096	story	
+W-Q097	economy	
+W-Q098	economy	
+W-Q099	crowd	
+W-Q100	economy	
+W-Q101	economy	
+W-Q102	economy	
+W-Q103	economy	
+W-Q104	economy	
+W-Q105	witnesses and senses	
+W-Q106	witnesses and senses	
+W-Q107	witnesses and senses	
+W-Q108	witnesses and senses	
+W-Q109	witnesses and senses	
+W-Q110	witnesses and senses	
+W-Q111	witnesses and senses	
+W-Q112	witnesses and senses	
+W-Q113	witnesses and senses	
+W-Q114	witnesses and senses	
+W-Q115	witnesses and senses	
+W-Q116	crowd	
+W-Q117	combat and stealth	
+W-Q118	crowd	
+W-Q119	combat and stealth	
+W-Q120	people	
+W-Q121	people	
+W-Q122	people	
+W-Q123	people	
+W-Q124	people	
+W-Q125	people	
+W-Q126	crowd	
+W-Q127	crowd	
+W-Q128	combat and stealth	
+W-Q129	combat and stealth	
+W-Q130	combat and stealth	
+W-Q131	combat and stealth	
+W-Q132	combat and stealth	
+W-Q133	combat and stealth	
+W-Q134	police and justice	
+W-Q135	police and justice	
+W-Q136	combat and stealth	
+W-Q137	witnesses and senses	
+W-Q138	vehicles	
+W-Q139	combat and stealth	
+W-Q140	combat and stealth	
+W-Q141	combat and stealth	
+W-Q142	people	
+W-Q143	witnesses and senses	
+W-Q144	combat and stealth	
+W-Q145	vehicles	
+W-Q146	world and places	
+W-Q147	combat and stealth	
+W-Q148	economy	
+W-Q149	economy	
+W-Q150	talk and gossip	
+W-Q151	vehicles	
+W-Q152	vehicles	
+W-Q153	vehicles	
+W-Q154	vehicles	
+W-Q155	vehicles	
+W-Q156	talk and gossip	
+W-Q157	talk and gossip	
+W-Q158	talk and gossip	
+W-Q159	talk and gossip	
+W-Q160	talk and gossip	
+W-Q161	talk and gossip	
+W-Q162	people	
+W-Q163	talk and gossip	
+W-Q164	talk and gossip	
+W-Q165	people	
+W-Q166	people	
+W-Q167	people	
+W-Q168	people	
+W-Q169	police and justice	
+W-Q170	economy	
+W-Q171	economy	
+W-Q172	cab trade	
+W-Q173	cab trade	
+W-Q174	police and justice	
+W-Q175	economy	
+W-Q176	combat and stealth	
+W-Q177	combat and stealth	
+W-Q178	story	
+W-Q179	story	
+W-Q180	witnesses and senses	
+W-Q181	world and places	
+W-Q182	interface and access	
+W-Q183	economy	
+W-Q184	combat and stealth	
+W-Q185	world and places	
+W-Q186	world and places	
+W-Q187	police and justice	
+W-Q188	police and justice	
+W-Q189	police and justice	
+W-Q190	combat and stealth	
+W-Q191	people	
+W-Q192	story	
+W-Q193	story	
+W-Q194	story	
+W-Q195	story	
+W-Q196	witnesses and senses	
+W-Q197	world and places	
+W-Q198	witnesses and senses	
+W-Q199	combat and stealth	
+W-Q200	combat and stealth	
+W-Q201	combat and stealth	
+W-Q202	people	
+W-Q203	police and justice	
+W-Q204	police and justice	
+W-Q205	story	
+W-Q206	police and justice	
+W-Q207	economy	
+W-Q208	combat and stealth	
+W-Q209	crowd	
+W-Q210	crowd	
+W-Q211	economy	
+W-Q212	police and justice	
+W-Q213	crowd	
+W-Q214	story	
+W-Q215	people	
+W-Q216	people	
+B-01	witnesses and senses	
+B-02	witnesses and senses	
+B-03	witnesses and senses	
+B-04	witnesses and senses	
+B-05	witnesses and senses	
+B-06	witnesses and senses	
+B-07	talk and gossip	
+B-08	talk and gossip	
+B-09	talk and gossip	
+B-10	talk and gossip	
+B-11	talk and gossip	
+B-12	police and justice	
+B-13	police and justice	
+B-14	police and justice	
+B-15	police and justice	
+B-16	witnesses and senses	
+B-17	crowd	
+B-18	crowd	
+B-19	crowd	
+B-20	crowd	
+B-21	cab trade	
+B-22	cab trade	
+B-23	cab trade	
+B-24	cab trade	
+B-25	economy	
+B-26	economy	
+B-27	economy	
+B-28	economy	
+B-29	combat and stealth	
+B-30	crowd	
+B-31	combat and stealth	
+B-32	combat and stealth	
+B-33	world and places	
+B-34	world and places	
+B-35	witnesses and senses	
+B-36	world and places	
+B-37	world and places	
+B-38	talk and gossip	
+B-39	world and places	
+B-40	world and places	
+B-41	world and places	
+B-42	world and places	
+B-43	crowd	
+B-44	world and places	
+B-45	crowd	
+B-46	witnesses and senses	
+B-47	crowd	
+B-48	people	
+B-49	economy	
+B-50	crowd	
+T-FN01	combat and stealth	
+T-FN02	combat and stealth	
+T-FN03	witnesses and senses	
+T-FN04	combat and stealth	
+T-FN05	combat and stealth	
+T-FN06	combat and stealth	
+T-FN07	witnesses and senses	
+T-FN08	witnesses and senses	
+T-FN09	police and justice	
+T-FN10	combat and stealth	
+T-FN11	combat and stealth	
+T-FN12	combat and stealth	W-Q200
+T-FN13	combat and stealth	
+T-FN14	crowd	
+T-FN15	vehicles	
+T-FN16	police and justice	
+T-FN17	combat and stealth	
+T-FN18	crowd	W-Q210
+T-FN19	talk and gossip	
+T-FN20	combat and stealth	
+T-FN21	people	
+T-FN22	combat and stealth	
+T-FN23	police and justice	
+T-FN24	combat and stealth	
+T-FN25	combat and stealth	
+T-FN26	combat and stealth	B-48
+T-FN27	combat and stealth	
+T-FN28	combat and stealth	
+T-FN29	combat and stealth	
+T-FN30	combat and stealth	
+T-CC01	witnesses and senses	
+T-CC02	people	
+T-CC03	combat and stealth	
+T-CC04	combat and stealth	
+T-CC05	crowd	
+T-CC06	talk and gossip	
+T-CC07	vehicles	
+T-CC08	people	
+T-CC09	combat and stealth	
+T-CC10	combat and stealth	
+T-CC11	police and justice	W-Q007
+T-CC12	combat and stealth	W-Q161
+T-CC13	combat and stealth	
+T-CC14	witnesses and senses	
+T-CC15	witnesses and senses	
+T-CC16	witnesses and senses	
+T-CC17	witnesses and senses	T-FN03
+T-CC18	witnesses and senses	
+T-CC19	witnesses and senses	B-02
+T-CC20	witnesses and senses	
+H-01	combat and stealth	
+H-02	combat and stealth	W-Q210
+H-03	combat and stealth	
+H-04	combat and stealth	W-Q126
+H-05	crowd	
+H-06	combat and stealth	T-CC05
+H-07	combat and stealth	T-FN30
+H-08	combat and stealth	T-FN13
+H-09	combat and stealth	W-Q136
+H-10	combat and stealth	
+H-11	combat and stealth	T-FN01
+H-12	combat and stealth	W-Q001
+H-13	combat and stealth	T-FN10
+H-14	combat and stealth	
+H-15	combat and stealth	W-Q002
+H-16	witnesses and senses	

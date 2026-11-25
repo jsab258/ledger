@@ -1,0 +1,51 @@
+- Can Frank wear the same suit for a fortnight and have the barber, the cafe owner and his crew comment on the smell and the stains?
+- What happens if Frank gets soaked in a November downpour on the docks and then sits in the cab for hours without changing, does he catch a cold and cough through conversations?
+- Can Frank buy a second-hand overcoat from a market stall and have people recognise it as a dead man's coat?
+- Can Frank wear a donkey jacket and hard hat to walk onto the docks and be taken for a stevedore by the gatekeeper?
+- Can Frank get a haircut and a wet shave at the barber on a Saturday morning and have regulars notice the difference at Mickey's that afternoon?
+- What happens if Frank turns up to a funeral for a local docker in a bright shirt, and do the mourners remember it?
+- Can Frank stand in the queue at the chip shop at lunchtime and be served in turn, or does the owner wave him ahead because of his reputation?
+- Can Frank sleep through the afternoon in the flat above the office and be woken by the landlady knocking about the rent?
+- What happens if Frank skips meals for two days while working double shifts, does he get shaky and mutter in conversation?
+- Can Frank wash his own shirts in the bath and hang them on a line across the back yard to dry, and what happens if it rains?
+- Can Frank bring a fresh pot of tea and a plate of toast to the night radio girl at the cab office and have her remember it at the end of the week?
+- Can Frank go to the Sunday service at the local church and sit at the back, and does the vicar greet him by name the next time he passes?
+- What happens if Frank always pays his tab at the newsagent on Friday, and does the owner start keeping his paper aside and mention him kindly to others?
+- Can Frank give a pensioner a free lift home from the post office on pension day, and will she tell her friends at the tea room by the market?
+- Can Frank stand on the sea wall at dawn and smoke a cigarette while a docker tells him about the old days before the cranes?
+- What happens if Frank is seen leaving the flat of a married woman at six in the morning, and does her husband hear of it by dinner time?
+- Can Frank return a lost wallet to a stranger at the bus station without taking the cash, and does that stranger spread the word?
+- Can Frank refuse a bribe from a rival and have the whole street know he is a man who cannot be bought?
+- Can Frank apologise in person to a shopkeeper he threatened last week and have her take back what she told her neighbours?
+- What happens if Frank breaks a promise to a driver to cover his Christmas shift, does the driver tell the other drivers and does loyalty drop across the office?
+- Can Frank keep a handwritten notebook of favours owed and favours due that the player reads and the townspeople also seem to track?
+- Can Frank tell a rival gang man to his face in the street that he will meet him at the cranes at midnight, and does the man turn up with others?
+- What happens if Frank hits a man who is already on the ground, do onlookers lose respect even if the man had it coming?
+- Can Frank walk away from an insult in the cafe in front of his crew, and do they read it as wisdom or as weakness?
+- Can Frank spare a beaten rival's life on the quayside and have the rival's men later come to him because of it?
+- Can Frank take the blame in front of the police for something a young driver did, and does that driver's loyalty turn to devotion?
+- Can Frank cross the road to avoid an old enemy in the market and have bystanders notice the avoidance?
+- Can Frank stand at his late uncle's grave with a bunch of flowers on the anniversary and have an old friend of Mickey's join him and talk?
+- Can Frank find his uncle's old diaries in a drawer and read them across several evenings, learning names and debts as a slow reveal?
+- Can Frank sit in the corner of the cafe for a whole morning doing nothing but drinking tea and watching the street, and learn who comes and goes?
+- Can Frank wait at the bus shelter in the drizzle with a newspaper and eavesdrop on a woman telling a friend about the landlord's visitors?
+- Can Frank carry a stranger's heavy suitcase up the station steps and be told a piece of local rumour in thanks?
+- What happens if Frank dresses as a rent collector and knocks on doors in a block of flats, do people answer and can he learn who is behind on their payments?
+- Can Frank grow a moustache over a few weeks and have the town react to the change in his face, including the police who have his description?
+- Can Frank take his cab to the car wash on a Sunday and have the lad there remember to keep the back seat clean for fares who complain?
+- What happens if Frank leaves a cigarette burning in the cab ashtray overnight and a smell of smoke puts off a fussy regular in the morning?
+- Can Frank ask a pensioner on the pier for a light and strike up a half-hour talk about the war, and does he see the old man again next week at the same bench?
+- Can Frank join the dockers queuing for the early shift at the gate and work an honest day to earn local respect, then return to the office tired and filthy?
+- What happens if Frank offers a cigarette to a nervous witness before asking a question and does she open up more than if he had just demanded?
+- Can Frank leave the flat unlocked while he works and come back to find his landlady has tidied up and read his letters?
+- Can Frank repair a broken window at the cafe himself on a Sunday morning because he knocked it out in a scuffle, and have the owner forgive him?
+- What happens if Frank is late three times in a row for a standing Thursday supper at his aunt's, and does she stop setting his place?
+- Can Frank get a hot-water bottle, a kettle and a bag of coal into the office on the first freezing night of December and have the drivers thank him for it?
+- Can Frank take a night driver aside after a cruel remark and put right a grudge between two crew members, and do the others see how he handles it?
+- Can Frank wear a black armband for a week after a crewman dies and be treated differently on the street?
+- Can Frank tell an elderly woman he is Mickey's nephew and hear a different story of Mickey than the one his crew tells?
+- What happens if Frank is always seen at the same corner table in the cafe at ten each morning, do people start to turn up there to ask him for favours?
+- Can Frank buy a bunch of flowers from the stall by the bus station and give them to a widow whose husband died owing money to him, and does she cancel her fear of him?
+- Can Frank walk the length of the Hook at closing time on a Saturday night and see each shopkeeper pull down their shutters in a routine he can learn?
+- Can Frank have a quiet wake for a dead driver in the back room of the office with tea, sandwiches and the man's family, and have the district talk about it for weeks?
+- What happens if Frank lets the office go to seed for a month, with unwashed mugs and bills pinned on the wall, do customers start taking their trade to the rival firm?

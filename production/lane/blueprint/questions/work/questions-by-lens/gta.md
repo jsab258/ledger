@@ -1,0 +1,51 @@
+- Can Frank steal a parked Cortina from outside the chip shop with the owner watching from the window, and will the owner describe both Frank and the car to the police?
+- Can Frank drag a driver out of his car at a red light, and do other drivers and pedestrians react, run, or call it in?
+- What happens if Frank steals a car and the owner's wife reports it, so a patrol car later spots the number plate on the docks road?
+- Can Frank swap number plates between two cars in a lock-up and then drive past a constable who is looking for the first plate?
+- Can Frank outrun a panda car through the Hook's back streets, park in a yard, and have the police lose him but still search the area?
+- What happens if Frank drives a minicab with a bleeding passenger in the back and a patrol car pulls alongside?
+- Can Frank mount the pavement to escape a chase, and will pedestrians he scatters remember his face and the cab's livery?
+- Can Frank hit a lamp post hard enough to cripple the cab, and will his own drivers refuse to take it out until it is fixed?
+- Can Frank ram a rival gang's van off the dock road and into the water, and what do the dockers on the quay say afterwards?
+- What happens if Frank runs over a tramp sleeping in a shop doorway by accident, and a witness at the bus stop saw the cab?
+- Can Frank torch a rival's car in a car park at night, and will the fire brigade's arrival bring the police to question the neighbours?
+- Can Frank hotwire a van at the docks and drive it into a warehouse yard without the night watchman challenging him?
+- What happens if Frank starts a fistfight in the cafe, and the cook, two customers and the waitress all take different sides?
+- Can Frank snatch a handbag from a woman at the bus shelter, run, and be chased by a passing man who decides to be a hero?
+- Can Frank rob the newsagent's till at closing time, and does the owner give a different description to the police than the cleaner does?
+- What happens if Frank robs a corner shop while the shopkeeper's brother, who is a docker, is sitting in the back room?
+- Can Frank walk into the post office wearing a mask and be recognised anyway by his voice or his gait?
+- Can Frank go on a rampage with a cosh through a street market, and does the town shut its shutters and stay indoors for days?
+- What happens if Frank beats up a man on the high street in front of forty people, and none of them calls the police but all of them gossip?
+- Can Frank kick a man who is already on the ground, and will the town talk about it differently than a fair fight?
+- Can Frank pick a pocket on a crowded bus and have the victim feel it a stop later and accuse the wrong passenger?
+- Can Frank knock a man out, drag him into the cab's boot, and drive him to the canal without anyone on the street noticing?
+- What happens if Frank leaves a body in the boot of a minicab and a mechanic is asked to look at the car the next day?
+- Can Frank steal a police panda car while the constables are inside a house, and what happens when he drives it into the Hook?
+- Can Frank wear a stolen police helmet and tunic to walk through a cordon at the docks?
+- Can Frank cause a diversion, like a false alarm at a warehouse, to pull the patrols away before a break-in elsewhere?
+- What happens if Frank phones in a tip from a phone box about a rival, and the call is traced to that box with a witness nearby?
+- Can Frank break a rival's shop window at three in the morning and be seen by a milkman on his round?
+- Can Frank sell a fence in a back room a stolen car stereo, and will the price drop if the fence has too many already?
+- Can Frank break into a tobacconist's through the roof, and does the alarm bell bring neighbours to their windows?
+- What happens if Frank escapes a police chase on foot over a canal bridge, but loses his cap and a witness picks it up?
+- Can Frank hide in the cab office with the lights off while two constables knock on the door, and will his dispatcher cover for him?
+- Can Frank bribe a constable on the beat to look the other way during a break-in, and does that constable then ask for more next week?
+- What happens if Frank is arrested after a chase, spends a night in the cells, and his crew has to decide whether to bail him or let him sweat?
+- Can Frank get a wanted description changed by repainting the cab, changing his coat and cutting his hair, and when does the town stop looking for him?
+- Can Frank hold up a security van on the dock road with a crew of three, and will each crew member behave differently under pressure?
+- Can Frank use a stolen lorry to block the dock road and stop a rival's delivery from reaching the warehouse?
+- What happens if Frank drives a getaway car and one of his crew sits in the back wounded and panicking, and the wounded man begs him to stop at a doctor's?
+- Can Frank climb onto the roof of a terrace and jump between houses to escape police, and will the residents complain about the noise?
+- Can Frank shove a pursuing constable into a skip or a hedge to slow him, and does the constable remember it as an assault?
+- Can Frank hijack a delivery lorry on the road to the docks, take the load to the lock-up, and sell it on over several days without being traced?
+- What happens if Frank speeds through the market in the cab on a Saturday and the traders hurl things at him afterwards whenever he passes?
+- Can Frank take a hostage at the docks, such as a ship's clerk, to get past the gate guards, and what does the clerk say afterwards?
+- Can Frank set fire to the cab office's own back room for a fake insurance claim, and will the loss adjuster ask the neighbours questions?
+- Can Frank scare a witness into silence by turning up at her front door and standing outside for an evening, and will her neighbours notice and talk?
+- What happens if Frank steals the car of a local councillor and finds papers in the glove box that he can later use as leverage?
+- Can Frank tail a rival's car at night with the headlights off through the Hook, and will the rival's driver notice and take a different route?
+- Can Frank park the cab across a side street to trap a patrol car in the alley behind the cafe, and what do the constables do?
+- What happens if Frank smashes through a level crossing barrier ahead of a goods train to lose a chase, and the signalman reports the cab?
+- Can Frank escape by hiding the car in a lock-up that belongs to someone he has bribed, and does the lock-up owner keep quiet when the police ask?
+- Can Frank take a cab full of paying passengers on a wild chase by accident, and will they complain, panic, or demand to be let out?

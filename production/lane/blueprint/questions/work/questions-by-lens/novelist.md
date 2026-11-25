@@ -1,0 +1,52 @@
+- Can Frank ask one of his drivers to say Frank was in the cab office all Tuesday night, and will that driver hold to it when a detective leans on him alone in an interview room?
+- What happens if two of Frank's alibi witnesses tell the police different times, say one says he left at nine and the other says half ten?
+- Can Frank plant a stolen wallet in a rival's coat pocket at the cafe and then tip off a constable to search him?
+- Can Frank photograph the bent detective taking an envelope in the multi-storey car park and later use the prints to make him drop a case?
+- What happens if the bent detective learns Frank has those photographs and decides it is safer to have Frank put away?
+- Can Frank feed a piece of false information to only one member of his crew, and work out who the informer is by seeing whether the police act on it?
+- If Frank finds out which driver is informing, can he keep him on and feed the police lies through him instead of getting rid of him?
+- Can Frank lend money to a struggling corner shop owner, and then call the debt in by asking him to look the other way when a van is unloaded behind his shop at night?
+- What happens if a man who owes Frank money skips town, and can Frank find out from his landlady or his ex-wife where he went?
+- Can Frank buy up another man's debts from a rival loan shark and become the one he owes?
+- Can Frank learn from his uncle Mickey's old ledger who owed Mickey favours, and go round collecting on them?
+- What happens if someone from Mickey's past turns up at the cab office claiming Mickey owed him, and is he telling the truth?
+- Can Frank find out how his uncle actually died by asking the right people in the right order, and does anyone lie to protect themselves?
+- Can Frank tell a rival gang leader that the other gang grassed him up, and will the two gangs turn on each other if he is believed?
+- What happens if Frank's lie about the rival gang is later contradicted by someone who was actually there?
+- Can Frank catch a dock foreman having an affair and threaten to tell his wife unless he lets Frank's lads onto the quay after dark?
+- What happens if Frank's blackmail victim decides he would rather confess to his wife than keep paying, and then goes to the police?
+- Can Frank burn a rival's minicab office at night and make it look like the rival did it himself for the insurance?
+- Can Frank wear a rival crew member's distinctive jacket while doing a job so that witnesses describe the wrong man to the police?
+- If witnesses wrongly name an innocent neighbour for something Frank did, can Frank let him take the fall, and does the town ever learn the truth?
+- Can Frank go to the police himself as a witness and give a false description that sends them after one of his enemies?
+- What happens if a loyal crew member is arrested and offered a lighter sentence to give evidence against Frank?
+- Can Frank pay a solicitor to visit his arrested man in the cells and quietly remind him what happens to people who talk?
+- Can Frank look after the wife of a crew member who is on remand, paying her rent, so that the man stays loyal inside?
+- What happens if Frank stops paying that wife's rent, and does the man in prison hear about it from visitors?
+- Can Frank test a new recruit by leaving cash in the office drawer and watching whether he takes any?
+- Can Frank order one of his crew to beat up someone the crew member grew up with, and will he refuse, warn the target, or do it and resent Frank?
+- What happens if Frank's most trusted man is quietly approached by a rival who offers him more money, and can Frank notice the signs?
+- Can Frank arrange to meet a rival in a quiet lock-up to make peace, and set up an ambush there instead?
+- If Frank breaks a truce he made in front of witnesses, does the rest of the Hook's underworld stop trusting his word?
+- Can Frank hide a body's worth of evidence, say a bloodied coat and a cosh, in the harbour, and could a diver or a dredger bring it back up weeks later?
+- What happens if a witness to an assault Frank committed moves away, and later comes back when the police reopen the case?
+- Can Frank intimidate a witness into changing her statement, and will the detective notice that her story suddenly changed?
+- Can Frank keep a ledger of who owes him what, and what happens if a rival or the police get hold of that ledger?
+- Can Frank arrange for a rival to be seen near a warehouse just before Frank's men rob it, using a fake phone call to lure him there?
+- Can Frank ring the police from a phone box anonymously, and can they trace that the call came from the box outside his own office?
+- What happens if Frank's ex-girlfriend, who knows about a crime he did years ago in another town, arrives in Meridian?
+- Can Frank make someone believe he has evidence against them when he actually has nothing, and does a bluff work better on some people than others?
+- Can Frank discover that a quiet old man on the estate was once a notorious armed robber, and recruit him for advice on a job?
+- Can Frank set up a fence in a second-hand shop, and what happens when a customer recognises his own stolen radio in the window?
+- If Frank does someone a genuine kindness, like getting a thug off the back of a widow, will that widow later refuse to identify him to the police?
+- Can Frank frame a corrupt councillor's driver for theft so that the councillor has to come to Frank to make it go away?
+- What happens if two of Frank's crew fall out over a woman and one starts telling outsiders Frank's business out of spite?
+- Can Frank put a crew member he no longer trusts on a job with a planted weakness, so that he gets caught instead of Frank?
+- Can Frank play the bent detective and an honest detective off against each other by giving each a different version of the same story?
+- What happens if the honest detective realises the bent one is on Frank's payroll, and does she go to her superiors or come to Frank?
+- Can Frank hand a rival over to the police as a grass in exchange for them ignoring his own operation for a month?
+- If the town learns Frank grassed on a rival, will his own people still trust him or will the word "grass" follow him round the Hook?
+- Can Frank take the blame for something a loyal crew member did, doing a short stretch on remand, and come out with that man's loyalty for life?
+- What happens if a driver who saw Frank leave a crime scene in a cab keeps quiet for weeks, then starts asking for money?
+- Can Frank arrange an alibi by being seen picking up a fare across town at the very time his crew is doing a job at the docks?
+- Can Frank forge an entry in the cab office's job book to show a fare he never drove, and will a detective think to check it against the passenger?

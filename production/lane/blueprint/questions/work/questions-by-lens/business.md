@@ -1,0 +1,51 @@
+- Can Frank sack a driver in the Mickey's office doorway in front of the other drivers, and will the sacked man bad-mouth him in the cafe afterwards?
+- What happens if Frank hires a driver who has no licence, and a traffic constable pulls him over on Quay Road with a fare on board?
+- Can Frank take a driver off a shift for turning up late three mornings running, and does the driver's loyalty drop or his temper rise?
+- Can Frank listen to the office radio at night and hear a rival firm's driver being sent to a job Mickey's could have taken?
+- What happens if Frank leaves the radio operator's desk empty for a whole evening and calls go unanswered?
+- Can Frank hire a bored switchboard woman from the launderette to run the radio, and does she start passing on who rings for which cab?
+- Can Frank change the fare charged for a run to the ferry terminal, and do regular customers notice and complain?
+- Can Frank undercut the rival cab firm on the late shift by a few pence a mile, and does their controller turn up to complain?
+- What happens if Frank lets a driver keep his fares for a week as a bonus, and the other drivers hear he is a soft touch?
+- Can Frank accept a standing weekly contract to ferry a night-shift cleaning crew from the Hook to the docks and back?
+- Can Frank buy a clapped-out second-hand Cortina from the scrapyard and put it on the road as a minicab, and will it break down mid-fare?
+- What happens if Frank stops paying the mechanic for repairs, and the mechanic quietly loosens a wheel nut on Frank's own car?
+- Can Frank swap the plates on a stolen car at the lock-up and sell it on to a dealer who does not ask questions?
+- Can Frank fit a second radio into his cab so he can talk to a lookout without the office hearing?
+- What happens if the council licensing officer finds Mickey's has more cars on the road than it has plates for?
+- Can Frank slip the licensing officer an envelope to overlook a failed vehicle inspection, and will the officer remember he is bent?
+- Can Frank forge a taxi licence disc for a car, and will a sharp-eyed constable notice the ink is wrong?
+- Can Frank keep two sets of books for the office, one for the taxman and one for himself, and what happens if the old bookkeeper spots it?
+- What happens if the taxman's inspector comes to Mickey's asking to see the wages book, and Frank has been paying drivers in cash with nothing written down?
+- Can Frank launder dirty cash by logging it as fares for jobs that never happened, and does a suspicious driver count the empty runs?
+- Can Frank buy the failing chip shop on Anchor Row and use its till to wash money, and will the neighbours notice it never has a queue?
+- Can Frank buy a run-down boarding house on the Hook and rent rooms to dockers, and will tenants gossip about who pays the rent?
+- What happens if Frank buys a derelict warehouse at the docks and the previous owner turns up claiming he was cheated?
+- Can Frank evict a tenant who owes three weeks, and does the street take the tenant's side if he is an old woman?
+- Can Frank charge the newsagent on Coal Lane a weekly sum for protection, and what does the newsagent do if he refuses to pay?
+- What happens if Frank sends a heavy to collect protection money and the heavy keeps a cut for himself?
+- Can Frank lower a shopkeeper's protection payment after his shop is hit by a break-in, and will word spread that Frank looks after his own?
+- Can Frank offer to protect a market trader from a rival gang's demands, and then turn out to be the one who bleeds him?
+- Can Frank stand outside the rival firm's office and tell its controller that his drivers will be working for Mickey's by Friday?
+- Can Frank poach the best driver from the rival cab firm by offering him a better car and a night off a week?
+- What happens if Frank is caught filling the rival firm's tyres with sugar water or slashing them during the night, and a witness saw a man in a cab driver's jacket?
+- Can Frank get his drivers to wait outside the rival firm's pitch at the station and take their fares by being quicker to the kerb?
+- Can Frank tip off the council that the rival firm's cars are uninsured, and does it blow back if the rival learns who rang?
+- Can Frank arrange for a van of stolen cigarettes to be unloaded at the docks at night and sold on through the cab office?
+- What happens if Frank takes delivery of a crate at the docks that turns out to be something he did not order?
+- Can Frank use cab drivers to carry parcels around the Hook, and will one of them open a parcel to see what is inside?
+- Can Frank keep a stash of stolen goods in the boot of an office car, and what happens if a driver finds it while cleaning?
+- Can Frank bribe a docks foreman to leave a particular container off the manifest overnight, and will the foreman come back asking for more?
+- Can Frank cut the supply of a wholesaler by threatening his delivery driver, and will the wholesaler go to the police?
+- What happens if Frank deals with a fence who gets arrested and names Frank to buy himself a lighter sentence?
+- Can Frank pay a bent solicitor to sit in on a police interview with one of his drivers, and does it change how the detective treats the driver?
+- Can Frank lend money to a driver who is behind on his rent, and what happens if the driver cannot pay it back?
+- Can Frank pay the widow of a driver hurt in a crash a weekly sum, and will the other drivers take it as a sign of loyalty?
+- Can Frank take a weekend away from the office and come back to find the takings short, and then work out which driver or operator skimmed them?
+- What happens if Frank puts a driver he does not trust on the cash round and the driver simply vanishes with the day's money?
+- Can Frank throw a sit-down dinner at the Chinese restaurant to settle a dispute with a rival boss, and who gets to sit where?
+- Can Frank send flowers to a dead driver's funeral from the office, and does the turnout tell him who counted that driver a friend?
+- Can Frank put his own name on the shop sign at the office and the cars, and will that draw the police or the rivals sooner?
+- What happens if Frank sells Mickey's to a rival buyer who has been offering money, and can he buy it back later?
+- Can Frank order every driver to refuse jobs from a particular street after a customer there cheated a driver, and do residents begin phoning the rival firm?
+- Can Frank run the office through one night's fog with just two cabs and a lot of calls queued, and does it earn or lose him regular customers?
