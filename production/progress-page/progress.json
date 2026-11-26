@@ -411,28 +411,29 @@
       "2026-11-22",
       "2026-11-23",
       "2026-11-24",
-      "2026-11-25"
+      "2026-11-25",
+      "2026-11-26"
     ],
     "gap_note": "No pictures from 9 to 20 October: the PC was off.",
     "morning": {
-      "date": "2026-11-25",
-      "line": "Morning, Wednesday 25 November. No phase open. On: n23-1 measuring block: every row solid or not needed (production/research/lane/measurements/STATUS.md) by Fri 27 Nov. Next: n23-2 our own build filmed and measured (tools/star_slots.py).",
+      "date": "2026-11-26",
+      "line": "Morning, Thursday 26 November. No phase open. On: n23-1 measuring block: every row solid or not needed (production/research/lane/measurements/STATUS.md) by Fri 27 Nov. Next: n23-2 our own build filmed and measured (tools/star_slots.py).",
       "failure": "",
       "views": [
         {
           "label": "The hook camera by day",
-          "today": "production/previews/morning-hook-day-2026-11-25.jpg",
-          "yesterday": "production/previews/morning-hook-day-2026-11-24.jpg"
+          "today": "production/previews/morning-hook-day-2026-11-26.jpg",
+          "yesterday": "production/previews/morning-hook-day-2026-11-25.jpg"
         },
         {
           "label": "The reverse view",
-          "today": "production/previews/morning-reverse-day-2026-11-25.jpg",
-          "yesterday": "production/previews/morning-reverse-day-2026-11-24.jpg"
+          "today": "production/previews/morning-reverse-day-2026-11-26.jpg",
+          "yesterday": "production/previews/morning-reverse-day-2026-11-25.jpg"
         },
         {
           "label": "The street at night",
-          "today": "production/previews/morning-night-2026-11-25.jpg",
-          "yesterday": "production/previews/morning-night-2026-11-24.jpg"
+          "today": "production/previews/morning-night-2026-11-26.jpg",
+          "yesterday": "production/previews/morning-night-2026-11-25.jpg"
         }
       ],
       "hook_sheet": "production/previews/hook-sheet-2026-10-05.jpg",
